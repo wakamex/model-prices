@@ -130,10 +130,14 @@ def resolve(model: str, provider: str | None = None) -> tuple[str, str] | None:
             target_provider, target_model = aliases["models"][candidate].split("/", 1)
             return target_provider, target_model
     # Prefer the model's own lab over another lab that also serves a variant of it.
+    # A lab model name resolves to the first-party id that serves and prices it.
+    bases = _prices()["bases"]
     for lab in order:
         for candidate in candidates:
             if _known(lab, candidate):
                 return lab, candidate
+            if candidate in bases.get(lab, {}):
+                return lab, bases[lab][candidate]
     return None
 
 

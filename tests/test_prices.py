@@ -22,6 +22,7 @@ from llm_prices.backfill import build, parse_rates, write
         ("opencode/grok-4.7", None, ("xai", "grok-4.7")),
         ("deepseek/deepseek-v4-flash-0731", None, ("deepseek", "deepseek-v4-flash")),
         ("grok-4-6-xhigh", None, ("xai", "grok-4.6")),
+        ("opencode/deepseek-v4.1-flash", None, ("deepseek", "deepseek-flash")),
         ("codex-auto-review", None, None),
     ],
 )
@@ -88,7 +89,7 @@ def _commit(repo: Path, message: str, when: str) -> None:
     )
 
 
-ASTRA = """base_model = "openai/gpt-6-astra"
+ASTRA = """name = "GPT-6 Astra"
 reasoning_options = [{{ type = "effort", values = ["low", "high"] }}]
 
 [cost]
@@ -120,6 +121,18 @@ def test_backfill_replays_price_changes_and_symlinks(tmp_path):
     _commit(repo, "no price change", "2026-09-05T10:00:00+00:00")
     (models / "gpt-6-astra.toml").write_text(ASTRA.format(input="9.00"))
     _commit(repo, "cut price", "2026-09-10T10:00:00+00:00")
+    # A first-party id serving a lab model, a deprecated id serving the same model, and
+    # a deleted id, to check which id a lab model name resolves to.
+    (models / "legacy.toml").write_text(
+        'base_model = "openai/gpt-6-astra-lab"\nstatus = "deprecated"\n'
+    )
+    (models / "removed.toml").write_text('base_model = "openai/gpt-6-other"\n')
+    _commit(repo, "add ids", "2026-09-11T10:00:00+00:00")
+    (models / "removed.toml").unlink()
+    (models / "gpt-6-astra.toml").write_text(
+        'base_model = "openai/gpt-6-astra-lab"\n' + ASTRA.format(input="9.00").split("\n", 1)[1]
+    )
+    _commit(repo, "serve lab model", "2026-09-12T10:00:00+00:00")
 
     data = build(repo, ("openai",))
 
@@ -130,6 +143,7 @@ def test_backfill_replays_price_changes_and_symlinks(tmp_path):
     assert entries[0]["rates"]["tiers"] == [{"above": 272_000, "input": 20.0, "output": 75.0}]
     assert entries[0]["rates"]["modes"] == {"fast": {"input": 20.0, "output": 100.0}}
     assert data["links"] == {"openai": {"astra-latest": "gpt-6-astra"}}
+    assert data["bases"] == {"openai": {"gpt-6-astra-lab": "gpt-6-astra"}}
 
     output = tmp_path / "prices.json"
     assert write(data, output)

@@ -25,6 +25,9 @@ TRACKED_PROVIDERS = (
 
 RATE_FIELDS = ("input", "output", "cache_read", "cache_write")
 
+# models.dev lab ids that differ from the id of the lab's own API provider.
+LAB_PROVIDERS = {"zhipuai": "zai"}
+
 
 def _utc(value: str) -> str:
     parsed = datetime.fromisoformat(value).astimezone(timezone.utc)
@@ -86,8 +89,8 @@ def _git(repo: Path, *args: str) -> str:
     ).stdout
 
 
-def _changes(repo: Path, providers: tuple[str, ...]) -> Iterator[tuple[str, str, str]]:
-    """Yield (commit, committed_at, path) for added or modified model files on main's history."""
+def _changes(repo: Path, providers: tuple[str, ...]) -> Iterator[tuple[str, str, str, str]]:
+    """Yield (status, commit, committed_at, path) for model file changes on main's history."""
     paths = [f"providers/{provider}/models" for provider in providers]
     log = _git(
         repo, "log", "--reverse", "--first-parent", "--diff-merges=first-parent",
@@ -99,8 +102,8 @@ def _changes(repo: Path, providers: tuple[str, ...]) -> Iterator[tuple[str, str,
             commit, committed_at = line[1:].split(" ", 1)
             continue
         status, _, path = line.partition("\t")
-        if status in {"A", "M"} and path.endswith(".toml"):
-            yield commit, _utc(committed_at), path
+        if status in {"A", "M", "D"} and path.endswith(".toml"):
+            yield status, commit, _utc(committed_at), path
 
 
 def _read_blobs(repo: Path, specs: list[str]) -> list[bytes | None]:
@@ -128,14 +131,21 @@ def _read_blobs(repo: Path, specs: list[str]) -> list[bytes | None]:
 def build(repo: Path, providers: tuple[str, ...] = TRACKED_PROVIDERS) -> dict[str, Any]:
     """Replay every price change of the tracked providers into effective-dated entries."""
     changes = list(_changes(repo, providers))
-    blobs = _read_blobs(repo, [f"{commit}:{path}" for commit, _, path in changes])
+    blobs = iter(_read_blobs(repo, [
+        f"{commit}:{path}" for status, commit, _, path in changes if status != "D"
+    ]))
     history: dict[str, dict[str, list[dict[str, Any]]]] = {}
     links: dict[str, dict[str, str]] = {}
-    for (commit, committed_at, path), blob in zip(changes, blobs):
-        if blob is None:
-            continue
+    # The lab model each first-party provider file currently serves, and whether the
+    # file is deprecated, so lab model names resolve to the id that prices them.
+    serves: dict[tuple[str, str], tuple[str, bool]] = {}
+    for status, commit, committed_at, path in changes:
         _, provider, _, *model_parts = path.removesuffix(".toml").split("/")
         model = "/".join(model_parts)
+        blob = None if status == "D" else next(blobs)
+        if blob is None:
+            serves.pop((provider, model), None)
+            continue
         target = _link_target(blob)
         if target is not None:
             # An alias follows its target's history, including periods before the alias
@@ -144,9 +154,16 @@ def build(repo: Path, providers: tuple[str, ...] = TRACKED_PROVIDERS) -> dict[st
             links.setdefault(provider, {})[model] = linked.removeprefix("./")
             continue
         try:
-            rates = parse_rates(tomllib.loads(blob.decode()))
+            document = tomllib.loads(blob.decode())
         except (tomllib.TOMLDecodeError, UnicodeDecodeError):
             continue
+        base = document.get("base_model")
+        lab, _, lab_model = base.partition("/") if isinstance(base, str) else ("", "", "")
+        if lab_model and LAB_PROVIDERS.get(lab, lab) == provider:
+            serves[(provider, model)] = (lab_model, document.get("status") == "deprecated")
+        else:
+            serves.pop((provider, model), None)
+        rates = parse_rates(document)
         if rates is None:
             continue
         entries = history.setdefault(provider, {}).setdefault(model, [])
@@ -168,14 +185,26 @@ def build(repo: Path, providers: tuple[str, ...] = TRACKED_PROVIDERS) -> dict[st
             provider: dict(sorted(models.items()))
             for provider, models in sorted(links.items()) if models
         },
+        "bases": _bases(serves),
     }
+
+
+def _bases(serves: dict[tuple[str, str], tuple[str, bool]]) -> dict[str, dict[str, str]]:
+    """Map each lab model to the first-party id serving it, preferring current ids."""
+    bases: dict[str, dict[str, str]] = {}
+    ranked = sorted(serves.items(), key=lambda item: (item[1][1], item[0][1]))
+    for (provider, model), (lab_model, _) in ranked:
+        if lab_model != model:
+            bases.setdefault(provider, {}).setdefault(lab_model, model)
+    return {provider: dict(sorted(models.items())) for provider, models in sorted(bases.items())}
 
 
 def write(data: dict[str, Any], output: Path) -> bool:
     """Write the price history if any tracked price changed; return whether it did."""
     if output.exists():
         current = json.loads(output.read_text())
-        if all(current.get(key) == data[key] for key in ("schema_version", "providers", "links")):
+        if all(current.get(key) == data[key]
+               for key in ("schema_version", "providers", "links", "bases")):
             return False
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(data, indent=1, sort_keys=True) + "\n")

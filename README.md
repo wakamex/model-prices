@@ -39,7 +39,7 @@ Each entry keeps input, output, cache read, and cache write rates, long-context 
 
 ## Model names
 
-`resolve()` maps the names that logs and agent harnesses use to models.dev ids. It lowercases the name and normalizes display names such as `Gemini 3.5 Flash (High)`. It reads a `provider/` prefix or the `provider` argument as a hint, and removes effort suffixes such as `-high` and date suffixes such as `-20251001` when the full name is unknown. A model is looked up at its own lab before other labs that also serve it. `aliases.toml` holds the few names that need an explicit mapping. Unknown models return `None` rather than a guessed price.
+`resolve()` maps the names that logs and agent harnesses use to models.dev ids. It lowercases the name and normalizes display names such as `Gemini 3.5 Flash (High)`. It reads a `provider/` prefix or the `provider` argument as a hint, and removes effort suffixes such as `-high` and date suffixes such as `-20251001` when the full name is unknown. A model is looked up at its own lab before other labs that also serve it. A lab model name resolves to the first-party API id that serves it, using models.dev's `base_model` links and preferring ids that are not deprecated: DeepSeek serves `deepseek-v4.1-flash` as `deepseek-flash`, so that name gets `deepseek-flash`'s price. `aliases.toml` holds the few names that need an explicit mapping. Unknown models return `None` rather than a guessed price.
 
 ## Recording what was used
 
