@@ -23,7 +23,10 @@ LAB_PROVIDERS = (
 )
 
 _EFFORT_SUFFIX = re.compile(r"-(minimal|low|medium|high|xhigh|max|thinking)$")
-_DATE_SUFFIX = re.compile(r"-(\d{8}|\d{4})$")
+# Dated snapshots: -2026-04-23 (OpenAI), -20251001 (Anthropic), -0731 (DeepSeek).
+_DATE_SUFFIX = re.compile(r"-(\d{4}-\d{2}-\d{2}|\d{8}|\d{4})$")
+# Context-window markers that tools append, such as Claude Code's "[1m]".
+_CONTEXT_MARKER = re.compile(r"\[[^\]]*\]$")
 
 
 @dataclass(frozen=True)
@@ -50,6 +53,8 @@ class Rates:
     tiers: tuple[Tier, ...] = ()
     # "peak" or "off_peak" for providers with time-of-day pricing, else None.
     period: str | None = None
+    # Suffix text removed from the requested name to find this model, such as "-max".
+    removed_suffix: str = ""
 
     def cost(self, input_tokens: int = 0, output_tokens: int = 0,
              cache_read_tokens: int = 0, cache_write_tokens: int = 0) -> float:
@@ -122,12 +127,36 @@ def _known(provider: str, model: str) -> bool:
             or model in data["links"].get(provider, {}))
 
 
-@cache
-def resolve(model: str, provider: str | None = None,
-            strict: bool = False) -> tuple[str, str] | None:
-    """Map a log or harness model name to a models.dev (provider, model) pair.
+def _candidates(name: str, strict: bool) -> list[tuple[str, str]]:
+    """Names to look up, with the suffix text removed to reach each, most exact first."""
+    found = [(name, "")]
+    if strict:
+        return found
+    marker = _CONTEXT_MARKER.search(name)
+    if marker:
+        found.append((name[:marker.start()], marker.group(0)))
+    # Anthropic ids write versions with hyphens: claude-sonnet-4.5 is claude-sonnet-4-5.
+    found += [(candidate.replace(".", "-"), removed) for candidate, removed in found
+              if candidate.startswith("claude-") and "." in candidate]
+    for pattern in (_EFFORT_SUFFIX, _DATE_SUFFIX):
+        for candidate, removed in list(found):
+            match = pattern.search(candidate)
+            if match:
+                found.append((candidate[:match.start()], match.group(0) + removed))
+    unique: dict[str, str] = {}
+    for candidate, removed in found:
+        unique.setdefault(candidate, removed)
+    return list(unique.items())
 
-    strict=True skips removing effort and date suffixes, for names that must match exactly.
+
+@cache
+def resolve_details(model: str, provider: str | None = None,
+                    strict: bool = False) -> tuple[str, str, str] | None:
+    """Like resolve, but also return the suffix text removed to find the model.
+
+    The removed text is "" for an exact, alias, or first-party match, and otherwise
+    names what was dropped, such as "-max" or "-2026-04-23", so callers can record
+    that the price belongs to a related name.
     """
     aliases = _config("aliases.toml")
     name = re.sub(r"[\s_]+", "-", re.sub(r"[()]", "", model.strip().lower())).strip("-")
@@ -136,27 +165,35 @@ def resolve(model: str, provider: str | None = None,
         provider = provider or prefix
     hint = aliases["providers"].get((provider or "").lower(), (provider or "").lower())
 
-    candidates = [name]
-    for pattern in () if strict else (_EFFORT_SUFFIX, _DATE_SUFFIX):
-        candidates += [pattern.sub("", candidate) for candidate in candidates]
+    candidates = _candidates(name, strict)
+    for candidate, removed in candidates:
+        if candidate in aliases["models"]:
+            target_provider, target_model = aliases["models"][candidate].split("/", 1)
+            return target_provider, target_model, removed
     order = ([hint] if hint in _prices()["providers"] else []) + [
         lab for lab in LAB_PROVIDERS if lab != hint
     ]
-    candidates = list(dict.fromkeys(candidates))
-    for candidate in candidates:
-        if candidate in aliases["models"]:
-            target_provider, target_model = aliases["models"][candidate].split("/", 1)
-            return target_provider, target_model
     # Prefer the model's own lab over another lab that also serves a variant of it.
     # A lab model name resolves to the first-party id that serves and prices it.
     bases = _prices()["bases"]
     for lab in order:
-        for candidate in candidates:
+        for candidate, removed in candidates:
             if _known(lab, candidate):
-                return lab, candidate
+                return lab, candidate, removed
             if candidate in bases.get(lab, {}):
-                return lab, bases[lab][candidate]
+                return lab, bases[lab][candidate], removed
     return None
+
+
+def resolve(model: str, provider: str | None = None,
+            strict: bool = False) -> tuple[str, str] | None:
+    """Map a log or harness model name to a models.dev (provider, model) pair.
+
+    strict=True skips removing effort, date, and context suffixes, for names that must
+    match exactly.
+    """
+    found = resolve_details(model, provider, strict)
+    return found[:2] if found else None
 
 
 def _tiers(raw: list[dict[str, Any]] | None) -> tuple[Tier, ...]:
@@ -285,15 +322,17 @@ def rates(model: str, at: datetime | str | None = None, provider: str | None = N
     whether the request fell in peak hours; it defaults to `at`.
     corrected=False returns models.dev's recorded rates without local corrections.
     """
-    resolved = resolve(model, provider)
-    if resolved is None:
+    details = resolve_details(model, provider)
+    if details is None:
         return None
+    resolved, removed = details[:2], details[2]
     moment = _parse_time(at)
     listed = _parse_time(prices_at) if prices_at is not None else moment
     found = _correction(*resolved, listed) if mode is None and corrected else None
     found = found or _history_rates(*resolved, listed, mode)
     if found is None:
         return None
+    found = replace(found, removed_suffix=removed) if removed else found
     period = _period(resolved[0], moment, schedule_at=listed)
     return _scaled(found, *period) if period else found
 

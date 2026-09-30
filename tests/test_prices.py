@@ -23,6 +23,9 @@ from llm_prices.backfill import build, parse_rates, write
         ("deepseek/deepseek-v4-flash-0731", None, ("deepseek", "deepseek-v4-flash")),
         ("grok-4-6-xhigh", None, ("xai", "grok-4.6")),
         ("opencode/deepseek-v4.1-flash", None, ("deepseek", "deepseek-flash")),
+        ("gpt-5.5-2026-04-23", None, ("openai", "gpt-5.5")),
+        ("claude-opus-5[1m]", None, ("anthropic", "claude-opus-5")),
+        ("claude-sonnet-4.5", None, ("anthropic", "claude-sonnet-4-5")),
         ("codex-auto-review", None, None),
     ],
 )
@@ -238,3 +241,11 @@ def test_plan_prices():
     assert llm_prices.plan("openai", "pro_500").usd_per_month == 500
     assert llm_prices.plan_ids("google") == ["pro", "ultra_100", "ultra_200"]
     assert "ultra" in llm_prices.plan_ids("google", at="2026-05-01")
+
+
+def test_rates_report_the_suffix_removed_to_find_the_model():
+    assert rates("kimi-k3-max").removed_suffix == "-max"
+    assert rates("gpt-5.5-2026-04-23").removed_suffix == "-2026-04-23"
+    assert rates("claude-opus-5[1m]").removed_suffix == "[1m]"
+    assert rates("claude-opus-5-5").removed_suffix == ""
+    assert rates("deepseek-v4.1-flash").removed_suffix == ""
