@@ -7,6 +7,7 @@ from bisect import bisect_right
 from dataclasses import asdict, dataclass, replace
 from datetime import datetime, timedelta, timezone
 from functools import cache
+import hashlib
 from importlib.metadata import version
 from importlib.resources import files
 import json
@@ -103,9 +104,18 @@ def _parse_time(value: datetime | str | None) -> datetime:
     return parsed.astimezone(timezone.utc)
 
 
+@cache
 def pricing_basis() -> str:
-    """Identify the price data, for recording alongside computed costs."""
-    return f"llm-prices-{version('llm-prices')}+models.dev@{_prices()['source_commit'][:12]}"
+    """Identify the price data, for recording alongside computed costs.
+
+    Names the package version and models.dev commit, plus a hash of every data file,
+    so a change to corrections, schedules, or aliases also changes the basis.
+    """
+    digest = hashlib.sha256()
+    for item in sorted(files(__package__).joinpath("data").iterdir(), key=lambda f: f.name):
+        digest.update(item.name.encode() + b"\0" + item.read_bytes())
+    return (f"llm-prices-{version('llm-prices')}+models.dev@{_prices()['source_commit'][:12]}"
+            f"+data@{digest.hexdigest()[:12]}")
 
 
 def _known(provider: str, model: str) -> bool:

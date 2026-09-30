@@ -76,7 +76,7 @@ The check also reads each default-model alias's live source, such as the Antigra
 
 ## Recording what was used
 
-`pricing_basis()` returns an identifier such as `llm-prices-0.1.0+models.dev@e2bf2e470a1b`, naming the package version and the models.dev commit its data came from. Store it next to computed costs.
+`pricing_basis()` returns an identifier such as `llm-prices-0.1.0+models.dev@e2bf2e470a1b+data@3f1c09a2b7de`, naming the package version, the models.dev commit its data came from, and a hash of all its data files, so any change to prices, corrections, schedules, or aliases changes it. Store it next to computed costs.
 
 ## Updating prices
 
