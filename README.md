@@ -41,7 +41,7 @@ Each entry keeps input, output, cache read, and cache write rates, long-context 
 
 Some providers charge more at busy hours. `schedules.toml` records each provider's peak windows, weekday rules, and holiday calendar, with the dates each version of the rules applied. The recorded rate is the off-peak rate, and inside a peak window every rate is multiplied by the schedule's peak multiplier. `Rates.period` says which applied: `"peak"`, `"off_peak"`, or `None` for providers without time-of-day pricing.
 
-DeepSeek is the one provider with such pricing so far. Since 16:00 UTC on August 16, 2026, its peak hours have been 01:00-04:00 and 06:00-10:00 UTC on weekdays other than Chinese public holidays, at twice the off-peak rate. The pricing page added the weekday and holiday exceptions in late August and mid-September without an announcement; llm-prices applies the current rule from the start of peak pricing.
+DeepSeek is the one provider with such pricing so far. Since 16:00 UTC on August 16, 2026, its peak hours have been 01:00-04:00 and 06:00-10:00 UTC on weekdays other than Chinese public holidays, at twice the off-peak rate. The pricing page added the weekday and holiday exceptions in late August and mid-September without an announcement; llm-prices applies the current rule from the start of peak pricing. [DeepSeek pricing history](docs/deepseek-pricing-history.md) records the evidence for each date.
 
 ## Official price checks
 
@@ -52,7 +52,7 @@ DeepSeek is the one provider with such pricing so far. Since 16:00 UTC on August
 - `mismatch`: llm-prices differs from the official page. The command exits with status 1.
 - `untracked`: the page lists a model that models.dev does not price.
 
-Page model names must match models.dev ids exactly, with no suffix removal, so a dated model is never compared with a different undated one. For DeepSeek, peak and off-peak prices are checked at the next hours the schedule classifies as each, and the page's peak-hour sentences must match the wording recorded in `schedules.toml`, so a change to the hours or exceptions fails the check. Google's dated future prices are read for the check date. A page that yields no prices fails the check, because its format has changed.
+Page model names must match models.dev ids exactly, with no suffix removal, so a dated model is never compared with a different undated one. For DeepSeek, peak and off-peak prices are checked at the next hours the schedule classifies as each, and the peak-hour rule on both the English and Chinese pricing pages must match the wording recorded in `schedules.toml`, so a change to the hours, multiplier, or exceptions fails the check. Google's dated future prices are read for the check date. A page that yields no prices fails the check, because its format has changed.
 
 ## Model names
 

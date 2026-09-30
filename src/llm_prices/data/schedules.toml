@@ -11,14 +11,19 @@ peak_hours_utc = [["01:00", "04:00"], ["06:00", "10:00"]]
 weekdays_only = true
 holidays = "cn"
 source = "https://api-docs.deepseek.com/zh-cn/updates"
-terms = "Peak hours are 01:00 - 04:00 and 06:00 - 10:00 UTC, Monday through Friday, excluding Chinese public holidays. All other hours are off-peak, including weekends and Chinese public holidays in full."
 note = """
 Announced 2026-07-31, effective 2026-08-17 00:00 Beijing time, which is 2026-08-16T16:00Z.
 The current rule is applied from that start. The pricing page first said peak hours applied
 every day; "Monday through Friday" appeared between the 2026-08-22T13:06Z and
 2026-08-23T18:11Z archives, and the holiday exclusion between 2026-09-17T23:31Z and
-2026-09-19T10:10Z. No announcement introduced either change. terms is the English pricing
-page's current wording, which llm-prices check compares with the live page."""
+2026-09-19T10:10Z. No announcement introduced either change. See
+docs/deepseek-pricing-history.md."""
+
+# The pricing pages' current wording of these terms; llm-prices check compares each
+# live page with it verbatim.
+[schedule.terms]
+en = "Off-peak rates are half of the peak rates. Peak hours are 01:00 - 04:00 and 06:00 - 10:00 UTC, Monday through Friday, excluding Chinese public holidays. All other hours are off-peak, including weekends and Chinese public holidays in full."
+zh = "空闲时段价格为高峰时段价格的一半。北京时间周一至周五（不含中国法定节假日）9:00 - 12:00、14:00 - 18:00 为高峰时段；其余时段，包括周末及中国法定节假日全天均为空闲时段。"
 
 # Mainland China public holidays (days off), local dates in UTC+8. Weekend make-up
 # workdays are not listed: DeepSeek treats all weekends as off-peak.

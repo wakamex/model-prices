@@ -217,25 +217,28 @@ def parse_deepseek(page: str, today: datetime) -> list[Observed]:
     return found
 
 
-def deepseek_terms(page: str) -> str | None:
-    """The pricing page's sentences defining peak and off-peak hours."""
-    match = re.search(r"Peak hours are .*? in full\.", _html_text(page))
-    return match.group(0) if match else None
+# Pages that state time-of-day pricing terms, each compared verbatim with the wording in
+# schedules.toml: {provider: {language: (url, pattern matching the terms)}}.
+TERMS: dict[str, dict[str, tuple[str, str]]] = {
+    "deepseek": {
+        "en": ("https://api-docs.deepseek.com/quick_start/pricing",
+               r"Off-peak rates are half of the peak rates\. Peak hours are .*? in full\."),
+        "zh": ("https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+               r"空闲时段价格为高峰时段价格的一半。.*?空闲时段。"),
+    },
+}
 
 
-# Pages that state time-of-day pricing terms, compared verbatim with schedules.toml.
-TERMS: dict[str, Callable[[str], str | None]] = {"deepseek": deepseek_terms}
-
-
-def compare_terms(provider: str, page: str, today: datetime) -> Result:
-    """Check that the page states the same peak-hour terms that schedules.toml records."""
-    recorded = _schedule(provider, today)
-    official = TERMS[provider](page)
-    if official is None:
-        raise ValueError(f"{provider}: no peak-hour terms found; the page format changed")
-    expected = recorded.get("terms") if recorded else None
-    return Result(provider, provider, "peak_terms", None, None, official, expected, None,
-                  "ok" if official == expected else "mismatch")
+def compare_terms(provider: str, language: str, page: str, today: datetime) -> Result:
+    """Check that a page states the same peak-hour terms that schedules.toml records."""
+    url, pattern = TERMS[provider][language]
+    match = re.search(pattern, _html_text(page))
+    if match is None:
+        raise ValueError(f"{provider}: no peak-hour terms found in {url}; the page format changed")
+    schedule = _schedule(provider, today)
+    expected = (schedule or {}).get("terms", {}).get(language)
+    return Result(provider, provider, f"peak_terms:{language}", None, None, match.group(0),
+                  expected, None, "ok" if match.group(0) == expected else "mismatch")
 
 
 SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
@@ -306,8 +309,13 @@ def run(providers: Iterable[str] | None = None, today: datetime | None = None,
         if not observed:
             raise ValueError(f"{provider}: no prices parsed from {url}; the page format changed")
         results.extend(compare(observed, moment))
-        if provider in TERMS:
-            results.append(compare_terms(provider, page, moment))
+        for language, (terms_url, _) in TERMS.get(provider, {}).items():
+            key = f"{provider}:{language}"
+            if terms_url == url:
+                terms_page = page
+            else:
+                terms_page = pages[key] if pages and key in pages else fetch(terms_url)
+            results.append(compare_terms(provider, language, terms_page, moment))
     return results
 
 
@@ -316,9 +324,10 @@ def report(results: list[Result]) -> str:
     for result in results:
         if result.status in {"ok", "untracked"}:
             continue
-        if result.field == "peak_terms":
-            lines.append(f"{result.status:9} {result.provider} peak-hour terms: official "
-                         f"{result.official!r}, schedules.toml {result.effective!r}")
+        if result.field.startswith("peak_terms:"):
+            language = result.field.partition(":")[2]
+            lines.append(f"{result.status:9} {result.provider} peak-hour terms ({language}): "
+                         f"official {result.official!r}, schedules.toml {result.effective!r}")
             continue
         tier = f" above {result.above:,}" if result.above else ""
         when = f" at {result.at}" if result.at else ""

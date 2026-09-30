@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<!-- Synthetic fixture: reproduces the pricing table layout of https://api-docs.deepseek.com/zh-cn/quick_start/pricing. Prices are those the page listed on 2026-09-30. -->
+<html lang="zh-CN"><head><title>模型 &amp; 价格</title></head><body>
+<table>
+<tr><td>MODEL</td><td>deepseek-flash<sup>(1)</sup></td><td>deepseek-v4-pro</td></tr>
+<tr><td>BASE URL (OpenAI Format)</td><td colspan="2">https://api.deepseek.com</td></tr>
+<tr><td rowspan="6">PRICING<sup>(2)</sup></td><td rowspan="2">1M INPUT TOKENS</td><td rowspan="2">(CACHE HIT)</td><td>OFF-PEAK</td><td>$0.003</td><td>$0.022</td></tr>
+<tr><td>PEAK</td><td>$0.006</td><td>$0.044</td></tr>
+<tr><td rowspan="2">1M INPUT TOKENS</td><td rowspan="2">(CACHE MISS)</td><td>OFF-PEAK</td><td>$0.15</td><td>$0.66</td></tr>
+<tr><td>PEAK</td><td>$0.3</td><td>$1.32</td></tr>
+<tr><td rowspan="2">1M OUTPUT TOKENS</td><td>OFF-PEAK</td><td>$0.6</td><td>$1.98</td></tr>
+<tr><td>PEAK</td><td>$1.2</td><td>$3.96</td></tr>
+<tr><td>Concurrency Limit<sup>(3)</sup></td><td>2500</td><td>500</td></tr>
+</table>
+<p>(1) A note about model names.</p>
+<p>(2) 空闲时段价格为高峰时段价格的一半。北京时间周一至周五（不含中国法定节假日）9:00 - 12:00、14:00 - 18:00 为高峰时段；其余时段，包括周末及中国法定节假日全天均为空闲时段。</p>
+<p>(3) A note about concurrency limits.</p>
+</body></html>

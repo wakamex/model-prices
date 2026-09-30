@@ -12,6 +12,7 @@ TODAY = datetime(2026, 9, 30, 12, tzinfo=timezone.utc)
 PAGES = {
     "anthropic": (FIXTURES / "anthropic.md").read_text(),
     "deepseek": (FIXTURES / "deepseek.html").read_text(),
+    "deepseek:zh": (FIXTURES / "deepseek-zh.html").read_text(),
     "google": (FIXTURES / "google.md").read_text(),
     "openai": (FIXTURES / "openai.md").read_text(),
     "zai": (FIXTURES / "zai.md").read_text(),
@@ -89,13 +90,18 @@ def test_check_command_exit_status(monkeypatch, capsys):
     assert main(["check", "zai"]) == 1
 
 
-def test_peak_hour_terms_must_match_the_recorded_schedule():
-    results = checks.run(["deepseek"], today=TODAY, pages={"deepseek": PAGES["deepseek"]})
-    terms = next(result for result in results if result.field == "peak_terms")
-    assert terms.status == "ok"
+def _terms(pages):
+    results = checks.run(["deepseek"], today=TODAY, pages=pages)
+    return {result.field: result for result in results if result.field.startswith("peak_terms")}
 
-    changed = PAGES["deepseek"].replace("06:00 - 10:00", "06:00 - 11:00")
-    results = checks.run(["deepseek"], today=TODAY, pages={"deepseek": changed})
-    terms = next(result for result in results if result.field == "peak_terms")
-    assert terms.status == "mismatch"
-    assert "06:00 - 11:00" in checks.report(results)
+
+def test_peak_hour_terms_must_match_in_both_languages():
+    pages = {"deepseek": PAGES["deepseek"], "deepseek:zh": PAGES["deepseek:zh"]}
+    assert {field: result.status for field, result in _terms(pages).items()} == {
+        "peak_terms:en": "ok", "peak_terms:zh": "ok",
+    }
+
+    changed = {**pages, "deepseek:zh": pages["deepseek:zh"].replace("14:00 - 18:00", "14:00 - 19:00")}
+    terms = _terms(changed)
+    assert (terms["peak_terms:en"].status, terms["peak_terms:zh"].status) == ("ok", "mismatch")
+    assert "14:00 - 19:00" in checks.report(checks.run(["deepseek"], today=TODAY, pages=changed))
