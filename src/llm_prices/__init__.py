@@ -310,7 +310,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.json:
         print(json.dumps(asdict(found), indent=2))
         return 0
-    print(f"{found.provider}/{found.model} from {found.valid_from} ({found.source})")
+    period = f", {found.period.replace('_', '-')} rate" if found.period else ""
+    print(f"{found.provider}/{found.model} from {found.valid_from}{period} ({found.source})")
     print(f"input ${found.input}  output ${found.output}  "
           f"cache read ${found.cache_read}  cache write ${found.cache_write}  per 1M tokens")
     for tier in found.tiers:
