@@ -236,3 +236,5 @@ def test_plan_prices():
     assert llm_prices.plan("google", "ultra_200").usd_per_month == 199.99
     assert llm_prices.plan("google", "ultra_200", at="2026-05-01") is None
     assert llm_prices.plan("openai", "pro_500").usd_per_month == 500
+    assert llm_prices.plan_ids("google") == ["pro", "ultra_100", "ultra_200"]
+    assert "ultra" in llm_prices.plan_ids("google", at="2026-05-01")

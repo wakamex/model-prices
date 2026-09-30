@@ -308,6 +308,13 @@ class Plan:
     source: str
 
 
+def plan_ids(provider: str, at: datetime | str | None = None) -> list[str]:
+    """Return the provider's plan ids with a price in effect at `at` (default now)."""
+    ids = {item["id"] for item in _config("plans.toml").get("plan", [])
+           if item["provider"] == provider}
+    return sorted(plan_id for plan_id in ids if plan(provider, plan_id, at) is not None)
+
+
 def plan(provider: str, plan_id: str, at: datetime | str | None = None) -> Plan | None:
     """Return a subscription plan's monthly price in effect at `at` (default now)."""
     moment = _parse_time(at)
