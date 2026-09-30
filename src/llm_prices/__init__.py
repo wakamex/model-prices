@@ -112,6 +112,15 @@ def _parse_time(value: datetime | str | None) -> datetime:
     return parsed.astimezone(timezone.utc)
 
 
+def data_as_of() -> datetime:
+    """When the price history was last synced from models.dev.
+
+    Rates for requests after this time assume no price has changed since; callers can
+    mark such costs provisional or warn when the installed data is old.
+    """
+    return _parse_time(_prices()["source_committed_at"])
+
+
 @cache
 def pricing_basis() -> str:
     """Identify the price data, for recording alongside computed costs.
@@ -123,7 +132,7 @@ def pricing_basis() -> str:
     for item in sorted(files(__package__).joinpath("data").iterdir(), key=lambda f: f.name):
         digest.update(item.name.encode() + b"\0" + item.read_bytes())
     return (f"llm-prices-{version('llm-prices')}+models.dev@{_prices()['source_commit'][:12]}"
-            f"+data@{digest.hexdigest()[:12]}")
+            f"+synced@{data_as_of().date().isoformat()}+data@{digest.hexdigest()[:12]}")
 
 
 def _known(provider: str, model: str) -> bool:
@@ -477,9 +486,13 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     period = f", {found.period.replace('_', '-')} rate" if found.period else ""
     print(f"{found.provider}/{found.model} from {found.valid_from}{period} ({found.source})")
-    print(f"input ${found.input}  output ${found.output}  "
-          f"cache read ${found.cache_read}  cache write ${found.cache_write}  per 1M tokens")
+    def usd(value: float | None) -> str:
+        return f"${value:g}" if value is not None else "- (input price)"
+
+    print(f"input {usd(found.input)}  output {usd(found.output)}  "
+          f"cache read {usd(found.cache_read)}  cache write {usd(found.cache_write)}  per 1M tokens")
     for tier in found.tiers:
-        print(f"above {tier.above:,} prompt tokens: input ${tier.input}  output ${tier.output}  "
-              f"cache read ${tier.cache_read}  cache write ${tier.cache_write}")
+        print(f"above {tier.above:,} prompt tokens: input {usd(tier.input)}  "
+              f"output {usd(tier.output)}  cache read {usd(tier.cache_read)}  "
+              f"cache write {usd(tier.cache_write)}")
     return 0

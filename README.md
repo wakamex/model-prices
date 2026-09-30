@@ -33,7 +33,11 @@ uv add llm-prices
 
 Prices come from the git history of [models.dev](https://github.com/sst/models.dev), an open catalog of model metadata that records each model's price in one TOML file per provider. Every commit on its main branch that changed a tracked model's price becomes an entry effective from that commit's time. The tracked providers are the labs that sell their own models: Alibaba, Anthropic, DeepSeek, Google, Moonshot AI, OpenAI, xAI, and Z.ai.
 
-models.dev sometimes records a change days after the provider made it, or lists a wrong price for a while. `corrections.toml` overrides those periods, and every correction cites its source. Usage from before a model's first recorded price is priced at that first price.
+models.dev sometimes records a change days after the provider made it, or lists a wrong price for a while. `corrections.toml` overrides those periods, and every correction cites its source.
+
+Usage from before a model's first recorded price is priced at that first price, because models.dev often adds a model after its launch. `Rates.valid_from` is then later than the requested time, which a caller can check to reject implausible times, such as a zero timestamp. Usage after the last sync, given by `data_as_of()`, assumes no price changed since.
+
+Pass the time the provider billed the request as `at`. Providers do not document whether a request that spans a peak boundary bills at its start or its end; agent harnesses usually report completion times, which is a reasonable choice.
 
 Each entry keeps input, output, cache read, and cache write rates, long-context tiers, and alternate modes such as fast mode. A tier applies when one request's whole prompt, meaning uncached input plus cache reads and writes, exceeds the tier size. A missing cache price falls back to the input price.
 
@@ -72,7 +76,7 @@ Page model names must match models.dev ids exactly, with no suffix removal, so a
 
 ## Recording what was used
 
-`pricing_basis()` returns an identifier such as `llm-prices-0.1.0+models.dev@e2bf2e470a1b+data@3f1c09a2b7de`, naming the package version, the models.dev commit its data came from, and a hash of all its data files, so any change to prices, corrections, schedules, or aliases changes it. Store it next to computed costs.
+`pricing_basis()` returns an identifier such as `llm-prices-0.1.0+models.dev@e2bf2e470a1b+synced@2026-09-30+data@3f1c09a2b7de`, naming the package version, the models.dev commit and sync date its data came from, and a hash of all its data files, so any change to prices, corrections, schedules, or aliases changes it. Store it next to computed costs.
 
 ## Updating prices
 
