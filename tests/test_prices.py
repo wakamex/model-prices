@@ -6,7 +6,7 @@ import sys
 import pytest
 
 import llm_prices
-from llm_prices import Rates, Tier, cost, main, rates, resolve
+from llm_prices import Rates, Tier, cost, main, rates, rates_between, resolve
 from llm_prices.backfill import build, parse_rates, write
 
 
@@ -249,3 +249,32 @@ def test_rates_report_the_suffix_removed_to_find_the_model():
     assert rates("claude-opus-5[1m]").removed_suffix == "[1m]"
     assert rates("claude-opus-5-5").removed_suffix == ""
     assert rates("deepseek-v4.1-flash").removed_suffix == ""
+
+
+def test_price_key_ignores_provenance():
+    corrected = rates("gpt-5.6-sol", at="2026-08-23T00:00:00Z")
+    recorded = rates("gpt-5.6-sol", at="2026-09-01T00:00:00Z")
+
+    assert corrected.source != recorded.source
+    assert corrected.price_key() == recorded.price_key()
+
+
+def test_rates_between_returns_each_distinct_price():
+    # A Monday 00:00-12:00 UTC span crosses DeepSeek's two peak windows.
+    segments = rates_between("deepseek-flash", "2026-09-28T00:00:00Z", "2026-09-28T12:00:00Z")
+
+    assert [(when.isoformat(), found.period) for when, found in segments] == [
+        ("2026-09-28T00:00:00+00:00", "off_peak"),
+        ("2026-09-28T01:00:00+00:00", "peak"),
+        ("2026-09-28T04:00:00+00:00", "off_peak"),
+        ("2026-09-28T06:00:00+00:00", "peak"),
+        ("2026-09-28T10:00:00+00:00", "off_peak"),
+    ]
+    # One price across a correction ending with identical rates.
+    assert len(rates_between("gpt-5.6-sol", "2026-08-24T00:00:00Z", "2026-08-26T00:00:00Z")) == 1
+    # A price change inside the span.
+    changes = rates_between("gpt-5.6-sol", "2026-08-21T00:00:00Z", "2026-08-23T00:00:00Z")
+    assert [(found.input, found.output) for _, found in changes] == [(5.0, 30.0), (4.0, 20.0)]
+    # A Chinese holiday weekday has no peak hours.
+    assert len(rates_between("deepseek-flash", "2026-10-01T00:00:00Z", "2026-10-01T23:00:00Z")) == 1
+    assert rates_between("codex-auto-review", "2026-09-01", "2026-09-02") == []

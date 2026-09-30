@@ -62,6 +62,10 @@ Page model names must match models.dev ids exactly, with no suffix removal, so a
 
 `rates()` and `cost()` take `prices_at` to price a request from a different date's price list while `at`, the time the request ran, still decides peak or off-peak. Pricing every past request with `prices_at` set to today compares usage across weeks without price changes appearing as usage changes.
 
+## Prices over a span
+
+`rates_between(model, start, end)` returns each distinct rate in effect over a span with the time it begins. Use it for usage known only to fall within a span, such as a run with a start and finish but no per-request times: a single entry means one price covered the whole span. It finds changes from price history, corrections, and time-of-day schedules exactly, including peak windows and holidays. `Rates.price_key()` compares prices without provenance, so a correction and the models.dev entry that later records the same prices compare equal.
+
 ## Subscription plans
 
 `plan(provider, plan_id, at=None)` returns a subscription plan's monthly price from `plans.toml`, keyed by the plan name each lab's usage tools report, such as `max_20x` for Claude or `lite` for the GLM Coding Plan. A plan sold in several price tiers gets one entry per tier, with the price in its id and name, such as `ultra_200` for Google AI Ultra $200 or `pro_500` for ChatGPT Pro $500. When a usage tool reports only the untiered name, that name has no entry, except that ChatGPT's `pro` keeps its original $200 price.

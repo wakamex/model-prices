@@ -56,6 +56,11 @@ class Rates:
     # Suffix text removed from the requested name to find this model, such as "-max".
     removed_suffix: str = ""
 
+    def price_key(self) -> tuple:
+        """The prices alone, without provenance, for comparing rates from different sources."""
+        return (self.input, self.output, self.cache_read, self.cache_write, self.tiers,
+                self.period)
+
     def cost(self, input_tokens: int = 0, output_tokens: int = 0,
              cache_read_tokens: int = 0, cache_write_tokens: int = 0) -> float:
         """Price one request; input_tokens excludes cache reads and writes.
@@ -335,6 +340,50 @@ def rates(model: str, at: datetime | str | None = None, provider: str | None = N
     found = replace(found, removed_suffix=removed) if removed else found
     period = _period(resolved[0], moment, schedule_at=listed)
     return _scaled(found, *period) if period else found
+
+
+def _change_times(provider: str, model: str, start: datetime, end: datetime) -> set[datetime]:
+    """Every moment in (start, end) at which the model's rates could change."""
+    times: set[datetime] = set(_entry_times(provider, model))
+    link = _prices()["links"].get(provider, {}).get(model)
+    if link:
+        times |= set(_entry_times(provider, link))
+    for begin, until, _ in (*_corrections(provider, model), *_schedules(provider)):
+        times |= {begin} | ({until} if until else set())
+    calendars = _config("schedules.toml").get("holidays", {})
+    for _, _, schedule in _schedules(provider):
+        calendar = calendars.get(schedule.get("holidays", ""))
+        day = start.replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=1)
+        while day <= end:
+            times.add(day)  # weekday rules change at UTC midnight
+            for window in schedule["peak_hours_utc"]:
+                for clock in window:
+                    hour, minute = map(int, clock.split(":"))
+                    times.add(day.replace(hour=hour, minute=minute))
+            if calendar:
+                times.add(day - timedelta(hours=calendar["utc_offset_hours"]))
+            day += timedelta(days=1)
+    return {moment for moment in times if start < moment < end}
+
+
+def rates_between(model: str, start: datetime | str, end: datetime | str,
+                  provider: str | None = None) -> list[tuple[datetime, Rates]]:
+    """Return the distinct rates in effect from `start` to `end`, each with the time it begins.
+
+    For usage known only to fall within a span, a single entry means one price covered the
+    whole span. Entries differ in price, not only in provenance. An unknown model gives [].
+    """
+    details = resolve_details(model, provider)
+    begin, finish = _parse_time(start), _parse_time(end)
+    first = rates(model, at=begin, provider=provider) if details else None
+    if first is None:
+        return []
+    segments = [(begin, first)]
+    for moment in sorted(_change_times(*details[:2], begin, finish)):
+        found = rates(model, at=moment, provider=provider)
+        if found is not None and found.price_key() != segments[-1][1].price_key():
+            segments.append((moment, found))
+    return segments
 
 
 def cost(model: str, *, input_tokens: int = 0, output_tokens: int = 0,
