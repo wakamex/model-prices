@@ -34,3 +34,5 @@ jobs:
           git push --force origin update-prices
           gh pr view update-prices >/dev/null 2>&1 || gh pr create --fill \
             --body "Rebuilt from models.dev. Check each changed model's valid_from against the provider's announcement and add a correction when models.dev recorded the change late."
+      - name: Compare with official pricing pages
+        run: uv --no-config run --locked llm-prices check

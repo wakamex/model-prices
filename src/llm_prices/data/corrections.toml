@@ -96,3 +96,12 @@ output = 1.98
 cache_read = 0.022
 source = "https://api-docs.deepseek.com/quick_start/pricing"
 note = "Unchanged since peak and off-peak pricing started 2026-08-16T16:00Z; models.dev still lists the earlier flat rate."
+
+[[correction]]
+provider = "google"
+model = "gemini-omni-flash-preview"
+valid_from = "2026-07-08T21:27:04Z"
+input = 1.5
+output = 9.0
+source = "https://ai.google.dev/gemini-api/docs/pricing"
+note = "Text output is $9.00; models.dev records the $17.50 video output price. Checked 2026-09-30; the page does not date the price."

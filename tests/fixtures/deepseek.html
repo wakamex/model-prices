@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<!-- Synthetic fixture: reproduces the pricing table layout of https://api-docs.deepseek.com/quick_start/pricing. Prices are those the page listed on 2026-09-30. -->
+<html lang="en"><head><title>Models &amp; Pricing</title></head><body>
+<table>
+<tr><td>MODEL</td><td>deepseek-flash<sup>(1)</sup></td><td>deepseek-v4-pro</td></tr>
+<tr><td>BASE URL (OpenAI Format)</td><td colspan="2">https://api.deepseek.com</td></tr>
+<tr><td rowspan="6">PRICING<sup>(2)</sup></td><td rowspan="2">1M INPUT TOKENS</td><td rowspan="2">(CACHE HIT)</td><td>OFF-PEAK</td><td>$0.003</td><td>$0.022</td></tr>
+<tr><td>PEAK</td><td>$0.006</td><td>$0.044</td></tr>
+<tr><td rowspan="2">1M INPUT TOKENS</td><td rowspan="2">(CACHE MISS)</td><td>OFF-PEAK</td><td>$0.15</td><td>$0.66</td></tr>
+<tr><td>PEAK</td><td>$0.3</td><td>$1.32</td></tr>
+<tr><td rowspan="2">1M OUTPUT TOKENS</td><td>OFF-PEAK</td><td>$0.6</td><td>$1.98</td></tr>
+<tr><td>PEAK</td><td>$1.2</td><td>$3.96</td></tr>
+<tr><td>Concurrency Limit<sup>(3)</sup></td><td>2500</td><td>500</td></tr>
+</table>
+<p>(1) A note about model names.</p>
+<p>(2) Off-peak rates are half of the peak rates. Peak hours are 01:00 - 04:00 and 06:00 - 10:00 UTC, Monday through Friday, excluding Chinese public holidays. All other hours are off-peak, including weekends and Chinese public holidays in full.</p>
+<p>(3) A note about concurrency limits.</p>
+</body></html>

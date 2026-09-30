@@ -43,6 +43,17 @@ Some providers charge more at busy hours. `schedules.toml` records each provider
 
 DeepSeek is the one provider with such pricing so far. Since 16:00 UTC on August 16, 2026, its peak hours have been 01:00-04:00 and 06:00-10:00 UTC at twice the off-peak rate. Weekends became off-peak between August 22 and 24, and Chinese public holidays were excluded from peak hours from mid-September. The schedule data cites the archived pricing pages that bound each change.
 
+## Official price checks
+
+`llm-prices check` fetches each supported provider's official pricing page, reads it with a parser written for that page's table layout, and compares every price with the rate llm-prices uses today. It covers Anthropic, DeepSeek, Google, OpenAI, and Z.ai. Each price is reported as:
+
+- `ok`: models.dev and the official page agree.
+- `corrected`: models.dev differs, but a correction in `corrections.toml` supplies the official price.
+- `mismatch`: llm-prices differs from the official page. The command exits with status 1.
+- `untracked`: the page lists a model that models.dev does not price.
+
+Page model names must match models.dev ids exactly, with no suffix removal, so a dated model is never compared with a different undated one. For DeepSeek, peak and off-peak prices are checked at the next hours the schedule classifies as each. Google's dated future prices are read for the check date. A page that yields no prices fails the check, because its format has changed.
+
 ## Model names
 
 `resolve()` maps the names that logs and agent harnesses use to models.dev ids. It lowercases the name and normalizes display names such as `Gemini 3.5 Flash (High)`. It reads a `provider/` prefix or the `provider` argument as a hint, and removes effort suffixes such as `-high` and date suffixes such as `-20251001` when the full name is unknown. A model is looked up at its own lab before other labs that also serve it. A lab model name resolves to the first-party API id that serves it, using models.dev's `base_model` links and preferring ids that are not deprecated: DeepSeek serves `deepseek-v4.1-flash` as `deepseek-flash`, so that name gets `deepseek-flash`'s price. `aliases.toml` holds the few names that need an explicit mapping. Unknown models return `None` rather than a guessed price.
@@ -53,7 +64,7 @@ DeepSeek is the one provider with such pricing so far. Since 16:00 UTC on August
 
 ## Updating prices
 
-A daily workflow clones models.dev, rebuilds `src/llm_prices/data/prices.json` with `llm-prices update`, and opens a pull request when a tracked price changed. Before merging, check each changed model's effective date against the provider's announcement and add a correction when models.dev recorded the change late.
+A daily workflow clones models.dev, rebuilds `src/llm_prices/data/prices.json` with `llm-prices update`, and opens a pull request when a tracked price changed. It then runs `llm-prices check` and fails when an official price disagrees; fix that with a correction, or with a models.dev pull request when models.dev is wrong. Before merging, check each changed model's effective date against the provider's announcement and add a correction when models.dev recorded the change late.
 
 To rebuild locally:
 

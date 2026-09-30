@@ -111,8 +111,12 @@ def _known(provider: str, model: str) -> bool:
             or model in data["links"].get(provider, {}))
 
 
-def resolve(model: str, provider: str | None = None) -> tuple[str, str] | None:
-    """Map a log or harness model name to a models.dev (provider, model) pair."""
+def resolve(model: str, provider: str | None = None,
+            strict: bool = False) -> tuple[str, str] | None:
+    """Map a log or harness model name to a models.dev (provider, model) pair.
+
+    strict=True skips removing effort and date suffixes, for names that must match exactly.
+    """
     aliases = _config("aliases.toml")
     name = re.sub(r"[\s_]+", "-", re.sub(r"[()]", "", model.strip().lower())).strip("-")
     if "/" in name:
@@ -121,7 +125,7 @@ def resolve(model: str, provider: str | None = None) -> tuple[str, str] | None:
     hint = aliases["providers"].get((provider or "").lower(), (provider or "").lower())
 
     candidates = [name]
-    for pattern in (_EFFORT_SUFFIX, _DATE_SUFFIX):
+    for pattern in () if strict else (_EFFORT_SUFFIX, _DATE_SUFFIX):
         candidates += [pattern.sub("", candidate) for candidate in candidates]
     order = ([hint] if hint in _prices()["providers"] else []) + [
         lab for lab in LAB_PROVIDERS if lab != hint
@@ -234,16 +238,17 @@ def _scaled(found: Rates, period: str, factor: float) -> Rates:
 
 
 def rates(model: str, at: datetime | str | None = None, provider: str | None = None,
-          mode: str | None = None) -> Rates | None:
+          mode: str | None = None, corrected: bool = True) -> Rates | None:
     """Return the rates in effect at `at` (default now), or None for an unknown model.
 
     Time-of-day pricing applies peak rates inside the provider's peak windows.
+    corrected=False returns models.dev's recorded rates without local corrections.
     """
     resolved = resolve(model, provider)
     if resolved is None:
         return None
     moment = _parse_time(at)
-    found = _correction(*resolved, moment) if mode is None else None
+    found = _correction(*resolved, moment) if mode is None and corrected else None
     found = found or _history_rates(*resolved, moment, mode)
     period = _period(resolved[0], moment) if found else None
     return _scaled(found, *period) if period else found
@@ -276,7 +281,21 @@ def main(argv: list[str] | None = None) -> int:
     update.add_argument("models_dev", type=Path)
     update.add_argument("--output", type=Path,
                         default=Path("src/llm_prices/data/prices.json"))
+    check = commands.add_parser(
+        "check", help="Compare effective prices with official provider pricing pages"
+    )
+    check.add_argument("providers", nargs="*", help="Providers to check (default: all)")
+    check.add_argument("--json", action="store_true")
     args = parser.parse_args(argv)
+
+    if args.command == "check":
+        from llm_prices.checks import SOURCES, as_json, report, run
+        unknown = sorted(set(args.providers) - set(SOURCES))
+        if unknown:
+            parser.error(f"no official pricing check for: {', '.join(unknown)}")
+        results = run(args.providers or None)
+        print(json.dumps(as_json(results), indent=2) if args.json else report(results))
+        return 1 if any(result.status == "mismatch" for result in results) else 0
 
     if args.command == "update":
         from llm_prices.backfill import build, write

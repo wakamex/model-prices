@@ -14,3 +14,6 @@ zcode = "zai"
 # "provider/model". Effort suffixes such as -high and date suffixes are already stripped.
 [models]
 "grok-4-6" = "xai/grok-4.6"
+"claude-haiku-3-5" = "anthropic/claude-3-5-haiku-latest"
+"claude-opus-4" = "anthropic/claude-opus-4-0"
+"claude-sonnet-4" = "anthropic/claude-sonnet-4-0"

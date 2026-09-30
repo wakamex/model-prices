@@ -209,3 +209,7 @@ def test_peak_multiplier_scales_every_rate():
     assert (peak.input, peak.cache_read, peak.output) == pytest.approx((1.32, 0.044, 3.96))
     assert rates("claude-opus-5-5", at="2026-09-30T02:00:00Z").period is None
 
+
+def test_strict_resolution_keeps_suffixes():
+    assert resolve("gpt-3.5-turbo-1106") == ("openai", "gpt-3.5-turbo")
+    assert resolve("gpt-3.5-turbo-1106", strict=True) is None
