@@ -238,26 +238,3 @@ def test_plan_prices():
     assert llm_prices.plan("openai", "pro_500").usd_per_month == 500
     assert llm_prices.plan_ids("google") == ["pro", "ultra_100", "ultra_200"]
     assert "ultra" in llm_prices.plan_ids("google", at="2026-05-01")
-
-
-@pytest.mark.parametrize(
-    ("at", "model"),
-    [
-        ("2026-03-01T00:00:00Z", "gemini-3-flash-preview"),  # before the first record
-        ("2026-07-21T17:27:10Z", "gemini-3.5-flash"),
-        ("2026-07-23T00:00:00Z", "gemini-3.6-flash"),
-        ("2026-08-12T00:00:00Z", "gemini-3.7-flash"),
-        ("2026-09-30T00:00:00Z", "gemini-3.8-flash"),
-    ],
-)
-def test_default_model_alias_follows_the_default_on_each_date(at, model):
-    found = rates("gemini-default", at=at)
-
-    assert (found.provider, found.model, found.inferred_from) == ("google", model, "gemini-default")
-
-
-def test_default_model_alias_keeps_the_request_date_under_current_prices():
-    found = rates("gemini-default", at="2026-07-23T00:00:00Z", prices_at="2026-09-30T00:00:00Z")
-
-    assert (found.model, found.inferred_from) == ("gemini-3.6-flash", "gemini-default")
-    assert rates("gemini-3.6-flash", at="2026-07-23T00:00:00Z").inferred_from is None

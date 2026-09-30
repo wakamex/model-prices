@@ -43,12 +43,6 @@ Some providers charge more at busy hours. `schedules.toml` records each provider
 
 DeepSeek is the one provider with such pricing so far. Since 16:00 UTC on August 16, 2026, its peak hours have been 01:00-04:00 and 06:00-10:00 UTC on weekdays other than Chinese public holidays, at twice the off-peak rate. The pricing page added the weekday and holiday exceptions in late August and mid-September without an announcement; llm-prices applies the current rule from the start of peak pricing. [DeepSeek pricing history](docs/deepseek-pricing-history.md) records the evidence for each date.
 
-## Default-model aliases
-
-Some tools report a request under a name for "the product's default model" rather than the model itself. Antigravity reports `gemini-default`, for example for Antigravity CLI runs before version 1.1.10 whose `--model` flag was ignored. `defaults.toml` maps such a name to the model that default named on each date, taken from a published record with a source for every change; for `gemini-default` that record is the `DEFAULT_MODEL` constant in the [Antigravity SDK](https://github.com/google-antigravity/antigravity-sdk-python/commits/main/google/antigravity/models.py). The alias resolves by when the request ran, also under `prices_at`.
-
-Prices found this way set `Rates.inferred_from` to the alias name, because the model is inferred, not recorded: the Antigravity CLI could also fall back to a model the user had saved, which the mapping cannot see. Reports should show such prices separately from recorded ones.
-
 ## Official price checks
 
 `llm-prices check` fetches each supported provider's official pricing page, reads it with a parser written for that page's table layout, and compares every price with the rate llm-prices uses today. It covers Anthropic, DeepSeek, Google, OpenAI, and Z.ai. Each price is reported as:
@@ -59,8 +53,6 @@ Prices found this way set `Rates.inferred_from` to the alias name, because the m
 - `untracked`: the page lists a model that models.dev does not price.
 
 Page model names must match models.dev ids exactly, with no suffix removal, so a dated model is never compared with a different undated one. For DeepSeek, peak and off-peak prices are checked at the next hours the schedule classifies as each, and the peak-hour rule on both the English and Chinese pricing pages must match the wording recorded in `schedules.toml`, so a change to the hours, multiplier, or exceptions fails the check. Google's dated future prices are read for the check date. A page that yields no prices fails the check, because its format has changed.
-
-The check also reads each default-model alias's live source, such as the Antigravity SDK's `DEFAULT_MODEL`, and reports a mismatch when the default has moved past the latest target in `defaults.toml`. Add the new target with the commit that changed it.
 
 ## Model names
 

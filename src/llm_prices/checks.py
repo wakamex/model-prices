@@ -13,7 +13,7 @@ import re
 from typing import Callable, Iterable
 import urllib.request
 
-from llm_prices import _config, _period, _schedule, default_target, rates, resolve
+from llm_prices import _period, _schedule, rates, resolve
 
 FIELDS = ("input", "cache_write", "cache_read", "output")
 
@@ -241,18 +241,6 @@ def compare_terms(provider: str, language: str, page: str, today: datetime) -> R
                   expected, None, "ok" if match.group(0) == expected else "mismatch")
 
 
-def compare_default(alias: dict, page: str, today: datetime) -> Result:
-    """Check that an alias's live default model is the latest target defaults.toml records."""
-    match = re.search(alias["check_pattern"], page, flags=re.MULTILINE)
-    if match is None:
-        raise ValueError(f"{alias['name']}: no default model found in {alias['check_url']}; "
-                         "the page format changed")
-    expected = default_target(alias["name"], today)[1]
-    return Result(alias["provider"], alias["name"], "default_model", None, None,
-                  match.group(1), expected, None,
-                  "ok" if match.group(1) == expected else "mismatch")
-
-
 SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "anthropic": ("https://platform.claude.com/docs/en/about-claude/pricing.md", parse_anthropic),
     "deepseek": ("https://api-docs.deepseek.com/quick_start/pricing", parse_deepseek),
@@ -328,13 +316,6 @@ def run(providers: Iterable[str] | None = None, today: datetime | None = None,
             else:
                 terms_page = pages[key] if pages and key in pages else fetch(terms_url)
             results.append(compare_terms(provider, language, terms_page, moment))
-    selected = set(providers or SOURCES)
-    for alias in _config("defaults.toml").get("alias", []):
-        if alias["provider"] not in selected or "check_url" not in alias:
-            continue
-        key = f"default:{alias['name']}"
-        page = pages[key] if pages and key in pages else fetch(alias["check_url"])
-        results.append(compare_default(alias, page, moment))
     return results
 
 
@@ -342,10 +323,6 @@ def report(results: list[Result]) -> str:
     lines = []
     for result in results:
         if result.status in {"ok", "untracked"}:
-            continue
-        if result.field == "default_model":
-            lines.append(f"{result.status:9} {result.model} default model: official "
-                         f"{result.official}, defaults.toml {result.effective}")
             continue
         if result.field.startswith("peak_terms:"):
             language = result.field.partition(":")[2]
