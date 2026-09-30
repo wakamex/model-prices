@@ -49,6 +49,8 @@ class Rates:
     tiers: tuple[Tier, ...] = ()
     # "peak" or "off_peak" for providers with time-of-day pricing, else None.
     period: str | None = None
+    # The default-model alias this model was inferred from, such as "gemini-default".
+    inferred_from: str | None = None
 
     def cost(self, input_tokens: int = 0, output_tokens: int = 0,
              cache_read_tokens: int = 0, cache_write_tokens: int = 0) -> float:
@@ -265,6 +267,24 @@ def _scaled(found: Rates, period: str, factor: float) -> Rates:
     )
 
 
+def default_target(model: str, at: datetime | str | None = None) -> tuple[str, str] | None:
+    """Return the (provider, model) a default-model alias named at `at`, if `model` is one.
+
+    Before the first recorded target, the first target applies.
+    """
+    name = model.strip().lower().split("/")[-1]
+    moment = _parse_time(at)
+    for alias in _config("defaults.toml").get("alias", []):
+        if alias["name"] != name:
+            continue
+        target = alias["targets"][0]
+        for candidate in alias["targets"]:
+            if _parse_time(candidate["valid_from"]) <= moment:
+                target = candidate
+        return alias["provider"], target["model"]
+    return None
+
+
 def rates(model: str, at: datetime | str | None = None, provider: str | None = None,
           mode: str | None = None, corrected: bool = True,
           prices_at: datetime | str | None = None) -> Rates | None:
@@ -275,6 +295,14 @@ def rates(model: str, at: datetime | str | None = None, provider: str | None = N
     whether the request fell in peak hours; it defaults to `at`.
     corrected=False returns models.dev's recorded rates without local corrections.
     """
+    # A default-model alias is resolved by when the request ran, even when pricing it
+    # from another date's price list.
+    inferred = default_target(model, at)
+    if inferred is not None:
+        found = rates(inferred[1], at=at, provider=inferred[0], mode=mode,
+                      corrected=corrected, prices_at=prices_at)
+        name = model.strip().lower().split("/")[-1]
+        return replace(found, inferred_from=name) if found else None
     resolved = resolve(model, provider)
     if resolved is None:
         return None

@@ -16,6 +16,7 @@ PAGES = {
     "google": (FIXTURES / "google.md").read_text(),
     "openai": (FIXTURES / "openai.md").read_text(),
     "zai": (FIXTURES / "zai.md").read_text(),
+    "default:gemini-default": (FIXTURES / "antigravity-sdk-models.py").read_text(),
 }
 
 
@@ -105,3 +106,17 @@ def test_peak_hour_terms_must_match_in_both_languages():
     terms = _terms(changed)
     assert (terms["peak_terms:en"].status, terms["peak_terms:zh"].status) == ("ok", "mismatch")
     assert "14:00 - 19:00" in checks.report(checks.run(["deepseek"], today=TODAY, pages=changed))
+
+
+def test_default_model_alias_must_match_the_live_default():
+    pages = {"google": PAGES["google"],
+             "default:gemini-default": PAGES["default:gemini-default"]}
+    result = next(r for r in checks.run(["google"], today=TODAY, pages=pages)
+                  if r.field == "default_model")
+    assert (result.status, result.official) == ("ok", "gemini-3.8-flash")
+
+    changed = {**pages, "default:gemini-default": pages["default:gemini-default"].replace(
+        'DEFAULT_MODEL = "gemini-3.8-flash"', 'DEFAULT_MODEL = "gemini-3.9-flash"')}
+    result = next(r for r in checks.run(["google"], today=TODAY, pages=changed)
+                  if r.field == "default_model")
+    assert (result.status, result.effective) == ("mismatch", "gemini-3.8-flash")
