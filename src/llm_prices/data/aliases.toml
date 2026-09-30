@@ -1,0 +1,16 @@
+# Provider hints from harness and log names, mapped to models.dev provider ids.
+[providers]
+agy = "google"
+claude = "anthropic"
+codex = "openai"
+dsh = "deepseek"
+gemini = "google"
+grok = "xai"
+kimi = "moonshotai"
+qwen = "alibaba"
+zcode = "zai"
+
+# Model names that do not resolve to a models.dev id by normalization, mapped to
+# "provider/model". Effort suffixes such as -high and date suffixes are already stripped.
+[models]
+"grok-4-6" = "xai/grok-4.6"

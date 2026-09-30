@@ -1,0 +1,41 @@
+# Rates that override models.dev history for a period, because models.dev recorded a
+# price change late or recorded a wrong price. valid_until is exclusive; each entry
+# needs an authoritative source. Remove an entry only if models.dev history is fixed.
+
+[[correction]]
+provider = "openai"
+model = "gpt-5.6-sol"
+valid_from = "2026-08-22T00:00:00Z"
+valid_until = "2026-08-25T04:37:24Z"
+input = 4.0
+output = 20.0
+cache_read = 0.4
+cache_write = 5.0
+tiers = [{ above = 272000, input = 8.0, output = 30.0, cache_read = 0.8, cache_write = 10.0 }]
+source = "https://github.com/sst/models.dev/pull/5375"
+note = "OpenAI's rate changed on 2026-08-22; models.dev updated on 2026-08-25."
+
+[[correction]]
+provider = "openai"
+model = "gpt-5.6"
+valid_from = "2026-08-22T00:00:00Z"
+valid_until = "2026-08-25T04:37:24Z"
+input = 4.0
+output = 20.0
+cache_read = 0.4
+cache_write = 5.0
+tiers = [{ above = 272000, input = 8.0, output = 30.0, cache_read = 0.8, cache_write = 10.0 }]
+source = "https://github.com/sst/models.dev/pull/5375"
+note = "Alias of gpt-5.6-sol, corrected in the same models.dev change."
+
+[[correction]]
+provider = "zai"
+model = "glm-5.3-flash"
+valid_from = "2026-09-02T18:53:25Z"
+valid_until = "2026-09-19T05:17:06Z"
+input = 0.15
+output = 0.50
+cache_read = 0.03
+cache_write = 0.0
+source = "https://docs.z.ai/guides/overview/pricing"
+note = "models.dev listed half the official price until 2026-09-19; the official price was verified on 2026-09-10."
