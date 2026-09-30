@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 import argparse
-from dataclasses import asdict, dataclass
-from datetime import datetime, timezone
+from dataclasses import asdict, dataclass, replace
+from datetime import datetime, timedelta, timezone
 from functools import cache
 from importlib.metadata import version
 from importlib.resources import files
@@ -46,6 +46,8 @@ class Rates:
     cache_read: float | None = None
     cache_write: float | None = None
     tiers: tuple[Tier, ...] = ()
+    # "peak" or "off_peak" for providers with time-of-day pricing, else None.
+    period: str | None = None
 
     def cost(self, input_tokens: int = 0, output_tokens: int = 0,
              cache_read_tokens: int = 0, cache_write_tokens: int = 0) -> float:
@@ -191,18 +193,60 @@ def _history_rates(provider: str, model: str, at: datetime, mode: str | None) ->
     )
 
 
+def _in_window(moment: datetime, window: list[str]) -> bool:
+    start, end = (datetime.strptime(value, "%H:%M").time() for value in window)
+    return start <= moment.time() < end
+
+
+def _period(provider: str, moment: datetime) -> tuple[str, float] | None:
+    """Return the time-of-day period and its multiplier on recorded rates, if any."""
+    config = _config("schedules.toml")
+    for schedule in config.get("schedule", []):
+        if schedule["provider"] != provider:
+            continue
+        start = _parse_time(schedule["valid_from"])
+        end = _parse_time(schedule["valid_until"]) if "valid_until" in schedule else None
+        if not (start <= moment and (end is None or moment < end)):
+            continue
+        peak = any(_in_window(moment, window) for window in schedule["peak_hours_utc"])
+        if schedule.get("weekdays_only") and moment.weekday() >= 5:
+            peak = False
+        calendar = config.get("holidays", {}).get(schedule.get("holidays", ""))
+        if calendar:
+            local = moment + timedelta(hours=calendar["utc_offset_hours"])
+            peak = peak and local.date().isoformat() not in calendar["dates"]
+        return ("peak", schedule["peak_multiplier"]) if peak else ("off_peak", 1.0)
+    return None
+
+
+def _scaled(found: Rates, period: str, factor: float) -> Rates:
+    def scale(value: float | None) -> float | None:
+        return None if value is None else value * factor
+    return replace(
+        found, period=period, input=found.input * factor, output=found.output * factor,
+        cache_read=scale(found.cache_read), cache_write=scale(found.cache_write),
+        tiers=tuple(
+            replace(tier, input=scale(tier.input), output=scale(tier.output),
+                    cache_read=scale(tier.cache_read), cache_write=scale(tier.cache_write))
+            for tier in found.tiers
+        ),
+    )
+
+
 def rates(model: str, at: datetime | str | None = None, provider: str | None = None,
           mode: str | None = None) -> Rates | None:
-    """Return the rates in effect at `at` (default now), or None for an unknown model."""
+    """Return the rates in effect at `at` (default now), or None for an unknown model.
+
+    Time-of-day pricing applies peak rates inside the provider's peak windows.
+    """
     resolved = resolve(model, provider)
     if resolved is None:
         return None
     moment = _parse_time(at)
-    if mode is None:
-        corrected = _correction(*resolved, moment)
-        if corrected is not None:
-            return corrected
-    return _history_rates(*resolved, moment, mode)
+    found = _correction(*resolved, moment) if mode is None else None
+    found = found or _history_rates(*resolved, moment, mode)
+    period = _period(resolved[0], moment) if found else None
+    return _scaled(found, *period) if period else found
 
 
 def cost(model: str, *, input_tokens: int = 0, output_tokens: int = 0,

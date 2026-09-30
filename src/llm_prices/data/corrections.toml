@@ -39,3 +39,60 @@ cache_read = 0.03
 cache_write = 0.0
 source = "https://docs.z.ai/guides/overview/pricing"
 note = "models.dev listed half the official price until 2026-09-19; the official price was verified on 2026-09-10."
+
+# DeepSeek rates below are off-peak rates; schedules.toml doubles them at peak.
+# Sources are DeepSeek's pricing page and its Internet Archive copies.
+
+[[correction]]
+provider = "deepseek"
+model = "deepseek-v4-flash"
+valid_from = "2026-08-16T16:00:00Z"
+valid_until = "2026-09-10T04:00:00Z"
+input = 0.22
+output = 0.66
+cache_read = 0.007
+source = "https://web.archive.org/web/20260816171438/https://api-docs.deepseek.com/quick_start/pricing/"
+note = "Peak and off-peak pricing started 2026-08-16T16:00Z; models.dev kept the earlier flat rate."
+
+[[correction]]
+provider = "deepseek"
+model = "deepseek-v4-flash-vision-exp"
+valid_from = "2026-08-21T00:00:00Z"
+valid_until = "2026-09-10T04:00:00Z"
+input = 0.22
+output = 0.66
+cache_read = 0.007
+source = "https://web.archive.org/web/20260821151358/https://api-docs.deepseek.com/quick_start/pricing/"
+note = "Released 2026-08-21 at V4 Flash rates; models.dev listed the earlier flat rate."
+
+[[correction]]
+provider = "deepseek"
+model = "deepseek-v4-flash"
+valid_from = "2026-09-10T04:00:00Z"
+valid_until = "2026-09-10T16:10:24Z"
+input = 0.15
+output = 0.60
+cache_read = 0.003
+source = "https://api-docs.deepseek.com/news/news260910/"
+note = "V4.1 Flash pricing took effect 2026-09-10T04:00Z; models.dev updated at 16:10Z."
+
+[[correction]]
+provider = "deepseek"
+model = "deepseek-v4-flash-vision-exp"
+valid_from = "2026-09-10T04:00:00Z"
+valid_until = "2026-09-10T16:10:24Z"
+input = 0.15
+output = 0.60
+cache_read = 0.003
+source = "https://api-docs.deepseek.com/news/news260910/"
+note = "Routed to V4.1 Flash at its price from 2026-09-10T04:00Z; models.dev updated at 16:10Z."
+
+[[correction]]
+provider = "deepseek"
+model = "deepseek-v4-pro"
+valid_from = "2026-08-16T16:00:00Z"
+input = 0.66
+output = 1.98
+cache_read = 0.022
+source = "https://api-docs.deepseek.com/quick_start/pricing"
+note = "Unchanged since peak and off-peak pricing started 2026-08-16T16:00Z; models.dev still lists the earlier flat rate."

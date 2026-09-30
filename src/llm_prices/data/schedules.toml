@@ -1,0 +1,51 @@
+# Time-of-day pricing. The recorded rate (models.dev history plus corrections) is the
+# off-peak rate; inside a peak window every rate, including long-context tiers, is
+# multiplied by peak_multiplier. Peak windows are UTC. A date listed under a holiday
+# calendar is off-peak all day, judged by that calendar's local date.
+
+[[schedule]]
+provider = "deepseek"
+valid_from = "2026-08-16T16:00:00Z"
+valid_until = "2026-08-22T14:16:20Z"
+peak_multiplier = 2.0
+peak_hours_utc = [["01:00", "04:00"], ["06:00", "10:00"]]
+weekdays_only = false
+source = "https://api-docs.deepseek.com/news/news260813/"
+note = "Pricing page archived 2026-08-16T17:14Z: peak hours every day. Still worded that way at 2026-08-22T14:16Z."
+
+[[schedule]]
+provider = "deepseek"
+valid_from = "2026-08-22T14:16:20Z"
+valid_until = "2026-09-17T05:14:18Z"
+peak_multiplier = 2.0
+peak_hours_utc = [["01:00", "04:00"], ["06:00", "10:00"]]
+weekdays_only = true
+source = "https://web.archive.org/web/20260824171826/https://api-docs.deepseek.com/quick_start/pricing/"
+note = "Monday through Friday first appears between the 2026-08-22T14:16Z and 2026-08-24T17:18Z archives; Sunday 2026-08-23 is treated as off-peak."
+
+[[schedule]]
+provider = "deepseek"
+valid_from = "2026-09-17T05:14:18Z"
+peak_multiplier = 2.0
+peak_hours_utc = [["01:00", "04:00"], ["06:00", "10:00"]]
+weekdays_only = true
+holidays = "cn"
+source = "https://api-docs.deepseek.com/quick_start/pricing"
+note = "The Chinese public holiday exclusion first appears between the 2026-09-17T05:14Z and 2026-09-22T21:24Z archives; no holiday falls in that gap."
+
+# Mainland China public holidays (days off), local dates in UTC+8. Weekend make-up
+# workdays are not listed: DeepSeek treats all weekends as off-peak.
+[holidays.cn]
+utc_offset_hours = 8
+source = "https://www.gov.cn/zhengce/content/202511/content_7047090.htm"
+dates = [
+  "2026-01-01", "2026-01-02", "2026-01-03",
+  "2026-02-15", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19",
+  "2026-02-20", "2026-02-21", "2026-02-22", "2026-02-23",
+  "2026-04-04", "2026-04-05", "2026-04-06",
+  "2026-05-01", "2026-05-02", "2026-05-03", "2026-05-04", "2026-05-05",
+  "2026-06-19", "2026-06-20", "2026-06-21",
+  "2026-09-25", "2026-09-26", "2026-09-27",
+  "2026-10-01", "2026-10-02", "2026-10-03", "2026-10-04", "2026-10-05",
+  "2026-10-06", "2026-10-07",
+]

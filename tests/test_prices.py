@@ -179,3 +179,33 @@ def test_module_entrypoint():
     )
     assert result.returncode == 0
     assert result.stdout.strip() == "0.1.0"
+
+
+@pytest.mark.parametrize(
+    ("at", "period", "input_price"),
+    [
+        ("2026-08-10T02:00:00Z", None, 0.14),        # flat pricing before 2026-08-16T16:00Z
+        ("2026-08-17T02:00:00Z", "peak", 0.44),      # Monday peak hour
+        ("2026-08-17T05:00:00Z", "off_peak", 0.22),  # between the two peak windows
+        ("2026-08-22T02:00:00Z", "peak", 0.44),      # Saturday, before weekends became off-peak
+        ("2026-08-23T02:00:00Z", "off_peak", 0.22),  # Sunday after the weekday-only change
+        ("2026-09-10T08:00:00Z", "peak", 0.30),      # V4.1 Flash price before models.dev caught up
+        ("2026-09-25T02:00:00Z", "off_peak", 0.15),  # Mid-Autumn Festival holiday
+        ("2026-09-28T02:00:00Z", "peak", 0.30),
+    ],
+)
+def test_deepseek_time_of_day_prices(at, period, input_price):
+    found = rates("deepseek-v4-flash", at=at)
+
+    assert found.period == period
+    assert found.input == pytest.approx(input_price)
+
+
+def test_peak_multiplier_scales_every_rate():
+    off_peak = rates("deepseek-v4-pro", at="2026-09-30T13:00:00Z")
+    peak = rates("deepseek-v4-pro", at="2026-09-30T02:00:00Z")
+
+    assert (off_peak.input, off_peak.cache_read, off_peak.output) == (0.66, 0.022, 1.98)
+    assert (peak.input, peak.cache_read, peak.output) == pytest.approx((1.32, 0.044, 3.96))
+    assert rates("claude-opus-5-5", at="2026-09-30T02:00:00Z").period is None
+
