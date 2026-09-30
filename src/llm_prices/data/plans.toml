@@ -1,0 +1,69 @@
+# Subscription plan prices in USD per month, as billed monthly. provider is the lab;
+# id is the plan name its usage tools report. An entry without valid_from applies from
+# before tracking began; a later entry for the same plan replaces it from its valid_from.
+# Plans whose reported id covers several prices are left out, so they stay unpriced.
+
+[[plan]]
+provider = "anthropic"
+id = "pro"
+name = "Claude Pro"
+usd_per_month = 20
+source = "https://claude.com/pricing"
+checked = "2026-09-30"
+
+[[plan]]
+provider = "anthropic"
+id = "max_5x"
+name = "Claude Max 5x"
+usd_per_month = 100
+source = "https://support.claude.com/en/articles/11049741-what-is-the-max-plan"
+checked = "2026-09-30"
+
+[[plan]]
+provider = "anthropic"
+id = "max_20x"
+name = "Claude Max 20x"
+usd_per_month = 200
+source = "https://support.claude.com/en/articles/11049741-what-is-the-max-plan"
+checked = "2026-09-30"
+
+[[plan]]
+provider = "openai"
+id = "go"
+name = "ChatGPT Go"
+usd_per_month = 8
+source = "https://developers.openai.com/codex/pricing"
+checked = "2026-09-30"
+
+[[plan]]
+provider = "openai"
+id = "plus"
+name = "ChatGPT Plus"
+usd_per_month = 20
+source = "https://developers.openai.com/codex/pricing"
+checked = "2026-09-30"
+
+[[plan]]
+provider = "openai"
+id = "pro"
+name = "ChatGPT Pro"
+usd_per_month = 200
+source = "https://developers.openai.com/codex/pricing"
+checked = "2026-09-30"
+note = "Pro now comes at $100, $200, or $500 per month, and Codex reports all three as pro. $200 was the only Pro price before the tiers; pass a different price for the other tiers."
+
+[[plan]]
+provider = "google"
+id = "pro"
+name = "Google AI Pro"
+usd_per_month = 19.99
+source = "https://gemini.google/subscriptions/"
+checked = "2026-09-30"
+
+[[plan]]
+provider = "zai"
+id = "lite"
+name = "GLM Coding Plan Lite"
+usd_per_month = 18
+source = "https://docs.z.ai/devpack/overview"
+checked = "2026-09-30"

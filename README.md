@@ -58,6 +58,14 @@ Page model names must match models.dev ids exactly, with no suffix removal, so a
 
 `resolve()` maps the names that logs and agent harnesses use to models.dev ids. It lowercases the name and normalizes display names such as `Gemini 3.5 Flash (High)`. It reads a `provider/` prefix or the `provider` argument as a hint, and removes effort suffixes such as `-high` and date suffixes such as `-20251001` when the full name is unknown. A model is looked up at its own lab before other labs that also serve it. A lab model name resolves to the first-party API id that serves it, using models.dev's `base_model` links and preferring ids that are not deprecated: DeepSeek serves `deepseek-v4.1-flash` as `deepseek-flash`, so that name gets `deepseek-flash`'s price. `aliases.toml` holds the few names that need an explicit mapping. Unknown models return `None` rather than a guessed price.
 
+## Current prices for past requests
+
+`rates()` and `cost()` take `prices_at` to price a request from a different date's price list while `at`, the time the request ran, still decides peak or off-peak. Pricing every past request with `prices_at` set to today compares usage across weeks without price changes appearing as usage changes.
+
+## Subscription plans
+
+`plan(provider, plan_id, at=None)` returns a subscription plan's monthly price from `plans.toml`, keyed by the plan name each lab's usage tools report, such as `max_20x` for Claude or `lite` for the GLM Coding Plan. A reported name that covers several prices, such as Google AI Ultra's two tiers, has no entry. ChatGPT Pro is listed at $200 even though Codex reports its $100 and $500 tiers under the same name.
+
 ## Recording what was used
 
 `pricing_basis()` returns an identifier such as `llm-prices-0.1.0+models.dev@e2bf2e470a1b`, naming the package version and the models.dev commit its data came from. Store it next to computed costs.

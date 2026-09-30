@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+from bisect import bisect_right
 from dataclasses import asdict, dataclass, replace
 from datetime import datetime, timedelta, timezone
 from functools import cache
@@ -111,6 +112,7 @@ def _known(provider: str, model: str) -> bool:
             or model in data["links"].get(provider, {}))
 
 
+@cache
 def resolve(model: str, provider: str | None = None,
             strict: bool = False) -> tuple[str, str] | None:
     """Map a log or harness model name to a models.dev (provider, model) pair.
@@ -151,12 +153,24 @@ def _tiers(raw: list[dict[str, Any]] | None) -> tuple[Tier, ...]:
     return tuple(Tier(**tier) for tier in raw or ())
 
 
+@cache
+def _corrections(provider: str, model: str) -> tuple[tuple[datetime, datetime | None, dict], ...]:
+    return tuple(
+        (_parse_time(item["valid_from"]),
+         _parse_time(item["valid_until"]) if "valid_until" in item else None, item)
+        for item in _config("corrections.toml").get("correction", [])
+        if item["provider"] == provider and item["model"] == model
+    )
+
+
+@cache
+def _entry_times(provider: str, model: str) -> tuple[datetime, ...]:
+    entries = _prices()["providers"].get(provider, {}).get(model, [])
+    return tuple(_parse_time(entry["valid_from"]) for entry in entries)
+
+
 def _correction(provider: str, model: str, at: datetime) -> Rates | None:
-    for item in _config("corrections.toml").get("correction", []):
-        if item["provider"] != provider or item["model"] != model:
-            continue
-        start = _parse_time(item["valid_from"])
-        end = _parse_time(item["valid_until"]) if "valid_until" in item else None
+    for start, end, item in _corrections(provider, model):
         if start <= at and (end is None or at < end):
             return Rates(
                 provider=provider, model=model, valid_from=item["valid_from"],
@@ -170,16 +184,14 @@ def _correction(provider: str, model: str, at: datetime) -> Rates | None:
 def _history_rates(provider: str, model: str, at: datetime, mode: str | None) -> Rates | None:
     data = _prices()
     entries = data["providers"].get(provider, {}).get(model, [])
+    times = _entry_times(provider, model)
     link = data["links"].get(provider, {}).get(model)
-    if link and (not entries or at < _parse_time(entries[0]["valid_from"])):
-        return rates(link, at=at, provider=provider, mode=mode)
+    if link and (not entries or at < times[0]):
+        return _history_rates(provider, link, at, mode)
     if not entries:
         return None
     # Usage before a model's first recorded price uses that first price.
-    entry = entries[0]
-    for candidate in entries:
-        if _parse_time(candidate["valid_from"]) <= at:
-            entry = candidate
+    entry = entries[max(bisect_right(times, at) - 1, 0)]
     values = dict(entry["rates"])
     tiers = values.pop("tiers", None)
     modes = values.pop("modes", {})
@@ -202,21 +214,31 @@ def _in_window(moment: datetime, window: list[str]) -> bool:
     return start <= moment.time() < end
 
 
+@cache
+def _schedules(provider: str) -> tuple[tuple[datetime, datetime | None, dict], ...]:
+    return tuple(
+        (_parse_time(item["valid_from"]),
+         _parse_time(item["valid_until"]) if "valid_until" in item else None, item)
+        for item in _config("schedules.toml").get("schedule", [])
+        if item["provider"] == provider
+    )
+
+
 def _schedule(provider: str, moment: datetime) -> dict[str, Any] | None:
     """Return the provider's time-of-day pricing schedule in effect at `moment`."""
-    for schedule in _config("schedules.toml").get("schedule", []):
-        if schedule["provider"] != provider:
-            continue
-        start = _parse_time(schedule["valid_from"])
-        end = _parse_time(schedule["valid_until"]) if "valid_until" in schedule else None
+    for start, end, schedule in _schedules(provider):
         if start <= moment and (end is None or moment < end):
             return schedule
     return None
 
 
-def _period(provider: str, moment: datetime) -> tuple[str, float] | None:
-    """Return the time-of-day period and its multiplier on recorded rates, if any."""
-    schedule = _schedule(provider, moment)
+def _period(provider: str, moment: datetime,
+            schedule_at: datetime | None = None) -> tuple[str, float] | None:
+    """Return the time-of-day period and its multiplier on recorded rates, if any.
+
+    schedule_at selects which version of the schedule applies; it defaults to `moment`.
+    """
+    schedule = _schedule(provider, schedule_at or moment)
     if schedule is None:
         return None
     peak = any(_in_window(moment, window) for window in schedule["peak_hours_utc"])
@@ -244,31 +266,61 @@ def _scaled(found: Rates, period: str, factor: float) -> Rates:
 
 
 def rates(model: str, at: datetime | str | None = None, provider: str | None = None,
-          mode: str | None = None, corrected: bool = True) -> Rates | None:
-    """Return the rates in effect at `at` (default now), or None for an unknown model.
+          mode: str | None = None, corrected: bool = True,
+          prices_at: datetime | str | None = None) -> Rates | None:
+    """Return the rates for a request made at `at` (default now), or None for an unknown model.
 
     Time-of-day pricing applies peak rates inside the provider's peak windows.
+    prices_at selects a different price list, such as today's, while `at` still decides
+    whether the request fell in peak hours; it defaults to `at`.
     corrected=False returns models.dev's recorded rates without local corrections.
     """
     resolved = resolve(model, provider)
     if resolved is None:
         return None
     moment = _parse_time(at)
-    found = _correction(*resolved, moment) if mode is None and corrected else None
-    found = found or _history_rates(*resolved, moment, mode)
-    period = _period(resolved[0], moment) if found else None
+    listed = _parse_time(prices_at) if prices_at is not None else moment
+    found = _correction(*resolved, listed) if mode is None and corrected else None
+    found = found or _history_rates(*resolved, listed, mode)
+    if found is None:
+        return None
+    period = _period(resolved[0], moment, schedule_at=listed)
     return _scaled(found, *period) if period else found
 
 
 def cost(model: str, *, input_tokens: int = 0, output_tokens: int = 0,
          cache_read_tokens: int = 0, cache_write_tokens: int = 0,
          at: datetime | str | None = None, provider: str | None = None,
-         mode: str | None = None) -> float | None:
-    """Price one request at the rates in effect at `at`; input_tokens excludes cache."""
-    found = rates(model, at=at, provider=provider, mode=mode)
+         mode: str | None = None, prices_at: datetime | str | None = None) -> float | None:
+    """Price one request made at `at`; input_tokens excludes cache reads and writes."""
+    found = rates(model, at=at, provider=provider, mode=mode, prices_at=prices_at)
     if found is None:
         return None
     return found.cost(input_tokens, output_tokens, cache_read_tokens, cache_write_tokens)
+
+
+@dataclass(frozen=True)
+class Plan:
+    provider: str
+    id: str
+    name: str
+    usd_per_month: float
+    source: str
+
+
+def plan(provider: str, plan_id: str, at: datetime | str | None = None) -> Plan | None:
+    """Return a subscription plan's monthly price in effect at `at` (default now)."""
+    moment = _parse_time(at)
+    found = None
+    for item in _config("plans.toml").get("plan", []):
+        if item["provider"] != provider or item["id"] != plan_id:
+            continue
+        if "valid_from" in item and _parse_time(item["valid_from"]) > moment:
+            continue
+        found = item
+    if found is None:
+        return None
+    return Plan(provider, plan_id, found["name"], found["usd_per_month"], found["source"])
 
 
 def main(argv: list[str] | None = None) -> int:

@@ -212,3 +212,21 @@ def test_peak_multiplier_scales_every_rate():
 def test_strict_resolution_keeps_suffixes():
     assert resolve("gpt-3.5-turbo-1106") == ("openai", "gpt-3.5-turbo")
     assert resolve("gpt-3.5-turbo-1106", strict=True) is None
+
+
+def test_current_price_list_keeps_the_request_time_of_day():
+    # A V4 Flash peak hour in August, priced from the September price list.
+    then = rates("deepseek-v4-flash", at="2026-08-17T02:00:00Z")
+    now = rates("deepseek-v4-flash", at="2026-08-17T02:00:00Z", prices_at="2026-09-30T00:00:00Z")
+    off_peak_now = rates("deepseek-v4-flash", at="2026-08-17T05:00:00Z",
+                         prices_at="2026-09-30T00:00:00Z")
+
+    assert (then.input, then.period) == (0.44, "peak")
+    assert (now.input, now.period) == (pytest.approx(0.30), "peak")
+    assert (off_peak_now.input, off_peak_now.period) == (0.15, "off_peak")
+
+
+def test_plan_prices():
+    assert llm_prices.plan("anthropic", "max_20x").usd_per_month == 200
+    assert llm_prices.plan("zai", "lite").usd_per_month == 18
+    assert llm_prices.plan("google", "ultra") is None
