@@ -87,3 +87,15 @@ def test_check_command_exit_status(monkeypatch, capsys):
 
     monkeypatch.setattr(checks, "fetch", lambda url: PAGES["zai"].replace("\\$1.4", "\\$9.9"))
     assert main(["check", "zai"]) == 1
+
+
+def test_peak_hour_terms_must_match_the_recorded_schedule():
+    results = checks.run(["deepseek"], today=TODAY, pages={"deepseek": PAGES["deepseek"]})
+    terms = next(result for result in results if result.field == "peak_terms")
+    assert terms.status == "ok"
+
+    changed = PAGES["deepseek"].replace("06:00 - 10:00", "06:00 - 11:00")
+    results = checks.run(["deepseek"], today=TODAY, pages={"deepseek": changed})
+    terms = next(result for result in results if result.field == "peak_terms")
+    assert terms.status == "mismatch"
+    assert "06:00 - 11:00" in checks.report(results)

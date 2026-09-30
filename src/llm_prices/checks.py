@@ -13,7 +13,7 @@ import re
 from typing import Callable, Iterable
 import urllib.request
 
-from llm_prices import _period, rates, resolve
+from llm_prices import _period, _schedule, rates, resolve
 
 FIELDS = ("input", "cache_write", "cache_read", "output")
 
@@ -37,8 +37,8 @@ class Result:
     field: str
     above: int | None
     at: str | None
-    official: float
-    effective: float | None
+    official: float | str
+    effective: float | str | None
     models_dev: float | None
     status: str
 
@@ -217,6 +217,27 @@ def parse_deepseek(page: str, today: datetime) -> list[Observed]:
     return found
 
 
+def deepseek_terms(page: str) -> str | None:
+    """The pricing page's sentences defining peak and off-peak hours."""
+    match = re.search(r"Peak hours are .*? in full\.", _html_text(page))
+    return match.group(0) if match else None
+
+
+# Pages that state time-of-day pricing terms, compared verbatim with schedules.toml.
+TERMS: dict[str, Callable[[str], str | None]] = {"deepseek": deepseek_terms}
+
+
+def compare_terms(provider: str, page: str, today: datetime) -> Result:
+    """Check that the page states the same peak-hour terms that schedules.toml records."""
+    recorded = _schedule(provider, today)
+    official = TERMS[provider](page)
+    if official is None:
+        raise ValueError(f"{provider}: no peak-hour terms found; the page format changed")
+    expected = recorded.get("terms") if recorded else None
+    return Result(provider, provider, "peak_terms", None, None, official, expected, None,
+                  "ok" if official == expected else "mismatch")
+
+
 SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "anthropic": ("https://platform.claude.com/docs/en/about-claude/pricing.md", parse_anthropic),
     "deepseek": ("https://api-docs.deepseek.com/quick_start/pricing", parse_deepseek),
@@ -285,6 +306,8 @@ def run(providers: Iterable[str] | None = None, today: datetime | None = None,
         if not observed:
             raise ValueError(f"{provider}: no prices parsed from {url}; the page format changed")
         results.extend(compare(observed, moment))
+        if provider in TERMS:
+            results.append(compare_terms(provider, page, moment))
     return results
 
 
@@ -292,6 +315,10 @@ def report(results: list[Result]) -> str:
     lines = []
     for result in results:
         if result.status in {"ok", "untracked"}:
+            continue
+        if result.field == "peak_terms":
+            lines.append(f"{result.status:9} {result.provider} peak-hour terms: official "
+                         f"{result.official!r}, schedules.toml {result.effective!r}")
             continue
         tier = f" above {result.above:,}" if result.above else ""
         when = f" at {result.at}" if result.at else ""

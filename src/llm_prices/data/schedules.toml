@@ -6,32 +6,19 @@
 [[schedule]]
 provider = "deepseek"
 valid_from = "2026-08-16T16:00:00Z"
-valid_until = "2026-08-22T14:16:20Z"
-peak_multiplier = 2.0
-peak_hours_utc = [["01:00", "04:00"], ["06:00", "10:00"]]
-weekdays_only = false
-source = "https://api-docs.deepseek.com/news/news260813/"
-note = "Pricing page archived 2026-08-16T17:14Z: peak hours every day. Still worded that way at 2026-08-22T14:16Z."
-
-[[schedule]]
-provider = "deepseek"
-valid_from = "2026-08-22T14:16:20Z"
-valid_until = "2026-09-17T05:14:18Z"
-peak_multiplier = 2.0
-peak_hours_utc = [["01:00", "04:00"], ["06:00", "10:00"]]
-weekdays_only = true
-source = "https://web.archive.org/web/20260824171826/https://api-docs.deepseek.com/quick_start/pricing/"
-note = "Monday through Friday first appears between the 2026-08-22T14:16Z and 2026-08-24T17:18Z archives; Sunday 2026-08-23 is treated as off-peak."
-
-[[schedule]]
-provider = "deepseek"
-valid_from = "2026-09-17T05:14:18Z"
 peak_multiplier = 2.0
 peak_hours_utc = [["01:00", "04:00"], ["06:00", "10:00"]]
 weekdays_only = true
 holidays = "cn"
-source = "https://api-docs.deepseek.com/quick_start/pricing"
-note = "The Chinese public holiday exclusion first appears between the 2026-09-17T05:14Z and 2026-09-22T21:24Z archives; no holiday falls in that gap."
+source = "https://api-docs.deepseek.com/zh-cn/updates"
+terms = "Peak hours are 01:00 - 04:00 and 06:00 - 10:00 UTC, Monday through Friday, excluding Chinese public holidays. All other hours are off-peak, including weekends and Chinese public holidays in full."
+note = """
+Announced 2026-07-31, effective 2026-08-17 00:00 Beijing time, which is 2026-08-16T16:00Z.
+The current rule is applied from that start. The pricing page first said peak hours applied
+every day; "Monday through Friday" appeared between the 2026-08-22T13:06Z and
+2026-08-23T18:11Z archives, and the holiday exclusion between 2026-09-17T23:31Z and
+2026-09-19T10:10Z. No announcement introduced either change. terms is the English pricing
+page's current wording, which llm-prices check compares with the live page."""
 
 # Mainland China public holidays (days off), local dates in UTC+8. Weekend make-up
 # workdays are not listed: DeepSeek treats all weekends as off-peak.

@@ -202,25 +202,31 @@ def _in_window(moment: datetime, window: list[str]) -> bool:
     return start <= moment.time() < end
 
 
-def _period(provider: str, moment: datetime) -> tuple[str, float] | None:
-    """Return the time-of-day period and its multiplier on recorded rates, if any."""
-    config = _config("schedules.toml")
-    for schedule in config.get("schedule", []):
+def _schedule(provider: str, moment: datetime) -> dict[str, Any] | None:
+    """Return the provider's time-of-day pricing schedule in effect at `moment`."""
+    for schedule in _config("schedules.toml").get("schedule", []):
         if schedule["provider"] != provider:
             continue
         start = _parse_time(schedule["valid_from"])
         end = _parse_time(schedule["valid_until"]) if "valid_until" in schedule else None
-        if not (start <= moment and (end is None or moment < end)):
-            continue
-        peak = any(_in_window(moment, window) for window in schedule["peak_hours_utc"])
-        if schedule.get("weekdays_only") and moment.weekday() >= 5:
-            peak = False
-        calendar = config.get("holidays", {}).get(schedule.get("holidays", ""))
-        if calendar:
-            local = moment + timedelta(hours=calendar["utc_offset_hours"])
-            peak = peak and local.date().isoformat() not in calendar["dates"]
-        return ("peak", schedule["peak_multiplier"]) if peak else ("off_peak", 1.0)
+        if start <= moment and (end is None or moment < end):
+            return schedule
     return None
+
+
+def _period(provider: str, moment: datetime) -> tuple[str, float] | None:
+    """Return the time-of-day period and its multiplier on recorded rates, if any."""
+    schedule = _schedule(provider, moment)
+    if schedule is None:
+        return None
+    peak = any(_in_window(moment, window) for window in schedule["peak_hours_utc"])
+    if schedule.get("weekdays_only") and moment.weekday() >= 5:
+        peak = False
+    calendar = _config("schedules.toml").get("holidays", {}).get(schedule.get("holidays", ""))
+    if calendar:
+        local = moment + timedelta(hours=calendar["utc_offset_hours"])
+        peak = peak and local.date().isoformat() not in calendar["dates"]
+    return ("peak", schedule["peak_multiplier"]) if peak else ("off_peak", 1.0)
 
 
 def _scaled(found: Rates, period: str, factor: float) -> Rates:

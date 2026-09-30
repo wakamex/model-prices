@@ -187,8 +187,7 @@ def test_module_entrypoint():
         ("2026-08-10T02:00:00Z", None, 0.14),        # flat pricing before 2026-08-16T16:00Z
         ("2026-08-17T02:00:00Z", "peak", 0.44),      # Monday peak hour
         ("2026-08-17T05:00:00Z", "off_peak", 0.22),  # between the two peak windows
-        ("2026-08-22T02:00:00Z", "peak", 0.44),      # Saturday, before weekends became off-peak
-        ("2026-08-23T02:00:00Z", "off_peak", 0.22),  # Sunday after the weekday-only change
+        ("2026-08-22T02:00:00Z", "off_peak", 0.22),  # Saturday: the current rule applies from the start
         ("2026-09-10T08:00:00Z", "peak", 0.30),      # V4.1 Flash price before models.dev caught up
         ("2026-09-25T02:00:00Z", "off_peak", 0.15),  # Mid-Autumn Festival holiday
         ("2026-09-28T02:00:00Z", "peak", 0.30),
