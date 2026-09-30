@@ -229,4 +229,10 @@ def test_current_price_list_keeps_the_request_time_of_day():
 def test_plan_prices():
     assert llm_prices.plan("anthropic", "max_20x").usd_per_month == 200
     assert llm_prices.plan("zai", "lite").usd_per_month == 18
-    assert llm_prices.plan("google", "ultra") is None
+    # Google AI Ultra was one plan until 2026-05-19, then two price-tagged tiers.
+    assert llm_prices.plan("google", "ultra", at="2026-05-01").usd_per_month == 249.99
+    assert llm_prices.plan("google", "ultra", at="2026-06-01") is None
+    assert llm_prices.plan("google", "ultra_100").name == "Google AI Ultra $100"
+    assert llm_prices.plan("google", "ultra_200").usd_per_month == 199.99
+    assert llm_prices.plan("google", "ultra_200", at="2026-05-01") is None
+    assert llm_prices.plan("openai", "pro_500").usd_per_month == 500

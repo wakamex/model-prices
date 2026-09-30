@@ -1,7 +1,8 @@
 # Subscription plan prices in USD per month, as billed monthly. provider is the lab;
-# id is the plan name its usage tools report. An entry without valid_from applies from
-# before tracking began; a later entry for the same plan replaces it from its valid_from.
-# Plans whose reported id covers several prices are left out, so they stay unpriced.
+# id is the plan name its usage tools report, or for a plan sold in several price tiers,
+# that name with the tier's price, such as ultra_200. An entry without valid_from applies
+# from before tracking began; valid_until is exclusive. A reported name that covers
+# several tiers has no entry for that period, so it stays unpriced.
 
 [[plan]]
 provider = "anthropic"
@@ -50,13 +51,65 @@ name = "ChatGPT Pro"
 usd_per_month = 200
 source = "https://developers.openai.com/codex/pricing"
 checked = "2026-09-30"
-note = "Pro now comes at $100, $200, or $500 per month, and Codex reports all three as pro. $200 was the only Pro price before the tiers; pass a different price for the other tiers."
+note = "Pro now comes at $100, $200, or $500 per month, and Codex reports all three as pro. $200 was the only Pro price before the tiers, whose launch date is not recorded here; use the pro_100 or pro_500 price for those tiers."
+
+[[plan]]
+provider = "openai"
+id = "pro_100"
+name = "ChatGPT Pro $100"
+usd_per_month = 100
+source = "https://developers.openai.com/codex/pricing"
+checked = "2026-09-30"
+
+[[plan]]
+provider = "openai"
+id = "pro_200"
+name = "ChatGPT Pro $200"
+usd_per_month = 200
+source = "https://developers.openai.com/codex/pricing"
+checked = "2026-09-30"
+
+[[plan]]
+provider = "openai"
+id = "pro_500"
+name = "ChatGPT Pro $500"
+usd_per_month = 500
+source = "https://developers.openai.com/codex/pricing"
+checked = "2026-09-30"
 
 [[plan]]
 provider = "google"
 id = "pro"
 name = "Google AI Pro"
 usd_per_month = 19.99
+source = "https://gemini.google/subscriptions/"
+checked = "2026-09-30"
+
+[[plan]]
+provider = "google"
+id = "ultra"
+name = "Google AI Ultra"
+usd_per_month = 249.99
+valid_until = "2026-05-19T00:00:00Z"
+source = "https://blog.google/products-and-platforms/products/google-one/google-ai-subscriptions/"
+checked = "2026-09-30"
+note = "The single Ultra plan until 2026-05-19, when Google split it into the $100 and $200 tiers below."
+
+[[plan]]
+provider = "google"
+id = "ultra_100"
+name = "Google AI Ultra $100"
+usd_per_month = 99.99
+valid_from = "2026-05-19T00:00:00Z"
+source = "https://gemini.google/subscriptions/"
+checked = "2026-09-30"
+
+[[plan]]
+provider = "google"
+id = "ultra_200"
+name = "Google AI Ultra $200"
+usd_per_month = 199.99
+valid_from = "2026-05-19T00:00:00Z"
 source = "https://gemini.google/subscriptions/"
 checked = "2026-09-30"
 

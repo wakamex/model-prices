@@ -317,6 +317,8 @@ def plan(provider: str, plan_id: str, at: datetime | str | None = None) -> Plan 
             continue
         if "valid_from" in item and _parse_time(item["valid_from"]) > moment:
             continue
+        if "valid_until" in item and _parse_time(item["valid_until"]) <= moment:
+            continue
         found = item
     if found is None:
         return None
