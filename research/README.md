@@ -26,7 +26,9 @@ Agents read pages from a shared library in `sources/`, one Markdown file per URL
 
 ## From finding to correction
 
-Only a verified finding becomes a correction in `src/llm_prices/data/corrections.toml`. A `models_dev_fix` corrects the whole earlier period. A dated `price_change` moves the start of the new price to the documented date. When sources only bracket a change, the earlier documented price applies until the first observation of the new one.
+`price_dates.py corrections` turns verified findings into `src/llm_prices/data/research_corrections.toml`, which is generated and not edited by hand. A `models_dev_fix` replaces the whole earlier period with the fixed rates, overlaid with any official price the finding quotes; when models.dev fixed a model several times in a row, each corrected period takes the rates of the last fix. A dated `price_change` moves the start of the new price to the documented date, or keeps the old price until that date when models.dev recorded the change early. A date without a time applies from 00:00 UTC. When sources only bracket a change, the earlier documented price applies until the first observation of the new one.
+
+The command lists every verified finding it leaves out: changes without a documented date, changes dated before the earlier price was even recorded (usually a quote about a different event), findings marked in its `REVIEWED` table after reading them, and periods that `corrections.toml` already covers. Hand corrections in `corrections.toml` take precedence over researched ones.
 
 ## Calibration
 

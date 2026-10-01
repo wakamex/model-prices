@@ -12,6 +12,7 @@ must appear in the library copy of its page.
     aop batch research/price-dates/batch.toml --jobs 4        (from research/price-dates)
     uv run --no-config python research/price_dates.py collect BATCH_JSON
     uv run --no-config python research/price_dates.py verify
+    uv run --no-config python research/price_dates.py corrections
 """
 
 from __future__ import annotations
@@ -32,7 +33,9 @@ EXTRACT = Path("/code/scripts/extract_web.py")
 EXTRACT_DEPS = ROOT / "price-dates" / "extract-deps"
 WORK = ROOT / "price-dates"
 SOURCES = ROOT / "sources"
-PRICES = ROOT.parent / "src" / "llm_prices" / "data" / "prices.json"
+DATA = ROOT.parent / "src" / "llm_prices" / "data"
+PRICES = DATA / "prices.json"
+RESEARCHED = DATA / "research_corrections.toml"
 FIELDS = ("input", "output", "cache_read", "cache_write", "tiers")
 
 PROMPT = """\
@@ -281,6 +284,141 @@ def verify() -> None:
               f"{finding.get('classification')} {finding.get('effective_at')}")
 
 
+# Verified findings whose official price needs a reviewed reading rather than the general
+# rule of overlaying it on the models.dev fix.
+REVIEWED = {
+    # The official cache_read of 0 is xAI's price for a model without caching; the fix was
+    # dropping models.dev's cache_write, which its fixed entry already does.
+    "xai_grok_2_1212_20250909t2003": "after",
+    # The official 0.6 is the cache_read above 200K tokens, which the fixed tier carries.
+    "xai_grok_4.5_20260731t1900": "after",
+    # The cited prices are Gemini Flash-Lite's, while both models.dev entries carry Flash
+    # prices; the finding does not settle what the alias pointed to.
+    "google_gemini_flash_lite_latest_20260821t0642": "skip",
+    # These date a model's release, not the latest alias switching to it, which is inferred.
+    # gemini-flash-latest also pointed to Gemini 3 Flash Preview from 2026-01-21.
+    "google_gemini_flash_latest_20260715t1513": "skip",
+    "google_gemini_flash_lite_latest_20260715t1513": "skip",
+}
+
+
+def _day_start(value: str) -> datetime:
+    """A documented date without a time applies from the start of that day in UTC."""
+    if len(value) == 10:
+        value += "T00:00:00Z"
+    return datetime.fromisoformat(value.replace("Z", "+00:00")).astimezone(timezone.utc)
+
+
+def _iso(value: datetime) -> str:
+    return value.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def _toml_value(value: object) -> str:
+    if isinstance(value, list):
+        return "[" + ", ".join(_toml_value(item) for item in value) + "]"
+    if isinstance(value, dict):
+        return "{ " + ", ".join(f"{key} = {_toml_value(item)}" for key, item in value.items()) + " }"
+    return json.dumps(value)
+
+
+def derive_corrections() -> tuple[list[dict], list[str]]:
+    """Turn verified findings into corrections, and list the findings left out and why.
+
+    A models_dev_fix replaces the earlier entry's whole period with the fixed rates, overlaid
+    with any official price the finding quotes. A dated price_change moves the start of the
+    new rates to the documented time, or keeps the old rates until it when models.dev
+    recorded the change early; a bracketed one applies the new rates from the first
+    observation of them.
+    """
+    changes = json.loads((WORK / "changes.json").read_text())
+    entries, skipped = [], []
+    # Rates fixed by each models_dev_fix, keyed by the start of the entry it corrects. When
+    # models.dev fixed a model twice in a row, the first fix's rates were still wrong, so a
+    # corrected period takes the rates of the fix that directly follows it.
+    fixed: dict[tuple[str, str, str], dict] = {}
+    for change in sorted(changes, key=lambda item: item["recorded_at"], reverse=True):
+        try:
+            finding = json.loads((WORK / "findings" / change["id"] / "finding.json").read_text())
+        except (FileNotFoundError, json.JSONDecodeError):
+            skipped.append(f"{change['id']}: no valid finding")
+            continue
+        kind = finding.get("classification")
+        if not finding.get("verified") or kind not in ("models_dev_fix", "price_change"):
+            continue
+        previous = _day_start(change["previous_at"])
+        recorded = _day_start(change["recorded_at"])
+        review = REVIEWED.get(change["id"])
+        if review == "skip":
+            skipped.append(f"{change['id']}: reviewed, not applied")
+            continue
+        if kind == "models_dev_fix":
+            rates = dict(change["after"])
+            if review != "after":
+                rates.update({key: value for key, value in
+                              (finding.get("official_previous_price") or {}).items()
+                              if value is not None})
+            rates = fixed.get((change["provider"], change["model"], change["recorded_at"]), rates)
+            fixed[(change["provider"], change["model"], change["previous_at"])] = rates
+            start, end = previous, recorded
+        else:
+            bracket = finding.get("bracket") or {}
+            moment = finding.get("effective_at") or bracket.get("first_after")
+            if not moment:
+                skipped.append(f"{change['id']}: price change without a documented date")
+                continue
+            effective = _day_start(moment)
+            if effective < previous:
+                # Dated before the earlier price was recorded: likely a different event,
+                # as when a 2026 cut was matched to a 2025 announcement.
+                skipped.append(f"{change['id']}: dated {moment}, before the earlier price "
+                               f"was recorded at {change['previous_at']}; needs review")
+                continue
+            if effective < recorded:
+                rates, start, end = dict(change["after"]), effective, recorded
+            elif effective > recorded:
+                rates, start, end = dict(change["before"]), recorded, effective
+            else:
+                continue
+        if start >= end:
+            continue
+        sources = [source["url"] for source in finding["sources"]]
+        entries.append({
+            "provider": change["provider"], "model": change["model"],
+            "valid_from": _iso(start), "valid_until": _iso(end), **rates,
+            "source": sources[0],
+            "note": f"{kind}: {finding.get('notes', '').strip()} "
+                    f"Finding research/price-dates/findings/{change['id']}.",
+        })
+    return entries, skipped
+
+
+def write_corrections() -> None:
+    import tomllib  # noqa: PLC0415
+    manual = tomllib.loads((DATA / "corrections.toml").read_text()).get("correction", [])
+    entries, skipped = derive_corrections()
+    kept = []
+    for entry in entries:
+        # Hand corrections in corrections.toml take precedence over overlapping research.
+        overlap = [item for item in manual
+                   if (item["provider"], item["model"]) == (entry["provider"], entry["model"])
+                   and _day_start(item["valid_from"]) < _day_start(entry["valid_until"])
+                   and _day_start(entry["valid_from"]) < _day_start(item.get("valid_until", "9999-12-31"))]
+        if overlap:
+            skipped.append(f"{entry['note'].rsplit('findings/', 1)[1].rstrip('.')}: "
+                           "covered by corrections.toml")
+        else:
+            kept.append(entry)
+    blocks = ["# Generated by research/price_dates.py corrections from verified price-date findings.\n"
+              "# Do not edit: change the findings or corrections.toml, which takes precedence.\n"]
+    for entry in sorted(kept, key=lambda item: (item["provider"], item["model"], item["valid_from"])):
+        blocks.append("[[correction]]\n" + "".join(f"{key} = {_toml_value(value)}\n"
+                                                    for key, value in entry.items()))
+    RESEARCHED.write_text("\n".join(blocks))
+    print(f"{len(kept)} corrections written to {RESEARCHED}")
+    for line in skipped:
+        print(f"skipped {line}")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -294,6 +432,7 @@ def main() -> int:
     gather = commands.add_parser("collect")
     gather.add_argument("batch", type=Path)
     commands.add_parser("verify")
+    commands.add_parser("corrections")
     args = parser.parse_args()
 
     changes_file = WORK / "changes.json"
@@ -308,6 +447,8 @@ def main() -> int:
         print(f"wrote {path}")
     elif args.command == "collect":
         collect(args.batch)
+    elif args.command == "corrections":
+        write_corrections()
     else:
         verify()
     return 0

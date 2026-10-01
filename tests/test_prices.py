@@ -48,6 +48,17 @@ def test_prices_follow_models_dev_history_with_corrections():
     assert after.source.startswith("https://github.com/sst/models.dev/commit/")
 
 
+def test_researched_corrections_apply_after_hand_corrections():
+    # models.dev listed GPT-4o mini's cache read as $0.08 for a year; OpenAI charges $0.075.
+    researched = rates("gpt-4o-mini", provider="openai", at="2026-01-01")
+    uncorrected = rates("gpt-4o-mini", provider="openai", at="2026-01-01", corrected=False)
+
+    assert (researched.cache_read, uncorrected.cache_read) == (0.075, 0.08)
+    assert researched.valid_from_basis == "documented"
+    # Research also dates the Sol cut to August 21; corrections.toml still decides it.
+    assert rates("gpt-5.6-sol", at="2026-08-23").source == "https://openai.com/index/gpt-5-6/"
+
+
 def test_usage_before_first_recorded_price_uses_that_price():
     early = rates("claude-opus-5-5", at="2026-01-01")
 

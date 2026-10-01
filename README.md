@@ -33,7 +33,7 @@ uv add llm-prices
 
 Prices come from the git history of [models.dev](https://github.com/sst/models.dev), an open catalog of model metadata that records each model's price in one TOML file per provider. Every commit on its main branch that changed a tracked model's price becomes an entry effective from that commit's time. The tracked providers are the labs that sell their own models: Alibaba, Anthropic, DeepSeek, Google, Moonshot AI, OpenAI, xAI, and Z.ai.
 
-models.dev sometimes records a change days after the provider made it, or lists a wrong price for a while. `corrections.toml` overrides those periods, and every correction cites its source. A correction without an end date names the models.dev values it replaces and stops applying as soon as models.dev records anything else, so it cannot outlive a later fix or price change.
+models.dev sometimes records a change days after the provider made it, or lists a wrong price for a while. `corrections.toml` overrides those periods, and every correction cites its source. `research_corrections.toml` adds corrections generated from agent research into every recorded change, each verified against quotes from its sources (see [research/README.md](research/README.md)); hand corrections take precedence. A correction without an end date names the models.dev values it replaces and stops applying as soon as models.dev records anything else, so it cannot outlive a later fix or price change.
 
 `Rates.valid_from_basis` says how a start date was found: `models.dev commit` dates usually lag the provider's real change by days, while `documented` dates come from a correction's cited source.
 

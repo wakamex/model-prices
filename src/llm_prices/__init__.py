@@ -251,7 +251,9 @@ def _corrections(provider: str, model: str) -> tuple[tuple[datetime, datetime | 
     return tuple(
         (_parse_time(item["valid_from"]),
          _parse_time(item["valid_until"]) if "valid_until" in item else None, item)
-        for item in _config("corrections.toml").get("correction", [])
+        # Hand corrections first, so they take precedence over researched ones.
+        for name in ("corrections.toml", "research_corrections.toml")
+        for item in _config(name).get("correction", [])
         if item["provider"] == provider and item["model"] == model
     )
 
