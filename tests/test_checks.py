@@ -55,6 +55,17 @@ def test_parsers_read_official_tables():
                   if model == "deepseek-flash" and field == "input") == [0.15, 0.3]
 
 
+def test_google_section_pricing_several_models_prices_each():
+    google = _prices("google")
+    names = {model for model, *_ in google}
+
+    assert {"Gemini 3.8 Live", "Gemini 3.8 Live Extended Thinking",
+            "Gemini 3.1 Flash Live Preview"} <= names
+    assert not any(", " in name or " and Gemini" in name for name in names)
+    # "$0.75 (text) $3.00 or $0.005/min (audio)": only the text price counts.
+    assert google[("Gemini 3.1 Flash Live Preview", "input", None, None)] == 0.75
+
+
 def test_google_dated_prices_follow_the_check_date():
     cell = "$0.75 through December 31, 2026. $1.50 starting January 1, 2027."
 
@@ -78,12 +89,13 @@ def test_check_scores_genai_prices_against_official_pages(capsys):
     results = checks.run(["anthropic", "openai"], pages=PAGES, today=TODAY, genai=genai)
     listed = {(r.model, r.field, r.above): r.genai_prices for r in results}
 
-    # genai-prices has no Opus 5.5 entry, and its Opus 5 rule accepts the name as a prefix.
-    assert listed[("anthropic/claude-opus-5-5", "input", None)] == 5
+    # genai-prices lacks Opus 5.5; its Opus 5 rule would accept the name only as a prefix.
+    assert listed[("anthropic/claude-opus-5-5", "input", None)] is None
+    # It still lists GPT-5.6 Sol at the price before the 2026-08-21 cut.
     assert listed[("openai/gpt-5.6-sol", "input", None)] == 5
     assert listed[("openai/gpt-5.6-sol", "input", 272000)] == 10
     report = checks.report(results, genai=True)
-    assert "genai     anthropic/claude-opus-5-5 input: official $4, genai-prices 5" in report
+    assert "genai     openai/gpt-5.6-sol input: official $4, genai-prices 5" in report
     assert "in genai-prices: " in report.splitlines()[-1]
 
 

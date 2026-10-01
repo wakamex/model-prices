@@ -158,6 +158,9 @@ def _google_price(cell: str, today: datetime) -> list[tuple[float, int | None]]:
     a modality list such as "(text / image)", or a prompt-size tier such as "prompts > 200k".
     """
     cell = cell.replace("\\<", "<").replace("\\>", ">")
+    # A per-minute alternative sits between an amount and its modality: "$3.00 or $0.005/min
+    # (audio)". Dropping it leaves each amount next to its own modality.
+    cell = re.sub(r"\s+or\s+\$[0-9]+(?:\.[0-9]+)?/min", "", cell)
     prices = []
     for amount, qualifier in re.findall(r"\$([0-9]+(?:\.[0-9]+)?)([^$]*)", cell):
         if "per hour" in qualifier:
@@ -180,16 +183,19 @@ def parse_google(text: str, today: datetime) -> list[Observed]:
     rows = {"Input price": "input", "Output price": "output", "Context caching price": "cache_read"}
     found = []
     for headings, header, table in _markdown_tables(text):
-        model = headings.get(2, "")
-        if (not model.startswith("Gemini") or headings.get(3) != "Standard"
+        heading = headings.get(2, "")
+        if (not heading.startswith("Gemini") or headings.get(3) != "Standard"
                 or header[-1] != "Paid Tier, per 1M tokens in USD"):
             continue
+        # One section can price several models: "Gemini A, Gemini B, and Gemini C".
+        models = re.split(r",\s*(?:and\s+)?|\s+and\s+(?=Gemini)", heading)
         for row in table:
             field = next((value for key, value in rows.items() if row[0].startswith(key)), None)
             if field is None:
                 continue
             for value, above in _google_price(row[-1], today):
-                found.append(Observed("google", model, field, value, above=above))
+                found.extend(Observed("google", model, field, value, above=above)
+                             for model in models)
     return found
 
 

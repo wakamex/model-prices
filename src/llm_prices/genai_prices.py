@@ -10,9 +10,10 @@ import urllib.request
 
 DATA_URL = "https://raw.githubusercontent.com/pydantic/genai-prices/main/prices/data.json"
 
-# llm-prices provider ids and the genai-prices ids for the same first-party APIs.
+# llm-prices provider ids and the genai-prices ids for the same first-party APIs. Z.ai has
+# none: genai-prices' zhipuai is Zhipu's mainland China API, priced from yuan.
 PROVIDERS = {"anthropic": "anthropic", "deepseek": "deepseek", "google": "google",
-             "moonshotai": "moonshotai", "openai": "openai", "xai": "x-ai", "zai": "zhipuai"}
+             "moonshotai": "moonshotai", "openai": "openai", "xai": "x-ai"}
 FIELDS = {"input": "input_mtok", "output": "output_mtok", "cache_read": "cache_read_mtok",
           "cache_write": "cache_write_mtok"}
 
@@ -53,15 +54,24 @@ def _matches(rule: dict, name: str) -> bool:
     return False
 
 
-def model_prices(data: list, provider: str, model: str, at: datetime) -> tuple[str, dict] | None:
-    """The genai-prices model a name resolves to and its prices at a moment.
+def _names(rule: dict) -> set[str]:
+    """The exact model names a match rule lists."""
+    if "equals" in rule:
+        return {rule["equals"]}
+    return {name for key in ("or", "and") for item in rule.get(key, []) for name in _names(item)}
 
-    As in genai-prices, the first model whose match rule accepts the name wins, so a name
-    it does not list can resolve to an older model whose rule accepts it as a prefix.
+
+def model_prices(data: list, provider: str, model: str, at: datetime) -> tuple[str, dict] | None:
+    """The genai-prices model that lists a name exactly, and its prices at a moment.
+
+    genai-prices also matches names by prefix, so a model it lacks, such as a newer
+    version, can resolve to an older model's prices. Only exact listings count here, so
+    a missing model reads as not listed rather than as a wrong price.
     """
+    name = model.lower()
     found = next((item for item in data if item["id"] == PROVIDERS.get(provider)), None)
-    entry = next((item for item in found["models"] if _matches(item["match"], model.lower())),
-                 None) if found else None
+    entry = next((item for item in found["models"]
+                  if name == item["id"] or name in _names(item["match"])), None) if found else None
     if entry is None:
         return None
     prices = entry["prices"]
