@@ -301,3 +301,14 @@ def test_open_ended_correction_stops_when_models_dev_changes(monkeypatch):
         assert (fixed.input, fixed.valid_from_basis) == (0.70, "models.dev commit")
     finally:
         llm_prices._entry_times.cache_clear()
+
+
+def test_breakdown_reports_the_tier_and_cost_by_token_type():
+    found = rates("gpt-6-astra", at="2026-09-20")
+    long = found.breakdown(input_tokens=10_000, cache_read_tokens=300_000, output_tokens=1_000)
+    short = found.breakdown(input_tokens=10_000, output_tokens=1_000)
+
+    assert long.tier_above == 272_000
+    assert (long.input, long.cache_read, long.output) == pytest.approx((0.2, 0.6, 0.075))
+    assert long.total == pytest.approx(found.cost(10_000, 1_000, 300_000))
+    assert short.tier_above is None

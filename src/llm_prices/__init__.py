@@ -42,6 +42,21 @@ class Tier:
 
 
 @dataclass(frozen=True)
+class CostBreakdown:
+    """USD cost of one request by token type, and the long-context tier applied, if any."""
+
+    tier_above: int | None
+    input: float
+    output: float
+    cache_read: float
+    cache_write: float
+
+    @property
+    def total(self) -> float:
+        return self.input + self.output + self.cache_read + self.cache_write
+
+
+@dataclass(frozen=True)
 class Rates:
     """USD per million tokens in effect for one model at one time."""
 
@@ -67,9 +82,9 @@ class Rates:
         return (self.input, self.output, self.cache_read, self.cache_write, self.tiers,
                 self.period)
 
-    def cost(self, input_tokens: int = 0, output_tokens: int = 0,
-             cache_read_tokens: int = 0, cache_write_tokens: int = 0) -> float:
-        """Price one request; input_tokens excludes cache reads and writes.
+    def breakdown(self, input_tokens: int = 0, output_tokens: int = 0,
+                  cache_read_tokens: int = 0, cache_write_tokens: int = 0) -> CostBreakdown:
+        """Price one request by token type; input_tokens excludes cache reads and writes.
 
         Long-context tiers apply when the request's whole prompt exceeds the tier size.
         Missing cache prices fall back to the input price.
@@ -79,8 +94,10 @@ class Rates:
             "input": self.input, "output": self.output,
             "cache_read": self.cache_read, "cache_write": self.cache_write,
         }
+        applied = None
         for tier in self.tiers:
             if prompt > tier.above:
+                applied = tier.above
                 rates.update({
                     key: value for key, value in asdict(tier).items()
                     if key != "above" and value is not None
@@ -88,12 +105,19 @@ class Rates:
         input_rate = rates["input"]
         cache_read = rates["cache_read"] if rates["cache_read"] is not None else input_rate
         cache_write = rates["cache_write"] if rates["cache_write"] is not None else input_rate
-        return (
-            input_tokens * input_rate
-            + output_tokens * rates["output"]
-            + cache_read_tokens * cache_read
-            + cache_write_tokens * cache_write
-        ) / 1e6
+        return CostBreakdown(
+            tier_above=applied,
+            input=input_tokens * input_rate / 1e6,
+            output=output_tokens * rates["output"] / 1e6,
+            cache_read=cache_read_tokens * cache_read / 1e6,
+            cache_write=cache_write_tokens * cache_write / 1e6,
+        )
+
+    def cost(self, input_tokens: int = 0, output_tokens: int = 0,
+             cache_read_tokens: int = 0, cache_write_tokens: int = 0) -> float:
+        """Price one request in USD; input_tokens excludes cache reads and writes."""
+        return self.breakdown(input_tokens, output_tokens, cache_read_tokens,
+                              cache_write_tokens).total
 
 
 @cache

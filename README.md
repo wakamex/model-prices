@@ -60,6 +60,16 @@ Holiday calendars record the last date they cover, and `llm-prices check` fails 
 
 Page model names must match models.dev ids exactly, with no suffix removal, so a dated model is never compared with a different undated one. For DeepSeek, peak and off-peak prices are checked at the next hours the schedule classifies as each, and the peak-hour rule on both the English and Chinese pricing pages must match the wording recorded in `schedules.toml`, so a change to the hours, multiplier, or exceptions fails the check. Google's dated future prices are read for the check date. A page that yields no prices fails the check, because its format has changed.
 
+## Not modeled
+
+llm-prices prices standard synchronous requests. It does not model batch, flex, or priority service tiers; Anthropic's separate 1-hour cache-write price, which it treats as the 5-minute price; regional or data-residency surcharges; storage charges for cached context; or tool fees such as web search. Modes listed by models.dev, such as fast mode, are available through `mode`.
+
+Where a model has no cache-write price, cache writes are priced as input. That matches providers whose caching is automatic and bills the first, cache-filling request as normal input, such as Google's implicit caching, DeepSeek, xAI, and Z.ai. Providers that charge more for writing a cache list a cache-write price in models.dev.
+
+Long-context tiers apply when a request's prompt exceeds the tier size. Providers word the boundary differently, such as Google's "> 200k" and xAI's "≥ 200k", so a prompt of exactly the tier size may price one tier off.
+
+`Rates.breakdown()` returns a request's cost by token type and the tier it reached, for callers that report either.
+
 ## Model names
 
 `resolve()` maps the names that logs and agent harnesses use to models.dev ids. It lowercases the name and normalizes display names such as `Gemini 3.5 Flash (High)` and dotted Claude versions such as `claude-sonnet-4.5`. It reads a `provider/` prefix or the `provider` argument as a hint, and when the full name is unknown it removes context markers such as `[1m]`, the `-build` suffix that xAI's subscription endpoint adds to Grok versions such as `grok-4.6-build`, effort suffixes such as `-high`, and date suffixes such as `-20251001` or `-2026-04-23`. `Rates.removed_suffix` records any text removed this way, and `resolve_details()` returns it, so a caller can tell when a price belongs to a related name: `-max` is both an effort level and part of some model names, such as `qwen3.8-max`. A model is looked up at its own lab before other labs that also serve it. A lab model name resolves to the first-party API id that serves it, using models.dev's `base_model` links and preferring ids that are not deprecated: DeepSeek serves `deepseek-v4.1-flash` as `deepseek-flash`, so that name gets `deepseek-flash`'s price. `aliases.toml` holds the few names that need an explicit mapping. Unknown models return `None` rather than a guessed price.
