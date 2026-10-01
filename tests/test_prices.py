@@ -30,6 +30,7 @@ MODEL_NAMES = [
     ("grok-4.6-build", None, ("xai", "grok-4.6")),
     ("grok-4.7-build", "grok", ("xai", "grok-4.7")),
     ("grok-4.6-build-high", None, ("xai", "grok-4.6")),
+    ("grok-4-build", None, None),  # only dotted Grok versions have -build names
     ("grok-build-0.1", None, ("xai", "grok-build-0.1")),
     ("codex-auto-review", None, None),
 ]
@@ -202,6 +203,13 @@ class PriceTests(unittest.TestCase):
         self.assertEqual(json.loads(stdout.getvalue())["cache_read"], 0.2)
         with mock.patch("sys.stdout", new_callable=io.StringIO):
             self.assertEqual(main(["rate", "codex-auto-review"]), 1)
+
+    def test_cli_rejects_an_invalid_time(self):
+        with (mock.patch("sys.stderr", new_callable=io.StringIO) as stderr,
+              self.assertRaises(SystemExit) as raised):
+            main(["rate", "gpt-5.5", "--at", "garbage"])
+        self.assertEqual(raised.exception.code, 2)
+        self.assertIn("not an ISO 8601 time", stderr.getvalue())
 
     def test_console_entrypoint(self):
         command = Path(sys.executable).with_name("llm-prices")

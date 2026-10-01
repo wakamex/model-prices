@@ -8,7 +8,7 @@ from dataclasses import asdict, dataclass, replace
 from datetime import datetime, timedelta, timezone
 from functools import cache
 import hashlib
-from importlib.metadata import version
+from importlib.metadata import PackageNotFoundError, version
 from importlib.resources import files
 import json
 from pathlib import Path
@@ -29,7 +29,7 @@ _DATE_SUFFIX = re.compile(r"-(\d{4}-\d{2}-\d{2}|\d{8}|\d{4})$")
 _CONTEXT_MARKER = re.compile(r"\[[^\]]*\]$")
 # xAI's subscription endpoint, used by Grok Build, reports grok-4.6 as grok-4.6-build:
 # a server-side alias, not a separate model. grok-build-0.1 is a separate model.
-_GROK_BUILD_ALIAS = re.compile(r"^(grok-\d+(?:\.\d+)*)(-build)$")
+_GROK_BUILD_ALIAS = re.compile(r"^(grok-\d+\.\d+)(-build)$")
 
 
 @dataclass(frozen=True)
@@ -163,7 +163,7 @@ def pricing_basis() -> str:
     digest = hashlib.sha256()
     for item in sorted(files(__package__).joinpath("data").iterdir(), key=lambda f: f.name):
         digest.update(item.name.encode() + b"\0" + item.read_bytes())
-    return (f"llm-prices-{version('llm-prices')}+models.dev@{_prices()['source_commit'][:12]}"
+    return (f"llm-prices-{_version()}+models.dev@{_prices()['source_commit'][:12]}"
             f"+synced@{data_as_of().date().isoformat()}+data@{digest.hexdigest()[:12]}")
 
 
@@ -521,14 +521,29 @@ def plan(provider: str, plan_id: str, at: datetime | str | None = None) -> Plan 
     return Plan(provider, plan_id, found["name"], found["usd_per_month"], found["source"])
 
 
+def _version() -> str:
+    """The installed version, or "unknown" when run from an uninstalled source tree."""
+    try:
+        return version("llm-prices")
+    except PackageNotFoundError:
+        return "unknown"
+
+
+def _cli_time(value: str) -> datetime:
+    try:
+        return _parse_time(value)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"not an ISO 8601 time: {value!r}") from None
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="llm-prices", description=__doc__)
-    parser.add_argument("--version", action="version", version=version("llm-prices"))
+    parser.add_argument("--version", action="version", version=_version())
     commands = parser.add_subparsers(dest="command", required=True)
     show = commands.add_parser("rate", help="Show the rates for a model at a time")
     show.add_argument("model")
     show.add_argument("--provider")
-    show.add_argument("--at", help="ISO 8601 time (default: now)")
+    show.add_argument("--at", type=_cli_time, help="ISO 8601 time (default: now)")
     show.add_argument("--mode", help="Alternate pricing mode, such as fast")
     show.add_argument("--json", action="store_true")
     update = commands.add_parser(
@@ -536,7 +551,8 @@ def main(argv: list[str] | None = None) -> int:
     )
     update.add_argument("models_dev", type=Path)
     update.add_argument("--output", type=Path,
-                        default=Path("src/llm_prices/data/prices.json"))
+                        default=Path(str(files(__package__).joinpath("data", "prices.json"))),
+                        help="File to write (default: this installation's prices.json)")
     check = commands.add_parser(
         "check", help="Compare effective prices with official provider pricing pages"
     )
