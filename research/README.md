@@ -42,6 +42,8 @@ The command lists every verified finding it leaves out: changes without a docume
 
 genai-prices lags providers much as models.dev does: on 2026-10-01 it agreed with models.dev against DeepSeek's own pricing page and OpenAI's GPT-5.6 Sol announcement. Agreement with models.dev is therefore weak evidence against a correction, and a disagreement is a lead to check against archived copies of the provider's page. The first run found two wrong corrections this way: Gemini 3.6 Flash's promotional price taken as its price since launch, which archived copies date to 2026-08-13, and a Claude Opus 4 cache-write price copied from models.dev's own wrong entry.
 
+`score_dating.py GENAI_PRICES_CHECKOUT` measures how promptly each source recorded nine price changes whose times are known from provider announcements or archived pricing pages. On 2026-10-01 models.dev recorded seven of them, from 12 hours to 7.5 days late, and never recorded DeepSeek's peak pricing. genai-prices committed only the Claude 4.6 long-context change, 4.5 days late but with the correct 2026-03-13 start date, and still lists the old price for the other seven changes to models it carries.
+
 ## Calibration
 
 The workflow was calibrated on four changes already researched by hand. GPT-6 Luna at medium effort classified all four correctly, taking 53 to 134 seconds and about $0.005 to $0.010 API-equivalent each. It also found two errors in the hand-made corrections: GPT-5.6 Sol's cut started on August 21, not August 22, and GLM-5.3 Flash's $0.075 was a real promotional price until early September, not a models.dev error.
