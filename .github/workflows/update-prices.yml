@@ -9,19 +9,32 @@ permissions:
   contents: write
   pull-requests: write
 
+# Opening the pull request needs the repository setting that allows GitHub Actions to
+# create pull requests.
 jobs:
   update:
     runs-on: ubuntu-24.04
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
       - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
         with:
           enable-cache: false
+      - name: Continue an open price pull request, keeping any corrections added to it
+        run: |
+          open="$(gh pr list --head update-prices --state open --json number --jq '.[].number')"
+          echo "OPEN_PR=$open" >> "$GITHUB_ENV"
+          if [ -n "$open" ]; then
+            git switch --track origin/update-prices
+          else
+            git switch -C update-prices
+          fi
       - run: git clone --quiet https://github.com/sst/models.dev.git "$RUNNER_TEMP/models.dev"
       - run: uv --no-config run --locked llm-prices update "$RUNNER_TEMP/models.dev"
       - name: Open or update the price pull request
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           if git diff --quiet; then
             echo "No price changes."
@@ -29,10 +42,13 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git switch -C update-prices
           git commit -am "Update prices from models.dev"
-          git push --force origin update-prices
-          gh pr view update-prices >/dev/null 2>&1 || gh pr create --fill \
-            --body "Rebuilt from models.dev. Check each changed model's valid_from against the provider's announcement and add a correction when models.dev recorded the change late."
+          if [ -n "$OPEN_PR" ]; then
+            git push origin update-prices
+          else
+            # No open pull request, so the branch holds nothing worth keeping.
+            git push --force origin update-prices
+            gh pr create --fill --body "Rebuilt from models.dev. Check each changed model's valid_from against the provider's announcement and add a correction when models.dev recorded the change late."
+          fi
       - name: Compare with official pricing pages
         run: uv --no-config run --locked llm-prices check
