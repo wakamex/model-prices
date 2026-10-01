@@ -1,46 +1,52 @@
 # Rates that override models.dev history for a period, because models.dev recorded a
 # price change late or recorded a wrong price. valid_until is exclusive; each entry
-# needs an authoritative source. An open-ended correction names the models.dev values it
+# needs an authoritative source. When sources only bracket a change, the earlier
+# documented price applies until the first observation of the new one. An open-ended correction names the models.dev values it
 # replaces in `replaces`, and stops applying once models.dev records anything else, so
 # a later fix or price change in models.dev ends it without an edit here.
 
 [[correction]]
 provider = "openai"
 model = "gpt-5.6-sol"
-valid_from = "2026-08-22T00:00:00Z"
+valid_from = "2026-08-21T00:00:00Z"
 valid_until = "2026-08-25T04:37:24Z"
 input = 4.0
 output = 20.0
 cache_read = 0.4
 cache_write = 5.0
 tiers = [{ above = 272000, input = 8.0, output = 30.0, cache_read = 0.8, cache_write = 10.0 }]
-source = "https://github.com/sst/models.dev/pull/5375"
-note = "OpenAI's rate changed on 2026-08-22; models.dev updated on 2026-08-25."
+source = "https://openai.com/index/gpt-5-6/"
+note = "\"Update on August 21, 2026: OpenAI dropped the API and credit pricing of GPT-5.6 Sol by over 20% for the next 3 months.\" No time of day is given; models.dev updated on 2026-08-25. See research/price-dates/findings."
 
 [[correction]]
 provider = "openai"
 model = "gpt-5.6"
-valid_from = "2026-08-22T00:00:00Z"
+valid_from = "2026-08-21T00:00:00Z"
 valid_until = "2026-08-25T04:37:24Z"
 input = 4.0
 output = 20.0
 cache_read = 0.4
 cache_write = 5.0
 tiers = [{ above = 272000, input = 8.0, output = 30.0, cache_read = 0.8, cache_write = 10.0 }]
-source = "https://github.com/sst/models.dev/pull/5375"
+source = "https://openai.com/index/gpt-5-6/"
 note = "Alias of gpt-5.6-sol, corrected in the same models.dev change."
 
 [[correction]]
 provider = "zai"
 model = "glm-5.3-flash"
-valid_from = "2026-09-02T18:53:25Z"
+valid_from = "2026-09-10T08:21:47Z"
 valid_until = "2026-09-19T05:17:06Z"
 input = 0.15
 output = 0.50
 cache_read = 0.03
 cache_write = 0.0
 source = "https://docs.z.ai/guides/overview/pricing"
-note = "models.dev listed half the official price until 2026-09-19; the official price was verified on 2026-09-10."
+note = """
+Z.ai's pricing page showed a promotional $0.075/$0.25 (list price $0.15 struck through) in
+the archived 2026-09-02T07:09Z copy and $0.15/$0.50 in the 2026-09-11T23:34Z copy, and AOP
+commit 0b865fa recorded the official $0.15 at 2026-09-10T08:21Z. The change falls between
+2026-09-02T07:09Z and that observation; the promotional price applies until the first
+observation of the new one. models.dev updated on 2026-09-19."""
 
 # DeepSeek rates below are off-peak rates; schedules.toml doubles them at peak.
 # Sources are DeepSeek's pricing page and its Internet Archive copies.

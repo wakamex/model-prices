@@ -37,13 +37,13 @@ def test_resolves_log_and_harness_model_names(name, provider, expected):
 
 
 def test_prices_follow_models_dev_history_with_corrections():
-    before = rates("gpt-5.6-sol", at="2026-08-21T12:00:00Z")
+    before = rates("gpt-5.6-sol", at="2026-08-20T12:00:00Z")
     corrected = rates("gpt-5.6-sol", at="2026-08-23T12:00:00Z")
     after = rates("gpt-5.6-sol", at="2026-09-01T00:00:00Z")
 
     assert (before.input, before.output) == (5.0, 30.0)
     assert (corrected.input, corrected.output) == (4.0, 20.0)
-    assert corrected.source == "https://github.com/sst/models.dev/pull/5375"
+    assert corrected.source == "https://openai.com/index/gpt-5-6/"
     assert (after.input, after.output) == (4.0, 20.0)
     assert after.source.startswith("https://github.com/sst/models.dev/commit/")
 
@@ -277,7 +277,7 @@ def test_rates_between_returns_each_distinct_price():
     # One price across a correction ending with identical rates.
     assert len(rates_between("gpt-5.6-sol", "2026-08-24T00:00:00Z", "2026-08-26T00:00:00Z")) == 1
     # A price change inside the span.
-    changes = rates_between("gpt-5.6-sol", "2026-08-21T00:00:00Z", "2026-08-23T00:00:00Z")
+    changes = rates_between("gpt-5.6-sol", "2026-08-20T00:00:00Z", "2026-08-23T00:00:00Z")
     assert [(found.input, found.output) for _, found in changes] == [(5.0, 30.0), (4.0, 20.0)]
     # A Chinese holiday weekday has no peak hours.
     assert len(rates_between("deepseek-flash", "2026-10-01T00:00:00Z", "2026-10-01T23:00:00Z")) == 1
