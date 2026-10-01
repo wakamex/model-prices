@@ -232,6 +232,8 @@ def add_extracts(finding_dir: Path, result: Path) -> None:
 
 
 def _normalize(text: str) -> str:
+    """Reduce Markdown to its visible text, so a quote of what a reader sees matches."""
+    text = re.sub(r"!?\[([^\]]*)\]\([^)]*\)", r"\1", text)  # links keep only their text
     return re.sub(r"\s+", " ", re.sub(r"[*_`#>|\\]", " ", text)).strip().lower()
 
 
