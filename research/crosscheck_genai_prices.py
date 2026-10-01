@@ -7,7 +7,7 @@ on or before that moment, which shows what it listed then. Each corrected field 
 reported as agreeing with the correction, with models.dev, or with neither, or as
 missing when genai-prices lists no price for it.
 
-    uv run --no-config python research/crosscheck_genai_prices.py GENAI_PRICES_CHECKOUT
+    uv run --locked python research/crosscheck_genai_prices.py GENAI_PRICES_CHECKOUT
 """
 
 from __future__ import annotations

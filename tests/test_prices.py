@@ -191,6 +191,13 @@ def test_cli_prints_rates(capsys):
     assert main(["rate", "codex-auto-review"]) == 1
 
 
+def test_console_entrypoint():
+    command = Path(sys.executable).with_name("llm-prices")
+    result = subprocess.run([command, "--version"], capture_output=True, text=True)
+    assert result.returncode == 0
+    assert result.stdout.strip() == version("llm-prices")
+
+
 def test_module_entrypoint():
     result = subprocess.run(
         [sys.executable, "-m", "llm_prices", "--version"], capture_output=True, text=True

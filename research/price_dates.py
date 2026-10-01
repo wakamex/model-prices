@@ -7,15 +7,15 @@ agents, and verifies their findings. Cited pages form a shared Markdown library 
 research/sources/, one file per URL, which each agent reads and adds to; every quote
 must appear in the library copy of its page.
 
-    uv run --no-config python research/price_dates.py changes MODELS_DEV_CHECKOUT
-    uv run --no-config python research/price_dates.py manifest [--only ID ...]
+    uv run --locked python research/price_dates.py changes MODELS_DEV_CHECKOUT
+    uv run --locked python research/price_dates.py manifest [--only ID ...]
     aop batch research/price-dates/batch.toml --jobs 4        (from research/price-dates)
-    uv run --no-config python research/price_dates.py collect BATCH_JSON
-    uv run --no-config python research/price_dates.py verify
-    uv run --no-config python research/price_dates.py review-manifest
+    uv run --locked python research/price_dates.py collect BATCH_JSON
+    uv run --locked python research/price_dates.py verify
+    uv run --locked python research/price_dates.py review-manifest
     aop batch research/price-dates/review-batch.toml --jobs 4
-    uv run --no-config python research/price_dates.py collect-reviews BATCH_JSON
-    uv run --no-config python research/price_dates.py corrections
+    uv run --locked python research/price_dates.py collect-reviews BATCH_JSON
+    uv run --locked python research/price_dates.py corrections
 """
 
 from __future__ import annotations

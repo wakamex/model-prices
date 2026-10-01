@@ -5,11 +5,11 @@ models.dev dates each price by the commit that recorded it. That commit can foll
 ## Workflow
 
 ```sh
-uv run --no-config python research/price_dates.py changes /path/to/models.dev   # list every change
-uv run --no-config python research/price_dates.py manifest [--only ID ...]       # one task per change
+uv run --locked python research/price_dates.py changes /path/to/models.dev   # list every change
+uv run --locked python research/price_dates.py manifest [--only ID ...]       # one task per change
 (cd research/price-dates && aop batch batch.toml --jobs 4)                       # GPT-6 Luna, medium effort
-uv run --no-config python research/price_dates.py collect .aop/batches/BATCH.json
-uv run --no-config python research/price_dates.py verify
+uv run --locked python research/price_dates.py collect .aop/batches/BATCH.json
+uv run --locked python research/price_dates.py verify
 ```
 
 Each agent classifies a change as a real `price_change` or a `models_dev_fix` of a price that was never official, and finds the effective date from provider pages, changelogs, announcements, and Internet Archive copies. It must quote every claim verbatim from the Markdown copy of a page.

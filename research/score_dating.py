@@ -5,7 +5,7 @@ announcements or archived pricing pages (see corrections.toml and the findings).
 this reports when models.dev first recorded the new price, when genai-prices first
 committed it, and any start date genai-prices assigns, measured against the true time.
 
-    uv run --no-config python research/score_dating.py GENAI_PRICES_CHECKOUT
+    uv run --locked python research/score_dating.py GENAI_PRICES_CHECKOUT
 """
 
 from __future__ import annotations

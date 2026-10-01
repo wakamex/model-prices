@@ -25,7 +25,7 @@ llm-prices rate "Gemini 3.5 Flash (High)" --json
 
 ## Install
 
-Requires Python 3.12 or newer.
+Requires Python 3.11 or newer.
 
 ```sh
 uv add llm-prices
