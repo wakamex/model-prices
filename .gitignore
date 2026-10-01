@@ -11,3 +11,5 @@ dist/
 /research/price-dates/run-when-archive-up.sh
 /research/price-dates/unit.*
 /research/price-dates/extract-deps/
+/research/price-dates/run-reviews.sh
+/research/price-dates/*.out

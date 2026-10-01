@@ -4,19 +4,6 @@
 [[correction]]
 provider = "alibaba"
 model = "qwen3.7-plus"
-valid_from = "2026-06-03T15:00:39Z"
-valid_until = "2026-06-10T00:47:27Z"
-input = 0.4
-output = 1.6
-cache_read = 0.04
-cache_write = 0.5
-tiers = [{ above = 256000, cache_read = 0.12, cache_write = 1.5, input = 1.2, output = 4.8 }]
-source = "https://www.alibabacloud.com/help/en/model-studio/qwen3-7-plus"
-note = "models_dev_fix: The provider\u2019s page identifies 256K as the standard lower-tier ceiling; the 128K value appears to have been a models.dev data error, not a provider price change. Its current region-specific US prices are input $0.40, output $1.60, and explicit cache read $0.04 per million tokens, but the page and available archived sources do not establish those amounts specifically during June 3\u201310, 2026. The Internet Archive CDX request returned HTTP 503, so no historical snapshot pair or effective date could be verified. Finding research/price-dates/findings/alibaba_qwen3.7_plus_20260610t0047."
-
-[[correction]]
-provider = "alibaba"
-model = "qwen3.7-plus"
 valid_from = "2026-06-10T00:47:27Z"
 valid_until = "2026-09-28T04:01:19Z"
 input = 0.4
@@ -54,18 +41,6 @@ note = "models_dev_fix: The earlier $0.08 cache_write matches Anthropic's cache_
 [[correction]]
 provider = "anthropic"
 model = "claude-3-5-sonnet-20240620"
-valid_from = "2025-06-05T20:08:05Z"
-valid_until = "2025-06-17T22:26:49Z"
-input = 3.0
-output = 15.0
-cache_read = 0.3
-cache_write = 3.75
-source = "https://www.anthropic.com/news/prompt-caching"
-note = "models_dev_fix: The earlier models.dev cache_write value of $0.30/MTok was not Anthropic's official price: the provider's Claude 3.5 Sonnet announcement lists cache writes at $3.75/MTok and reads at $0.30/MTok. The provider did not state when models.dev corrected its field mapping; this is a metadata fix, so no effective date is assigned. Finding research/price-dates/findings/anthropic_claude_3_5_sonnet_20240620_20250617t2226."
-
-[[correction]]
-provider = "anthropic"
-model = "claude-3-5-sonnet-20240620"
 valid_from = "2025-06-17T22:26:49Z"
 valid_until = "2025-06-23T20:53:34Z"
 input = 3.0
@@ -78,18 +53,6 @@ note = "models_dev_fix: Anthropic's first-party pricing rules establish the reco
 [[correction]]
 provider = "anthropic"
 model = "claude-3-5-sonnet-20241022"
-valid_from = "2025-06-05T20:08:05Z"
-valid_until = "2025-06-17T22:26:49Z"
-input = 3.0
-output = 15.0
-cache_read = 0.3
-cache_write = 3.75
-source = "https://www.anthropic.com/news/prompt-caching"
-note = "models_dev_fix: Anthropic published these cache prices for Claude 3.5 Sonnet when prompt caching launched in 2024, so the earlier record's omitted cache prices were not an official zero-priced state. The later models.dev value of $0.30 for cache_write does not match Anthropic's $3.75 cache-write price; no provider price-change date is established. Finding research/price-dates/findings/anthropic_claude_3_5_sonnet_20241022_20250617t2226."
-
-[[correction]]
-provider = "anthropic"
-model = "claude-3-5-sonnet-20241022"
 valid_from = "2025-06-17T22:26:49Z"
 valid_until = "2025-06-23T20:53:34Z"
 input = 3.0
@@ -98,42 +61,6 @@ cache_read = 0.3
 cache_write = 3.75
 source = "https://claude.com/blog/prompt-caching"
 note = "models_dev_fix: Anthropic's prompt caching announcement states the official Claude 3.5 Sonnet cache write rate was $3.75/MTok and cache read was $0.30/MTok, so the earlier models.dev cache_write value appears to have been an error. The source does not state a later effective date; the other official previous-price fields are left null because this cited passage does not state them. Finding research/price-dates/findings/anthropic_claude_3_5_sonnet_20241022_20250623t2053."
-
-[[correction]]
-provider = "anthropic"
-model = "claude-3-7-sonnet-20250219"
-valid_from = "2025-06-05T20:08:05Z"
-valid_until = "2025-06-17T22:26:49Z"
-input = 3.0
-output = 15.0
-cache_read = 0.3
-cache_write = 3.75
-source = "https://www.anthropic.com/news/claude-3-7-sonnet"
-note = "models_dev_fix: The earlier $3/$15 base price is official, but $0.30 is the cache-read rate, not the cache-write rate; Anthropic's 1.25x write rule gives $3.75/MTok. This is a models.dev correction, not a provider price change, and the sources do not establish an effective date for its metadata correction. Finding research/price-dates/findings/anthropic_claude_3_7_sonnet_20250219_20250617t2226."
-
-[[correction]]
-provider = "anthropic"
-model = "claude-3-7-sonnet-20250219"
-valid_from = "2025-06-17T22:26:49Z"
-valid_until = "2025-06-23T20:53:34Z"
-input = 3.0
-output = 15.0
-cache_read = 0.3
-cache_write = 3.75
-source = "https://www.anthropic.com/news/claude-3-7-sonnet"
-note = "models_dev_fix: Anthropic's model launch price and prompt-caching pricing formula imply that Claude 3.7 Sonnet's official five-minute cache-write price was $3.75/MTok throughout the earlier period; the recorded $0.30 was its cache-read price. No source located here states a June 2025 price-change date, and the supplied Wayback pricing-page extractions omit the pricing table, so the correction date is unknown. Finding research/price-dates/findings/anthropic_claude_3_7_sonnet_20250219_20250623t2053."
-
-[[correction]]
-provider = "anthropic"
-model = "claude-3-haiku-20240307"
-valid_from = "2025-06-05T20:08:05Z"
-valid_until = "2025-06-17T22:26:49Z"
-input = 0.25
-output = 1.25
-cache_read = 0.03
-cache_write = 0.3
-source = "https://www.anthropic.com/news/prompt-caching"
-note = "models_dev_fix: Anthropic had already published Claude 3 Haiku cache pricing, so the June 2025 addition was a models.dev correction of omitted cache fields, not a provider price change. The provider's official cache-write rate was $0.30/MTok (despite the recorded after-value of $0.03); the cache_read value was $0.03/MTok. The cited source does not state the base input/output rates, so those supplied unchanged values are retained from the recorded earlier price; no effective date is inferred. Finding research/price-dates/findings/anthropic_claude_3_haiku_20240307_20250617t2226."
 
 [[correction]]
 provider = "anthropic"
@@ -161,18 +88,6 @@ note = "models_dev_fix: The reported addition is a catalog correction: Anthropic
 
 [[correction]]
 provider = "anthropic"
-model = "claude-3-opus-20240229"
-valid_from = "2025-06-17T22:26:49Z"
-valid_until = "2025-06-23T20:53:34Z"
-input = 15.0
-output = 75.0
-cache_read = 1.5
-cache_write = 18.75
-source = "https://www.anthropic.com/news/prompt-caching"
-note = "models_dev_fix: Anthropic's official announcement already listed Claude 3 Opus cache writes at $18.75/MTok and cache reads at $1.50/MTok by December 17, 2024. The $1.50 cache_write value in models.dev was therefore not the provider's price; no separate correction date is established by these sources. Finding research/price-dates/findings/anthropic_claude_3_opus_20240229_20250623t2053."
-
-[[correction]]
-provider = "anthropic"
 model = "claude-haiku-4-5-20251001"
 valid_from = "2025-10-15T17:24:36Z"
 valid_until = "2025-10-15T17:51:46Z"
@@ -185,39 +100,15 @@ note = "models_dev_fix: Anthropic's launch announcement establishes $1/$5 input/
 
 [[correction]]
 provider = "anthropic"
-model = "claude-haiku-4-5-20251001"
-valid_from = "2025-10-15T17:51:46Z"
-valid_until = "2025-10-15T22:14:20Z"
-input = 1.0
-output = 5.0
-cache_read = 0.1
-cache_write = 1.25
-source = "https://www.anthropic.com/news/claude-haiku-4-5"
-note = "models_dev_fix: Anthropic\u2019s launch announcement dated October 15, 2025 specifies $1/$5 input/output pricing, so the earlier $1.25 output value was not the provider\u2019s official launch price and is best classified as a models.dev fix. The source does not state a clock time for the price, and no change effective time is applicable. Finding research/price-dates/findings/anthropic_claude_haiku_4_5_20251001_20251015t2214."
-
-[[correction]]
-provider = "anthropic"
 model = "claude-opus-4-20250514"
 valid_from = "2025-06-05T20:08:05Z"
 valid_until = "2025-06-17T22:26:49Z"
 input = 15.0
 output = 75.0
 cache_read = 1.5
-cache_write = 18.75
+cache_write = 1.5
 source = "https://www.anthropic.com/news/claude-4"
 note = "models_dev_fix: The earlier $15/$75 base price was official; Anthropic's Opus 4 table identifies cache reads at $1.50/MTok and writes at $18.75/MTok for 5-minute TTL or $30/MTok for 1-hour TTL. Thus the added $1.50 cache_write value was not an official price; no effective date for this models.dev correction is stated by the cited provider sources. Finding research/price-dates/findings/anthropic_claude_opus_4_20250514_20250617t2226."
-
-[[correction]]
-provider = "anthropic"
-model = "claude-opus-4-20250514"
-valid_from = "2025-06-17T22:26:49Z"
-valid_until = "2025-06-23T20:53:34Z"
-input = 15.0
-output = 75.0
-cache_read = 1.5
-cache_write = 18.75
-source = "https://www.anthropic.com/news/claude-4"
-note = "models_dev_fix: The earlier $1.50 cache_write value was not Anthropic's official cache-write rate; it corresponds to the cache-read rate, so this is a models.dev correction. These sources establish the official price but do not state when models.dev's value was corrected; archived pricing pages extracted here omit their model pricing tables. Finding research/price-dates/findings/anthropic_claude_opus_4_20250514_20250623t2053."
 
 [[correction]]
 provider = "anthropic"
@@ -230,18 +121,6 @@ cache_read = 0.5
 cache_write = 6.25
 source = "https://www.anthropic.com/news/claude-opus-4-5"
 note = "models_dev_fix: Anthropic's launch announcement establishes $5/$25 base pricing, and its official pricing table lists cache reads at $0.50 and five-minute cache writes at $6.25 per million tokens. The earlier models.dev cache values were not the provider's official Opus 4.5 rates; the exact time of models.dev's correction is not established here. Internet Archive CDX lookup returned HTTP 503, so no archival bracket was available. Finding research/price-dates/findings/anthropic_claude_opus_4_5_20251126t1557."
-
-[[correction]]
-provider = "anthropic"
-model = "claude-opus-4-6"
-valid_from = "2026-03-13T00:00:00Z"
-valid_until = "2026-03-13T19:13:40Z"
-input = 5.0
-output = 25.0
-cache_read = 0.5
-cache_write = 6.25
-source = "https://www.anthropic.com/news/claude-opus-4-6"
-note = "price_change: This was a real provider price change: Anthropic's February 5 launch post stated the premium above 200k tokens, and its March 13 announcement said standard pricing now applied across the full 1M window. Anthropic states the announcement's date as March 13, 2026; it gives no time or timezone. Finding research/price-dates/findings/anthropic_claude_opus_4_6_20260313t1913."
 
 [[correction]]
 provider = "anthropic"
@@ -268,18 +147,6 @@ source = "https://platform.claude.com/docs/en/build-with-claude/prompt-caching.m
 note = "models_dev_fix: The earlier models.dev record had the cache read and cache write amounts reversed. Anthropic\u2019s documentation identifies the official Sonnet 4 values as $0.30 per million cache reads and $3.75 per million 5-minute cache writes. The sources do not establish when models.dev corrected its own record or a provider price change date. Finding research/price-dates/findings/anthropic_claude_sonnet_4_20250514_20250623t2053."
 
 [[correction]]
-provider = "anthropic"
-model = "claude-sonnet-4-6"
-valid_from = "2026-03-13T00:00:00Z"
-valid_until = "2026-03-13T19:13:40Z"
-input = 3.0
-output = 15.0
-cache_read = 0.3
-cache_write = 3.75
-source = "https://claude.com/blog/1m-context-ga"
-note = "price_change: Anthropic announced on March 13, 2026 that standard $3/$15 pricing applied across Sonnet 4.6's full 1M context window, removing the long-context premium reflected in the earlier tiered price. The announcement specifies a calendar date but no time or timezone; Internet Archive CDX requests timed out, so no snapshot bracket is available. Finding research/price-dates/findings/anthropic_claude_sonnet_4_6_20260313t1913."
-
-[[correction]]
 provider = "deepseek"
 model = "deepseek-chat"
 valid_from = "2025-06-10T22:55:28Z"
@@ -289,28 +156,6 @@ output = 1.1
 cache_read = 0.07
 source = "https://api-docs.deepseek.com/news/news1226/"
 note = "models_dev_fix: The June 10 models.dev entry omitted cache-read pricing that DeepSeek had publicly listed as $0.07/M; the June 17 addition is therefore a models.dev correction, not evidence of a provider price change then. DeepSeek\u2019s source does not date this correction, so effective_at is null. Finding research/price-dates/findings/deepseek_deepseek_chat_20250617t2226."
-
-[[correction]]
-provider = "deepseek"
-model = "deepseek-chat"
-valid_from = "2025-09-29T00:00:00Z"
-valid_until = "2025-11-17T16:05:41Z"
-input = 0.28
-output = 0.42
-cache_read = 0.028
-source = "https://api-docs.deepseek.com/news/news250929/"
-note = "price_change: DeepSeek's September 29, 2025 announcement explicitly says the price cut was effective immediately, establishing a day-level effective date; it gives no time of day. The announcement confirms a genuine provider price change, but does not state the earlier input, output, or cache-read prices. Finding research/price-dates/findings/deepseek_deepseek_chat_20251117t1605."
-
-[[correction]]
-provider = "deepseek"
-model = "deepseek-chat"
-valid_from = "2026-04-25T17:28:45Z"
-valid_until = "2026-06-06T22:51:44Z"
-input = 0.14
-output = 0.28
-cache_read = 0.0028
-source = "https://api-docs.deepseek.com/updates/"
-note = "models_dev_fix: Classified as models_dev_fix: DeepSeek's changelog says deepseek-chat pointed to V4-Flash beginning with the April 24, 2026 release, before the models.dev price interval began. The official pricing page's extracted Markdown omits its price table, and Wayback snapshot extraction returned 429, so the historical cache_read value cannot be verified from a quote here; effective_at is therefore null. Finding research/price-dates/findings/deepseek_deepseek_chat_20260606t2251."
 
 [[correction]]
 provider = "deepseek"
@@ -326,17 +171,6 @@ note = "models_dev_fix: The provider's archived pricing page, captured June 9, 2
 [[correction]]
 provider = "deepseek"
 model = "deepseek-reasoner"
-valid_from = "2025-08-25T16:35:54Z"
-valid_until = "2025-09-05T16:00:00Z"
-input = 0.55
-output = 2.19
-cache_read = 0.14
-source = "https://web.archive.org/web/20250821064706id_/https://api-docs.deepseek.com/quick_start/pricing"
-note = "price_change: The provider's archived pricing page explicitly says the earlier price list remained in effect until the stated UTC time, confirming a real provider price change. Its scheduled new input price is $0.56; models.dev records $0.57 after the change, so that one-cent difference is not supported by this provider source. Finding research/price-dates/findings/deepseek_deepseek_reasoner_20250825t1635."
-
-[[correction]]
-provider = "deepseek"
-model = "deepseek-reasoner"
 valid_from = "2025-09-29T00:00:00Z"
 valid_until = "2025-11-17T16:05:41Z"
 input = 0.28
@@ -344,28 +178,6 @@ output = 0.42
 cache_read = 0.028
 source = "https://api-docs.deepseek.com/updates/"
 note = "price_change: The provider's September 29 update identifies deepseek-reasoner among the upgraded API models, and its announcement says the price cut was effective immediately; this supports a September 29 price change. The archived pricing-page captures could not be fetched, so the exact prior price is left unknown and no before/after snapshot bracket is claimed. Finding research/price-dates/findings/deepseek_deepseek_reasoner_20251117t1605."
-
-[[correction]]
-provider = "deepseek"
-model = "deepseek-reasoner"
-valid_from = "2026-04-24T00:00:00Z"
-valid_until = "2026-04-25T17:28:45Z"
-input = 0.14
-output = 0.28
-cache_read = 0.028
-source = "https://api-docs.deepseek.com/news/news250929"
-note = "price_change: The provider's dated April 24, 2026 V4 announcement says the API update was available that day, consistent with a real provider change rather than a models.dev correction. The archived pricing-page CDX query was unavailable (503); no accessible primary source here gives exact pre-change rates or brackets the pricing-page transition, so effective precision is limited to the announcement day. Finding research/price-dates/findings/deepseek_deepseek_reasoner_20260425t1728."
-
-[[correction]]
-provider = "google"
-model = "gemini-1.5-flash"
-valid_from = "2025-06-10T22:41:49Z"
-valid_until = "2025-06-17T22:26:49Z"
-input = 0.075
-output = 0.3
-cache_read = 0.01875
-source = "https://developers.googleblog.com/en/gemini-15-flash-updates-google-ai-studio-gemini-api/"
-note = "models_dev_fix: The June 2025 models.dev edit added a cache_read field while retaining Google\u2019s unchanged input/output prices, so the evidence points to a catalog omission being corrected rather than a provider price change. Google\u2019s announcement confirms caching prices were reduced but does not state the resulting cache-read amount. Internet Archive CDX access was unavailable, so the exact earlier cache-read price and a snapshot bracket could not be verified; no effective date is assigned. Finding research/price-dates/findings/google_gemini_1.5_flash_20250617t2226."
 
 [[correction]]
 provider = "google"
@@ -399,17 +211,6 @@ output = 0.4
 cache_read = 0.025
 source = "https://web.archive.org/web/20250616024644id_/https://ai.google.dev/gemini-api/docs/pricing"
 note = "models_dev_fix: Google's own pricing page already listed the $0.025 per million text/image/video context caching rate on 2025-06-16, so the earlier models.dev omission was a catalog error rather than a provider price change. This establishes the official rate during the earlier period; it does not establish a provider effective date for the catalog correction. Finding research/price-dates/findings/google_gemini_2.0_flash_20250617t2226."
-
-[[correction]]
-provider = "google"
-model = "gemini-2.5-flash-preview-04-17"
-valid_from = "2025-06-10T22:41:49Z"
-valid_until = "2025-06-17T22:26:49Z"
-input = 0.15
-output = 0.6
-cache_read = 0.0375
-source = "https://developers.googleblog.com/en/gemini-2-5-models-now-support-implicit-caching/"
-note = "models_dev_fix: Classified as models_dev_fix: Google's implicit caching announcement establishes the 75% cache-hit discount for Gemini 2.5, equivalent to $0.0375/M against the $0.15/M input rate. The models.dev commit reflects adding the omitted cache_read field; available provider sources do not state the exact date implicit caching became available for this preview model. Finding research/price-dates/findings/google_gemini_2.5_flash_preview_04_17_20250617t2226."
 
 [[correction]]
 provider = "google"
@@ -452,19 +253,9 @@ valid_until = "2025-12-17T20:39:42Z"
 input = 0.5
 output = 3.0
 cache_read = 0.05
+tiers = [{ above = 200000, cache_read = 0.05, input = 0.5, output = 3.0 }]
 source = "https://blog.google/products-and-platforms/products/gemini/gemini-3-flash/"
 note = "models_dev_fix: Google\u2019s launch announcement published on 2025-12-17 gives the same $0.50/$3 rates as the later models.dev correction, indicating the earlier $0.15/$0.60 entry was a models.dev error. Google\u2019s current pricing page lists $0.05 cache reads; no source located states an exact time for this correction or independently establishes the earlier cache rate. Finding research/price-dates/findings/google_gemini_3_flash_preview_20251217t2039."
-
-[[correction]]
-provider = "google"
-model = "gemini-3-flash-preview"
-valid_from = "2025-12-17T20:39:42Z"
-valid_until = "2026-05-12T22:40:48Z"
-input = 0.5
-output = 3.0
-cache_read = 0.05
-source = "https://web.archive.org/web/20260501160638/https://ai.google.dev/gemini-api/docs/pricing"
-note = "models_dev_fix: The pre-commit May 1, 2026 Google pricing snapshot shows the same flat $0.50/$3.00/$0.05 rates as the current Google page, supporting that the >200,000-token tier was a models.dev metadata error rather than a provider price change. The sources do not establish the complete pricing history back to launch or an effective date; Internet Archive CDX requests returned HTTP 503, so no narrower historical bracket was available. Finding research/price-dates/findings/google_gemini_3_flash_preview_20260512t2240."
 
 [[correction]]
 provider = "google"
@@ -521,17 +312,6 @@ source = "https://ai.google.dev/gemini-api/docs/pricing"
 note = "models_dev_fix: Google's pricing page identifies the lower rates as the official rates through December 31, 2026, with the models.dev higher rates beginning only on January 1, 2027. Thus the higher earlier models.dev values were not Google's official price during the earlier period; Google does not state a start time for that lower-rate period in the cited text. Finding research/price-dates/findings/google_gemini_3.6_flash_20260821t0642."
 
 [[correction]]
-provider = "google"
-model = "gemini-flash-latest"
-valid_from = "2025-09-29T15:50:03Z"
-valid_until = "2025-10-15T16:05:35Z"
-input = 0.3
-output = 2.5
-cache_read = 0.075
-source = "https://developers.googleblog.com/gemini-2-5-thinking-model-updates/"
-note = "models_dev_fix: The provider announcement identifies the pricing update but does not state its effective date. The earlier models.dev output rate was not the provider-stated prior rate; no cited source establishes the historical cache-read rate, so it is null. Finding research/price-dates/findings/google_gemini_flash_latest_20251015t1605."
-
-[[correction]]
 provider = "openai"
 model = "codex-mini-latest"
 valid_from = "2025-06-05T17:34:29Z"
@@ -584,17 +364,6 @@ output = 1.6
 cache_read = 0.1
 source = "https://developers.openai.com/api/docs/models/gpt-4.1-mini"
 note = "models_dev_fix: The models.dev commit describes a schema rename and removal of zero-valued cache fields; the recorded addition exposes the existing nonzero cached-input price. OpenAI's available archived launch page does not include the detailed rate table, so no effective date for any provider price change is stated or bracketed. Finding research/price-dates/findings/openai_gpt_4.1_mini_20250617t2226."
-
-[[correction]]
-provider = "openai"
-model = "gpt-4.1-nano"
-valid_from = "2025-06-11T20:51:05Z"
-valid_until = "2025-06-17T22:26:49Z"
-input = 0.1
-output = 0.4
-cache_read = 0.025
-source = "https://developers.openai.com/api/docs/models/gpt-4.1-nano"
-note = "models_dev_fix: OpenAI's pricing documentation lists cached input at $0.025 per million tokens, so the earlier catalog record's omission was not the provider's official rate. The supplied primary sources do not state when the catalog's $0.03 value took effect; the Internet Archive CDX request for contemporaneous pricing snapshots returned HTTP 503. Finding research/price-dates/findings/openai_gpt_4.1_nano_20250617t2226."
 
 [[correction]]
 provider = "openai"
@@ -675,28 +444,6 @@ note = "models_dev_fix: The recorded $0.13 is consistent with a rounded represen
 
 [[correction]]
 provider = "openai"
-model = "gpt-5-chat-latest"
-valid_from = "2025-08-08T20:57:07Z"
-valid_until = "2026-05-26T17:06:15Z"
-input = 1.25
-output = 10.0
-cache_read = 0.125
-source = "https://community.openai.com/t/gpt-5-gpt-5-mini-and-gpt-5-nano-now-available-in-the-api/1337048"
-note = "models_dev_fix: The provider had already announced GPT-5 pricing with a 90% cache discount on August 7, 2025, before models.dev's stated August 8 start for the earlier record; the added cache_read field therefore reflects a models.dev omission, not a provider price change. The available provider evidence does not establish a later correction date. Finding research/price-dates/findings/openai_gpt_5_chat_latest_20260526t1706."
-
-[[correction]]
-provider = "openai"
-model = "gpt-5-mini"
-valid_from = "2025-08-07T17:59:07Z"
-valid_until = "2025-08-08T21:09:56Z"
-input = 0.25
-output = 2.0
-cache_read = 0.025
-source = "https://developers.openai.com/api/docs/models/gpt-5-mini"
-note = "models_dev_fix: OpenAI's official rate is $0.025 per million cached input tokens, so the $0.03 value added by models.dev is inconsistent with the provider's published price; this is a models.dev correction, not evidence of a provider price change. The provider pages do not establish when the $0.025 rate first took effect, so no effective date or bracket is asserted. Finding research/price-dates/findings/openai_gpt_5_mini_20250808t2109."
-
-[[correction]]
-provider = "openai"
 model = "gpt-5-mini"
 valid_from = "2025-08-08T21:09:56Z"
 valid_until = "2026-01-20T16:03:07Z"
@@ -730,29 +477,6 @@ note = "models_dev_fix: OpenAI's model page gives $0.005 cached input pricing an
 
 [[correction]]
 provider = "openai"
-model = "gpt-5.1"
-valid_from = "2025-11-13T21:52:47Z"
-valid_until = "2026-05-26T17:06:15Z"
-input = 1.25
-output = 10.0
-cache_read = 0.125
-source = "https://developers.openai.com/api/docs/models/gpt-5.1"
-note = "models_dev_fix: OpenAI's official model page gives the cached input rate as $0.125, matching the post-change value. The $0.13 earlier value appears to be an inaccurate rounding in models.dev; no provider source located states a later effective date for a change, so no date is assigned. Finding research/price-dates/findings/openai_gpt_5.1_20260526t1706."
-
-[[correction]]
-provider = "openai"
-model = "gpt-5.4"
-valid_from = "2026-04-08T04:47:19Z"
-valid_until = "2026-05-12T22:40:48Z"
-input = 2.5
-output = 15.0
-cache_read = 0.25
-tiers = [{ above = 272000, cache_read = 0.5, input = 5.0, output = 22.5 }]
-source = "https://web.archive.org/web/20260407122011id_/https://developers.openai.com/api/docs/pricing"
-note = "models_dev_fix: Classified as a models.dev correction: the provider's archived pricing rows before and after the initial models.dev recording give the same rates, and current OpenAI documentation defines the corresponding boundary as 272K. The archive extraction omitted a historical boundary definition, and an archived model-page request returned HTTP 429; no effective date for a provider price change is established. Finding research/price-dates/findings/openai_gpt_5.4_20260512t2240."
-
-[[correction]]
-provider = "openai"
 model = "gpt-5.4-pro"
 valid_from = "2026-03-05T23:50:22Z"
 valid_until = "2026-05-12T22:40:48Z"
@@ -761,18 +485,6 @@ output = 180.0
 tiers = [{ above = 272000, input = 60.0, output = 270.0 }]
 source = "https://developers.openai.com/api/docs/models/gpt-5.4-pro"
 note = "models_dev_fix: The recorded 200,000-token threshold was not the official threshold: OpenAI's documentation specifies >272K for long-context pricing, so this is a models.dev correction, not a provider price change. The official price during the earlier period was $30/$180 per million tokens through 272K input tokens and $60/$270 above 272K; no dated historical source or archive bracket was available to establish a more precise historical timestamp. Finding research/price-dates/findings/openai_gpt_5.4_pro_20260512t2240."
-
-[[correction]]
-provider = "openai"
-model = "gpt-5.5"
-valid_from = "2026-04-24T00:00:00Z"
-valid_until = "2026-04-24T18:50:50Z"
-input = 5.0
-output = 30.0
-cache_read = 0.5
-tiers = [{ above = 200000, cache_read = 1.0, input = 10.0, output = 45.0 }]
-source = "https://openai.com/index/introducing-gpt-5-5/"
-note = "price_change: The $5/$30 baseline was the price OpenAI announced before API availability; the dated April 24 availability update is the best provider-stated effective date for the API price structure. OpenAI's currently fetched documentation confirms the higher long-context multiplier, although its current threshold is >272K rather than the models.dev record's >200K. The Internet Archive CDX request failed, so no historical snapshot could establish a more precise time or validate the original threshold. Finding research/price-dates/findings/openai_gpt_5.5_20260424t1850."
 
 [[correction]]
 provider = "openai"
@@ -835,17 +547,6 @@ note = "models_dev_fix: OpenAI announced prompt caching for o1-preview on Octobe
 
 [[correction]]
 provider = "openai"
-model = "o3"
-valid_from = "2025-06-11T20:51:05Z"
-valid_until = "2025-06-17T22:26:49Z"
-input = 2.0
-output = 8.0
-cache_read = 0.5
-source = "https://developers.openai.com/api/docs/models/o3"
-note = "models_dev_fix: The earlier record omitted cache_read even though OpenAI lists o3 cached input at $0.50/M tokens, so this is a models.dev data/schema correction, not a provider price change. An Internet Archive request for a contemporaneous snapshot returned HTTP 429; the available primary-source page does not state when the rate began. Finding research/price-dates/findings/openai_o3_20250617t2226."
-
-[[correction]]
-provider = "openai"
 model = "o3-mini"
 valid_from = "2025-06-11T20:51:05Z"
 valid_until = "2025-06-17T22:26:49Z"
@@ -879,28 +580,6 @@ note = "models_dev_fix: The provider's launch pricing and current model document
 
 [[correction]]
 provider = "xai"
-model = "grok-2"
-valid_from = "2025-06-17T22:26:49Z"
-valid_until = "2025-09-09T20:03:17Z"
-input = 2.0
-output = 10.0
-cache_read = 2.0
-source = "https://x.ai/news/grok-1212"
-note = "models_dev_fix: The provider announcement establishes $2 input and $10 output rates, while its API billing record has no distinct cache-write price field; the recorded $10 cache_write is therefore not evidenced as an official charge and is consistent with a models.dev mapping error. xAI's pages support no effective date for this correction, and the Internet Archive CDX endpoint refused access, so no date is inferred. Finding research/price-dates/findings/xai_grok_2_20250909t2003."
-
-[[correction]]
-provider = "xai"
-model = "grok-2-1212"
-valid_from = "2025-06-10T21:45:14Z"
-valid_until = "2025-06-17T22:26:49Z"
-input = 2.0
-output = 10.0
-cache_read = 2.0
-source = "https://x.ai/news/grok-1212"
-note = "models_dev_fix: The provider announcement establishes the $2/$10 base rates, while the June models.dev entry aligns with its stated cache-field/schema migration rather than a provider price announcement; this is best classified as a models.dev fix. The accessible xAI sources do not establish the historic cache-read charge or a date for its metadata correction, and the Internet Archive pricing snapshot request returned 429, so effective_at is null. Finding research/price-dates/findings/xai_grok_2_1212_20250617t2226."
-
-[[correction]]
-provider = "xai"
 model = "grok-2-1212"
 valid_from = "2025-06-17T22:26:49Z"
 valid_until = "2025-09-09T20:03:17Z"
@@ -909,50 +588,6 @@ output = 10.0
 cache_read = 2.0
 source = "https://x.ai/news/grok-1212"
 note = "models_dev_fix: The provider evidence supports $2 input and $10 output; its model configuration shows cached prompts priced at zero and no separate cache-write rate, so the recorded cache_write value of $10 appears to have been a models.dev data error. The Internet Archive CDX endpoint returned HTTP 503, so no archive snapshot pair was available; no effective date is asserted. Finding research/price-dates/findings/xai_grok_2_1212_20250909t2003."
-
-[[correction]]
-provider = "xai"
-model = "grok-2-latest"
-valid_from = "2025-06-17T22:26:49Z"
-valid_until = "2025-09-09T20:03:17Z"
-input = 2.0
-output = 10.0
-cache_read = 2.0
-source = "https://x.ai/news/grok-1212"
-note = "models_dev_fix: The official Grok-2 announcement gives $2 input and $10 output pricing, matching the recorded rates, while the provider's caching documentation describes reduced-price cached prompt tokens rather than a separately priced cache-write token type. This supports treating the cache_write=$10 field as a models.dev categorization error; no source located states an effective date or historical cache-read rate, and the Internet Archive CDX request failed with HTTP 503. Finding research/price-dates/findings/xai_grok_2_latest_20250909t2003."
-
-[[correction]]
-provider = "xai"
-model = "grok-2-vision"
-valid_from = "2025-06-17T22:26:49Z"
-valid_until = "2025-09-09T20:03:17Z"
-input = 2.0
-output = 10.0
-cache_read = 2.0
-source = "https://x.ai/news/grok-1212"
-note = "models_dev_fix: The source material supports the $2/$10 base rates but gives no evidence that xAI ever charged a separate $10 cache-write rate; its API model schema uses a single cached-prompt price field instead. No primary source found states or brackets when models.dev removed that field, and the Wayback CDX endpoint returned HTTP 503, so the effective date is unknown. Finding research/price-dates/findings/xai_grok_2_vision_20250909t2003."
-
-[[correction]]
-provider = "xai"
-model = "grok-2-vision-1212"
-valid_from = "2025-06-17T22:26:49Z"
-valid_until = "2025-09-09T20:03:17Z"
-input = 2.0
-output = 10.0
-cache_read = 2.0
-source = "https://x.ai/news/grok-1212"
-note = "models_dev_fix: xAI announced the $2 input / $10 output rates on Dec 12, 2024. Its announcement does not support models.dev's earlier cache_write: 10 field, so this is best classified as models_dev_fix; the official cache_read rate is not stated in the source. The requested Internet Archive CDX endpoint was unavailable from this workspace, so no snapshot pair could be checked. Finding research/price-dates/findings/xai_grok_2_vision_1212_20250909t2003."
-
-[[correction]]
-provider = "xai"
-model = "grok-2-vision-latest"
-valid_from = "2025-06-10T21:45:14Z"
-valid_until = "2025-06-17T22:26:49Z"
-input = 2.0
-output = 10.0
-cache_read = 2.0
-source = "https://docs.x.ai/developers/release-notes"
-note = "models_dev_fix: The added cache_read value equals the standard input rate, while xAI describes cached tokens as substantially cheaper; this points to a models.dev data/schema correction rather than a provider price change. The available sources do not state Grok 2's exact cache rate for the earlier period, and the Internet Archive pricing-page requests returned 429, so the rate and any effective date cannot be established. Finding research/price-dates/findings/xai_grok_2_vision_latest_20250617t2226."
 
 [[correction]]
 provider = "xai"
@@ -989,17 +624,6 @@ note = "models_dev_fix: The contemporaneous xAI model page archived on 2025-06-0
 
 [[correction]]
 provider = "xai"
-model = "grok-3-fast-latest"
-valid_from = "2025-06-17T22:26:49Z"
-valid_until = "2025-09-09T20:03:17Z"
-input = 5.0
-output = 25.0
-cache_read = 1.25
-source = "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing"
-note = "models_dev_fix: The models.dev commit message identifies this as adding reasoning cost, and xAI's pricing guide says reasoning tokens use the full completion price; this supports a models.dev field correction rather than a provider price change. The Internet Archive CDX request for xAI's pricing page returned HTTP 503, so no primary archived page establishing the historic full price row was available; the listed official previous prices reflect the established input, output, and cached-input rates, while cache_write was not an official price. Finding research/price-dates/findings/xai_grok_3_fast_latest_20250909t2003."
-
-[[correction]]
-provider = "xai"
 model = "grok-3-latest"
 valid_from = "2025-06-17T22:26:49Z"
 valid_until = "2025-09-09T20:03:17Z"
@@ -1023,40 +647,6 @@ note = "models_dev_fix: Classified as models_dev_fix: xAI announced prompt cachi
 
 [[correction]]
 provider = "xai"
-model = "grok-3-mini-fast-latest"
-valid_from = "2025-06-10T21:45:14Z"
-valid_until = "2025-06-17T22:26:49Z"
-input = 0.6
-output = 4.0
-cache_read = 0.15
-source = "https://docs.x.ai/developers/rest-api-reference/management/auth"
-note = "models_dev_fix: The provider metadata exposes a $0.15 cached input rate for grok-3-mini and lists grok-3-mini-fast-latest as an alias, supporting that the newly represented cache_read value was provider pricing rather than a newly introduced price. The source is current metadata and does not date when that rate first applied; the earlier $0.60 input/$4.00 output values align with the recorded period, but no primary-source snapshot bracketing it was available here. Finding research/price-dates/findings/xai_grok_3_mini_fast_latest_20250617t2226."
-
-[[correction]]
-provider = "xai"
-model = "grok-3-mini-fast-latest"
-valid_from = "2025-06-17T22:26:49Z"
-valid_until = "2025-09-09T20:03:17Z"
-input = 0.6
-output = 4.0
-cache_read = 0.15
-source = "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing"
-note = "models_dev_fix: The change removes only models.dev's cache_write field while leaving the other listed prices unchanged, and xAI documents a discounted cached-input rate rather than a separate cache-write charge; this supports a models.dev fix. The 2025 pricing-page archive lookup failed with HTTP 503, so no source available here states the official Grok 3 Mini Fast rates during the earlier period or the timing of this correction. Finding research/price-dates/findings/xai_grok_3_mini_fast_latest_20250909t2003."
-
-[[correction]]
-provider = "xai"
-model = "grok-3-mini-latest"
-valid_from = "2025-06-10T21:45:14Z"
-valid_until = "2025-06-17T22:26:49Z"
-input = 0.3
-output = 0.5
-cache_read = 0.075
-cache_write = 0.5
-source = "https://docs.x.ai/developers/release-notes"
-note = "models_dev_fix: The models.dev commit describes a schema cleanup (renaming cache fields and removing zero-valued fields), not a provider pricing announcement; xAI\u2019s release notes say cached prompts were available in May 2025. I classify this as models_dev_fix, but the available provider source does not state Grok 3 Mini\u2019s official token rates during the earlier period, so those values and an effective date are left unknown. Finding research/price-dates/findings/xai_grok_3_mini_latest_20250617t2226."
-
-[[correction]]
-provider = "xai"
 model = "grok-4.5"
 valid_from = "2026-07-19T04:20:56Z"
 valid_until = "2026-07-31T19:00:57Z"
@@ -1066,27 +656,3 @@ cache_read = 0.3
 tiers = [{ above = 200000, cache_read = 0.6, input = 4.0, output = 12.0 }]
 source = "https://docs.x.ai/developers/pricing"
 note = "models_dev_fix: The provider's published pricing gives the >200k cached-input rate as $0.60, so the earlier $1.00 catalog value was a models.dev error rather than a provider price change. The current provider pages do not establish the exact historical publication date of that rate, and the Internet Archive CDX request timed out; no date is inferred. Finding research/price-dates/findings/xai_grok_4.5_20260731t1900."
-
-[[correction]]
-provider = "xai"
-model = "grok-beta"
-valid_from = "2025-06-10T21:45:14Z"
-valid_until = "2025-06-17T22:26:49Z"
-input = 5.0
-output = 15.0
-cache_read = 5.0
-cache_write = 15.0
-source = "https://web.archive.org/web/20250608075937/https://docs.x.ai/docs/models"
-note = "models_dev_fix: The xAI catalog snapshots preserve the same listed input/output prices across the models.dev commit and contain no cached-price fields for Grok Beta, while the newly represented cache values duplicate the standard rates. This points to a models.dev data/schema correction; the provider sources do not state a cache price or a provider effective date. Finding research/price-dates/findings/xai_grok_beta_20250617t2226."
-
-[[correction]]
-provider = "zai"
-model = "glm-5"
-valid_from = "2026-02-11T18:17:49Z"
-valid_until = "2026-02-11T20:35:23Z"
-input = 1.0
-output = 3.2
-cache_read = 0.2
-cache_write = 0.0
-source = "https://docs.z.ai/guides/overview/pricing"
-note = "models_dev_fix: The provider's launch announcement is dated February 12, while models.dev recorded the zero values on February 11; Z.ai's official pricing table gives the nonzero GLM-5 rates. This supports a models.dev prelaunch placeholder/error rather than an official free-price period. I could not retrieve Internet Archive snapshots (the CDX endpoint returned HTTP 503), so no exact pricing-effective time or archived before/after bracket is available. Finding research/price-dates/findings/zai_glm_5_20260211t2035."

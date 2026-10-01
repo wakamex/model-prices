@@ -12,6 +12,9 @@ must appear in the library copy of its page.
     aop batch research/price-dates/batch.toml --jobs 4        (from research/price-dates)
     uv run --no-config python research/price_dates.py collect BATCH_JSON
     uv run --no-config python research/price_dates.py verify
+    uv run --no-config python research/price_dates.py review-manifest
+    aop batch research/price-dates/review-batch.toml --jobs 4
+    uv run --no-config python research/price_dates.py collect-reviews BATCH_JSON
     uv run --no-config python research/price_dates.py corrections
 """
 
@@ -107,6 +110,52 @@ unavailable, say so in notes rather than concluding there is no evidence.
 """
 
 
+REVIEW_PROMPT = """\
+You are checking one finding written by another researcher for llm-prices, an open dataset
+of LLM API prices over time. The finding explains a price change recorded by models.dev,
+an open model catalog:
+
+- Model: {provider}/{model}
+- Price before (USD per million tokens): {before}, recorded from {previous_at}
+- Price after: {after}, recorded from {recorded_at}
+
+The finding is /inputs/{id}/finding.json. Every quote in it has been checked by machine to
+appear in the page it cites, so do not check that again. Copies of the cited pages are in
+/inputs/sources/ (one Markdown file per URL; /inputs/sources/index.tsv lists them) and in
+/inputs/{id}/sources/. Judge only from these files; do not look for other sources.
+
+Check whether the quotes, read in their surrounding text, support the finding:
+
+1. Each quote offered as evidence for a claim is about this model, not another model,
+   version, or alias, and about this price or this change, not a different event. A quote
+   that only gives context, such as a model's capabilities, is not a failure.
+2. The classification holds. "price_change": the provider's price changed from the before
+   price to the after price. "models_dev_fix": during the period it was recorded, the
+   before entry differed from the provider's official price in at least one field, either
+   a wrong value or a missing price the provider charged, such as cached input; the after
+   entry is models.dev's correction.
+3. The sources place the claimed price in the right period. For a price_change, the
+   effective_at date or bracket is stated in the cited pages, in a quote or the page's own
+   date, and should not fall before the before price was recorded unless the sources show
+   models.dev recorded both prices late. For a models_dev_fix, a current price page may
+   stand for the earlier period when nothing in the cited pages shows a different price in
+   between; say in notes when you rely on that. Fail the check when the sources show a
+   different price applied then.
+4. Each non-null value in official_previous_price matches a quoted price for this model.
+   Null values claim nothing and pass.
+
+Write $AOP_OUTPUT_DIR/review.json:
+
+{{
+  "verdict": "supported" | "unsupported",
+  "problems": ["one entry per failed check, naming the check and the quote"],
+  "notes": "one or two sentences"
+}}
+
+Use "supported" only when every check passes.
+"""
+
+
 def _git(repo: Path, *args: str) -> str:
     return subprocess.run(["git", "-C", str(repo), *args], check=True,
                           capture_output=True, text=True).stdout
@@ -186,6 +235,73 @@ def write_manifest(changes: list[dict], only: set[str], model: str, effort: str)
     manifest = WORK / "batch.toml"
     manifest.write_text("\n".join(blocks))
     return manifest
+
+
+def write_review_manifest(changes: list[dict], only: set[str], model: str, effort: str) -> Path:
+    """One review task per verified finding that could become a correction."""
+    tasks = WORK / "review-tasks"
+    tasks.mkdir(parents=True, exist_ok=True)
+    write_index()
+    blocks = []
+    for change in changes:
+        if only and change["id"] not in only:
+            continue
+        try:
+            finding = json.loads((WORK / "findings" / change["id"] / "finding.json").read_text())
+        except (FileNotFoundError, json.JSONDecodeError):
+            continue
+        if not finding.get("verified") or finding.get("classification") == "unclear":
+            continue
+        prompt = REVIEW_PROMPT.format(**{key: json.dumps(value) if isinstance(value, dict) else value
+                                         for key, value in change.items()})
+        (tasks / f"{change['id']}.md").write_text(prompt)
+        blocks.append(
+            f'[[tasks]]\nid = "{change["id"]}"\nagent = "codex"\nmodel = "{model}"\n'
+            f'effort = "{effort}"\nprofile = "sealed"\nno_web = true\ntimeout = 900\n'
+            f'prompt_file = "review-tasks/{change["id"]}.md"\n'
+            f'inputs = ["../sources", "findings/{change["id"]}"]\n'
+            f'artifacts = ["review.json"]\n'
+        )
+    manifest = WORK / "review-batch.toml"
+    manifest.write_text("\n".join(blocks))
+    return manifest
+
+
+def review_prompt_id() -> str:
+    return hashlib.sha256(REVIEW_PROMPT.encode()).hexdigest()[:12]
+
+
+def collect_reviews(batch: Path) -> None:
+    """Append each review to its finding's reviews.jsonl, tagged with the review prompt."""
+    summary = json.loads(batch.read_text())
+    runs = batch.resolve().parent.parent / "runs"
+    for result in summary["tasks"]:
+        artifact = runs / str(result.get("run_id")) / "artifacts" / "review.json"
+        try:
+            review = json.loads(artifact.read_text())
+        except (FileNotFoundError, json.JSONDecodeError) as error:
+            print(f"skip {result['task']}: {result['status']}, {error}", file=sys.stderr)
+            continue
+        record = {"run_id": result["run_id"], "prompt": review_prompt_id(), **review}
+        with (WORK / "findings" / result["task"] / "reviews.jsonl").open("a") as log:
+            log.write(json.dumps(record) + "\n")
+
+
+def review_verdict(change_id: str) -> tuple[str | None, list[str]]:
+    """The majority verdict of the reviews made with the current prompt, and their problems.
+
+    A single review is noisy, so a finding counts as supported only when most of at least
+    three reviews say so.
+    """
+    path = WORK / "findings" / change_id / "reviews.jsonl"
+    reviews = [json.loads(line) for line in path.read_text().splitlines()] if path.exists() else []
+    reviews = [review for review in reviews if review["prompt"] == review_prompt_id()]
+    if len(reviews) < 3:
+        return None, []
+    supported = sum(review.get("verdict") == "supported" for review in reviews)
+    problems = [problem for review in reviews if review.get("verdict") != "supported"
+                for problem in review.get("problems", [])]
+    return ("supported" if supported * 2 > len(reviews) else "unsupported"), problems
 
 
 def collect(batch: Path) -> None:
@@ -284,8 +400,9 @@ def verify() -> None:
               f"{finding.get('classification')} {finding.get('effective_at')}")
 
 
-# Verified findings whose official price needs a reviewed reading rather than the general
-# rule of overlaying it on the models.dev fix.
+# Findings read by hand, which settles them whatever the agent review says: "after" applies
+# the models.dev fix's own rates, ignoring the finding's official price, and "skip" leaves
+# the finding out.
 REVIEWED = {
     # The official cache_read of 0 is xAI's price for a model without caching; the fix was
     # dropping models.dev's cache_write, which its fixed entry already does.
@@ -347,6 +464,13 @@ def derive_corrections() -> tuple[list[dict], list[str]]:
             continue
         kind = finding.get("classification")
         if not finding.get("verified") or kind not in ("models_dev_fix", "price_change"):
+            continue
+        verdict, problems = review_verdict(change["id"])
+        if verdict is None:
+            skipped.append(f"{change['id']}: fewer than three reviews")
+            continue
+        if verdict != "supported" and change["id"] not in REVIEWED:
+            skipped.append(f"{change['id']}: reviews found {' | '.join(problems)[:300]}")
             continue
         previous = _day_start(change["previous_at"])
         recorded = _day_start(change["recorded_at"])
@@ -435,6 +559,12 @@ def main() -> int:
     gather = commands.add_parser("collect")
     gather.add_argument("batch", type=Path)
     commands.add_parser("verify")
+    reviews = commands.add_parser("review-manifest")
+    reviews.add_argument("--only", nargs="*", default=[])
+    reviews.add_argument("--model", default="gpt-6-luna")
+    reviews.add_argument("--effort", default="medium")
+    gather_reviews = commands.add_parser("collect-reviews")
+    gather_reviews.add_argument("batch", type=Path)
     commands.add_parser("corrections")
     args = parser.parse_args()
 
@@ -450,6 +580,12 @@ def main() -> int:
         print(f"wrote {path}")
     elif args.command == "collect":
         collect(args.batch)
+    elif args.command == "review-manifest":
+        changes = json.loads(changes_file.read_text())
+        path = write_review_manifest(changes, set(args.only), args.model, args.effort)
+        print(f"wrote {path}")
+    elif args.command == "collect-reviews":
+        collect_reviews(args.batch)
     elif args.command == "corrections":
         write_corrections()
     else:
