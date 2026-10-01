@@ -26,6 +26,9 @@ from llm_prices.backfill import build, parse_rates, write
         ("gpt-5.5-2026-04-23", None, ("openai", "gpt-5.5")),
         ("claude-opus-5[1m]", None, ("anthropic", "claude-opus-5")),
         ("claude-sonnet-4.5", None, ("anthropic", "claude-sonnet-4-5")),
+        ("grok-4.6-build", None, ("xai", "grok-4.6")),
+        ("grok-4.7-build", "grok", ("xai", "grok-4.7")),
+        ("grok-build-0.1", None, ("xai", "grok-build-0.1")),
         ("codex-auto-review", None, None),
     ],
 )
@@ -247,6 +250,7 @@ def test_rates_report_the_suffix_removed_to_find_the_model():
     assert rates("kimi-k3-max").removed_suffix == "-max"
     assert rates("gpt-5.5-2026-04-23").removed_suffix == "-2026-04-23"
     assert rates("claude-opus-5[1m]").removed_suffix == "[1m]"
+    assert rates("grok-4.6-build").removed_suffix == "-build"
     assert rates("claude-opus-5-5").removed_suffix == ""
     assert rates("deepseek-v4.1-flash").removed_suffix == ""
 

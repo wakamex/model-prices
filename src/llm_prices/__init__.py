@@ -27,6 +27,9 @@ _EFFORT_SUFFIX = re.compile(r"-(minimal|low|medium|high|xhigh|max|thinking)$")
 _DATE_SUFFIX = re.compile(r"-(\d{4}-\d{2}-\d{2}|\d{8}|\d{4})$")
 # Context-window markers that tools append, such as Claude Code's "[1m]".
 _CONTEXT_MARKER = re.compile(r"\[[^\]]*\]$")
+# xAI's subscription endpoint, used by Grok Build, reports grok-4.6 as grok-4.6-build:
+# a server-side alias, not a separate model. grok-build-0.1 is a separate model.
+_GROK_BUILD_ALIAS = re.compile(r"^(grok-\d+(?:\.\d+)*)(-build)$")
 
 
 @dataclass(frozen=True)
@@ -149,6 +152,8 @@ def _candidates(name: str, strict: bool) -> list[tuple[str, str]]:
     marker = _CONTEXT_MARKER.search(name)
     if marker:
         found.append((name[:marker.start()], marker.group(0)))
+    found += [(match.group(1), match.group(2) + removed) for candidate, removed in found
+              if (match := _GROK_BUILD_ALIAS.match(candidate))]
     # Anthropic ids write versions with hyphens: claude-sonnet-4.5 is claude-sonnet-4-5.
     found += [(candidate.replace(".", "-"), removed) for candidate, removed in found
               if candidate.startswith("claude-") and "." in candidate]
