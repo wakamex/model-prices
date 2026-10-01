@@ -444,17 +444,18 @@ def _toml_value(value: object) -> str:
 def derive_corrections() -> tuple[list[dict], list[str]]:
     """Turn verified findings into corrections, and list the findings left out and why.
 
-    A models_dev_fix replaces the earlier entry's whole period with the fixed rates, overlaid
-    with any official price the finding quotes. A dated price_change moves the start of the
+    A models_dev_fix keeps models.dev's earlier entry over its whole period and replaces only
+    the prices the finding quotes, so a correction never copies an unquoted value from
+    models.dev's later entry. A dated price_change moves the start of the
     new rates to the documented time, or keeps the old rates until it when models.dev
     recorded the change early; a bracketed one applies the new rates from the first
     observation of them.
     """
     changes = json.loads((WORK / "changes.json").read_text())
     entries, skipped = [], []
-    # Rates fixed by each models_dev_fix, keyed by the start of the entry it corrects. When
-    # models.dev fixed a model twice in a row, the first fix's rates were still wrong, so a
-    # corrected period takes the rates of the fix that directly follows it.
+    # Official prices quoted by each models_dev_fix, keyed by the start of the entry it
+    # corrects. When models.dev fixed a model twice in a row, a corrected period also takes
+    # the prices quoted for the fix that directly follows it.
     fixed: dict[tuple[str, str, str], dict] = {}
     for change in sorted(changes, key=lambda item: item["recorded_at"], reverse=True):
         try:
@@ -479,13 +480,15 @@ def derive_corrections() -> tuple[list[dict], list[str]]:
             skipped.append(f"{change['id']}: reviewed, not applied")
             continue
         if kind == "models_dev_fix":
-            rates = dict(change["after"])
-            if review != "after":
-                rates.update({key: value for key, value in
-                              (finding.get("official_previous_price") or {}).items()
-                              if value is not None})
-            rates = fixed.get((change["provider"], change["model"], change["recorded_at"]), rates)
-            fixed[(change["provider"], change["model"], change["previous_at"])] = rates
+            quoted = {key: value for key, value in
+                      (finding.get("official_previous_price") or {}).items() if value is not None}
+            later = fixed.get((change["provider"], change["model"], change["recorded_at"]), {})
+            quoted = {**later, **quoted}
+            fixed[(change["provider"], change["model"], change["previous_at"])] = quoted
+            rates = dict(change["after"]) if review == "after" else {**change["before"], **quoted}
+            if rates == change["before"]:
+                skipped.append(f"{change['id']}: no quoted price differs from models.dev")
+                continue
             start, end = previous, recorded
         else:
             bracket = finding.get("bracket") or {}

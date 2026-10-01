@@ -32,9 +32,15 @@ Single reviews are noisy: across three passes of the same prompt over 111 findin
 
 ## From finding to correction
 
-`price_dates.py corrections` turns verified, reviewed findings into `src/llm_prices/data/research_corrections.toml`, which is generated and not edited by hand. A `models_dev_fix` replaces the whole earlier period with the fixed rates, overlaid with any official price the finding quotes; when models.dev fixed a model several times in a row, each corrected period takes the rates of the last fix. A dated `price_change` moves the start of the new price to the documented date, or keeps the old price until that date when models.dev recorded the change early. A date without a time applies from 00:00 UTC. When sources only bracket a change, the earlier documented price applies until the first observation of the new one.
+`price_dates.py corrections` turns verified, reviewed findings into `src/llm_prices/data/research_corrections.toml`, which is generated and not edited by hand. A `models_dev_fix` keeps models.dev's earlier entry over its whole period and replaces only the prices the finding quotes, together with those quoted for a fix that directly follows it; a correction never copies an unquoted value from models.dev's later entry, which was itself sometimes wrong. A dated `price_change` moves the start of the new price to the documented date, or keeps the old price until that date when models.dev recorded the change early. A date without a time applies from 00:00 UTC. When sources only bracket a change, the earlier documented price applies until the first observation of the new one.
 
 The command lists every verified finding it leaves out: changes without a documented date, changes dated before the earlier price was even recorded (usually a quote about a different event), findings marked in its `REVIEWED` table after reading them, and periods that `corrections.toml` already covers. Hand corrections in `corrections.toml` take precedence over researched ones.
+
+## Cross-check against genai-prices
+
+`crosscheck_genai_prices.py GENAI_PRICES_CHECKOUT` prices every correction's period with [Pydantic's genai-prices](https://github.com/pydantic/genai-prices), both from its current data, which dates a few changes, and from the `data.json` it had committed at that time. Each corrected field is reported as agreeing with the correction, with models.dev, with neither, or as missing from genai-prices.
+
+genai-prices lags providers much as models.dev does: on 2026-10-01 it agreed with models.dev against DeepSeek's own pricing page and OpenAI's GPT-5.6 Sol announcement. Agreement with models.dev is therefore weak evidence against a correction, and a disagreement is a lead to check against archived copies of the provider's page. The first run found two wrong corrections this way: Gemini 3.6 Flash's promotional price taken as its price since launch, which archived copies date to 2026-08-13, and a Claude Opus 4 cache-write price copied from models.dev's own wrong entry.
 
 ## Calibration
 

@@ -115,3 +115,20 @@ output = 9.0
 replaces = { output = 17.5 }
 source = "https://ai.google.dev/gemini-api/docs/pricing"
 note = "Text output is $9.00; models.dev records the $17.50 video output price. Checked 2026-09-30; the page does not date the price."
+
+[[correction]]
+provider = "google"
+model = "gemini-3.6-flash"
+valid_from = "2026-08-13T18:11:24Z"
+valid_until = "2026-08-21T06:42:28Z"
+input = 0.75
+output = 3.75
+cache_read = 0.075
+source = "https://web.archive.org/web/20260813181124/https://ai.google.dev/gemini-api/docs/pricing"
+note = """
+Google's pricing page listed Gemini 3.6 Flash at $1.50/$7.50 with $0.15 caching in every
+archived copy from launch to 2026-08-12T04:23:35Z, and "$0.75 through December 31, 2026.
+$1.50 starting January 1, 2027." from 2026-08-13T18:11:24Z, the day Gemini 3.7 Flash launched
+at an introductory price. The promotional price applies from that first observation; models.dev
+updated on 2026-08-21. Research finding google_gemini_3.6_flash_20260821t0642 took the
+promotion for the price since launch."""
