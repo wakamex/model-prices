@@ -1,13 +1,13 @@
-# llm-prices
+# model-prices
 
-LLM API prices as they were at any point in time. Pricing past usage at today's rates misstates it whenever a price changed: GPT-5.6 Sol cost $5/$30 per million input/output tokens until August 21, 2026, and $4/$20 for the three months after. This package answers "what did this request cost at API prices when it ran?"
+LLM API prices, today's or as they were at any point in time. Pricing past usage at today's rates misstates it whenever a price changed: GPT-5.6 Sol cost $5/$30 per million input/output tokens until August 21, 2026, and $4/$20 for the three months after. This package answers "what did this request cost at API prices when it ran?"
 
 Status: work in progress. Versions before 0.1 may change the data format and API without notice.
 
 ```python
-import llm_prices
+import model_prices
 
-llm_prices.cost(
+model_prices.cost(
     "gpt-5.6-sol",
     input_tokens=12_000,        # uncached input only
     cache_read_tokens=180_000,
@@ -15,12 +15,12 @@ llm_prices.cost(
     at="2026-08-20T14:00:00Z",
 )
 
-llm_prices.rates("claude-opus-5-5")  # current rates, per million tokens
+model_prices.rates("claude-opus-5-5")  # current rates, per million tokens
 ```
 
 ```sh
-llm-prices rate gpt-5.6-sol --at 2026-08-20
-llm-prices rate "Gemini 3.5 Flash (High)" --json
+model-prices rate gpt-5.6-sol --at 2026-08-20
+model-prices rate "Gemini 3.5 Flash (High)" --json
 ```
 
 ## Install
@@ -28,14 +28,14 @@ llm-prices rate "Gemini 3.5 Flash (High)" --json
 Requires Python 3.11 or newer.
 
 ```sh
-uv add llm-prices
+uv add model-prices
 ```
 
 ## Where the prices come from
 
 Prices come from the git history of [models.dev](https://github.com/sst/models.dev), an open catalog of model metadata that records each model's price in one TOML file per provider. Every commit on its main branch that changed a tracked model's price becomes an entry effective from that commit's time. The tracked providers are the labs that sell their own models: Alibaba, Anthropic, DeepSeek, Google, Moonshot AI, OpenAI, xAI, and Z.ai.
 
-models.dev sometimes records a change days after the provider made it, or lists a wrong price for a while. `corrections.toml` overrides those periods, and every correction cites its source. `research_corrections.toml` adds corrections generated from agent research into every recorded change, each verified against quotes from its sources (see [research/README.md](https://github.com/wakamex/llm-prices/blob/main/research/README.md)); hand corrections take precedence. A correction without an end date names the models.dev values it replaces and stops applying as soon as models.dev records anything else, so it cannot outlive a later fix or price change.
+models.dev sometimes records a change days after the provider made it, or lists a wrong price for a while. `corrections.toml` overrides those periods, and every correction cites its source. `research_corrections.toml` adds corrections generated from agent research into every recorded change, each verified against quotes from its sources (see [research/README.md](https://github.com/wakamex/model-prices/blob/main/research/README.md)); hand corrections take precedence. A correction without an end date names the models.dev values it replaces and stops applying as soon as models.dev records anything else, so it cannot outlive a later fix or price change.
 
 `Rates.valid_from_basis` says how a start date was found: `models.dev commit` dates usually lag the provider's real change by days, while `documented` dates come from a correction's cited source.
 
@@ -49,24 +49,24 @@ Each entry keeps input, output, cache read, and cache write rates, long-context 
 
 Some providers price by time of day. `schedules.toml` records each version of a provider's rules with the dates it applied: either peak windows that multiply the recorded rate, or off-peak windows that discount it for listed models. `Rates.period` says which applied: `"peak"` or `"off_peak"`, `"standard"` outside a discount window, or `None` when no time-of-day rule applies.
 
-Holiday calendars record the last date they cover, and `llm-prices check` fails 45 days before that date so the next year's holidays are added in time. DeepSeek is the one provider with such pricing so far. From 16:30 UTC on February 26, 2025 until 16:00 UTC on September 5, 2025, it took 50% off DeepSeek-V3 (`deepseek-chat`) and 75% off DeepSeek-R1 (`deepseek-reasoner`) from 16:30 to 00:30 UTC daily. Since 16:00 UTC on August 16, 2026, its peak hours have been 01:00-04:00 and 06:00-10:00 UTC on weekdays other than Chinese public holidays, at twice the off-peak rate. The pricing page added the weekday and holiday exceptions in late August and mid-September without an announcement; llm-prices applies the current rule from the start of peak pricing. [DeepSeek pricing history](https://github.com/wakamex/llm-prices/blob/main/docs/deepseek-pricing-history.md) records the evidence for each 2026 date. DeepSeek decides the period by when a request completes, so pass the completion time as `at` where it is known.
+Holiday calendars record the last date they cover, and `model-prices check` fails 45 days before that date so the next year's holidays are added in time. DeepSeek is the one provider with such pricing so far. From 16:30 UTC on February 26, 2025 until 16:00 UTC on September 5, 2025, it took 50% off DeepSeek-V3 (`deepseek-chat`) and 75% off DeepSeek-R1 (`deepseek-reasoner`) from 16:30 to 00:30 UTC daily. Since 16:00 UTC on August 16, 2026, its peak hours have been 01:00-04:00 and 06:00-10:00 UTC on weekdays other than Chinese public holidays, at twice the off-peak rate. The pricing page added the weekday and holiday exceptions in late August and mid-September without an announcement; model-prices applies the current rule from the start of peak pricing. [DeepSeek pricing history](https://github.com/wakamex/model-prices/blob/main/docs/deepseek-pricing-history.md) records the evidence for each 2026 date. DeepSeek decides the period by when a request completes, so pass the completion time as `at` where it is known.
 
 ## Official price checks
 
-`llm-prices check` fetches each supported provider's official pricing page, reads it with a parser written for that page's table layout, and compares every price with the rate llm-prices uses today. It covers Anthropic, DeepSeek, Google, OpenAI, xAI, and Z.ai. Each price is reported as:
+`model-prices check` fetches each supported provider's official pricing page, reads it with a parser written for that page's table layout, and compares every price with the rate model-prices uses today. It covers Anthropic, DeepSeek, Google, OpenAI, xAI, and Z.ai. Each price is reported as:
 
 - `ok`: models.dev and the official page agree.
 - `corrected`: models.dev differs, but a correction in `corrections.toml` or `research_corrections.toml` supplies the official price.
-- `mismatch`: llm-prices differs from the official page. The command exits with status 1.
+- `mismatch`: model-prices differs from the official page. The command exits with status 1.
 - `untracked`: the page lists a model that models.dev does not price.
 
 Page model names must match models.dev ids exactly, with no suffix removal, so a dated model is never compared with a different undated one. For DeepSeek, peak and off-peak prices are checked at the next hours the schedule classifies as each, and the peak-hour rule on both the English and Chinese pricing pages must match the wording recorded in `schedules.toml`, so a change to the hours, multiplier, or exceptions fails the check. Google's dated future prices are read for the check date. A page that yields no prices fails the check, because its format has changed.
 
-`llm-prices check --genai-prices` also scores [Pydantic's genai-prices](https://github.com/pydantic/genai-prices) against the same official prices, reading its `data.json` from GitHub, or from a file or checkout given as `--genai-prices PATH`. It lists each price genai-prices gets wrong and ends with how many official prices each source lists correctly, wrongly, or not at all. Its disagreements never change the exit status. genai-prices is read by exact model id only: it also matches names by prefix, which would give a model it lacks, such as Claude Opus 5.5, an older model's prices. Z.ai is not compared, because genai-prices' Zhipu entry is the mainland China API. On 2026-10-01, models.dev listed 342 official prices correctly and 7 wrongly; genai-prices listed 173 correctly and 40 wrongly, almost all from missing price cuts such as GPT-5.6's.
+`model-prices check --genai-prices` also scores [Pydantic's genai-prices](https://github.com/pydantic/genai-prices) against the same official prices, reading its `data.json` from GitHub, or from a file or checkout given as `--genai-prices PATH`. It lists each price genai-prices gets wrong and ends with how many official prices each source lists correctly, wrongly, or not at all. Its disagreements never change the exit status. genai-prices is read by exact model id only: it also matches names by prefix, which would give a model it lacks, such as Claude Opus 5.5, an older model's prices. Z.ai is not compared, because genai-prices' Zhipu entry is the mainland China API. On 2026-10-01, models.dev listed 342 official prices correctly and 7 wrongly; genai-prices listed 173 correctly and 40 wrongly, almost all from missing price cuts such as GPT-5.6's.
 
 ## Not modeled
 
-llm-prices prices standard synchronous requests. It does not model batch, flex, or priority service tiers; Anthropic's separate 1-hour cache-write price, which it treats as the 5-minute price; regional or data-residency surcharges; storage charges for cached context; or tool fees such as web search. Modes listed by models.dev, such as fast mode, are available through `mode`. While a correction applies, a mode's price is the corrected price scaled by the mode's ratio to models.dev's standard price at that time, since corrections record standard prices only.
+model-prices prices standard synchronous requests. It does not model batch, flex, or priority service tiers; Anthropic's separate 1-hour cache-write price, which it treats as the 5-minute price; regional or data-residency surcharges; storage charges for cached context; or tool fees such as web search. Modes listed by models.dev, such as fast mode, are available through `mode`. While a correction applies, a mode's price is the corrected price scaled by the mode's ratio to models.dev's standard price at that time, since corrections record standard prices only.
 
 Where a model has no cache-write price, cache writes are priced as input. That matches providers whose caching is automatic and bills the first, cache-filling request as normal input, such as Google's implicit caching, DeepSeek, xAI, and Z.ai. Providers that charge more for writing a cache list a cache-write price in models.dev.
 
@@ -92,17 +92,17 @@ Long-context tiers apply when a request's prompt exceeds the tier size. Provider
 
 ## Recording what was used
 
-`pricing_basis()` returns an identifier such as `llm-prices-0.0.1+models.dev@e2bf2e470a1b+synced@2026-09-30+data@3f1c09a2b7de`, naming the package version, the models.dev commit its data came from and that commit's date, and a hash of all its data files, so any change to prices, corrections, schedules, or aliases changes it. Store it next to computed costs.
+`pricing_basis()` returns an identifier such as `model-prices-0.0.1+models.dev@e2bf2e470a1b+synced@2026-09-30+data@3f1c09a2b7de`, naming the package version, the models.dev commit its data came from and that commit's date, and a hash of all its data files, so any change to prices, corrections, schedules, or aliases changes it. Store it next to computed costs.
 
 ## Updating prices
 
-A daily workflow clones models.dev, rebuilds `src/llm_prices/data/prices.json` with `llm-prices update`, and opens a pull request when a tracked price changed. It then runs `llm-prices check` and fails when an official price disagrees; fix that with a correction, or with a models.dev pull request when models.dev is wrong. Before merging, check each changed model's effective date against the provider's announcement and add a correction when models.dev recorded the change late.
+A daily workflow clones models.dev, rebuilds `src/model_prices/data/prices.json` with `model-prices update`, and opens a pull request when a tracked price changed. It then runs `model-prices check` and fails when an official price disagrees; fix that with a correction, or with a models.dev pull request when models.dev is wrong. Before merging, check each changed model's effective date against the provider's announcement and add a correction when models.dev recorded the change late.
 
 To rebuild locally:
 
 ```sh
 git clone https://github.com/sst/models.dev.git /tmp/models.dev
-uv run --locked llm-prices update /tmp/models.dev
+uv run --locked model-prices update /tmp/models.dev
 ```
 
 ## Development
@@ -113,4 +113,4 @@ uv run --locked python -m unittest discover -s tests
 
 ## License
 
-The code and the corrections are MIT licensed. `src/llm_prices/data/prices.json` is derived from [models.dev](https://github.com/sst/models.dev), whose MIT license is in `src/llm_prices/data/LICENSE.models.dev`. The test fixture `tests/fixtures/genai-prices.json` is an excerpt of [genai-prices](https://github.com/pydantic/genai-prices), whose MIT license is in `tests/fixtures/LICENSE.genai-prices`.
+The code and the corrections are MIT licensed. `src/model_prices/data/prices.json` is derived from [models.dev](https://github.com/sst/models.dev), whose MIT license is in `src/model_prices/data/LICENSE.models.dev`. The test fixture `tests/fixtures/genai-prices.json` is an excerpt of [genai-prices](https://github.com/pydantic/genai-prices), whose MIT license is in `tests/fixtures/LICENSE.genai-prices`.

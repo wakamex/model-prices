@@ -7,7 +7,7 @@ FILES = ("corrections.toml", "research_corrections.toml")
 
 
 def _corrections(name):
-    return tomllib.loads(files("llm_prices").joinpath("data", name).read_text())["correction"]
+    return tomllib.loads(files("model_prices").joinpath("data", name).read_text())["correction"]
 
 
 def _time(value):

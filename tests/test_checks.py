@@ -5,8 +5,8 @@ from pathlib import Path
 import unittest
 from unittest import mock
 
-from llm_prices import checks, main
-from llm_prices.checks import Observed
+from model_prices import checks, main
+from model_prices.checks import Observed
 
 FIXTURES = Path(__file__).parent / "fixtures"
 TODAY = datetime(2026, 9, 30, 12, tzinfo=timezone.utc)

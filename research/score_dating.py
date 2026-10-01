@@ -17,9 +17,9 @@ import json
 from pathlib import Path
 import subprocess
 
-from llm_prices import genai_prices
+from model_prices import genai_prices
 
-PRICES = Path(__file__).resolve().parent.parent / "src" / "llm_prices" / "data" / "prices.json"
+PRICES = Path(__file__).resolve().parent.parent / "src" / "model_prices" / "data" / "prices.json"
 FAR_FUTURE = datetime(2100, 1, 1, tzinfo=timezone.utc)
 
 # (provider, model, field, new value, true time, how the time is known). A field of

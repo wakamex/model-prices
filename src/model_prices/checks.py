@@ -13,7 +13,7 @@ import re
 from typing import Callable, Iterable
 import urllib.request
 
-from llm_prices import _config, _parse_time, _period, _schedule, genai_prices, rates, resolve
+from model_prices import _config, _parse_time, _period, _schedule, genai_prices, rates, resolve
 
 FIELDS = ("input", "cache_write", "cache_read", "output")
 
@@ -294,7 +294,7 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
 
 
 def fetch(url: str) -> str:
-    request = urllib.request.Request(url, headers={"User-Agent": "llm-prices"})
+    request = urllib.request.Request(url, headers={"User-Agent": "model-prices"})
     with urllib.request.urlopen(request, timeout=30) as response:
         return response.read().decode()
 
@@ -318,7 +318,7 @@ def _value(found, field: str, above: int | None) -> float | None:
 
 def compare(observed: Iterable[Observed], today: datetime,
             genai: list | None = None) -> list[Result]:
-    """Classify each official price against llm-prices and against models.dev alone, and
+    """Classify each official price against model-prices and against models.dev alone, and
     record what genai-prices lists for it when its data is given."""
     results = []
     for item in observed:
@@ -395,7 +395,7 @@ def report(results: list[Result], genai: bool = False) -> str:
         when = f" at {result.at}" if result.at else ""
         lines.append(
             f"{result.status:9} {result.model} {result.field}{tier}{when}: "
-            f"official ${result.official:g}, llm-prices {result.effective}, "
+            f"official ${result.official:g}, model-prices {result.effective}, "
             f"models.dev {result.models_dev}"
         )
     if genai:

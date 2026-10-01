@@ -1,19 +1,19 @@
 [project]
-name = "llm-prices"
+name = "model-prices"
 version = "0.1.0"
-description = "Effective-dated LLM API prices from models.dev history, with sourced corrections"
+description = "LLM API prices, current and historical, from models.dev with sourced corrections"
 readme = "README.md"
 license = "MIT"
-license-files = ["LICENSE", "src/llm_prices/data/LICENSE.models.dev"]
+license-files = ["LICENSE", "src/model_prices/data/LICENSE.models.dev"]
 requires-python = ">=3.11"
 dependencies = []
 
 [project.scripts]
-llm-prices = "llm_prices:main"
+model-prices = "model_prices:main"
 
 [project.urls]
-Homepage = "https://github.com/wakamex/llm-prices"
-Source = "https://github.com/wakamex/llm-prices"
+Homepage = "https://github.com/wakamex/model-prices"
+Source = "https://github.com/wakamex/model-prices"
 
 [build-system]
 requires = ["hatchling"]

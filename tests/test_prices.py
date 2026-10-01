@@ -9,9 +9,9 @@ import tempfile
 import unittest
 from unittest import mock
 
-import llm_prices
-from llm_prices import Rates, Tier, cost, main, rates, rates_between, resolve
-from llm_prices.backfill import build, parse_rates, write
+import model_prices
+from model_prices import Rates, Tier, cost, main, rates, rates_between, resolve
+from model_prices.backfill import build, parse_rates, write
 
 MODEL_NAMES = [
     ("claude-opus-5-5", None, ("anthropic", "claude-opus-5-5")),
@@ -192,9 +192,9 @@ class PriceTests(unittest.TestCase):
         self.assertIsNone(parse_rates({"name": "no cost"}))
 
     def test_shipped_data_identifies_its_source(self):
-        basis = llm_prices.pricing_basis()
+        basis = model_prices.pricing_basis()
 
-        self.assertTrue(basis.startswith("llm-prices-"))
+        self.assertTrue(basis.startswith("model-prices-"))
         self.assertIn("+models.dev@", basis)
 
     def test_cli_prints_rates(self):
@@ -212,17 +212,17 @@ class PriceTests(unittest.TestCase):
         self.assertIn("not an ISO 8601 time", stderr.getvalue())
 
     def test_console_entrypoint(self):
-        command = Path(sys.executable).with_name("llm-prices")
+        command = Path(sys.executable).with_name("model-prices")
         result = subprocess.run([command, "--version"], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0)
-        self.assertEqual(result.stdout.strip(), version("llm-prices"))
+        self.assertEqual(result.stdout.strip(), version("model-prices"))
 
     def test_module_entrypoint(self):
         result = subprocess.run(
-            [sys.executable, "-m", "llm_prices", "--version"], capture_output=True, text=True
+            [sys.executable, "-m", "model_prices", "--version"], capture_output=True, text=True
         )
         self.assertEqual(result.returncode, 0)
-        self.assertEqual(result.stdout.strip(), version("llm-prices"))
+        self.assertEqual(result.stdout.strip(), version("model-prices"))
 
     def test_deepseek_time_of_day_prices(self):
         for at, period, input_price in DEEPSEEK_HOURS:
@@ -283,17 +283,17 @@ class PriceTests(unittest.TestCase):
         self.assertEqual((off_peak_now.input, off_peak_now.period), (0.15, "off_peak"))
 
     def test_plan_prices(self):
-        self.assertEqual(llm_prices.plan("anthropic", "max_20x").usd_per_month, 200)
-        self.assertEqual(llm_prices.plan("zai", "lite").usd_per_month, 18)
+        self.assertEqual(model_prices.plan("anthropic", "max_20x").usd_per_month, 200)
+        self.assertEqual(model_prices.plan("zai", "lite").usd_per_month, 18)
         # Google AI Ultra was one plan until 2026-05-19, then two price-tagged tiers.
-        self.assertEqual(llm_prices.plan("google", "ultra", at="2026-05-01").usd_per_month, 249.99)
-        self.assertIsNone(llm_prices.plan("google", "ultra", at="2026-06-01"))
-        self.assertEqual(llm_prices.plan("google", "ultra_100").name, "Google AI Ultra $100")
-        self.assertEqual(llm_prices.plan("google", "ultra_200").usd_per_month, 199.99)
-        self.assertIsNone(llm_prices.plan("google", "ultra_200", at="2026-05-01"))
-        self.assertEqual(llm_prices.plan("openai", "pro_500").usd_per_month, 500)
-        self.assertEqual(llm_prices.plan_ids("google"), ["pro", "ultra_100", "ultra_200"])
-        self.assertIn("ultra", llm_prices.plan_ids("google", at="2026-05-01"))
+        self.assertEqual(model_prices.plan("google", "ultra", at="2026-05-01").usd_per_month, 249.99)
+        self.assertIsNone(model_prices.plan("google", "ultra", at="2026-06-01"))
+        self.assertEqual(model_prices.plan("google", "ultra_100").name, "Google AI Ultra $100")
+        self.assertEqual(model_prices.plan("google", "ultra_200").usd_per_month, 199.99)
+        self.assertIsNone(model_prices.plan("google", "ultra_200", at="2026-05-01"))
+        self.assertEqual(model_prices.plan("openai", "pro_500").usd_per_month, 500)
+        self.assertEqual(model_prices.plan_ids("google"), ["pro", "ultra_100", "ultra_200"])
+        self.assertIn("ultra", model_prices.plan_ids("google", at="2026-05-01"))
 
     def test_rates_report_the_suffix_removed_to_find_the_model(self):
         self.assertEqual(rates("kimi-k3-max").removed_suffix, "-max")
@@ -337,18 +337,18 @@ class PriceTests(unittest.TestCase):
         found = rates("deepseek-v4-pro", at="2026-09-30T13:00:00Z")
         self.assertEqual((found.input, found.valid_from_basis), (0.66, "documented"))
 
-        data = copy.deepcopy(llm_prices._prices())
+        data = copy.deepcopy(model_prices._prices())
         entry = data["providers"]["deepseek"]["deepseek-v4-pro"][-1]
         data["providers"]["deepseek"]["deepseek-v4-pro"].append(
             {"valid_from": "2026-09-29T00:00:00Z", "commit": "fixed",
              "rates": {**entry["rates"], "input": 0.70}})
-        llm_prices._entry_times.cache_clear()
+        model_prices._entry_times.cache_clear()
         try:
-            with mock.patch.object(llm_prices, "_prices", lambda: data):
+            with mock.patch.object(model_prices, "_prices", lambda: data):
                 fixed = rates("deepseek-v4-pro", at="2026-09-30T13:00:00Z")
             self.assertEqual((fixed.input, fixed.valid_from_basis), (0.70, "models.dev commit"))
         finally:
-            llm_prices._entry_times.cache_clear()
+            model_prices._entry_times.cache_clear()
 
     def test_aliases_take_the_corrections_of_their_model(self):
         # claude-haiku-4-5 links to claude-haiku-4-5-20251001, which models.dev first

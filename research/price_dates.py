@@ -38,13 +38,13 @@ EXTRACT = Path(os.environ.get("EXTRACT_WEB", "extract_web.py")).resolve()
 EXTRACT_DEPS = ROOT / "price-dates" / "extract-deps"
 WORK = ROOT / "price-dates"
 SOURCES = ROOT / "sources"
-DATA = ROOT.parent / "src" / "llm_prices" / "data"
+DATA = ROOT.parent / "src" / "model_prices" / "data"
 PRICES = DATA / "prices.json"
 RESEARCHED = DATA / "research_corrections.toml"
 FIELDS = ("input", "output", "cache_read", "cache_write", "tiers")
 
 PROMPT = """\
-You are researching one recorded API price change for llm-prices, an open dataset of
+You are researching one recorded API price change for model-prices, an open dataset of
 LLM API prices over time.
 
 models.dev, an open model catalog, recorded this change:
@@ -113,7 +113,7 @@ unavailable, say so in notes rather than concluding there is no evidence.
 
 
 REVIEW_PROMPT = """\
-You are checking one finding written by another researcher for llm-prices, an open dataset
+You are checking one finding written by another researcher for model-prices, an open dataset
 of LLM API prices over time. The finding explains a price change recorded by models.dev,
 an open model catalog:
 

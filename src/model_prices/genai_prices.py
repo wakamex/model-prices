@@ -10,7 +10,7 @@ import urllib.request
 
 DATA_URL = "https://raw.githubusercontent.com/pydantic/genai-prices/main/prices/data.json"
 
-# llm-prices provider ids and the genai-prices ids for the same first-party APIs. Z.ai has
+# model-prices provider ids and the genai-prices ids for the same first-party APIs. Z.ai has
 # none: genai-prices' zhipuai is Zhipu's mainland China API, priced from yuan.
 PROVIDERS = {"anthropic": "anthropic", "deepseek": "deepseek", "google": "google",
              "moonshotai": "moonshotai", "openai": "openai", "xai": "x-ai"}
@@ -21,7 +21,7 @@ FIELDS = {"input": "input_mtok", "output": "output_mtok", "cache_read": "cache_r
 def load(source: str) -> list:
     """genai-prices' data.json from a URL, the file itself, or a checkout containing it."""
     if source.startswith(("http://", "https://")):
-        request = urllib.request.Request(source, headers={"User-Agent": "llm-prices"})
+        request = urllib.request.Request(source, headers={"User-Agent": "model-prices"})
         with urllib.request.urlopen(request, timeout=30) as response:
             return json.loads(response.read().decode())
     path = Path(source)

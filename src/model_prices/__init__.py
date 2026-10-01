@@ -163,7 +163,7 @@ def pricing_basis() -> str:
     digest = hashlib.sha256()
     for item in sorted(files(__package__).joinpath("data").iterdir(), key=lambda f: f.name):
         digest.update(item.name.encode() + b"\0" + item.read_bytes())
-    return (f"llm-prices-{_version()}+models.dev@{_prices()['source_commit'][:12]}"
+    return (f"model-prices-{_version()}+models.dev@{_prices()['source_commit'][:12]}"
             f"+synced@{data_as_of().date().isoformat()}+data@{digest.hexdigest()[:12]}")
 
 
@@ -524,7 +524,7 @@ def plan(provider: str, plan_id: str, at: datetime | str | None = None) -> Plan 
 def _version() -> str:
     """The installed version, or "unknown" when run from an uninstalled source tree."""
     try:
-        return version("llm-prices")
+        return version("model-prices")
     except PackageNotFoundError:
         return "unknown"
 
@@ -537,7 +537,7 @@ def _cli_time(value: str) -> datetime:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="llm-prices", description=__doc__)
+    parser = argparse.ArgumentParser(prog="model-prices", description=__doc__)
     parser.add_argument("--version", action="version", version=_version())
     commands = parser.add_subparsers(dest="command", required=True)
     show = commands.add_parser("rate", help="Show the rates for a model at a time")
@@ -565,8 +565,8 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     if args.command == "check":
-        from llm_prices import genai_prices
-        from llm_prices.checks import SOURCES, as_json, report, run
+        from model_prices import genai_prices
+        from model_prices.checks import SOURCES, as_json, report, run
         unknown = sorted(set(args.providers) - set(SOURCES))
         if unknown:
             parser.error(f"no official pricing check for: {', '.join(unknown)}")
@@ -580,7 +580,7 @@ def main(argv: list[str] | None = None) -> int:
         return 1 if any(result.status == "mismatch" for result in results) else 0
 
     if args.command == "update":
-        from llm_prices.backfill import build, write
+        from model_prices.backfill import build, write
         changed = write(build(args.models_dev), args.output)
         print(f"Updated {args.output}" if changed else "No tracked price changes.")
         return 0

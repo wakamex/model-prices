@@ -1,4 +1,4 @@
-"""Compare llm-prices corrections with Pydantic's genai-prices, an independent price list.
+"""Compare model-prices corrections with Pydantic's genai-prices, an independent price list.
 
 For each correction, takes the middle of its period and prices the model there three ways:
 the correction, models.dev's own entry, and genai-prices. genai-prices is read twice: its
@@ -21,11 +21,11 @@ from pathlib import Path
 import subprocess
 import tomllib
 
-import llm_prices
-from llm_prices import genai_prices
-from llm_prices.genai_prices import FIELDS, _time
+import model_prices
+from model_prices import genai_prices
+from model_prices.genai_prices import FIELDS, _time
 
-DATA = Path(__file__).resolve().parent.parent / "src" / "llm_prices" / "data"
+DATA = Path(__file__).resolve().parent.parent / "src" / "model_prices" / "data"
 
 
 def genai_rates(data: list, provider: str, model: str, at: datetime) -> dict | None:
@@ -71,7 +71,7 @@ def crosscheck(checkout: Path) -> None:
             start = _time(item["valid_from"])
             end = _time(item["valid_until"]) if "valid_until" in item else datetime.now(timezone.utc)
             at = start + (end - start) / 2
-            recorded = llm_prices.rates(item["model"], provider=item["provider"], at=at,
+            recorded = model_prices.rates(item["model"], provider=item["provider"], at=at,
                                         corrected=False)
             earlier = [commit for when, commit in commits if when <= at]
             views = {"now": genai_rates(current, item["provider"], item["model"], at),

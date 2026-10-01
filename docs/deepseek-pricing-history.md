@@ -1,8 +1,8 @@
 # DeepSeek API pricing history, July to September 2026
 
-DeepSeek's first-party API prices changed three times between July and September 2026, and models.dev recorded most of those changes late or not at all. This page records what DeepSeek charged in each period and the evidence behind each date, so the corrections and schedule in `src/llm_prices/data/` can be audited.
+DeepSeek's first-party API prices changed three times between July and September 2026, and models.dev recorded most of those changes late or not at all. This page records what DeepSeek charged in each period and the evidence behind each date, so the corrections and schedule in `src/model_prices/data/` can be audited.
 
-The short version: DeepSeek moved from flat pricing to peak and off-peak pricing at 16:00 UTC on August 16, 2026, charging twice the off-peak rate from 01:00 to 04:00 and 06:00 to 10:00 UTC. It cut the V4 Flash price when V4.1 Flash launched at 04:00 UTC on September 10. The weekday-only and Chinese public holiday exceptions to peak hours appeared on the pricing page later, without an announcement, and llm-prices applies them from the start of peak pricing.
+The short version: DeepSeek moved from flat pricing to peak and off-peak pricing at 16:00 UTC on August 16, 2026, charging twice the off-peak rate from 01:00 to 04:00 and 06:00 to 10:00 UTC. It cut the V4 Flash price when V4.1 Flash launched at 04:00 UTC on September 10. The weekday-only and Chinese public holiday exceptions to peak hours appeared on the pricing page later, without an announcement, and model-prices applies them from the start of peak pricing.
 
 The evidence comes from DeepSeek's own changelog and news posts in English and Chinese, and from Internet Archive copies of its English and Chinese pricing pages, which bound when each change reached the page.
 
@@ -24,7 +24,7 @@ The current rule, on the English pricing page: "Off-peak rates are half of the p
 
 The Chinese page states the same rule in Beijing time: 9:00 to 12:00 and 14:00 to 18:00, Monday through Friday, excluding Chinese statutory holidays.
 
-`llm-prices check` compares both pages' wording with `schedules.toml` every day, so any change to the hours, the multiplier, or the exceptions fails the check.
+`model-prices check` compares both pages' wording with `schedules.toml` every day, so any change to the hours, the multiplier, or the exceptions fails the check.
 
 ## Announcements
 
@@ -45,7 +45,7 @@ Each boundary is the last archived copy with the old wording and the first with 
 | V4.1 Flash prices | [2026-09-10 08:40](https://web.archive.org/web/20260910084045/https://api-docs.deepseek.com/zh-cn/quick_start/pricing) | [2026-09-15 14:22](https://web.archive.org/web/20260915142205/https://api-docs.deepseek.com/quick_start/pricing) (first archived copy after the change) |
 | Chinese public holidays excluded | between [2026-09-17 23:31](https://web.archive.org/web/20260917233155/https://api-docs.deepseek.com/zh-cn/quick_start/pricing) and [2026-09-19 10:10](https://web.archive.org/web/20260919101058/https://api-docs.deepseek.com/zh-cn/quick_start/pricing) | between [2026-09-17 05:14](https://web.archive.org/web/20260917051418/https://api-docs.deepseek.com/quick_start/pricing) and [2026-09-22 21:24](https://web.archive.org/web/20260922212416/https://api-docs.deepseek.com/quick_start/pricing) |
 
-Because neither exception was announced, llm-prices treats both as clarifications and applies the current rule from 2026-08-16 16:00 UTC. The only prices this affects are the peak hours of Saturday 2026-08-22, which are off-peak under the current rule; no Chinese public holiday fell between August 16 and September 17.
+Because neither exception was announced, model-prices treats both as clarifications and applies the current rule from 2026-08-16 16:00 UTC. The only prices this affects are the peak hours of Saturday 2026-08-22, which are off-peak under the current rule; no Chinese public holiday fell between August 16 and September 17.
 
 ## Holidays
 
