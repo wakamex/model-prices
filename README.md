@@ -1,6 +1,6 @@
 # llm-prices
 
-LLM API prices as they were at any point in time. Pricing past usage at today's rates misstates it whenever a price changed: GPT-5.6 Sol cost $5/$30 per million input/output tokens until August 21, 2026, and $4/$20 after. This package answers "what did this request cost at API prices when it ran?"
+LLM API prices as they were at any point in time. Pricing past usage at today's rates misstates it whenever a price changed: GPT-5.6 Sol cost $5/$30 per million input/output tokens until August 21, 2026, and $4/$20 for the three months after. This package answers "what did this request cost at API prices when it ran?"
 
 Status: work in progress. Versions before 0.1 may change the data format and API without notice.
 
@@ -35,11 +35,11 @@ uv add llm-prices
 
 Prices come from the git history of [models.dev](https://github.com/sst/models.dev), an open catalog of model metadata that records each model's price in one TOML file per provider. Every commit on its main branch that changed a tracked model's price becomes an entry effective from that commit's time. The tracked providers are the labs that sell their own models: Alibaba, Anthropic, DeepSeek, Google, Moonshot AI, OpenAI, xAI, and Z.ai.
 
-models.dev sometimes records a change days after the provider made it, or lists a wrong price for a while. `corrections.toml` overrides those periods, and every correction cites its source. `research_corrections.toml` adds corrections generated from agent research into every recorded change, each verified against quotes from its sources (see [research/README.md](research/README.md)); hand corrections take precedence. A correction without an end date names the models.dev values it replaces and stops applying as soon as models.dev records anything else, so it cannot outlive a later fix or price change.
+models.dev sometimes records a change days after the provider made it, or lists a wrong price for a while. `corrections.toml` overrides those periods, and every correction cites its source. `research_corrections.toml` adds corrections generated from agent research into every recorded change, each verified against quotes from its sources (see [research/README.md](https://github.com/wakamex/llm-prices/blob/main/research/README.md)); hand corrections take precedence. A correction without an end date names the models.dev values it replaces and stops applying as soon as models.dev records anything else, so it cannot outlive a later fix or price change.
 
 `Rates.valid_from_basis` says how a start date was found: `models.dev commit` dates usually lag the provider's real change by days, while `documented` dates come from a correction's cited source.
 
-Usage from before a model's first recorded price is priced at that first price, because models.dev often adds a model after its launch. `Rates.valid_from` is then later than the requested time, which a caller can check to reject implausible times, such as a zero timestamp. Usage after the last sync, given by `data_as_of()`, assumes no price changed since.
+Usage from before a model's first recorded price is priced at that first price, because models.dev often adds a model after its launch. `Rates.valid_from` is then later than the requested time, which a caller can check to reject implausible times, such as a zero timestamp. Usage after `data_as_of()`, the date of the models.dev commit the data was built from, assumes no price changed since.
 
 Pass the time the provider billed the request as `at`. Providers do not document whether a request that spans a peak boundary bills at its start or its end; agent harnesses usually report completion times, which is a reasonable choice.
 
@@ -49,14 +49,14 @@ Each entry keeps input, output, cache read, and cache write rates, long-context 
 
 Some providers charge more at busy hours. `schedules.toml` records each provider's peak windows, weekday rules, and holiday calendar, with the dates each version of the rules applied. The recorded rate is the off-peak rate, and inside a peak window every rate is multiplied by the schedule's peak multiplier. `Rates.period` says which applied: `"peak"`, `"off_peak"`, or `None` for providers without time-of-day pricing.
 
-Holiday calendars record the last date they cover, and `llm-prices check` fails 45 days before that date so the next year's holidays are added in time. DeepSeek is the one provider with such pricing so far. Since 16:00 UTC on August 16, 2026, its peak hours have been 01:00-04:00 and 06:00-10:00 UTC on weekdays other than Chinese public holidays, at twice the off-peak rate. The pricing page added the weekday and holiday exceptions in late August and mid-September without an announcement; llm-prices applies the current rule from the start of peak pricing. [DeepSeek pricing history](docs/deepseek-pricing-history.md) records the evidence for each date.
+Holiday calendars record the last date they cover, and `llm-prices check` fails 45 days before that date so the next year's holidays are added in time. DeepSeek is the one provider with such pricing so far. Since 16:00 UTC on August 16, 2026, its peak hours have been 01:00-04:00 and 06:00-10:00 UTC on weekdays other than Chinese public holidays, at twice the off-peak rate. The pricing page added the weekday and holiday exceptions in late August and mid-September without an announcement; llm-prices applies the current rule from the start of peak pricing. [DeepSeek pricing history](https://github.com/wakamex/llm-prices/blob/main/docs/deepseek-pricing-history.md) records the evidence for each date.
 
 ## Official price checks
 
 `llm-prices check` fetches each supported provider's official pricing page, reads it with a parser written for that page's table layout, and compares every price with the rate llm-prices uses today. It covers Anthropic, DeepSeek, Google, OpenAI, xAI, and Z.ai. Each price is reported as:
 
 - `ok`: models.dev and the official page agree.
-- `corrected`: models.dev differs, but a correction in `corrections.toml` supplies the official price.
+- `corrected`: models.dev differs, but a correction in `corrections.toml` or `research_corrections.toml` supplies the official price.
 - `mismatch`: llm-prices differs from the official page. The command exits with status 1.
 - `untracked`: the page lists a model that models.dev does not price.
 
@@ -92,7 +92,7 @@ Long-context tiers apply when a request's prompt exceeds the tier size. Provider
 
 ## Recording what was used
 
-`pricing_basis()` returns an identifier such as `llm-prices-0.1.0+models.dev@e2bf2e470a1b+synced@2026-09-30+data@3f1c09a2b7de`, naming the package version, the models.dev commit and sync date its data came from, and a hash of all its data files, so any change to prices, corrections, schedules, or aliases changes it. Store it next to computed costs.
+`pricing_basis()` returns an identifier such as `llm-prices-0.0.1+models.dev@e2bf2e470a1b+synced@2026-09-30+data@3f1c09a2b7de`, naming the package version, the models.dev commit its data came from and that commit's date, and a hash of all its data files, so any change to prices, corrections, schedules, or aliases changes it. Store it next to computed costs.
 
 ## Updating prices
 

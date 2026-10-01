@@ -143,10 +143,12 @@ def _parse_time(value: datetime | str | None) -> datetime:
 
 
 def data_as_of() -> datetime:
-    """When the price history was last synced from models.dev.
+    """The date of the models.dev commit the price history was built from.
 
-    Rates for requests after this time assume no price has changed since; callers can
-    mark such costs provisional or warn when the installed data is old.
+    The history is rebuilt only when a tracked price changes, so this is when models.dev
+    last changed a tracked price as of the build. Rates for requests after this time
+    assume no price has changed since; callers can mark such costs provisional or warn
+    when the installed data is old.
     """
     return _parse_time(_prices()["source_committed_at"])
 
