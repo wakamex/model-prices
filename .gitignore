@@ -13,3 +13,5 @@ dist/
 /research/price-dates/extract-deps/
 /research/price-dates/run-reviews.sh
 /research/price-dates/*.out
+/research/price-dates/review-batch.toml
+/research/price-dates/review-tasks/
