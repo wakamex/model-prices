@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 1.0,
+  "output": 5.0,
+  "cache_read": 0.1
+ },
+ "sources": [
+  {
+   "url": "https://www.anthropic.com/news/claude-haiku-4-5",
+   "saved_as": "sources/www.anthropic.com_news_claude-haiku-4-5.html",
+   "quote": "Claude Haiku 4.5 is available everywhere today. If you\u2019re a developer, simply use claude-haiku-4-5 via the Claude API. Pricing is now $1/$5 per million input and output tokens.",
+   "supports": "Anthropic's October 15, 2025 launch announcement states that API pricing was $1 per million input tokens and $5 per million output tokens from launch.",
+   "extracted_as": "research/sources/e99bd76836c10fea.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+   "saved_as": "sources/docs.anthropic.com_en_docs_about-claude_pricing.html",
+   "quote": "A cache hit costs 10% of the standard input price",
+   "supports": "Anthropic documents the cache read price as 10% of standard input pricing; applied to the launch input price of $1, that is $0.10 per million tokens.",
+   "extracted_as": "research/sources/5770757567c6c228.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "Anthropic's launch announcement establishes $1/$5 input/output pricing on October 15, 2025, so the earlier $3/$15 catalog entry was not its official API price. Anthropic's cache pricing documentation gives cache hits at 10% of input; no provider source located states a more precise change time or a before/after bracket.",
+ "verified": true
+}

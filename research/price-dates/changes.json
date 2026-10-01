@@ -1,0 +1,3425 @@
+[
+ {
+  "provider": "alibaba",
+  "model": "qwen3-coder-30b-a3b-instruct",
+  "before": {
+   "input": 0.45,
+   "output": 2.25
+  },
+  "after": {
+   "input": 0.45,
+   "output": 2.25,
+   "tiers": [
+    {
+     "above": 32000,
+     "input": 0.75,
+     "output": 3.75
+    },
+    {
+     "above": 128000,
+     "input": 1.2,
+     "output": 6.0
+    }
+   ]
+  },
+  "previous_at": "2025-10-14T17:34:46Z",
+  "recorded_at": "2026-09-02T18:53:25Z",
+  "commit": "241a9864813e3d9c91f16923ec805333b3ea0543",
+  "commit_url": "https://github.com/sst/models.dev/commit/241a9864813e3d9c91f16923ec805333b3ea0543",
+  "message": "Merge branch 'dev' of github.com:anomalyco/models.dev into dev",
+  "id": "alibaba_qwen3_coder_30b_a3b_instruct_20260902t1853"
+ },
+ {
+  "provider": "alibaba",
+  "model": "qwen3-coder-480b-a35b-instruct",
+  "before": {
+   "input": 1.5,
+   "output": 7.5
+  },
+  "after": {
+   "input": 1.5,
+   "output": 7.5,
+   "tiers": [
+    {
+     "above": 32000,
+     "input": 2.7,
+     "output": 13.5
+    },
+    {
+     "above": 128000,
+     "input": 4.5,
+     "output": 22.5
+    }
+   ]
+  },
+  "previous_at": "2025-10-14T17:34:46Z",
+  "recorded_at": "2026-09-02T18:53:25Z",
+  "commit": "241a9864813e3d9c91f16923ec805333b3ea0543",
+  "commit_url": "https://github.com/sst/models.dev/commit/241a9864813e3d9c91f16923ec805333b3ea0543",
+  "message": "Merge branch 'dev' of github.com:anomalyco/models.dev into dev",
+  "id": "alibaba_qwen3_coder_480b_a35b_instruct_20260902t1853"
+ },
+ {
+  "provider": "alibaba",
+  "model": "qwen3.6-plus",
+  "before": {
+   "input": 0.276,
+   "output": 1.651,
+   "cache_read": 0.028,
+   "cache_write": 0.344
+  },
+  "after": {
+   "input": 0.5,
+   "output": 3.0,
+   "cache_read": 0.05,
+   "cache_write": 0.625,
+   "tiers": [
+    {
+     "above": 256000,
+     "cache_read": 0.2,
+     "cache_write": 2.5,
+     "input": 2.0,
+     "output": 6.0
+    }
+   ]
+  },
+  "previous_at": "2026-04-04T18:55:23Z",
+  "recorded_at": "2026-05-12T22:40:48Z",
+  "commit": "5e344ded49d8bb8d98941b283237515c4236b058",
+  "commit_url": "https://github.com/sst/models.dev/commit/5e344ded49d8bb8d98941b283237515c4236b058",
+  "message": "Merge pull request #1755 from anomalyco/correct-context-tracking feat: add new context pricing tiers",
+  "id": "alibaba_qwen3.6_plus_20260512t2240"
+ },
+ {
+  "provider": "alibaba",
+  "model": "qwen3.7-plus",
+  "before": {
+   "input": 0.5,
+   "output": 3.0,
+   "cache_read": 0.05,
+   "cache_write": 0.625,
+   "tiers": [
+    {
+     "above": 128000,
+     "cache_read": 0.2,
+     "cache_write": 2.5,
+     "input": 2.0,
+     "output": 6.0
+    }
+   ]
+  },
+  "after": {
+   "input": 0.5,
+   "output": 3.0,
+   "cache_read": 0.05,
+   "cache_write": 0.625,
+   "tiers": [
+    {
+     "above": 256000,
+     "cache_read": 0.2,
+     "cache_write": 2.5,
+     "input": 2.0,
+     "output": 6.0
+    }
+   ]
+  },
+  "previous_at": "2026-06-03T15:00:39Z",
+  "recorded_at": "2026-06-10T00:47:27Z",
+  "commit": "e9f798225cba65e8f4e43803ae0b8124399acc87",
+  "commit_url": "https://github.com/sst/models.dev/commit/e9f798225cba65e8f4e43803ae0b8124399acc87",
+  "message": "Merge pull request #2090 from coder-wangbin/fix/qwen3.7-plus-params fix(alibaba/qwen3.7-plus): correct max output to 64K and tier size to 256K",
+  "id": "alibaba_qwen3.7_plus_20260610t0047"
+ },
+ {
+  "provider": "alibaba",
+  "model": "qwen3.7-plus",
+  "before": {
+   "input": 0.5,
+   "output": 3.0,
+   "cache_read": 0.05,
+   "cache_write": 0.625,
+   "tiers": [
+    {
+     "above": 256000,
+     "cache_read": 0.2,
+     "cache_write": 2.5,
+     "input": 2.0,
+     "output": 6.0
+    }
+   ]
+  },
+  "after": {
+   "input": 0.4,
+   "output": 1.6,
+   "cache_read": 0.04,
+   "cache_write": 0.5,
+   "tiers": [
+    {
+     "above": 256000,
+     "cache_read": 0.12,
+     "cache_write": 1.5,
+     "input": 1.2,
+     "output": 4.8
+    }
+   ]
+  },
+  "previous_at": "2026-06-10T00:47:27Z",
+  "recorded_at": "2026-09-28T04:01:19Z",
+  "commit": "5bb82699001d63ffd26e09b9a40dcea764131a4b",
+  "commit_url": "https://github.com/sst/models.dev/commit/5bb82699001d63ffd26e09b9a40dcea764131a4b",
+  "message": "fix(alibaba): align international models and plan allowlists (#8231) Co-authored-by: rekram1-node <rekram1-node@users.noreply.github.com>",
+  "id": "alibaba_qwen3.7_plus_20260928t0401"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-3-5-haiku-20241022",
+  "before": {
+   "input": 0.8,
+   "output": 4.0
+  },
+  "after": {
+   "input": 0.8,
+   "output": 4.0,
+   "cache_read": 0.08,
+   "cache_write": 0.08
+  },
+  "previous_at": "2025-06-05T20:08:05Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "anthropic_claude_3_5_haiku_20241022_20250617t2226"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-3-5-haiku-20241022",
+  "before": {
+   "input": 0.8,
+   "output": 4.0,
+   "cache_read": 0.08,
+   "cache_write": 0.08
+  },
+  "after": {
+   "input": 0.8,
+   "output": 4.0,
+   "cache_read": 0.08,
+   "cache_write": 1.0
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-06-23T20:53:34Z",
+  "commit": "320c099c02fc2a7651a1de9698df7d20d5af2b88",
+  "commit_url": "https://github.com/sst/models.dev/commit/320c099c02fc2a7651a1de9698df7d20d5af2b88",
+  "message": "Merge pull request #21 from ndraiman/openrouter Added openrouter provider and top 10 programming models",
+  "id": "anthropic_claude_3_5_haiku_20241022_20250623t2053"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-3-5-sonnet-20240620",
+  "before": {
+   "input": 3.0,
+   "output": 15.0
+  },
+  "after": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.3,
+   "cache_write": 0.3
+  },
+  "previous_at": "2025-06-05T20:08:05Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "anthropic_claude_3_5_sonnet_20240620_20250617t2226"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-3-5-sonnet-20240620",
+  "before": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.3,
+   "cache_write": 0.3
+  },
+  "after": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.3,
+   "cache_write": 3.75
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-06-23T20:53:34Z",
+  "commit": "320c099c02fc2a7651a1de9698df7d20d5af2b88",
+  "commit_url": "https://github.com/sst/models.dev/commit/320c099c02fc2a7651a1de9698df7d20d5af2b88",
+  "message": "Merge pull request #21 from ndraiman/openrouter Added openrouter provider and top 10 programming models",
+  "id": "anthropic_claude_3_5_sonnet_20240620_20250623t2053"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-3-5-sonnet-20241022",
+  "before": {
+   "input": 3.0,
+   "output": 15.0
+  },
+  "after": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.3,
+   "cache_write": 0.3
+  },
+  "previous_at": "2025-06-05T20:08:05Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "anthropic_claude_3_5_sonnet_20241022_20250617t2226"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-3-5-sonnet-20241022",
+  "before": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.3,
+   "cache_write": 0.3
+  },
+  "after": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.3,
+   "cache_write": 3.75
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-06-23T20:53:34Z",
+  "commit": "320c099c02fc2a7651a1de9698df7d20d5af2b88",
+  "commit_url": "https://github.com/sst/models.dev/commit/320c099c02fc2a7651a1de9698df7d20d5af2b88",
+  "message": "Merge pull request #21 from ndraiman/openrouter Added openrouter provider and top 10 programming models",
+  "id": "anthropic_claude_3_5_sonnet_20241022_20250623t2053"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-3-7-sonnet-20250219",
+  "before": {
+   "input": 3.0,
+   "output": 15.0
+  },
+  "after": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.3,
+   "cache_write": 0.3
+  },
+  "previous_at": "2025-06-05T20:08:05Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "anthropic_claude_3_7_sonnet_20250219_20250617t2226"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-3-7-sonnet-20250219",
+  "before": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.3,
+   "cache_write": 0.3
+  },
+  "after": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.3,
+   "cache_write": 3.75
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-06-23T20:53:34Z",
+  "commit": "320c099c02fc2a7651a1de9698df7d20d5af2b88",
+  "commit_url": "https://github.com/sst/models.dev/commit/320c099c02fc2a7651a1de9698df7d20d5af2b88",
+  "message": "Merge pull request #21 from ndraiman/openrouter Added openrouter provider and top 10 programming models",
+  "id": "anthropic_claude_3_7_sonnet_20250219_20250623t2053"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-3-haiku-20240307",
+  "before": {
+   "input": 0.25,
+   "output": 1.25
+  },
+  "after": {
+   "input": 0.25,
+   "output": 1.25,
+   "cache_read": 0.03,
+   "cache_write": 0.03
+  },
+  "previous_at": "2025-06-05T20:08:05Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "anthropic_claude_3_haiku_20240307_20250617t2226"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-3-haiku-20240307",
+  "before": {
+   "input": 0.25,
+   "output": 1.25,
+   "cache_read": 0.03,
+   "cache_write": 0.03
+  },
+  "after": {
+   "input": 0.25,
+   "output": 1.25,
+   "cache_read": 0.03,
+   "cache_write": 0.3
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-06-23T20:53:34Z",
+  "commit": "320c099c02fc2a7651a1de9698df7d20d5af2b88",
+  "commit_url": "https://github.com/sst/models.dev/commit/320c099c02fc2a7651a1de9698df7d20d5af2b88",
+  "message": "Merge pull request #21 from ndraiman/openrouter Added openrouter provider and top 10 programming models",
+  "id": "anthropic_claude_3_haiku_20240307_20250623t2053"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-3-opus-20240229",
+  "before": {
+   "input": 15.0,
+   "output": 75.0
+  },
+  "after": {
+   "input": 15.0,
+   "output": 75.0,
+   "cache_read": 1.5,
+   "cache_write": 1.5
+  },
+  "previous_at": "2025-06-05T20:08:05Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "anthropic_claude_3_opus_20240229_20250617t2226"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-3-opus-20240229",
+  "before": {
+   "input": 15.0,
+   "output": 75.0,
+   "cache_read": 1.5,
+   "cache_write": 1.5
+  },
+  "after": {
+   "input": 15.0,
+   "output": 75.0,
+   "cache_read": 1.5,
+   "cache_write": 18.75
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-06-23T20:53:34Z",
+  "commit": "320c099c02fc2a7651a1de9698df7d20d5af2b88",
+  "commit_url": "https://github.com/sst/models.dev/commit/320c099c02fc2a7651a1de9698df7d20d5af2b88",
+  "message": "Merge pull request #21 from ndraiman/openrouter Added openrouter provider and top 10 programming models",
+  "id": "anthropic_claude_3_opus_20240229_20250623t2053"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-3-sonnet-20240229",
+  "before": {
+   "input": 3.0,
+   "output": 15.0
+  },
+  "after": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.3,
+   "cache_write": 0.3
+  },
+  "previous_at": "2025-06-05T20:08:05Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "anthropic_claude_3_sonnet_20240229_20250617t2226"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-haiku-4-5-20251001",
+  "before": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.3,
+   "cache_write": 3.75
+  },
+  "after": {
+   "input": 1.0,
+   "output": 1.25,
+   "cache_read": 0.1,
+   "cache_write": 1.25
+  },
+  "previous_at": "2025-10-15T17:24:36Z",
+  "recorded_at": "2025-10-15T17:51:46Z",
+  "commit": "db133a691ddf5cef093f0b664e3c722eb5034a08",
+  "commit_url": "https://github.com/sst/models.dev/commit/db133a691ddf5cef093f0b664e3c722eb5034a08",
+  "message": "fix: haiku 4.5 cost",
+  "id": "anthropic_claude_haiku_4_5_20251001_20251015t1751"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-haiku-4-5-20251001",
+  "before": {
+   "input": 1.0,
+   "output": 1.25,
+   "cache_read": 0.1,
+   "cache_write": 1.25
+  },
+  "after": {
+   "input": 1.0,
+   "output": 5.0,
+   "cache_read": 0.1,
+   "cache_write": 1.25
+  },
+  "previous_at": "2025-10-15T17:51:46Z",
+  "recorded_at": "2025-10-15T22:14:20Z",
+  "commit": "7493e1dbabe98145a21e09cc5d17e8ae41572de8",
+  "commit_url": "https://github.com/sst/models.dev/commit/7493e1dbabe98145a21e09cc5d17e8ae41572de8",
+  "message": "Merge pull request #293 from mikesoylu/patch-1 [fix] Update output cost in claude-haiku-4-5 model",
+  "id": "anthropic_claude_haiku_4_5_20251001_20251015t2214"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-opus-4-20250514",
+  "before": {
+   "input": 15.0,
+   "output": 75.0
+  },
+  "after": {
+   "input": 15.0,
+   "output": 75.0,
+   "cache_read": 1.5,
+   "cache_write": 1.5
+  },
+  "previous_at": "2025-06-05T20:08:05Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "anthropic_claude_opus_4_20250514_20250617t2226"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-opus-4-20250514",
+  "before": {
+   "input": 15.0,
+   "output": 75.0,
+   "cache_read": 1.5,
+   "cache_write": 1.5
+  },
+  "after": {
+   "input": 15.0,
+   "output": 75.0,
+   "cache_read": 1.5,
+   "cache_write": 18.75
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-06-23T20:53:34Z",
+  "commit": "320c099c02fc2a7651a1de9698df7d20d5af2b88",
+  "commit_url": "https://github.com/sst/models.dev/commit/320c099c02fc2a7651a1de9698df7d20d5af2b88",
+  "message": "Merge pull request #21 from ndraiman/openrouter Added openrouter provider and top 10 programming models",
+  "id": "anthropic_claude_opus_4_20250514_20250623t2053"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-opus-4-5",
+  "before": {
+   "input": 5.0,
+   "output": 25.0,
+   "cache_read": 1.5,
+   "cache_write": 18.75
+  },
+  "after": {
+   "input": 5.0,
+   "output": 25.0,
+   "cache_read": 0.5,
+   "cache_write": 6.25
+  },
+  "previous_at": "2025-11-24T19:15:58Z",
+  "recorded_at": "2025-11-26T15:57:56Z",
+  "commit": "c9867f10b934c8fdd2b4ca3426258756c07fcfca",
+  "commit_url": "https://github.com/sst/models.dev/commit/c9867f10b934c8fdd2b4ca3426258756c07fcfca",
+  "message": "Merge pull request #439 from badlogic/fix-claude-opus-4-5-cache-pricing Fix Claude Opus 4.5 cache pricing",
+  "id": "anthropic_claude_opus_4_5_20251126t1557"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-opus-4-6",
+  "before": {
+   "input": 5.0,
+   "output": 25.0,
+   "cache_read": 0.5,
+   "cache_write": 6.25,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 1.0,
+     "cache_write": 12.5,
+     "input": 10.0,
+     "output": 37.5
+    }
+   ]
+  },
+  "after": {
+   "input": 5.0,
+   "output": 25.0,
+   "cache_read": 0.5,
+   "cache_write": 6.25
+  },
+  "previous_at": "2026-02-05T18:34:34Z",
+  "recorded_at": "2026-03-13T19:13:40Z",
+  "commit": "304233bdda5364f834f280fac8076bff19717999",
+  "commit_url": "https://github.com/sst/models.dev/commit/304233bdda5364f834f280fac8076bff19717999",
+  "message": "Merge pull request #1169 from mdrxy/mdrxy/anthropic-token-limits Update Claude 4.6 context/pricing",
+  "id": "anthropic_claude_opus_4_6_20260313t1913"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-sonnet-4-20250514",
+  "before": {
+   "input": 3.0,
+   "output": 15.0
+  },
+  "after": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 3.75,
+   "cache_write": 0.3
+  },
+  "previous_at": "2025-06-04T22:41:51Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "anthropic_claude_sonnet_4_20250514_20250617t2226"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-sonnet-4-20250514",
+  "before": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 3.75,
+   "cache_write": 0.3
+  },
+  "after": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.3,
+   "cache_write": 3.75
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-06-23T20:53:34Z",
+  "commit": "320c099c02fc2a7651a1de9698df7d20d5af2b88",
+  "commit_url": "https://github.com/sst/models.dev/commit/320c099c02fc2a7651a1de9698df7d20d5af2b88",
+  "message": "Merge pull request #21 from ndraiman/openrouter Added openrouter provider and top 10 programming models",
+  "id": "anthropic_claude_sonnet_4_20250514_20250623t2053"
+ },
+ {
+  "provider": "anthropic",
+  "model": "claude-sonnet-4-6",
+  "before": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.3,
+   "cache_write": 3.75,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.6,
+     "cache_write": 7.5,
+     "input": 6.0,
+     "output": 22.5
+    }
+   ]
+  },
+  "after": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.3,
+   "cache_write": 3.75
+  },
+  "previous_at": "2026-02-17T19:12:10Z",
+  "recorded_at": "2026-03-13T19:13:40Z",
+  "commit": "304233bdda5364f834f280fac8076bff19717999",
+  "commit_url": "https://github.com/sst/models.dev/commit/304233bdda5364f834f280fac8076bff19717999",
+  "message": "Merge pull request #1169 from mdrxy/mdrxy/anthropic-token-limits Update Claude 4.6 context/pricing",
+  "id": "anthropic_claude_sonnet_4_6_20260313t1913"
+ },
+ {
+  "provider": "deepseek",
+  "model": "deepseek-chat",
+  "before": {
+   "input": 0.27,
+   "output": 1.1
+  },
+  "after": {
+   "input": 0.27,
+   "output": 1.1,
+   "cache_read": 0.07
+  },
+  "previous_at": "2025-06-10T22:55:28Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "deepseek_deepseek_chat_20250617t2226"
+ },
+ {
+  "provider": "deepseek",
+  "model": "deepseek-chat",
+  "before": {
+   "input": 0.27,
+   "output": 1.1,
+   "cache_read": 0.07
+  },
+  "after": {
+   "input": 0.57,
+   "output": 1.68,
+   "cache_read": 0.07
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-08-25T16:35:54Z",
+  "commit": "6144f84d7962f739ff706f69384f6914ff925372",
+  "commit_url": "https://github.com/sst/models.dev/commit/6144f84d7962f739ff706f69384f6914ff925372",
+  "message": "Merge pull request #158 from Mahamed-Belkheir/deepseek-3.1-updates add: chutes deepseek v3.1 and thinking model, update deepseek provider context",
+  "id": "deepseek_deepseek_chat_20250825t1635"
+ },
+ {
+  "provider": "deepseek",
+  "model": "deepseek-chat",
+  "before": {
+   "input": 0.57,
+   "output": 1.68,
+   "cache_read": 0.07
+  },
+  "after": {
+   "input": 0.28,
+   "output": 0.42,
+   "cache_read": 0.028
+  },
+  "previous_at": "2025-08-25T16:35:54Z",
+  "recorded_at": "2025-11-17T16:05:41Z",
+  "commit": "b99f043b714f38137403ed3b1aaf7af61e3cb251",
+  "commit_url": "https://github.com/sst/models.dev/commit/b99f043b714f38137403ed3b1aaf7af61e3cb251",
+  "message": "Merge pull request #394 from mlazuardy/update-deepseek Update DeepSeek model costs and last_updated",
+  "id": "deepseek_deepseek_chat_20251117t1605"
+ },
+ {
+  "provider": "deepseek",
+  "model": "deepseek-chat",
+  "before": {
+   "input": 0.28,
+   "output": 0.42,
+   "cache_read": 0.028
+  },
+  "after": {
+   "input": 0.14,
+   "output": 0.28,
+   "cache_read": 0.028
+  },
+  "previous_at": "2025-11-17T16:05:41Z",
+  "recorded_at": "2026-04-25T17:28:45Z",
+  "commit": "f458b199942e7b5f565a14ce9455faf1d07146ad",
+  "commit_url": "https://github.com/sst/models.dev/commit/f458b199942e7b5f565a14ce9455faf1d07146ad",
+  "message": "Merge pull request #1592 from MiyakoMeow/feat/deepseek-1m-context fix(deepseek): all has 1M context / 384k output / adjusted price",
+  "id": "deepseek_deepseek_chat_20260425t1728"
+ },
+ {
+  "provider": "deepseek",
+  "model": "deepseek-chat",
+  "before": {
+   "input": 0.14,
+   "output": 0.28,
+   "cache_read": 0.028
+  },
+  "after": {
+   "input": 0.14,
+   "output": 0.28,
+   "cache_read": 0.0028
+  },
+  "previous_at": "2026-04-25T17:28:45Z",
+  "recorded_at": "2026-06-06T22:51:44Z",
+  "commit": "d9964116116f6f3dea2de8526a855656a9c17b9c",
+  "commit_url": "https://github.com/sst/models.dev/commit/d9964116116f6f3dea2de8526a855656a9c17b9c",
+  "message": "Merge pull request #2037 from licat2023/fix/deepseek-cache-pricing fix(models.dev): correct deepseek-chat/reasoner cache_read pricing",
+  "id": "deepseek_deepseek_chat_20260606t2251"
+ },
+ {
+  "provider": "deepseek",
+  "model": "deepseek-reasoner",
+  "before": {
+   "input": 0.55,
+   "output": 2.19
+  },
+  "after": {
+   "input": 0.55,
+   "output": 2.19,
+   "cache_read": 0.14
+  },
+  "previous_at": "2025-06-10T22:55:28Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "deepseek_deepseek_reasoner_20250617t2226"
+ },
+ {
+  "provider": "deepseek",
+  "model": "deepseek-reasoner",
+  "before": {
+   "input": 0.55,
+   "output": 2.19,
+   "cache_read": 0.14
+  },
+  "after": {
+   "input": 0.57,
+   "output": 1.68,
+   "cache_read": 0.07
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-08-25T16:35:54Z",
+  "commit": "6144f84d7962f739ff706f69384f6914ff925372",
+  "commit_url": "https://github.com/sst/models.dev/commit/6144f84d7962f739ff706f69384f6914ff925372",
+  "message": "Merge pull request #158 from Mahamed-Belkheir/deepseek-3.1-updates add: chutes deepseek v3.1 and thinking model, update deepseek provider context",
+  "id": "deepseek_deepseek_reasoner_20250825t1635"
+ },
+ {
+  "provider": "deepseek",
+  "model": "deepseek-reasoner",
+  "before": {
+   "input": 0.57,
+   "output": 1.68,
+   "cache_read": 0.07
+  },
+  "after": {
+   "input": 0.28,
+   "output": 0.42,
+   "cache_read": 0.028
+  },
+  "previous_at": "2025-08-25T16:35:54Z",
+  "recorded_at": "2025-11-17T16:05:41Z",
+  "commit": "b99f043b714f38137403ed3b1aaf7af61e3cb251",
+  "commit_url": "https://github.com/sst/models.dev/commit/b99f043b714f38137403ed3b1aaf7af61e3cb251",
+  "message": "Merge pull request #394 from mlazuardy/update-deepseek Update DeepSeek model costs and last_updated",
+  "id": "deepseek_deepseek_reasoner_20251117t1605"
+ },
+ {
+  "provider": "deepseek",
+  "model": "deepseek-reasoner",
+  "before": {
+   "input": 0.28,
+   "output": 0.42,
+   "cache_read": 0.028
+  },
+  "after": {
+   "input": 0.14,
+   "output": 0.28,
+   "cache_read": 0.028
+  },
+  "previous_at": "2025-11-17T16:05:41Z",
+  "recorded_at": "2026-04-25T17:28:45Z",
+  "commit": "f458b199942e7b5f565a14ce9455faf1d07146ad",
+  "commit_url": "https://github.com/sst/models.dev/commit/f458b199942e7b5f565a14ce9455faf1d07146ad",
+  "message": "Merge pull request #1592 from MiyakoMeow/feat/deepseek-1m-context fix(deepseek): all has 1M context / 384k output / adjusted price",
+  "id": "deepseek_deepseek_reasoner_20260425t1728"
+ },
+ {
+  "provider": "deepseek",
+  "model": "deepseek-reasoner",
+  "before": {
+   "input": 0.14,
+   "output": 0.28,
+   "cache_read": 0.028
+  },
+  "after": {
+   "input": 0.14,
+   "output": 0.28,
+   "cache_read": 0.0028
+  },
+  "previous_at": "2026-04-25T17:28:45Z",
+  "recorded_at": "2026-06-06T22:51:44Z",
+  "commit": "d9964116116f6f3dea2de8526a855656a9c17b9c",
+  "commit_url": "https://github.com/sst/models.dev/commit/d9964116116f6f3dea2de8526a855656a9c17b9c",
+  "message": "Merge pull request #2037 from licat2023/fix/deepseek-cache-pricing fix(models.dev): correct deepseek-chat/reasoner cache_read pricing",
+  "id": "deepseek_deepseek_reasoner_20260606t2251"
+ },
+ {
+  "provider": "deepseek",
+  "model": "deepseek-v4-flash",
+  "before": {
+   "input": 0.14,
+   "output": 0.28,
+   "cache_read": 0.028
+  },
+  "after": {
+   "input": 0.14,
+   "output": 0.28,
+   "cache_read": 0.0028
+  },
+  "previous_at": "2026-04-24T12:34:03Z",
+  "recorded_at": "2026-05-25T05:18:18Z",
+  "commit": "ad654e71da156b98f9e683f889e02bc6e8b8b0b2",
+  "commit_url": "https://github.com/sst/models.dev/commit/ad654e71da156b98f9e683f889e02bc6e8b8b0b2",
+  "message": "Merge pull request #1850 from huxeon/dev fix: modify the deepseek v4 flash/pro price",
+  "id": "deepseek_deepseek_v4_flash_20260525t0518"
+ },
+ {
+  "provider": "deepseek",
+  "model": "deepseek-v4-flash",
+  "before": {
+   "input": 0.14,
+   "output": 0.28,
+   "cache_read": 0.0028
+  },
+  "after": {
+   "input": 0.15,
+   "output": 0.6,
+   "cache_read": 0.003
+  },
+  "previous_at": "2026-05-25T05:18:18Z",
+  "recorded_at": "2026-09-10T16:10:24Z",
+  "commit": "f7b0eda070c66ba93d2b0d0e444ce8e29e2c0d48",
+  "commit_url": "https://github.com/sst/models.dev/commit/f7b0eda070c66ba93d2b0d0e444ce8e29e2c0d48",
+  "message": "Add DeepSeek V4.1 Flash for deepseek provider (#6721) * Add DeepSeek V4.1 Flash for deepseek provider - add providers/deepseek/models/deepseek-flash.toml mapping to deepseek/deepseek-v4.1-flash - mark deepseek-v4-flash and deepseek-v4-flash-vision-exp deprecated (retired; served by V4.1 Flash) * Address review: drop redundant name, restore wire-path comments * Comment out deprecated status in deepseek-v4-flash.toml Commented out the deprecated status line in the TOML file. * Comment out deprecated status in TOML configuration Commented out the deprecated status line for clarity. --------- Co-authored-by: Aiden Cline <63023139+rekram1-node@users.noreply.github.com>",
+  "id": "deepseek_deepseek_v4_flash_20260910t1610"
+ },
+ {
+  "provider": "deepseek",
+  "model": "deepseek-v4-flash-vision-exp",
+  "before": {
+   "input": 0.14,
+   "output": 0.28,
+   "cache_read": 0.0028
+  },
+  "after": {
+   "input": 0.15,
+   "output": 0.6,
+   "cache_read": 0.003
+  },
+  "previous_at": "2026-08-21T21:27:55Z",
+  "recorded_at": "2026-09-10T16:10:24Z",
+  "commit": "f7b0eda070c66ba93d2b0d0e444ce8e29e2c0d48",
+  "commit_url": "https://github.com/sst/models.dev/commit/f7b0eda070c66ba93d2b0d0e444ce8e29e2c0d48",
+  "message": "Add DeepSeek V4.1 Flash for deepseek provider (#6721) * Add DeepSeek V4.1 Flash for deepseek provider - add providers/deepseek/models/deepseek-flash.toml mapping to deepseek/deepseek-v4.1-flash - mark deepseek-v4-flash and deepseek-v4-flash-vision-exp deprecated (retired; served by V4.1 Flash) * Address review: drop redundant name, restore wire-path comments * Comment out deprecated status in deepseek-v4-flash.toml Commented out the deprecated status line in the TOML file. * Comment out deprecated status in TOML configuration Commented out the deprecated status line for clarity. --------- Co-authored-by: Aiden Cline <63023139+rekram1-node@users.noreply.github.com>",
+  "id": "deepseek_deepseek_v4_flash_vision_exp_20260910t1610"
+ },
+ {
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "before": {
+   "input": 1.74,
+   "output": 3.48,
+   "cache_read": 0.145
+  },
+  "after": {
+   "input": 0.435,
+   "output": 0.87,
+   "cache_read": 0.003625
+  },
+  "previous_at": "2026-04-24T07:04:52Z",
+  "recorded_at": "2026-05-25T05:18:18Z",
+  "commit": "ad654e71da156b98f9e683f889e02bc6e8b8b0b2",
+  "commit_url": "https://github.com/sst/models.dev/commit/ad654e71da156b98f9e683f889e02bc6e8b8b0b2",
+  "message": "Merge pull request #1850 from huxeon/dev fix: modify the deepseek v4 flash/pro price",
+  "id": "deepseek_deepseek_v4_pro_20260525t0518"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-1.5-flash",
+  "before": {
+   "input": 0.075,
+   "output": 0.3
+  },
+  "after": {
+   "input": 0.075,
+   "output": 0.3,
+   "cache_read": 0.01875
+  },
+  "previous_at": "2025-06-10T22:41:49Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "google_gemini_1.5_flash_20250617t2226"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-1.5-flash-8b",
+  "before": {
+   "input": 0.0375,
+   "output": 0.15
+  },
+  "after": {
+   "input": 0.0375,
+   "output": 0.15,
+   "cache_read": 0.01
+  },
+  "previous_at": "2025-06-10T22:41:49Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "google_gemini_1.5_flash_8b_20250617t2226"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-1.5-pro",
+  "before": {
+   "input": 1.25,
+   "output": 5.0
+  },
+  "after": {
+   "input": 1.25,
+   "output": 5.0,
+   "cache_read": 0.3125
+  },
+  "previous_at": "2025-06-10T22:41:49Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "google_gemini_1.5_pro_20250617t2226"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-2.0-flash",
+  "before": {
+   "input": 0.1,
+   "output": 0.4
+  },
+  "after": {
+   "input": 0.1,
+   "output": 0.4,
+   "cache_read": 0.025
+  },
+  "previous_at": "2025-06-10T22:41:49Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "google_gemini_2.0_flash_20250617t2226"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-2.5-flash",
+  "before": {
+   "input": 0.3,
+   "output": 2.5,
+   "cache_read": 0.075
+  },
+  "after": {
+   "input": 0.3,
+   "output": 2.5,
+   "cache_read": 0.03
+  },
+  "previous_at": "2025-06-18T13:23:28Z",
+  "recorded_at": "2026-04-20T18:43:53Z",
+  "commit": "3d09981eda8f88581176033f5cf6a65ad2ff8850",
+  "commit_url": "https://github.com/sst/models.dev/commit/3d09981eda8f88581176033f5cf6a65ad2ff8850",
+  "message": "Merge pull request #1499 from rovo89/patch-1 [google] Fix cache_read cost in gemini-2.5-flash model",
+  "id": "google_gemini_2.5_flash_20260420t1843"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-2.5-flash-lite",
+  "before": {
+   "input": 0.1,
+   "output": 0.4,
+   "cache_read": 0.025
+  },
+  "after": {
+   "input": 0.1,
+   "output": 0.4,
+   "cache_read": 0.01
+  },
+  "previous_at": "2025-09-24T16:48:52Z",
+  "recorded_at": "2026-05-12T22:40:48Z",
+  "commit": "5e344ded49d8bb8d98941b283237515c4236b058",
+  "commit_url": "https://github.com/sst/models.dev/commit/5e344ded49d8bb8d98941b283237515c4236b058",
+  "message": "Merge pull request #1755 from anomalyco/correct-context-tracking feat: add new context pricing tiers",
+  "id": "google_gemini_2.5_flash_lite_20260512t2240"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-2.5-flash-preview-04-17",
+  "before": {
+   "input": 0.15,
+   "output": 0.6
+  },
+  "after": {
+   "input": 0.15,
+   "output": 0.6,
+   "cache_read": 0.0375
+  },
+  "previous_at": "2025-06-10T22:41:49Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "google_gemini_2.5_flash_preview_04_17_20250617t2226"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-2.5-flash-preview-05-20",
+  "before": {
+   "input": 0.15,
+   "output": 0.6
+  },
+  "after": {
+   "input": 0.15,
+   "output": 0.6,
+   "cache_read": 0.0375
+  },
+  "previous_at": "2025-06-10T22:41:49Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "google_gemini_2.5_flash_preview_05_20_20250617t2226"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-2.5-flash-preview-09-2025",
+  "before": {
+   "input": 0.15,
+   "output": 0.6,
+   "cache_read": 0.0375
+  },
+  "after": {
+   "input": 0.3,
+   "output": 2.5,
+   "cache_read": 0.075
+  },
+  "previous_at": "2025-09-26T16:02:13Z",
+  "recorded_at": "2025-10-15T16:05:35Z",
+  "commit": "f314c1388f2d1f498a098cb0408658f5eeec686d",
+  "commit_url": "https://github.com/sst/models.dev/commit/f314c1388f2d1f498a098cb0408658f5eeec686d",
+  "message": "Merge pull request #267 from rubnogueira/feat/google-ai-flash-09-2025 fix: gemini 2.5 family pricing",
+  "id": "google_gemini_2.5_flash_preview_09_2025_20251015t1605"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-2.5-pro",
+  "before": {
+   "input": 1.25,
+   "output": 10.0,
+   "cache_read": 0.31
+  },
+  "after": {
+   "input": 1.25,
+   "output": 10.0,
+   "cache_read": 0.125,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.25,
+     "input": 2.5,
+     "output": 15.0
+    }
+   ]
+  },
+  "previous_at": "2025-06-18T13:23:28Z",
+  "recorded_at": "2026-04-20T03:17:45Z",
+  "commit": "ccb8dcc65f037c6eaccb8ecc85a3959a56d9a65c",
+  "commit_url": "https://github.com/sst/models.dev/commit/ccb8dcc65f037c6eaccb8ecc85a3959a56d9a65c",
+  "message": "Merge pull request #1493 from rovo89/patch-1 Add context_over_200k for gemini-2.5-pro and adjust cache_read costs",
+  "id": "google_gemini_2.5_pro_20260420t0317"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-2.5-pro-preview-05-06",
+  "before": {
+   "input": 1.25,
+   "output": 10.0
+  },
+  "after": {
+   "input": 1.25,
+   "output": 10.0,
+   "cache_read": 0.31
+  },
+  "previous_at": "2025-06-10T22:41:49Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "google_gemini_2.5_pro_preview_05_06_20250617t2226"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-2.5-pro-preview-06-05",
+  "before": {
+   "input": 1.25,
+   "output": 10.0
+  },
+  "after": {
+   "input": 1.25,
+   "output": 10.0,
+   "cache_read": 0.31
+  },
+  "previous_at": "2025-06-10T22:41:49Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "google_gemini_2.5_pro_preview_06_05_20250617t2226"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-3-flash-preview",
+  "before": {
+   "input": 0.15,
+   "output": 0.6,
+   "cache_read": 0.0375,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.075,
+     "input": 0.3,
+     "output": 1.2
+    }
+   ]
+  },
+  "after": {
+   "input": 0.5,
+   "output": 3.0,
+   "cache_read": 0.05,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.05,
+     "input": 0.5,
+     "output": 3.0
+    }
+   ]
+  },
+  "previous_at": "2025-12-17T16:19:09Z",
+  "recorded_at": "2025-12-17T20:39:42Z",
+  "commit": "5ff7fad6c35c65f2f38ee37c8536bc7577908d9b",
+  "commit_url": "https://github.com/sst/models.dev/commit/5ff7fad6c35c65f2f38ee37c8536bc7577908d9b",
+  "message": "Merge pull request #529 from markusylisiurunen/fix-gemini-3-flash-preview-pricing Fix Gemini 3 Flash Preview pricing",
+  "id": "google_gemini_3_flash_preview_20251217t2039"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-3-flash-preview",
+  "before": {
+   "input": 0.5,
+   "output": 3.0,
+   "cache_read": 0.05,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.05,
+     "input": 0.5,
+     "output": 3.0
+    }
+   ]
+  },
+  "after": {
+   "input": 0.5,
+   "output": 3.0,
+   "cache_read": 0.05
+  },
+  "previous_at": "2025-12-17T20:39:42Z",
+  "recorded_at": "2026-05-12T22:40:48Z",
+  "commit": "5e344ded49d8bb8d98941b283237515c4236b058",
+  "commit_url": "https://github.com/sst/models.dev/commit/5e344ded49d8bb8d98941b283237515c4236b058",
+  "message": "Merge pull request #1755 from anomalyco/correct-context-tracking feat: add new context pricing tiers",
+  "id": "google_gemini_3_flash_preview_20260512t2240"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-3-pro-preview",
+  "before": {
+   "input": 2.0,
+   "output": 12.0,
+   "cache_read": 0.2
+  },
+  "after": {
+   "input": 2.0,
+   "output": 12.0,
+   "cache_read": 0.2,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.4,
+     "input": 4.0,
+     "output": 18.0
+    }
+   ]
+  },
+  "previous_at": "2025-11-18T16:33:03Z",
+  "recorded_at": "2025-11-18T16:59:37Z",
+  "commit": "e8d76a101841de60a88cd11d03b6f411a9c0acb2",
+  "commit_url": "https://github.com/sst/models.dev/commit/e8d76a101841de60a88cd11d03b6f411a9c0acb2",
+  "message": "Merge pull request #398 from TylerBarnes/add-gemini-3-pro-preview Add Gemini 3 Pro Preview model",
+  "id": "google_gemini_3_pro_preview_20251118t1659"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-3.1-flash-image-preview",
+  "before": {
+   "input": 0.25,
+   "output": 60.0
+  },
+  "after": {
+   "input": 0.5,
+   "output": 60.0
+  },
+  "previous_at": "2026-03-07T16:57:06Z",
+  "recorded_at": "2026-05-12T22:40:48Z",
+  "commit": "5e344ded49d8bb8d98941b283237515c4236b058",
+  "commit_url": "https://github.com/sst/models.dev/commit/5e344ded49d8bb8d98941b283237515c4236b058",
+  "message": "Merge pull request #1755 from anomalyco/correct-context-tracking feat: add new context pricing tiers",
+  "id": "google_gemini_3.1_flash_image_preview_20260512t2240"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-3.1-flash-lite",
+  "before": {
+   "input": 0.25,
+   "output": 1.5,
+   "cache_read": 0.025,
+   "cache_write": 1.0
+  },
+  "after": {
+   "input": 0.25,
+   "output": 1.5,
+   "cache_read": 0.025
+  },
+  "previous_at": "2026-05-07T20:44:25Z",
+  "recorded_at": "2026-05-12T22:40:48Z",
+  "commit": "5e344ded49d8bb8d98941b283237515c4236b058",
+  "commit_url": "https://github.com/sst/models.dev/commit/5e344ded49d8bb8d98941b283237515c4236b058",
+  "message": "Merge pull request #1755 from anomalyco/correct-context-tracking feat: add new context pricing tiers",
+  "id": "google_gemini_3.1_flash_lite_20260512t2240"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-3.1-flash-lite-preview",
+  "before": {
+   "input": 0.5,
+   "output": 3.0,
+   "cache_read": 0.05,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.025,
+     "cache_write": 1.0,
+     "input": 0.25,
+     "output": 1.5
+    }
+   ]
+  },
+  "after": {
+   "input": 0.25,
+   "output": 1.5,
+   "cache_read": 0.025,
+   "cache_write": 1.0
+  },
+  "previous_at": "2026-03-07T17:13:45Z",
+  "recorded_at": "2026-03-13T23:41:41Z",
+  "commit": "1e3bc38b313814a76e1f46c122316f7cd039cd04",
+  "commit_url": "https://github.com/sst/models.dev/commit/1e3bc38b313814a76e1f46c122316f7cd039cd04",
+  "message": "Merge pull request #1137 from mcowger/mcowger/correct-gemini-flash-lite-pricing Fix incorrect pricing for gemini-3.1-flash-lite-preview",
+  "id": "google_gemini_3.1_flash_lite_preview_20260313t2341"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-3.1-flash-lite-preview",
+  "before": {
+   "input": 0.25,
+   "output": 1.5,
+   "cache_read": 0.025,
+   "cache_write": 1.0
+  },
+  "after": {
+   "input": 0.25,
+   "output": 1.5,
+   "cache_read": 0.025
+  },
+  "previous_at": "2026-03-13T23:41:41Z",
+  "recorded_at": "2026-05-12T22:40:48Z",
+  "commit": "5e344ded49d8bb8d98941b283237515c4236b058",
+  "commit_url": "https://github.com/sst/models.dev/commit/5e344ded49d8bb8d98941b283237515c4236b058",
+  "message": "Merge pull request #1755 from anomalyco/correct-context-tracking feat: add new context pricing tiers",
+  "id": "google_gemini_3.1_flash_lite_preview_20260512t2240"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-3.6-flash",
+  "before": {
+   "input": 1.5,
+   "output": 7.5,
+   "cache_read": 0.15
+  },
+  "after": {
+   "input": 0.75,
+   "output": 3.75,
+   "cache_read": 0.075
+  },
+  "previous_at": "2026-07-21T15:59:34Z",
+  "recorded_at": "2026-08-21T06:42:28Z",
+  "commit": "501c0d8797561e9a048c93b3fb1bf67a57e3fe89",
+  "commit_url": "https://github.com/sst/models.dev/commit/501c0d8797561e9a048c93b3fb1bf67a57e3fe89",
+  "message": "fix: audit Google Gemini pricing (#5184) Co-authored-by: rekram1-node <rekram1-node@users.noreply.github.com>",
+  "id": "google_gemini_3.6_flash_20260821t0642"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-flash-latest",
+  "before": {
+   "input": 0.15,
+   "output": 0.6,
+   "cache_read": 0.0375
+  },
+  "after": {
+   "input": 0.3,
+   "output": 2.5,
+   "cache_read": 0.075
+  },
+  "previous_at": "2025-09-29T15:50:03Z",
+  "recorded_at": "2025-10-15T16:05:35Z",
+  "commit": "f314c1388f2d1f498a098cb0408658f5eeec686d",
+  "commit_url": "https://github.com/sst/models.dev/commit/f314c1388f2d1f498a098cb0408658f5eeec686d",
+  "message": "Merge pull request #267 from rubnogueira/feat/google-ai-flash-09-2025 fix: gemini 2.5 family pricing",
+  "id": "google_gemini_flash_latest_20251015t1605"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-flash-latest",
+  "before": {
+   "input": 0.3,
+   "output": 2.5,
+   "cache_read": 0.075
+  },
+  "after": {
+   "input": 1.5,
+   "output": 9.0,
+   "cache_read": 0.15
+  },
+  "previous_at": "2025-10-15T16:05:35Z",
+  "recorded_at": "2026-07-15T15:13:59Z",
+  "commit": "2953fed88b788fe3ba30575beae9f74088aaf508",
+  "commit_url": "https://github.com/sst/models.dev/commit/2953fed88b788fe3ba30575beae9f74088aaf508",
+  "message": "Merge pull request #3266 from anomalyco/fix/latest-alias-reasoning-options fix: align *-latest alias reasoning_options with current model targets",
+  "id": "google_gemini_flash_latest_20260715t1513"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-flash-latest",
+  "before": {
+   "input": 1.5,
+   "output": 9.0,
+   "cache_read": 0.15
+  },
+  "after": {
+   "input": 0.75,
+   "output": 3.75,
+   "cache_read": 0.075
+  },
+  "previous_at": "2026-07-15T15:13:59Z",
+  "recorded_at": "2026-08-21T06:42:28Z",
+  "commit": "501c0d8797561e9a048c93b3fb1bf67a57e3fe89",
+  "commit_url": "https://github.com/sst/models.dev/commit/501c0d8797561e9a048c93b3fb1bf67a57e3fe89",
+  "message": "fix: audit Google Gemini pricing (#5184) Co-authored-by: rekram1-node <rekram1-node@users.noreply.github.com>",
+  "id": "google_gemini_flash_latest_20260821t0642"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-flash-lite-latest",
+  "before": {
+   "input": 0.1,
+   "output": 0.4,
+   "cache_read": 0.025
+  },
+  "after": {
+   "input": 0.25,
+   "output": 1.5,
+   "cache_read": 0.025
+  },
+  "previous_at": "2025-09-29T15:50:03Z",
+  "recorded_at": "2026-07-15T15:13:59Z",
+  "commit": "2953fed88b788fe3ba30575beae9f74088aaf508",
+  "commit_url": "https://github.com/sst/models.dev/commit/2953fed88b788fe3ba30575beae9f74088aaf508",
+  "message": "Merge pull request #3266 from anomalyco/fix/latest-alias-reasoning-options fix: align *-latest alias reasoning_options with current model targets",
+  "id": "google_gemini_flash_lite_latest_20260715t1513"
+ },
+ {
+  "provider": "google",
+  "model": "gemini-flash-lite-latest",
+  "before": {
+   "input": 0.25,
+   "output": 1.5,
+   "cache_read": 0.025
+  },
+  "after": {
+   "input": 0.3,
+   "output": 2.5,
+   "cache_read": 0.03
+  },
+  "previous_at": "2026-07-15T15:13:59Z",
+  "recorded_at": "2026-08-21T06:42:28Z",
+  "commit": "501c0d8797561e9a048c93b3fb1bf67a57e3fe89",
+  "commit_url": "https://github.com/sst/models.dev/commit/501c0d8797561e9a048c93b3fb1bf67a57e3fe89",
+  "message": "fix: audit Google Gemini pricing (#5184) Co-authored-by: rekram1-node <rekram1-node@users.noreply.github.com>",
+  "id": "google_gemini_flash_lite_latest_20260821t0642"
+ },
+ {
+  "provider": "moonshotai",
+  "model": "kimi-k2.5",
+  "before": {
+   "input": 0.0,
+   "output": 0.0,
+   "cache_read": 0.0,
+   "cache_write": 0.0
+  },
+  "after": {
+   "input": 0.6,
+   "output": 3.0,
+   "cache_read": 0.1
+  },
+  "previous_at": "2026-01-27T18:59:59Z",
+  "recorded_at": "2026-01-29T08:16:34Z",
+  "commit": "0c0d9177199ff9a45c32611da8a5b4d73479ea5e",
+  "commit_url": "https://github.com/sst/models.dev/commit/0c0d9177199ff9a45c32611da8a5b4d73479ea5e",
+  "message": "sync",
+  "id": "moonshotai_kimi_k2.5_20260129t0816"
+ },
+ {
+  "provider": "openai",
+  "model": "codex-mini-latest",
+  "before": {
+   "input": 1.5,
+   "output": 6.0
+  },
+  "after": {
+   "input": 1.5,
+   "output": 6.0,
+   "cache_read": 0.375
+  },
+  "previous_at": "2025-06-05T17:34:29Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "openai_codex_mini_latest_20250617t2226"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-3.5-turbo",
+  "before": {
+   "input": 0.5,
+   "output": 1.5,
+   "cache_read": 1.25
+  },
+  "after": {
+   "input": 0.5,
+   "output": 1.5,
+   "cache_read": 0.0
+  },
+  "previous_at": "2025-07-23T00:22:50Z",
+  "recorded_at": "2026-05-26T17:06:15Z",
+  "commit": "979f5da0ca1de78854195511150a1476a5e8b73e",
+  "commit_url": "https://github.com/sst/models.dev/commit/979f5da0ca1de78854195511150a1476a5e8b73e",
+  "message": "Merge pull request #1864 from oskarkocol/update/openai-cache-rates chore: update openai cache rates",
+  "id": "openai_gpt_3.5_turbo_20260526t1706"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-4",
+  "before": {
+   "input": 10.0,
+   "output": 30.0
+  },
+  "after": {
+   "input": 30.0,
+   "output": 60.0
+  },
+  "previous_at": "2025-06-11T20:51:05Z",
+  "recorded_at": "2025-08-08T21:10:25Z",
+  "commit": "8753d3ba21e8adc7c17a531543ff66f3e88b0075",
+  "commit_url": "https://github.com/sst/models.dev/commit/8753d3ba21e8adc7c17a531543ff66f3e88b0075",
+  "message": "Merge pull request #120 from nickdowse-stripe/update-gpt4-pricing Update OpenAI GPT-4 input/output token pricing",
+  "id": "openai_gpt_4_20250808t2110"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-4.1",
+  "before": {
+   "input": 2.0,
+   "output": 8.0
+  },
+  "after": {
+   "input": 2.0,
+   "output": 8.0,
+   "cache_read": 0.5
+  },
+  "previous_at": "2025-06-11T20:51:05Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "openai_gpt_4.1_20250617t2226"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-4.1-mini",
+  "before": {
+   "input": 0.4,
+   "output": 1.6
+  },
+  "after": {
+   "input": 0.4,
+   "output": 1.6,
+   "cache_read": 0.1
+  },
+  "previous_at": "2025-06-11T20:51:05Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "openai_gpt_4.1_mini_20250617t2226"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-4.1-nano",
+  "before": {
+   "input": 0.1,
+   "output": 0.4
+  },
+  "after": {
+   "input": 0.1,
+   "output": 0.4,
+   "cache_read": 0.03
+  },
+  "previous_at": "2025-06-11T20:51:05Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "openai_gpt_4.1_nano_20250617t2226"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-4.1-nano",
+  "before": {
+   "input": 0.1,
+   "output": 0.4,
+   "cache_read": 0.03
+  },
+  "after": {
+   "input": 0.1,
+   "output": 0.4,
+   "cache_read": 0.025
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2026-05-26T17:06:15Z",
+  "commit": "979f5da0ca1de78854195511150a1476a5e8b73e",
+  "commit_url": "https://github.com/sst/models.dev/commit/979f5da0ca1de78854195511150a1476a5e8b73e",
+  "message": "Merge pull request #1864 from oskarkocol/update/openai-cache-rates chore: update openai cache rates",
+  "id": "openai_gpt_4.1_nano_20260526t1706"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-4.5-preview",
+  "before": {
+   "input": 75.0,
+   "output": 150.0
+  },
+  "after": {
+   "input": 75.0,
+   "output": 150.0,
+   "cache_read": 37.5
+  },
+  "previous_at": "2025-06-11T20:51:05Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "openai_gpt_4.5_preview_20250617t2226"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-4o",
+  "before": {
+   "input": 2.5,
+   "output": 10.0
+  },
+  "after": {
+   "input": 2.5,
+   "output": 10.0,
+   "cache_read": 1.25
+  },
+  "previous_at": "2025-06-05T20:31:32Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "openai_gpt_4o_20250617t2226"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "before": {
+   "input": 0.15,
+   "output": 0.6
+  },
+  "after": {
+   "input": 0.15,
+   "output": 0.6,
+   "cache_read": 0.08
+  },
+  "previous_at": "2025-06-05T20:31:32Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "openai_gpt_4o_mini_20250617t2226"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "before": {
+   "input": 0.15,
+   "output": 0.6,
+   "cache_read": 0.08
+  },
+  "after": {
+   "input": 0.15,
+   "output": 0.6,
+   "cache_read": 0.075
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2026-05-26T17:06:15Z",
+  "commit": "979f5da0ca1de78854195511150a1476a5e8b73e",
+  "commit_url": "https://github.com/sst/models.dev/commit/979f5da0ca1de78854195511150a1476a5e8b73e",
+  "message": "Merge pull request #1864 from oskarkocol/update/openai-cache-rates chore: update openai cache rates",
+  "id": "openai_gpt_4o_mini_20260526t1706"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-5",
+  "before": {
+   "input": 1.25,
+   "output": 10.0
+  },
+  "after": {
+   "input": 1.25,
+   "output": 10.0,
+   "cache_read": 0.13
+  },
+  "previous_at": "2025-08-07T17:59:07Z",
+  "recorded_at": "2025-08-08T21:09:56Z",
+  "commit": "13b6ab800eb3d77458b1d74cc0bf9287a3ca3a58",
+  "commit_url": "https://github.com/sst/models.dev/commit/13b6ab800eb3d77458b1d74cc0bf9287a3ca3a58",
+  "message": "update cache read cost for gpt-5 models",
+  "id": "openai_gpt_5_20250808t2109"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-5",
+  "before": {
+   "input": 1.25,
+   "output": 10.0,
+   "cache_read": 0.13
+  },
+  "after": {
+   "input": 1.25,
+   "output": 10.0,
+   "cache_read": 0.125
+  },
+  "previous_at": "2025-08-08T21:09:56Z",
+  "recorded_at": "2026-01-20T16:03:07Z",
+  "commit": "9de5f304fe3975878135b66de757b69cf3bc0050",
+  "commit_url": "https://github.com/sst/models.dev/commit/9de5f304fe3975878135b66de757b69cf3bc0050",
+  "message": "Merge pull request #683 from nickdowse/dev Fix: Fix incorrect OpenAI, Gemini prices",
+  "id": "openai_gpt_5_20260120t1603"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-5-chat-latest",
+  "before": {
+   "input": 1.25,
+   "output": 10.0
+  },
+  "after": {
+   "input": 1.25,
+   "output": 10.0,
+   "cache_read": 0.125
+  },
+  "previous_at": "2025-08-08T20:57:07Z",
+  "recorded_at": "2026-05-26T17:06:15Z",
+  "commit": "979f5da0ca1de78854195511150a1476a5e8b73e",
+  "commit_url": "https://github.com/sst/models.dev/commit/979f5da0ca1de78854195511150a1476a5e8b73e",
+  "message": "Merge pull request #1864 from oskarkocol/update/openai-cache-rates chore: update openai cache rates",
+  "id": "openai_gpt_5_chat_latest_20260526t1706"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-5-mini",
+  "before": {
+   "input": 0.25,
+   "output": 2.0
+  },
+  "after": {
+   "input": 0.25,
+   "output": 2.0,
+   "cache_read": 0.03
+  },
+  "previous_at": "2025-08-07T17:59:07Z",
+  "recorded_at": "2025-08-08T21:09:56Z",
+  "commit": "13b6ab800eb3d77458b1d74cc0bf9287a3ca3a58",
+  "commit_url": "https://github.com/sst/models.dev/commit/13b6ab800eb3d77458b1d74cc0bf9287a3ca3a58",
+  "message": "update cache read cost for gpt-5 models",
+  "id": "openai_gpt_5_mini_20250808t2109"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-5-mini",
+  "before": {
+   "input": 0.25,
+   "output": 2.0,
+   "cache_read": 0.03
+  },
+  "after": {
+   "input": 0.25,
+   "output": 2.0,
+   "cache_read": 0.025
+  },
+  "previous_at": "2025-08-08T21:09:56Z",
+  "recorded_at": "2026-01-20T16:03:07Z",
+  "commit": "9de5f304fe3975878135b66de757b69cf3bc0050",
+  "commit_url": "https://github.com/sst/models.dev/commit/9de5f304fe3975878135b66de757b69cf3bc0050",
+  "message": "Merge pull request #683 from nickdowse/dev Fix: Fix incorrect OpenAI, Gemini prices",
+  "id": "openai_gpt_5_mini_20260120t1603"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-5-nano",
+  "before": {
+   "input": 0.05,
+   "output": 0.4
+  },
+  "after": {
+   "input": 0.05,
+   "output": 0.4,
+   "cache_read": 0.01
+  },
+  "previous_at": "2025-08-07T17:59:07Z",
+  "recorded_at": "2025-08-08T21:09:56Z",
+  "commit": "13b6ab800eb3d77458b1d74cc0bf9287a3ca3a58",
+  "commit_url": "https://github.com/sst/models.dev/commit/13b6ab800eb3d77458b1d74cc0bf9287a3ca3a58",
+  "message": "update cache read cost for gpt-5 models",
+  "id": "openai_gpt_5_nano_20250808t2109"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-5-nano",
+  "before": {
+   "input": 0.05,
+   "output": 0.4,
+   "cache_read": 0.01
+  },
+  "after": {
+   "input": 0.05,
+   "output": 0.4,
+   "cache_read": 0.005
+  },
+  "previous_at": "2025-08-08T21:09:56Z",
+  "recorded_at": "2026-01-20T16:03:07Z",
+  "commit": "9de5f304fe3975878135b66de757b69cf3bc0050",
+  "commit_url": "https://github.com/sst/models.dev/commit/9de5f304fe3975878135b66de757b69cf3bc0050",
+  "message": "Merge pull request #683 from nickdowse/dev Fix: Fix incorrect OpenAI, Gemini prices",
+  "id": "openai_gpt_5_nano_20260120t1603"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-5.1",
+  "before": {
+   "input": 1.25,
+   "output": 10.0,
+   "cache_read": 0.13
+  },
+  "after": {
+   "input": 1.25,
+   "output": 10.0,
+   "cache_read": 0.125
+  },
+  "previous_at": "2025-11-13T21:52:47Z",
+  "recorded_at": "2026-05-26T17:06:15Z",
+  "commit": "979f5da0ca1de78854195511150a1476a5e8b73e",
+  "commit_url": "https://github.com/sst/models.dev/commit/979f5da0ca1de78854195511150a1476a5e8b73e",
+  "message": "Merge pull request #1864 from oskarkocol/update/openai-cache-rates chore: update openai cache rates",
+  "id": "openai_gpt_5.1_20260526t1706"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-5.4",
+  "before": {
+   "input": 2.5,
+   "output": 15.0,
+   "cache_read": 0.25,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.5,
+     "input": 5.0,
+     "output": 22.5
+    }
+   ]
+  },
+  "after": {
+   "input": 2.5,
+   "output": 15.0,
+   "cache_read": 0.25,
+   "tiers": [
+    {
+     "above": 272000,
+     "cache_read": 0.5,
+     "input": 5.0,
+     "output": 22.5
+    }
+   ]
+  },
+  "previous_at": "2026-04-08T04:47:19Z",
+  "recorded_at": "2026-05-12T22:40:48Z",
+  "commit": "5e344ded49d8bb8d98941b283237515c4236b058",
+  "commit_url": "https://github.com/sst/models.dev/commit/5e344ded49d8bb8d98941b283237515c4236b058",
+  "message": "Merge pull request #1755 from anomalyco/correct-context-tracking feat: add new context pricing tiers",
+  "id": "openai_gpt_5.4_20260512t2240"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-5.4-pro",
+  "before": {
+   "input": 30.0,
+   "output": 180.0,
+   "tiers": [
+    {
+     "above": 200000,
+     "input": 60.0,
+     "output": 270.0
+    }
+   ]
+  },
+  "after": {
+   "input": 30.0,
+   "output": 180.0,
+   "tiers": [
+    {
+     "above": 272000,
+     "input": 60.0,
+     "output": 270.0
+    }
+   ]
+  },
+  "previous_at": "2026-03-05T23:50:22Z",
+  "recorded_at": "2026-05-12T22:40:48Z",
+  "commit": "5e344ded49d8bb8d98941b283237515c4236b058",
+  "commit_url": "https://github.com/sst/models.dev/commit/5e344ded49d8bb8d98941b283237515c4236b058",
+  "message": "Merge pull request #1755 from anomalyco/correct-context-tracking feat: add new context pricing tiers",
+  "id": "openai_gpt_5.4_pro_20260512t2240"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "before": {
+   "input": 5.0,
+   "output": 30.0,
+   "cache_read": 0.5
+  },
+  "after": {
+   "input": 5.0,
+   "output": 30.0,
+   "cache_read": 0.5,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 1.0,
+     "input": 10.0,
+     "output": 45.0
+    }
+   ]
+  },
+  "previous_at": "2026-04-23T19:17:20Z",
+  "recorded_at": "2026-04-24T18:50:50Z",
+  "commit": "9277a23a29af4a18f900625905f045b8f4d4d37f",
+  "commit_url": "https://github.com/sst/models.dev/commit/9277a23a29af4a18f900625905f045b8f4d4d37f",
+  "message": "update zen models",
+  "id": "openai_gpt_5.5_20260424t1850"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-5.5",
+  "before": {
+   "input": 5.0,
+   "output": 30.0,
+   "cache_read": 0.5,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 1.0,
+     "input": 10.0,
+     "output": 45.0
+    }
+   ]
+  },
+  "after": {
+   "input": 5.0,
+   "output": 30.0,
+   "cache_read": 0.5,
+   "tiers": [
+    {
+     "above": 272000,
+     "cache_read": 1.0,
+     "input": 10.0,
+     "output": 45.0
+    }
+   ]
+  },
+  "previous_at": "2026-04-24T18:50:50Z",
+  "recorded_at": "2026-05-12T22:40:48Z",
+  "commit": "5e344ded49d8bb8d98941b283237515c4236b058",
+  "commit_url": "https://github.com/sst/models.dev/commit/5e344ded49d8bb8d98941b283237515c4236b058",
+  "message": "Merge pull request #1755 from anomalyco/correct-context-tracking feat: add new context pricing tiers",
+  "id": "openai_gpt_5.5_20260512t2240"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-5.5-pro",
+  "before": {
+   "input": 30.0,
+   "output": 180.0
+  },
+  "after": {
+   "input": 30.0,
+   "output": 180.0,
+   "tiers": [
+    {
+     "above": 200000,
+     "input": 60.0,
+     "output": 270.0
+    }
+   ]
+  },
+  "previous_at": "2026-04-28T19:00:34Z",
+  "recorded_at": "2026-04-29T00:27:38Z",
+  "commit": "43eafcb258c37c04aa02a509aeb821588e18f9b1",
+  "commit_url": "https://github.com/sst/models.dev/commit/43eafcb258c37c04aa02a509aeb821588e18f9b1",
+  "message": "Merge pull request #1581 from xiaojiezj/zenmux_0425 feat: add models for zenmux provider",
+  "id": "openai_gpt_5.5_pro_20260429t0027"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-5.5-pro",
+  "before": {
+   "input": 30.0,
+   "output": 180.0,
+   "tiers": [
+    {
+     "above": 200000,
+     "input": 60.0,
+     "output": 270.0
+    }
+   ]
+  },
+  "after": {
+   "input": 30.0,
+   "output": 180.0,
+   "tiers": [
+    {
+     "above": 272000,
+     "input": 60.0,
+     "output": 270.0
+    }
+   ]
+  },
+  "previous_at": "2026-04-29T00:27:38Z",
+  "recorded_at": "2026-05-12T22:40:48Z",
+  "commit": "5e344ded49d8bb8d98941b283237515c4236b058",
+  "commit_url": "https://github.com/sst/models.dev/commit/5e344ded49d8bb8d98941b283237515c4236b058",
+  "message": "Merge pull request #1755 from anomalyco/correct-context-tracking feat: add new context pricing tiers",
+  "id": "openai_gpt_5.5_pro_20260512t2240"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-5.6",
+  "before": {
+   "input": 5.0,
+   "output": 30.0,
+   "cache_read": 0.5,
+   "cache_write": 6.25,
+   "tiers": [
+    {
+     "above": 272000,
+     "cache_read": 1.0,
+     "cache_write": 12.5,
+     "input": 10.0,
+     "output": 45.0
+    }
+   ]
+  },
+  "after": {
+   "input": 4.0,
+   "output": 20.0,
+   "cache_read": 0.4,
+   "cache_write": 5.0,
+   "tiers": [
+    {
+     "above": 272000,
+     "cache_read": 0.8,
+     "cache_write": 10.0,
+     "input": 8.0,
+     "output": 30.0
+    }
+   ]
+  },
+  "previous_at": "2026-07-09T17:59:06Z",
+  "recorded_at": "2026-08-25T04:37:24Z",
+  "commit": "0b2318a699fb140b7e568228e05d3212c9f095dc",
+  "commit_url": "https://github.com/sst/models.dev/commit/0b2318a699fb140b7e568228e05d3212c9f095dc",
+  "message": "fix(openai): gpt-5.6-sol + gpt-5.6 alias still on the pre-2026-08-22 rate ($5/$30 \u2192 $4/$20) (#5375) * fix(openai): gpt-5.6-sol price cut \u2014 $5/$30 \u2192 $2/$10 * fix(openai): gpt-5.6-sol price cut \u2014 $5/$30 \u2192 $2/$10 * fix(openai): use OpenAI's published Sol promo rate ($4/$20), not the batch rate * fix(openai): use OpenAI's published Sol promo rate ($4/$20), not the batch rate",
+  "id": "openai_gpt_5.6_20260825t0437"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-5.6-luna",
+  "before": {
+   "input": 1.0,
+   "output": 6.0,
+   "cache_read": 0.1,
+   "cache_write": 1.25,
+   "tiers": [
+    {
+     "above": 272000,
+     "cache_read": 0.2,
+     "cache_write": 2.5,
+     "input": 2.0,
+     "output": 9.0
+    }
+   ]
+  },
+  "after": {
+   "input": 0.2,
+   "output": 1.2,
+   "cache_read": 0.02,
+   "cache_write": 0.25,
+   "tiers": [
+    {
+     "above": 272000,
+     "cache_read": 0.04,
+     "cache_write": 0.5,
+     "input": 0.4,
+     "output": 1.8
+    }
+   ]
+  },
+  "previous_at": "2026-07-09T17:59:06Z",
+  "recorded_at": "2026-07-31T02:49:19Z",
+  "commit": "9b6e58f1e296f12af4d06a04bb216dcf73baba5a",
+  "commit_url": "https://github.com/sst/models.dev/commit/9b6e58f1e296f12af4d06a04bb216dcf73baba5a",
+  "message": "fix: update GPT-5.6 Terra/Luna pricing for OpenAI and Azure (#3884) OpenAI cut Terra 20% and Luna 80% on 2026-07-30. Update standard, long-context tier, and fast-mode costs for openai, azure, and azure-cognitive-services. Sol unchanged.",
+  "id": "openai_gpt_5.6_luna_20260731t0249"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-5.6-sol",
+  "before": {
+   "input": 5.0,
+   "output": 30.0,
+   "cache_read": 0.5,
+   "cache_write": 6.25,
+   "tiers": [
+    {
+     "above": 272000,
+     "cache_read": 1.0,
+     "cache_write": 12.5,
+     "input": 10.0,
+     "output": 45.0
+    }
+   ]
+  },
+  "after": {
+   "input": 4.0,
+   "output": 20.0,
+   "cache_read": 0.4,
+   "cache_write": 5.0,
+   "tiers": [
+    {
+     "above": 272000,
+     "cache_read": 0.8,
+     "cache_write": 10.0,
+     "input": 8.0,
+     "output": 30.0
+    }
+   ]
+  },
+  "previous_at": "2026-07-09T17:59:06Z",
+  "recorded_at": "2026-08-25T04:37:24Z",
+  "commit": "0b2318a699fb140b7e568228e05d3212c9f095dc",
+  "commit_url": "https://github.com/sst/models.dev/commit/0b2318a699fb140b7e568228e05d3212c9f095dc",
+  "message": "fix(openai): gpt-5.6-sol + gpt-5.6 alias still on the pre-2026-08-22 rate ($5/$30 \u2192 $4/$20) (#5375) * fix(openai): gpt-5.6-sol price cut \u2014 $5/$30 \u2192 $2/$10 * fix(openai): gpt-5.6-sol price cut \u2014 $5/$30 \u2192 $2/$10 * fix(openai): use OpenAI's published Sol promo rate ($4/$20), not the batch rate * fix(openai): use OpenAI's published Sol promo rate ($4/$20), not the batch rate",
+  "id": "openai_gpt_5.6_sol_20260825t0437"
+ },
+ {
+  "provider": "openai",
+  "model": "gpt-5.6-terra",
+  "before": {
+   "input": 2.5,
+   "output": 15.0,
+   "cache_read": 0.25,
+   "cache_write": 3.125,
+   "tiers": [
+    {
+     "above": 272000,
+     "cache_read": 0.5,
+     "cache_write": 6.25,
+     "input": 5.0,
+     "output": 22.5
+    }
+   ]
+  },
+  "after": {
+   "input": 2.0,
+   "output": 12.0,
+   "cache_read": 0.2,
+   "cache_write": 2.5,
+   "tiers": [
+    {
+     "above": 272000,
+     "cache_read": 0.4,
+     "cache_write": 5.0,
+     "input": 4.0,
+     "output": 18.0
+    }
+   ]
+  },
+  "previous_at": "2026-07-09T17:59:06Z",
+  "recorded_at": "2026-07-31T02:49:19Z",
+  "commit": "9b6e58f1e296f12af4d06a04bb216dcf73baba5a",
+  "commit_url": "https://github.com/sst/models.dev/commit/9b6e58f1e296f12af4d06a04bb216dcf73baba5a",
+  "message": "fix: update GPT-5.6 Terra/Luna pricing for OpenAI and Azure (#3884) OpenAI cut Terra 20% and Luna 80% on 2026-07-30. Update standard, long-context tier, and fast-mode costs for openai, azure, and azure-cognitive-services. Sol unchanged.",
+  "id": "openai_gpt_5.6_terra_20260731t0249"
+ },
+ {
+  "provider": "openai",
+  "model": "o1",
+  "before": {
+   "input": 15.0,
+   "output": 60.0
+  },
+  "after": {
+   "input": 15.0,
+   "output": 60.0,
+   "cache_read": 7.5
+  },
+  "previous_at": "2025-06-11T20:51:05Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "openai_o1_20250617t2226"
+ },
+ {
+  "provider": "openai",
+  "model": "o1-mini",
+  "before": {
+   "input": 3.0,
+   "output": 12.0
+  },
+  "after": {
+   "input": 1.1,
+   "output": 4.4
+  },
+  "previous_at": "2025-06-05T20:31:32Z",
+  "recorded_at": "2025-06-11T20:51:05Z",
+  "commit": "24a6c0b527d3b80f919f03172cf24982885b3843",
+  "commit_url": "https://github.com/sst/models.dev/commit/24a6c0b527d3b80f919f03172cf24982885b3843",
+  "message": "Add Azure models",
+  "id": "openai_o1_mini_20250611t2051"
+ },
+ {
+  "provider": "openai",
+  "model": "o1-mini",
+  "before": {
+   "input": 1.1,
+   "output": 4.4
+  },
+  "after": {
+   "input": 1.1,
+   "output": 4.4,
+   "cache_read": 0.55
+  },
+  "previous_at": "2025-06-11T20:51:05Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "openai_o1_mini_20250617t2226"
+ },
+ {
+  "provider": "openai",
+  "model": "o1-preview",
+  "before": {
+   "input": 15.0,
+   "output": 60.0
+  },
+  "after": {
+   "input": 15.0,
+   "output": 60.0,
+   "cache_read": 7.5
+  },
+  "previous_at": "2025-06-05T20:31:32Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "openai_o1_preview_20250617t2226"
+ },
+ {
+  "provider": "openai",
+  "model": "o3",
+  "before": {
+   "input": 2.0,
+   "output": 8.0
+  },
+  "after": {
+   "input": 2.0,
+   "output": 8.0,
+   "cache_read": 0.5
+  },
+  "previous_at": "2025-06-11T20:51:05Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "openai_o3_20250617t2226"
+ },
+ {
+  "provider": "openai",
+  "model": "o3-mini",
+  "before": {
+   "input": 1.1,
+   "output": 4.4
+  },
+  "after": {
+   "input": 1.1,
+   "output": 4.4,
+   "cache_read": 0.55
+  },
+  "previous_at": "2025-06-11T20:51:05Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "openai_o3_mini_20250617t2226"
+ },
+ {
+  "provider": "openai",
+  "model": "o4-mini",
+  "before": {
+   "input": 1.1,
+   "output": 4.4
+  },
+  "after": {
+   "input": 1.1,
+   "output": 4.4,
+   "cache_read": 0.28
+  },
+  "previous_at": "2025-06-11T20:51:05Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "openai_o4_mini_20250617t2226"
+ },
+ {
+  "provider": "openai",
+  "model": "o4-mini",
+  "before": {
+   "input": 1.1,
+   "output": 4.4,
+   "cache_read": 0.28
+  },
+  "after": {
+   "input": 1.1,
+   "output": 4.4,
+   "cache_read": 0.275
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2026-05-26T17:06:15Z",
+  "commit": "979f5da0ca1de78854195511150a1476a5e8b73e",
+  "commit_url": "https://github.com/sst/models.dev/commit/979f5da0ca1de78854195511150a1476a5e8b73e",
+  "message": "Merge pull request #1864 from oskarkocol/update/openai-cache-rates chore: update openai cache rates",
+  "id": "openai_o4_mini_20260526t1706"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-2",
+  "before": {
+   "input": 2.0,
+   "output": 10.0
+  },
+  "after": {
+   "input": 2.0,
+   "output": 10.0,
+   "cache_read": 2.0,
+   "cache_write": 10.0
+  },
+  "previous_at": "2025-06-10T21:45:14Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "xai_grok_2_20250617t2226"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-2",
+  "before": {
+   "input": 2.0,
+   "output": 10.0,
+   "cache_read": 2.0,
+   "cache_write": 10.0
+  },
+  "after": {
+   "input": 2.0,
+   "output": 10.0,
+   "cache_read": 2.0
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-09-09T20:03:17Z",
+  "commit": "b71977af7841a9170a0dfe30042724a147c8b883",
+  "commit_url": "https://github.com/sst/models.dev/commit/b71977af7841a9170a0dfe30042724a147c8b883",
+  "message": "Add reasoning cost for grok models",
+  "id": "xai_grok_2_20250909t2003"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-2-1212",
+  "before": {
+   "input": 2.0,
+   "output": 10.0
+  },
+  "after": {
+   "input": 2.0,
+   "output": 10.0,
+   "cache_read": 2.0,
+   "cache_write": 10.0
+  },
+  "previous_at": "2025-06-10T21:45:14Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "xai_grok_2_1212_20250617t2226"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-2-1212",
+  "before": {
+   "input": 2.0,
+   "output": 10.0,
+   "cache_read": 2.0,
+   "cache_write": 10.0
+  },
+  "after": {
+   "input": 2.0,
+   "output": 10.0,
+   "cache_read": 2.0
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-09-09T20:03:17Z",
+  "commit": "b71977af7841a9170a0dfe30042724a147c8b883",
+  "commit_url": "https://github.com/sst/models.dev/commit/b71977af7841a9170a0dfe30042724a147c8b883",
+  "message": "Add reasoning cost for grok models",
+  "id": "xai_grok_2_1212_20250909t2003"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-2-latest",
+  "before": {
+   "input": 2.0,
+   "output": 10.0
+  },
+  "after": {
+   "input": 2.0,
+   "output": 10.0,
+   "cache_read": 2.0,
+   "cache_write": 10.0
+  },
+  "previous_at": "2025-06-10T21:45:14Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "xai_grok_2_latest_20250617t2226"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-2-latest",
+  "before": {
+   "input": 2.0,
+   "output": 10.0,
+   "cache_read": 2.0,
+   "cache_write": 10.0
+  },
+  "after": {
+   "input": 2.0,
+   "output": 10.0,
+   "cache_read": 2.0
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-09-09T20:03:17Z",
+  "commit": "b71977af7841a9170a0dfe30042724a147c8b883",
+  "commit_url": "https://github.com/sst/models.dev/commit/b71977af7841a9170a0dfe30042724a147c8b883",
+  "message": "Add reasoning cost for grok models",
+  "id": "xai_grok_2_latest_20250909t2003"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-2-vision",
+  "before": {
+   "input": 2.0,
+   "output": 10.0
+  },
+  "after": {
+   "input": 2.0,
+   "output": 10.0,
+   "cache_read": 2.0,
+   "cache_write": 10.0
+  },
+  "previous_at": "2025-06-10T21:45:14Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "xai_grok_2_vision_20250617t2226"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-2-vision",
+  "before": {
+   "input": 2.0,
+   "output": 10.0,
+   "cache_read": 2.0,
+   "cache_write": 10.0
+  },
+  "after": {
+   "input": 2.0,
+   "output": 10.0,
+   "cache_read": 2.0
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-09-09T20:03:17Z",
+  "commit": "b71977af7841a9170a0dfe30042724a147c8b883",
+  "commit_url": "https://github.com/sst/models.dev/commit/b71977af7841a9170a0dfe30042724a147c8b883",
+  "message": "Add reasoning cost for grok models",
+  "id": "xai_grok_2_vision_20250909t2003"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-2-vision-1212",
+  "before": {
+   "input": 2.0,
+   "output": 10.0
+  },
+  "after": {
+   "input": 2.0,
+   "output": 10.0,
+   "cache_read": 2.0,
+   "cache_write": 10.0
+  },
+  "previous_at": "2025-06-10T21:45:14Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "xai_grok_2_vision_1212_20250617t2226"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-2-vision-1212",
+  "before": {
+   "input": 2.0,
+   "output": 10.0,
+   "cache_read": 2.0,
+   "cache_write": 10.0
+  },
+  "after": {
+   "input": 2.0,
+   "output": 10.0,
+   "cache_read": 2.0
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-09-09T20:03:17Z",
+  "commit": "b71977af7841a9170a0dfe30042724a147c8b883",
+  "commit_url": "https://github.com/sst/models.dev/commit/b71977af7841a9170a0dfe30042724a147c8b883",
+  "message": "Add reasoning cost for grok models",
+  "id": "xai_grok_2_vision_1212_20250909t2003"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-2-vision-latest",
+  "before": {
+   "input": 2.0,
+   "output": 10.0
+  },
+  "after": {
+   "input": 2.0,
+   "output": 10.0,
+   "cache_read": 2.0,
+   "cache_write": 10.0
+  },
+  "previous_at": "2025-06-10T21:45:14Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "xai_grok_2_vision_latest_20250617t2226"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-2-vision-latest",
+  "before": {
+   "input": 2.0,
+   "output": 10.0,
+   "cache_read": 2.0,
+   "cache_write": 10.0
+  },
+  "after": {
+   "input": 2.0,
+   "output": 10.0,
+   "cache_read": 2.0
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-09-09T20:03:17Z",
+  "commit": "b71977af7841a9170a0dfe30042724a147c8b883",
+  "commit_url": "https://github.com/sst/models.dev/commit/b71977af7841a9170a0dfe30042724a147c8b883",
+  "message": "Add reasoning cost for grok models",
+  "id": "xai_grok_2_vision_latest_20250909t2003"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-3",
+  "before": {
+   "input": 3.0,
+   "output": 15.0
+  },
+  "after": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.75,
+   "cache_write": 15.0
+  },
+  "previous_at": "2025-06-10T21:45:14Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "xai_grok_3_20250617t2226"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-3",
+  "before": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.75,
+   "cache_write": 15.0
+  },
+  "after": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.75
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-09-09T20:03:17Z",
+  "commit": "b71977af7841a9170a0dfe30042724a147c8b883",
+  "commit_url": "https://github.com/sst/models.dev/commit/b71977af7841a9170a0dfe30042724a147c8b883",
+  "message": "Add reasoning cost for grok models",
+  "id": "xai_grok_3_20250909t2003"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-3-fast",
+  "before": {
+   "input": 5.0,
+   "output": 25.0
+  },
+  "after": {
+   "input": 5.0,
+   "output": 25.0,
+   "cache_read": 1.25,
+   "cache_write": 25.0
+  },
+  "previous_at": "2025-06-10T21:45:14Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "xai_grok_3_fast_20250617t2226"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-3-fast",
+  "before": {
+   "input": 5.0,
+   "output": 25.0,
+   "cache_read": 1.25,
+   "cache_write": 25.0
+  },
+  "after": {
+   "input": 5.0,
+   "output": 25.0,
+   "cache_read": 1.25
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-09-09T20:03:17Z",
+  "commit": "b71977af7841a9170a0dfe30042724a147c8b883",
+  "commit_url": "https://github.com/sst/models.dev/commit/b71977af7841a9170a0dfe30042724a147c8b883",
+  "message": "Add reasoning cost for grok models",
+  "id": "xai_grok_3_fast_20250909t2003"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-3-fast-latest",
+  "before": {
+   "input": 5.0,
+   "output": 25.0
+  },
+  "after": {
+   "input": 5.0,
+   "output": 25.0,
+   "cache_read": 1.25,
+   "cache_write": 25.0
+  },
+  "previous_at": "2025-06-10T21:45:14Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "xai_grok_3_fast_latest_20250617t2226"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-3-fast-latest",
+  "before": {
+   "input": 5.0,
+   "output": 25.0,
+   "cache_read": 1.25,
+   "cache_write": 25.0
+  },
+  "after": {
+   "input": 5.0,
+   "output": 25.0,
+   "cache_read": 1.25
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-09-09T20:03:17Z",
+  "commit": "b71977af7841a9170a0dfe30042724a147c8b883",
+  "commit_url": "https://github.com/sst/models.dev/commit/b71977af7841a9170a0dfe30042724a147c8b883",
+  "message": "Add reasoning cost for grok models",
+  "id": "xai_grok_3_fast_latest_20250909t2003"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-3-latest",
+  "before": {
+   "input": 3.0,
+   "output": 15.0
+  },
+  "after": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.75,
+   "cache_write": 15.0
+  },
+  "previous_at": "2025-06-10T21:45:14Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "xai_grok_3_latest_20250617t2226"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-3-latest",
+  "before": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.75,
+   "cache_write": 15.0
+  },
+  "after": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.75
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-09-09T20:03:17Z",
+  "commit": "b71977af7841a9170a0dfe30042724a147c8b883",
+  "commit_url": "https://github.com/sst/models.dev/commit/b71977af7841a9170a0dfe30042724a147c8b883",
+  "message": "Add reasoning cost for grok models",
+  "id": "xai_grok_3_latest_20250909t2003"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-3-mini",
+  "before": {
+   "input": 0.3,
+   "output": 0.5
+  },
+  "after": {
+   "input": 0.3,
+   "output": 0.5,
+   "cache_read": 0.075,
+   "cache_write": 0.5
+  },
+  "previous_at": "2025-06-10T21:45:14Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "xai_grok_3_mini_20250617t2226"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-3-mini",
+  "before": {
+   "input": 0.3,
+   "output": 0.5,
+   "cache_read": 0.075,
+   "cache_write": 0.5
+  },
+  "after": {
+   "input": 0.3,
+   "output": 0.5,
+   "cache_read": 0.075
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-09-09T20:03:17Z",
+  "commit": "b71977af7841a9170a0dfe30042724a147c8b883",
+  "commit_url": "https://github.com/sst/models.dev/commit/b71977af7841a9170a0dfe30042724a147c8b883",
+  "message": "Add reasoning cost for grok models",
+  "id": "xai_grok_3_mini_20250909t2003"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-3-mini-fast",
+  "before": {
+   "input": 0.6,
+   "output": 4.0
+  },
+  "after": {
+   "input": 0.6,
+   "output": 4.0,
+   "cache_read": 0.15,
+   "cache_write": 4.0
+  },
+  "previous_at": "2025-06-10T21:45:14Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "xai_grok_3_mini_fast_20250617t2226"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-3-mini-fast",
+  "before": {
+   "input": 0.6,
+   "output": 4.0,
+   "cache_read": 0.15,
+   "cache_write": 4.0
+  },
+  "after": {
+   "input": 0.6,
+   "output": 4.0,
+   "cache_read": 0.15
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-09-09T20:03:17Z",
+  "commit": "b71977af7841a9170a0dfe30042724a147c8b883",
+  "commit_url": "https://github.com/sst/models.dev/commit/b71977af7841a9170a0dfe30042724a147c8b883",
+  "message": "Add reasoning cost for grok models",
+  "id": "xai_grok_3_mini_fast_20250909t2003"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-3-mini-fast-latest",
+  "before": {
+   "input": 0.6,
+   "output": 4.0
+  },
+  "after": {
+   "input": 0.6,
+   "output": 4.0,
+   "cache_read": 0.15,
+   "cache_write": 4.0
+  },
+  "previous_at": "2025-06-10T21:45:14Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "xai_grok_3_mini_fast_latest_20250617t2226"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-3-mini-fast-latest",
+  "before": {
+   "input": 0.6,
+   "output": 4.0,
+   "cache_read": 0.15,
+   "cache_write": 4.0
+  },
+  "after": {
+   "input": 0.6,
+   "output": 4.0,
+   "cache_read": 0.15
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-09-09T20:03:17Z",
+  "commit": "b71977af7841a9170a0dfe30042724a147c8b883",
+  "commit_url": "https://github.com/sst/models.dev/commit/b71977af7841a9170a0dfe30042724a147c8b883",
+  "message": "Add reasoning cost for grok models",
+  "id": "xai_grok_3_mini_fast_latest_20250909t2003"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-3-mini-latest",
+  "before": {
+   "input": 0.3,
+   "output": 0.5
+  },
+  "after": {
+   "input": 0.3,
+   "output": 0.5,
+   "cache_read": 0.075,
+   "cache_write": 0.5
+  },
+  "previous_at": "2025-06-10T21:45:14Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "xai_grok_3_mini_latest_20250617t2226"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-3-mini-latest",
+  "before": {
+   "input": 0.3,
+   "output": 0.5,
+   "cache_read": 0.075,
+   "cache_write": 0.5
+  },
+  "after": {
+   "input": 0.3,
+   "output": 0.5,
+   "cache_read": 0.075
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-09-09T20:03:17Z",
+  "commit": "b71977af7841a9170a0dfe30042724a147c8b883",
+  "commit_url": "https://github.com/sst/models.dev/commit/b71977af7841a9170a0dfe30042724a147c8b883",
+  "message": "Add reasoning cost for grok models",
+  "id": "xai_grok_3_mini_latest_20250909t2003"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-4",
+  "before": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.75,
+   "cache_write": 15.0
+  },
+  "after": {
+   "input": 3.0,
+   "output": 15.0,
+   "cache_read": 0.75
+  },
+  "previous_at": "2025-07-10T11:32:05Z",
+  "recorded_at": "2025-09-09T20:03:17Z",
+  "commit": "b71977af7841a9170a0dfe30042724a147c8b883",
+  "commit_url": "https://github.com/sst/models.dev/commit/b71977af7841a9170a0dfe30042724a147c8b883",
+  "message": "Add reasoning cost for grok models",
+  "id": "xai_grok_4_20250909t2003"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-4.20-0309-non-reasoning",
+  "before": {
+   "input": 2.0,
+   "output": 6.0,
+   "cache_read": 0.2,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.4,
+     "input": 4.0,
+     "output": 12.0
+    }
+   ]
+  },
+  "after": {
+   "input": 1.25,
+   "output": 2.5,
+   "cache_read": 0.2,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.4,
+     "input": 4.0,
+     "output": 12.0
+    }
+   ]
+  },
+  "previous_at": "2026-03-21T16:56:37Z",
+  "recorded_at": "2026-05-20T21:02:38Z",
+  "commit": "92a621594ebf77dd8140cd8cc2e33a3e34094b64",
+  "commit_url": "https://github.com/sst/models.dev/commit/92a621594ebf77dd8140cd8cc2e33a3e34094b64",
+  "message": "Merge pull request #1813 from anomalyco/sync-xai chore(sync): add xai model sync",
+  "id": "xai_grok_4.20_0309_non_reasoning_20260520t2102"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-4.20-0309-non-reasoning",
+  "before": {
+   "input": 1.25,
+   "output": 2.5,
+   "cache_read": 0.2,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.4,
+     "input": 4.0,
+     "output": 12.0
+    }
+   ]
+  },
+  "after": {
+   "input": 1.25,
+   "output": 2.5,
+   "cache_read": 0.2,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.4,
+     "input": 2.5,
+     "output": 5.0
+    }
+   ]
+  },
+  "previous_at": "2026-05-20T21:02:38Z",
+  "recorded_at": "2026-05-21T21:45:43Z",
+  "commit": "b13abc9141b0cba4d55d2c80e7c1dbc551238076",
+  "commit_url": "https://github.com/sst/models.dev/commit/b13abc9141b0cba4d55d2c80e7c1dbc551238076",
+  "message": "Merge pull request #1827 from anomalyco/update-xai-pricing fix xAI long-context pricing",
+  "id": "xai_grok_4.20_0309_non_reasoning_20260521t2145"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-4.20-0309-reasoning",
+  "before": {
+   "input": 2.0,
+   "output": 6.0,
+   "cache_read": 0.2,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.4,
+     "input": 4.0,
+     "output": 12.0
+    }
+   ]
+  },
+  "after": {
+   "input": 1.25,
+   "output": 2.5,
+   "cache_read": 0.2,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.4,
+     "input": 4.0,
+     "output": 12.0
+    }
+   ]
+  },
+  "previous_at": "2026-03-21T16:56:37Z",
+  "recorded_at": "2026-05-20T21:02:38Z",
+  "commit": "92a621594ebf77dd8140cd8cc2e33a3e34094b64",
+  "commit_url": "https://github.com/sst/models.dev/commit/92a621594ebf77dd8140cd8cc2e33a3e34094b64",
+  "message": "Merge pull request #1813 from anomalyco/sync-xai chore(sync): add xai model sync",
+  "id": "xai_grok_4.20_0309_reasoning_20260520t2102"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-4.20-0309-reasoning",
+  "before": {
+   "input": 1.25,
+   "output": 2.5,
+   "cache_read": 0.2,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.4,
+     "input": 4.0,
+     "output": 12.0
+    }
+   ]
+  },
+  "after": {
+   "input": 1.25,
+   "output": 2.5,
+   "cache_read": 0.2,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.4,
+     "input": 2.5,
+     "output": 5.0
+    }
+   ]
+  },
+  "previous_at": "2026-05-20T21:02:38Z",
+  "recorded_at": "2026-05-21T21:45:43Z",
+  "commit": "b13abc9141b0cba4d55d2c80e7c1dbc551238076",
+  "commit_url": "https://github.com/sst/models.dev/commit/b13abc9141b0cba4d55d2c80e7c1dbc551238076",
+  "message": "Merge pull request #1827 from anomalyco/update-xai-pricing fix xAI long-context pricing",
+  "id": "xai_grok_4.20_0309_reasoning_20260521t2145"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-4.20-multi-agent-0309",
+  "before": {
+   "input": 2.0,
+   "output": 6.0,
+   "cache_read": 0.2,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.4,
+     "input": 4.0,
+     "output": 12.0
+    }
+   ]
+  },
+  "after": {
+   "input": 1.25,
+   "output": 2.5,
+   "cache_read": 0.2,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.4,
+     "input": 4.0,
+     "output": 12.0
+    }
+   ]
+  },
+  "previous_at": "2026-03-21T16:56:37Z",
+  "recorded_at": "2026-05-20T21:02:38Z",
+  "commit": "92a621594ebf77dd8140cd8cc2e33a3e34094b64",
+  "commit_url": "https://github.com/sst/models.dev/commit/92a621594ebf77dd8140cd8cc2e33a3e34094b64",
+  "message": "Merge pull request #1813 from anomalyco/sync-xai chore(sync): add xai model sync",
+  "id": "xai_grok_4.20_multi_agent_0309_20260520t2102"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-4.20-multi-agent-0309",
+  "before": {
+   "input": 1.25,
+   "output": 2.5,
+   "cache_read": 0.2,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.4,
+     "input": 4.0,
+     "output": 12.0
+    }
+   ]
+  },
+  "after": {
+   "input": 1.25,
+   "output": 2.5,
+   "cache_read": 0.2,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.4,
+     "input": 2.5,
+     "output": 5.0
+    }
+   ]
+  },
+  "previous_at": "2026-05-20T21:02:38Z",
+  "recorded_at": "2026-05-21T21:45:43Z",
+  "commit": "b13abc9141b0cba4d55d2c80e7c1dbc551238076",
+  "commit_url": "https://github.com/sst/models.dev/commit/b13abc9141b0cba4d55d2c80e7c1dbc551238076",
+  "message": "Merge pull request #1827 from anomalyco/update-xai-pricing fix xAI long-context pricing",
+  "id": "xai_grok_4.20_multi_agent_0309_20260521t2145"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-4.5",
+  "before": {
+   "input": 2.0,
+   "output": 6.0,
+   "cache_read": 0.5,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 1.0,
+     "input": 4.0,
+     "output": 12.0
+    }
+   ]
+  },
+  "after": {
+   "input": 2.0,
+   "output": 6.0,
+   "cache_read": 0.3,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 1.0,
+     "input": 4.0,
+     "output": 12.0
+    }
+   ]
+  },
+  "previous_at": "2026-07-08T18:14:39Z",
+  "recorded_at": "2026-07-19T04:20:56Z",
+  "commit": "8a45b332462c5d3e3656de1d05b0c582f4ad0d4c",
+  "commit_url": "https://github.com/sst/models.dev/commit/8a45b332462c5d3e3656de1d05b0c582f4ad0d4c",
+  "message": "Merge pull request #3333 from anomalyco/automation/sync-models-xai chore(sync): update xAI model catalog",
+  "id": "xai_grok_4.5_20260719t0420"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-4.5",
+  "before": {
+   "input": 2.0,
+   "output": 6.0,
+   "cache_read": 0.3,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 1.0,
+     "input": 4.0,
+     "output": 12.0
+    }
+   ]
+  },
+  "after": {
+   "input": 2.0,
+   "output": 6.0,
+   "cache_read": 0.3,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.6,
+     "input": 4.0,
+     "output": 12.0
+    }
+   ]
+  },
+  "previous_at": "2026-07-19T04:20:56Z",
+  "recorded_at": "2026-07-31T19:00:57Z",
+  "commit": "c00ef3ebfcf1105acd6956f74a769df9b5cf0518",
+  "commit_url": "https://github.com/sst/models.dev/commit/c00ef3ebfcf1105acd6956f74a769df9b5cf0518",
+  "message": "fix(xai): correct Grok 4.5 long-context cached-input price (#3865) The >200K context tier reported cache_read = 1, but xAI publishes $0.60 for cached input above the threshold. The stale value is 2x the model's original (also incorrect) base rate of 0.5; when the base was corrected to 0.3 the tier was never re-derived, because tiers are preserved verbatim across syncs. OpenRouter's file carries the same value and is corrected alongside it. Co-authored-by: Claude Opus 5 (1M context) <noreply@anthropic.com>",
+  "id": "xai_grok_4.5_20260731t1900"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-beta",
+  "before": {
+   "input": 5.0,
+   "output": 15.0
+  },
+  "after": {
+   "input": 5.0,
+   "output": 15.0,
+   "cache_read": 5.0,
+   "cache_write": 15.0
+  },
+  "previous_at": "2025-06-10T21:45:14Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "xai_grok_beta_20250617t2226"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-beta",
+  "before": {
+   "input": 5.0,
+   "output": 15.0,
+   "cache_read": 5.0,
+   "cache_write": 15.0
+  },
+  "after": {
+   "input": 5.0,
+   "output": 15.0,
+   "cache_read": 5.0
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-09-09T20:03:17Z",
+  "commit": "b71977af7841a9170a0dfe30042724a147c8b883",
+  "commit_url": "https://github.com/sst/models.dev/commit/b71977af7841a9170a0dfe30042724a147c8b883",
+  "message": "Add reasoning cost for grok models",
+  "id": "xai_grok_beta_20250909t2003"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-build-0.1",
+  "before": {
+   "input": 1.0,
+   "output": 2.0,
+   "cache_read": 0.2
+  },
+  "after": {
+   "input": 1.0,
+   "output": 2.0,
+   "cache_read": 0.2,
+   "tiers": [
+    {
+     "above": 200000,
+     "cache_read": 0.4,
+     "input": 2.0,
+     "output": 4.0
+    }
+   ]
+  },
+  "previous_at": "2026-05-20T18:05:06Z",
+  "recorded_at": "2026-05-21T21:45:43Z",
+  "commit": "b13abc9141b0cba4d55d2c80e7c1dbc551238076",
+  "commit_url": "https://github.com/sst/models.dev/commit/b13abc9141b0cba4d55d2c80e7c1dbc551238076",
+  "message": "Merge pull request #1827 from anomalyco/update-xai-pricing fix xAI long-context pricing",
+  "id": "xai_grok_build_0.1_20260521t2145"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-vision-beta",
+  "before": {
+   "input": 5.0,
+   "output": 15.0
+  },
+  "after": {
+   "input": 5.0,
+   "output": 15.0,
+   "cache_read": 5.0,
+   "cache_write": 15.0
+  },
+  "previous_at": "2025-06-10T21:45:14Z",
+  "recorded_at": "2025-06-17T22:26:49Z",
+  "commit": "19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "commit_url": "https://github.com/sst/models.dev/commit/19bc7d7cfbeceff01117c355691e450a9ae05760",
+  "message": "Rename cache fields and make them optional - Rename inputCached/outputCached to cache_read/cache_write in schema - Make cache fields optional in ModelSchema - Remove cache fields from TOML files where value is $0 - Keep cache fields only when they have actual pricing values \ud83e\udd16 Generated with [opencode](https://opencode.ai) Co-Authored-By: opencode <noreply@opencode.ai>",
+  "id": "xai_grok_vision_beta_20250617t2226"
+ },
+ {
+  "provider": "xai",
+  "model": "grok-vision-beta",
+  "before": {
+   "input": 5.0,
+   "output": 15.0,
+   "cache_read": 5.0,
+   "cache_write": 15.0
+  },
+  "after": {
+   "input": 5.0,
+   "output": 15.0,
+   "cache_read": 5.0
+  },
+  "previous_at": "2025-06-17T22:26:49Z",
+  "recorded_at": "2025-09-09T20:03:17Z",
+  "commit": "b71977af7841a9170a0dfe30042724a147c8b883",
+  "commit_url": "https://github.com/sst/models.dev/commit/b71977af7841a9170a0dfe30042724a147c8b883",
+  "message": "Add reasoning cost for grok models",
+  "id": "xai_grok_vision_beta_20250909t2003"
+ },
+ {
+  "provider": "zai",
+  "model": "glm-5",
+  "before": {
+   "input": 0.0,
+   "output": 0.0,
+   "cache_read": 0.0,
+   "cache_write": 0.0
+  },
+  "after": {
+   "input": 1.0,
+   "output": 3.2,
+   "cache_read": 0.2,
+   "cache_write": 0.0
+  },
+  "previous_at": "2026-02-11T18:17:49Z",
+  "recorded_at": "2026-02-11T20:35:23Z",
+  "commit": "d89897d07e8c0f0559a21e202738bdd3ebfaf21d",
+  "commit_url": "https://github.com/sst/models.dev/commit/d89897d07e8c0f0559a21e202738bdd3ebfaf21d",
+  "message": "Merge pull request #866 from Sczr0/dev Update pricing for ZAI GLM-5",
+  "id": "zai_glm_5_20260211t2035"
+ },
+ {
+  "provider": "zai",
+  "model": "glm-5.2",
+  "before": {
+   "input": 0.0,
+   "output": 0.0,
+   "cache_read": 0.0,
+   "cache_write": 0.0
+  },
+  "after": {
+   "input": 1.4,
+   "output": 4.4,
+   "cache_read": 0.26,
+   "cache_write": 0.0
+  },
+  "previous_at": "2026-06-13T20:31:44Z",
+  "recorded_at": "2026-06-22T02:55:21Z",
+  "commit": "f027b110481e1c8fc22b4c9cc288edaf4d603f95",
+  "commit_url": "https://github.com/sst/models.dev/commit/f027b110481e1c8fc22b4c9cc288edaf4d603f95",
+  "message": "Merge pull request #2708 from tonimelisma/add-zai-glm-5.2-local feat(zai): add GLM-5.2 to Z.AI API provider",
+  "id": "zai_glm_5.2_20260622t0255"
+ },
+ {
+  "provider": "zai",
+  "model": "glm-5.3-flash",
+  "before": {
+   "input": 0.075,
+   "output": 0.25,
+   "cache_read": 0.015,
+   "cache_write": 0.0
+  },
+  "after": {
+   "input": 0.15,
+   "output": 0.5,
+   "cache_read": 0.03,
+   "cache_write": 0.0
+  },
+  "previous_at": "2026-09-02T18:53:25Z",
+  "recorded_at": "2026-09-19T05:17:06Z",
+  "commit": "ebfeed5f5eb53e48f6fdf659cf9907ee0172ec03",
+  "commit_url": "https://github.com/sst/models.dev/commit/ebfeed5f5eb53e48f6fdf659cf9907ee0172ec03",
+  "message": "feat: add GLM-5.3-FlashX to Z.AI providers (#7475) Co-authored-by: Aiden Cline <rekram1-node@users.noreply.github.com>",
+  "id": "zai_glm_5.3_flash_20260919t0517"
+ }
+]

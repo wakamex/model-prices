@@ -1,0 +1,45 @@
+{
+ "classification": "price_change",
+ "effective_at": "2026-08-21",
+ "effective_precision": "day",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 5.0,
+  "output": 30.0,
+  "cache_read": 0.5
+ },
+ "sources": [
+  {
+   "url": "https://openai.com/index/gpt-5-6/",
+   "saved_as": "sources/openai.com_index_gpt-5-6.txt",
+   "quote": "Update on August 21, 2026: OpenAI dropped the API and credit pricing of GPT\u20115.6 Sol by over 20% for the next 3 months.",
+   "supports": "OpenAI dates the Sol API price reduction to August 21, 2026.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://openai.com/index/gpt-5-6/",
+   "saved_as": "sources/openai.com_index_gpt-5-6.txt",
+   "quote": "GPT\u20115.6 is priced per 1M tokens across three model sizes: Sol is $5 input / $30 output; Terra is $2.50 input / $15 output; and Luna is $1 input / $6 output.",
+   "supports": "OpenAI states the official pre-reduction Sol input and output price.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-5.6-sol",
+   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-5.6-sol.html",
+   "quote": "GPT-5.6 Sol costs $4 per million input tokens and $20 per million output tokens, a 20% reduction in input pricing and a 33% reduction in output pricing.",
+   "supports": "OpenAI's model documentation lists the reduced price and confirms it is a reduction.",
+   "extracted_as": "research/sources/258cade2cefa3253.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "This was a real provider price change, not a models.dev correction: OpenAI identifies an August 21, 2026 price reduction and states the earlier $5/$30 rates. The announcement gives a date but no time or timezone, so effective_at is reported at day precision; no archived pricing snapshot pair was available to bracket it more tightly.",
+ "verified": true
+}

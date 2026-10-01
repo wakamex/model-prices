@@ -1,3 +1,10 @@
 __pycache__/
 .venv/
 dist/
+/.aop/
+# Copies of third-party pages cited by price research; kept locally, not published.
+/research/sources/
+/research/price-dates/findings/*/sources/
+/research/price-dates/tasks/
+/research/price-dates/batch.toml
+/research/price-dates/*.log

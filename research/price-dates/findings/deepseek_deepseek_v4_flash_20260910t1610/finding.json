@@ -1,0 +1,63 @@
+{
+ "classification": "price_change",
+ "effective_at": "2026-09-10T04:00:00Z",
+ "effective_precision": "exact",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://web.archive.org/web/20260731073821/https://api-docs.deepseek.com/quick_start/pricing/",
+   "saved_as": "sources/web.archive.org_pricing_20260731073821.html",
+   "quote": "1M INPUT TOKENS (CACHE HIT) $0.0028; 1M INPUT TOKENS (CACHE MISS) $0.14; 1M OUTPUT TOKENS $0.28",
+   "supports": "DeepSeek's official API pricing page archived July 31 lists the recorded earlier Flash price.",
+   "extracted_as": "research/sources/074e2ec8dd51d418.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://api-docs.deepseek.com/news/news260910/",
+   "saved_as": "sources/api-docs.deepseek.com_news_news260910.html",
+   "quote": "New pricing takes effect at 04:00 UTC on Sept 10, 2026.",
+   "supports": "DeepSeek states the effective time for the V4.1-Flash pricing update.",
+   "extracted_as": "research/sources/d5314b91bf6a1d15.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://api-docs.deepseek.com/updates/",
+   "saved_as": "sources/api-docs.deepseek.com_updates.html",
+   "quote": "With the release of DeepSeek-V4.1-Flash, API prices have been reduced accordingly.",
+   "supports": "The official changelog ties the V4.1-Flash release to an API price reduction.",
+   "extracted_as": "research/sources/e547d0d8cbe359a0.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://web.archive.org/web/20260909004920/https://api-docs.deepseek.com/quick_start/pricing/",
+   "saved_as": "sources/web.archive.org_pricing_pre_sep.html",
+   "quote": "1M INPUT TOKENS (CACHE MISS) OFF-PEAK $0.22 $0.66; PEAK $0.44 $1.32; 1M OUTPUT TOKENS OFF-PEAK $0.66 $1.98; PEAK $1.32 $3.96",
+   "supports": "Immediately before the September change, the official pricing page showed rates higher than the old catalog value, reflecting a separate August price schedule.",
+   "extracted_as": "research/sources/2f429e12a7c39ba9.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://api-docs.deepseek.com/quick_start/pricing/",
+   "saved_as": "sources/api-docs.deepseek.com_quick_start_pricing.html",
+   "quote": "1M INPUT TOKENS (CACHE HIT) OFF-PEAK $0.003; PEAK $0.006; 1M INPUT TOKENS (CACHE MISS) OFF-PEAK $0.15; PEAK $0.3; 1M OUTPUT TOKENS OFF-PEAK $0.6; PEAK $1.2",
+   "supports": "Current official pricing lists the new Flash off-peak values matching the models.dev after-price.",
+   "extracted_as": "research/sources/280758cc57a6ef53.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The $0.14/$0.28 price was an official DeepSeek Flash price in the July 31 archive, so this is a real provider price change rather than a never-official models.dev value. DeepSeek also announced a separate August 16 schedule before the September 10 reduction; models.dev's recorded start date therefore does not establish continuous validity of the old rate through September.",
+ "verified": false
+}

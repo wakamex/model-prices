@@ -1,0 +1,36 @@
+{
+ "classification": "price_change",
+ "effective_at": null,
+ "effective_precision": "bracketed",
+ "bracket": {
+  "last_before": "2026-09-02T07:09:13Z",
+  "first_after": "2026-09-11T23:34:40Z"
+ },
+ "official_previous_price": {
+  "input": 0.075,
+  "output": 0.25,
+  "cache_read": 0.015
+ },
+ "sources": [
+  {
+   "url": "https://web.archive.org/web/20260902070913/https://docs.z.ai/guides/overview/pricing",
+   "saved_as": "sources/web.archive.org_web_20260902070913_docs.z.ai_guides_overview_pricing.html",
+   "quote": "children:`GLM-5.3-Flash`}),_jsxs(_components.td,{\\\"data-numeric\\\":`true`,style:{textAlign:`left`},children:[_jsx(_components.del,{children:`$0.15`}),` $0.075`]})",
+   "supports": "Archived Z.AI pricing table on September 2 shows the reduced active rates as $0.075 input, $0.015 cache read, and $0.25 output; crossed-out values indicate earlier higher rates.",
+   "extracted_as": "research/sources/aa1f70db0bd2fe1d.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://web.archive.org/web/20260911233440/https://docs.z.ai/guides/overview/pricing",
+   "saved_as": "sources/web.archive.org_web_20260911233440_docs.z.ai_guides_overview_pricing.html",
+   "quote": "children:`GLM-5.3-Flash`}),_jsx(_components.td,{\\\"data-numeric\\\":`true`,style:{textAlign:`left`},children:`$0.15`}),_jsx(_components.td,{\\\"data-numeric\\\":`true`,style:{textAlign:`left`},children:`$0.03`})",
+   "supports": "Archived Z.AI pricing table on September 11 lists the new active rates: $0.15 input, $0.03 cache read, and $0.50 output.",
+   "extracted_as": "research/sources/9b0e0515ddfb123a.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "Z.AI\u2019s own pricing page records the earlier models.dev values as the active rates on the September 2 snapshot and the doubled rates on September 11. The effective date is not stated; available provider snapshots bracket the change between 2026-09-02T07:09:13Z and 2026-09-11T23:34:40Z.",
+ "verified": true
+}
