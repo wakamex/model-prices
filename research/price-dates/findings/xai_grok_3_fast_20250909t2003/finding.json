@@ -15,13 +15,22 @@
   {
    "url": "https://docs.x.ai/developers/pricing",
    "file": "dedf56167aa34815.md",
-   "quote": "| grok-4.3 (< 200k prompt tokens) | 1M | $1.25 | $0.20 | $2.50 |",
-   "supports": "The currently extracted xAI pricing page contains current model pricing, but does not establish historical Grok 3 Fast prices or the cache-write price in dispute.",
+   "quote": "| Model | Context | Input / 1M tokens | Cached input / 1M tokens | Output / 1M tokens |",
+   "supports": "Current xAI pricing distinguishes cached input from input and output; it does not establish the historic Grok 3 Fast cache-write rate.",
    "extracted_as": "research/sources/dedf56167aa34815.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing",
+   "file": "e56927861559295b.md",
+   "quote": "| Token type | Billing rate |\n|---|---|\n| Prompt tokens (non-cached) | Full prompt token price |\n| Cached prompt tokens | Reduced cached prompt token price |\n| Completion tokens | Full completion token price |\n| Reasoning tokens | Full completion token price |",
+   "supports": "xAI's current caching documentation identifies cached prompt tokens as a discounted billing type but does not state an earlier Grok 3 Fast cache-write price or its effective date.",
+   "extracted_as": "research/sources/e56927861559295b.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The provider's current pricing page does not establish whether $25 cache-write was ever official, and no effective date is stated there. The Internet Archive CDX query for xAI's pricing page returned HTTP 503, so a before/after archived snapshot pair could not be checked; without that evidence the classification and timing remain unclear.",
+ "notes": "The available primary-source material does not settle whether $25 cache_write was ever an official charge or give a change date. Attempts to retrieve pre/post-change Internet Archive pricing snapshots were rate-limited (429) or unavailable, so the record remains unclear.",
  "verified": true
 }

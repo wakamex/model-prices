@@ -13,33 +13,24 @@
  },
  "sources": [
   {
-   "url": "https://ai.google.dev/gemini-api/docs/pricing",
-   "file": "b88c4950bbf39196.md",
-   "quote": "| Input price | Not available | $2.00, prompts \\<= 200k tokens $4.00, prompts \\> 200k tokens |",
-   "supports": "Google's current pricing documentation shows a base and higher prompt tier for Gemini 3.1 Pro Preview, the successor; it does not establish when the same schedule first applied to Gemini 3 Pro Preview.",
-   "extracted_as": "research/sources/b88c4950bbf39196.md",
-   "quote_verified": true,
-   "verified_in": "independent extract"
-  },
-  {
-   "url": "https://ai.google.dev/gemini-api/docs/pricing",
-   "file": "b88c4950bbf39196.md",
-   "quote": "| Context caching price | Not available | $0.20, prompts \\<= 200k tokens $0.40, prompts \\> 200k $4.50 / 1,000,000 tokens per hour (storage price) |",
-   "supports": "Google's current pricing documentation shows cache prices split at 200k prompts for Gemini 3.1 Pro Preview.",
-   "extracted_as": "research/sources/b88c4950bbf39196.md",
-   "quote_verified": true,
-   "verified_in": "independent extract"
-  },
-  {
    "url": "https://ai.google.dev/gemini-api/docs/changelog",
    "file": "a24fd97eb3d00730.md",
-   "quote": "- Launched the first Gemini 3 series model, `gemini-3-pro-preview`, our\n  state-of-the-art reasoning and multimodal understanding model with powerful\n  agentic and coding capabilities.",
-   "supports": "Google's changelog records the Gemini 3 Pro Preview launch under November 18, 2025.",
+   "quote": "## November 18, 2025\n\n- Launched the first Gemini 3 series model, `gemini-3-pro-preview`, our\n  state-of-the-art reasoning and multimodal understanding model with powerful\n  agentic and coding capabilities.",
+   "supports": "Google dates the Gemini 3 Pro Preview launch to November 18, 2025; the launch entry gives no pricing details.",
    "extracted_as": "research/sources/a24fd97eb3d00730.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-3-developers/",
+   "file": "eccba1bcc6c5b7c0.md",
+   "quote": "- Published: 2025-11-18",
+   "supports": "Google's developer announcement was published on November 18, 2025, but the captured page does not specify Gemini 3 Pro API token prices or a pricing effective time.",
+   "extracted_as": "research/sources/eccba1bcc6c5b7c0.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "Google's current pricing page gives a tiered schedule for the successor Gemini 3.1 Pro Preview, and its changelog confirms Gemini 3 Pro Preview launched on November 18, 2025. Neither source documents the original Gemini 3 Pro Preview price or when its tiered schedule applied; the Internet Archive CDX request returned HTTP 503, so no archived before/after pricing snapshots were available.",
+ "notes": "The available primary Google sources establish the model's launch date but do not state its token prices or when any tiered pricing took effect. The supplied current pricing page and changelog do not provide a dated pricing history, and the available archive snapshots do not bracket November 2025, so the classification and effective date remain unclear.",
  "verified": true
 }

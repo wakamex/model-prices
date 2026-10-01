@@ -13,33 +13,24 @@
  },
  "sources": [
   {
-   "url": "https://docs.x.ai/developers/pricing.md",
-   "saved_as": "sources/docs.x.ai_developers_pricing.md",
-   "quote": "| grok-4.20-0309-reasoning (< 200k prompt tokens) | 1M | $1.25 | $0.20 | $2.50 |",
-   "supports": "xAI's current pricing documentation lists the model at $1.25 input, $0.20 cached input, and $2.50 output below the long-context threshold.",
-   "extracted_as": "research/sources/1914b0f1b14a59a9.md",
+   "url": "https://docs.x.ai/developers/pricing",
+   "file": "sources/dedf56167aa34815.md",
+   "quote": "| grok-4.20-0309-reasoning (< 200k prompt tokens) | 1M | $1.25 | $0.20 | $2.50 |\n| grok-4.20-0309-reasoning (\u2265 200k prompt tokens) | 1M | $2.50 | $0.40 | $5.00 |",
+   "supports": "xAI's currently published pricing for the model, including its short- and long-context rates.",
+   "extracted_as": "research/sources/dedf56167aa34815.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
-   "url": "https://docs.x.ai/developers/pricing.md",
-   "saved_as": "sources/docs.x.ai_developers_pricing.md",
-   "quote": "| grok-4.20-0309-reasoning (\u2265 200k prompt tokens) | 1M | $2.50 | $0.40 | $5.00 |",
-   "supports": "xAI's current pricing documentation lists higher prices for prompts reaching 200k tokens.",
-   "extracted_as": "research/sources/1914b0f1b14a59a9.md",
-   "quote_verified": true,
-   "verified_in": "independent extract"
-  },
-  {
-   "url": "https://docs.x.ai/developers/release-notes.md",
-   "saved_as": "sources/docs.x.ai_developers_release-notes.md",
-   "quote": "### Grok 4.20 and Grok 4.20 Multi-agent are live",
-   "supports": "xAI release notes say Grok 4.20 became live in March 2026, but do not state its launch pricing or the date of any subsequent price change.",
-   "extracted_as": "research/sources/0d32f204ca3ae411.md",
+   "url": "https://docs.x.ai/developers/models/grok-4.20-experimental-beta-0304-reasoning",
+   "file": "sources/727cc8c8dad76b6f.md",
+   "quote": "| Input | $1.25 | $2.50 |\n| Cached input | $0.20 | $0.40 |\n| Output | $2.50 | $5.00 |",
+   "supports": "The provider model page gives the same current rates for the exact model slug recorded by models.dev.",
+   "extracted_as": "research/sources/727cc8c8dad76b6f.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The provider's current docs list $1.25/$2.50 (cached input $0.20), while the release notes place launch in March 2026; neither source records historical launch prices or a repricing date. The Internet Archive CDX endpoint timed out, so no provider snapshot could be used to determine whether the earlier $2/$6 was ever official.",
+ "notes": "The provider's available current documentation confirms the lower rates but does not establish what it charged during the earlier models.dev period or when any change took effect. The requested Internet Archive snapshots returned HTTP 429 on both attempts, so no before/after bracket or official previous price could be verified.",
  "verified": true
 }

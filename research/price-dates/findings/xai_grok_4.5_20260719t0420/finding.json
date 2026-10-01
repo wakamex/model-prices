@@ -13,33 +13,24 @@
  },
  "sources": [
   {
-   "url": "https://docs.x.ai/developers/pricing",
-   "file": "1914b0f1b14a59a9.md",
-   "quote": "| grok-4.5 (< 200k prompt tokens) | 500k | $2.00 | $0.30 | $6.00 |",
-   "supports": "xAI's current official pricing for Grok 4.5, including cached input.",
-   "extracted_as": "research/sources/dedf56167aa34815.md",
-   "quote_verified": true,
-   "verified_in": "independent extract"
-  },
-  {
-   "url": "https://docs.x.ai/developers/release-notes.md",
-   "file": "2b950d5a745e6c95.md",
-   "quote": "Grok 4.5, SpaceXAI's model for coding, agentic tasks, and knowledge work, is now available on the xAI API. Priced at $2 / 1M input tokens and $6 / 1M output tokens, with configurable reasoning effort (low, medium, or high; default high). See the [Grok 4.5 overview](/developers/grok-4-5) and the [announcement](https://x.ai/news/grok-4-5).",
-   "supports": "xAI's launch note confirms input and output prices but does not state the cached input rate or an effective date for a cache price change.",
-   "extracted_as": "research/sources/0d32f204ca3ae411.md",
-   "quote_verified": true,
-   "verified_in": "independent extract"
-  },
-  {
    "url": "https://docs.x.ai/developers/models/grok-4.5",
    "file": "80640d2f1b4eaa52.md",
    "quote": "| Cached input | $0.30 | $0.60 |",
-   "supports": "xAI's current model page gives cached input pricing for standard and long context.",
+   "supports": "The provider's current model page lists cached input at $0.30 per million tokens below 200k prompt tokens and $0.60 at or above 200k.",
    "extracted_as": "research/sources/80640d2f1b4eaa52.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/release-notes",
+   "file": "2b950d5a745e6c95.md",
+   "quote": "Grok 4.5, SpaceXAI's model for coding, agentic tasks, and knowledge work, is now available on the xAI API. Priced at $2 / 1M input tokens and $6 / 1M output tokens, with configurable reasoning effort (low, medium, or high; default high).",
+   "supports": "The provider's release notes state the launch input and output prices, but do not state the cached-input price.",
+   "extracted_as": "research/sources/2b950d5a745e6c95.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The official pages available here state the current cached input rate, but the launch note does not give an earlier cached rate or a date for changing it. July 18 and July 19 archived pricing-page captures were extractable, but their Markdown omits the dynamic model price table, so they do not establish whether $0.50 was once official or bracket when $0.30 took effect.",
+ "notes": "The primary sources establish the current $0.30 cached-input rate and the launch input/output rates, but do not establish the official cached-input rate during the earlier period or date any cached-input change. The July 10, 2026 Internet Archive capture of the model page omits the pricing table, and extraction of the July 19 capture returned HTTP 429; therefore the evidence does not decide whether models.dev recorded an earlier official rate or its own error.",
  "verified": true
 }

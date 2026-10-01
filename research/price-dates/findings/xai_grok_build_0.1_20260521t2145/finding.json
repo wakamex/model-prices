@@ -16,12 +16,12 @@
    "url": "https://docs.x.ai/developers/pricing",
    "file": "dedf56167aa34815.md",
    "quote": "| grok-build-0.1 (\u2265 200k prompt tokens) | 256k | $2.00 | $0.40 | $4.00 |",
-   "supports": "xAI's pricing page currently lists the higher long-context tier matching the added tier in the models.dev record.",
+   "supports": "xAI's current official pricing page lists the corrected \u2265200k long-context tier. It does not establish when that tier took effect.",
    "extracted_as": "research/sources/dedf56167aa34815.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The available official xAI page confirms the higher tier exists, but it does not date when it took effect or establish whether the earlier single-rate record was ever official. The Internet Archive CDX request for the xAI pricing page returned HTTP 503, so no snapshot bracket could be established.",
+ "notes": "The current xAI pricing page matches the added tier, but there is no primary-source evidence here establishing whether the earlier base-only entry was ever the official complete price or when the tier began. Internet Archive's CDX endpoint returned a temporary-offline response, so an archived before/after bracket could not be obtained.",
  "verified": true
 }

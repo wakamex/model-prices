@@ -14,14 +14,14 @@
  "sources": [
   {
    "url": "https://x.ai/news/grok-1212",
-   "file": "e0c44d30e87131f4.md",
+   "file": "sources/e0c44d30e87131f4.md",
    "quote": "One month ago we released the public beta of our enterprise API along with preview models `grok-beta` and `grok-vision-beta`. Today we are adding two new models coming to our API: `grok-2-1212` and `grok-2-vision-1212`.",
-   "supports": "xAI announced grok-vision-beta as a preview model for its API, but this announcement does not state its price.",
+   "supports": "xAI identifies grok-vision-beta as an earlier public beta model, but gives no price for that model or date of a price change.",
    "extracted_as": "research/sources/e0c44d30e87131f4.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The available primary source confirms the model's API preview status but does not establish any token rates or a price-change date. Internet Archive lookup for xAI's pricing page did not yield usable snapshots (direct date requests returned 404 and the CDX request timed out), so the evidence cannot decide whether models.dev corrected an error or recorded a provider price change.",
+ "notes": "The available xAI announcement confirms the preview model existed but does not establish its price. Attempts to retrieve archived xAI pricing snapshots were rate-limited by the Internet Archive (HTTP 429), including after waiting; the evidence therefore does not decide whether models.dev recorded a real provider price change or corrected its own error.",
  "verified": true
 }

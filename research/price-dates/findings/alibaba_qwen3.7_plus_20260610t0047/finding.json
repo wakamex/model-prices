@@ -1,5 +1,5 @@
 {
- "classification": "unclear",
+ "classification": "models_dev_fix",
  "effective_at": null,
  "effective_precision": "unknown",
  "bracket": {
@@ -15,13 +15,40 @@
   {
    "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-7-plus",
    "file": "96fcf1f728557a68.md",
-   "quote": "<Accordion title=\"Input<=256k\" defaultOpen>\n      <table><thead><tr><th>Billing Item</th><th>Price (USD)</th><th>Unit</th></tr></thead><tbody><tr><td><p>Input</p></td><td><p>0.4</p></td><td><p>Per 1M tokens</p></td></tr><tr><td><p>Output</p></td><td><p>1.6</p></td><td><p>Per 1M tokens</p></td></tr>",
-   "supports": "Alibaba's current official page places one regional price tier through 256K input tokens; this does not establish what the tier threshold was during the earlier period or match the reported USD prices.",
+   "quote": "    <Accordion title=\"Input<=256k\" defaultOpen>",
+   "supports": "Alibaba\u2019s official Qwen3.7-Plus pricing page places the lower input tier at up to 256K, which conflicts with models.dev\u2019s earlier 128K boundary and supports an erroneous tier threshold rather than a provider price change.",
+   "extracted_as": "research/sources/96fcf1f728557a68.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-7-plus",
+   "file": "96fcf1f728557a68.md",
+   "quote": "<td><p>Input</p></td><td><p>0.4</p></td><td><p>Per 1M tokens</p></td>",
+   "supports": "The official page lists the US-scope input price as $0.4 per million tokens.",
+   "extracted_as": "research/sources/96fcf1f728557a68.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-7-plus",
+   "file": "96fcf1f728557a68.md",
+   "quote": "<td><p>Output</p></td><td><p>1.6</p></td><td><p>Per 1M tokens</p></td>",
+   "supports": "The official page lists the US-scope output price as $1.6 per million tokens.",
+   "extracted_as": "research/sources/96fcf1f728557a68.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-7-plus",
+   "file": "96fcf1f728557a68.md",
+   "quote": "<td><p>Explicit Cache Read</p></td><td><p>0.04</p></td><td><p>Per 1M tokens</p></td>",
+   "supports": "The official page lists the US-scope explicit cache read price as $0.04 per million tokens.",
    "extracted_as": "research/sources/96fcf1f728557a68.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The current Alibaba model page uses a 256K threshold, consistent with the corrected threshold, but the available primary source is not a historical capture and lists different region-specific prices. Internet Archive requests did not return a usable snapshot, so the evidence does not determine whether 128K was once official or when any provider-side change took effect.",
+ "notes": "The provider\u2019s page identifies 256K as the standard lower-tier ceiling; the 128K value appears to have been a models.dev data error, not a provider price change. Its current region-specific US prices are input $0.40, output $1.60, and explicit cache read $0.04 per million tokens, but the page and available archived sources do not establish those amounts specifically during June 3\u201310, 2026. The Internet Archive CDX request returned HTTP 503, so no historical snapshot pair or effective date could be verified.",
  "verified": true
 }

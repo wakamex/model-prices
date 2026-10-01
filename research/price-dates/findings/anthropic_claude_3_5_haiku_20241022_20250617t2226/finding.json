@@ -1,5 +1,5 @@
 {
- "classification": "unclear",
+ "classification": "models_dev_fix",
  "effective_at": null,
  "effective_precision": "unknown",
  "bracket": {
@@ -7,30 +7,30 @@
   "first_after": null
  },
  "official_previous_price": {
-  "input": null,
-  "output": null,
-  "cache_read": null
+  "input": 0.8,
+  "output": 4.0,
+  "cache_read": 0.08
  },
  "sources": [
   {
-   "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching.md",
-   "file": "sources/3fcf060249def8b4.md",
-   "quote": "| Claude Haiku 3.5 ([retired, except on Bedrock and Google Cloud](https://platform.claude.com/docs/en/about-claude/model-deprecations)) | $0.80 / MTok      | $1 / MTok       | $1.60 / MTok    | $0.08 / MTok             | $4 / MTok     |",
-   "supports": "Anthropic currently documents Haiku 3.5's base input, cache write, cache read, and output prices, including $0.08/MTok cache reads. It does not give a historical effective date.",
-   "extracted_as": "research/sources/3fcf060249def8b4.md",
+   "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+   "file": "50846cd1ff366c72.md",
+   "quote": "| Claude Haiku 3.5 ([retired, except on Bedrock and Google Cloud](https://platform.claude.com/docs/en/about-claude/model-deprecations)) | $0.80 / MTok          | $1 / MTok       | $1.60 / MTok    | $0.08 / MTok             | $4 / MTok              |",
+   "supports": "Anthropic's official pricing lists Haiku 3.5 input, cache write, cache read, and output rates; cache read was $0.08 per million tokens alongside $0.80 input and $4 output.",
+   "extracted_as": "research/sources/50846cd1ff366c72.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
    "url": "https://www.anthropic.com/news/prompt-caching",
-   "file": "sources/8716c9bbc07be2b9.md",
-   "quote": "Prompt caching is available today in public beta for Claude 3.5 Sonnet, Claude 3 Opus, and Claude 3 Haiku.",
-   "supports": "Anthropic's December 2024 announcement lists the models initially supported for prompt caching and does not list Claude 3.5 Haiku.",
+   "file": "8716c9bbc07be2b9.md",
+   "quote": "Cached prompts are priced based on the number of input tokens you cache and how frequently you use that content. Writing to the cache costs 25% more than our base input token price for any given model, while using cached content is significantly cheaper, costing only 10% of the base input token price.",
+   "supports": "Anthropic states its general cache pricing formula, consistent with cache read being 10% of Haiku 3.5's $0.80 input rate.",
    "extracted_as": "research/sources/8716c9bbc07be2b9.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "Anthropic's current pricing documentation confirms paid cache reads and writes for Claude Haiku 3.5, but it does not establish when those prices took effect or whether caching was available for this model during the earlier models.dev period. The archived pricing-page extracts around June 17, 2025 omit the pricing rows, so the evidence does not decide between a price change and a models.dev fix.",
+ "notes": "The recorded change aligns with a models.dev schema/field correction: Anthropic's official pricing identifies the same base rates and a $0.08 cache read rate. The cited provider materials do not establish precisely when Haiku 3.5's cache rate became available, so no effective date is assigned.",
  "verified": true
 }

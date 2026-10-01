@@ -1,5 +1,5 @@
 {
- "classification": "unclear",
+ "classification": "models_dev_fix",
  "effective_at": null,
  "effective_precision": "unknown",
  "bracket": {
@@ -7,21 +7,30 @@
   "first_after": null
  },
  "official_previous_price": {
-  "input": null,
-  "output": null,
-  "cache_read": null
+  "input": 15.0,
+  "output": 60.0,
+  "cache_read": 7.5
  },
  "sources": [
   {
    "url": "https://developers.openai.com/api/docs/models/o1",
-   "saved_as": "sources/developers.openai.com_api_docs_models_o1.html",
-   "quote": "<div>Input</div><div class=\"text-2xl font-semibold\">$15.00</div></div><div class=\"flex flex-1 flex-col gap-1 rounded-lg border border-solid border-default bg-surface-secondary px-3 py-4\"><div>Cached input</div><div class=\"text-2xl font-semibold\">$7.50</div></div><div class=\"flex flex-1 flex-col gap-1 rounded-lg border border-solid border-default bg-surface-secondary px-3 py-4\"><div>Output</div><div class=\"text-2xl font-semibold\">$60.00</div>",
-   "supports": "OpenAI's current official o1 page lists the same input and output rates and a $7.50 cached-input rate. It does not date when that rate began.",
+   "file": "4527eb88a5fb5188.md",
+   "quote": "| Cached input | $7.5 | 1M tokens |",
+   "supports": "OpenAI's o1 model documentation lists cached input at $7.5 per million tokens.",
    "extracted_as": "research/sources/4527eb88a5fb5188.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/pricing",
+   "file": "00eaf917ab1113cf.md",
+   "quote": "| o1 | $15.00 | $7.50 | - | $60.00 | - | - | - | - |",
+   "supports": "OpenAI's pricing table lists o1 input at $15, cached input at $7.50, and output at $60 per million tokens.",
+   "extracted_as": "research/sources/00eaf917ab1113cf.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "OpenAI's current model page confirms the added cache price, but does not establish whether o1's official price during June 11\u201317, 2025 already included it. The Internet Archive CDX endpoint returned a temporary offline page, so no before/after pricing snapshots could be obtained; the effective date and classification therefore remain unresolved.",
+ "notes": "OpenAI's official o1 documentation and pricing table give the same $15/$7.50/$60 rates, which indicates the absent cache_read value in the earlier models.dev record was an omission rather than an official price change. The available official pages are current copies and do not date when this cache rate was first applicable, so no effective date or historical bracket can be assigned.",
  "verified": true
 }

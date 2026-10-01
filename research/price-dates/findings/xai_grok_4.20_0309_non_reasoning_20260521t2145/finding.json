@@ -16,21 +16,12 @@
    "url": "https://docs.x.ai/developers/models/grok-4.20-non-reasoning",
    "file": "2d81e4f4b8af6408.md",
    "quote": "| Input | $1.25 | $2.50 |\n| Cached input | $0.20 | $0.40 |\n| Output | $2.50 | $5.00 |",
-   "supports": "The current official xAI model page lists the post-change tiered prices.",
+   "supports": "xAI currently documents the lower long-context rates for this model; this does not establish the earlier official rate or when the rates changed.",
    "extracted_as": "research/sources/2d81e4f4b8af6408.md",
-   "quote_verified": true,
-   "verified_in": "independent extract"
-  },
-  {
-   "url": "https://docs.x.ai/developers/pricing",
-   "file": "dedf56167aa34815.md",
-   "quote": "| grok-4.20-0309-non-reasoning (\u2265 200k prompt tokens) | 1M | $2.50 | $0.40 | $5.00 |",
-   "supports": "xAI's current pricing table lists the lower long-context rates.",
-   "extracted_as": "research/sources/dedf56167aa34815.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The official pages available here confirm the lower long-context prices currently listed but do not establish whether the earlier $4 input/$12 output rates were ever official. Internet Archive CDX requests for xAI pricing history returned service errors, so no archival bracket or effective date could be established.",
+ "notes": "The available primary source confirms only the current lower long-context price and does not say when it took effect. The Wayback CDX index showed relevant May 2026 captures, but extraction of the May 15 and May 21 captures returned HTTP 429, and the successfully extracted May 30 pricing page omitted the model pricing table; the historical classification and effective date therefore remain unclear.",
  "verified": true
 }

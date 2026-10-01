@@ -1,5 +1,5 @@
 {
- "classification": "unclear",
+ "classification": "models_dev_fix",
  "effective_at": null,
  "effective_precision": "unknown",
  "bracket": {
@@ -7,48 +7,30 @@
   "first_after": null
  },
  "official_previous_price": {
-  "input": null,
-  "output": null,
-  "cache_read": null
+  "input": 3.0,
+  "output": 15.0,
+  "cache_read": 0.3
  },
  "sources": [
   {
-   "url": "https://www.anthropic.com/news/prompt-caching",
+   "url": "https://claude.com/blog/prompt-caching",
    "file": "c7c4fcc8db2f7ca5.md",
-   "quote": "Writing to the cache costs 25% more than our base input token price for any given model, while using cached content is significantly cheaper, costing only 10% of the base input token price.",
-   "supports": "Anthropic specifies distinct cache-write and cache-read price multipliers, so the two $0.30 fields alone do not demonstrate an official pricing change.",
-   "extracted_as": "research/sources/8716c9bbc07be2b9.md",
+   "quote": "Cached prompts are priced based on the number of input tokens you cache and how frequently you use that content. Writing to the cache costs 25% more than our base input token price for any given model, while using cached content is significantly cheaper, costing only 10% of the base input token price.",
+   "supports": "Anthropic's prompt-caching charges are 1.25x the model's base input price for writes and 0.1x for reads; at a $3 base input price this is $3.75 and $0.30 per million tokens.",
+   "extracted_as": "research/sources/c7c4fcc8db2f7ca5.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
-   "url": "https://platform.claude.com/docs/en/about-claude/pricing",
-   "file": "5770757567c6c228.md",
-   "quote": "| Claude Sonnet 4 ([retired, except on Bedrock and Google Cloud](https://platform.claude.com/docs/en/about-claude/model-deprecations))  | $3 / MTok             | $3.75 / MTok    | $6 / MTok       | $0.30 / MTok             | $15 / MTok             |",
-   "supports": "The provider\u2019s current table separately lists input, cache-write, cache-read, and output rates for a later Sonnet model; it does not state Claude 3 Sonnet\u2019s historical row.",
-   "extracted_as": "research/sources/50846cd1ff366c72.md",
-   "quote_verified": true,
-   "verified_in": "independent extract"
-  },
-  {
-   "url": "https://web.archive.org/web/20250614032517/https://www.anthropic.com/pricing",
-   "file": "789337fa8528b019.md",
-   "quote": "Prompt caching pricing is for our standard 5-minute TTL; [extended prompt caching](https://web.archive.org/web/20250614032517/https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching#1-hour-cache-duration-beta) is available at an additional cost",
-   "supports": "The archived official page is dated before the models.dev commit and acknowledges distinct prompt-caching pricing, but its extracted Markdown omits the model-price table.",
-   "extracted_as": "research/sources/789337fa8528b019.md",
-   "quote_verified": true,
-   "verified_in": "independent extract"
-  },
-  {
-   "url": "https://web.archive.org/web/20250618073341/https://www.anthropic.com/pricing",
-   "file": "74607e9f5c8312d5.md",
-   "quote": "Prompt caching pricing is for our standard 5-minute TTL; [extended prompt caching](https://web.archive.org/web/20250618073341/https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching#1-hour-cache-duration-beta) is available at an additional cost",
-   "supports": "The archived official page is dated after the models.dev commit, but its extracted Markdown omits the model-price table.",
-   "extracted_as": "research/sources/74607e9f5c8312d5.md",
+   "url": "https://www.anthropic.com/news/claude-3-5-sonnet",
+   "file": "e91e6f80eaaceb58.md",
+   "quote": "The model costs $3 per million input tokens and $15 per million output tokens, with a 200K token context window.",
+   "supports": "Anthropic stated the official $3/$15 per million input/output pricing for Claude 3.5 Sonnet, described as having the speed and cost of Claude 3 Sonnet.",
+   "extracted_as": "research/sources/e91e6f80eaaceb58.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The available provider sources establish that cache reads and writes have different rates, but they do not show Claude 3 Sonnet\u2019s prices across the earlier period. Internet Archive full-page extraction returned HTTP 429 on both attempts, so the archive snapshots cannot resolve whether models.dev was correcting an omission or reporting a provider price change.",
+ "notes": "The recorded base prices were legitimate provider prices, but the added cache_write value of $0.30 is not Anthropic's published write price: its published formula yields $3.75 at a $3 input price, while cache_read is $0.30. This is a models.dev data correction, not a provider price change; the cited primary sources do not state when the mistaken cache_write value was first recorded.",
  "verified": true
 }

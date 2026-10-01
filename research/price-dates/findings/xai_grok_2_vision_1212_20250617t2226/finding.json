@@ -13,24 +13,24 @@
  },
  "sources": [
   {
-   "url": "https://x.ai/news/grok-1212",
-   "file": "sources/e0c44d30e87131f4.md",
-   "quote": "As a result of our efficiency improvements, we are also lowering the price of these models to $2 / 1M input tokens and $10 / 1M output tokens.",
-   "supports": "xAI's official $2 input and $10 output rates for the Grok-2-vision-1212 launch; it does not state cache pricing.",
-   "extracted_as": "research/sources/e0c44d30e87131f4.md",
+   "url": "https://x.ai/news/grok-2",
+   "file": "1572648d0de93018.md",
+   "quote": "Grok-2 and Grok-2 mini are currently in beta on \ud835\udd4f, and we are also making both models available through our enterprise API later this month.",
+   "supports": "xAI's announcement that the Grok-2 family, including the vision model family, would be offered through its enterprise API; it gives no API prices.",
+   "extracted_as": "research/sources/1572648d0de93018.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
-   "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing.md",
-   "file": "sources/fdb8e6a04853b79d.md",
-   "quote": "Cached tokens are billed at the **cached prompt token price**, which is substantially lower than the regular prompt token price. The exact rates vary by model \u2014 check the [Pricing](/developers/pricing) page for current prices.",
-   "supports": "xAI distinguishes cached-token rates, which vary by model, but this current documentation gives no historical Grok-2-vision-1212 rate.",
-   "extracted_as": "research/sources/fdb8e6a04853b79d.md",
+   "url": "https://docs.x.ai/developers/pricing",
+   "file": "dedf56167aa34815.md",
+   "quote": "| Model | Context | Input / 1M tokens | Cached input / 1M tokens | Output / 1M tokens |",
+   "supports": "xAI's current pricing page distinguishes a cached-input price, but its listed model rows do not cover grok-2-vision-1212.",
+   "extracted_as": "research/sources/dedf56167aa34815.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The launch announcement establishes the original input/output rates, but the available primary sources do not establish the official cache-read rate before June 17, 2025 or when a cache-rate change took effect. Internet Archive could not be reached from this environment (connection refused), so no dated pricing-page snapshots were available to resolve whether models.dev surfaced a prior official rate or fixed its own omission.",
+ "notes": "The provider announcement and current pricing documentation do not establish whether the earlier $2/$10 was the official price or establish historical cache rates for grok-2-vision-1212. The Internet Archive CDX request for the provider pricing page returned HTTP 503, so no before/after snapshot bracket or effective date could be verified.",
  "verified": true
 }

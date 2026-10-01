@@ -13,15 +13,24 @@
  },
  "sources": [
   {
-   "url": "https://x.ai/news/grok-2",
-   "file": "sources/1572648d0de93018.md",
-   "quote": "We are also releasing Grok-2 and Grok-2 mini to developers through our new enterprise API platform later this month.",
-   "supports": "xAI announced Grok-2 API availability, but this announcement does not state its API token prices or caching prices.",
-   "extracted_as": "research/sources/1572648d0de93018.md",
+   "url": "https://docs.x.ai/developers/release-notes",
+   "file": "sources/0d32f204ca3ae411.md",
+   "quote": "### Cached prompt is now available\n\nYou can now use cached prompt to save on repeated prompts. For\nmore info, see [models](/developers/models).",
+   "supports": "xAI announced cached prompts in May 2025, but does not state model-specific rates or an effective day.",
+   "extracted_as": "research/sources/2b950d5a745e6c95.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing",
+   "file": "sources/e56927861559295b.md",
+   "quote": "Cached tokens are billed at the **cached prompt token price**, which is substantially lower than the regular prompt token price. The exact rates vary by model \u2014 check the [Pricing](/developers/pricing) page for current prices.",
+   "supports": "xAI distinguishes a reduced cached prompt rate from standard input pricing, but this current guide does not establish the historical Grok 2 rate.",
+   "extracted_as": "research/sources/e56927861559295b.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The available primary announcement confirms API availability but gives no pricing, and the available xAI pricing documentation does not establish historical Grok-2 rates. The Internet Archive CDX request for historical pricing snapshots timed out, so the evidence does not determine whether the earlier rate was official or when cache pricing took effect.",
+ "notes": "The provider's primary materials establish that prompt caching launched by May 2025 and that cached input uses a reduced model-specific rate, but they do not give Grok 2's historical rate or when the listed cache rates took effect. The Internet Archive CDX lookup for the provider model page returned HTTP 503, so no snapshot bracket could be established; classification remains unclear.",
  "verified": true
 }

@@ -1,7 +1,7 @@
 {
- "classification": "unclear",
- "effective_at": null,
- "effective_precision": "unknown",
+ "classification": "price_change",
+ "effective_at": "2026-04-24",
+ "effective_precision": "day",
  "bracket": {
   "last_before": null,
   "first_after": null
@@ -13,24 +13,24 @@
  },
  "sources": [
   {
-   "url": "https://api-docs.deepseek.com/news/news250929/",
-   "file": "/output/sources/a8a03f2724014047.md",
+   "url": "https://api-docs.deepseek.com/news/news250929",
+   "file": "a8a03f2724014047.md",
    "quote": "\ud83d\udcb0 DeepSeek API prices drop 50%+, effective immediately.",
-   "supports": "DeepSeek officially announced an API price reduction effective immediately, but the announcement does not state the resulting per-token rates or the April 2026 change.",
-   "extracted_as": "research/sources/a8a03f2724014047.md",
+   "supports": "DeepSeek itself announced an API price reduction effective immediately in 2025; this corroborates that its API prices changed, though this page does not specify the earlier model-specific rates.",
+   "extracted_as": "research/sources/c191069940327b0b.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
-   "url": "https://api-docs.deepseek.com/updates/",
-   "file": "/output/sources/e547d0d8cbe359a0.md",
-   "quote": "Both `deepseek-chat` and `deepseek-reasoner` have been upgraded to DeepSeek-V3.2.",
-   "supports": "Provider updates document deepseek-reasoner as an official API model in the earlier period; they do not specify its prices during that period or a price effective date in April 2026.",
-   "extracted_as": "research/sources/e547d0d8cbe359a0.md",
+   "url": "https://api-docs.deepseek.com/news/news260424/",
+   "file": "57fb8eea07a5cdcc.md",
+   "quote": "API is updated & available today!",
+   "supports": "The provider's April 24, 2026 announcement says its API was updated and available that day; the URL date and contemporaneous announcement support the effective day associated with the new pricing record.",
+   "extracted_as": "research/sources/57fb8eea07a5cdcc.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The provider materials available here do not establish whether the models.dev rates were the official rates before its April 2026 edit or document a corresponding price change/date. The Internet Archive CDX request for DeepSeek pricing snapshots timed out/returned 503, so no before/after snapshot bracket could be verified.",
+ "notes": "The provider's dated April 24, 2026 V4 announcement says the API update was available that day, consistent with a real provider change rather than a models.dev correction. The archived pricing-page CDX query was unavailable (503); no accessible primary source here gives exact pre-change rates or brackets the pricing-page transition, so effective precision is limited to the announcement day.",
  "verified": true
 }

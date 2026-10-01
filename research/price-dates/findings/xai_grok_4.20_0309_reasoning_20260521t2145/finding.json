@@ -13,15 +13,33 @@
  },
  "sources": [
   {
-   "url": "https://docs.x.ai/developers/pricing",
-   "file": "dedf56167aa34815.md",
+   "url": "https://docs.x.ai/developers/pricing.md",
+   "file": "xai-pricing-current.md",
    "quote": "| grok-4.20-0309-reasoning (\u2265 200k prompt tokens) | 1M | $2.50 | $0.40 | $5.00 |",
-   "supports": "xAI's current pricing documentation lists the model's long-context rates as $2.50 input, $0.40 cached input, and $5.00 output per million tokens. It does not establish the prior rate or when this rate became effective.",
-   "extracted_as": "research/sources/dedf56167aa34815.md",
+   "supports": "xAI's presently documented long-context rates match the after price.",
+   "extracted_as": "research/sources/1914b0f1b14a59a9.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/release-notes",
+   "file": "xai-release-notes.md",
+   "quote": "### Grok 4.20 and Grok 4.20 Multi-agent are live\n\n* For more details on Grok 4.20 Multi-agent, check out the [docs](/developers/model-capabilities/text/multi-agent)",
+   "supports": "xAI's release notes confirm the model launch but state no pricing or price-change date.",
+   "extracted_as": "research/sources/2b950d5a745e6c95.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/models/grok-4.20-experimental-beta-0304-reasoning",
+   "file": "xai-grok420-model.md",
+   "quote": "- **Model name:** `grok-4.20-0309-reasoning`",
+   "supports": "xAI's model documentation identifies the exact model name.",
+   "extracted_as": "research/sources/727cc8c8dad76b6f.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The available first-party xAI page confirms the current long-context rates but does not state their effective date or the preceding rates. The Internet Archive CDX endpoint timed out when queried for May 2026 snapshots, so no archived before/after evidence was available to decide whether the earlier models.dev rate was official or an error.",
+ "notes": "The current xAI pricing page corroborates the lower long-context price, but the available primary-source material does not establish whether the higher earlier rate was ever official or when any change took effect. An Internet Archive CDX listing showed a May 21 pricing snapshot, but extracting archived snapshots was blocked by HTTP 429/connection refusal; therefore no snapshot-based bracket can be claimed.",
  "verified": true
 }

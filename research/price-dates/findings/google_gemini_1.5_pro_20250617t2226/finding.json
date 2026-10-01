@@ -1,5 +1,5 @@
 {
- "classification": "unclear",
+ "classification": "models_dev_fix",
  "effective_at": null,
  "effective_precision": "unknown",
  "bracket": {
@@ -15,13 +15,13 @@
   {
    "url": "https://developers.googleblog.com/en/updated-gemini-models-reduced-15-pro-pricing-increased-rate-limits-and-more/",
    "file": "beae2cef9c7c08cb.md",
-   "quote": "Today we are announcing a 64% price reduction on input tokens, a 52% price reduction on output tokens, and a 64% price reduction on incremental cached tokens for our strongest 1.5 series model, Gemini 1.5 Pro, [effective October 1st, 2024](https://ai.google.dev/pricing), on prompts less than 128K tokens.",
-   "supports": "Google confirms Gemini 1.5 Pro had paid incremental cached-token pricing and that pricing changed effective October 1, 2024, but this passage does not give the resulting per-token amounts needed to establish the official cache_read price for June 2025.",
+   "quote": "Today we are announcing a 64% price reduction on input tokens, a 52% price reduction on output tokens, and a 64% price reduction on incremental cached tokens for our strongest 1.5 series model, Gemini 1.5 Pro, [effective October 1st, 2024](https://ai.google.dev/pricing)",
+   "supports": "Google's official announcement establishes that Gemini 1.5 Pro had priced incremental cached tokens before the June 2025 models.dev schema correction. The quoted price change took effect October 1, 2024.",
    "extracted_as": "research/sources/beae2cef9c7c08cb.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "Google's announcement establishes that cached-token pricing existed and had been reduced effective October 1, 2024, so models.dev's omitted cache_read may have been an omission rather than a provider price change. The Internet Archive CDX request for the June 2025 pricing page returned HTTP 503, and the available Google source does not state exact prices; classification and previous official amounts therefore remain unclear.",
+ "notes": "The June 2025 models.dev commit describes a schema rename and removal of zero-valued cache fields; Google's announcement confirms that Gemini 1.5 Pro cached tokens had official pricing since at least October 1, 2024. The cited announcement does not state the resulting cache rate, so the official earlier-period cache price is left null; no June 2025 provider price change is evidenced.",
  "verified": true
 }

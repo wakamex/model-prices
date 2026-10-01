@@ -15,22 +15,22 @@
   {
    "url": "https://docs.x.ai/developers/release-notes",
    "file": "2b950d5a745e6c95.md",
-   "quote": "### Cached prompt is now available\n\nYou can now use cached prompt to save on repeated prompts. For\nmore info, see [models](/developers/models).",
-   "supports": "xAI says prompt caching was available in May 2025, but this excerpt gives no Grok 3 cache price or pricing effective date.",
+   "quote": "## May 2025\n\n### Cached prompt is now available\n\nYou can now use cached prompt to save on repeated prompts. For\nmore info, see [models](/developers/models).",
+   "supports": "xAI says cached prompts became available during May 2025, before the earlier models.dev record, but gives no cache price or precise launch day.",
    "extracted_as": "research/sources/2b950d5a745e6c95.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
-   "url": "https://docs.x.ai/developers/pricing",
-   "file": "dedf56167aa34815.md",
-   "quote": "| Model | Context | Input / 1M tokens | Cached input / 1M tokens | Output / 1M tokens |\n| --- | --- | --- | --- | --- |\n| grok-4.7 (< 200k prompt tokens) | 500k | $2.00 | $0.50 | $6.00 |",
-   "supports": "The current provider pricing page exposes cached input rates but does not list Grok 3, so it cannot establish Grok 3's historical cache rate.",
-   "extracted_as": "research/sources/dedf56167aa34815.md",
+   "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching",
+   "file": "1c2d07f12e4c46df.md",
+   "quote": "* **Lower cost** \u2014 cached tokens are billed at a reduced rate",
+   "supports": "xAI confirms cached tokens have reduced-rate billing, but this current documentation does not give the historical Grok 3 rate.",
+   "extracted_as": "research/sources/1c2d07f12e4c46df.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The provider confirms prompt caching existed before the models.dev record, but the accessible primary sources do not establish whether Grok 3's cache_read/cache_write rates were already official then or when those rates took effect. Internet Archive retrieval of the provider pricing history failed with HTTP 503, so the classification and effective date remain unclear.",
+ "notes": "The provider confirms cached-prompt functionality existed by May 2025, so the June 10 record's missing cache fields may reflect incomplete dataset coverage; however, available provider sources do not state Grok 3's cache rates in that earlier period or date a pricing change. Internet Archive CDX requests for the xAI pricing page returned HTTP 503, so no historical pricing snapshot could be checked.",
  "verified": true
 }

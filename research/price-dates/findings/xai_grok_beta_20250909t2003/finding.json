@@ -13,15 +13,15 @@
  },
  "sources": [
   {
-   "url": "https://x.ai/news/api",
-   "file": "a0d1a4244309656a.md",
-   "quote": "We are kicking off our public beta with a preview of a new Grok model that is currently in the final stages of development. The model \u2013 released under the provisional name grok-beta \u2013 has a context length of 128,000 tokens and also supports function calling and system prompts.",
-   "supports": "xAI's primary announcement confirms grok-beta was an official API preview model, but does not state its price.",
-   "extracted_as": "research/sources/a0d1a4244309656a.md",
+   "url": "https://docs.x.ai/developers/pricing",
+   "file": "dedf56167aa34815.md",
+   "quote": "| Model | Context | Input / 1M tokens | Cached input / 1M tokens | Output / 1M tokens |",
+   "supports": "xAI's current pricing documentation presents its token-price categories, but does not establish the historical Grok Beta rates.",
+   "extracted_as": "research/sources/dedf56167aa34815.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The available provider announcement establishes that grok-beta was an official preview model but supplies no prices. The Internet Archive CDX query for xAI pricing returned no 2025 captures (and subsequent requests failed), and the available provider pricing page no longer lists grok-beta; there is therefore no primary-source evidence here to decide whether cache_write at $15 was an official rate or models.dev's error, or to date an effective change.",
+ "notes": "The available current xAI pricing page does not list grok-beta or establish whether its earlier cache-write rate was official. Internet Archive snapshots of x.ai/api were found around the period, but archive replay returned HTTP 429, so the historical price and effective date remain unresolved.",
  "verified": true
 }

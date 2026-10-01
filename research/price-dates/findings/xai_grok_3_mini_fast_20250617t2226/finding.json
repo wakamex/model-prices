@@ -14,9 +14,9 @@
  "sources": [
   {
    "url": "https://docs.x.ai/developers/release-notes",
-   "file": "2b950d5a745e6c95.md",
+   "file": "0d32f204ca3ae411.md",
    "quote": "### Cached prompt is now available\n\nYou can now use cached prompt to save on repeated prompts. For\nmore info, see [models](/developers/models).",
-   "supports": "xAI release notes place the introduction of cached prompts in May 2025, before the models.dev observation; they do not state Grok 3 Mini Fast cache rates or an exact effective date.",
+   "supports": "xAI announced prompt caching was available in May 2025, but this passage gives no model-specific cache prices or exact launch day.",
    "extracted_as": "research/sources/2b950d5a745e6c95.md",
    "quote_verified": true,
    "verified_in": "independent extract"
@@ -25,12 +25,12 @@
    "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing",
    "file": "e56927861559295b.md",
    "quote": "Cached tokens are billed at the **cached prompt token price**, which is substantially lower than the regular prompt token price. The exact rates vary by model \u2014 check the [Pricing](/developers/pricing) page for current prices.",
-   "supports": "xAI confirms cached prompt billing is model-specific, but this current documentation does not establish the June 2025 official Grok 3 Mini Fast rate.",
+   "supports": "xAI confirms cached prompt billing is distinct and model-specific; the current documentation does not establish the Grok 3 Mini Fast rate in June 2025.",
    "extracted_as": "research/sources/e56927861559295b.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The provider\u2019s release notes show caching was available by May 2025, but the available primary sources do not establish whether Grok 3 Mini Fast\u2019s earlier listing omitted nonzero official cache rates or whether those rates were introduced later. The requested classification and effective date therefore remain unclear; no usable archive snapshot establishing the earlier model-specific rates was retrieved.",
+ "notes": "The models.dev commit describes a schema rename and removal of zero-valued fields, while the xAI release notes say prompt caching became available in May 2025. The provider material available here does not establish whether Grok 3 Mini Fast previously had no cache charge or whether the listed $0.15/$4 rates were newly introduced; the Internet Archive CDX request for xAI pricing returned HTTP 503, so classification and timing remain unclear.",
  "verified": true
 }

@@ -14,41 +14,32 @@
  "sources": [
   {
    "url": "https://ai.google.dev/gemini-api/docs/changelog",
-   "saved_as": "sources/ai.google.dev-gemini-api-docs-changelog.html",
-   "quote": "<h2 id=\"09-25-2025\" data-text=\"September 25, 2025\" tabindex=\"-1\">September 25, 2025</h2>",
-   "supports": "Google's changelog dates the model launch to September 25, 2025; it does not state the launch price.",
+   "file": "a24fd97eb3d00730.md",
+   "quote": "- Launched following preview models:\n\n  - `gemini-2.5-flash-preview-09-2025`\n  - `gemini-2.5-flash-lite-preview-09-2025`",
+   "supports": "Google's changelog dates the preview model launch under September 25, 2025; it does not give a price.",
    "extracted_as": "research/sources/a24fd97eb3d00730.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
   },
   {
-   "url": "https://ai.google.dev/gemini-api/docs/changelog",
-   "saved_as": "sources/ai.google.dev-gemini-api-docs-changelog.html",
-   "quote": "<li><code translate=\"no\" dir=\"ltr\">gemini-2.5-flash-preview-09-2025</code></li>",
-   "supports": "The launch entry names the specific preview model.",
-   "extracted_as": "research/sources/a24fd97eb3d00730.md",
+   "url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "file": "b88c4950bbf39196.md",
+   "quote": "| Input price | Free of charge | $0.30 (text / image / video) $1.00 (audio) |\n| Output price (including thinking tokens) | Free of charge | $2.50 |",
+   "supports": "The current official pricing page gives the stable Gemini 2.5 Flash input and output rates, but does not establish what the preview model's rate was during the period in question.",
+   "extracted_as": "research/sources/b88c4950bbf39196.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
   },
   {
-   "url": "https://ai.google.dev/gemini-api/docs/pricing?hl=en",
-   "saved_as": "sources/ai.google.dev-gemini-api-docs-pricing.html",
-   "quote": "<tr>\n      <td>Input price</td>\n      <td>Free of charge</td>\n      <td>$0.30 (text / image / video)<br>$1.00 (audio)</td>\n    </tr>",
-   "supports": "The current official page lists $0.30 input for stable Gemini 2.5 Flash; the page's section is for the stable model, not the dated preview.",
-   "extracted_as": "research/sources/0dec03421ba15acd.md",
+   "url": "https://ai.google.dev/gemini-api/docs/models/gemini-2.5-flash-preview-09-2025",
+   "file": "6dc9ec6e80ce5b0a.md",
+   "quote": "| Latest update | September 2025 |",
+   "supports": "The preview model page identifies its latest update as September 2025 but supplies no price.",
+   "extracted_as": "research/sources/6dc9ec6e80ce5b0a.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
-  },
-  {
-   "url": "https://ai.google.dev/gemini-api/docs/pricing?hl=en",
-   "saved_as": "sources/ai.google.dev-gemini-api-docs-pricing.html",
-   "quote": "<tr>\n      <td>Output price (including thinking tokens)</td>\n      <td>Free of charge</td>\n      <td>$2.50</td>\n    </tr>",
-   "supports": "The current official page lists $2.50 output for stable Gemini 2.5 Flash; the page's section is for the stable model, not the dated preview.",
-   "extracted_as": "research/sources/0dec03421ba15acd.md",
-   "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
   }
  ],
- "notes": "The provider changelog confirms this preview launched September 25, 2025, but the currently fetched pricing page gives rates only in a section for stable gemini-2.5-flash and does not establish the dated preview's historical price. The requested Wayback CDX query returned HTTP 503, so no provider snapshot pair was available; the change versus models.dev's recorded price therefore remains unclear, with no defensible effective date or official previous price.",
+ "notes": "The provider sources available here do not say whether the lower models.dev price was ever official for this preview model, nor do they date a price change. The current stable-model price is not proof of the preview model's historical price. Wayback CDX returned HTTP 503, so no archived price-page snapshots could be checked; effective date and official previous price remain undetermined.",
  "verified": true
 }

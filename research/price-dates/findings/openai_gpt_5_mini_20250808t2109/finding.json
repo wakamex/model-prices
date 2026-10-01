@@ -1,5 +1,5 @@
 {
- "classification": "unclear",
+ "classification": "models_dev_fix",
  "effective_at": null,
  "effective_precision": "unknown",
  "bracket": {
@@ -7,21 +7,30 @@
   "first_after": null
  },
  "official_previous_price": {
-  "input": null,
-  "output": null,
-  "cache_read": null
+  "input": 0.25,
+  "output": 2.0,
+  "cache_read": 0.025
  },
  "sources": [
   {
    "url": "https://developers.openai.com/api/docs/models/gpt-5-mini",
-   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-5-mini.html",
-   "quote": "Cached input $0.025",
-   "supports": "OpenAI currently documents GPT-5 mini cached input at $0.025 per million tokens, which differs from the $0.03 cache_read value models.dev added; it does not establish the historical rate on August 7\u20138, 2025.",
+   "file": "941c4e8041c2a99f.md",
+   "quote": "| Cached input | $0.025 | 1M tokens |",
+   "supports": "OpenAI's GPT-5 mini model documentation gives cached input at $0.025 per million tokens.",
    "extracted_as": "research/sources/941c4e8041c2a99f.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/pricing",
+   "file": "00eaf917ab1113cf.md",
+   "quote": "| gpt-5-mini | $0.25 | $0.025 | - | $2.00 | - | - | - | - |",
+   "supports": "OpenAI's pricing table lists the model's input, cached input, and output rates as $0.25, $0.025, and $2.00 per million tokens.",
+   "extracted_as": "research/sources/00eaf917ab1113cf.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The available primary documentation does not establish whether $0.03 was an actual provider price change or a models.dev correction, nor when any such change took effect. Internet Archive CDX listed captures on 2025-08-07T16:33:51Z and 2025-08-08T16:25:01Z, but fetching the snapshot pages returned HTTP 403, so no historical bracket could be verified.",
+ "notes": "OpenAI's official rate is $0.025 per million cached input tokens, so the $0.03 value added by models.dev is inconsistent with the provider's published price; this is a models.dev correction, not evidence of a provider price change. The provider pages do not establish when the $0.025 rate first took effect, so no effective date or bracket is asserted.",
  "verified": true
 }

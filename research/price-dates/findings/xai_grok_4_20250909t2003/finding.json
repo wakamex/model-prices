@@ -13,33 +13,24 @@
  },
  "sources": [
   {
-   "url": "https://docs.x.ai/developers/release-notes",
-   "saved_as": "sources/docs.x.ai_developers_release-notes.html",
-   "quote": "You can now use Grok 4 via our API or on https://grok.com.",
-   "supports": "xAI records API availability of Grok 4 on July 9, 2025, but this release note does not give token prices.",
-   "extracted_as": "research/sources/2b950d5a745e6c95.md",
+   "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing",
+   "file": "e56927861559295b.md",
+   "quote": "Cached tokens are billed at the **cached prompt token price**, which is substantially lower than the regular prompt token price. The exact rates vary by model \u2014 check the [Pricing](/developers/pricing) page for current prices.",
+   "supports": "xAI documents separate reduced cached-prompt token billing, but does not say a cache-write fee applies.",
+   "extracted_as": "research/sources/e56927861559295b.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
-   "url": "https://docs.x.ai/developers/rest-api-reference/inference/models",
-   "saved_as": "sources/docs.x.ai_developers_rest-api-reference_inference_models.html",
-   "quote": "Price of a prompt text token (in USD cents per 100 million tokens) that was cached previously.",
-   "supports": "Current xAI model metadata defines the cached prompt price field; it does not establish what cache-write billing was in effect in July\u2013September 2025.",
-   "extracted_as": "research/sources/72bf9d12755c6a08.md",
+   "url": "https://web.archive.org/web/20250911090812/https://docs.x.ai/docs/models",
+   "file": "16fab1bf9a0a9e72.md",
+   "quote": "For details on the pricing, please refer to the pricing table above, or on [xAI Console](https://web.archive.org/web/20250911090812/https://console.x.ai/).",
+   "supports": "The archived September 11 model page redirects pricing evidence to a table/console but its extracted copy does not contain rates.",
+   "extracted_as": "research/sources/16fab1bf9a0a9e72.md",
    "quote_verified": true,
    "verified_in": "independent extract"
-  },
-  {
-   "url": "https://docs.x.ai/developers/pricing",
-   "saved_as": "sources/docs.x.ai_developers_pricing.html",
-   "quote": "Prices per 1M tokens",
-   "supports": "The current xAI pricing page provides a present-day pricing table, but no Grok 4 row or historical cache-write rate.",
-   "extracted_as": "research/sources/dedf56167aa34815.md",
-   "quote_verified": true,
-   "verified_in": "agent copy"
   }
  ],
- "notes": "The July 9 xAI release note establishes API availability, not the disputed cache-write amount; current xAI pricing and API metadata cannot resolve whether the earlier cache_write value was official at the time. The Internet Archive CDX endpoint for xAI pricing timed out without returning data, so no before/after snapshot bracket was available. The supplied models.dev commit date alone does not establish a provider effective date.",
+ "notes": "The available primary-source copy does not establish whether xAI ever officially billed Grok 4 cache writes at $15/1M, nor does it bracket a provider pricing change. The Wayback CDX request for xAI model-page captures failed with HTTP 503, so I cannot infer a change date or official earlier-period rates.",
  "verified": true
 }

@@ -7,30 +7,39 @@
   "first_after": null
  },
  "official_previous_price": {
-  "input": 30.0,
-  "output": 180.0,
+  "input": null,
+  "output": null,
   "cache_read": null
  },
  "sources": [
   {
-   "url": "https://developers.openai.com/api/docs/models/gpt-5.5-pro",
-   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-5.5-pro.html",
-   "quote": "GPT-5.5 Pro does not offer a cached input discount.",
-   "supports": "OpenAI's current official model documentation says GPT-5.5 Pro has no cached input discount.",
-   "extracted_as": "research/sources/0b8dbd2e299afeb3.md",
+   "url": "https://developers.openai.com/api/docs/pricing",
+   "file": "sources/00eaf917ab1113cf.md",
+   "quote": "| gpt-5.5-pro (<272K context length) | $30.00 | - | - | $180.00 | $60.00 | - | - | $270.00 |",
+   "supports": "OpenAI's current pricing page lists GPT-5.5 Pro's base and long-context rates with a 272K threshold.",
+   "extracted_as": "research/sources/00eaf917ab1113cf.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
-   "url": "https://developers.openai.com/api/docs/models/gpt-5.5-pro",
-   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-5.5-pro.html",
-   "quote": "Input</div><div class=\"text-2xl font-semibold\">$30.00</div></div><div class=\"flex flex-1 flex-col gap-1 rounded-lg border border-solid border-default bg-surface-secondary px-3 py-4\"><div>Output</div><div class=\"text-2xl font-semibold\">$180.00</div>",
-   "supports": "The current official model page lists $30 input and $180 output per million tokens. It does not document the changed threshold.",
-   "extracted_as": "research/sources/0b8dbd2e299afeb3.md",
+   "url": "https://developers.openai.com/api/docs/models/gpt-5.5-pro.md",
+   "file": "sources/f4193889b065983a.md",
+   "quote": "- Default snapshot: `gpt-5.5-pro-2026-04-23`",
+   "supports": "OpenAI identifies the model snapshot associated with its initial release period.",
+   "extracted_as": "research/sources/f4193889b065983a.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/changelog",
+   "file": "sources/49e8d0577a5e1f9d.md",
+   "quote": "### Apr 24\n\nFeature \u00b7 Model: gpt-5.5 \u00b7 Model: gpt-5.5-pro \u00b7 API: v1/responses \u00b7 API: v1/chat/completions \u00b7 API: v1/batch\n\nReleased [GPT-5.5](https://developers.openai.com/api/docs/models/gpt-5.5), a new frontier model for complex professional work, to the Chat Completions and Responses API, and released [GPT-5.5 Pro](https://developers.openai.com/api/docs/models/gpt-5.5-pro) for Responses API requests for tougher problems that benefit from more compute.",
+   "supports": "OpenAI's changelog dates the GPT-5.5 Pro launch to Apr 24, 2026.",
+   "extracted_as": "research/sources/49e8d0577a5e1f9d.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "OpenAI's current model documentation confirms the $30/$180 base rates and no cached input discount, but it does not state the 200,000- or 272,000-token threshold or when either applied. The Internet Archive CDX endpoint could not be reached, so no historical pricing-page snapshots were available to bracket the threshold change; classification and effective date remain unclear.",
+ "notes": "OpenAI's current documentation shows a 272K threshold, while its launch changelog dates GPT-5.5 Pro's release to Apr 24, 2026. The sources available here do not establish what threshold OpenAI officially published between launch and the models.dev correction, so they cannot distinguish an actual price change from a models.dev fix. Internet Archive CDX returned HTTP 503, preventing retrieval of dated snapshots.",
  "verified": true
 }

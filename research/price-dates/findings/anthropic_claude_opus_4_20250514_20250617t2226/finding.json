@@ -1,5 +1,5 @@
 {
- "classification": "unclear",
+ "classification": "models_dev_fix",
  "effective_at": null,
  "effective_precision": "unknown",
  "bracket": {
@@ -7,30 +7,39 @@
   "first_after": null
  },
  "official_previous_price": {
-  "input": null,
-  "output": null,
-  "cache_read": null
+  "input": 15.0,
+  "output": 75.0,
+  "cache_read": 1.5
  },
  "sources": [
   {
-   "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
-   "saved_as": "sources/docs.anthropic.com_en_docs_about-claude_pricing.txt",
-   "quote": "Claude Opus 4 \ue0f0 $15 / MTok $75 / MTok $18.75 / MTok $30 / MTok $1.50 / MTok",
-   "supports": "Anthropic's pricing table lists Opus 4 input, five-minute and one-hour cache-write, cache-hit, and output rates. It shows the cache read/hit rate is $1.50/MTok, while five-minute writes are $18.75/MTok.",
-   "extracted_as": "research/sources/5770757567c6c228.md",
-   "quote_verified": true,
-   "verified_in": "agent copy"
-  },
-  {
    "url": "https://www.anthropic.com/news/claude-4",
-   "saved_as": "sources/anthropic.com_news_claude-4.txt",
-   "quote": "Introducing Claude 4 May 22, 2025",
-   "supports": "Anthropic dates its Claude 4 announcement to May 22, 2025.",
+   "file": "4ec03078d3169fe5.md",
+   "quote": "Pricing remains consistent with previous Opus and Sonnet models: Opus 4 at $15/$75 per million tokens (input/output) and Sonnet 4 at $3/$15.",
+   "supports": "Anthropic stated Opus 4's official base input and output prices at launch.",
    "extracted_as": "research/sources/4ec03078d3169fe5.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
+   "file": "3fcf060249def8b4.md",
+   "quote": "| Claude Opus 4 ([retired, except on Google Cloud](https://platform.claude.com/docs/en/about-claude/model-deprecations))                | $15 / MTok        | $18.75 / MTok   | $30 / MTok      | $1.50 / MTok             | $75 / MTok    |",
+   "supports": "Anthropic's model-specific table shows Opus 4 cache reads at $1.50/MTok and cache writes at $18.75/MTok (5-minute) or $30/MTok (1-hour), not $1.50 for both.",
+   "extracted_as": "research/sources/9a3bbc4f637b202c.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.anthropic.com/news/prompt-caching",
+   "file": "8716c9bbc07be2b9.md",
+   "quote": "Writing to the cache costs 25% more than our base input token price for any given model, while using cached content is significantly cheaper, costing only 10% of the base input token price.",
+   "supports": "Anthropic's published rule distinguishes write pricing (25% premium) from cache reads (10% of input price), showing a $1.50 cache-write value is not its published standard price for Opus 4.",
+   "extracted_as": "research/sources/8716c9bbc07be2b9.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "Anthropic's currently fetched pricing page distinguishes cache hits from two cache-write durations, but it does not establish that these rates were in force on June 5, 2025. The Internet Archive CDX requests for historical pricing snapshots returned HTTP 503, so there is no source here that brackets the June 17 models.dev edit or settles whether the earlier omission was a models.dev error.",
+ "notes": "The earlier $15/$75 base price was official; Anthropic's Opus 4 table identifies cache reads at $1.50/MTok and writes at $18.75/MTok for 5-minute TTL or $30/MTok for 1-hour TTL. Thus the added $1.50 cache_write value was not an official price; no effective date for this models.dev correction is stated by the cited provider sources.",
  "verified": true
 }

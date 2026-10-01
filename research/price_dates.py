@@ -299,6 +299,9 @@ REVIEWED = {
     # gemini-flash-latest also pointed to Gemini 3 Flash Preview from 2026-01-21.
     "google_gemini_flash_latest_20260715t1513": "skip",
     "google_gemini_flash_lite_latest_20260715t1513": "skip",
+    # Classified as a fix of the earlier entry, but its notes say the later entry added a
+    # wrong cache_write, and its price quote is about Claude 3.5 Sonnet.
+    "anthropic_claude_3_sonnet_20240229_20250617t2226": "skip",
 }
 
 

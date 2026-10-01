@@ -16,30 +16,21 @@
    "url": "https://docs.x.ai/developers/models/grok-4.20-non-reasoning",
    "file": "sources/2d81e4f4b8af6408.md",
    "quote": "| Input | $1.25 | $2.50 |\n| Cached input | $0.20 | $0.40 |\n| Output | $2.50 | $5.00 |",
-   "supports": "xAI's current official model page lists the lower rates and the long-context rates, but does not date when they began.",
+   "supports": "The provider's current model page lists $1.25/$2.50 input and $2.50/$5.00 output rates across the two context tiers.",
    "extracted_as": "research/sources/2d81e4f4b8af6408.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
-   "url": "https://docs.x.ai/developers/pricing",
-   "file": "sources/dedf56167aa34815.md",
+   "url": "https://docs.x.ai/developers/pricing.md",
+   "file": "sources/1914b0f1b14a59a9.md",
    "quote": "| grok-4.20-0309-non-reasoning (< 200k prompt tokens) | 1M | $1.25 | $0.20 | $2.50 |",
-   "supports": "xAI's current official pricing table independently lists the lower standard rates for this exact model.",
-   "extracted_as": "research/sources/dedf56167aa34815.md",
-   "quote_verified": true,
-   "verified_in": "independent extract"
-  },
-  {
-   "url": "https://docs.x.ai/developers/release-notes",
-   "file": "sources/2b950d5a745e6c95.md",
-   "quote": "### Grok 4.20 and Grok 4.20 Multi-agent are live",
-   "supports": "xAI's release notes establish that Grok 4.20 was launched, but this entry gives no price or precise date.",
-   "extracted_as": "research/sources/2b950d5a745e6c95.md",
+   "supports": "The provider's pricing table confirms the current under-200k rate for the exact model slug.",
+   "extracted_as": "research/sources/1914b0f1b14a59a9.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The accessible xAI sources confirm the current lower price but do not establish whether the earlier $2/$6 rate was ever xAI's official price, nor when any reduction took effect. The Internet Archive CDX endpoint returned HTTP 503 for xAI pricing and model-page queries, so no archived before/after bracket could be obtained.",
+ "notes": "The available provider pages confirm the lower rates now, but do not date a change or establish what the provider charged earlier. Internet Archive CDX retrieval was attempted but failed with a connection-refused error, so there is no supported date bracket or basis to decide whether models.dev corrected an earlier error.",
  "verified": true
 }

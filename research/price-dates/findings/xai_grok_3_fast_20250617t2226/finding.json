@@ -13,15 +13,24 @@
  },
  "sources": [
   {
-   "url": "https://docs.x.ai/developers/release-notes",
-   "file": "2b950d5a745e6c95.md",
-   "quote": "### Cached prompt is now available\n\nYou can now use cached prompt to save on repeated prompts. For\nmore info, see [models](/developers/models).",
-   "supports": "xAI announced cached prompts were available in May 2025, before the models.dev commit. It does not state Grok 3 Fast cache rates or their effective date.",
-   "extracted_as": "research/sources/2b950d5a745e6c95.md",
+   "url": "https://docs.x.ai/developers/release-notes.md",
+   "file": "sources/0d32f204ca3ae411.md",
+   "quote": "You can now use cached prompt to save on repeated prompts. For\nmore info, see [models](/developers/models).",
+   "supports": "xAI announced cached prompt functionality in May 2025, before both models.dev observations; it does not state the Grok 3 Fast cache price.",
+   "extracted_as": "research/sources/0d32f204ca3ae411.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://web.archive.org/web/20250911090812/https://docs.x.ai/docs/models",
+   "file": "sources/16fab1bf9a0a9e72.md",
+   "quote": "The caching is automatically enabled for all requests without user input.",
+   "supports": "xAI documentation describes prompt caching, but this later snapshot provides no historical Grok 3 Fast cache price or effective date.",
+   "extracted_as": "research/sources/16fab1bf9a0a9e72.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The xAI release notes establish that cached prompts were available by May 2025, but the available primary-source pages do not state Grok 3 Fast's historical cache pricing or when those rates began. The archived pricing snapshots needed to determine whether the earlier record omitted an already official rate could not be retrieved, so the evidence does not decide between a provider price change and a models.dev correction.",
+ "notes": "The official sources found confirm that prompt caching existed by May 2025, but they do not establish whether the earlier models.dev record omitted an official Grok 3 Fast cache price or whether the June 17 addition reflected a provider price change. The Internet Archive CDX query for xAI pricing returned no matching snapshot and subsequent requests were unavailable, so no pricing bracket or effective date can be stated.",
  "verified": true
 }

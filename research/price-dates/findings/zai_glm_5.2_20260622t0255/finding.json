@@ -13,15 +13,24 @@
  },
  "sources": [
   {
+   "url": "https://docs.z.ai/release-notes/new-released.md",
+   "file": "sources/new-released.md",
+   "quote": "<Update label=\"2026-06-16\" description=\"  GLM-5.2\">",
+   "supports": "Z.AI dates its GLM-5.2 release entry to June 16, 2026.",
+   "extracted_as": "research/sources/82ae75b90aab5d29.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
    "url": "https://docs.z.ai/guides/overview/pricing",
-   "file": "sources/667e800254a1c2b1.md",
+   "file": "sources/zai-pricing-current.md",
    "quote": "| GLM-5.2 | \\$1.4 | \\$0.26 | Limited-time Free | \\$4.4 |",
-   "supports": "Z.AI's current pricing page lists GLM-5.2 at $1.4 input, $4.4 output, and $0.26 cached input per 1M tokens. It does not state when those rates began.",
+   "supports": "The current official Z.AI pricing table lists GLM-5.2 at $1.4 input, $0.26 cached input, $4.4 output, and limited-time free cached input storage.",
    "extracted_as": "research/sources/667e800254a1c2b1.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The available provider page confirms the after price but does not establish whether the earlier zero price was ever official or when the listed rates took effect. An Internet Archive CDX lookup did not return within the available request window, so there is no usable snapshot pair to bracket the change.",
+ "notes": "Z.AI's release notes date GLM-5.2 to June 16, 2026, and its current pricing table lists nonzero token prices, but neither states what the official price was during the earlier models.dev period. Internet Archive CDX showed snapshots on June 6, 14, 16, 17, 18, and 24, but archive page extraction returned HTTP 429, so a provider pricing snapshot pair could not be inspected. The evidence therefore does not decide whether models.dev's zero values reflected a free introductory price or an internal error, and no effective date is established.",
  "verified": true
 }

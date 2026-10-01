@@ -1,5 +1,5 @@
 {
- "classification": "unclear",
+ "classification": "price_change",
  "effective_at": null,
  "effective_precision": "unknown",
  "bracket": {
@@ -7,30 +7,30 @@
   "first_after": null
  },
  "official_previous_price": {
-  "input": null,
-  "output": null,
-  "cache_read": null
+  "input": 1.25,
+  "output": 10.0,
+  "cache_read": 0.31
  },
  "sources": [
   {
-   "url": "https://developers.googleblog.com/gemini-2-5-thinking-model-updates/",
-   "file": "sources/36dc945eafa03b9a.md",
-   "quote": "The growth and demand for Gemini 2.5 Pro continues to be the steepest of any of our models we have ever seen. To allow more customers to build on this model in production, we are making the 06-05 version of the model stable, with the same pareto frontier price point as before.",
-   "supports": "Google stated the stable Gemini 2.5 Pro release retained the preceding price point, but this statement does not give the numerical rates or cache pricing.",
-   "extracted_as": "research/sources/36dc945eafa03b9a.md",
+   "url": "https://web.archive.org/web/20250616024644id_/https://ai.google.dev/gemini-api/docs/pricing",
+   "file": "49b05230e1e3765d.md",
+   "quote": "Context caching price | Not available | $0.31, prompts <= 200k tokens  \n$0.625, prompts > 200k",
+   "supports": "Google's archived pricing page records the earlier Gemini 2.5 Pro cache rate as $0.31 per million tokens at or below 200k and $0.625 above 200k.",
+   "extracted_as": "research/sources/49b05230e1e3765d.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
-   "url": "https://web.archive.org/web/20260501160638/https://ai.google.dev/gemini-api/docs/pricing",
-   "file": "sources/72eb48018b1809c8.md",
-   "quote": "Input price | Free of charge | $1.25, prompts <= 200k tokens  \n$2.50, prompts > 200k tokens  \nOutput price (including thinking tokens) | Free of charge | $10.00, prompts <= 200k tokens  \n$15.00, prompts > 200k  \nContext caching price | Not available | $0.125, prompts <= 200k tokens  \n$0.25, prompts > 200k",
-   "supports": "Google's archived pricing page displays the later tiered input/output and cache prices; the snapshot postdates the models.dev commit and does not establish when the prices began.",
-   "extracted_as": "research/sources/72eb48018b1809c8.md",
+   "url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "file": "b88c4950bbf39196.md",
+   "quote": "| Context caching price | Not available | $0.125, prompts \\<= 200k tokens $0.25, prompts \\> 200k $4.50 / 1,000,000 tokens per hour (storage price) |",
+   "supports": "Google's current pricing page records the reduced cache rates and the over-200k tier.",
+   "extracted_as": "research/sources/b88c4950bbf39196.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The available primary-source evidence confirms Google's stable release kept the earlier price point and shows the later official tiered rates, but it does not establish whether models.dev's earlier flat rates and $0.31 cache_read were once official or an omission/error. Internet Archive CDX retrieval for the historical pricing page did not return usable results, so no effective date or prior official cache rate can be determined.",
+ "notes": "The earlier $0.31 rate was an official Google price, so this is a provider price change rather than a models.dev correction. The available before snapshot is dated 2025-06-16 and a later provider page shows the new rates, but the Internet Archive CDX request for intervening 2025 snapshots returned HTTP 503; no effective date or reliable bracket could be established.",
  "verified": true
 }

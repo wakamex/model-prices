@@ -1,5 +1,5 @@
 {
- "classification": "unclear",
+ "classification": "price_change",
  "effective_at": null,
  "effective_precision": "unknown",
  "bracket": {
@@ -7,30 +7,48 @@
   "first_after": null
  },
  "official_previous_price": {
-  "input": null,
-  "output": null,
-  "cache_read": null
+  "input": 0.276,
+  "output": 1.651,
+  "cache_read": 0.028
  },
  "sources": [
   {
    "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-6-plus",
-   "file": "sources/93185ea2b256edfe.md",
-   "quote": "<Tab title=\"China (Beijing)\">\n    <Accordion title=\"Input<=256k\" defaultOpen>\n      <table><thead><tr><th>Billing Item</th><th>Price (USD)</th><th>Unit</th></tr></thead><tbody><tr><td><p>Input</p></td><td><p>0.276</p></td><td><p>Per 1M tokens</p></td></tr><tr><td><p>Output</p></td><td><p>1.651</p></td><td><p>Per 1M tokens</p></td></tr>",
-   "supports": "The earlier input/output prices are official for the China (Beijing) region in the current provider pricing page.",
+   "file": "/output/sources/93185ea2b256edfe.md",
+   "quote": "<tr><td><p>Input</p></td><td><p>0.276</p></td><td><p>Per 1M tokens</p></td></tr>",
+   "supports": "China (Beijing) input price was USD 0.276 per million tokens.",
    "extracted_as": "research/sources/93185ea2b256edfe.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
    "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-6-plus",
-   "file": "sources/93185ea2b256edfe.md",
-   "quote": "<Tab title=\"Singapore\">\n    Scope: International\n\n    <Accordion title=\"Input<=256k\" defaultOpen>\n      <table><thead><tr><th>Billing Item</th><th>Price (USD)</th><th>Unit</th></tr></thead><tbody><tr><td><p>Input</p></td><td><p>0.5</p></td><td><p>Per 1M tokens</p></td>",
-   "supports": "The newer input price is official for Singapore's International scope, illustrating regional rather than necessarily temporal price differences.",
+   "file": "/output/sources/93185ea2b256edfe.md",
+   "quote": "<tr><td><p>Output</p></td><td><p>1.651</p></td><td><p>Per 1M tokens</p></td></tr>",
+   "supports": "China (Beijing) output price was USD 1.651 per million tokens.",
+   "extracted_as": "research/sources/93185ea2b256edfe.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-6-plus",
+   "file": "/output/sources/93185ea2b256edfe.md",
+   "quote": "<tr><td><p>Explicit Cache Creation</p></td><td><p>0.344</p></td><td><p>Per 1M tokens</p></td></tr>",
+   "supports": "China (Beijing) explicit cache creation price was USD 0.344 per million tokens.",
+   "extracted_as": "research/sources/93185ea2b256edfe.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-6-plus",
+   "file": "/output/sources/93185ea2b256edfe.md",
+   "quote": "<tr><td><p>Explicit Cache Read</p></td><td><p>0.028</p></td><td><p>Per 1M tokens</p></td></tr>",
+   "supports": "China (Beijing) explicit cache read price was USD 0.028 per million tokens.",
    "extracted_as": "research/sources/93185ea2b256edfe.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "Alibaba's current model page lists both price sets by region, and the newer set is the Singapore International rate; this does not establish that the earlier price was never official or that a provider price change occurred. No provider source found here dates a transition, so the classification and effective date remain unclear.",
+ "notes": "The earlier price was an official Alibaba price for China (Beijing); the current provider page lists different rates for Singapore (International), so this establishes a regional price distinction rather than when any temporal change occurred. The Internet Archive CDX request returned HTTP 503, and no provider source found here states an effective date; effective_at is therefore unknown.",
  "verified": true
 }

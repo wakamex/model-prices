@@ -1,5 +1,5 @@
 {
- "classification": "unclear",
+ "classification": "price_change",
  "effective_at": null,
  "effective_precision": "unknown",
  "bracket": {
@@ -7,39 +7,21 @@
   "first_after": null
  },
  "official_previous_price": {
-  "input": null,
-  "output": null,
-  "cache_read": null
+  "input": 1.74,
+  "output": 3.48,
+  "cache_read": 0.145
  },
  "sources": [
   {
-   "url": "https://api-docs.deepseek.com/news/news260424/",
-   "file": "57fb8eea07a5cdcc.md",
-   "quote": "API is updated & available today!",
-   "supports": "DeepSeek's official announcement says the V4 API was available on the April 24 launch date; it does not state the API rates in extractable text.",
-   "extracted_as": "research/sources/57fb8eea07a5cdcc.md",
-   "quote_verified": true,
-   "verified_in": "independent extract"
-  },
-  {
-   "url": "https://api-docs.deepseek.com/quick_start/pricing",
-   "file": "8eb12065b9344787.md",
-   "quote": "Product prices may vary and DeepSeek reserves the right to adjust them. We recommend topping up based on your actual usage and regularly checking this page for the most recent pricing information.",
-   "supports": "DeepSeek's official pricing documentation warns that prices can change, but this extracted version contains no dated historical price values.",
-   "extracted_as": "research/sources/8eb12065b9344787.md",
-   "quote_verified": true,
-   "verified_in": "independent extract"
-  },
-  {
-   "url": "https://api-docs.deepseek.com/updates/",
-   "file": "e547d0d8cbe359a0.md",
-   "quote": "The new prices will take effect at 16:00 (UTC Time) on August 16, 2026.",
-   "supports": "DeepSeek's official changelog dates a later August 2026 pricing change, not the May change under investigation.",
-   "extracted_as": "research/sources/e547d0d8cbe359a0.md",
+   "url": "https://www.deepseek.com/en/news/v4-preview/",
+   "file": "ac1656ce70df9aca.md",
+   "quote": "![V4 API Pricing](https://www.deepseek.com/images/blog/v4-preview/v4-price-en.png)",
+   "supports": "DeepSeek's April 24, 2026 launch announcement embeds its official V4 API pricing table, which gives V4-Pro input (cache miss) $1.74, output $3.48, and input (cache hit) $0.145 per million tokens.",
+   "extracted_as": "research/sources/ac1656ce70df9aca.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The supplied first-party extracts do not establish whether $1.74/$3.48/$0.145 was ever DeepSeek's charged price or give the May effective date. Internet Archive was temporarily offline during lookup, and the provider's announcement post could not be extracted; therefore the classification and earlier official rates remain unresolved.",
+ "notes": "The official launch pricing image establishes that the earlier price was a real provider price, so this is a price_change. The available primary source does not state when the lower price took effect, and the Internet Archive CDX request returned HTTP 503, so no effective date or snapshot bracket can be reported.",
  "verified": true
 }

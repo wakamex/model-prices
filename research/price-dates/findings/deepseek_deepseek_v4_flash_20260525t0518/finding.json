@@ -13,15 +13,15 @@
  },
  "sources": [
   {
-   "url": "https://api-docs.deepseek.com/news/news260424/",
-   "file": "57fb8eea07a5cdcc.md",
-   "quote": "API is updated & available today!",
-   "supports": "DeepSeek's official announcement says the V4 API became available, but gives no price or cache-read rate.",
-   "extracted_as": "research/sources/57fb8eea07a5cdcc.md",
+   "url": "https://api-docs.deepseek.com/quick_start/pricing",
+   "file": "8eb12065b9344787.md",
+   "quote": "Product prices may vary and DeepSeek reserves the right to adjust them. We recommend topping up based on your actual usage and regularly checking this page for the most recent pricing information.",
+   "supports": "DeepSeek's pricing documentation says prices may change, but the extracted page does not state the V4 Flash rates or their effective date.",
+   "extracted_as": "research/sources/8eb12065b9344787.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The provider source available here does not establish whether $0.028 was once an official cache-read price or a models.dev error, and it does not state a rate-change date. Internet Archive CDX access failed with connection refused, so no before/after pricing snapshots could be checked; accordingly, the classification remains unclear and no effective date or previous official price is inferred.",
+ "notes": "The available primary pricing-page extraction does not show a V4 Flash price table, and the attempted Internet Archive CDX request did not return usable snapshot data. The sources therefore do not establish whether $0.028 was ever DeepSeek's official cache-read price or when $0.0028 took effect.",
  "verified": true
 }

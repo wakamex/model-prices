@@ -1,5 +1,5 @@
 {
- "classification": "unclear",
+ "classification": "models_dev_fix",
  "effective_at": null,
  "effective_precision": "unknown",
  "bracket": {
@@ -7,21 +7,30 @@
   "first_after": null
  },
  "official_previous_price": {
-  "input": null,
-  "output": null,
-  "cache_read": null
+  "input": 1.25,
+  "output": 10.0,
+  "cache_read": 0.125
  },
  "sources": [
   {
+   "url": "https://community.openai.com/t/gpt-5-gpt-5-mini-and-gpt-5-nano-now-available-in-the-api/1337048",
+   "file": "55ed2ade59bc1c45.md",
+   "quote": "Input: $1.25 / 1M tokens, 90% cache discount  \nOutput: $10 / 1M tokens",
+   "supports": "OpenAI's API launch announcement dated August 7, 2025 states GPT-5's input and output rates and a 90% cache discount, making cached input $0.125/M.",
+   "extracted_as": "research/sources/55ed2ade59bc1c45.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
    "url": "https://developers.openai.com/api/docs/models/gpt-5-chat-latest",
    "file": "af0efaceeb7e8d1d.md",
-   "quote": "| Cached input | $0.125 | 1M tokens |",
-   "supports": "OpenAI currently lists GPT-5 Chat cached input at $0.125 per million tokens.",
+   "quote": "| Input | $1.25 | 1M tokens |\n| Cached input | $0.125 | 1M tokens |\n| Output | $10 | 1M tokens |",
+   "supports": "OpenAI's model-specific documentation lists these same rates for GPT-5 Chat.",
    "extracted_as": "research/sources/af0efaceeb7e8d1d.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The current OpenAI model page confirms the added cache rate but does not establish when it took effect or what OpenAI charged during the earlier models.dev period. The OpenAI launch announcement extraction was denied (403), and the Internet Archive request returned 429, so the earlier official price cannot be verified from quotable source files.",
+ "notes": "The provider had already announced GPT-5 pricing with a 90% cache discount on August 7, 2025, before models.dev's stated August 8 start for the earlier record; the added cache_read field therefore reflects a models.dev omission, not a provider price change. The available provider evidence does not establish a later correction date.",
  "verified": true
 }

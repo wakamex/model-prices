@@ -13,33 +13,15 @@
  },
  "sources": [
   {
-   "url": "https://docs.x.ai/developers/pricing",
-   "saved_as": "sources/docs.x.ai-developers-pricing.html",
-   "quote": "The batch discount applies to all token types \u2014 input tokens, output tokens, cached tokens, and reasoning tokens.",
-   "supports": "Current xAI pricing documentation recognizes cached tokens as a billable token category, but does not establish the historical rate for grok-vision-beta or when it changed.",
-   "extracted_as": "research/sources/dedf56167aa34815.md",
-   "quote_verified": true,
-   "verified_in": "independent extract"
-  },
-  {
-   "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing",
-   "saved_as": "sources/docs.x.ai-developers-advanced-api-usage-prompt-caching-usage-and-pricing.html",
-   "quote": "Long context pricing applies when total prompt tokens (including cached tokens) exceed the model's long context threshold. Both cached and non-cached tokens use their respective long-context rates in this case.",
-   "supports": "Current xAI documentation confirms cached tokens may have respective rates, but does not state a historical grok-vision-beta cache price or an effective date.",
-   "extracted_as": "research/sources/e56927861559295b.md",
-   "quote_verified": true,
-   "verified_in": "independent extract"
-  },
-  {
-   "url": "https://x.ai/news/api",
-   "saved_as": "sources/x.ai-news-api.html",
-   "quote": "The vision model will be available next week.",
-   "supports": "xAI announced the vision model's planned availability in its API launch post, but the announcement does not state prices.",
-   "extracted_as": "research/sources/a0d1a4244309656a.md",
+   "url": "https://docs.x.ai/developers/release-notes.md",
+   "file": "0d32f204ca3ae411.md",
+   "quote": "### Cached prompt is now available\n\nYou can now use cached prompt to save on repeated prompts. For\nmore info, see [models](/developers/models).",
+   "supports": "xAI announced cached prompt availability in May 2025, before the models.dev recording; this establishes prior feature availability but gives no Grok Vision Beta cache price.",
+   "extracted_as": "research/sources/0d32f204ca3ae411.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The available primary pages do not establish whether grok-vision-beta's cache rates were newly introduced or had been omitted by models.dev. The current docs are not historical evidence. An Internet Archive CDX request for the xAI pricing page returned HTTP 503, so no archived snapshot pair or effective date could be verified.",
+ "notes": "The available primary source shows prompt caching existed before the June 17 models.dev commit, but does not state whether Grok Vision Beta cache reads or writes were priced at $5/$15 per million tokens or whether the prior omission reflected zero pricing. An Internet Archive CDX request for xAI pricing snapshots failed with a connection-refused error, so no effective date or official previous cache price can be established.",
  "verified": true
 }

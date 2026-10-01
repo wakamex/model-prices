@@ -13,15 +13,24 @@
  },
  "sources": [
   {
-   "url": "https://ai.google.dev/gemini-api/docs/pricing?hl=en",
-   "saved_as": "sources/ai.google.dev-gemini-api-docs-pricing.html",
-   "quote": "<td>Context caching price</td>\n      <td>Not available</td>\n      <td>$0.01 (text / image / video)<br>$0.03 (audio)<br>$1.00 / 1,000,000 tokens per hour (storage price)</td>",
-   "supports": "Google's current pricing page lists standard Gemini 2.5 Flash-Lite context caching at $0.01 per million text, image, or video tokens. It does not establish the earlier rate or when the listed rate took effect.",
-   "extracted_as": "research/sources/0dec03421ba15acd.md",
+   "url": "https://web.archive.org/web/20260501160638/https://ai.google.dev/gemini-api/docs/pricing",
+   "file": "72eb48018b1809c8.md",
+   "quote": "Context caching price | Not available | $0.01 (text / image / video)",
+   "supports": "Google's archived pricing page listed the model's paid-tier cached input price as $0.01/M tokens by May 1, 2026.",
+   "extracted_as": "research/sources/72eb48018b1809c8.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/changelog",
+   "file": "a24fd97eb3d00730.md",
+   "quote": "- Released `gemini-2.5-flash-lite`, our fast, low-cost, high-performance Gemini 2.5 model. To learn more, see [Gemini 2.5\n  Flash-Lite](https://ai.google.dev/gemini-api/docs/models#gemini-2.5-flash-lite).",
+   "supports": "Google's changelog dates release of Gemini 2.5 Flash-Lite to July 22, 2025, but does not state the cached input price.",
+   "extracted_as": "research/sources/a24fd97eb3d00730.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "The available official pricing page shows $0.01 now, but no primary source found here establishes whether $0.025 was ever Google's official rate or dates a reduction. Internet Archive's CDX endpoint timed out from this environment, so no before-and-after snapshots were obtained.",
+ "notes": "The available official archive establishes $0.01 by 2026-05-01, while the official changelog does not specify the earlier cache rate. An attempt to retrieve a pre-change Internet Archive pricing snapshot was blocked with HTTP 429, so the evidence cannot determine whether $0.025 was ever Google's official price or date the transition.",
  "verified": true
 }

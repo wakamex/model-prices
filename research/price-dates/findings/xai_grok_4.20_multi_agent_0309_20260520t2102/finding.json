@@ -14,14 +14,23 @@
  "sources": [
   {
    "url": "https://docs.x.ai/developers/pricing",
-   "saved_as": "sources/docs.x.ai_developers_pricing.html",
-   "quote": "\"promptTextTokenPrice\":\"12500\",\"promptImageTokenPrice\":\"12500\",\"promptTextTokenPriceLongContext\":\"25000\",\"cachedPromptTokenPrice\":\"2000\",\"cachedPromptTokenPriceLongContext\":\"4000\",\"completionTextTokenPrice\":\"25000\"",
-   "supports": "The current xAI pricing data lists $1.25 per million input, $2.50 per million output, $0.20 cached input, and doubled input/cached rates at long context. It does not state when those rates began.",
+   "file": "dedf56167aa34815.md",
+   "quote": "| grok-4.20-multi-agent-0309 (< 200k prompt tokens) | 1M | $1.25 | $0.20 | $2.50 |",
+   "supports": "xAI's current official price for the model below 200k prompt tokens",
    "extracted_as": "research/sources/dedf56167aa34815.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/models/grok-4.20-experimental-beta-0304-reasoning",
+   "file": "727cc8c8dad76b6f.md",
+   "quote": "| Input | $1.25 | $2.50 |",
+   "supports": "The current model page shows $1.25 input below 200k tokens and $2.50 above the threshold, consistent with current pricing",
+   "extracted_as": "research/sources/727cc8c8dad76b6f.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "The live xAI pricing page supports the after rates, but does not establish the rate before the change or an effective date. The Internet Archive CDX endpoint was unavailable (HTTP 503), so I could not obtain a provider-page snapshot pair to determine whether $2/$6 was formerly official or when any change took effect.",
+ "notes": "The provider's current pricing matches the models.dev after price, but the available official sources do not establish what xAI charged during the earlier period or when any change took effect. Internet Archive lookup for 2026 snapshots did not return a usable response, so the earlier price cannot be classified as an actual provider price change or a models.dev correction.",
  "verified": true
 }

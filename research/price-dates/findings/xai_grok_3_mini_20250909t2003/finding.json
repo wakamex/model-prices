@@ -16,21 +16,21 @@
    "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing",
    "file": "e56927861559295b.md",
    "quote": "Cached tokens are billed at the **cached prompt token price**, which is substantially lower than the regular prompt token price. The exact rates vary by model \u2014 check the [Pricing](/developers/pricing) page for current prices.",
-   "supports": "xAI documents billing for cached prompt tokens at a model-specific discounted rate, but this page does not state a cache-write fee or historical Grok 3 mini rates.",
+   "supports": "xAI documents a distinct reduced rate for cached prompt tokens but gives no historical grok-3-mini price or cache-write price here.",
    "extracted_as": "research/sources/e56927861559295b.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
-   "url": "https://docs.x.ai/developers/pricing",
-   "file": "dedf56167aa34815.md",
-   "quote": "| Model | Context | Input / 1M tokens | Cached input / 1M tokens | Output / 1M tokens |",
-   "supports": "xAI's pricing schema lists input, cached input, and output prices; it does not establish whether the historical cache_write amount was an official charge.",
-   "extracted_as": "research/sources/dedf56167aa34815.md",
+   "url": "https://web.archive.org/web/20250911090812/https://docs.x.ai/docs/models",
+   "file": "16fab1bf9a0a9e72.md",
+   "quote": "When moving from `grok-3`/`grok-3-mini` to `grok-4`, please note the following differences:",
+   "supports": "An archived official xAI model document references grok-3-mini, but the captured passage provides no pricing evidence.",
+   "extracted_as": "research/sources/16fab1bf9a0a9e72.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The supplied xAI documentation does not establish whether $0.50 per million cache_write tokens was ever an official Grok 3 mini price. The Wayback CDX/archive lookup for xAI's pricing documentation did not return usable results, so there is no source-based effective date or bracket.",
+ "notes": "The available provider documentation does not establish whether $0.50 per million cache-write tokens was ever xAI's official grok-3-mini rate, nor state a price-change date. Internet Archive CDX returned its Temporarily Offline page, and a direct June 2025 pricing snapshot request returned HTTP 429, so no bracketing snapshot pair was available.",
  "verified": true
 }

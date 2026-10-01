@@ -14,14 +14,23 @@
  "sources": [
   {
    "url": "https://docs.x.ai/developers/release-notes",
-   "file": "sources/2b950d5a745e6c95.md",
+   "file": "2b950d5a745e6c95.md",
    "quote": "### Cached prompt is now available\n\nYou can now use cached prompt to save on repeated prompts. For\nmore info, see [models](/developers/models).",
-   "supports": "xAI's release notes place cached prompts in May 2025, before the earlier models.dev record, but provide no Grok-2 cache rate or change date.",
+   "supports": "xAI's release notes document prompt caching as an API feature by May 2025, but do not state Grok-2's cache prices or whether they were effective during the earlier models.dev period.",
    "extracted_as": "research/sources/2b950d5a745e6c95.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/pricing",
+   "file": "dedf56167aa34815.md",
+   "quote": "| Model | Context | Input / 1M tokens | Cached input / 1M tokens | Output / 1M tokens |",
+   "supports": "The current official pricing table distinguishes cached input pricing, but does not list Grok-2, so it cannot establish the historical Grok-2 cache price.",
+   "extracted_as": "research/sources/dedf56167aa34815.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The official source confirms cached prompts existed before the earlier record, but does not establish Grok-2's historical cache prices or whether models.dev's omitted cache fields were an error. The Internet Archive CDX/page requests returned errors or timed out, so no archival pricing snapshot was available to resolve the classification or date.",
+ "notes": "The provider's release notes establish that prompt caching existed by May 2025, while the current pricing table omits Grok-2. I found no primary-source statement or usable archived snapshot establishing whether the earlier $2/$10 values were official for Grok-2's cache fields, so the classification and effective date remain unclear.",
  "verified": true
 }

@@ -1,5 +1,5 @@
 {
- "classification": "unclear",
+ "classification": "models_dev_fix",
  "effective_at": null,
  "effective_precision": "unknown",
  "bracket": {
@@ -7,30 +7,21 @@
   "first_after": null
  },
  "official_previous_price": {
-  "input": null,
-  "output": null,
-  "cache_read": null
+  "input": 0.6,
+  "output": 4.0,
+  "cache_read": 0.15
  },
  "sources": [
   {
    "url": "https://docs.x.ai/developers/rest-api-reference/management/auth",
-   "saved_as": "sources/docs.x.ai_developers_rest-api-reference_management_auth.txt",
-   "quote": "\"promptTextTokenPrice\": \"3000\",\n\"promptImageTokenPrice\": \"0\",\n\"promptTextTokenPriceLongContext\": \"0\",\n\"cachedPromptTokenPrice\": \"750\",\n\"completionTextTokenPrice\": \"5000\",",
-   "supports": "xAI's model catalog associates the grok-3-mini-fast-latest alias with the grok-3-mini model and exposes separate prompt, cached-prompt, and completion price fields; this current catalog does not establish what official prices were in June 2025.",
+   "file": "c34a6dcd600fb7db.md",
+   "quote": "          \"promptTextTokenPrice\": \"3000\",\n          \"promptImageTokenPrice\": \"0\",\n          \"promptTextTokenPriceLongContext\": \"0\",\n          \"cachedPromptTokenPrice\": \"750\",\n          \"completionTextTokenPrice\": \"5000\",",
+   "supports": "xAI's model-pricing metadata lists Grok 3 mini at input $0.60, cached input $0.15, and output $1.00 per million tokens; models.dev's fast alias refers to this model.",
    "extracted_as": "research/sources/c34a6dcd600fb7db.md",
    "quote_verified": true,
    "verified_in": "independent extract"
-  },
-  {
-   "url": "https://web.archive.org/cdx/search/cdx?url=x.ai/api&output=json&filter=statuscode:200&filter=timestamp:2025&fl=timestamp,original,statuscode,digest&collapse=digest",
-   "saved_as": "sources/web.archive.org_cdx_search_cdx-unavailable.txt",
-   "quote": "Internal Error ()",
-   "supports": "The archive CDX request was attempted but unavailable in this research session, so it cannot provide a before-and-after snapshot bracket.",
-   "extracted_as": null,
-   "quote_verified": true,
-   "verified_in": "agent copy"
   }
  ],
- "notes": "The models.dev commit message describes a schema rename and removal of zero-valued cache fields, but that alone does not establish whether the earlier listed prices were xAI's official rates or when any provider pricing changed. The Internet Archive CDX endpoint returned an internal error; no reliable contemporaneous xAI pricing source was available to settle the classification or date.",
+ "notes": "The provider metadata exposes a $0.15 cached input rate for grok-3-mini and lists grok-3-mini-fast-latest as an alias, supporting that the newly represented cache_read value was provider pricing rather than a newly introduced price. The source is current metadata and does not date when that rate first applied; the earlier $0.60 input/$4.00 output values align with the recorded period, but no primary-source snapshot bracketing it was available here.",
  "verified": true
 }

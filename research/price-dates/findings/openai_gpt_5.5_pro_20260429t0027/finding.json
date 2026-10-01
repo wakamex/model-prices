@@ -1,5 +1,5 @@
 {
- "classification": "unclear",
+ "classification": "models_dev_fix",
  "effective_at": null,
  "effective_precision": "unknown",
  "bracket": {
@@ -7,30 +7,30 @@
   "first_after": null
  },
  "official_previous_price": {
-  "input": null,
-  "output": null,
+  "input": 30.0,
+  "output": 180.0,
   "cache_read": null
  },
  "sources": [
   {
-   "url": "https://developers.openai.com/api/docs/models/gpt-5.5-pro.md",
-   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-5.5-pro.md",
-   "quote": "| Input | $30 | 1M tokens |\n| Output | $180 | 1M tokens |",
-   "supports": "OpenAI currently documents the model\u2019s standard input and output rates as $30 and $180 per million tokens.",
-   "extracted_as": "research/sources/f4193889b065983a.md",
+   "url": "https://developers.openai.com/api/docs/models/gpt-5.5-pro",
+   "file": "0b8dbd2e299afeb3.md",
+   "quote": "| Metric | Price | Unit |\n| --- | ---: | --- |\n| Input | $30 | 1M tokens |\n| Output | $180 | 1M tokens |\n\n- GPT-5.5 Pro does not offer a cached input discount.",
+   "supports": "OpenAI's official GPT-5.5 Pro page lists the same $30 input and $180 output base prices, with no cached input discount.",
+   "extracted_as": "research/sources/0b8dbd2e299afeb3.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
    "url": "https://developers.openai.com/api/docs/pricing.md",
-   "saved_as": "sources/developers.openai.com_api_docs_pricing.md",
-   "quote": "| gpt-5.5-pro (<272K context length) | $30.00 | - | - | $180.00 | $60.00 | - | - | $270.00 |",
-   "supports": "OpenAI currently documents $30/$180 for shorter contexts and $60/$270 for long contexts, with a 272K context threshold.",
+   "file": "6d28d1d0210a5ba7.md",
+   "quote": "| Model | Short context input | Short context cached input | Short context cache writes | Short context output | Long context input | Long context cached input | Long context cache writes | Long context output |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| gpt-5.5-pro (<272K context length) | $30.00 | - | - | $180.00 | $60.00 | - | - | $270.00 |",
+   "supports": "OpenAI publishes both the base and higher long-context price for GPT-5.5 Pro; the long-context rate is tied to context length, demonstrating tiered pricing rather than a general price change.",
    "extracted_as": "research/sources/6d28d1d0210a5ba7.md",
-   "quote_verified": true,
-   "verified_in": "independent extract"
+   "quote_verified": false,
+   "verified_in": null
   }
  ],
- "notes": "The OpenAI sources fetched confirm that both price pairs are official now, but do not date the introduction of long-context pricing; the current threshold is 272K, not models.dev\u2019s 200K. The OpenAI launch-page fetch returned HTTP 403 and the Internet Archive CDX request returned HTTP 503, so the available evidence cannot determine whether the earlier models.dev entry was historically complete or when the tier began.",
- "verified": true
+ "notes": "The evidence indicates the $30/$180 rates were the official base rates; the later-added higher tier reflects omitted long-context pricing. OpenAI's current documentation sets its threshold at 272K context length, not the 200,000-token cutoff in the models.dev record, and the sources do not establish when ZenMux reflected that tier.",
+ "verified": false
 }

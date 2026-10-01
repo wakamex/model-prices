@@ -13,24 +13,15 @@
  },
  "sources": [
   {
-   "url": "https://docs.x.ai/developers/release-notes",
-   "file": "sources/2b950d5a745e6c95.md",
-   "quote": "Our latest flagship `Grok 3` models are now generally available via\nthe API. For more info, see [models](/developers/models).",
-   "supports": "xAI release notes place general API availability of Grok 3 models in April 2025, but give no price or price-effective date.",
-   "extracted_as": "research/sources/2b950d5a745e6c95.md",
-   "quote_verified": true,
-   "verified_in": "independent extract"
-  },
-  {
-   "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing",
-   "file": "sources/e56927861559295b.md",
-   "quote": "Cached tokens are billed at the **cached prompt token price**, which is substantially lower than the regular prompt token price. The exact rates vary by model \u2014 check the [Pricing](/developers/pricing) page for current prices.",
-   "supports": "xAI documents reduced billing for cached prompt tokens, but does not state that Grok 3 mini had no separately-priced cache writes during the earlier period.",
-   "extracted_as": "research/sources/e56927861559295b.md",
+   "url": "https://web.archive.org/web/20250911090812/https://docs.x.ai/docs/models",
+   "file": "16fab1bf9a0a9e72.md",
+   "quote": "For details on the pricing, please refer to the pricing table above, or on [xAI Console](https://web.archive.org/web/20250911090812/https://console.x.ai/).",
+   "supports": "xAI's archived documentation points to a pricing table or console, but the extracted page does not provide the rates needed to determine whether the earlier models.dev price was official.",
+   "extracted_as": "research/sources/16fab1bf9a0a9e72.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The available provider documentation establishes Grok 3 API availability and describes cached-token pricing generally, but provides no historical Grok 3 mini rates and does not establish whether the earlier cache_write value was ever official. The Internet Archive CDX/snapshot request was unavailable (503/429), so there is no provider snapshot pair to bracket a change; classification and effective date remain unclear.",
+ "notes": "I could not determine whether this was a provider price change or a models.dev correction, or establish an effective date. Wayback CDX listed x.ai/api captures from 2025-06-11 and 2025-09-16, but extraction failed (connection refusal/429); the accessible September documentation does not include its referenced pricing table.",
  "verified": true
 }

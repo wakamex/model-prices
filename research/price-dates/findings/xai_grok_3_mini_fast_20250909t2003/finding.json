@@ -13,24 +13,24 @@
  },
  "sources": [
   {
-   "url": "https://docs.x.ai/developers/pricing",
-   "file": "dedf56167aa34815.md",
-   "quote": "| Model | Context | Input / 1M tokens | Cached input / 1M tokens | Output / 1M tokens |",
-   "supports": "Current xAI pricing distinguishes cached input from output; it has no cache-write price column.",
-   "extracted_as": "research/sources/dedf56167aa34815.md",
+   "url": "https://x.ai/news/grok-3",
+   "file": "sources/9e8c6430d83420da.md",
+   "quote": "Today, we are announcing two beta reasoning models, Grok 3 (Think) and Grok 3 mini (Think).",
+   "supports": "xAI identifies Grok 3 mini as a reasoning model; this does not establish a cache-write price.",
+   "extracted_as": "research/sources/9e8c6430d83420da.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
-   "url": "https://docs.x.ai/developers/release-notes",
-   "file": "2b950d5a745e6c95.md",
-   "quote": "### Cached prompt is now available\n\nYou can now use cached prompt to save on repeated prompts. For\nmore info, see [models](/developers/models).",
-   "supports": "xAI announced cached prompts in May 2025, but this passage does not state Grok 3 Mini Fast's price.",
-   "extracted_as": "research/sources/2b950d5a745e6c95.md",
+   "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing",
+   "file": "sources/e56927861559295b.md",
+   "quote": "| Reasoning tokens | Full completion token price |",
+   "supports": "xAI's available prompt-caching documentation says reasoning tokens use completion pricing, but gives no historical cache-write rate or effective date for the recorded change.",
+   "extracted_as": "research/sources/e56927861559295b.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The primary sources retrieved establish that xAI prices cached input, but do not establish Grok 3 Mini Fast's historical rates or whether the earlier $4 cache_write value was ever official. Internet Archive requests for the needed 2025 pricing snapshots returned 429 (including a redirected archive request), so no effective date or classification can be supported.",
+ "notes": "The available primary-source material confirms Grok 3 Mini's reasoning nature but does not determine whether $4 cache_write was ever an official rate or when it changed. The Internet Archive CDX request for historical xAI pricing returned HTTP 503; no effective date or official earlier price can be established from the accessible sources.",
  "verified": true
 }

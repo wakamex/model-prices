@@ -16,21 +16,12 @@
    "url": "https://developers.openai.com/api/docs/models/o1-mini",
    "file": "661d5c52a1260254.md",
    "quote": "| Input | $1.1 | 1M tokens |\n| Cached input | $0.55 | 1M tokens |\n| Output | $4.4 | 1M tokens |",
-   "supports": "OpenAI's currently documented o1-mini pricing is $1.10 input, $0.55 cached input, and $4.40 output per million tokens.",
+   "supports": "OpenAI currently lists the lower rates for o1-mini, but this current page does not establish when they took effect or the historical rate.",
    "extracted_as": "research/sources/661d5c52a1260254.md",
-   "quote_verified": true,
-   "verified_in": "independent extract"
-  },
-  {
-   "url": "https://developers.openai.com/api/docs/models/o3-mini",
-   "file": "0333f463c1e6b22b.md",
-   "quote": "o3-mini is our newest small reasoning model, providing high intelligence at the same cost and latency targets of o1-mini.",
-   "supports": "OpenAI documents o3-mini at the same cost and latency targets as o1-mini, consistent with the lower rate being official by o3-mini's 2025-01-31 snapshot.",
-   "extracted_as": "research/sources/0333f463c1e6b22b.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The available official documentation confirms the lower o1-mini rate now and ties that cost target to o3-mini (snapshot 2025-01-31), but neither source explicitly states o1-mini's historical rate or when it changed. Internet Archive pricing snapshots could not be retrieved (429), and OpenAI's announcement page extraction was blocked (403), so the classification and any earlier official price remain unresolved.",
+ "notes": "The provider page currently shows $1.10/$4.40, but does not date the rate change. The attempted Internet Archive pricing-page extraction was rate limited (429), and the OpenAI launch announcement could not be extracted (403), so available quotable primary evidence does not decide whether models.dev corrected an error or recorded a genuine price change.",
  "verified": true
 }

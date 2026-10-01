@@ -15,8 +15,8 @@
   {
    "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-coder-30b-a3b-instruct",
    "file": "1806cc86b6b3f9f5.md",
-   "quote": "<table><thead><tr><th>Billing Item</th><th>Price (USD)</th><th>Unit</th></tr></thead><tbody><tr><td><p>Input</p></td><td><p>0.45</p></td><td><p>Per 1M tokens</p></td></tr><tr><td><p>Output</p></td><td><p>2.25</p></td><td><p>Per 1M tokens</p></td></tr></tbody></table>",
-   "supports": "Alibaba Cloud currently lists the International <=32k input/output rates as $0.45/$2.25 per million tokens.",
+   "quote": "<tr><td><p>Input</p></td><td><p>0.45</p></td><td><p>Per 1M tokens</p></td></tr><tr><td><p>Output</p></td><td><p>2.25</p></td><td><p>Per 1M tokens</p></td></tr>",
+   "supports": "Current official Singapore pricing has the base input/output rates matching the earlier flat models.dev price.",
    "extracted_as": "research/sources/1806cc86b6b3f9f5.md",
    "quote_verified": true,
    "verified_in": "independent extract"
@@ -24,8 +24,8 @@
   {
    "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-coder-30b-a3b-instruct",
    "file": "1806cc86b6b3f9f5.md",
-   "quote": "<table><thead><tr><th>Billing Item</th><th>Price (USD)</th><th>Unit</th></tr></thead><tbody><tr><td><p>Input</p></td><td><p>0.75</p></td><td><p>Per 1M tokens</p></td></tr><tr><td><p>Output</p></td><td><p>3.75</p></td><td><p>Per 1M tokens</p></td></tr></tbody></table>",
-   "supports": "Alibaba Cloud currently lists $0.75/$3.75 for the International 32k\u2013128k input tier.",
+   "quote": "<tr><td><p>Input</p></td><td><p>0.75</p></td><td><p>Per 1M tokens</p></td></tr><tr><td><p>Output</p></td><td><p>3.75</p></td><td><p>Per 1M tokens</p></td></tr>",
+   "supports": "Current official Singapore pricing lists the first higher-context tier at the exact rates models.dev later added.",
    "extracted_as": "research/sources/1806cc86b6b3f9f5.md",
    "quote_verified": true,
    "verified_in": "independent extract"
@@ -33,13 +33,13 @@
   {
    "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-coder-30b-a3b-instruct",
    "file": "1806cc86b6b3f9f5.md",
-   "quote": "<table><thead><tr><th>Billing Item</th><th>Price (USD)</th><th>Unit</th></tr></thead><tbody><tr><td><p>Input</p></td><td><p>1.2</p></td><td><p>Per 1M tokens</p></td></tr><tr><td><p>Output</p></td><td><p>6</p></td><td><p>Per 1M tokens</p></td></tr></tbody></table>",
-   "supports": "Alibaba Cloud currently lists $1.20/$6.00 for the International 128k\u2013256k input tier.",
+   "quote": "<tr><td><p>Input</p></td><td><p>1.2</p></td><td><p>Per 1M tokens</p></td></tr><tr><td><p>Output</p></td><td><p>6</p></td><td><p>Per 1M tokens</p></td></tr>",
+   "supports": "Current official Singapore pricing lists the highest context tier at the exact rates models.dev later added.",
    "extracted_as": "research/sources/1806cc86b6b3f9f5.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The provider\u2019s current page confirms the reported tier schedule, but it does not date when the tiers began. The accessible archive search did not provide a 2025 before/after snapshot pair, so the evidence cannot determine whether the earlier flat entry was a provider price or a models.dev omission; no effective date is assigned.",
+ "notes": "The current Alibaba page confirms all three Singapore tier prices, but does not date when the tiers began. The Internet Archive CDX query for the model page returned no snapshots, so the earlier flat price cannot be confirmed or disproved for the earlier period; effective date and prior official price remain unknown.",
  "verified": true
 }
