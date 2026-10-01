@@ -2,8 +2,7 @@ name: Release eligibility
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 permissions:
   contents: read

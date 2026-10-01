@@ -24,6 +24,7 @@ import argparse
 from datetime import datetime, timezone
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import shutil
@@ -31,7 +32,8 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parent
-EXTRACT = Path("/code/scripts/extract_web.py")
+# extract_web.py from https://github.com/wakamex/scripts, located by the EXTRACT_WEB variable.
+EXTRACT = Path(os.environ.get("EXTRACT_WEB", "extract_web.py")).resolve()
 # The sealed runs have the system Python but neither uv nor the user's packages.
 EXTRACT_DEPS = ROOT / "price-dates" / "extract-deps"
 WORK = ROOT / "price-dates"

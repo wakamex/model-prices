@@ -1,3 +1,4 @@
+from importlib.metadata import version
 import json
 from pathlib import Path
 import subprocess
@@ -195,7 +196,7 @@ def test_module_entrypoint():
         [sys.executable, "-m", "llm_prices", "--version"], capture_output=True, text=True
     )
     assert result.returncode == 0
-    assert result.stdout.strip() == "0.1.0"
+    assert result.stdout.strip() == version("llm-prices")
 
 
 @pytest.mark.parametrize(

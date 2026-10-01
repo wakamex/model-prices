@@ -1,6 +1,8 @@
 # llm-prices
 
-LLM API prices as they were at any point in time. Pricing past usage at today's rates misstates it whenever a price changed: GPT-5.6 Sol cost $5/$30 per million input/output tokens until August 22, 2026, and $4/$20 after. This package answers "what did this request cost at API prices when it ran?"
+LLM API prices as they were at any point in time. Pricing past usage at today's rates misstates it whenever a price changed: GPT-5.6 Sol cost $5/$30 per million input/output tokens until August 21, 2026, and $4/$20 after. This package answers "what did this request cost at API prices when it ran?"
+
+Status: work in progress. Versions before 0.1 may change the data format and API without notice.
 
 ```python
 import llm_prices
@@ -111,4 +113,4 @@ uv run --locked pytest
 
 ## License
 
-MIT. Price data is derived from [models.dev](https://github.com/sst/models.dev), which is MIT licensed.
+The code and the corrections are MIT licensed. `src/llm_prices/data/prices.json` is derived from [models.dev](https://github.com/sst/models.dev), whose MIT license is in `src/llm_prices/data/LICENSE.models.dev`. The test fixture `tests/fixtures/genai-prices.json` is an excerpt of [genai-prices](https://github.com/pydantic/genai-prices), whose MIT license is in `tests/fixtures/LICENSE.genai-prices`.
