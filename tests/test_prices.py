@@ -316,6 +316,27 @@ class PriceTests(unittest.TestCase):
         finally:
             llm_prices._entry_times.cache_clear()
 
+    def test_aliases_take_the_corrections_of_their_model(self):
+        # claude-haiku-4-5 links to claude-haiku-4-5-20251001, which models.dev first
+        # listed at Sonnet's $3/$15 for 27 minutes.
+        alias = rates("claude-haiku-4-5", at="2025-10-15T17:30:00Z")
+        dated = rates("claude-haiku-4-5-20251001", at="2025-10-15T17:30:00Z")
+
+        self.assertEqual((alias.input, alias.output, alias.valid_from_basis),
+                         (dated.input, dated.output, "documented"))
+        boundaries = [when.isoformat() for when, _ in rates_between(
+            "claude-haiku-4-5", "2025-10-15T17:00:00Z", "2025-10-15T18:00:00Z")]
+        self.assertIn("2025-10-15T17:24:36+00:00", boundaries)
+
+    def test_modes_follow_corrections(self):
+        # Fast mode costs twice the standard rate, before and during the Sol correction.
+        corrected = rates("gpt-5.6-sol", at="2026-08-22T12:00:00Z", mode="fast")
+        recorded = rates("gpt-5.6-sol", at="2026-08-22T12:00:00Z", mode="fast", corrected=False)
+
+        self.assertEqual((corrected.input, corrected.output), (8.0, 40.0))
+        self.assertEqual((recorded.input, recorded.output), (10.0, 60.0))
+        self.assertIsNone(rates("gpt-5.6-sol", at="2026-08-22T12:00:00Z", mode="missing"))
+
     def test_breakdown_reports_the_tier_and_cost_by_token_type(self):
         found = rates("gpt-6-astra", at="2026-09-20")
         long = found.breakdown(input_tokens=10_000, cache_read_tokens=300_000, output_tokens=1_000)

@@ -278,15 +278,36 @@ def _correction(provider: str, model: str, at: datetime) -> Rates | None:
                 cache_read=item.get("cache_read"), cache_write=item.get("cache_write"),
                 tiers=_tiers(item.get("tiers")), valid_from_basis="documented",
             )
-    return None
+    # An alias without its own history at this time takes the corrections of the model it
+    # points to, just as it takes that model's price history.
+    link = _link(provider, model, at)
+    return _correction(provider, link, at) if link else None
+
+
+def _link(provider: str, model: str, at: datetime) -> str | None:
+    """The model an alias points to at `at`, when the alias has no price of its own then."""
+    link = _prices()["links"].get(provider, {}).get(model)
+    times = _entry_times(provider, model)
+    return link if link and (not times or at < times[0]) else None
+
+
+def _in_mode(corrected: Rates, standard: Rates, moded: Rates) -> Rates:
+    """Corrected rates in a mode, scaled by the mode's ratio to models.dev's standard rates."""
+    def scaled(field: str) -> float | None:
+        value, base, mode_value = (getattr(item, field) for item in (corrected, standard, moded))
+        if value is None or not base or mode_value is None:
+            return value
+        return value * mode_value / base
+    return replace(corrected, input=scaled("input"), output=scaled("output"),
+                   cache_read=scaled("cache_read"), cache_write=scaled("cache_write"), tiers=())
 
 
 def _history_rates(provider: str, model: str, at: datetime, mode: str | None) -> Rates | None:
     data = _prices()
     entries = data["providers"].get(provider, {}).get(model, [])
     times = _entry_times(provider, model)
-    link = data["links"].get(provider, {}).get(model)
-    if link and (not entries or at < times[0]):
+    link = _link(provider, model, at)
+    if link:
         return _history_rates(provider, link, at, mode)
     if not entries:
         return None
@@ -381,7 +402,13 @@ def rates(model: str, at: datetime | str | None = None, provider: str | None = N
     resolved, removed = details[:2], details[2]
     moment = _parse_time(at)
     listed = _parse_time(prices_at) if prices_at is not None else moment
-    found = _correction(*resolved, listed) if mode is None and corrected else None
+    found = _correction(*resolved, listed) if corrected else None
+    if found is not None and mode is not None:
+        # Corrections give standard rates; a mode keeps its models.dev ratio to them.
+        standard, moded = (_history_rates(*resolved, listed, name) for name in (None, mode))
+        found = _in_mode(found, standard, moded) if moded is not None and standard else None
+        if moded is None:
+            return None
     found = found or _history_rates(*resolved, listed, mode)
     if found is None:
         return None
@@ -396,7 +423,8 @@ def _change_times(provider: str, model: str, start: datetime, end: datetime) -> 
     link = _prices()["links"].get(provider, {}).get(model)
     if link:
         times |= set(_entry_times(provider, link))
-    for begin, until, _ in (*_corrections(provider, model), *_schedules(provider)):
+    linked = _corrections(provider, link) if link else ()
+    for begin, until, _ in (*_corrections(provider, model), *linked, *_schedules(provider)):
         times |= {begin} | ({until} if until else set())
     calendars = _config("schedules.toml").get("holidays", {})
     for _, _, schedule in _schedules(provider):
