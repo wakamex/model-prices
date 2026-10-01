@@ -129,6 +129,24 @@ def parse_zai(text: str, today: datetime) -> list[Observed]:
     return found
 
 
+def parse_xai(text: str, today: datetime) -> list[Observed]:
+    columns = {"Input / 1M tokens": "input", "Cached input / 1M tokens": "cache_read",
+               "Output / 1M tokens": "output"}
+    found = []
+    for headings, header, rows in _markdown_tables(text):
+        if headings.get(3) != "Text API Pricing" or header[0] != "Model":
+            continue
+        for row in rows:
+            model = re.sub(r"\s*\(.*\)", "", row[0]).strip()
+            tier = re.search(r"≥\s*([0-9]+)k prompt tokens", row[0])
+            for title, field in columns.items():
+                value = _price(row[header.index(title)])
+                if value is not None:
+                    found.append(Observed("xai", model, field, value,
+                                          above=int(tier.group(1)) * 1000 if tier else None))
+    return found
+
+
 _GOOGLE_DATE = r"([A-Z][a-z]+ [0-9]{1,2}, [0-9]{4})"
 
 
@@ -263,6 +281,7 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "deepseek": ("https://api-docs.deepseek.com/quick_start/pricing", parse_deepseek),
     "google": ("https://ai.google.dev/gemini-api/docs/pricing.md.txt", parse_google),
     "openai": ("https://developers.openai.com/api/docs/pricing.md", parse_openai),
+    "xai": ("https://docs.x.ai/developers/pricing.md", parse_xai),
     "zai": ("https://docs.z.ai/guides/overview/pricing.md", parse_zai),
 }
 

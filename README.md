@@ -51,7 +51,7 @@ Holiday calendars record the last date they cover, and `llm-prices check` fails 
 
 ## Official price checks
 
-`llm-prices check` fetches each supported provider's official pricing page, reads it with a parser written for that page's table layout, and compares every price with the rate llm-prices uses today. It covers Anthropic, DeepSeek, Google, OpenAI, and Z.ai. Each price is reported as:
+`llm-prices check` fetches each supported provider's official pricing page, reads it with a parser written for that page's table layout, and compares every price with the rate llm-prices uses today. It covers Anthropic, DeepSeek, Google, OpenAI, xAI, and Z.ai. Each price is reported as:
 
 - `ok`: models.dev and the official page agree.
 - `corrected`: models.dev differs, but a correction in `corrections.toml` supplies the official price.

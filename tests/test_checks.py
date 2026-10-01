@@ -15,6 +15,7 @@ PAGES = {
     "deepseek:zh": (FIXTURES / "deepseek-zh.html").read_text(),
     "google": (FIXTURES / "google.md").read_text(),
     "openai": (FIXTURES / "openai.md").read_text(),
+    "xai": (FIXTURES / "xai.md").read_text(),
     "zai": (FIXTURES / "zai.md").read_text(),
 }
 
@@ -35,6 +36,10 @@ def test_parsers_read_official_tables():
     assert ("gpt-5.4-mini", "input", 272_000, None) not in openai
 
     assert _prices("zai")[("GLM-5.3", "cache_read", None, None)] == 0.26
+
+    xai = _prices("xai")
+    assert xai[("grok-4.6", "input", None, None)] == 2
+    assert xai[("grok-4.6", "output", 200_000, None)] == 12
 
     google = _prices("google")
     assert google[("Gemini 3.8 Flash", "input", None, None)] == 0.75
