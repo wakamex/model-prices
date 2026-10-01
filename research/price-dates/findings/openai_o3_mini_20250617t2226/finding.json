@@ -1,0 +1,27 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 1.1,
+  "output": 4.4,
+  "cache_read": 0.55
+ },
+ "sources": [
+  {
+   "url": "https://developers.openai.com/api/docs/models/o3-mini",
+   "saved_as": "sources/openai-model-o3-mini.html",
+   "quote": "Text tokens Per 1M tokens \u2219 Batch API price Input $1.10 Cached input $0.55 Output $4.40",
+   "supports": "OpenAI currently publishes the same input, output, and cached input rates as in the models.dev record after the commit.",
+   "extracted_as": "research/sources/0333f463c1e6b22b.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The added cache_read field represents OpenAI's existing $0.55 cached-input rate, so the recorded change is a models.dev data correction rather than a provider price change. The fetched OpenAI model page gives the current rate but does not state when the cached-input price first took effect; no effective date is inferred.",
+ "verified": false
+}

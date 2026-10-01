@@ -1,0 +1,27 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/pricing?hl=en",
+   "saved_as": "sources/ai.google.dev_gemini-api_docs_pricing.html",
+   "quote": "<tr>\n      <td>Context caching price</td>\n      <td>Not available</td>\n      <td>$0.025 (text / image / video)<br>$0.05 (audio)<br>$1.00 / 1,000,000 tokens per hour (storage price)</td>\n    </tr>",
+   "supports": "Google's fetched pricing page lists context caching at $0.025 for text/image/video and a separate storage price of $1.00 per million tokens per hour. It does not establish when this pricing applied in the earlier period or how models.dev mapped the storage charge.",
+   "extracted_as": "research/sources/0dec03421ba15acd.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "The current Google pricing page shows a separate hourly storage charge alongside context caching, but does not establish the official price in the earlier period or whether models.dev's cache_write field represented that charge. The Internet Archive CDX endpoint was unavailable (HTTP 503), so no archived before/after snapshots could be checked; the classification and effective date remain unclear.",
+ "verified": true
+}

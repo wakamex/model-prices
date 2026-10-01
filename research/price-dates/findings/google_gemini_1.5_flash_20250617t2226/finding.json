@@ -1,0 +1,45 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 0.075,
+  "output": 0.3,
+  "cache_read": 0.01875
+ },
+ "sources": [
+  {
+   "url": "https://developers.googleblog.com/en/gemini-15-flash-updates-google-ai-studio-gemini-api/",
+   "saved_as": "sources/developers.googleblog.com_en_gemini-15-flash-updates-google-ai-studio-gemini-api.html",
+   "quote": "To make this model even more affordable, as of August 12, we\u2019re reducing the input price by 78% to $0.075/1 million tokens and the output price by 71% to $0.3/1 million tokens for prompts under 128K tokens (cascading the reductions across the >128K tokens tier as well as caching).",
+   "supports": "Google says the input/output rates took effect August 12, 2024 and explicitly states the reductions also cascaded to caching. This dates the pricing regime before the June 2025 models.dev record.",
+   "extracted_as": "research/sources/e2e1a79ce0bc6ea7.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://storage.googleapis.com/gweb-developer-goog-blog-assets/images/Gemma_BlogGraphs_01_202408808_v3.original.png",
+   "saved_as": "sources/storage.googleapis.com_gweb-developer-goog-blog-assets_images_Gemma_BlogGraphs_01_202408808_v3.original.png",
+   "quote": "<=128K tokens | $0.075 | $0.3 | $0.01875",
+   "supports": "Google\u2019s embedded pricing table gives the Gemini 1.5 Flash input, output, and caching prices per million tokens after the August 2024 reduction.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://developers.googleblog.com/en/new-features-for-the-gemini-api-and-google-ai-studio/",
+   "saved_as": "sources/developers.googleblog.com_en_new-features-for-the-gemini-api-and-google-ai-studio.html",
+   "quote": "To help developers reduce costs for tasks that use the same tokens across multiple prompts, we\u2019ve launched context caching in the Gemini API for both Gemini 1.5 Pro and 1.5 Flash.",
+   "supports": "This is a primary-source Google announcement published June 27, 2024; it also states that context caching launched for both Gemini 1.5 Pro and 1.5 Flash, establishing caching was available before the August price schedule.",
+   "extracted_as": "research/sources/2e43004a7914313a.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The cache_read addition recorded in June 2025 reflects an omitted field in models.dev, not a provider price change: Google\u2019s August 2024 pricing announcement applied the price reductions to caching, and its associated price table lists $0.01875 per million tokens. The Internet Archive CDX endpoint returned HTTP 503 during research, so no archived pricing-page snapshot was available; the official announcement and its embedded chart provide the evidence.",
+ "verified": false
+}

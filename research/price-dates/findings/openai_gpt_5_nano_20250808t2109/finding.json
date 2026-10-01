@@ -1,0 +1,27 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": 0.005
+ },
+ "sources": [
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-5-nano",
+   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-5-nano.html",
+   "quote": "Cached input $0.005",
+   "supports": "OpenAI's model documentation lists GPT-5 nano cached input at $0.005 per million tokens, rather than the $0.01 added in models.dev.",
+   "extracted_as": "research/sources/21fa25aca516d2ed.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "OpenAI's official model page lists cached input at $0.005 per million tokens, so the $0.01 value added in the recorded models.dev change is not the official price. The available official source does not date when that rate applied during the earlier period; no effective date is assigned.",
+ "verified": true
+}

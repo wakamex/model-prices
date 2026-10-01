@@ -1,0 +1,45 @@
+{
+ "classification": "price_change",
+ "effective_at": "2026-03-13",
+ "effective_precision": "day",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://claude.com/blog/1m-context-ga",
+   "saved_as": "sources/claude.com_blog_1m-context-ga.html",
+   "quote": "Date March 13, 2026",
+   "supports": "Anthropic dates the announcement to March 13, 2026.",
+   "extracted_as": "research/sources/2b3a2d5a5ce5d666.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://claude.com/blog/1m-context-ga",
+   "saved_as": "sources/claude.com_blog_1m-context-ga.html",
+   "quote": "Claude Opus 4.6 and Sonnet 4.6 now include the full 1M context window at standard pricing on the Claude Platform. Standard pricing applies across the full window \u2014 $5/$25 per million tokens for Opus 4.6 and $3/$15 for Sonnet 4.6.",
+   "supports": "Anthropic announced the standard per-token pricing across the full context window, including Opus 4.6.",
+   "extracted_as": "research/sources/2b3a2d5a5ce5d666.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.anthropic.com/news/claude-opus-4-6",
+   "saved_as": "sources/www.anthropic.com_news_claude-opus-4-6.html",
+   "quote": "Premium pricing applies for prompts exceeding 200k tokens ($10/$37.50 per million input/output tokens), available only on the Claude Platform.",
+   "supports": "Anthropic's Opus 4.6 launch announcement documents the earlier official premium rate above 200K tokens.",
+   "extracted_as": "research/sources/6c20810f6d90adf9.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "This was a provider price change: Anthropic's launch announcement specified premium pricing above 200K tokens, and its March 13, 2026 announcement says standard pricing now applies across the full 1M window. The source states the effective day but no time; the Internet Archive CDX requests returned HTTP 503, so no snapshot bracket was established.",
+ "verified": false
+}

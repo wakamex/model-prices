@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 0.3,
+  "output": 0.5,
+  "cache_read": 0.075
+ },
+ "sources": [
+  {
+   "url": "https://docs.x.ai/developers/release-notes",
+   "saved_as": "sources/docs.x.ai_developers_release-notes.txt",
+   "quote": "May 29\n\n### Cached prompt is now available\n\nYou can now use cached prompt to save on repeated prompts. For more info, see models.",
+   "supports": "xAI announced prompt caching on May 29, before the earlier models.dev record began on June 10, so adding cache pricing on June 17 is consistent with a catalog correction rather than a newly effective cache feature.",
+   "extracted_as": "research/sources/2b950d5a745e6c95.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://docs.x.ai/developers/rest-api-reference/management/auth",
+   "saved_as": "sources/docs.x.ai_developers_rest-api-reference_management_auth.txt",
+   "quote": "\"name\": \"grok-3-mini\",\n\"version\": \"1.0\",\n\"inputModalities\": [\n  \"TEXT\"\n],\n\"outputModalities\": [\n  \"TEXT\"\n],\n\"promptTextTokenPrice\": \"3000\",\n\"promptImageTokenPrice\": \"0\",\n\"promptTextTokenPriceLongContext\": \"0\",\n\"cachedPromptTokenPrice\": \"750\",\n\"completionTextTokenPrice\": \"5000\",\n\"completionTokenPriceLongContext\": \"0\",\n\"searchPrice\": \"2500\",",
+   "supports": "xAI's official model listing gives Grok 3 mini input, cached prompt, and completion token price values, corresponding to $0.30, $0.075, and $0.50 per million tokens.",
+   "extracted_as": "research/sources/c34a6dcd600fb7db.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "Classified as models_dev_fix: xAI announced prompt caching on May 29, before the dataset's June 10 earlier record, and the provider's model listing shows a nonzero cached prompt price. No provider source found states when this exact cache rate took effect; the Wayback CDX/archive was inaccessible in this environment, so effective_at and the bracket are unknown. The historical cache rate is inferred to have been $0.075 from the provider's current model listing, not established by a dated snapshot.",
+ "verified": true
+}

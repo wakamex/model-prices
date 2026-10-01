@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 3.0,
+  "output": 15.0,
+  "cache_read": 0.75
+ },
+ "sources": [
+  {
+   "url": "https://web.archive.org/web/20250628113750/https://docs.x.ai/docs/models",
+   "saved_as": "sources/web.archive.org-web-20250628113750-docs.x.ai-docs-models.html",
+   "quote": "\\\"name\\\":\\\"grok-3\\\",\\\"version\\\":\\\"\\\",\\\"inputModalities\\\":[\\\"TEXT\\\"],\\\"outputModalities\\\":[\\\"TEXT\\\"],\\\"maxPromptLength\\\":131072,\\\"promptTextTokenPrice\\\":\\\"30000\\\",\\\"cachedPromptTextTokenPrice\\\":\\\"7500\\\",\\\"completionTextTokenPrice\\\":\\\"150000\\\",\\\"aliases\\\":[\\\"grok-3-latest\\\"]",
+   "supports": "xAI's archived model catalog lists Grok 3 input at $3/M tokens, cached input at $0.75/M, and completion at $15/M during the earlier period; it lists no distinct cache-write price.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://web.archive.org/web/20250911090812/https://docs.x.ai/docs/models",
+   "saved_as": "sources/web.archive.org-web-20250911090812-docs.x.ai-docs-models.html",
+   "quote": "\\\"aliases\\\":[\\\"grok-3-latest\\\",\\\"grok-3-beta\\\"],\\\"name\\\":\\\"grok-3\\\",\\\"version\\\":\\\"1.0\\\",\\\"promptTextTokenPrice\\\":\\\"30000\\\",\\\"promptImageTokenPrice\\\":0,\\\"completionTextTokenPrice\\\":\\\"150000\\\",\\\"rps\\\":\\\"10\\\",\\\"cluster\\\":\\\"us-east-1\\\",\\\"maxPromptLength\\\":131072,\\\"cachedPromptTokenPrice\\\":\\\"7500\\\"",
+   "supports": "The first archived xAI catalog capture after the recorded models.dev edit still lists Grok 3 at the same input, completion, and cached-token rates, with no cache-write rate.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "The provider's archived catalog shows unchanged Grok 3 rates before and shortly after the models.dev edit, including cached input at $0.75/M and no separate cache-write price. No effective date for a provider price change is stated or bracketed; the evidence supports treating the removed $15/M cache_write field as a models.dev correction.",
+ "verified": true
+}

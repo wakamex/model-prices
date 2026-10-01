@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 3.0,
+  "output": 15.0,
+  "cache_read": 0.75
+ },
+ "sources": [
+  {
+   "url": "https://docs.x.ai/developers/release-notes",
+   "saved_as": "sources/docs.x.ai_developers_release-notes.html",
+   "quote": "May 2025\nMay 29\nCached prompt is now available\nYou can now use cached prompt to save on repeated prompts.",
+   "supports": "xAI announced cached prompts on May 29, 2025, before models.dev's June 10 start for this price record.",
+   "extracted_as": "research/sources/2b950d5a745e6c95.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://docs.x.ai/developers/rest-api-reference/management/auth",
+   "saved_as": "sources/docs.x.ai_developers_rest-api-reference_management_auth.html",
+   "quote": "\"promptTextTokenPrice\"\n:\n\"30000\"\n,\n\"promptImageTokenPrice\"\n:\n\"0\"\n,\n\"promptTextTokenPriceLongContext\"\n:\n\"0\"\n,\n\"cachedPromptTokenPrice\"\n:\n\"7500\"\n,\n\"completionTextTokenPrice\"\n:\n\"150000\"",
+   "supports": "xAI's current model metadata assigns Grok 3 a cached prompt rate alongside its input and completion rates; the rate corresponds to $0.75 per million cached input tokens.",
+   "extracted_as": "research/sources/c34a6dcd600fb7db.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The June 17 models.dev commit describes a schema rename and removal of zero-valued cache fields, rather than a provider price change. xAI had already announced cached prompts by May 29; its current Grok 3 metadata shows a nonzero cached prompt rate, consistent with a catalog omission. Internet Archive CDX did not respond during this research, so no historical snapshot bracket or exact provider effective date could be established.",
+ "verified": false
+}

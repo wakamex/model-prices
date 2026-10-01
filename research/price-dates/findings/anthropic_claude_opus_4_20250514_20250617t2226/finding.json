@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+   "saved_as": "sources/docs.anthropic.com_en_docs_about-claude_pricing.txt",
+   "quote": "Claude Opus 4 \ue0f0 $15 / MTok $75 / MTok $18.75 / MTok $30 / MTok $1.50 / MTok",
+   "supports": "Anthropic's pricing table lists Opus 4 input, five-minute and one-hour cache-write, cache-hit, and output rates. It shows the cache read/hit rate is $1.50/MTok, while five-minute writes are $18.75/MTok.",
+   "extracted_as": "research/sources/5770757567c6c228.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://www.anthropic.com/news/claude-4",
+   "saved_as": "sources/anthropic.com_news_claude-4.txt",
+   "quote": "Introducing Claude 4 May 22, 2025",
+   "supports": "Anthropic dates its Claude 4 announcement to May 22, 2025.",
+   "extracted_as": "research/sources/4ec03078d3169fe5.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "Anthropic's currently fetched pricing page distinguishes cache hits from two cache-write durations, but it does not establish that these rates were in force on June 5, 2025. The Internet Archive CDX requests for historical pricing snapshots returned HTTP 503, so there is no source here that brackets the June 17 models.dev edit or settles whether the earlier omission was a models.dev error.",
+ "verified": true
+}

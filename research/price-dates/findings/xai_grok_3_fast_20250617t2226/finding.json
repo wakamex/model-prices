@@ -1,0 +1,45 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://docs.x.ai/developers/rest-api-reference/management/auth",
+   "saved_as": "sources/docs.x.ai_developers_rest-api-reference_management_auth.html",
+   "quote": "\"grok-3-fast\"",
+   "supports": "Current xAI API reference lists grok-3-fast as an alias of its grok-3 model; it does not establish the model's June 2025 price.",
+   "extracted_as": "research/sources/c34a6dcd600fb7db.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://web.archive.org/web/20250612025539/https://x.ai/api",
+   "saved_as": "sources/web.archive.org_web_20250612025539_x.ai_api.html",
+   "quote": "Access Grok 3 API",
+   "supports": "An archived xAI API page exists before the models.dev record, but the saved page contains no pricing table for this model.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://docs.x.ai/developers/models/grok-3-fast",
+   "saved_as": "sources/docs.x.ai_developers_models_grok-3-fast.html",
+   "quote": "cachedPromptTokenPrice\":\"7500\"",
+   "supports": "Current xAI model catalog includes a cached prompt token price field for another model entry; the requested historical cache price for Grok 3 Fast is not established.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The available primary-source material does not determine whether the June 17, 2025 models.dev record reflects a provider price change or a correction to its own data. The Internet Archive CDX request for xAI's pricing documentation returned HTTP 503, and surviving xAI page captures checked here do not show the requested price row; no effective date or official prior cache price can be stated.",
+ "verified": false
+}

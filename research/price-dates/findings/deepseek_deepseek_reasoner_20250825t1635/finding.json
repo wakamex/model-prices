@@ -1,0 +1,54 @@
+{
+ "classification": "price_change",
+ "effective_at": "2025-09-05T16:00:00Z",
+ "effective_precision": "exact",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 0.55,
+  "output": 2.19,
+  "cache_read": 0.14
+ },
+ "sources": [
+  {
+   "url": "https://api-docs.deepseek.com/news/news250120/",
+   "saved_as": "sources/api-docs.deepseek.com_news_news250120.html",
+   "quote": "\ud83d\udcb0 $0.14 / million input tokens (cache hit)",
+   "supports": "DeepSeek's official January 2025 R1 release identifies cache-hit input pricing for deepseek-reasoner.",
+   "extracted_as": "research/sources/f75bec4ecc98ee0e.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://api-docs.deepseek.com/news/news250120/",
+   "saved_as": "sources/api-docs.deepseek.com_news_news250120.html",
+   "quote": "\ud83d\udcb0 $0.55 / million input tokens (cache miss)",
+   "supports": "DeepSeek's official January 2025 R1 release identifies cache-miss input pricing for deepseek-reasoner.",
+   "extracted_as": "research/sources/f75bec4ecc98ee0e.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://api-docs.deepseek.com/news/news250120/",
+   "saved_as": "sources/api-docs.deepseek.com_news_news250120.html",
+   "quote": "\ud83d\udcb0 $2.19 / million output tokens",
+   "supports": "DeepSeek's official January 2025 R1 release identifies output pricing for deepseek-reasoner.",
+   "extracted_as": "research/sources/f75bec4ecc98ee0e.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://api-docs.deepseek.com/news/news250821/",
+   "saved_as": "sources/api-docs.deepseek.com_news_news250821.html",
+   "quote": "\ud83d\udd39 New pricing starts & off-peak discounts end at Sep 5th, 2025, 16:00 (UTC Time) \ud83d\udd39 Until then, APIs follow current pricing",
+   "supports": "DeepSeek states the new pricing start instant and that its then-current pricing remained in effect until that instant.",
+   "extracted_as": "research/sources/11d864679913c531.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "DeepSeek's own R1 release documents the earlier deepseek-reasoner prices, and its V3.1 announcement explicitly schedules new pricing for 2025-09-05 16:00 UTC, so this is a provider price change rather than a models.dev correction. The Internet Archive CDX endpoint returned its temporary-offline page, so no archived pricing-table snapshot was available to verify the after-price values or construct a snapshot bracket.",
+ "verified": false
+}

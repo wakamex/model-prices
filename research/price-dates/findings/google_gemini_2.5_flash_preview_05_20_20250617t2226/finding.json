@@ -1,0 +1,54 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/changelog",
+   "saved_as": "sources/ai.google.dev-gemini-api-docs-changelog.html",
+   "quote": "Released `gemini-2.5-flash-preview-05-20`, a Gemini preview model optimized for price-performance and adaptive thinking.",
+   "supports": "Google's changelog identifies the dated preview model as released on May 20, 2025.",
+   "extracted_as": "research/sources/a24fd97eb3d00730.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://developers.googleblog.com/gemini-2-5-thinking-model-updates/",
+   "saved_as": "sources/developers.googleblog.com-gemini-2-5-thinking-model-updates.html",
+   "quote": "$0.30 / 1M input tokens (*up from $0.15 input)",
+   "supports": "Google later described a Flash pricing update and confirmed the prior input price was $0.15, but this passage does not address the cached input rate or establish when the dated preview's price changed.",
+   "extracted_as": "research/sources/36dc945eafa03b9a.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://developers.googleblog.com/gemini-2-5-thinking-model-updates/",
+   "saved_as": "sources/developers.googleblog.com-gemini-2-5-thinking-model-updates.html",
+   "quote": "If you are using the Gemini 2.5 Flash Preview 04-17 , the existing preview pricing will remain in effect until its planned deprecation on July 15, 2025, at which point that model endpoint will be turned off.",
+   "supports": "Google states that preview pricing persisted for the 04-17 endpoint until July 15, 2025; it does not explicitly cover the specific 05-20 endpoint or cached input pricing.",
+   "extracted_as": "research/sources/36dc945eafa03b9a.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "saved_as": "sources/ai.google.dev-gemini-api-docs-pricing.html",
+   "quote": "Context caching price  | Not available  | $0.03 (text / image / video)",
+   "supports": "The current pricing page lists a cached input price for stable Gemini 2.5 Flash, but this is not evidence of the historical 05-20 preview price.",
+   "extracted_as": "research/sources/b88c4950bbf39196.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The official sources saved here do not decide whether the cache_read field appearing in models.dev represented a provider price change or a catalog correction, and they do not state the dated preview's official cache_read price during the earlier period. The announced July 15 date refers specifically to the 04-17 endpoint, not an explicitly documented price change for the 05-20 endpoint. The requested Wayback CDX listing was unavailable (HTTP 503), so no archived pricing snapshots could be checked.",
+ "verified": false
+}

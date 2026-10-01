@@ -1,0 +1,27 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 75.0,
+  "output": 150.0,
+  "cache_read": 37.5
+ },
+ "sources": [
+  {
+   "url": "https://community.openai.com/t/gpt-4-5-is-live-in-the-api/1131571.json",
+   "saved_as": "sources/openai-community-gpt45-announcement.json",
+   "quote": "A typical query costs on average $68 / 1M tokens, with cache discounts ($75 / 1M input tokens, $37.5 /1M cached input, $150 / 1M output). Batch jobs are discounted 50% and cached input is discounted 50%.",
+   "supports": "OpenAI's GPT-4.5 launch announcement states the regular input, cached input, and output rates, showing that the $37.50 cached-input rate existed at launch.",
+   "extracted_as": "research/sources/50e6bd555ac00060.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "OpenAI stated the $37.50 per million cached-input rate in its GPT-4.5 launch announcement on 2025-02-28, before models.dev first recorded this price on 2025-06-11. The recorded change is therefore a models.dev fix; no provider price change date applies.",
+ "verified": true
+}

@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 0.15,
+  "output": 0.6,
+  "cache_read": 0.075
+ },
+ "sources": [
+  {
+   "url": "https://openai.com/index/api-prompt-caching/",
+   "saved_as": "sources/openai.com_index_api-prompt-caching.html",
+   "quote": "gpt-4o-mini-2024-07-18  | $0.15  | $0.075  | $0.60",
+   "supports": "OpenAI's October 1, 2024 prompt caching announcement lists the GPT-4o mini uncached input, cached input, and output prices as $0.15, $0.075, and $0.60 per million tokens.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-4o-mini",
+   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-4o-mini.html",
+   "quote": "Cached input$0.075",
+   "supports": "OpenAI's current model documentation continues to list the cached input price as $0.075.",
+   "extracted_as": "research/sources/0bde2382d7f5584d.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The provider's own October 2024 pricing table already gives GPT-4o mini cached input at $0.075, the same rate models.dev later adopted. This is a models.dev correction; the exact correction date is not established by the provider sources. OpenAI's announcement page was blocked by a Cloudflare challenge when saved with curl, but its page text was available through web search; the saved HTML response is the challenge page.",
+ "verified": false
+}

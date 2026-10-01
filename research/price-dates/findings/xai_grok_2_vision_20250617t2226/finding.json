@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://x.ai/news/grok-1212",
+   "saved_as": "sources/x.ai-news-grok-1212.html",
+   "quote": "As a result of our efficiency improvements, we are also lowering the price of these models to $2 / 1M input tokens and $10 / 1M output tokens.",
+   "supports": "xAI's announcement gives the standard input and output price for Grok 2 Vision models; it does not state cached-token pricing or an effective date.",
+   "extracted_as": "research/sources/e0c44d30e87131f4.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/release-notes",
+   "saved_as": "sources/docs.x.ai-developers-release-notes.html",
+   "quote": "Cached prompt is now available",
+   "supports": "xAI release notes identify cached prompts as an API capability, but this passage does not establish Grok 2 Vision cache prices or when a particular rate applied.",
+   "extracted_as": "research/sources/2b950d5a745e6c95.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The provider's announcement supports the unchanged $2/$10 standard rates, but available primary-source material does not establish whether the newly recorded cache_read/cache_write values were official Grok 2 Vision rates throughout the earlier period or became effective later. The Internet Archive CDX endpoint was unavailable from this environment, so no snapshot pair could be checked; no effective date or official previous cache rate can be stated.",
+ "verified": true
+}

@@ -1,0 +1,45 @@
+{
+ "classification": "price_change",
+ "effective_at": "2025-09-05T16:00:00Z",
+ "effective_precision": "exact",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://deepseek.com/en/news/deepseek-v3/",
+   "saved_as": "sources/deepseek.com_en_news_deepseek-v3.html",
+   "quote": "$0.27/M tokens  | $0.07/M tokens  | $1.10/M tokens",
+   "supports": "DeepSeek's official V3 announcement listed the earlier input cache-miss, cache-hit, and output rates, matching the models.dev earlier price.",
+   "extracted_as": "research/sources/ff43e4b259a0639c.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://api-docs.deepseek.com/news/news250821/",
+   "saved_as": "sources/api-docs.deepseek.com_news_news250821.html",
+   "quote": "New pricing starts & off-peak discounts end at Sep 5th, 2025, 16:00 (UTC Time)",
+   "supports": "DeepSeek stated the exact UTC time that new pricing would start and off-peak discounts would end.",
+   "extracted_as": "research/sources/11d864679913c531.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://api-docs.deepseek.com/news/news250821/",
+   "saved_as": "sources/api-docs.deepseek.com_news_news250821.html",
+   "quote": "Until then, APIs follow current pricing",
+   "supports": "Confirms the existing rates remained in effect until the announced pricing start.",
+   "extracted_as": "research/sources/11d864679913c531.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "The earlier figures match DeepSeek's own announced V3 API rates, so this was a provider price change rather than a models.dev correction. DeepSeek announced that new pricing would start at 2025-09-05 16:00 UTC; that is the stated effective time for the pricing change.",
+ "verified": false
+}

@@ -1,0 +1,45 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://docs.x.ai/developers/pricing",
+   "saved_as": "sources/docs.x.ai-developers-pricing.html",
+   "quote": "The batch discount applies to all token types \u2014 input tokens, output tokens, cached tokens, and reasoning tokens.",
+   "supports": "Current xAI pricing documentation recognizes cached tokens as a billable token category, but does not establish the historical rate for grok-vision-beta or when it changed.",
+   "extracted_as": "research/sources/dedf56167aa34815.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing",
+   "saved_as": "sources/docs.x.ai-developers-advanced-api-usage-prompt-caching-usage-and-pricing.html",
+   "quote": "Long context pricing applies when total prompt tokens (including cached tokens) exceed the model's long context threshold. Both cached and non-cached tokens use their respective long-context rates in this case.",
+   "supports": "Current xAI documentation confirms cached tokens may have respective rates, but does not state a historical grok-vision-beta cache price or an effective date.",
+   "extracted_as": "research/sources/e56927861559295b.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://x.ai/news/api",
+   "saved_as": "sources/x.ai-news-api.html",
+   "quote": "The vision model will be available next week.",
+   "supports": "xAI announced the vision model's planned availability in its API launch post, but the announcement does not state prices.",
+   "extracted_as": "research/sources/a0d1a4244309656a.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The available primary pages do not establish whether grok-vision-beta's cache rates were newly introduced or had been omitted by models.dev. The current docs are not historical evidence. An Internet Archive CDX request for the xAI pricing page returned HTTP 503, so no archived snapshot pair or effective date could be verified.",
+ "verified": true
+}

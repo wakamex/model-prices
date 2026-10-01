@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://docs.x.ai/developers/release-notes",
+   "saved_as": "sources/docs.x.ai_developers_release-notes.html",
+   "quote": "May 29\n\n### Cached prompt is now available\n\nYou can now use cached prompt to save on repeated prompts. For more info, see models.",
+   "supports": "xAI documents cached prompting becoming available, but this excerpt does not state Grok 3 Mini Fast's cache price or its effective date.",
+   "extracted_as": "research/sources/2b950d5a745e6c95.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://docs.x.ai/developers/pricing",
+   "saved_as": "sources/docs.x.ai_developers_pricing.html",
+   "quote": "grok-3-mini-fast",
+   "supports": "The current official pricing page identifies the model, but its current content does not establish the rate during June 10\u201317, 2025.",
+   "extracted_as": "research/sources/dedf56167aa34815.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The available xAI release notes say cached prompting became available on May 29, 2025, but do not give Grok 3 Mini Fast's cache_read rate or establish whether its earlier listed prices were official. The Wayback CDX request for archived xAI pricing snapshots returned an empty result, so no before/after bracket could be established. Effective date and official previous cache pricing remain unknown.",
+ "verified": false
+}

@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://docs.x.ai/developers/release-notes.md",
+   "saved_as": "sources/release-notes.md",
+   "quote": "You can now use cached prompt to save on repeated prompts. For\nmore info, see [models](/developers/models).",
+   "supports": "xAI announced cached prompts in May 2025, but this announcement does not identify whether grok-2-vision-latest supported them or state its cache prices.",
+   "extracted_as": "research/sources/0d32f204ca3ae411.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing.md",
+   "saved_as": "sources/prompt-cache-pricing.md",
+   "quote": "Cached tokens are billed at the **cached prompt token price**, which is substantially lower than the regular prompt token price. The exact rates vary by model \u2014 check the [Pricing](/developers/pricing) page for current prices.",
+   "supports": "xAI says cached tokens have a model-specific reduced rate; it does not establish the historical Grok 2 Vision rate.",
+   "extracted_as": "research/sources/fdb8e6a04853b79d.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The available official sources do not establish whether the earlier $2/$10 rate was official for this model, whether the newly recorded cache rates were official, or when any provider change took effect. The Internet Archive CDX endpoint returned HTTP 503, so no historical pricing-page snapshots could be checked.",
+ "verified": true
+}

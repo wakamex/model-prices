@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 1.5,
+  "output": 6.0,
+  "cache_read": 0.375
+ },
+ "sources": [
+  {
+   "url": "https://openai.com/index/introducing-codex/",
+   "saved_as": "sources/openai.com_index_introducing-codex.txt",
+   "quote": "For developers building with codex-mini-latest, the model is available on the Responses API and priced at $1.50 per 1M input tokens and $6 per 1M output tokens, with a 75% prompt caching discount.",
+   "supports": "OpenAI announced the input/output prices and prompt caching discount as part of the Codex-mini launch on May 16, 2025. A 75% discount on the $1.50 input price is $0.375 per million cached input tokens.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/models/codex-mini-latest",
+   "saved_as": "sources/developers.openai.com_api_docs_models_codex-mini-latest.html",
+   "quote": "Cached input\n\n$0.375",
+   "supports": "OpenAI's model documentation currently lists cached input at $0.375 per million tokens, corroborating the cache price implied by the launch announcement.",
+   "extracted_as": "research/sources/ab04670bc6e71f3e.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The earlier $1.50/$6.00 figures were real, but the missing cache_read field was a models.dev omission: OpenAI's May 16, 2025 launch post already stated a 75% prompt caching discount, implying $0.375 cached input pricing. The provider source gives the price at launch but does not date any later effective change; no change is established, so effective_at is null. The OpenAI launch page returned HTTP 403 to direct curl in this environment, so its saved text file contains the verbatim relevant rendered passage from the fetched OpenAI page.",
+ "verified": true
+}

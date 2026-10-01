@@ -1,0 +1,45 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 0.0375,
+  "output": 0.15,
+  "cache_read": 0.01
+ },
+ "sources": [
+  {
+   "url": "https://developers.googleblog.com/en/gemini-15-flash-8b-is-now-generally-available-for-use/",
+   "saved_as": "sources/google_developersblog_en_gemini-15-flash-8b-is-now-generally-available-for-use.html",
+   "quote": "$0.01 per 1 million tokens on cached prompts <128K",
+   "supports": "Google announced a $0.01 cached prompt price for Gemini 1.5 Flash-8B at stable release, before the June 2025 models.dev edit. The same announcement lists the $0.0375 input and $0.15 output prices.",
+   "extracted_as": "research/sources/48bf167918ee570f.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://web.archive.org/web/20250617165525/https://ai.google.dev/gemini-api/docs/pricing",
+   "saved_as": "sources/web_archive_20250617165525_ai_google_dev_pricing.html",
+   "quote": "Context caching price Free of charge, up to 1 million tokens of storage per hour $0.01, prompts <= 128k tokens $0.02, prompts > 128k tokens",
+   "supports": "Google's pricing page snapshot captured June 17, 2025 at 16:55:25 UTC lists the paid context caching rate as $0.01 per million cached tokens for prompts up to 128K, just before the models.dev commit.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://web.archive.org/web/20250621161929/https://ai.google.dev/gemini-api/docs/pricing",
+   "saved_as": "sources/web_archive_20250621161929_ai_google_dev_pricing.html",
+   "quote": "Context caching price Free of charge, up to 1 million tokens of storage per hour $0.01, prompts <= 128k tokens $0.02, prompts > 128k tokens",
+   "supports": "A later Google pricing page snapshot on June 21, 2025 shows the same cached price; it was still listed after the models.dev field rename.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "Google had already announced and published the $0.01 cached input price by October 2024; its pricing page listed it both immediately before and after the June 2025 models.dev edit. The edit added an omitted provider price field, so there is no provider price-change effective date to report.",
+ "verified": false
+}

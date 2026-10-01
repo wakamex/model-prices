@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 3.0,
+  "output": 15.0,
+  "cache_read": 0.3
+ },
+ "sources": [
+  {
+   "url": "https://www.anthropic.com/news/claude-3-5-sonnet",
+   "saved_as": "sources/www.anthropic.com_news_claude-3-5-sonnet.html",
+   "quote": "The model costs $3 per million input tokens and $15 per million output tokens, with a 200K token context window.",
+   "supports": "Anthropic's original Claude 3.5 Sonnet announcement gives the $3 input and $15 output prices.",
+   "extracted_as": "research/sources/e91e6f80eaaceb58.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching.md",
+   "saved_as": "sources/docs.anthropic.com_en_docs_build-with-claude_prompt-caching.md",
+   "quote": "* 5-minute cache write tokens are 1.25 times the base input tokens price\n  * 1-hour cache write tokens are 2 times the base input tokens price\n  * Cache read tokens are 0.1 times the base input tokens price (see the table footnote for per-model exceptions)",
+   "supports": "Anthropic's documented prompt-caching multipliers mean a $3 base input price yields a $3.75 5-minute cache write price and $0.30 cache read price.",
+   "extracted_as": "research/sources/3fcf060249def8b4.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "Anthropic's first-party pricing rules establish the recorded earlier cache_write value of $0.30 as inconsistent with official 5-minute cache-write pricing ($3.75); the $0.30 value is the cache-read rate. This is a models.dev correction, not a provider price change. The requested Wayback CDX query returned HTTP 503, so no historical snapshot bracket or more precise historical confirmation was available.",
+ "verified": true
+}

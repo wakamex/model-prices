@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://raw.githubusercontent.com/MoonshotAI/Kimi-K2.5/master/README.md",
+   "saved_as": "sources/raw.githubusercontent.com_MoonshotAI_Kimi-K2.5_README.md",
+   "quote": "> You can access Kimi-K2.5's API on https://platform.moonshot.ai and we provide OpenAI/Anthropic-compatible API for you.",
+   "supports": "Moonshot\u2019s official repository confirms Kimi K2.5 was accessible through its official API, but does not state its price.",
+   "extracted_as": "research/sources/196df2a25df783a9.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://platform.kimi.com/docs/pricing/chat-k25",
+   "saved_as": "sources/platform.kimi.com_docs_pricing_chat-k25.html",
+   "quote": "kimi-k2.5 \u5df2\u4e8e 2026 \u5e74 8 \u6708 31 \u65e5\u4e0b\u7ebf\uff0c\u4e0d\u518d\u7ef4\u62a4\u548c\u652f\u6301\u3002",
+   "supports": "The provider\u2019s current documentation says Kimi K2.5 was retired; it does not establish the historical price.",
+   "extracted_as": "research/sources/c169d8e8b4c0ca11.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The provider\u2019s current sources available here do not state Kimi K2.5\u2019s price during the earlier period or when the listed $0.60/$3.00 rates took effect. The Internet Archive CDX request for the provider pricing page timed out, so there is no usable before/after snapshot pair; classification and effective date remain unclear.",
+ "verified": false
+}

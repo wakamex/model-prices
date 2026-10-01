@@ -1,0 +1,27 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 2.0,
+  "output": 10.0,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://x.ai/news/grok-1212",
+   "saved_as": "sources/x.ai_news_grok-1212.html",
+   "quote": "As a result of our efficiency improvements, we are also lowering the price of these models to $2 / 1M input tokens and $10 / 1M output tokens.",
+   "supports": "xAI's original announcement gives the official input and output prices for grok-2-vision-1212; it does not state a cache-write price.",
+   "extracted_as": "research/sources/e0c44d30e87131f4.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "xAI announced the $2 input / $10 output rates on Dec 12, 2024. Its announcement does not support models.dev's earlier cache_write: 10 field, so this is best classified as models_dev_fix; the official cache_read rate is not stated in the source. The requested Internet Archive CDX endpoint was unavailable from this workspace, so no snapshot pair could be checked.",
+ "verified": true
+}

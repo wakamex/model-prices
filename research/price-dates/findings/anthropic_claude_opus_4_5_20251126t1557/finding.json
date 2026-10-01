@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 5.0,
+  "output": 25.0,
+  "cache_read": 0.5
+ },
+ "sources": [
+  {
+   "url": "https://www.anthropic.com/news/claude-opus-4-5",
+   "saved_as": "sources/anthropic.com_news_claude-opus-4-5.html",
+   "quote": "Pricing is now $5/$25 per million tokens\u2014making Opus-level capabilities accessible to even more users, teams, and enterprises.",
+   "supports": "Anthropic announced Opus 4.5's $5 input and $25 output per million token prices at launch on November 24, 2025.",
+   "extracted_as": "research/sources/57f01cae307e1cb1.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+   "saved_as": "sources/docs.anthropic.com_en_docs_about-claude_pricing.html",
+   "quote": "Claude Opus 4.5 $5 / MTok $25 / MTok $6.25 / MTok $10 / MTok $0.50 / MTok",
+   "supports": "Anthropic's model pricing table lists Opus 4.5 at $5 input, $25 output, $6.25 5-minute cache write, $10 1-hour cache write, and $0.50 cache hit/refresh per million tokens.",
+   "extracted_as": "research/sources/5770757567c6c228.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The launch announcement establishes the $5/$25 base price from November 24, and Anthropic's pricing table gives the cache prices that follow its published cache pricing structure. The earlier models.dev cache values therefore appear to be its own error, not a provider price that later changed. Internet Archive CDX requests returned HTTP 503, so no archive snapshot bracket was available; the exact historical cache pricing at the earlier period is inferred from Anthropic's official model pricing table.",
+ "verified": false
+}

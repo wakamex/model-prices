@@ -1,0 +1,45 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 0.15,
+  "output": 0.6,
+  "cache_read": 0.0375
+ },
+ "sources": [
+  {
+   "url": "https://web.archive.org/web/20250612000000/https://ai.google.dev/gemini-api/docs/pricing",
+   "saved_as": "sources/web.archive.org_web_20250612000000_ai.google.dev_gemini-api_docs_pricing.html",
+   "quote": "Input price Free of charge $0.15 (text / image / video)$1.00 (audio)",
+   "supports": "Google's pricing page snapshot labels the section Gemini 2.5 Flash Preview and gives the paid input rate.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://web.archive.org/web/20250612000000/https://ai.google.dev/gemini-api/docs/pricing",
+   "saved_as": "sources/web.archive.org_web_20250612000000_ai.google.dev_gemini-api_docs_pricing.html",
+   "quote": "Output price Free of charge Non-thinking: $0.60Thinking: $3.50",
+   "supports": "Google's pricing page snapshot gives the non-thinking output rate.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://web.archive.org/web/20250612000000/https://ai.google.dev/gemini-api/docs/pricing",
+   "saved_as": "sources/web.archive.org_web_20250612000000_ai.google.dev_gemini-api_docs_pricing.html",
+   "quote": "Context caching price Not available $0.0375 (text / image / video)$0.25 (audio)$1.00 / 1,000,000 tokens per hour",
+   "supports": "Before the models.dev commit date, Google already listed a $0.0375 per million token context caching price for Gemini 2.5 Flash Preview.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "Google's June 11, 2025 archived pricing page already listed the same $0.0375 text/image/video context caching rate, alongside the $0.15 input and $0.60 non-thinking output rates. This indicates models.dev added an already official cache price during its cache-field schema migration; no provider price change date is established.",
+ "verified": false
+}

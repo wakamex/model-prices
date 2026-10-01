@@ -1,0 +1,45 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 2.5,
+  "output": 15.0,
+  "cache_read": 0.25
+ },
+ "sources": [
+  {
+   "url": "https://web.archive.org/web/20260408161245id_/https://developers.openai.com/api/docs/models/gpt-5.4",
+   "saved_as": "sources/web.archive.org_web_20260408161245_developers.openai.com_api_docs_models_gpt-5.4.html",
+   "quote": "Input $2.50 Cached input $0.25 Output $15.00",
+   "supports": "OpenAI's documented standard GPT-5.4 input, cached input, and output prices during the earlier period.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://web.archive.org/web/20260408161245id_/https://developers.openai.com/api/docs/models/gpt-5.4",
+   "saved_as": "sources/web.archive.org_web_20260408161245_developers.openai.com_api_docs_models_gpt-5.4.html",
+   "quote": "For models with a 1.05M context window (GPT-5.4 and GPT-5.4 pro), prompts with >272K input tokens are priced at 2x input and 1.5x output for the full session for standard, batch, and flex.",
+   "supports": "OpenAI had documented the 272K long-context pricing threshold on the April 8 snapshot, before the models.dev correction.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://web.archive.org/web/20260305180656id_/https://developers.openai.com/api/docs/models/gpt-5.4",
+   "saved_as": "sources/web.archive.org_web_20260305180656_developers.openai.com_api_docs_models_gpt-5.4.html",
+   "quote": "For models with a 1.05M context window (GPT-5.4 and GPT-5.4 pro), prompts with >272K input tokens are priced at 2x input and 1.5x output for the full session for standard, batch, and flex.",
+   "supports": "OpenAI documented the 272K threshold in its March 5 model-page snapshot at launch, indicating 200K was not the official threshold.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The earlier 200,000-token tier was a models.dev error: OpenAI's archived model page already specified the 272K threshold on March 5 and still did so on April 8, when models.dev began recording the earlier value. These sources establish the threshold, not an effective date for any provider price change; no price change is supported, so effective_at is null.",
+ "verified": false
+}

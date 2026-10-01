@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 30.0,
+  "output": 180.0,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-5.5-pro",
+   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-5.5-pro.html",
+   "quote": "GPT-5.5 Pro does not offer a cached input discount.",
+   "supports": "OpenAI's current official model documentation says GPT-5.5 Pro has no cached input discount.",
+   "extracted_as": "research/sources/0b8dbd2e299afeb3.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-5.5-pro",
+   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-5.5-pro.html",
+   "quote": "Input</div><div class=\"text-2xl font-semibold\">$30.00</div></div><div class=\"flex flex-1 flex-col gap-1 rounded-lg border border-solid border-default bg-surface-secondary px-3 py-4\"><div>Output</div><div class=\"text-2xl font-semibold\">$180.00</div>",
+   "supports": "The current official model page lists $30 input and $180 output per million tokens. It does not document the changed threshold.",
+   "extracted_as": "research/sources/0b8dbd2e299afeb3.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "OpenAI's current model documentation confirms the $30/$180 base rates and no cached input discount, but it does not state the 200,000- or 272,000-token threshold or when either applied. The Internet Archive CDX endpoint could not be reached, so no historical pricing-page snapshots were available to bracket the threshold change; classification and effective date remain unclear.",
+ "verified": true
+}

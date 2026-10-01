@@ -1,0 +1,45 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 3.0,
+  "output": 15.0,
+  "cache_read": 0.3
+ },
+ "sources": [
+  {
+   "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+   "saved_as": "sources/docs.anthropic.com_en_docs_about-claude_pricing.html",
+   "quote": "Claude Sonnet 4 $3 / MTok $15 / MTok $3.75 / MTok $6 / MTok $0.30 / MTok",
+   "supports": "Anthropic's Sonnet 4 price row gives base input/output followed by cache-write pricing and cache-hit pricing; the listed write and read values match the models.dev after values in their respective fields.",
+   "extracted_as": "research/sources/5770757567c6c228.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
+   "saved_as": "sources/platform.claude.com_docs_en_build-with-claude_prompt-caching.html",
+   "quote": "Cache read tokens are 0.1 times the base input tokens price (see the table footnote for per-model exceptions)",
+   "supports": "Anthropic documents cache reads as one tenth of base input; at Sonnet 4's $3 input price this is $0.30/MTok.",
+   "extracted_as": "research/sources/9a3bbc4f637b202c.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.anthropic.com/news/claude-4",
+   "saved_as": "sources/www.anthropic.com_news_claude-4.html",
+   "quote": "Pricing remains consistent with previous Opus and Sonnet models: Opus 4 at $15/$75 per million tokens (input/output) and Sonnet 4 at $3/$15.",
+   "supports": "Anthropic's Claude 4 launch announcement states Sonnet 4's $3 input and $15 output rates at launch.",
+   "extracted_as": "research/sources/4ec03078d3169fe5.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The earlier models.dev entry swaps the official cache-read and 5-minute cache-write amounts. Anthropic's pricing row and cache multiplier support treating this as a models.dev correction, not a provider price change. I could not establish an effective date because the Internet Archive CDX request returned HTTP 503 and the available first-party pages do not date a cache-price change.",
+ "verified": false
+}

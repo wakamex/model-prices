@@ -1,0 +1,45 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-6-plus",
+   "saved_as": "sources/www.alibabacloud.com_help_en_model-studio_qwen3-6-plus.html",
+   "quote": "Input  | 0.276  | Per 1M tokens\nOutput  | 1.651  | Per 1M tokens",
+   "supports": "Alibaba currently lists the earlier input and output prices under China (Beijing), as well as the cache rates elsewhere in that regional pricing section.",
+   "extracted_as": "research/sources/93185ea2b256edfe.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-6-plus",
+   "saved_as": "sources/www.alibabacloud.com_help_en_model-studio_qwen3-6-plus.html",
+   "quote": "Scope: International\n\nInput<=256k\n\nBilling Item  | Price (USD)  | Unit\n--- | --- | ---\nInput  | 0.5  | Per 1M tokens\nOutput  | 3  | Per 1M tokens",
+   "supports": "Alibaba identifies the $0.5/$3 rates and higher-context tier as Singapore pricing for the International scope.",
+   "extracted_as": "research/sources/93185ea2b256edfe.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://www.alibabacloud.com/en/press-room/alibaba-unveils-qwen3-6-plus-to-accelerate-agentic?_p_lc=1",
+   "saved_as": "sources/www.alibabacloud.com_en_press-room_alibaba-unveils-qwen3-6-plus.html",
+   "quote": "Hangzhou, China, April 2, 2026 \u2013 Alibaba has released Qwen3.6-Plus, the latest iteration of its flagship series of large language models, delivering a significant advancement in agentic coding, as well as multimodal perception and reasoning.",
+   "supports": "Alibaba's announcement dates model release to April 2, 2026; it does not state a price or a price-effective date.",
+   "extracted_as": "research/sources/ba07cd520a8b26c5.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The provider documents both the earlier and later values as current prices for different regions/scopes, so the evidence does not establish whether the May 2026 catalog change was a temporal provider price change or a correction to its regional mapping. The Internet Archive CDX request for the Alibaba pricing page returned HTTP 503, so no archived snapshot pair was available to bracket a date.",
+ "verified": false
+}

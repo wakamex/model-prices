@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 0.25,
+  "output": 1.25,
+  "cache_read": 0.03
+ },
+ "sources": [
+  {
+   "url": "https://claude.com/blog/prompt-caching",
+   "saved_as": "sources/anthropic-com-blog-prompt-caching.html",
+   "quote": "Claude 3 Haiku Fastest, most cost-effective model 200K context window Input $0.25 / MTok Prompt caching $0.30 / MTok - Cache write $0.03 / MTok - Cache read Output $1.25 / MTok",
+   "supports": "Anthropic's Haiku 3 prices include unchanged base input/output and official cache-write and cache-read prices.",
+   "extracted_as": "research/sources/c7c4fcc8db2f7ca5.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://claude.com/blog/prompt-caching",
+   "saved_as": "sources/anthropic-com-blog-prompt-caching.html",
+   "quote": "Prompt caching is available today in public beta for Claude 3.5 Sonnet, Claude 3 Opus, and Claude 3 Haiku.",
+   "supports": "Anthropic identifies prompt caching as an API feature available for Claude 3 Haiku, consistent with cache prices having been applicable before the June 2025 models.dev field change.",
+   "extracted_as": "research/sources/c7c4fcc8db2f7ca5.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "Anthropic's listed Haiku 3 rates show the cache prices as $0.30/MTok for writes and $0.03/MTok for reads, while base input/output remain $0.25/$1.25. The models.dev change is therefore a metadata correction, not a provider price change; the archived-page index returned HTTP 503, so no historical snapshot bracket or exact date is available.",
+ "verified": false
+}

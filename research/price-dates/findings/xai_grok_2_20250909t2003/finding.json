@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 2.0,
+  "output": 10.0,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://x.ai/news/grok-1212",
+   "saved_as": "sources/x.ai_news_grok-1212.html",
+   "quote": "As a result of our efficiency improvements, we are also lowering the price of these models to $2 / 1M input tokens and $10 / 1M output tokens.",
+   "supports": "xAI announced Grok-2 API input and output prices of $2 and $10 per million tokens on December 12, 2024.",
+   "extracted_as": "research/sources/e0c44d30e87131f4.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/rest-api-reference/management/auth",
+   "saved_as": "sources/docs.x.ai_developers_rest-api-reference_management_auth.html",
+   "quote": "          \"promptTextTokenPrice\": \"20000\",\n          \"promptImageTokenPrice\": \"0\",\n          \"promptTextTokenPriceLongContext\": \"0\",\n          \"cachedPromptTokenPrice\": \"0\",\n          \"completionTextTokenPrice\": \"100000\",",
+   "supports": "The current provider model record exposes prompt, cached-prompt, and completion token price fields for Grok-2, with no cache-write price field.",
+   "extracted_as": "research/sources/c34a6dcd600fb7db.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The provider announcement establishes $2 input and $10 output rates, while its API billing record has no distinct cache-write price field; the recorded $10 cache_write is therefore not evidenced as an official charge and is consistent with a models.dev mapping error. xAI's pages support no effective date for this correction, and the Internet Archive CDX endpoint refused access, so no date is inferred.",
+ "verified": true
+}

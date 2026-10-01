@@ -1,0 +1,27 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 15.0,
+  "output": 60.0,
+  "cache_read": 7.5
+ },
+ "sources": [
+  {
+   "url": "https://openai.com/index/api-prompt-caching/",
+   "saved_as": "sources/openai_com_index_api-prompt-caching.txt",
+   "quote": "| o1\u2011preview | $15.00 | $7.50 | $60.00 |",
+   "supports": "OpenAI's October 1, 2024 announcement lists o1-preview's uncached input, cached input, and output prices as $15, $7.50, and $60 per million tokens, so the earlier price was already official.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "OpenAI announced prompt caching for o1-preview on October 1, 2024, with cached input at $7.50 alongside the unchanged $15 input and $60 output rates. Thus the June 2025 models.dev addition reflects a previously omitted official cache price, not a provider price change. Internet Archive CDX was unavailable (503), so no archival snapshot pair was obtained; no precise price-effective date is claimed.",
+ "verified": true
+}

@@ -1,0 +1,54 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/changelog",
+   "saved_as": "sources/ai.google.dev-gemini-api-docs-changelog.html",
+   "quote": "<h2 id=\"09-25-2025\" data-text=\"September 25, 2025\" tabindex=\"-1\">September 25, 2025</h2>",
+   "supports": "Google's changelog dates the model launch to September 25, 2025; it does not state the launch price.",
+   "extracted_as": "research/sources/a24fd97eb3d00730.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/changelog",
+   "saved_as": "sources/ai.google.dev-gemini-api-docs-changelog.html",
+   "quote": "<li><code translate=\"no\" dir=\"ltr\">gemini-2.5-flash-preview-09-2025</code></li>",
+   "supports": "The launch entry names the specific preview model.",
+   "extracted_as": "research/sources/a24fd97eb3d00730.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/pricing?hl=en",
+   "saved_as": "sources/ai.google.dev-gemini-api-docs-pricing.html",
+   "quote": "<tr>\n      <td>Input price</td>\n      <td>Free of charge</td>\n      <td>$0.30 (text / image / video)<br>$1.00 (audio)</td>\n    </tr>",
+   "supports": "The current official page lists $0.30 input for stable Gemini 2.5 Flash; the page's section is for the stable model, not the dated preview.",
+   "extracted_as": "research/sources/0dec03421ba15acd.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/pricing?hl=en",
+   "saved_as": "sources/ai.google.dev-gemini-api-docs-pricing.html",
+   "quote": "<tr>\n      <td>Output price (including thinking tokens)</td>\n      <td>Free of charge</td>\n      <td>$2.50</td>\n    </tr>",
+   "supports": "The current official page lists $2.50 output for stable Gemini 2.5 Flash; the page's section is for the stable model, not the dated preview.",
+   "extracted_as": "research/sources/0dec03421ba15acd.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "The provider changelog confirms this preview launched September 25, 2025, but the currently fetched pricing page gives rates only in a section for stable gemini-2.5-flash and does not establish the dated preview's historical price. The requested Wayback CDX query returned HTTP 503, so no provider snapshot pair was available; the change versus models.dev's recorded price therefore remains unclear, with no defensible effective date or official previous price.",
+ "verified": true
+}

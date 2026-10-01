@@ -1,0 +1,45 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://api-docs.deepseek.com/news/news260424/",
+   "saved_as": "sources/api-docs.deepseek.com_news_news260424.html",
+   "quote": "deepseek-chat & deepseek-reasoner will be fully retired and inaccessible after Jul 24th, 2026, 15:59 (UTC Time). (Currently routing to deepseek-v4-flash non-thinking/thinking).",
+   "supports": "DeepSeek states its legacy API model names were routing to V4 Flash during the period, but does not state a historical price for those names.",
+   "extracted_as": "research/sources/57fb8eea07a5cdcc.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://api-docs.deepseek.com/quick_start/pricing",
+   "saved_as": "sources/api-docs.deepseek.com_quick_start_pricing.html",
+   "quote": "1M INPUT TOKENS (CACHE HIT) OFF-PEAK $0.003 $0.022 PEAK $0.006 $0.044",
+   "supports": "The current official pricing table gives rates for DeepSeek Flash and V4 Pro, not the legacy model names, and does not establish the historical rate in question.",
+   "extracted_as": "research/sources/8eb12065b9344787.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://api-docs.deepseek.com/news/news250120/",
+   "saved_as": "sources/api-docs.deepseek.com_news_news250120.html",
+   "quote": "Use DeepSeek-R1 by setting model=deepseek-reasoner \ud83d\udcb0 $0.14 / million input tokens (cache hit) \ud83d\udcb0 $0.55 / million input tokens (cache miss) \ud83d\udcb0 $2.19 / million output tokens",
+   "supports": "An earlier official release priced deepseek-reasoner differently; this does not resolve its price during April-June 2026.",
+   "extracted_as": "research/sources/f75bec4ecc98ee0e.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The official live pricing page now lists DeepSeek Flash and V4 Pro, while DeepSeek says deepseek-reasoner was routing to V4 Flash; the pages retrieved do not establish whether $0.028 was ever official during the earlier period or when $0.0028 became effective. The Internet Archive CDX request was unavailable, so no snapshot bracket could be established.",
+ "verified": false
+}

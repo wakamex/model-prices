@@ -1,0 +1,27 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-5-mini",
+   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-5-mini.html",
+   "quote": "Cached input $0.025",
+   "supports": "OpenAI currently documents GPT-5 mini cached input at $0.025 per million tokens, which differs from the $0.03 cache_read value models.dev added; it does not establish the historical rate on August 7\u20138, 2025.",
+   "extracted_as": "research/sources/941c4e8041c2a99f.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The available primary documentation does not establish whether $0.03 was an actual provider price change or a models.dev correction, nor when any such change took effect. Internet Archive CDX listed captures on 2025-08-07T16:33:51Z and 2025-08-08T16:25:01Z, but fetching the snapshot pages returned HTTP 403, so no historical bracket could be verified.",
+ "verified": true
+}

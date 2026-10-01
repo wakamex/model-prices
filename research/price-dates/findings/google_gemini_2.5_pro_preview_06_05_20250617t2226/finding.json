@@ -1,0 +1,45 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 1.25,
+  "output": 10.0,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://developers.googleblog.com/gemini-2-5-thinking-model-updates/",
+   "saved_as": "sources/developers.googleblog.com_gemini-2-5-thinking-model-updates.html",
+   "quote": "To allow more customers to build on this model in production, we are making the 06-05 version of the model stable, with the same pareto frontier price point as before.",
+   "supports": "Google said the 06-05 model became stable at the same price point as before, so this does not indicate a change to the ordinary input/output price.",
+   "extracted_as": "research/sources/36dc945eafa03b9a.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.cloud.google.com/vertex-ai/generative-ai/docs/release-notes",
+   "saved_as": "sources/docs.cloud.google.com_vertex-ai_generative-ai_docs_release-notes.html",
+   "quote": "Preview endpoint availability and removal: All existing Gemini 2.5 Flash and Pro preview endpoints (listed below) will continue to be available with their current preview pricing until July 15, 2025. After this date, these preview endpoints will be shut down.",
+   "supports": "The 06-05 preview endpoint retained its existing preview pricing through July 15, 2025; this does not state when the cache_read field was first priced.",
+   "extracted_as": "research/sources/e7a5ab242987e4ae.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/optimization",
+   "saved_as": "sources/ai.google.dev_gemini-api_docs_optimization.html",
+   "quote": "Implicit caching: Automatically enabled on Gemini 2.5 and newer models. The system passes on cost savings if your request hits existing caches based on common prompt prefixes.",
+   "supports": "Gemini 2.5 supported implicit caching, but this page does not give the historical cache price for the named preview model.",
+   "extracted_as": "research/sources/41fe60b53a138b46.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "Google's announcement supports unchanged input/output pricing, and its release notes confirm the preview price remained in force through July 15, 2025. I could not establish from an accessible primary source whether the specific $0.31 cache_read rate was already official during the earlier period or was newly introduced; the Internet Archive CDX endpoint returned HTTP 503, so there is no snapshot bracket or effective date.",
+ "verified": true
+}

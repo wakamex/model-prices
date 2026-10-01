@@ -1,0 +1,45 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 3.0,
+  "output": 15.0,
+  "cache_read": 0.75
+ },
+ "sources": [
+  {
+   "url": "https://web.archive.org/web/20250608075937/https://docs.x.ai/docs/models",
+   "saved_as": "sources/web.archive.org_web_20250608075937_docs.x.ai_docs_models.html",
+   "quote": "\\\"name\\\":\\\"grok-3\\\",\\\"version\\\":\\\"\\\",\\\"inputModalities\\\":[\\\"TEXT\\\"],\\\"outputModalities\\\":[\\\"TEXT\\\"],\\\"maxPromptLength\\\":131072,\\\"promptTextTokenPrice\\\":\\\"30000\\\",\\\"cachedPromptTextTokenPrice\\\":\\\"7500\\\",\\\"completionTextTokenPrice\\\":\\\"150000\\\"",
+   "supports": "xAI's archived model record gives Grok 3 input, cached-prompt, and completion token prices during the earlier period; it contains no cache-write price.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://web.archive.org/web/20250608075937/https://docs.x.ai/docs/models",
+   "saved_as": "sources/web.archive.org_web_20250608075937_docs.x.ai_docs_models.html",
+   "quote": "The caching is automatically enabled for all requests without user input. You can view the cached prompt token consumption",
+   "supports": "xAI describes cached prompt usage, consistent with cached-input pricing rather than a separate cache-write price.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://docs.x.ai/developers/release-notes",
+   "saved_as": "sources/docs.x.ai_developers_release-notes.html",
+   "quote": "You can now use cached prompt to save on repeated prompts. For",
+   "supports": "xAI release notes say cached prompts became available May 29, 2025, before the June 8 archived model price record.",
+   "extracted_as": "research/sources/2b950d5a745e6c95.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The contemporaneous xAI model page archived on 2025-06-08 lists Grok 3 input, cached-prompt, and completion token prices corresponding to $3, $0.75, and $15 per million tokens; it contains no cache-write price. This supports models.dev correcting its own cache_write entry, not a provider price change. No effective date applies. The Internet Archive CDX listing endpoint returned HTTP 503, so additional snapshots to bracket the September edit could not be checked.",
+ "verified": true
+}

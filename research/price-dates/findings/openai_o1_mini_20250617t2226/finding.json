@@ -1,0 +1,27 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 1.1,
+  "output": 4.4,
+  "cache_read": 0.55
+ },
+ "sources": [
+  {
+   "url": "https://developers.openai.com/api/docs/models/o1-mini",
+   "saved_as": "sources/developers.openai.com_api_docs_models_o1-mini.html",
+   "quote": "$0.55",
+   "supports": "OpenAI's official o1-mini model documentation lists the cached-input rate as $0.55 per million tokens, alongside the recorded unchanged input and output prices. This indicates the cache field addition reflects previously omitted pricing metadata rather than a provider price change.",
+   "extracted_as": "research/sources/661d5c52a1260254.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "OpenAI currently documents o1-mini cached input at $0.55 per million tokens, consistent with the 50% prompt-caching discount and its unchanged $1.10 input rate. The Internet Archive CDX and snapshot requests returned errors, so available primary-source evidence does not establish an exact historical date or directly bracket when that rate applied during the earlier period.",
+ "verified": true
+}

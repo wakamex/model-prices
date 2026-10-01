@@ -1,0 +1,63 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "saved_as": "sources/alibabacloud.com_help_en_model-studio_model-pricing.txt",
+   "quote": "qwen3-coder-480b-a35b-instruct\nInternational\n0<Token\u226432K\n$1.5\n$7.5\n1 million tokens",
+   "supports": "Alibaba lists the current base International tier at $1.5 input and $7.5 output.",
+   "extracted_as": "research/sources/3a2df24851aa546e.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "saved_as": "sources/alibabacloud.com_help_en_model-studio_model-pricing.txt",
+   "quote": "32K<Token\u2264128K\n$2.7\n$13.5",
+   "supports": "Alibaba lists the current 32K\u2013128K International tier.",
+   "extracted_as": "research/sources/3a2df24851aa546e.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "saved_as": "sources/alibabacloud.com_help_en_model-studio_model-pricing.txt",
+   "quote": "128K<Token\u2264200K\n$4.5\n$22.5",
+   "supports": "Alibaba lists the current 128K\u2013200K International tier.",
+   "extracted_as": "research/sources/3a2df24851aa546e.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/newly-released-models",
+   "saved_as": "sources/alibabacloud.com_help_en_model-studio_newly-released-models.txt",
+   "quote": "Text generation\n2025-07-23\nInternational\nqwen3-coder-480b-a35b-instruct\nQwen3-based code generation model with strong coding agent power; code capability reaches open-source SOTA.",
+   "supports": "Alibaba lists the model's release date, but gives no information about the date or prior pricing of the tier change.",
+   "extracted_as": "research/sources/eac8dfbeb78c6d30.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://web.archive.org/cdx/search/cdx?url=alibabacloud.com/help/en/model-studio/model-pricing&output=json&filter=statuscode:200&collapse=digest",
+   "saved_as": "sources/web.archive.org_cdx_search_cdx.html",
+   "quote": "Internet Archive: Temporarily Offline",
+   "supports": "The archive snapshot index endpoint was unavailable, preventing a before/after pricing snapshot comparison.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "Alibaba's current pricing page corroborates the new tier structure, but the available provider material does not establish whether the earlier flat rate was official at the time or when the tiers took effect. The Internet Archive CDX endpoint returned a Temporarily Offline page, so no historical snapshot bracket could be verified.",
+ "verified": true
+}

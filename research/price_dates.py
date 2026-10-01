@@ -197,7 +197,11 @@ def save_source(url: str) -> Path | None:
 def verify() -> None:
     """Check each finding's quotes against independently saved copies of its sources."""
     for finding_path in sorted((WORK / "findings").glob("*/finding.json")):
-        finding = json.loads(finding_path.read_text())
+        try:
+            finding = json.loads(finding_path.read_text())
+        except json.JSONDecodeError as error:
+            print(f"BAD {finding_path.parent.name}: invalid finding.json ({error})")
+            continue
         own_sources = finding_path.parent
         for source in finding.get("sources", []):
             saved = save_source(source["url"])

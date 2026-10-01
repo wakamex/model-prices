@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 1.0,
+  "output": 5.0,
+  "cache_read": 0.1
+ },
+ "sources": [
+  {
+   "url": "https://www.anthropic.com/news/claude-haiku-4-5",
+   "saved_as": "sources/www.anthropic.com_news_claude-haiku-4-5.html",
+   "quote": "Claude Haiku 4.5 is available everywhere today. If you\u2019re a developer, simply use claude-haiku-4-5 via the Claude API. Pricing is now $1/$5 per million input and output tokens.",
+   "supports": "Anthropic stated the model was available and priced at $1 per million input tokens and $5 per million output tokens on its October 15, 2025 launch. This contradicts the $1.25 output value recorded earlier by models.dev.",
+   "extracted_as": "research/sources/e99bd76836c10fea.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.anthropic.com/news/claude-haiku-4-5",
+   "saved_as": "sources/www.anthropic.com_news_claude-haiku-4-5.html",
+   "quote": "Oct 15, 2025",
+   "supports": "The announcement is dated October 15, 2025.",
+   "extracted_as": "research/sources/e99bd76836c10fea.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "Anthropic\u2019s launch announcement dated October 15, 2025 specifies $1/$5 input/output pricing, so the earlier $1.25 output value was not the provider\u2019s official launch price and is best classified as a models.dev fix. The source does not state a clock time for the price, and no change effective time is applicable.",
+ "verified": true
+}

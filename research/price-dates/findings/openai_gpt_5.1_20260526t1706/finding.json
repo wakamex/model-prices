@@ -1,0 +1,23 @@
+{
+  "classification": "models_dev_fix",
+  "effective_at": null,
+  "effective_precision": "unknown",
+  "bracket": {
+    "last_before": null,
+    "first_after": null
+  },
+  "official_previous_price": {
+    "input": 1.25,
+    "output": 10.0,
+    "cache_read": 0.125
+  },
+  "sources": [
+    {
+      "url": "https://developers.openai.com/api/docs/models/gpt-5.1",
+      "saved_as": "sources/developers.openai.com_api_docs_models_gpt-5.1.html",
+      "quote": "<div>Cached input</div><div class=\"text-2xl font-semibold\">$0.125</div>",
+      "supports": "OpenAI's model page lists GPT-5.1 cached input at $0.125 per million tokens."
+    }
+  ],
+  "notes": "OpenAI's official current GPT-5.1 page gives a cached input rate of $0.125, so models.dev's earlier $0.13 was not the official rate. I could not retrieve an official historical page or announcement snapshot that dates when the incorrect models.dev value began or was corrected; the effective time is therefore unknown."
+}\n

@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 3.0,
+  "output": 15.0,
+  "cache_read": 0.3
+ },
+ "sources": [
+  {
+   "url": "https://claude.com/blog/prompt-caching",
+   "saved_as": "sources/claude.com_blog_prompt-caching.html",
+   "quote": "Claude 3.5 Sonnet Our most intelligent model to date 200K context window Input $3 / MTok Prompt caching $3.75 / MTok - Cache write $0.30 / MTok - Cache read Output $15 / MTok",
+   "supports": "Anthropic's own prompt caching page lists Claude 3.5 Sonnet's $3 input, $15 output, $0.30 cache read, and $3.75 cache write prices. The page identifies a December 17, 2024 update, before the models.dev record.",
+   "extracted_as": "research/sources/c7c4fcc8db2f7ca5.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+   "saved_as": "sources/platform.claude.com_docs_en_about-claude_pricing.html",
+   "quote": "Claude Sonnet 3.5 (deprecated)  | $3 / MTok  | $3.75 / MTok  | $6 / MTok  | $0.30 / MTok  | $15 / MTok",
+   "supports": "Anthropic's pricing documentation also gives the 3.5 Sonnet cache write as $3.75/MTok, consistent with the announcement's cache-read/cache-write distinction.",
+   "extracted_as": "research/sources/50846cd1ff366c72.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The earlier $0.30 cache_write appears to have copied the official cache_read amount; Anthropic's own announcement had listed cache_write at $3.75/MTok before June 2025. The Wayback CDX request returned a temporary 503/Offline page, so archived snapshots could not be used to bracket any price change; no provider change date is supported.",
+ "verified": false
+}

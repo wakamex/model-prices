@@ -1,0 +1,54 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 1.25,
+  "output": 10.0,
+  "cache_read": 0.31
+ },
+ "sources": [
+  {
+   "url": "https://developers.googleblog.com/en/gemini-2-5-models-now-support-implicit-caching/",
+   "saved_as": "sources/developers.googleblog.com_en_gemini-2-5-models-now-support-implicit-caching.html",
+   "quote": "MAY 8, 2025",
+   "supports": "Dates Google's announcement that Gemini 2.5 models gained implicit caching before the June 17, 2025 models.dev edit.",
+   "extracted_as": "research/sources/c5cb8ef891d638e9.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://developers.googleblog.com/en/gemini-2-5-models-now-support-implicit-caching/",
+   "saved_as": "sources/developers.googleblog.com_en_gemini-2-5-models-now-support-implicit-caching.html",
+   "quote": "Now, when you send a request to one of the Gemini 2.5 models, if the request shares a common prefix as one of previous requests, then it\u2019s eligible for a cache hit. We will dynamically pass cost savings back to you, providing the same 75% token discount.",
+   "supports": "Shows cache hits were discounted by 75% for Gemini 2.5, so the cache-read price was an existing discounted input price rather than a new June 17 price change.",
+   "extracted_as": "research/sources/c5cb8ef891d638e9.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "saved_as": "sources/ai.google.dev_gemini-api_docs_pricing.html",
+   "quote": "$1.25, prompts <= 200k tokens $2.50, prompts > 200k tokens",
+   "supports": "Google's pricing table lists the Gemini 2.5 Pro standard input price as $1.25 per million tokens for prompts up to 200k; applying its 75% cache discount gives $0.3125, represented as $0.31.",
+   "extracted_as": "research/sources/b88c4950bbf39196.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/changelog",
+   "saved_as": "sources/ai.google.dev_gemini-api_docs_changelog.html",
+   "quote": "Released gemini-2.5-pro, the stable version of our most powerful model, now with adaptive thinking.",
+   "supports": "Confirms the model lineage was still in Google's active Gemini 2.5 product line at the time of the June 17 catalog edit.",
+   "extracted_as": "research/sources/a24fd97eb3d00730.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The earlier $1.25 input and $10.00 output prices were official; Google's May 8 announcement establishes a 75% cache-hit discount for Gemini 2.5, making cache_read $0.3125 (about $0.31) at the <=200k input rate before the catalog edit. This is a models.dev omission/fix, not a provider price change; no exact effective timestamp for the catalog correction can be derived, and the Internet Archive CDX request returned HTTP 503.",
+ "verified": false
+}

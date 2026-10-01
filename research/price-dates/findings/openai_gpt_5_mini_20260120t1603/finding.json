@@ -1,0 +1,27 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-5-mini",
+   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-5-mini.html",
+   "quote": "Text tokens Per 1M tokens \u2219 Batch API price Input $0.25 Cached input $0.025 Output $2.00",
+   "supports": "OpenAI's current GPT-5 Mini model documentation lists cached input at $0.025 per million tokens, alongside input and output prices. It does not establish when that cached price began.",
+   "extracted_as": "research/sources/941c4e8041c2a99f.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "OpenAI's current model page confirms the $0.025 cached-input price, but the available primary-source text does not establish whether $0.03 was ever official or when a change took effect. The Internet Archive CDX request for the pricing page returned HTTP 403, and the OpenAI launch page also returned HTTP 403 to curl; without an accessible archived price page or explicit announcement, the historical classification and date remain unclear.",
+ "verified": false
+}

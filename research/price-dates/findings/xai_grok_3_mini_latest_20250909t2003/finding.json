@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://docs.x.ai/developers/pricing",
+   "saved_as": "sources/docs.x.ai_developers_pricing.html",
+   "quote": "Input  | Cached  | Output  | Input  | Cached  | Output",
+   "supports": "xAI's official pricing schema distinguishes input, cached input, and output rates; it does not list a separate cache-write rate. This is current documentation and does not date the historical price.",
+   "extracted_as": "research/sources/dedf56167aa34815.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing",
+   "saved_as": "sources/docs.x.ai_developers_advanced-api-usage_prompt-caching_usage-and-pricing.html",
+   "quote": "Prompt tokens (non-cached)  | Full prompt token price",
+   "supports": "xAI says cache misses/non-cached prompt tokens are billed at the full prompt price, indicating a cache write is not a separate discounted or independently priced token category. The page is current, not a historical snapshot.",
+   "extracted_as": "research/sources/e56927861559295b.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The recorded cache_write value of $0.50 matches the output rate, while xAI's pricing and caching documentation describes input, cached input, and output and bills non-cached prompt tokens at the full prompt price. This supports treating removal of cache_write as a models.dev correction, but the current docs do not state Grok 3 Mini's historical rates. The Internet Archive CDX request for xAI pricing returned HTTP 503, so no historical snapshot pair was available; no effective date or historical price values are asserted.",
+ "verified": false
+}

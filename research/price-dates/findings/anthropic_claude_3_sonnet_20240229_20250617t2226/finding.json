@@ -1,0 +1,45 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 3.0,
+  "output": 15.0,
+  "cache_read": 0.3
+ },
+ "sources": [
+  {
+   "url": "https://web.archive.org/web/20250614032517/https://www.anthropic.com/pricing",
+   "saved_as": "sources/web.archive.org_web_20250614032517_anthropic_pricing.html",
+   "quote": "Claude Sonnet 3.7 | 200K context window | 50% discount with batch processing* | Input | $3 / MTok | Prompt caching write | $3.75 / MTok | Prompt caching read | $0.30 / MTok | Output | $15 / MTok",
+   "supports": "Anthropic's archived pricing before the catalog commit lists separate cache write/read rates alongside $3 input and $15 output rates. This is the closest Sonnet model listed, not the target Claude 3 Sonnet.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://web.archive.org/web/20250618073341/https://www.anthropic.com/pricing",
+   "saved_as": "sources/web.archive.org_web_20250618073341_anthropic_pricing.html",
+   "quote": "Claude Sonnet 3.7 | 200K context window | 50% discount with batch processing* | Input | $3 / MTok | Prompt caching write | $3.75 / MTok | Prompt caching read | $0.30 / MTok | Output | $15 / MTok",
+   "supports": "The same provider-listed Sonnet prices remained on the archived page after the models.dev commit; no provider price transition is bracketed.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+   "saved_as": "sources/docs.anthropic.com_en_docs_about-claude_pricing.html",
+   "quote": "5-minute cache write | 1.25x base input price | Cache valid for 5 minutes",
+   "supports": "Anthropic documents cache-write pricing as 1.25 times base input, distinguishing it from cache-read pricing. At a $3 input rate, the write rate is $3.75 per million tokens.",
+   "extracted_as": "research/sources/5770757567c6c228.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "This is a models.dev metadata correction, not evidence of a provider price change: the commit added cache fields while base input/output stayed $3/$15, and Anthropic's archived pricing snapshots on June 14 and June 18 show unchanged Sonnet pricing. Anthropic's cited archived table lists Sonnet 3.7 rather than the exact Claude 3 Sonnet model, so the target model's specific cache prices and any effective date cannot be directly established from these pages; the official pricing structure gives $0.30 cache reads and $3.75 5-minute writes at $3 input.",
+ "verified": false
+}

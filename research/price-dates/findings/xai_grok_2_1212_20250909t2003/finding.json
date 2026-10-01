@@ -1,0 +1,63 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 2.0,
+  "output": 10.0,
+  "cache_read": 0.0
+ },
+ "sources": [
+  {
+   "url": "https://x.ai/news/grok-1212",
+   "saved_as": "sources/x.ai_news_grok-1212.html",
+   "quote": "As a result of our efficiency improvements, we are also lowering the price of these models to $2 / 1M input tokens and $10 / 1M output tokens.",
+   "supports": "xAI's launch announcement states the official input and output rates for grok-2-1212.",
+   "extracted_as": "research/sources/e0c44d30e87131f4.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/rest-api-reference/management/billing.md",
+   "saved_as": "sources/docs.x.ai_developers_rest-api-reference_management_billing.md",
+   "quote": "          \"description\": \"Chat grok-2-1212-1.0.0\",\n          \"unitType\": \"Prompt text tokens\",\n          \"unitPrice\": \"20000\",",
+   "supports": "xAI's billing reference shows a prompt-token billing line for grok-2-1212 in its February 2025 invoice example, consistent with $2 per million input tokens.",
+   "extracted_as": "research/sources/7a219b3bacd09e60.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/rest-api-reference/management/billing.md",
+   "saved_as": "sources/docs.x.ai_developers_rest-api-reference_management_billing.md",
+   "quote": "          \"description\": \"Chat grok-2-1212-1.0.0\",\n          \"unitType\": \"Completion text tokens\",\n          \"unitPrice\": \"100000\",",
+   "supports": "The same invoice example records completion-token billing at the rate corresponding to $10 per million output tokens.",
+   "extracted_as": "research/sources/7a219b3bacd09e60.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/rest-api-reference/management/auth.md",
+   "saved_as": "sources/docs.x.ai_developers_rest-api-reference_management_auth.md",
+   "quote": "          \"promptTextTokenPrice\": \"20000\",\n          \"promptImageTokenPrice\": \"0\",\n          \"promptTextTokenPriceLongContext\": \"0\",\n          \"cachedPromptTokenPrice\": \"0\",\n          \"completionTextTokenPrice\": \"100000\",",
+   "supports": "xAI's model configuration lists a zero cached-prompt rate and the normal prompt and completion rates; it has no separate cache-write price.",
+   "extracted_as": "research/sources/4a9cd1caaadfa309.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/rest-api-reference/management/auth.md",
+   "saved_as": "sources/docs.x.ai_developers_rest-api-reference_management_auth.md",
+   "quote": "            \"reasoning\": false",
+   "supports": "xAI's model configuration identifies grok-2-1212 as not supporting reasoning, which weighs against treating the removed cache_write value as a provider price change for reasoning.",
+   "extracted_as": "research/sources/4a9cd1caaadfa309.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The provider evidence supports $2 input and $10 output; its model configuration shows cached prompts priced at zero and no separate cache-write rate, so the recorded cache_write value of $10 appears to have been a models.dev data error. The Internet Archive CDX endpoint returned HTTP 503, so no archive snapshot pair was available; no effective date is asserted.",
+ "verified": true
+}

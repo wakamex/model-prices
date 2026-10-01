@@ -1,0 +1,45 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://docs.x.ai/developers/release-notes",
+   "saved_as": "sources/docs.x.ai_developers_release-notes.html",
+   "quote": "You can now use Grok 4 via our API or on https://grok.com.",
+   "supports": "xAI records API availability of Grok 4 on July 9, 2025, but this release note does not give token prices.",
+   "extracted_as": "research/sources/2b950d5a745e6c95.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/rest-api-reference/inference/models",
+   "saved_as": "sources/docs.x.ai_developers_rest-api-reference_inference_models.html",
+   "quote": "Price of a prompt text token (in USD cents per 100 million tokens) that was cached previously.",
+   "supports": "Current xAI model metadata defines the cached prompt price field; it does not establish what cache-write billing was in effect in July\u2013September 2025.",
+   "extracted_as": "research/sources/72bf9d12755c6a08.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/pricing",
+   "saved_as": "sources/docs.x.ai_developers_pricing.html",
+   "quote": "Prices per 1M tokens",
+   "supports": "The current xAI pricing page provides a present-day pricing table, but no Grok 4 row or historical cache-write rate.",
+   "extracted_as": "research/sources/dedf56167aa34815.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "The July 9 xAI release note establishes API availability, not the disputed cache-write amount; current xAI pricing and API metadata cannot resolve whether the earlier cache_write value was official at the time. The Internet Archive CDX endpoint for xAI pricing timed out without returning data, so no before/after snapshot bracket was available. The supplied models.dev commit date alone does not establish a provider effective date.",
+ "verified": true
+}

@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 30.0,
+  "output": 60.0,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-4",
+   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-4.html",
+   "quote": "<div>Input</div><div class=\"text-2xl font-semibold\">$30.00</div>",
+   "supports": "OpenAI's GPT-4 model page lists the standard input price as $30 per million tokens.",
+   "extracted_as": "research/sources/89b5264d2cee6f34.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-4",
+   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-4.html",
+   "quote": "<div>Output</div><div class=\"text-2xl font-semibold\">$60.00</div>",
+   "supports": "OpenAI's GPT-4 model page lists the standard output price as $60 per million tokens.",
+   "extracted_as": "research/sources/89b5264d2cee6f34.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "The provider's documented GPT-4 prices are $30 input and $60 output, so the earlier $10/$30 models.dev entry appears to have been a catalog error. I could not date the correction: the Internet Archive CDX request for pricing-page snapshots returned HTTP 503, and no provider source retrieved here states an effective date.",
+ "verified": true
+}

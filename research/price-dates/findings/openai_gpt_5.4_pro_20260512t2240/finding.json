@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 30.0,
+  "output": 180.0,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-5.4-pro",
+   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-5.4-pro.html",
+   "quote": "For models with a 1.05M context window (GPT-5.4 and GPT-5.4 Pro), prompts with >272K input tokens are priced at 2x input and 1.5x output for the full session for standard, batch, and flex.",
+   "supports": "OpenAI's official long-context pricing threshold for GPT-5.4 Pro is above 272K input tokens; applied to the listed $30/$180 base rates, the long-context rates are $60/$270.",
+   "extracted_as": "research/sources/a5d5cb37c2d6a671.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/pricing/",
+   "saved_as": "sources/developers.openai.com_api_docs_pricing.html",
+   "quote": "gpt-5.4-pro (<272K context length)",
+   "supports": "OpenAI's published standard-context pricing table identifies GPT-5.4 Pro as a less-than-272K context model; its row gives $30 input and $180 output per million tokens.",
+   "extracted_as": "research/sources/0d98381e292cbaea.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The recorded 200,000-token threshold was not the official threshold: OpenAI's documentation specifies >272K for long-context pricing, so this is a models.dev correction, not a provider price change. The official price during the earlier period was $30/$180 per million tokens through 272K input tokens and $60/$270 above 272K; no dated historical source or archive bracket was available to establish a more precise historical timestamp.",
+ "verified": true
+}

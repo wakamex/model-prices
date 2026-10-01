@@ -1,0 +1,27 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-5.5",
+   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-5.5.html",
+   "quote": "For GPT-5.5, prompts with &gt;272K input tokens are priced at 2x input and 1.5x output for the full session for standard, batch, and flex.",
+   "supports": "OpenAI's currently served GPT-5.5 documentation states the 272K long-context pricing threshold. It does not establish when that threshold took effect.",
+   "extracted_as": "research/sources/77eee737d65ed6d2.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "The fetched official model page gives the current 272K threshold, but no contemporaneous evidence establishes whether OpenAI previously charged the higher tier above 200K or whether that earlier threshold was a models.dev error. I could not retrieve Internet Archive CDX results (requests failed with 503/connection refused), and OpenAI's launch announcement URL returned 403, so there is no reliable before/after bracket or official earlier-period price in the saved sources.",
+ "verified": true
+}

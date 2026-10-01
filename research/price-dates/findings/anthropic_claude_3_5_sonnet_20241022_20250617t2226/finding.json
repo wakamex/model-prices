@@ -1,0 +1,63 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 3.0,
+  "output": 15.0,
+  "cache_read": 0.3
+ },
+ "sources": [
+  {
+   "url": "https://www.anthropic.com/news/prompt-caching",
+   "saved_as": "sources/anthropic.com_news_prompt-caching.html",
+   "quote": "$3 / MTok",
+   "supports": "Anthropic's listed Claude 3.5 Sonnet base input price.",
+   "extracted_as": "research/sources/8716c9bbc07be2b9.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://www.anthropic.com/news/prompt-caching",
+   "saved_as": "sources/anthropic.com_news_prompt-caching.html",
+   "quote": "$15 / MTok",
+   "supports": "Anthropic's listed Claude 3.5 Sonnet output price.",
+   "extracted_as": "research/sources/8716c9bbc07be2b9.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://www.anthropic.com/news/prompt-caching",
+   "saved_as": "sources/anthropic.com_news_prompt-caching.html",
+   "quote": "$3.75 / MTok - Cache write",
+   "supports": "Anthropic's listed Claude 3.5 Sonnet cache-write price, showing models.dev's added cache_write value of $0.30 was not the official rate.",
+   "extracted_as": "research/sources/8716c9bbc07be2b9.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.anthropic.com/news/prompt-caching",
+   "saved_as": "sources/anthropic.com_news_prompt-caching.html",
+   "quote": "$0.30 / MTok - Cache read",
+   "supports": "Anthropic's listed Claude 3.5 Sonnet cache-read price, which was already official during the period models.dev omitted cache pricing.",
+   "extracted_as": "research/sources/8716c9bbc07be2b9.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.anthropic.com/news/prompt-caching",
+   "saved_as": "sources/anthropic.com_news_prompt-caching.html",
+   "quote": "Update: Prompt caching is Generally Available on the Anthropic API. Prompt caching is also available in preview in Amazon Bedrock and on Google Cloud\u2019s Vertex AI. (December 17, 2024)",
+   "supports": "The provider page dates the API prompt-caching GA update to December 17, 2024, before the June 2025 models.dev period.",
+   "extracted_as": "research/sources/8716c9bbc07be2b9.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "Anthropic's page lists Claude 3.5 Sonnet at $3/$15 per MTok and prompt-cache prices of $3.75/write and $0.30/read; it also dates API general availability to December 17, 2024. This makes the recorded change a models.dev fix, and its added $0.30 cache_write is itself inconsistent with Anthropic's listed write price; the Internet Archive CDX endpoint returned its temporary-offline page, so no snapshot bracket was available.",
+ "verified": false
+}

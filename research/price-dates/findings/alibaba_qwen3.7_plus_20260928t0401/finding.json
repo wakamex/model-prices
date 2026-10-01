@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "saved_as": "sources/www.alibabacloud.com_help_en_model-studio_model-pricing.html",
+   "quote": "qwen3.7-plus Currently equivalent to qwen3.7-plus-2026-05-26 context caching discount International 0<Token\u2264256K List price $0.4 (Limited-time 20% off) List price $1.6 (Limited-time 20% off) List price $1.6 (Limited-time 20% off)",
+   "supports": "Alibaba's current pricing page gives the Qwen3.7-Plus international base tier and indicates a limited-time discount, but it does not establish the price during the earlier period or when the discount began.",
+   "extracted_as": "research/sources/3a2df24851aa546e.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "saved_as": "sources/www.alibabacloud.com_help_en_model-studio_model-pricing.html",
+   "quote": "qwen3.6-plus Currently equivalent to qwen3.6-plus-2026-04-02 International 0<Token\u2264256K $0.5 $3 $3 1 million tokens 256K<Token\u22641M $2 $6 $6",
+   "supports": "The earlier models.dev figures match Alibaba's listed Qwen3.6-Plus prices, which is a possible source of misattribution, but this current page alone does not prove what Qwen3.7-Plus cost in June.",
+   "extracted_as": "research/sources/3a2df24851aa546e.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "Alibaba's live pricing page shows a Qwen3.7-Plus promotional price and a neighboring Qwen3.6-Plus row matching the earlier models.dev values, but it does not establish Qwen3.7-Plus's official price during the earlier period or whether those prior values were an error. The Internet Archive CDX endpoint returned HTTP 503, so no dated snapshot pair was available; the change date and classification remain unclear.",
+ "verified": false
+}

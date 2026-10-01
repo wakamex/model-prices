@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "http://web.archive.org/web/20260521081415/https://docs.x.ai/developers/pricing",
+   "saved_as": "sources/web.archive.org_web_20260521081415_docs.x.ai_developers_pricing.html",
+   "quote": "\\\"promptTextTokenPriceLongContext\\\":\\\"$n25000\\\",\\\"cachedPromptTokenPrice\\\":\\\"$n2000\\\",\\\"cachedPromptTokenPriceLongContext\\\":\\\"$n4000\\\",\\\"completionTextTokenPrice\\\":\\\"$n25000\\\",\\\"completionTokenPriceLongContext\\\":\\\"$n50000\\\"",
+   "supports": "The provider's archived model catalog contained these long-context and cached-token price values by the archive capture time, before the models.dev commit.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://docs.x.ai/developers/pricing",
+   "saved_as": "sources/docs.x.ai_developers_pricing.html",
+   "quote": "grok-4.20-0309-non-reasoning Long context \u2265 200k tokens 1M $1.25 $0.20 $2.50 $2.50 $0.40 $5.00",
+   "supports": "xAI's published pricing table currently lists $2.50 input, $0.40 cached input, and $5.00 output for this model's long-context tier.",
+   "extracted_as": "research/sources/dedf56167aa34815.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "xAI's archived catalog shows the lower long-context rates by 2026-05-21 08:14:15 UTC, but this is after the earlier models.dev observation began on 2026-05-20 21:02:38Z. No provider source found establishes whether the $4/$12 tier was official before that archive capture, so the evidence does not decide between a provider price change and a models.dev correction.",
+ "verified": false
+}

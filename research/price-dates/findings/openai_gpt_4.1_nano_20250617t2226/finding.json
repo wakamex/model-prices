@@ -1,0 +1,27 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 0.1,
+  "output": 0.4,
+  "cache_read": 0.025
+ },
+ "sources": [
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-4.1-nano",
+   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-4.1-nano.html",
+   "quote": "Input $0.10 Cached input $0.025 Output $0.40",
+   "supports": "OpenAI's model documentation lists the official input, cached input, and output prices, showing cached input was $0.025 per million tokens rather than the catalog's newly recorded $0.03.",
+   "extracted_as": "research/sources/35a29609b7f6c436.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The provider's published GPT-4.1 nano rates match the earlier input and output values, but its cached-input rate is $0.025, not the added $0.03. No provider change date or historical snapshot pair was established, so effective_at is null; the OpenAI announcement page could not be fetched directly (HTTP 403).",
+ "verified": false
+}

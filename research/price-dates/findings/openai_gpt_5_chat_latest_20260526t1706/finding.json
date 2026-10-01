@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-5-chat-latest",
+   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-5-chat-latest.html",
+   "quote": "Cached input",
+   "supports": "OpenAI's current GPT-5 Chat model page includes a cached-input price field; the fetched page displays $0.125. It does not date when that price began.",
+   "extracted_as": "research/sources/af0efaceeb7e8d1d.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/pricing",
+   "saved_as": "sources/developers.openai.com_api_docs_pricing.html",
+   "quote": "Model  | Input  | Cached input  | Cache writes  | Output",
+   "supports": "OpenAI's pricing page identifies cached input as a separately priced category, but the current page does not establish its historical availability for this alias.",
+   "extracted_as": "research/sources/00eaf917ab1113cf.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The fetched OpenAI sources establish a current cached-input rate for GPT-5 Chat but do not establish whether it was already official during the earlier models.dev period or when it took effect. The Internet Archive CDX request timed out without returning snapshots, so no historical bracket was available; classification and effective date remain unclear.",
+ "verified": false
+}

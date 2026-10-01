@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 2.5,
+  "output": 10.0,
+  "cache_read": 1.25
+ },
+ "sources": [
+  {
+   "url": "https://openai.com/index/api-prompt-caching/",
+   "saved_as": "sources/openai.com_index_api-prompt-caching.txt",
+   "quote": "gpt-4o-2024-08-06  | $2.50  | $1.25  | $10.00",
+   "supports": "OpenAI's October 1, 2024 prompt caching announcement lists GPT-4o at $2.50 per million uncached input tokens, $1.25 per million cached input tokens, and $10.00 per million output tokens. This establishes that the cache_read rate recorded later by models.dev was already official.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://openai.com/index/api-prompt-caching/",
+   "saved_as": "sources/openai.com_index_api-prompt-caching.txt",
+   "quote": "October 1, 2024",
+   "supports": "The source is dated October 1, 2024, before the earlier models.dev record on June 5, 2025.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "Classified as models_dev_fix: OpenAI's own October 1, 2024 announcement already listed GPT-4o cached input at $1.25 per million tokens, with input/output at $2.50/$10.00. The June 2025 models.dev change reflects cache-field renaming and omission of zero-priced cache fields, not a provider price change. No effective date for the catalog correction is inferred. The OpenAI page was accessible through the web retrieval tool, but direct curl returned HTTP 403; the saved text contains the quoted page passages. The Internet Archive CDX endpoint returned HTTP 503.",
+ "verified": true
+}

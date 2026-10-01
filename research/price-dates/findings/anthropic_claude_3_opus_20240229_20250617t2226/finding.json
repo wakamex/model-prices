@@ -1,0 +1,55 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 15.0,
+  "output": 75.0,
+  "cache_read": 1.5,
+  "cache_write": 18.75
+ },
+ "sources": [
+  {
+   "url": "https://www.anthropic.com/news/prompt-caching",
+   "saved_as": "sources/anthropic.com_news_prompt-caching.txt",
+   "quote": "Prompt caching, which enables developers to cache frequently used context between API calls, is now available on the Anthropic API. With prompt caching, customers can provide Claude with more background knowledge and example outputs\u2014all while reducing costs by up to 90% and latency by up to 85% for long prompts. Prompt caching is available today in public beta for Claude 3.5 Sonnet, Claude 3 Opus, and Claude 3 Haiku.",
+   "supports": "Anthropic offered prompt caching for Claude 3 Opus before the June 2025 models.dev field addition.",
+   "extracted_as": "research/sources/8716c9bbc07be2b9.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.anthropic.com/news/prompt-caching",
+   "saved_as": "sources/anthropic.com_news_prompt-caching.txt",
+   "quote": "$18.75 / MTok - Cache write",
+   "supports": "Anthropic's published Claude 3 Opus cache write price.",
+   "extracted_as": "research/sources/8716c9bbc07be2b9.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.anthropic.com/news/prompt-caching",
+   "saved_as": "sources/anthropic.com_news_prompt-caching.txt",
+   "quote": "$1.50 / MTok - Cache read",
+   "supports": "Anthropic's published Claude 3 Opus cache read price.",
+   "extracted_as": "research/sources/8716c9bbc07be2b9.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+   "saved_as": "sources/platform.claude.com_docs_en_about-claude_pricing.md",
+   "quote": "The following table shows pricing for all Claude models:",
+   "supports": "Identifies Anthropic's official model pricing table; the archived documentation page and launch article support the Opus 3 values above.",
+   "extracted_as": "research/sources/50846cd1ff366c72.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The reported addition is a catalog correction: Anthropic had already offered prompt caching for Claude 3 Opus, with a $1.50/MTok read and $18.75/MTok write price; it was not a provider change to $1.50 writes. Internet Archive's CDX endpoint returned HTTP 503, so no snapshot bracket or more precise effective date could be established.",
+ "verified": true
+}

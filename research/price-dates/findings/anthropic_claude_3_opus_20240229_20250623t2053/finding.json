@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 15.0,
+  "output": 75.0,
+  "cache_read": 1.5
+ },
+ "sources": [
+  {
+   "url": "https://www.anthropic.com/news/prompt-caching",
+   "saved_as": "sources/www.anthropic.com_news_prompt-caching.html",
+   "quote": "$18.75 / MTok - Cache write",
+   "supports": "Anthropic's own Claude 3 Opus pricing table states the official cache-write price.",
+   "extracted_as": "research/sources/8716c9bbc07be2b9.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.anthropic.com/news/prompt-caching",
+   "saved_as": "sources/www.anthropic.com_news_prompt-caching.html",
+   "quote": "Update : Prompt caching is Generally Available on the Anthropic API. Prompt caching is also available in preview in Amazon Bedrock and on Google Cloud\u2019s Vertex AI. (December 17, 2024)",
+   "supports": "The official announcement's update is dated December 17, 2024, before models.dev recorded the earlier price.",
+   "extracted_as": "research/sources/8716c9bbc07be2b9.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "Anthropic's official announcement already listed Claude 3 Opus cache writes at $18.75/MTok and cache reads at $1.50/MTok by December 17, 2024. The $1.50 cache_write value in models.dev was therefore not the provider's price; no separate correction date is established by these sources.",
+ "verified": true
+}

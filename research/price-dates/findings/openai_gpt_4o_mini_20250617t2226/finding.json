@@ -1,0 +1,27 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 0.15,
+  "output": 0.6,
+  "cache_read": 0.075
+ },
+ "sources": [
+  {
+   "url": "https://openai.com/index/api-prompt-caching/",
+   "saved_as": "sources/openai.com_index_api-prompt-caching.txt",
+   "quote": "gpt-4o-mini-2024-07-18  | $0.15  | $0.075  | $0.60",
+   "supports": "OpenAI's October 1, 2024 announcement gives GPT-4o mini input, cached-input, and output rates, establishing that the cached-input rate existed before the June 2025 models.dev record.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "Classified as models_dev_fix: OpenAI published the $0.15 input, $0.075 cached-input, and $0.60 output rates in 2024, before models.dev's June 5\u201317, 2025 period; the later $0.08 value is consistent with rounding that existing rate. No source found here states a provider price-change date, so effective_at is null. Internet Archive retrieval was unavailable from this environment, so no snapshot bracket could be established.",
+ "verified": true
+}

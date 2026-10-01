@@ -1,0 +1,45 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://x.ai/news/api",
+   "saved_as": "sources/xai.com_news_api.md",
+   "quote": "We are kicking off our public beta with a preview of a new Grok model that is currently in the final stages of development. The model \u2013 released under the provisional name grok-beta \u2013 has a context length of 128,000 tokens and also supports function calling and system prompts.",
+   "supports": "xAI identifies grok-beta as the model included in its API public beta; the announcement does not state its token prices.",
+   "extracted_as": "research/sources/a0d1a4244309656a.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://x.ai/news/grok-1212",
+   "saved_as": "sources/xai.com_news_grok-1212.md",
+   "quote": "As a result of our efficiency improvements, we are also lowering the price of these models to $2 / 1M input tokens and $10 / 1M output tokens.",
+   "supports": "xAI specifies a price reduction for grok-2-1212 and grok-2-vision-1212, not grok-beta; this does not establish the disputed Grok Beta prices.",
+   "extracted_as": "research/sources/e0c44d30e87131f4.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing",
+   "saved_as": "sources/docs.x.ai_developers_advanced-api-usage_prompt-caching_usage-and-pricing.md",
+   "quote": "Cached tokens are billed at the cached prompt token price, which is substantially lower than the regular prompt token price. The exact rates vary by model \u2014 check the Pricing page for current prices.",
+   "supports": "Current xAI documentation describes cached prompt token pricing; it does not document historical grok-beta cache_write pricing.",
+   "extracted_as": "research/sources/e56927861559295b.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The available xAI announcements do not state the official grok-beta prices during the earlier period or date a relevant price change, so the prior cache_write entry cannot be confirmed as official or erroneous. Wayback returned snapshots for x.ai/api, but fetching those snapshots failed with a connection error; the pricing-page CDX request returned HTTP 503, so no historical snapshot pair is available.",
+ "verified": false
+}

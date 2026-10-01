@@ -1,0 +1,45 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 0.276,
+  "output": 1.101,
+  "cache_read": 0.028
+ },
+ "sources": [
+  {
+   "url": "https://help.aliyun.com/en/model-studio/model-pricing",
+   "saved_as": "sources/help.aliyun.com_en_model-studio_model-pricing.html",
+   "quote": "qwen3.7-plus-2026-05-26 | Global | 0<Token\u2264256K | $0.276 | $1.101 | $1.101",
+   "supports": "Alibaba's official, version-specific Global pricing table gives qwen3.7-plus-2026-05-26 a 256K lower-tier boundary and the listed input/output prices.",
+   "extracted_as": "research/sources/76cac3ba4d016524.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-7-plus",
+   "saved_as": "sources/www.alibabacloud.com_help_en_model-studio_qwen3-7-plus.html",
+   "quote": "Explicit Cache Read  | 0.028  | Per 1M tokens",
+   "supports": "Alibaba's official Qwen3.7-Plus model page states its explicit cache-read price per million tokens.",
+   "extracted_as": "research/sources/96fcf1f728557a68.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://web.archive.org/cdx/search/cdx?url=help.aliyun.com%2Fen%2Fmodel-studio%2Fmodel-pricing&output=json",
+   "saved_as": "sources/web.archive.org_cdx_model-pricing.json",
+   "quote": "[\"com,aliyun,help)/en/model-studio/model-pricing\",\"20260810200132\",\"https://help.aliyun.com/en/model-studio/model-pricing\",\"text/html\",\"200\",\"CVDGBTWJ775GAARQMESGMCSIB7QGR7CK\",\"510229\"]",
+   "supports": "The archive index returned August 2026 snapshots only for this exact pricing page, with no snapshot bracketing the June 2026 models.dev update.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "The official pricing table identifies the dated 2026-05-26 model version with a 256K threshold, consistent with models.dev correcting its tier metadata rather than recording a provider price change; current documentation does not establish exactly when that listing was first published. The archive index returned August snapshots only, so it provides no before/after bracket around June. The official cache-read figure is for explicit cache reads and may not be directly equivalent to models.dev\u2019s cache_read field.",
+ "verified": false
+}

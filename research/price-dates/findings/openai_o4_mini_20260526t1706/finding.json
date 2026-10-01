@@ -1,0 +1,27 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 1.1,
+  "output": 4.4,
+  "cache_read": 0.275
+ },
+ "sources": [
+  {
+   "url": "https://developers.openai.com/api/docs/models/o4-mini",
+   "saved_as": "sources/developers.openai.com_api_docs_models_o4-mini.html",
+   "quote": "Text tokens | Per 1M tokens | \u2219 | Batch API price | Input | $1.10 | Cached input | $0.275 | Output | $4.40",
+   "supports": "OpenAI's model-specific pricing page lists the o4-mini standard input, cached input, and output rates as $1.10, $0.275, and $4.40 per million tokens. The catalog's prior cache rate of $0.28 differs from the published rate.",
+   "extracted_as": "research/sources/9c147f9a8e6a8e52.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The provider's current model page gives the same $0.275 cached-input rate as the post-change catalog value, indicating models.dev corrected its rounded $0.28 value rather than recording a provider price change. Internet Archive CDX was unavailable (HTTP 503), so no dated snapshot was obtained to establish when that correction occurred or independently bracket the historical period.",
+ "verified": false
+}

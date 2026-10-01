@@ -1,0 +1,27 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://docs.x.ai/developers/rest-api-reference/management/auth",
+   "saved_as": "sources/docs.x.ai_developers_rest-api-reference_management_auth.html",
+   "quote": "\"name\" : \"grok-3\" , \"version\" : \"1.0\" , \"inputModalities\" : [ \"TEXT\" ] , \"outputModalities\" : [ \"TEXT\" ] , \"promptTextTokenPrice\" : \"30000\" , \"promptImageTokenPrice\" : \"0\" , \"promptTextTokenPriceLongContext\" : \"0\" , \"cachedPromptTokenPrice\" : \"7500\" , \"completionTextTokenPrice\" : \"150000\" , \"completionTokenPriceLongContext\" : \"0\" , \"searchPrice\" : \"2500\" , \"rps\" : \"10\" , \"rpm\" : \"600\" , \"tpm\" : \"0\" , \"cluster\" : \"us-east-1\" , \"maxPromptLength\" : 131072 , \"aliases\" : [ \"grok-3-latest\" , \"grok-3-beta\" , \"grok-3-fast\" , \"grok-3-fast-latest\" , \"grok-3-fast-beta\" ]",
+   "supports": "The current provider reference groups the Grok 3 Fast aliases with a Grok 3 model entry, but it does not date this pricing or establish what was official during June 2025.",
+   "extracted_as": "research/sources/c34a6dcd600fb7db.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The available current xAI reference does not establish the historical June 2025 price or whether the added cache prices reflected a provider change. Internet Archive CDX queries for xAI documentation were attempted but returned no snapshots for the queried model route, then failed with connection refused for subsequent queries; there is no snapshot pair or provider-stated effective date here, so the classification remains unclear.",
+ "verified": false
+}

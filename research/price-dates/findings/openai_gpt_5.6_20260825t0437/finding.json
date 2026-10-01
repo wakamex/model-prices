@@ -1,0 +1,46 @@
+{
+ "classification": "price_change",
+ "effective_at": "2026-08-21",
+ "effective_precision": "day",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 5.0,
+  "output": 30.0,
+  "cache_read": 0.5,
+  "cache_write": null
+ },
+ "sources": [
+  {
+   "url": "https://community.openai.com/t/20-price-reduction-for-gpt-5-6-sol-api-codex-credits-and-chatgpt-work/1391726",
+   "saved_as": "sources/community.openai.com_t_20-price-reduction-for-gpt-5-6-sol-api-codex-credits-and-chatgpt-work_1391726.html",
+   "quote": "Starting today, you get the same Sol intelligence at a lower price. Sol now costs $4 per million input tokens and $20 per million output tokens, 20% lower input pricing and 33% lower output pricing.",
+   "supports": "OpenAI's announcement says the lower API rates started that day and gives the new input and output rates. The post is timestamped August 21, 2026.",
+   "extracted_as": "research/sources/201e34f805627b1b.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://community.openai.com/t/20-price-reduction-for-gpt-5-6-sol-api-codex-credits-and-chatgpt-work/1391726",
+   "saved_as": "sources/community.openai.com_t_20-price-reduction-for-gpt-5-6-sol-api-codex-credits-and-chatgpt-work_1391726.html",
+   "quote": "GPT-5.6 Sol  | $5.00  | $4.00  | $0.50  | $0.40  | $30.00  | $20.00",
+   "supports": "OpenAI's announcement table explicitly identifies the old and new input, cached input, and output prices.",
+   "extracted_as": "research/sources/201e34f805627b1b.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/pricing",
+   "saved_as": "sources/developers.openai.com_api_docs_pricing.html",
+   "quote": "gpt-5.6-sol  | $4.00  | $0.40  | $5.00  | $20.00",
+   "supports": "OpenAI's pricing documentation confirms the current Sol input, cached input, cache write, and output prices.",
+   "extracted_as": "research/sources/00eaf917ab1113cf.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "This was a provider price change, not a models.dev correction: OpenAI described the old and new rates and said the lower price started August 21, 2026. The announcement gives a date but no time or timezone; the older cache-write rate is not stated in the saved primary sources, so it is null.",
+ "verified": true
+}

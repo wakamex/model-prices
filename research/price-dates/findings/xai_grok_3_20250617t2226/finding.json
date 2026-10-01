@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://docs.x.ai/developers/release-notes",
+   "saved_as": "sources/docs.x.ai_developers_release-notes.html",
+   "quote": "May 29 Cached prompt is now available You can now use cached prompt to save on repeated prompts.",
+   "supports": "xAI's release notes say prompt caching was available by May 29, 2025, before the models.dev interval began. They do not state Grok 3's cache prices.",
+   "extracted_as": "research/sources/2b950d5a745e6c95.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://docs.x.ai/developers/pricing",
+   "saved_as": "sources/docs.x.ai_developers_pricing.html",
+   "quote": "All prices are in USD. For per-model details, see the models page.",
+   "supports": "Current official pricing page; it does not resolve Grok 3's historical pricing during June 2025.",
+   "extracted_as": "research/sources/dedf56167aa34815.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The release notes establish that cached prompts existed before the earlier models.dev record, but do not establish Grok 3's cache rates then or a later provider price change. The Internet Archive CDX endpoint could not be reached from this environment, so no historical pricing-page snapshots were available to bracket the change; effective date and classification remain unclear.",
+ "verified": false
+}

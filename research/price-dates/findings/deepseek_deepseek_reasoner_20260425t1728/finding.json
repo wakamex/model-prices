@@ -1,0 +1,54 @@
+{
+ "classification": "price_change",
+ "effective_at": "2026-04-24",
+ "effective_precision": "day",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://deepseek.com/news/v4-preview/",
+   "saved_as": "sources/deepseek.com_news_v4-preview.html",
+   "quote": "\u52a8\u60012026 \u5e74 4 \u6708 24 \u65e5",
+   "supports": "Dates the provider's V4 launch announcement to April 24, 2026.",
+   "extracted_as": "research/sources/6d509d40106014c8.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://deepseek.com/news/v4-preview/",
+   "saved_as": "sources/deepseek.com_news_v4-preview.html",
+   "quote": "\u65e7\u6709\u7684 API \u63a5\u53e3\u7684\u4e24\u4e2a\u6a21\u578b\u540d deepseek-chat \u4e0e deepseek-reasoner \u5c06\u4e8e\u4e09\u4e2a\u6708\u540e\uff082026-07-24\uff09\u505c\u6b62\u4f7f\u7528\u3002\u5f53\u524d\u9636\u6bb5\u5185\uff0c\u8fd9\u4e24\u4e2a\u6a21\u578b\u540d\u5206\u522b\u6307\u5411 deepseek-v4-flash \u7684\u975e\u601d\u8003\u6a21\u5f0f\u4e0e\u601d\u8003\u6a21\u5f0f\u3002",
+   "supports": "Provider says deepseek-reasoner mapped to V4-Flash during the period beginning with the launch announcement; the accompanying official price graphic lists V4-Flash at $0.14 input, $0.28 output, and $0.028 cache hit per million tokens.",
+   "extracted_as": "research/sources/6d509d40106014c8.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://deepseek.com/images/blog/v4-preview/v4-price.png",
+   "saved_as": "sources/deepseek.com_images_blog_v4-preview_v4-price.png",
+   "quote": "V4 API \u4ef7\u683c",
+   "supports": "Official V4 launch pricing graphic, embedded in the announcement, gives the V4-Flash rates corresponding to the new prices.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://api-docs.deepseek.com/updates/",
+   "saved_as": "sources/api-docs.deepseek.com_updates.html",
+   "quote": "Date: 2026-04-24",
+   "supports": "Independent provider documentation changelog dates the V4 API update to April 24, 2026.",
+   "extracted_as": "research/sources/e547d0d8cbe359a0.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The provider's April 24, 2026 V4 announcement says the legacy deepseek-reasoner name pointed to V4-Flash, and its attached official pricing graphic lists the new V4-Flash rates. The provider page dates the announcement but gives no time of day, so the effective time is stated only to the day. Internet Archive CDX was unavailable (connection failure), so I could not retrieve archived provider pricing pages; consequently the earlier rates are not independently established here and official_previous_price is null.",
+ "verified": false
+}

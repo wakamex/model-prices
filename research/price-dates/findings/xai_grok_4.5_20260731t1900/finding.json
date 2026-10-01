@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://docs.x.ai/developers/pricing",
+   "saved_as": "sources/docs.x.ai_developers_pricing.html",
+   "quote": "grok-4.5 Long context \u2265 200k tokens 500k $2.00 $0.30 $6.00 $4.00 $0.60 $12.00",
+   "supports": "Current xAI documentation lists Grok 4.5 long-context cached input at $0.60 per million tokens, with $4 input and $12 output.",
+   "extracted_as": "research/sources/dedf56167aa34815.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://docs.x.ai/developers/models/grok-4.5",
+   "saved_as": "sources/docs.x.ai_developers_models_grok-4.5.html",
+   "quote": "We charge different rates for requests which exceed the 200K context window",
+   "supports": "xAI documents a distinct pricing tier for requests above the 200K context threshold.",
+   "extracted_as": "research/sources/80640d2f1b4eaa52.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The current official pricing page gives the post-correction long-context cached-input rate ($0.60), but it does not establish what xAI charged during the earlier period. The Wayback CDX endpoint was unavailable (HTTP 503; browser access also failed), so there is no primary snapshot or effective-date evidence to distinguish a provider price change from a models.dev fix.",
+ "verified": false
+}

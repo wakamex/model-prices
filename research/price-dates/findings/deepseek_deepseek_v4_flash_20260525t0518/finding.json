@@ -1,0 +1,36 @@
+{
+ "classification": "price_change",
+ "effective_at": null,
+ "effective_precision": "bracketed",
+ "bracket": {
+  "last_before": "2026-04-25T16:58:22Z",
+  "first_after": "2026-04-26T15:11:33Z"
+ },
+ "official_previous_price": {
+  "input": 0.14,
+  "output": 0.28,
+  "cache_read": 0.028
+ },
+ "sources": [
+  {
+   "url": "https://web.archive.org/web/20260425165822/https://api-docs.deepseek.com/quick_start/pricing/",
+   "saved_as": "sources/web.archive.org_web_20260425165822_pricing.html",
+   "quote": "1M INPUT TOKENS (CACHE HIT)$0.028$0.03625 (limited-time 75% off*)$0.145",
+   "supports": "DeepSeek's official pricing page, archived immediately before the change, listed the V4 Flash cache hit price as $0.028 per million tokens.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://web.archive.org/web/20260426151133/https://api-docs.deepseek.com/quick_start/pricing/",
+   "saved_as": "sources/web.archive.org_web_20260426151133_pricing.html",
+   "quote": "1M INPUT TOKENS (CACHE HIT)(2)$0.0028$0.003625 (limited-time 75% off(3))$0.0145",
+   "supports": "DeepSeek's official pricing page, archived immediately after the change, listed the V4 Flash cache hit price as $0.0028 per million tokens.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The official snapshots establish an actual provider price change, rather than a models.dev correction. They bracket the change between 2026-04-25T16:58:22Z and 2026-04-26T15:11:33Z; no exact effective time is stated by these sources.",
+ "verified": false
+}

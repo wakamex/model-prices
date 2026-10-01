@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "saved_as": "sources/www.alibabacloud.com_help_en_model-studio_model-pricing.html",
+   "quote": "qwen3-coder-30b-a3b-instruct  | International  | 0<Token\u226432K  | $0.45  | $2.25  | 1 million tokens",
+   "supports": "Alibaba currently lists $0.45/$2.25 as the international tier up to 32K input tokens; following rows give higher rates for higher context lengths.",
+   "extracted_as": "research/sources/3a2df24851aa546e.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-coder-30b-a3b-instruct",
+   "saved_as": "sources/www.alibabacloud.com_help_en_model-studio_qwen3-coder-30b-a3b-instruct.html",
+   "quote": "Last Updated:Sep 28, 2026",
+   "supports": "Alibaba's model-specific page is current and updated after the models.dev record, so it does not establish whether the flat price applied earlier.",
+   "extracted_as": "research/sources/1806cc86b6b3f9f5.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "Alibaba's current primary pricing page confirms the recorded $0.45/$2.25 is the <=32K international tier and lists higher-context tiers; it does not establish when those tiers began. The earlier flat entry may therefore be an omission or may reflect an earlier pricing schedule. Internet Archive CDX requests failed with HTTP 503, so no snapshot pair was available to decide or bracket the change.",
+ "verified": false
+}

@@ -1,0 +1,36 @@
+{
+ "classification": "price_change",
+ "effective_at": "2026-07-30",
+ "effective_precision": "day",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://openai.com/index/gpt-5-6/",
+   "saved_as": "sources/openai.com_index_gpt-5-6.txt",
+   "quote": "GPT\u20115.6 is priced per 1M tokens across three model sizes: Sol is $5 input / $30 output; Terra is $2.50 input / $15 output; and Luna is $1 input / $6 output.",
+   "supports": "OpenAI's July 9 launch post states Terra's earlier official input and output prices.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://openai.com/index/advancing-the-price-performance-frontier-with-gpt-5-6/",
+   "saved_as": "sources/openai.com_index_advancing-the-price-performance-frontier-with-gpt-5-6.txt",
+   "quote": "Starting July 30, API pricing is $2 per million input tokens and $12 per million output tokens for Terra, and $0.20 per million input tokens and $1.20 per million output tokens for Luna. Sol pricing remains unchanged.",
+   "supports": "OpenAI explicitly dates the new API prices to July 30, 2026.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "This is a provider price change, not a models.dev correction: OpenAI's July 9 launch post states Terra at $2.50/$15, and its July 30 announcement states $2/$12 starting July 30. The exact time and timezone are not stated. Direct page downloads returned HTTP 403 and the Internet Archive CDX endpoint did not return usable content in this environment; saved source files contain the quoted text from OpenAI's search-indexed page output rather than raw downloaded HTML.",
+ "verified": true
+}

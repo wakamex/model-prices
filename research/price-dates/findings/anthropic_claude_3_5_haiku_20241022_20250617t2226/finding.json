@@ -1,0 +1,27 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 0.8,
+  "output": 4.0,
+  "cache_read": 0.08
+ },
+ "sources": [
+  {
+   "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+   "saved_as": "sources/platform.claude.com_docs_en_about-claude_pricing.html",
+   "quote": "Claude Haiku 3.5 | $0.80 / MTok | $4 / MTok | $1 / MTok | $1.60 / MTok | $0.08 / MTok",
+   "supports": "Anthropic's official pricing table gives Haiku 3.5 base input/output rates and prompt cache write rates of $1/$1.60 per MTok and cache read rate of $0.08 per MTok. This contradicts a newly recorded cache_write rate of $0.08.",
+   "extracted_as": "research/sources/50846cd1ff366c72.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The recorded change is a models.dev correction to cache-field data, not a provider price change: the earlier base prices match Anthropic's table, while Anthropic lists $0.08 only for cache reads and lists higher cache write prices. The Wayback CDX endpoint did not respond to requests, so this source does not establish an archived price precisely as of June 2025; effective_at and bracket are therefore unknown.",
+ "verified": false
+}

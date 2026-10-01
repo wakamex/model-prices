@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://x.ai/news/grok-3",
+   "saved_as": "sources/x.ai_news_grok-3.html",
+   "quote": "In the coming weeks, we will release Grok 3 and Grok 3 mini via our API platform, offering access to both the standard and reasoning models.",
+   "supports": "xAI's announcement says Grok 3 and Grok 3 mini would be released through its API, but gives no prices or effective pricing date.",
+   "extracted_as": "research/sources/9e8c6430d83420da.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/pricing",
+   "saved_as": "sources/docs.x.ai_developers_pricing.html",
+   "quote": "Prompt caching discounts are applied before the multiplier.",
+   "supports": "Current xAI pricing documentation describes caching discounts, but it does not establish whether the earlier cache_write price for this model was official or when a change occurred.",
+   "extracted_as": "research/sources/dedf56167aa34815.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The primary sources retrieved do not state the official historical rate for grok-3-mini-fast-latest or date a pricing change. The Internet Archive CDX request for the xAI pricing documentation returned HTTP 503, so no archived pricing snapshot pair could be checked. The evidence therefore does not distinguish a provider price change from a models.dev correction.",
+ "verified": false
+}

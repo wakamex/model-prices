@@ -1,0 +1,45 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 3.0,
+  "output": 15.0,
+  "cache_read": 0.3
+ },
+ "sources": [
+  {
+   "url": "https://web.archive.org/web/20250610103300/https://docs.anthropic.com/en/docs/about-claude/pricing",
+   "saved_as": "sources/web.archive.org_20250610103300_docs.anthropic.com_pricing.html",
+   "quote": "Claude Sonnet 3.5 $3 / MTok $3.75 / MTok $6 / MTok $0.30 / MTok $15 / MTok",
+   "supports": "Provider pricing page snapshot from June 10, 2025 lists base input, cache write tiers, cache hits, and output prices for Claude Sonnet 3.5.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://web.archive.org/web/20250619162725/https://docs.anthropic.com/en/docs/about-claude/pricing",
+   "saved_as": "sources/web.archive.org_20250619162725_docs.anthropic.com_pricing.html",
+   "quote": "Claude Sonnet 3.5 $3 / MTok $3.75 / MTok $6 / MTok $0.30 / MTok $15 / MTok",
+   "supports": "Provider pricing page snapshot from June 19, 2025 confirms the same model pricing shortly after the models.dev commit.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://claude.com/blog/prompt-caching",
+   "saved_as": "sources/claude.com_blog_prompt-caching.html",
+   "quote": "Claude 3.5 Sonnet Our most intelligent model to date 200K context window Input $3 / MTok Prompt caching $3.75 / MTok - Cache write $0.30 / MTok - Cache read Output $15 / MTok",
+   "supports": "Anthropic states its official Claude 3.5 Sonnet cache write and cache read rates alongside input and output prices.",
+   "extracted_as": "research/sources/c7c4fcc8db2f7ca5.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The earlier $3 input and $15 output values were official, but the earlier record omitted Anthropic\u2019s already-published cache pricing; this was not a provider price change. Anthropic\u2019s pricing table gives $3.75/MTok for 5-minute cache writes (and $6/MTok for 1-hour writes) and $0.30/MTok for cache hits. The models.dev after-value of $0.30 for cache_write therefore does not match Anthropic\u2019s official write price. No effective date applies.",
+ "verified": false
+}

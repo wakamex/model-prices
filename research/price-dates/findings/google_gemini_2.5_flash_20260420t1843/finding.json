@@ -1,0 +1,36 @@
+{
+ "classification": "price_change",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://developers.googleblog.com/en/gemini-2-5-models-now-support-implicit-caching/",
+   "saved_as": "sources/developers.googleblog.com_en_gemini-2-5-models-now-support-implicit-caching.html",
+   "quote": "We will dynamically pass cost savings back to you, providing the same 75% token discount.",
+   "supports": "Google announced that Gemini 2.5 implicit cache hits received a 75% discount; on $0.30 input that corresponds to $0.075 per million cached tokens, matching the earlier recorded rate.",
+   "extracted_as": "research/sources/c5cb8ef891d638e9.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "saved_as": "sources/ai.google.dev_gemini-api_docs_pricing.html",
+   "quote": "Context caching price | Not available | $0.03 (text / image / video) $0.1 (audio) $1.00 / 1,000,000 tokens per hour (storage price)",
+   "supports": "Google's current Gemini 2.5 Flash Standard pricing table lists $0.03 per million cached text, image, or video tokens.",
+   "extracted_as": "research/sources/b88c4950bbf39196.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The official May 2025 announcement supports the earlier $0.075 cache-read rate as a 75% discount on $0.30 input, while Google's current pricing page lists $0.03, so this is a provider price change. Google does not state the change date on the fetched page; the Internet Archive CDX request returned HTTP 503, so there is no defensible effective date or snapshot bracket.",
+ "verified": true
+}

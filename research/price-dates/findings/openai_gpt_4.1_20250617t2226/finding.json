@@ -1,0 +1,27 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 2.0,
+  "output": 8.0,
+  "cache_read": 0.5
+ },
+ "sources": [
+  {
+   "url": "https://openai.com/index/gpt-4-1/",
+   "saved_as": "sources/openai.com_index_gpt-4-1.txt",
+   "quote": "gpt-4.1  | $2.00  | $0.50  | $8.00  | $1.84",
+   "supports": "OpenAI's GPT-4.1 launch announcement lists input, cached input, and output prices as $2.00, $0.50, and $8.00 per million tokens, respectively.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "OpenAI's launch announcement already listed cached input at $0.50 per million tokens, so the earlier models.dev record omitting cache_read was not the provider's complete official price. The announcement says these models were launching then; it does not state a later change date, and the models.dev commit only adds the omitted field.",
+ "verified": true
+}

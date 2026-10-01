@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-5.5-pro.md",
+   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-5.5-pro.md",
+   "quote": "| Input | $30 | 1M tokens |\n| Output | $180 | 1M tokens |",
+   "supports": "OpenAI currently documents the model\u2019s standard input and output rates as $30 and $180 per million tokens.",
+   "extracted_as": "research/sources/f4193889b065983a.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/pricing.md",
+   "saved_as": "sources/developers.openai.com_api_docs_pricing.md",
+   "quote": "| gpt-5.5-pro (<272K context length) | $30.00 | - | - | $180.00 | $60.00 | - | - | $270.00 |",
+   "supports": "OpenAI currently documents $30/$180 for shorter contexts and $60/$270 for long contexts, with a 272K context threshold.",
+   "extracted_as": "research/sources/6d28d1d0210a5ba7.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The OpenAI sources fetched confirm that both price pairs are official now, but do not date the introduction of long-context pricing; the current threshold is 272K, not models.dev\u2019s 200K. The OpenAI launch-page fetch returned HTTP 403 and the Internet Archive CDX request returned HTTP 503, so the available evidence cannot determine whether the earlier models.dev entry was historically complete or when the tier began.",
+ "verified": true
+}

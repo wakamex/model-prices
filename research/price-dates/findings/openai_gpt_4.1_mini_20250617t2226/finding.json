@@ -1,0 +1,45 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 0.4,
+  "output": 1.6,
+  "cache_read": 0.1
+ },
+ "sources": [
+  {
+   "url": "https://web.archive.org/web/20250612080402id_/https://openai.com/index/gpt-4-1/",
+   "saved_as": "sources/web.archive.org_web_20250612080402_openai_gpt-4-1.html",
+   "quote": "gpt-4.1-mini | $0.40 | $0.10 | $1.60 | $0.42",
+   "supports": "OpenAI's pricing table in the June 12, 2025 archived announcement lists input, cached input, and output prices at $0.40, $0.10, and $1.60 per million tokens.",
+   "extracted_as": "research/sources/d086554a47cb6ff5.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://web.archive.org/cdx/search/cdx?url=openai.com/index/gpt-4-1/&output=json&filter=statuscode:200&filter=timestamp:2025&fl=timestamp,original,statuscode&collapse=digest",
+   "saved_as": "sources/web.archive.org_cdx_openai_gpt-4-1.json",
+   "quote": "[\"20250612080402\",\"https://openai.com/index/gpt-4-1/\",\"200\"]",
+   "supports": "The archive index records the cited OpenAI announcement snapshot at 2025-06-12 08:04:02 UTC.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-4.1-mini",
+   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-4.1-mini.html",
+   "quote": "Input\n$0.40\nCached input\n$0.10\nOutput\n$1.60",
+   "supports": "OpenAI's model documentation confirms the model's input, cached input, and output prices.",
+   "extracted_as": "research/sources/8a4fa43931a29660.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The reported input and output rates were correct, but the prior models.dev record omitted OpenAI's already listed $0.10 cached-input rate. OpenAI's archived June 12 announcement shows these prices before the June 17 schema commit; the commit date is a dataset correction date, not a provider price effective date.",
+ "verified": false
+}

@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://docs.x.ai/developers/pricing",
+   "saved_as": "sources/docs.x.ai_developers_pricing.html",
+   "quote": "grok-4.20-0309-reasoning Long context \u2265 200k tokens | 1M | $1.25 | $0.20 | $2.50 | $2.50 | $0.40 | $5.00",
+   "supports": "xAI's current pricing lists the model's long-context input, cached-input, and output rates as $2.50, $0.40, and $5.00 per million tokens, respectively. This establishes the current official pricing, not its May 2026 history.",
+   "extracted_as": "research/sources/dedf56167aa34815.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://docs.x.ai/developers/models/grok-4.20-experimental-beta-0304-reasoning",
+   "saved_as": "sources/docs.x.ai_developers_models_grok-4.20-experimental-beta-0304-reasoning.html",
+   "quote": "Model name\n\ngrok-4.20-0309-reasoning",
+   "supports": "xAI's model page identifies this model by the exact slug in the recorded change.",
+   "extracted_as": "research/sources/727cc8c8dad76b6f.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The available xAI pages show current prices only; they do not establish whether the earlier $4/$12 long-context rates were ever official or when any change took effect. The Internet Archive CDX endpoint for the provider documentation returned HTTP 503, so no historical snapshot pair was available. Accordingly, the classification and date remain unresolved.",
+ "verified": false
+}

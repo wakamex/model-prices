@@ -1,0 +1,54 @@
+{
+ "classification": "price_change",
+ "effective_at": "2026-09-10T04:00:00Z",
+ "effective_precision": "exact",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://api-docs.deepseek.com/news/news260821/",
+   "saved_as": "sources/api-docs.deepseek.com_news_news260821.html",
+   "quote": "Images are tokenized for billing: up to 384 tokens each, at V4-Flash pricing",
+   "supports": "DeepSeek says the vision model uses the provider's V4-Flash prices, establishing it was priced with that model at launch.",
+   "extracted_as": "research/sources/267bf98ef0798993.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://api-docs.deepseek.com/news/news260910/",
+   "saved_as": "sources/api-docs.deepseek.com_news_news260910.html",
+   "quote": "New pricing takes effect at 04:00 UTC on Sept 10, 2026.",
+   "supports": "DeepSeek gives the exact effective time for the new API pricing.",
+   "extracted_as": "research/sources/d5314b91bf6a1d15.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://api-docs.deepseek.com/news/news260910/",
+   "saved_as": "sources/api-docs.deepseek.com_news_news260910.html",
+   "quote": "V4-Flash & V4-Flash-Vision-Exp are retired. For compatibility, deepseek-v4-flash and deepseek-v4-flash-vision-exp temporarily route to V4.1-Flash.",
+   "supports": "DeepSeek confirms the affected legacy vision model name now routes to V4.1-Flash.",
+   "extracted_as": "research/sources/d5314b91bf6a1d15.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://api-docs.deepseek.com/quick_start/pricing/",
+   "saved_as": "sources/api-docs.deepseek.com_quick_start_pricing.html",
+   "quote": "The legacy names deepseek-v4-flash and deepseek-v4-flash-vision-exp are still accepted, but the corresponding models have been retired, their requests are served by the DeepSeek-V4.1-Flash model and billed at the Flash price.",
+   "supports": "DeepSeek confirms requests using the vision model's legacy name are billed at the new Flash price.",
+   "extracted_as": "research/sources/280758cc57a6ef53.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "DeepSeek\u2019s August 21 launch note says the vision model used V4-Flash pricing, and its September 10 announcement states that new pricing took effect at 04:00 UTC while routing the legacy vision name to V4.1-Flash. The provider\u2019s current page does not state the prior numeric rates, and web.archive.org was unavailable, so the previous-price fields are null.",
+ "verified": true
+}

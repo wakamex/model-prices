@@ -17,7 +17,7 @@
    "saved_as": "sources/web.archive.org_pricing_20260731073821.html",
    "quote": "1M INPUT TOKENS (CACHE HIT) $0.0028; 1M INPUT TOKENS (CACHE MISS) $0.14; 1M OUTPUT TOKENS $0.28",
    "supports": "DeepSeek's official API pricing page archived July 31 lists the recorded earlier Flash price.",
-   "extracted_as": "research/sources/074e2ec8dd51d418.md",
+   "extracted_as": null,
    "quote_verified": false,
    "verified_in": null
   },
@@ -44,7 +44,7 @@
    "saved_as": "sources/web.archive.org_pricing_pre_sep.html",
    "quote": "1M INPUT TOKENS (CACHE MISS) OFF-PEAK $0.22 $0.66; PEAK $0.44 $1.32; 1M OUTPUT TOKENS OFF-PEAK $0.66 $1.98; PEAK $1.32 $3.96",
    "supports": "Immediately before the September change, the official pricing page showed rates higher than the old catalog value, reflecting a separate August price schedule.",
-   "extracted_as": "research/sources/2f429e12a7c39ba9.md",
+   "extracted_as": null,
    "quote_verified": false,
    "verified_in": null
   },

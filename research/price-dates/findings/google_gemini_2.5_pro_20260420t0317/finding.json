@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/pricing?hl=en",
+   "saved_as": "sources/ai.google.dev-gemini-api-docs-pricing-hl-en.html",
+   "quote": "Context caching price | Not available | $0.125, prompts <= 200k tokens $0.25, prompts > 200k $4.50 / 1,000,000 tokens per hour (storage price)",
+   "supports": "Google's current Gemini Developer API pricing for Gemini 2.5 Pro.",
+   "extracted_as": "research/sources/0dec03421ba15acd.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/changelog",
+   "saved_as": "sources/ai.google.dev-gemini-api-docs-changelog.html",
+   "quote": "Released gemini-2.5-pro, the stable version of our most powerful model, now with adaptive thinking.",
+   "supports": "Google\u2019s changelog dates the stable model release under June 17, 2025, but contains no stated date for this cache-price change.",
+   "extracted_as": "research/sources/a24fd97eb3d00730.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The current Gemini Developer API price differs from the recorded earlier cache_read value, but available primary sources do not establish whether $0.31 was the Gemini Developer API\u2019s official rate during the earlier period or a pricing mix-up with another Google offering. The changelog does not state a price-change date, and the Internet Archive CDX request timed out, leaving no usable snapshots to bracket the date; classification and effective date are therefore unclear.",
+ "verified": false
+}

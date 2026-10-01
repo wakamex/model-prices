@@ -1,0 +1,45 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 1.0,
+  "output": 2.0,
+  "cache_read": 0.2
+ },
+ "sources": [
+  {
+   "url": "https://web.archive.org/web/20260521081415/https://docs.x.ai/developers/pricing",
+   "saved_as": "sources/web.archive.org_web_20260521081415_docs.x.ai_developers_pricing.html",
+   "quote": "grok-build-0.1 256k $1.00 $0.20 $2.00",
+   "supports": "xAI's pricing page snapshot from 2026-05-21 08:14:15 UTC lists the model's base input, cached input, and output prices before the models.dev commit.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://docs.x.ai/developers/pricing",
+   "saved_as": "sources/docs.x.ai_developers_pricing.html",
+   "quote": "\"name\":\"grok-build-0.1\",\"version\":\"1.0\",\"inputModalities\":[\"TEXT\",\"IMAGE\"],\"outputModalities\":[\"TEXT\"],\"promptTextTokenPrice\":\"10000\",\"promptImageTokenPrice\":\"10000\",\"promptTextTokenPriceLongContext\":\"20000\",\"cachedPromptTokenPrice\":\"2000\",\"cachedPromptTokenPriceLongContext\":\"4000\",\"completionTextTokenPrice\":\"20000\",\"completionTokenPriceLongContext\":\"40000\"",
+   "supports": "xAI's current official pricing data encodes the long-context rates as double the base rates: input $2, cached input $0.40, and output $4 per million tokens.",
+   "extracted_as": "research/sources/dedf56167aa34815.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://web.archive.org/cdx/search/cdx?url=docs.x.ai/developers/pricing&output=json&filter=statuscode:200&filter=timestamp:202605&fl=timestamp,original,statuscode,digest&collapse=digest",
+   "saved_as": "sources/web.archive.org_cdx_docs.x.ai_developers_pricing.json",
+   "quote": "[\"20260521081415\",\"https://docs.x.ai/developers/pricing\",\"200\",\"EM5Q5K2ZHBYPLT6F6ERYNPEMT5WTB6XI\"]",
+   "supports": "The Internet Archive CDX index dates the pre-commit xAI pricing page capture to 2026-05-21 08:14:15 UTC.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "The provider's pricing documentation already listed the $1/$2/$0.20 base rates in an archived capture before the models.dev commit, and its pricing data defines doubled rates for long context. This points to models.dev adding omitted long-context tiers rather than recording a provider price change; the available sources do not state when those tiers first took effect.",
+ "verified": false
+}

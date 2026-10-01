@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://docs.x.ai/developers/release-notes",
+   "saved_as": "sources/docs.x.ai_developers_release-notes.html",
+   "quote": "You can now use cached prompt to save on repeated prompts.",
+   "supports": "xAI release notes say cached prompts were available by May 29, 2025; they do not state the price or when the cache rates took effect.",
+   "extracted_as": "research/sources/2b950d5a745e6c95.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/pricing",
+   "saved_as": "sources/docs.x.ai_developers_pricing.html",
+   "quote": "Cached prompt tokens: Prompt tokens that were served from cache rather than recomputed",
+   "supports": "xAI defines the cached prompt token category on its current pricing page, but this does not establish its historical Grok 3 mini price.",
+   "extracted_as": "research/sources/dedf56167aa34815.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The available xAI release notes establish that cached prompts were available by May 29, but provide no historical Grok 3 mini rate or pricing-change date, so the prior $0.30/$0.50 rates cannot be confirmed or rejected as official. Internet Archive CDX requests returned HTTP 503 and direct snapshot requests returned 404, so no historical pricing snapshot could be checked.",
+ "verified": false
+}

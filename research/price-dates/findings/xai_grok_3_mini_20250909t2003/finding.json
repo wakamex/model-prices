@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://x.ai/news/grok-3",
+   "saved_as": "sources/x.ai_news_grok-3.html",
+   "quote": "In the coming weeks, we will release Grok 3 and Grok 3 mini via our API platform, offering access to both the standard and reasoning models.",
+   "supports": "xAI announced planned API availability for Grok 3 Mini, but this announcement gives no price or effective date.",
+   "extracted_as": "research/sources/9e8c6430d83420da.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing",
+   "saved_as": "sources/docs.x.ai_prompt-caching_usage-and-pricing.html",
+   "quote": "Cached tokens are billed at the cached prompt token price, which is substantially lower than the regular prompt token price.",
+   "supports": "xAI's current documentation describes discounted cached prompt tokens; it does not state a separate historical cache-write rate for Grok 3 Mini.",
+   "extracted_as": "research/sources/e56927861559295b.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The available xAI primary sources do not determine whether the earlier cache_write value was an official rate or a models.dev error, and they do not state or bracket a change date. Wayback CDX requests for the xAI pricing page returned HTTP 503, so no historical snapshot pair was available.",
+ "verified": false
+}

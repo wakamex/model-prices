@@ -1,0 +1,27 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 0.8,
+  "output": 4.0,
+  "cache_read": 0.08
+ },
+ "sources": [
+  {
+   "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
+   "saved_as": "sources/docs.anthropic.com_en_docs_about-claude_pricing.html",
+   "quote": "Claude Haiku 3.5 | $0.80 / MTok | $4 / MTok | $1 / MTok | $1.6 / MTok | $0.08 / MTok",
+   "supports": "Anthropic's official pricing table lists the Haiku 3.5 base input, output, 5-minute cache write, 1-hour cache write, and cache-hit prices respectively.",
+   "extracted_as": "research/sources/5770757567c6c228.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "Anthropic's table distinguishes 5-minute cache writes ($1/MTok) from cache hits ($0.08/MTok), so the earlier $0.08 cache_write value was not Anthropic's official price. The source establishes the official value but does not state when models.dev's correction occurred; effective_at is therefore null.",
+ "verified": false
+}

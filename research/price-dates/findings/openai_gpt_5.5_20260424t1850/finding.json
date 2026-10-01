@@ -1,0 +1,36 @@
+{
+ "classification": "price_change",
+ "effective_at": "2026-04-24",
+ "effective_precision": "day",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://openai.com/index/introducing-gpt-5-5/",
+   "saved_as": "sources/openai.com_index_introducing-gpt-5-5.txt",
+   "quote": "For API developers, gpt-5.5 will soon be available in the Responses and Chat Completions APIs at $5 per 1M input tokens and $30 per 1M output tokens, with a 1M context window.",
+   "supports": "OpenAI states API availability began April 24; its original announcement states the standard GPT-5.5 API rates were $5 input and $30 output per million tokens.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-5.5",
+   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-5.5.html",
+   "quote": "For GPT-5.5, prompts with &gt;272K input tokens are priced at 2x input and 1.5x output for the full session for standard, batch, and flex.",
+   "supports": "OpenAI's current model documentation confirms an official higher-price long-context regime (twice input and 1.5 times output); current threshold is 272K tokens.",
+   "extracted_as": "research/sources/77eee737d65ed6d2.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "The $5/$30 baseline was the price OpenAI announced before API availability; the dated April 24 availability update is the best provider-stated effective date for the API price structure. OpenAI's currently fetched documentation confirms the higher long-context multiplier, although its current threshold is >272K rather than the models.dev record's >200K. The Internet Archive CDX request failed, so no historical snapshot could establish a more precise time or validate the original threshold.",
+ "verified": true
+}

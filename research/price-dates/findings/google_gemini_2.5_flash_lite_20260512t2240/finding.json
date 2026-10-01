@@ -1,0 +1,27 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/pricing?hl=en",
+   "saved_as": "sources/ai.google.dev-gemini-api-docs-pricing.html",
+   "quote": "<td>Context caching price</td>\n      <td>Not available</td>\n      <td>$0.01 (text / image / video)<br>$0.03 (audio)<br>$1.00 / 1,000,000 tokens per hour (storage price)</td>",
+   "supports": "Google's current pricing page lists standard Gemini 2.5 Flash-Lite context caching at $0.01 per million text, image, or video tokens. It does not establish the earlier rate or when the listed rate took effect.",
+   "extracted_as": "research/sources/0dec03421ba15acd.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "The available official pricing page shows $0.01 now, but no primary source found here establishes whether $0.025 was ever Google's official rate or dates a reduction. Internet Archive's CDX endpoint timed out from this environment, so no before-and-after snapshots were obtained.",
+ "verified": true
+}

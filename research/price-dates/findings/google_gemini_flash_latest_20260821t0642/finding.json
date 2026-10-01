@@ -1,0 +1,45 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 1.5,
+  "output": 9.0,
+  "cache_read": 0.15
+ },
+ "sources": [
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/pricing?hl=en",
+   "saved_as": "sources/ai.google.dev-gemini-api-docs-pricing.html",
+   "quote": "Input price Free of charge $1.50 Output price (including thinking tokens) Free of charge $9.00 Context caching price Free of charge $0.15",
+   "supports": "Google's official pricing page lists the supplied earlier prices for Gemini 3.5 Flash.",
+   "extracted_as": "research/sources/0dec03421ba15acd.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/changelog",
+   "saved_as": "sources/ai.google.dev-gemini-api-docs-changelog.html",
+   "quote": "This is now the model behind gemini-flash-latest .",
+   "supports": "Google says Gemini 3.5 Flash was behind the alias as of its May 19, 2026 release note.",
+   "extracted_as": "research/sources/a24fd97eb3d00730.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/changelog",
+   "saved_as": "sources/ai.google.dev-gemini-api-docs-changelog.html",
+   "quote": "Features improved token efficiency and code/agentic planning capabilities at a lower price point than 3.5 Flash",
+   "supports": "Google's July 21, 2026 note announced Gemini 3.6 Flash at a lower price point than 3.5 Flash, but does not say it became the alias target.",
+   "extracted_as": "research/sources/a24fd97eb3d00730.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The earlier amounts are official for Gemini 3.5 Flash, and Google identified that model as gemini-flash-latest's target on May 19, 2026. Google later announced 3.6 Flash at a lower price on July 21, but the available first-party evidence does not establish when or whether the alias switched to it; the Internet Archive CDX request returned HTTP 503, so no archival snapshot bracket was obtained.",
+ "verified": true
+}

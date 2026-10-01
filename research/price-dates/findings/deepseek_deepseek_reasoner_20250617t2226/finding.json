@@ -1,0 +1,27 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 0.55,
+  "output": 2.19,
+  "cache_read": 0.14
+ },
+ "sources": [
+  {
+   "url": "https://api-docs.deepseek.com/news/news250120/",
+   "saved_as": "sources/api-docs.deepseek.com_news_news250120.html",
+   "quote": "$0.14 / million input tokens (cache hit) \ud83d\udcb0 $0.55 / million input tokens (cache miss) \ud83d\udcb0 $2.19 / million output tokens",
+   "supports": "DeepSeek's January 20, 2025 R1 release specified the same cache-hit, cache-miss, and output prices recorded before the models.dev schema change.",
+   "extracted_as": "research/sources/f75bec4ecc98ee0e.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The earlier models.dev record omitted the cache-hit price even though DeepSeek's R1 release listed it as $0.14 per million input tokens; the $0.55 input and $2.19 output rates were also official. The Wayback CDX endpoint listed a June 9, 2025 pricing-page snapshot, but fetching the snapshot from web.archive.org failed, so no precise change date or archived table quote is asserted.",
+ "verified": false
+}

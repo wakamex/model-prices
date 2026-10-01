@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://x.ai/news/grok-1212",
+   "saved_as": "sources/x.ai_news_grok-1212.html",
+   "quote": "As a result of our efficiency improvements, we are also lowering the price of these models to $2 / 1M input tokens and $10 / 1M output tokens.",
+   "supports": "xAI announced the $2 input and $10 output price for the Grok-2 and Grok-2 Vision dated models; it does not specify a cache-write price or an effective date.",
+   "extracted_as": "research/sources/e0c44d30e87131f4.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/pricing",
+   "saved_as": "sources/docs.x.ai_developers_pricing.html",
+   "quote": "All prices are in USD. For per-model details, see the models page.",
+   "supports": "Current official API pricing page; it has no Grok-2-vision listing and cannot establish the historical cache-write price or timing.",
+   "extracted_as": "research/sources/dedf56167aa34815.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The xAI announcement supports the $2 input and $10 output prices, but says nothing about cache-write billing. The Internet Archive CDX endpoint was temporarily offline during research, so no snapshot pair was available; the evidence cannot determine whether cache_write=10 was an official price or a models.dev field error, or date any change.",
+ "verified": false
+}

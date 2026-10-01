@@ -1,0 +1,27 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://docs.x.ai/developers/pricing",
+   "saved_as": "sources/docs.x.ai_developers_pricing.html",
+   "quote": "\"promptTextTokenPrice\":\"12500\",\"promptImageTokenPrice\":\"12500\",\"promptTextTokenPriceLongContext\":\"25000\",\"cachedPromptTokenPrice\":\"2000\",\"cachedPromptTokenPriceLongContext\":\"4000\",\"completionTextTokenPrice\":\"25000\"",
+   "supports": "The current xAI pricing data lists $1.25 per million input, $2.50 per million output, $0.20 cached input, and doubled input/cached rates at long context. It does not state when those rates began.",
+   "extracted_as": "research/sources/dedf56167aa34815.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "The live xAI pricing page supports the after rates, but does not establish the rate before the change or an effective date. The Internet Archive CDX endpoint was unavailable (HTTP 503), so I could not obtain a provider-page snapshot pair to determine whether $2/$6 was formerly official or when any change took effect.",
+ "verified": true
+}

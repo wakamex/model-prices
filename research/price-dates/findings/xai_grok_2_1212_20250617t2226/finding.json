@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://x.ai/news/grok-1212",
+   "saved_as": "sources/x.ai_news_grok-1212.html",
+   "quote": "As a result of our efficiency improvements, we are also lowering the price of these models to $2 / 1M input tokens and $10 / 1M output tokens.",
+   "supports": "xAI announced Grok 2-1212 at $2 per million input tokens and $10 per million output tokens, but this does not state cached-token rates or the 2025 cache-field change.",
+   "extracted_as": "research/sources/e0c44d30e87131f4.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/rest-api-reference/management/auth",
+   "saved_as": "sources/docs.x.ai_developers_rest-api-reference_management_auth.html",
+   "quote": "\"cachedPromptTokenPrice\": \"0\",",
+   "supports": "Current xAI management API documentation shows a zero cached-prompt price for the grok-2-1212 model object; it does not establish the historical cache price as of June 2025.",
+   "extracted_as": "research/sources/c34a6dcd600fb7db.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The provider announcement establishes the $2/$10 standard rates, while current API documentation shows a zero cached-prompt rate. Neither source establishes what cache-read or cache-write rates were during the earlier recorded period, and the Internet Archive CDX endpoint was temporarily offline when checked, so the classification and timing remain unclear.",
+ "verified": true
+}

@@ -1,0 +1,54 @@
+{
+ "classification": "price_change",
+ "effective_at": "2025-09-29",
+ "effective_precision": "day",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://api-docs.deepseek.com/updates/",
+   "saved_as": "sources/api-docs.deepseek.com_updates.html",
+   "quote": "Date: 2025-09-29",
+   "supports": "Dates the provider's V3.2-Exp model and API update to September 29, 2025.",
+   "extracted_as": "research/sources/e547d0d8cbe359a0.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://api-docs.deepseek.com/news/news250929/",
+   "saved_as": "sources/api-docs.deepseek.com_news_news250929.html",
+   "quote": "DeepSeek API prices drop 50%+, effective immediately.",
+   "supports": "Provider describes an API price reduction and says it took effect immediately.",
+   "extracted_as": "research/sources/a8a03f2724014047.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.deepseek.com/en/news/deepseek-v3-1/",
+   "saved_as": "sources/www.deepseek.com_en_news_deepseek-v3-1.html",
+   "quote": "New pricing starts & off-peak discounts end at Sep 5th, 2025, 16:00 (UTC Time)",
+   "supports": "Shows an earlier scheduled price reset, explaining why the September 29 price reduction must be distinguished from the change that ended off-peak discounts.",
+   "extracted_as": "research/sources/3fe7595f03a20ce1.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://web.archive.org/cdx/search/cdx?url=api-docs.deepseek.com/quick_start/pricing/&output=json&filter=statuscode:200&filter=timestamp:2025&collapse=digest",
+   "saved_as": "sources/web.archive.org_cdx_search_cdx_api-docs.deepseek.com_quick_start_pricing.json",
+   "quote": "20250922123509",
+   "supports": "The Wayback CDX index lists a September 22, 2025 pricing-page capture before the price announcement; the archived capture itself could not be retrieved.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "The provider's September 29 update identifies deepseek-reasoner among the upgraded API models, and its announcement says the price cut was effective immediately; this supports a September 29 price change. The archived pricing-page captures could not be fetched, so the exact prior price is left unknown and no before/after snapshot bracket is claimed.",
+ "verified": true
+}

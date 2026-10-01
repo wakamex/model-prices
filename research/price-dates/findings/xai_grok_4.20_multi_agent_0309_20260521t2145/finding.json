@@ -1,0 +1,27 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://docs.x.ai/developers/pricing",
+   "saved_as": "sources/docs.x.ai_developers_pricing.html",
+   "quote": "\"name\":\"grok-4.20-multi-agent-0309\",\"version\":\"1.0\",\"inputModalities\":[\"TEXT\",\"IMAGE\"],\"outputModalities\":[\"TEXT\"],\"promptTextTokenPrice\":\"12500\",\"promptImageTokenPrice\":\"12500\",\"promptTextTokenPriceLongContext\":\"25000\",\"cachedPromptTokenPrice\":\"2000\",\"cachedPromptTokenPriceLongContext\":\"4000\",\"completionTextTokenPrice\":\"25000\",\"completionTokenPriceLongContext\":\"50000\"",
+   "supports": "xAI currently publishes $2.50 input, $0.40 cached input, and $5.00 output per million tokens for long-context requests; this confirms the revised price but does not establish the price before it or when the revision took effect.",
+   "extracted_as": "research/sources/dedf56167aa34815.md",
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "The available first-party xAI pricing page confirms the revised long-context rates, but provides no historical effective date or earlier rate. Internet Archive could not be accessed during research (the CDX endpoint timed out / Archive reported temporary unavailability), and no first-party dated announcement establishing the previous rate or change date was found. The evidence therefore does not distinguish a provider price change from a models.dev correction.",
+ "verified": true
+}

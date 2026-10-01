@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 5.0,
+  "output": 15.0,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://web.archive.org/web/20250608075937/https://docs.x.ai/docs/models",
+   "saved_as": "sources/web.archive.org_web_20250608075937_docs.x.ai_docs_models.html",
+   "quote": "\\\"name\\\":\\\"grok-beta\\\",\\\"version\\\":\\\"\\\",\\\"inputModalities\\\":[\\\"TEXT\\\"],\\\"outputModalities\\\":[\\\"TEXT\\\"],\\\"maxPromptLength\\\":131072,\\\"promptTextTokenPrice\\\":\\\"50000\\\",\\\"completionTextTokenPrice\\\":\\\"150000\\\"",
+   "supports": "xAI's archived model catalog listed Grok Beta's input and output token price fields before the models.dev commit, with no cache price field in the model entry.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://web.archive.org/web/20250628113750/https://docs.x.ai/docs/models",
+   "saved_as": "sources/web.archive.org_web_20250628113750_docs.x.ai_docs_models.html",
+   "quote": "\\\"name\\\":\\\"grok-beta\\\",\\\"version\\\":\\\"\\\",\\\"inputModalities\\\":[\\\"TEXT\\\"],\\\"outputModalities\\\":[\\\"TEXT\\\"],\\\"maxPromptLength\\\":131072,\\\"promptTextTokenPrice\\\":\\\"50000\\\",\\\"completionTextTokenPrice\\\":\\\"150000\\\"",
+   "supports": "The later xAI snapshot shows the same Grok Beta input and output fields, with no cache price field in the model entry.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "The xAI catalog snapshots preserve the same listed input/output prices across the models.dev commit and contain no cached-price fields for Grok Beta, while the newly represented cache values duplicate the standard rates. This points to a models.dev data/schema correction; the provider sources do not state a cache price or a provider effective date.",
+ "verified": true
+}

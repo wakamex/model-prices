@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://docs.x.ai/developers/pricing",
+   "saved_as": "sources/docs.x.ai_developers_pricing.html",
+   "quote": "Cached Output Input Cached Output",
+   "supports": "xAI's official pricing table expresses cached prompt tokens as a cached input category; it has no separate cache-write price category. This supports treating models.dev's added cache_write field as its own error, though this current page does not document the historical Grok 3 rates.",
+   "extracted_as": "research/sources/dedf56167aa34815.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://docs.x.ai/developers/release-notes",
+   "saved_as": "sources/docs.x.ai_developers_release-notes.html",
+   "quote": "You can now use cached prompt to save on repeated prompts.",
+   "supports": "xAI described the caching feature as cached prompts, rather than a separately priced cache-write operation.",
+   "extracted_as": "research/sources/2b950d5a745e6c95.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "Classified as models_dev_fix because the provider's own pricing materials identify cached input/prompt pricing and do not identify a cache-write rate; the recorded difference is the removal of that extra field. The official historical Grok 3 Fast price and its effective date are not stated by the accessible sources, so those values are null. Internet Archive was unavailable from this environment, preventing a historical snapshot comparison.",
+ "verified": false
+}

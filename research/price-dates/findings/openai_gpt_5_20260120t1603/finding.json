@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 1.25,
+  "output": 10.0,
+  "cache_read": 0.125
+ },
+ "sources": [
+  {
+   "url": "https://openai.com/index/introducing-gpt-5-for-developers/",
+   "saved_as": "sources/openai.com-index-introducing-gpt-5-for-developers.txt",
+   "quote": "GPT\u20115 is priced at $1.25/1M input tokens and $10/1M output tokens, GPT\u20115 mini is priced at $0.25/1M input tokens and $2/1M output tokens, and GPT\u20115 nano is priced at $0.05/1M input tokens and $0.40/1M output tokens.",
+   "supports": "OpenAI's Aug 7, 2025 launch announcement states GPT-5's input and output rates at launch.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-5",
+   "saved_as": "sources/developers.openai.com-api-docs-models-gpt-5.txt",
+   "quote": "Cached input\n\n$0.125",
+   "supports": "OpenAI's API model page lists the GPT-5 cached-input rate as $0.125 per million tokens, matching the alleged earlier $0.13 when rounded to two decimal places.",
+   "extracted_as": "research/sources/2212448829042fd6.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The recorded $0.13 is consistent with a rounded representation of OpenAI's $0.125 cached-input rate; the provider's listed input and output rates also match the recorded values. The Web Archive CDX request could not be fetched from this environment (connection refused), and the available provider sources do not date any separate price change; therefore the record is classified as a models.dev fix, with no effective date asserted.",
+ "verified": true
+}

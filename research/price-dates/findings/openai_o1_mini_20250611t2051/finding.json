@@ -1,0 +1,45 @@
+{
+ "classification": "price_change",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://openai.com/index/api-prompt-caching/",
+   "saved_as": "sources/openai.com_index_api-prompt-caching.txt",
+   "quote": "| o1 mini | $3.00 | $1.50 | $12.00 |",
+   "supports": "OpenAI's official October 1, 2024 pricing announcement lists the earlier o1-mini input, cached-input, and output prices.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/models/o1-mini",
+   "saved_as": "sources/developers.openai.com_api_docs_models_o1-mini.html",
+   "quote": "Input $1.10 Cached input $0.55 Output $4.40",
+   "supports": "OpenAI's current model documentation lists the lower o1-mini rates.",
+   "extracted_as": "research/sources/661d5c52a1260254.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://web.archive.org/cdx/search/cdx?url=openai.com%2Fapi%2Fpricing%2F&output=json&filter=statuscode%3A200&filter=timestamp%3A2025&collapse=digest",
+   "saved_as": "sources/web.archive.org_cdx_openai-api-pricing_2025.json",
+   "quote": "[\"com,openai)/api/pricing\",\"20250129060213\",\"https://openai.com/api/pricing/\",\"text/html\",\"200\"",
+   "supports": "The archive index records a January 29, 2025 capture of OpenAI's pricing page; its capture date does not establish what price that page showed.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "OpenAI's official October 2024 announcement confirms the earlier $3/$12 price was provider-official, while current OpenAI documentation shows $1.10/$4.40. The Internet Archive CDX index was available, but archived page replays could not be fetched, so the effective date and a price-based snapshot bracket remain unknown.",
+ "verified": false
+}

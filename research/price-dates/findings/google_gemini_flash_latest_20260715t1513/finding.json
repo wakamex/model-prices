@@ -1,0 +1,45 @@
+{
+ "classification": "price_change",
+ "effective_at": "2026-05-19",
+ "effective_precision": "day",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/changelog",
+   "saved_as": "sources/ai.google.dev_gemini-api_docs_changelog.html",
+   "quote": "May 19, 2026 Released gemini-3.5-flash , the generally available (GA) version of Gemini 3.5 Flash , our most intelligent model for sustained frontier performance on agentic and coding tasks. This is now the model behind gemini-flash-latest .",
+   "supports": "Google states the date Gemini 3.5 Flash became the model behind gemini-flash-latest.",
+   "extracted_as": "research/sources/a24fd97eb3d00730.md",
+   "quote_verified": false,
+   "verified_in": null
+  },
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "saved_as": "sources/ai.google.dev_gemini-api_docs_pricing.html",
+   "quote": "Input price Free of charge $1.50 Output price (including thinking tokens) Free of charge $9.00 Context caching price Free of charge $0.15",
+   "supports": "Google's current official pricing row for Gemini 3.5 Flash gives the recorded after prices.",
+   "extracted_as": "research/sources/b88c4950bbf39196.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://web.archive.org/web/20260714213305/https://ai.google.dev/gemini-api/docs/pricing",
+   "saved_as": "sources/web.archive.org_web_20260714213305_ai.google.dev_pricing.html",
+   "quote": "Input price Free of charge $0.30 (text / image / video) $1.00 (audio) Output price (including thinking tokens) Free of charge $2.50 Context caching price Not available $0.03 (text / image / video)",
+   "supports": "The archived Google pricing page documents the earlier $0.30 text input, $2.50 output and $0.03 cache prices for Gemini 2.5 Flash; these rates were official for that model.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "Google dates the alias switch to Gemini 3.5 Flash to May 19, 2026; that model's official listed rates match the after price. The old rates were official for Gemini 2.5 Flash, so this is a real price change as the latest alias moved targets, though the record's long interval obscures the intervening alias change(s). Google gives no time of day or timezone for the May 19 switch.",
+ "verified": false
+}

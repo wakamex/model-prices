@@ -1,0 +1,27 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://web.archive.org/web/20250611094417/https://x.ai/api",
+   "saved_as": "sources/web.archive.org_20250611_x.ai_api.html",
+   "quote": "grok-2-vision-1212 Our latest multimodal which processes documents, diagrams, charts, screenshots, and photographs. 8192 $2.00 $2.00 $10.00",
+   "supports": "An archived xAI API page snapshot dated June 11, 2025 displayed Grok 2 Vision token prices; it does not establish cache rates for grok-2-1212.",
+   "extracted_as": null,
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The available xAI archive snapshot predates the models.dev schema commit and shows a Grok 2 Vision pricing row, but it does not state cache_read/cache_write prices for grok-2-1212. I could not retrieve a primary-source archived pricing page after the reported change, so the evidence neither brackets a provider price change nor proves models.dev's earlier record was erroneous; no effective date or official previous cache price can be determined.",
+ "verified": false
+}
