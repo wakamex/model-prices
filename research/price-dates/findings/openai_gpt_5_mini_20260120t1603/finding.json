@@ -1,5 +1,5 @@
 {
- "classification": "unclear",
+ "classification": "models_dev_fix",
  "effective_at": null,
  "effective_precision": "unknown",
  "bracket": {
@@ -7,21 +7,39 @@
   "first_after": null
  },
  "official_previous_price": {
-  "input": null,
-  "output": null,
-  "cache_read": null
+  "input": 0.25,
+  "output": 2.0,
+  "cache_read": 0.025
  },
  "sources": [
   {
    "url": "https://developers.openai.com/api/docs/models/gpt-5-mini",
-   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-5-mini.html",
-   "quote": "Text tokens Per 1M tokens \u2219 Batch API price Input $0.25 Cached input $0.025 Output $2.00",
-   "supports": "OpenAI's current GPT-5 Mini model documentation lists cached input at $0.025 per million tokens, alongside input and output prices. It does not establish when that cached price began.",
+   "file": "941c4e8041c2a99f.md",
+   "quote": "| Cached input | $0.025 | 1M tokens |",
+   "supports": "OpenAI currently gives GPT-5 Mini cached input price as $0.025 per million tokens.",
    "extracted_as": "research/sources/941c4e8041c2a99f.md",
-   "quote_verified": false,
-   "verified_in": null
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-5-mini",
+   "file": "941c4e8041c2a99f.md",
+   "quote": "- Default snapshot: `gpt-5-mini-2025-08-07`",
+   "supports": "Identifies the default model snapshot from 2025-08-07.",
+   "extracted_as": "research/sources/941c4e8041c2a99f.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/pricing",
+   "file": "00eaf917ab1113cf.md",
+   "quote": "| gpt-5-mini | $0.25 | $0.025 | - | $2.00 | - | - | - | - |",
+   "supports": "OpenAI pricing page confirms $0.25 input, $0.025 cached input, and $2.00 output.",
+   "extracted_as": "research/sources/00eaf917ab1113cf.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "OpenAI's current model page confirms the $0.025 cached-input price, but the available primary-source text does not establish whether $0.03 was ever official or when a change took effect. The Internet Archive CDX request for the pricing page returned HTTP 403, and the OpenAI launch page also returned HTTP 403 to curl; without an accessible archived price page or explicit announcement, the historical classification and date remain unclear.",
- "verified": false
+ "notes": "The provider documentation lists $0.025 cached input and identifies the default snapshot as gpt-5-mini-2025-08-07, so the reported $0.03 appears to be a models.dev error rather than an official prior rate. OpenAI\u2019s launch page extraction was blocked (403), and the Internet Archive CDX endpoint returned 503; the available provider documentation does not state an effective date for the corrected record.",
+ "verified": true
 }

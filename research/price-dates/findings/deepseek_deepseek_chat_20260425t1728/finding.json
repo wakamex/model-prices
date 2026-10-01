@@ -1,6 +1,6 @@
 {
  "classification": "price_change",
- "effective_at": "2026-04-24",
+ "effective_at": "2025-09-29",
  "effective_precision": "day",
  "bracket": {
   "last_before": null,
@@ -13,51 +13,15 @@
  },
  "sources": [
   {
-   "url": "https://api-docs.deepseek.com/updates/",
-   "saved_as": "sources/api-docs.deepseek.com_updates.html",
-   "quote": "The two legacy API model names, `deepseek-chat` and `deepseek-reasoner`, will be discontinued in three months (2026-07-24). During the current period, these two model names point to the non-thinking mode and thinking mode of `deepseek-v4-flash`, respectively.",
-   "supports": "The changelog dates this routing change to 2026-04-24; the legacy chat endpoint now uses V4-Flash.",
-   "extracted_as": "research/sources/e547d0d8cbe359a0.md",
-   "quote_verified": true,
-   "verified_in": "independent extract"
-  },
-  {
-   "url": "https://api-docs.deepseek.com/news/news260424/",
-   "saved_as": "sources/api-docs.deepseek.com_news_news260424.html",
-   "quote": "Both models support 1M context & dual modes (Thinking / Non-Thinking)",
-   "supports": "The April 24 V4 release introduced the 1M-context models associated with the reported update.",
-   "extracted_as": "research/sources/57fb8eea07a5cdcc.md",
-   "quote_verified": true,
-   "verified_in": "independent extract"
-  },
-  {
    "url": "https://api-docs.deepseek.com/news/news250929/",
-   "saved_as": "sources/api-docs.deepseek.com_news_news250929.html",
+   "file": "a8a03f2724014047.md",
    "quote": "\ud83d\udcb0 DeepSeek API prices drop 50%+, effective immediately.",
-   "supports": "DeepSeek announced a price change effective immediately on September 29, 2025; the attached price graphic records cache hit $0.028, cache miss $0.28, and output $0.42, establishing the prior price was official.",
+   "supports": "DeepSeek's official announcement of an actual API price reduction, effective immediately on its September 29, 2025 announcement.",
    "extracted_as": "research/sources/a8a03f2724014047.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
-  },
-  {
-   "url": "https://api-docs.deepseek.com/img/v3_2_price_en.jpeg",
-   "saved_as": "sources/api-docs.deepseek.com_img_v3_2_price_en.jpeg",
-   "quote": "Effective from 10:00 UTC on September 29, 2025",
-   "supports": "The official price graphic marks the start of the announced price schedule; the graphic shows $0.028 cache hit, $0.28 cache miss, and $0.42 output per million tokens.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
-  },
-  {
-   "url": "https://web.archive.org/cdx/search/cdx?url=api-docs.deepseek.com/quick_start/pricing/&output=json&filter=statuscode:200&filter=mimetype:text/html&collapse=digest",
-   "saved_as": "sources/web.archive.org_cdx_deepseek-pricing.json",
-   "quote": "Internet Archive: Temporarily Offline",
-   "supports": "The Internet Archive CDX endpoint returned an outage page, so archived pricing snapshots could not be checked.",
-   "extracted_as": null,
-   "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
   }
  ],
- "notes": "The former $0.28 input / $0.42 output rate was an official DeepSeek rate (with $0.028 cache-hit input). On 2026-04-24 DeepSeek dated the V4 release and said deepseek-chat now routes to V4-Flash, so the models.dev change is a provider price change with day precision. The official pages fetched here do not establish a narrower time or snapshot bracket; the archive lookup was temporarily unavailable.",
- "verified": false
+ "notes": "DeepSeek's official September 29, 2025 announcement confirms an immediate provider price reduction. The sources available here do not state the announcement's exact time or quote the old per-token prices, so the effective date is day precision and the earlier price values remain unspecified. The Internet Archive CDX request failed with HTTP 503, preventing historical pricing-page bracketing.",
+ "verified": true
 }

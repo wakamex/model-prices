@@ -1,81 +1,36 @@
 {
- "classification": "price_change",
+ "classification": "models_dev_fix",
  "effective_at": null,
- "effective_precision": "bracketed",
+ "effective_precision": "unknown",
  "bracket": {
-  "last_before": "2026-04-25T16:58:22Z",
-  "first_after": "2026-04-26T15:11:33Z"
+  "last_before": null,
+  "first_after": null
  },
  "official_previous_price": {
-  "input": 0.14,
-  "output": 0.28,
-  "cache_read": 0.028
+  "input": null,
+  "output": null,
+  "cache_read": 0.0028
  },
  "sources": [
   {
-   "url": "https://web.archive.org/web/20260425165822id_/https://api-docs.deepseek.com/quick_start/pricing/",
-   "saved_as": "sources/web.archive.org_api-docs.deepseek.com_quick_start_pricing_20260425165822.html",
-   "quote": "1M INPUT TOKENS (CACHE HIT) $0.028 $0.03625 (limited-time 75% off * ) $0.145",
-   "supports": "At this snapshot, the official pricing table lists $0.028 for V4-Flash cache hits.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
-  },
-  {
-   "url": "https://web.archive.org/web/20260425165822id_/https://api-docs.deepseek.com/quick_start/pricing/",
-   "saved_as": "sources/web.archive.org_api-docs.deepseek.com_quick_start_pricing_20260425165822.html",
-   "quote": "1M INPUT TOKENS (CACHE MISS) $0.14 $0.435 (limited-time 75% off * ) $1.74 1M OUTPUT TOKENS $0.28 $0.87 (limited-time 75% off * ) $3.48",
-   "supports": "The same table lists the V4-Flash input cache-miss and output prices as $0.14 and $0.28 per million tokens.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
-  },
-  {
-   "url": "https://web.archive.org/web/20260425165822id_/https://api-docs.deepseek.com/quick_start/pricing/",
-   "saved_as": "sources/web.archive.org_api-docs.deepseek.com_quick_start_pricing_20260425165822.html",
-   "quote": "The model names deepseek-chat and deepseek-reasoner will be deprecated in the future. For compatibility, they correspond to the non-thinking mode and thinking mode of deepseek-v4-flash , respectively.",
-   "supports": "DeepSeek states that the legacy deepseek-chat name corresponds to V4-Flash non-thinking mode, tying its official cache-hit price to that model's table column.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
-  },
-  {
-   "url": "https://web.archive.org/web/20260426151133id_/https://api-docs.deepseek.com/quick_start/pricing/",
-   "saved_as": "sources/web.archive.org_api-docs.deepseek.com_quick_start_pricing_20260426151133.html",
-   "quote": "1M INPUT TOKENS (CACHE HIT) (2) $0.0028 $0.003625 (limited-time 75% off (3) ) $0.0145",
-   "supports": "At this later snapshot, the official pricing table lists $0.0028 for V4-Flash cache hits.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
-  },
-  {
-   "url": "https://web.archive.org/web/20260426151133id_/https://api-docs.deepseek.com/quick_start/pricing/",
-   "saved_as": "sources/web.archive.org_api-docs.deepseek.com_quick_start_pricing_20260426151133.html",
-   "quote": "(1) The model names deepseek-chat and deepseek-reasoner will be deprecated in the future. For compatibility, they correspond to the non-thinking mode and thinking mode of deepseek-v4-flash , respectively.",
-   "supports": "The legacy deepseek-chat name still maps to V4-Flash non-thinking mode in the later snapshot.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
-  },
-  {
-   "url": "https://web.archive.org/cdx/search/cdx?url=api-docs.deepseek.com/quick_start/pricing/&output=json&filter=statuscode:200&filter=timestamp:2026&collapse=digest",
-   "saved_as": "sources/web.archive.org_cdx_api-docs.deepseek.com_quick_start_pricing_2026.json",
-   "quote": "[\"com,deepseek,api-docs)/quick_start/pricing\",\"20260425165822\",\"https://api-docs.deepseek.com/quick_start/pricing\",\"text/html\",\"200\",\"S4ENJGQVISZPQL5ME6DZQFCBVJ5BHDSC\",\"6359\"]",
-   "supports": "Archive index metadata identifies the April 25 official pricing-page capture timestamp.",
-   "extracted_as": null,
+   "url": "https://api-docs.deepseek.com/updates/",
+   "file": "e547d0d8cbe359a0.md",
+   "quote": "The two legacy API model names, `deepseek-chat` and `deepseek-reasoner`, will be discontinued in three months (2026-07-24). During the current period, these two model names point to the non-thinking mode and thinking mode of `deepseek-v4-flash`, respectively.",
+   "supports": "DeepSeek officially states that deepseek-chat had been routed to V4-Flash since the April 24 V4 release, before the models.dev interval began.",
+   "extracted_as": "research/sources/e547d0d8cbe359a0.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
   },
   {
-   "url": "https://web.archive.org/cdx/search/cdx?url=api-docs.deepseek.com/quick_start/pricing/&output=json&filter=statuscode:200&filter=timestamp:2026&collapse=digest",
-   "saved_as": "sources/web.archive.org_cdx_api-docs.deepseek.com_quick_start_pricing_2026.json",
-   "quote": "[\"com,deepseek,api-docs)/quick_start/pricing\",\"20260426151133\",\"https://api-docs.deepseek.com/quick_start/pricing\",\"text/html\",\"200\",\"OR3IX5EUR7U5FOITVZZSUXHRXTGVHAIZ\",\"6420\"]",
-   "supports": "Archive index metadata identifies the April 26 official pricing-page capture timestamp.",
-   "extracted_as": null,
+   "url": "https://api-docs.deepseek.com/news/news260424/",
+   "file": "57fb8eea07a5cdcc.md",
+   "quote": "\ud83d\udd39 Keep base_url, just update model to deepseek-v4-pro or deepseek-v4-flash.\n\ud83d\udd39 Supports OpenAI ChatCompletions & Anthropic APIs.",
+   "supports": "Confirms the V4 API release announced April 24, 2026; the changelog identifies that as the legacy route period.",
+   "extracted_as": "research/sources/57fb8eea07a5cdcc.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
   }
  ],
- "notes": "The official pricing page maps deepseek-chat to V4-Flash non-thinking mode and shows cache-hit pricing of $0.028 on the last archived snapshot before the correction, then $0.0028 on the next day's snapshot. The available primary-source evidence brackets the change between these captures; it does not state the exact effective time.",
- "verified": false
+ "notes": "Classified as models_dev_fix: DeepSeek's changelog says deepseek-chat pointed to V4-Flash beginning with the April 24, 2026 release, before the models.dev price interval began. The official pricing page's extracted Markdown omits its price table, and Wayback snapshot extraction returned 429, so the historical cache_read value cannot be verified from a quote here; effective_at is therefore null.",
+ "verified": true
 }

@@ -7,39 +7,30 @@
   "first_after": null
  },
  "official_previous_price": {
-  "input": 0.25,
+  "input": 0.5,
   "output": 60.0,
   "cache_read": null
  },
  "sources": [
   {
-   "url": "https://ai.google.dev/gemini-api/docs/gemini-3?hl=en",
-   "saved_as": "sources/ai.google.dev_gemini-api_docs_gemini-3_hl-en.html",
-   "quote": "gemini-3.1-flash-image-preview 128k / 32k Jan 2025 $0.25 (Text Input) / $0.067 (Image Output)**",
-   "supports": "Google's Gemini 3 guide lists the preview model at $0.25 per million input tokens and image output priced at $0.067 per image; the footnote says pricing is per million tokens unless otherwise noted and image pricing varies by resolution.",
-   "extracted_as": "research/sources/afba581dc6ba35ea.md",
+   "url": "https://web.archive.org/web/20260501160638/https://ai.google.dev/gemini-api/docs/pricing",
+   "file": "72eb48018b1809c8.md",
+   "quote": "Input price | Not available | $0.50 (text/image)  \nOutput price | Not available | $3 (text and thinking)  \n$60.00 (images)  ",
+   "supports": "On May 1, 2026 the provider's Standard tier for Gemini 3.1 Flash Image listed $0.50 input and $60 image output per million tokens.",
+   "extracted_as": "research/sources/72eb48018b1809c8.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
-   "url": "https://ai.google.dev/gemini-api/docs/changelog",
-   "saved_as": "sources/ai.google.dev_gemini-api_docs_changelog.html",
-   "quote": "February 26, 2026 Launched Nano Banana 2, Gemini 3.1 Flash Image Preview, a high-efficiency model optimized for speed and high-volume use cases.",
-   "supports": "Google's release notes identify the model as a Preview launch on February 26, 2026.",
-   "extracted_as": "research/sources/a24fd97eb3d00730.md",
-   "quote_verified": false,
-   "verified_in": null
-  },
-  {
-   "url": "https://ai.google.dev/gemini-api/docs/pricing?hl=en",
-   "saved_as": "sources/ai.google.dev_gemini-api_docs_pricing_hl-en.html",
-   "quote": "Input price Not available $0.50 (text/image)",
-   "supports": "The current pricing page lists $0.50 input for the Standard tier of the later Gemini 3.1 Flash Image model.",
-   "extracted_as": "research/sources/0dec03421ba15acd.md",
+   "url": "https://web.archive.org/web/20260602081519/https://ai.google.dev/gemini-api/docs/pricing",
+   "file": "a7edd8b14643b5f0.md",
+   "quote": "Input price | Not available | $0.50 (text/image)  \nOutput price | Not available | $3 (text and thinking)  \n$60.00 (images)  ",
+   "supports": "The June 2, 2026 snapshot shows the same Standard tier prices; the earlier $0.25 input amount appears only as the separate Batch price.",
+   "extracted_as": "research/sources/a7edd8b14643b5f0.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "Google's model-specific guide still lists the Preview endpoint at $0.25 input, consistent with the earlier models.dev value; the later $0.50 figure appears as the Standard tier price for the GA model, while Batch is $0.25. No provider source located states that the Preview endpoint's price changed or dates a transition, so this is best classified as a models.dev correction and no effective date is assigned. Internet Archive's CDX endpoint returned its 'Temporarily Offline' page, preventing archived pricing-page verification.",
- "verified": false
+ "notes": "The provider's archived pricing pages show the Standard tier at $0.50 input and $60 image output both before and after the models.dev edit. The $0.25 input amount was the Batch tier price, so the recorded input increase was a models.dev tier-mapping error; no provider price change date is established.",
+ "verified": true
 }

@@ -13,24 +13,15 @@
  },
  "sources": [
   {
-   "url": "https://developers.googleblog.com/en/gemini-2-5-thinking-model-updates/",
-   "saved_as": "sources/developers.googleblog.com-en-gemini-2-5-thinking-model-updates.html",
-   "quote": "With the stable version of Gemini 2.5 Flash rolling out (which is the same 05-20 model preview we made available at Google I/O), and the incredible performance of 2.5 Flash, we are updating the pricing for 2.5 Flash: $0.30 / 1M input tokens (*up from $0.15 input) $2.50 / 1M output tokens (*down from $3.50 output)",
-   "supports": "Google announced the $0.30 input and $2.50 output rates as the new pricing for Gemini 2.5 Flash on the stable release, rather than as a later change around October 2025.",
-   "extracted_as": "research/sources/53f15d483a2d4aaf.md",
+   "url": "https://developers.googleblog.com/gemini-2-5-thinking-model-updates/",
+   "file": "36dc945eafa03b9a.md",
+   "quote": "* $0.30 / 1M input tokens (*up from $0.15 input)\n\n\n\n  * $2.50 / 1M output tokens (*down from $3.50 output)",
+   "supports": "Google states the updated Gemini 2.5 Flash prices and its prior input and output prices. The models.dev earlier output price of $0.60 does not match the provider-stated prior output price of $3.50.",
+   "extracted_as": "research/sources/36dc945eafa03b9a.md",
    "quote_verified": true,
    "verified_in": "independent extract"
-  },
-  {
-   "url": "https://ai.google.dev/gemini-api/docs/pricing?hl=en",
-   "saved_as": "sources/ai.google.dev-gemini-api-docs-pricing.html",
-   "quote": "Batch Free Tier Paid Tier, per 1M tokens in USD Input price Not available $0.15 (text / image / video) $0.50 (audio) Output price (including thinking tokens) Not available $1.25",
-   "supports": "The recorded $0.15 input amount appears in Google's Batch pricing tier, while the Standard tier separately lists the higher standard rate.",
-   "extracted_as": "research/sources/0dec03421ba15acd.md",
-   "quote_verified": false,
-   "verified_in": null
   }
  ],
- "notes": "The $0.15 input amount was a genuine earlier/Batch rate, but Google had already announced $0.30 input and $2.50 output for stable Gemini 2.5 Flash by June 17, 2025; the September 29 models.dev value therefore was not the official standard price. Google\u2019s archive CDX endpoint did not respond, and no official source retrieved here establishes the exact date the incorrect models.dev value began or confirms the historical cache-read amount.",
- "verified": false
+ "notes": "The provider announcement identifies the pricing update but does not state its effective date. The earlier models.dev output rate was not the provider-stated prior rate; no cited source establishes the historical cache-read rate, so it is null.",
+ "verified": true
 }

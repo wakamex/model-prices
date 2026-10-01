@@ -1,36 +1,27 @@
 {
- "classification": "price_change",
+ "classification": "unclear",
  "effective_at": null,
- "effective_precision": "bracketed",
+ "effective_precision": "unknown",
  "bracket": {
-  "last_before": "2026-04-25T16:58:22Z",
-  "first_after": "2026-04-26T15:11:33Z"
+  "last_before": null,
+  "first_after": null
  },
  "official_previous_price": {
-  "input": 0.14,
-  "output": 0.28,
-  "cache_read": 0.028
+  "input": null,
+  "output": null,
+  "cache_read": null
  },
  "sources": [
   {
-   "url": "https://web.archive.org/web/20260425165822/https://api-docs.deepseek.com/quick_start/pricing/",
-   "saved_as": "sources/web.archive.org_web_20260425165822_pricing.html",
-   "quote": "1M INPUT TOKENS (CACHE HIT)$0.028$0.03625 (limited-time 75% off*)$0.145",
-   "supports": "DeepSeek's official pricing page, archived immediately before the change, listed the V4 Flash cache hit price as $0.028 per million tokens.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
-  },
-  {
-   "url": "https://web.archive.org/web/20260426151133/https://api-docs.deepseek.com/quick_start/pricing/",
-   "saved_as": "sources/web.archive.org_web_20260426151133_pricing.html",
-   "quote": "1M INPUT TOKENS (CACHE HIT)(2)$0.0028$0.003625 (limited-time 75% off(3))$0.0145",
-   "supports": "DeepSeek's official pricing page, archived immediately after the change, listed the V4 Flash cache hit price as $0.0028 per million tokens.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
+   "url": "https://api-docs.deepseek.com/news/news260424/",
+   "file": "57fb8eea07a5cdcc.md",
+   "quote": "API is updated & available today!",
+   "supports": "DeepSeek's official announcement says the V4 API became available, but gives no price or cache-read rate.",
+   "extracted_as": "research/sources/57fb8eea07a5cdcc.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "The official snapshots establish an actual provider price change, rather than a models.dev correction. They bracket the change between 2026-04-25T16:58:22Z and 2026-04-26T15:11:33Z; no exact effective time is stated by these sources.",
- "verified": false
+ "notes": "The provider source available here does not establish whether $0.028 was once an official cache-read price or a models.dev error, and it does not state a rate-change date. Internet Archive CDX access failed with connection refused, so no before/after pricing snapshots could be checked; accordingly, the classification remains unclear and no effective date or previous official price is inferred.",
+ "verified": true
 }

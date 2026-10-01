@@ -14,32 +14,41 @@
  "sources": [
   {
    "url": "https://developers.googleblog.com/en/gemini-15-flash-8b-is-now-generally-available-for-use/",
-   "saved_as": "sources/google_developersblog_en_gemini-15-flash-8b-is-now-generally-available-for-use.html",
-   "quote": "$0.01 per 1 million tokens on cached prompts <128K",
-   "supports": "Google announced a $0.01 cached prompt price for Gemini 1.5 Flash-8B at stable release, before the June 2025 models.dev edit. The same announcement lists the $0.0375 input and $0.15 output prices.",
+   "file": "48bf167918ee570f.md",
+   "quote": "* **$0.0375 per 1 million input tokens** on prompts <128K",
+   "supports": "Google's official input price for Gemini 1.5 Flash-8B.",
    "extracted_as": "research/sources/48bf167918ee570f.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
-   "url": "https://web.archive.org/web/20250617165525/https://ai.google.dev/gemini-api/docs/pricing",
-   "saved_as": "sources/web_archive_20250617165525_ai_google_dev_pricing.html",
-   "quote": "Context caching price Free of charge, up to 1 million tokens of storage per hour $0.01, prompts <= 128k tokens $0.02, prompts > 128k tokens",
-   "supports": "Google's pricing page snapshot captured June 17, 2025 at 16:55:25 UTC lists the paid context caching rate as $0.01 per million cached tokens for prompts up to 128K, just before the models.dev commit.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
+   "url": "https://developers.googleblog.com/en/gemini-15-flash-8b-is-now-generally-available-for-use/",
+   "file": "48bf167918ee570f.md",
+   "quote": "* **$0.15 per 1 million output tokens** on prompts <128K",
+   "supports": "Google's official output price for Gemini 1.5 Flash-8B.",
+   "extracted_as": "research/sources/48bf167918ee570f.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   },
   {
-   "url": "https://web.archive.org/web/20250621161929/https://ai.google.dev/gemini-api/docs/pricing",
-   "saved_as": "sources/web_archive_20250621161929_ai_google_dev_pricing.html",
-   "quote": "Context caching price Free of charge, up to 1 million tokens of storage per hour $0.01, prompts <= 128k tokens $0.02, prompts > 128k tokens",
-   "supports": "A later Google pricing page snapshot on June 21, 2025 shows the same cached price; it was still listed after the models.dev field rename.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
+   "url": "https://developers.googleblog.com/en/gemini-15-flash-8b-is-now-generally-available-for-use/",
+   "file": "48bf167918ee570f.md",
+   "quote": "* **$0.01 per 1 million tokens** on cached prompts <128K",
+   "supports": "Google's official cached-token price for Gemini 1.5 Flash-8B, showing the cache_read value existed before the June 2025 models.dev record.",
+   "extracted_as": "research/sources/48bf167918ee570f.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://developers.googleblog.com/en/gemini-15-flash-8b-is-now-generally-available-for-use/",
+   "file": "48bf167918ee570f.md",
+   "quote": "For developers on the [paid tier](https://aistudio.google.com/app/plan_information), billing will start on Monday October 14th.",
+   "supports": "Dates the announcement's paid-tier billing start, establishing the pricing announcement predates the June 2025 catalog record.",
+   "extracted_as": "research/sources/48bf167918ee570f.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "Google had already announced and published the $0.01 cached input price by October 2024; its pricing page listed it both immediately before and after the June 2025 models.dev edit. The edit added an omitted provider price field, so there is no provider price-change effective date to report.",
- "verified": false
+ "notes": "Google's official 2024 launch announcement lists the same input and output prices and a $0.01 cached-token price, so the June 2025 cache_read addition reflects a models.dev omission/schema correction rather than a provider price change. The Internet Archive CDX lookup returned HTTP 503; no effective date for the catalog correction is established.",
+ "verified": true
 }

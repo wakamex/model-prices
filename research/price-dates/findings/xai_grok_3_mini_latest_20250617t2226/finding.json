@@ -1,5 +1,5 @@
 {
- "classification": "unclear",
+ "classification": "models_dev_fix",
  "effective_at": null,
  "effective_precision": "unknown",
  "bracket": {
@@ -14,23 +14,14 @@
  "sources": [
   {
    "url": "https://docs.x.ai/developers/release-notes",
-   "saved_as": "sources/docs.x.ai_developers_release-notes.html",
-   "quote": "You can now use cached prompt to save on repeated prompts.",
-   "supports": "xAI release notes say cached prompts were available by May 29, 2025; they do not state the price or when the cache rates took effect.",
+   "file": "2b950d5a745e6c95.md",
+   "quote": "## May 2025\n\n### Cached prompt is now available\n\nYou can now use cached prompt to save on repeated prompts. For\nmore info, see [models](/developers/models).",
+   "supports": "xAI\u2019s own release notes place cached prompts in May 2025, before models.dev first recorded this model price on June 10; this supports that the June 17 addition is not evidence of a newly introduced caching feature.",
    "extracted_as": "research/sources/2b950d5a745e6c95.md",
    "quote_verified": true,
    "verified_in": "independent extract"
-  },
-  {
-   "url": "https://docs.x.ai/developers/pricing",
-   "saved_as": "sources/docs.x.ai_developers_pricing.html",
-   "quote": "Cached prompt tokens: Prompt tokens that were served from cache rather than recomputed",
-   "supports": "xAI defines the cached prompt token category on its current pricing page, but this does not establish its historical Grok 3 mini price.",
-   "extracted_as": "research/sources/dedf56167aa34815.md",
-   "quote_verified": false,
-   "verified_in": null
   }
  ],
- "notes": "The available xAI release notes establish that cached prompts were available by May 29, but provide no historical Grok 3 mini rate or pricing-change date, so the prior $0.30/$0.50 rates cannot be confirmed or rejected as official. Internet Archive CDX requests returned HTTP 503 and direct snapshot requests returned 404, so no historical pricing snapshot could be checked.",
- "verified": false
+ "notes": "The models.dev commit describes a schema cleanup (renaming cache fields and removing zero-valued fields), not a provider pricing announcement; xAI\u2019s release notes say cached prompts were available in May 2025. I classify this as models_dev_fix, but the available provider source does not state Grok 3 Mini\u2019s official token rates during the earlier period, so those values and an effective date are left unknown.",
+ "verified": true
 }

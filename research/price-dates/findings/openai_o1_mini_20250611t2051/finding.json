@@ -1,5 +1,5 @@
 {
- "classification": "price_change",
+ "classification": "unclear",
  "effective_at": null,
  "effective_precision": "unknown",
  "bracket": {
@@ -13,33 +13,24 @@
  },
  "sources": [
   {
-   "url": "https://openai.com/index/api-prompt-caching/",
-   "saved_as": "sources/openai.com_index_api-prompt-caching.txt",
-   "quote": "| o1 mini | $3.00 | $1.50 | $12.00 |",
-   "supports": "OpenAI's official October 1, 2024 pricing announcement lists the earlier o1-mini input, cached-input, and output prices.",
-   "extracted_as": null,
-   "quote_verified": true,
-   "verified_in": "agent copy"
-  },
-  {
    "url": "https://developers.openai.com/api/docs/models/o1-mini",
-   "saved_as": "sources/developers.openai.com_api_docs_models_o1-mini.html",
-   "quote": "Input $1.10 Cached input $0.55 Output $4.40",
-   "supports": "OpenAI's current model documentation lists the lower o1-mini rates.",
+   "file": "661d5c52a1260254.md",
+   "quote": "| Input | $1.1 | 1M tokens |\n| Cached input | $0.55 | 1M tokens |\n| Output | $4.4 | 1M tokens |",
+   "supports": "OpenAI's currently documented o1-mini pricing is $1.10 input, $0.55 cached input, and $4.40 output per million tokens.",
    "extracted_as": "research/sources/661d5c52a1260254.md",
-   "quote_verified": false,
-   "verified_in": null
+   "quote_verified": true,
+   "verified_in": "independent extract"
   },
   {
-   "url": "https://web.archive.org/cdx/search/cdx?url=openai.com%2Fapi%2Fpricing%2F&output=json&filter=statuscode%3A200&filter=timestamp%3A2025&collapse=digest",
-   "saved_as": "sources/web.archive.org_cdx_openai-api-pricing_2025.json",
-   "quote": "[\"com,openai)/api/pricing\",\"20250129060213\",\"https://openai.com/api/pricing/\",\"text/html\",\"200\"",
-   "supports": "The archive index records a January 29, 2025 capture of OpenAI's pricing page; its capture date does not establish what price that page showed.",
-   "extracted_as": null,
+   "url": "https://developers.openai.com/api/docs/models/o3-mini",
+   "file": "0333f463c1e6b22b.md",
+   "quote": "o3-mini is our newest small reasoning model, providing high intelligence at the same cost and latency targets of o1-mini.",
+   "supports": "OpenAI documents o3-mini at the same cost and latency targets as o1-mini, consistent with the lower rate being official by o3-mini's 2025-01-31 snapshot.",
+   "extracted_as": "research/sources/0333f463c1e6b22b.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
   }
  ],
- "notes": "OpenAI's official October 2024 announcement confirms the earlier $3/$12 price was provider-official, while current OpenAI documentation shows $1.10/$4.40. The Internet Archive CDX index was available, but archived page replays could not be fetched, so the effective date and a price-based snapshot bracket remain unknown.",
- "verified": false
+ "notes": "The available official documentation confirms the lower o1-mini rate now and ties that cost target to o3-mini (snapshot 2025-01-31), but neither source explicitly states o1-mini's historical rate or when it changed. Internet Archive pricing snapshots could not be retrieved (429), and OpenAI's announcement page extraction was blocked (403), so the classification and any earlier official price remain unresolved.",
+ "verified": true
 }

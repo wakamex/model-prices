@@ -17,7 +17,7 @@
    "saved_as": "sources/web.archive.org_web_20250616024644_ai.google.dev_gemini-api_docs_pricing.html",
    "quote": "<tr>\n      <td>Context caching price</td>\n      <td>Free of charge</td>\n      <td>$0.025 / 1,000,000 tokens (text/image/video)<br>$0.175 / 1,000,000 tokens (audio)</td>\n    </tr>",
    "supports": "Google's pricing page snapshot from 2025-06-16 listed Gemini 2.0 Flash context caching at $0.025 per million text/image/video tokens, before the models.dev schema change.",
-   "extracted_as": null,
+   "extracted_as": "research/sources/49b05230e1e3765d.md",
    "quote_verified": true,
    "verified_in": "agent copy"
   },
@@ -26,7 +26,7 @@
    "saved_as": "sources/web.archive.org_web_20250616024644_ai.google.dev_gemini-api_docs_pricing.html",
    "quote": "<tr>\n      <td>Input price</td>\n      <td>Free of charge</td>\n      <td>$0.10 (text / image / video)<br>$0.70 (audio)</td>\n    </tr>",
    "supports": "The same pre-change Google pricing page lists standard input at $0.10 per million text/image/video tokens.",
-   "extracted_as": null,
+   "extracted_as": "research/sources/49b05230e1e3765d.md",
    "quote_verified": true,
    "verified_in": "agent copy"
   },
@@ -35,7 +35,7 @@
    "saved_as": "sources/web.archive.org_web_20250616024644_ai.google.dev_gemini-api_docs_pricing.html",
    "quote": "<tr>\n      <td>Output price</td>\n      <td>Free of charge</td>\n      <td>$0.40</td>\n    </tr>",
    "supports": "The same pre-change Google pricing page lists standard output at $0.40 per million tokens.",
-   "extracted_as": null,
+   "extracted_as": "research/sources/49b05230e1e3765d.md",
    "quote_verified": true,
    "verified_in": "agent copy"
   }

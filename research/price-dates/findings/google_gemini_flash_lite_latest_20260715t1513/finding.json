@@ -1,45 +1,54 @@
 {
- "classification": "unclear",
- "effective_at": null,
- "effective_precision": "unknown",
+ "classification": "price_change",
+ "effective_at": "2026-03-03",
+ "effective_precision": "day",
  "bracket": {
   "last_before": null,
   "first_after": null
  },
  "official_previous_price": {
-  "input": null,
-  "output": null,
+  "input": 0.1,
+  "output": 0.4,
   "cache_read": null
  },
  "sources": [
   {
+   "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-lite/",
+   "file": "cad1527f95f16233.md",
+   "quote": "Starting today, 3.1 Flash-Lite is rolling out in preview to developers via the Gemini API in [Google AI Studio](https://aistudio.google.com/prompts/new_chat?model=gemini-3.1-flash-lite-preview) and for enterprises via [Vertex AI](https://console.cloud.google.com/vertex-ai/studio/multimodal?mode=prompt&model=gemini-3.1-flash-lite-preview).",
+   "supports": "The newly launched Gemini 3.1 Flash-Lite price took effect with its March 3, 2026 announcement.",
+   "extracted_as": "research/sources/cad1527f95f16233.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-lite/",
+   "file": "cad1527f95f16233.md",
+   "quote": "Priced at just $0.25/1M input tokens and $1.50/1M output tokens, 3.1 Flash-Lite delivers enhanced performance at a fraction of the cost of larger models.",
+   "supports": "Official provider pricing for Gemini 3.1 Flash-Lite matches the new input and output prices.",
+   "extracted_as": "research/sources/cad1527f95f16233.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
    "url": "https://ai.google.dev/gemini-api/docs/pricing",
-   "saved_as": "sources/ai.google.dev_gemini-api_docs_pricing.html",
-   "quote": "Gemini 2.5 Flash-Lite gemini-2.5-flash-lite Try it in Google AI Studio A small and cost effective model, built for at scale usage. Standard Free Tier Paid Tier, per 1M tokens in USD Input price (text, image, video) Free of charge $0.10 (text / image / video) $0.30 (audio) Output price (including thinking tokens) Free of charge $0.40",
-   "supports": "Google's current pricing page lists the official price for the specific Gemini 2.5 Flash-Lite model, not the latest alias.",
+   "file": "b88c4950bbf39196.md",
+   "quote": "| Input price (text, image, video) | Free of charge | $0.10 (text / image / video) $0.30 (audio) |",
+   "supports": "Google's price table for Gemini 2.5 Flash-Lite matches the earlier $0.10 input price.",
    "extracted_as": "research/sources/b88c4950bbf39196.md",
-   "quote_verified": false,
-   "verified_in": null
+   "quote_verified": true,
+   "verified_in": "independent extract"
   },
   {
-   "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-lite/",
-   "saved_as": "sources/blog.google_gemini-3-1-flash-lite.html",
-   "quote": "Mar 03, 2026",
-   "supports": "Google's announcement is dated March 3, 2026.",
-   "extracted_as": "research/sources/cad1527f95f16233.md",
+   "url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "file": "b88c4950bbf39196.md",
+   "quote": "| Output price (including thinking tokens) | Free of charge | $0.40 |",
+   "supports": "Google's price table for Gemini 2.5 Flash-Lite matches the earlier $0.40 output price.",
+   "extracted_as": "research/sources/b88c4950bbf39196.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
-  },
-  {
-   "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-lite/",
-   "saved_as": "sources/blog.google_gemini-3-1-flash-lite.html",
-   "quote": "Priced at $0.25/1M input tokens and $1.50/1M output tokens, it's cost-efficient and faster than 2.5 Flash.",
-   "supports": "Google states the 3.1 Flash-Lite price, but does not identify it as the price of gemini-flash-lite-latest.",
-   "extracted_as": "research/sources/cad1527f95f16233.md",
-   "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
   }
  ],
- "notes": "The official sources establish different prices for the specifically named 2.5 Flash-Lite and 3.1 Flash-Lite models, but do not establish which model gemini-flash-lite-latest targeted before and after the recorded models.dev edit or when Google changed that alias. The Internet Archive CDX endpoint was reachable, but repeated attempts to retrieve its large pricing-page index failed; no bracketing snapshots were obtained. Thus the record alone cannot decide whether this was a provider price change or a models.dev correction, and no effective date or official previous price for the alias is established.",
- "verified": false
+ "notes": "Google announced Gemini 3.1 Flash-Lite at $0.25/$1.50 on March 3, 2026; its launch explains the higher price recorded later for the rolling latest alias. The official table available here lists Gemini 2.5 Flash-Lite's input/output at $0.10/$0.40, but does not establish that the earlier cache_read value of $0.025 was official; therefore cache_read is null.",
+ "verified": true
 }

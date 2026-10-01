@@ -14,23 +14,23 @@
  "sources": [
   {
    "url": "https://api-docs.deepseek.com/news/news1226/",
-   "saved_as": "sources/api-docs.deepseek.com_news_news1226.html",
-   "quote": "Input (cache miss)  | Input (cache hit)  | Output\n--- | --- | ---\n$0.27/M tokens  | $0.07/M tokens  | $1.10/M tokens",
-   "supports": "DeepSeek's official pricing announcement lists $0.27/M input on cache misses, $0.07/M on cache hits, and $1.10/M output. This establishes that cache-read pricing was already official before models.dev's June 2025 recording.",
+   "file": "sources/6185dc8ddb3764b6.md",
+   "quote": "Input (cache miss)| Input (cache hit)| Output  \n---|---|---  \n$0.27/M tokens| $0.07/M tokens| $1.10/M tokens",
+   "supports": "DeepSeek\u2019s own pricing announcement lists the cache-hit price as $0.07/M alongside $0.27/M input and $1.10/M output.",
    "extracted_as": "research/sources/6185dc8ddb3764b6.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
    "url": "https://api-docs.deepseek.com/news/news1226/",
-   "saved_as": "sources/api-docs.deepseek.com_news_news1226.html",
-   "quote": "* \ud83c\udf89 Until Feb 8: same as V2!\n  * \ud83e\udd2f From Feb 8 onwards:",
-   "supports": "The announcement states when this price schedule began: February 8, following the December 26, 2024 V3 announcement. It does not explicitly state a timezone or year for February 8.",
+   "file": "sources/6185dc8ddb3764b6.md",
+   "quote": "  * \ud83c\udf89 Until Feb 8: same as V2!\n  * \ud83e\udd2f From Feb 8 onwards:",
+   "supports": "DeepSeek\u2019s announcement distinguishes its pre-February 8 pricing period from the new pricing; it does not give a year or an exact time for the transition.",
    "extracted_as": "research/sources/6185dc8ddb3764b6.md",
-   "quote_verified": false,
-   "verified_in": null
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "DeepSeek's official December 26, 2024 announcement says the $0.07/M cache-hit price applied from February 8 onwards. Thus models.dev's earlier $0.27/$1.10 record omitted a price that was already official, making this a models.dev fix. The source does not specify a timezone or explicitly print the year of February 8; no change date applies to this correction.",
- "verified": false
+ "notes": "The June 10 models.dev entry omitted cache-read pricing that DeepSeek had publicly listed as $0.07/M; the June 17 addition is therefore a models.dev correction, not evidence of a provider price change then. DeepSeek\u2019s source does not date this correction, so effective_at is null.",
+ "verified": true
 }

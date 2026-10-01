@@ -13,15 +13,24 @@
  },
  "sources": [
   {
+   "url": "https://community.openai.com/t/announcement-release-of-o3-and-o4-mini-april-16-2025/1230164/6",
+   "file": "4de6a9a455a9cced.md",
+   "quote": "| o4-mini | Our faster, cost-efficient reasoning model delivering strong performance on math, coding and vision | $1.100 | $0.275 | $4.40 |",
+   "supports": "OpenAI's April 16, 2025 API pricing announcement listed the original o4-mini cached input price as $0.275 per million tokens, alongside $1.10 input and $4.40 output.",
+   "extracted_as": "research/sources/4de6a9a455a9cced.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
    "url": "https://developers.openai.com/api/docs/models/o4-mini",
-   "saved_as": "sources/developers.openai.com_api_docs_models_o4-mini.html",
-   "quote": "Text tokens | Per 1M tokens | \u2219 | Batch API price | Input | $1.10 | Cached input | $0.275 | Output | $4.40",
-   "supports": "OpenAI's model-specific pricing page lists the o4-mini standard input, cached input, and output rates as $1.10, $0.275, and $4.40 per million tokens. The catalog's prior cache rate of $0.28 differs from the published rate.",
+   "file": "9c147f9a8e6a8e52.md",
+   "quote": "| Cached input | $0.275 | 1M tokens |",
+   "supports": "OpenAI's current model documentation continues to list cached input at $0.275 per million tokens.",
    "extracted_as": "research/sources/9c147f9a8e6a8e52.md",
-   "quote_verified": false,
-   "verified_in": null
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "The provider's current model page gives the same $0.275 cached-input rate as the post-change catalog value, indicating models.dev corrected its rounded $0.28 value rather than recording a provider price change. Internet Archive CDX was unavailable (HTTP 503), so no dated snapshot was obtained to establish when that correction occurred or independently bracket the historical period.",
- "verified": false
+ "notes": "The provider's launch pricing and current model documentation agree at $0.275, so models.dev's earlier $0.28 appears to be a rounding error rather than an official price. The Archive CDX request returned HTTP 503, so no historical pricing-page snapshot pair was available; the evidence does not establish a provider price-change date.",
+ "verified": true
 }

@@ -1,5 +1,5 @@
 {
- "classification": "unclear",
+ "classification": "models_dev_fix",
  "effective_at": null,
  "effective_precision": "unknown",
  "bracket": {
@@ -7,30 +7,39 @@
   "first_after": null
  },
  "official_previous_price": {
-  "input": null,
-  "output": null,
+  "input": 2.0,
+  "output": 10.0,
   "cache_read": null
  },
  "sources": [
   {
    "url": "https://x.ai/news/grok-1212",
-   "saved_as": "sources/x.ai_news_grok-1212.html",
+   "file": "e0c44d30e87131f4.md",
    "quote": "As a result of our efficiency improvements, we are also lowering the price of these models to $2 / 1M input tokens and $10 / 1M output tokens.",
-   "supports": "xAI announced the $2 input and $10 output price for the Grok-2 and Grok-2 Vision dated models; it does not specify a cache-write price or an effective date.",
+   "supports": "xAI itself announced the Grok 2 model rates as $2 input and $10 output per million tokens.",
    "extracted_as": "research/sources/e0c44d30e87131f4.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
-   "url": "https://docs.x.ai/developers/pricing",
-   "saved_as": "sources/docs.x.ai_developers_pricing.html",
-   "quote": "All prices are in USD. For per-model details, see the models page.",
-   "supports": "Current official API pricing page; it has no Grok-2-vision listing and cannot establish the historical cache-write price or timing.",
-   "extracted_as": "research/sources/dedf56167aa34815.md",
-   "quote_verified": false,
-   "verified_in": null
+   "url": "https://docs.x.ai/developers/rest-api-reference/management/auth",
+   "file": "c34a6dcd600fb7db.md",
+   "quote": "          \"cachedPromptTokenPrice\": \"0\",",
+   "supports": "The provider's API model record has a cached prompt price field, with zero for grok-2-vision-1212; it has no cache-write price field in its documented model pricing schema.",
+   "extracted_as": "research/sources/c34a6dcd600fb7db.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/rest-api-reference/management/auth",
+   "file": "c34a6dcd600fb7db.md",
+   "quote": "    * `cachedPromptTokenPrice` (string) \u2014 The price (in USD cents) per 100 million cached prompt tokens.",
+   "supports": "xAI documents its cache price as a cached-prompt-token price, not as a separate cache-write rate.",
+   "extracted_as": "research/sources/c34a6dcd600fb7db.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "The xAI announcement supports the $2 input and $10 output prices, but says nothing about cache-write billing. The Internet Archive CDX endpoint was temporarily offline during research, so no snapshot pair was available; the evidence cannot determine whether cache_write=10 was an official price or a models.dev field error, or date any change.",
- "verified": false
+ "notes": "The documented $2/$10 rates match the unchanged input/output values in the models.dev record. xAI's model record exposes cached prompt pricing (shown as zero for Grok 2 Vision) but no cache-write rate, so the removed cache_write entry is best classified as a models.dev correction; the cited sources do not establish a historical cache-read price or an effective date. The Internet Archive CDX request for archived pricing material returned HTTP 503, so no archive snapshot pair was available.",
+ "verified": true
 }

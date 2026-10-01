@@ -14,23 +14,14 @@
  "sources": [
   {
    "url": "https://api-docs.deepseek.com/news/news250929/",
-   "saved_as": "sources/api-docs.deepseek.com_news_news250929.html",
-   "quote": "DeepSeek API prices drop 50%+, effective immediately.",
-   "supports": "The provider explicitly announced a real API price reduction that took effect immediately.",
+   "file": "a8a03f2724014047.md",
+   "quote": "\ud83d\udcb0 DeepSeek API prices drop 50%+, effective immediately.",
+   "supports": "Provider announcement of an immediate API price reduction on the September 29, 2025 announcement page.",
    "extracted_as": "research/sources/a8a03f2724014047.md",
    "quote_verified": true,
    "verified_in": "independent extract"
-  },
-  {
-   "url": "https://api-docs.deepseek.com/updates/",
-   "saved_as": "sources/api-docs.deepseek.com_updates.html",
-   "quote": "Date: 2025-09-29 DeepSeek-V3.2-Exp Both deepseek-chat and deepseek-reasoner have been upgraded to DeepSeek-V3.2-Exp. deepseek-chat corresponds to DeepSeek-V3.2-Exp's non-thinking mode",
-   "supports": "The provider's changelog dates the model upgrade to September 29, 2025 and identifies deepseek-chat as the upgraded API model.",
-   "extracted_as": "research/sources/e547d0d8cbe359a0.md",
-   "quote_verified": false,
-   "verified_in": null
   }
  ],
- "notes": "Classified as a provider price change: DeepSeek's release note says the reduction was effective immediately, and its changelog dates the deepseek-chat upgrade to 2025-09-29. The source states no time of day, so precision is day; no official previous-price figure is asserted here. Internet Archive CDX returned HTTP 503, so no archived pricing-page snapshots could be checked.",
- "verified": false
+ "notes": "DeepSeek's September 29, 2025 announcement explicitly says the price cut was effective immediately, establishing a day-level effective date; it gives no time of day. The announcement confirms a genuine provider price change, but does not state the earlier input, output, or cache-read prices.",
+ "verified": true
 }

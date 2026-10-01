@@ -13,42 +13,69 @@
  },
  "sources": [
   {
-   "url": "https://api-docs.deepseek.com/news/news250120/",
-   "saved_as": "sources/api-docs.deepseek.com_news_news250120.html",
-   "quote": "\ud83d\udcb0 $0.14 / million input tokens (cache hit)",
-   "supports": "DeepSeek's official January 2025 R1 release identifies cache-hit input pricing for deepseek-reasoner.",
-   "extracted_as": "research/sources/f75bec4ecc98ee0e.md",
+   "url": "https://web.archive.org/web/20250821064706id_/https://api-docs.deepseek.com/quick_start/pricing",
+   "file": "old.md",
+   "quote": "Starting from 16:00 UTC Time on Sept 5th, 2025, we will apply the following price list and cancel the nighttime discount:",
+   "supports": "The provider's scheduled effective time for its new prices.",
+   "extracted_as": "research/sources/22631d2d58202b2c.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
   },
   {
-   "url": "https://api-docs.deepseek.com/news/news250120/",
-   "saved_as": "sources/api-docs.deepseek.com_news_news250120.html",
-   "quote": "\ud83d\udcb0 $0.55 / million input tokens (cache miss)",
-   "supports": "DeepSeek's official January 2025 R1 release identifies cache-miss input pricing for deepseek-reasoner.",
-   "extracted_as": "research/sources/f75bec4ecc98ee0e.md",
+   "url": "https://web.archive.org/web/20250821064706id_/https://api-docs.deepseek.com/quick_start/pricing",
+   "file": "old.md",
+   "quote": "1M INPUT TOKENS (CACHE MISS)| $0.27| $0.55",
+   "supports": "The then-current standard deepseek-reasoner input cache-miss price was $0.55 per million tokens.",
+   "extracted_as": "research/sources/22631d2d58202b2c.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
   },
   {
-   "url": "https://api-docs.deepseek.com/news/news250120/",
-   "saved_as": "sources/api-docs.deepseek.com_news_news250120.html",
-   "quote": "\ud83d\udcb0 $2.19 / million output tokens",
-   "supports": "DeepSeek's official January 2025 R1 release identifies output pricing for deepseek-reasoner.",
-   "extracted_as": "research/sources/f75bec4ecc98ee0e.md",
+   "url": "https://web.archive.org/web/20250821064706id_/https://api-docs.deepseek.com/quick_start/pricing",
+   "file": "old.md",
+   "quote": "1M INPUT TOKENS (CACHE HIT)| $0.07| $0.14",
+   "supports": "The then-current standard deepseek-reasoner cache-hit price was $0.14 per million tokens.",
+   "extracted_as": "research/sources/22631d2d58202b2c.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
   },
   {
-   "url": "https://api-docs.deepseek.com/news/news250821/",
-   "saved_as": "sources/api-docs.deepseek.com_news_news250821.html",
-   "quote": "\ud83d\udd39 New pricing starts & off-peak discounts end at Sep 5th, 2025, 16:00 (UTC Time) \ud83d\udd39 Until then, APIs follow current pricing",
-   "supports": "DeepSeek states the new pricing start instant and that its then-current pricing remained in effect until that instant.",
-   "extracted_as": "research/sources/11d864679913c531.md",
-   "quote_verified": false,
-   "verified_in": null
+   "url": "https://web.archive.org/web/20250821064706id_/https://api-docs.deepseek.com/quick_start/pricing",
+   "file": "old.md",
+   "quote": "1M OUTPUT TOKENS| $1.10| $2.19",
+   "supports": "The then-current standard deepseek-reasoner output price was $2.19 per million tokens.",
+   "extracted_as": "research/sources/22631d2d58202b2c.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://web.archive.org/web/20250821064706id_/https://api-docs.deepseek.com/quick_start/pricing",
+   "file": "old.md",
+   "quote": "1M INPUT TOKENS (CACHE MISS)| $0.56",
+   "supports": "The new provider-listed input cache-miss price was $0.56 per million tokens.",
+   "extracted_as": "research/sources/22631d2d58202b2c.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://web.archive.org/web/20250821064706id_/https://api-docs.deepseek.com/quick_start/pricing",
+   "file": "old.md",
+   "quote": "1M INPUT TOKENS (CACHE HIT)| $0.07",
+   "supports": "The new provider-listed cache-hit price was $0.07 per million tokens.",
+   "extracted_as": "research/sources/22631d2d58202b2c.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://web.archive.org/web/20250821064706id_/https://api-docs.deepseek.com/quick_start/pricing",
+   "file": "old.md",
+   "quote": "1M OUTPUT TOKENS| $1.68",
+   "supports": "The new provider-listed output price was $1.68 per million tokens.",
+   "extracted_as": "research/sources/22631d2d58202b2c.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "DeepSeek's own R1 release documents the earlier deepseek-reasoner prices, and its V3.1 announcement explicitly schedules new pricing for 2025-09-05 16:00 UTC, so this is a provider price change rather than a models.dev correction. The Internet Archive CDX endpoint returned its temporary-offline page, so no archived pricing-table snapshot was available to verify the after-price values or construct a snapshot bracket.",
- "verified": false
+ "notes": "The provider's archived pricing page explicitly says the earlier price list remained in effect until the stated UTC time, confirming a real provider price change. Its scheduled new input price is $0.56; models.dev records $0.57 after the change, so that one-cent difference is not supported by this provider source.",
+ "verified": true
 }

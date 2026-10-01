@@ -13,24 +13,24 @@
  },
  "sources": [
   {
-   "url": "http://web.archive.org/web/20260521081415/https://docs.x.ai/developers/pricing",
-   "saved_as": "sources/web.archive.org_web_20260521081415_docs.x.ai_developers_pricing.html",
-   "quote": "\\\"promptTextTokenPriceLongContext\\\":\\\"$n25000\\\",\\\"cachedPromptTokenPrice\\\":\\\"$n2000\\\",\\\"cachedPromptTokenPriceLongContext\\\":\\\"$n4000\\\",\\\"completionTextTokenPrice\\\":\\\"$n25000\\\",\\\"completionTokenPriceLongContext\\\":\\\"$n50000\\\"",
-   "supports": "The provider's archived model catalog contained these long-context and cached-token price values by the archive capture time, before the models.dev commit.",
-   "extracted_as": null,
+   "url": "https://docs.x.ai/developers/models/grok-4.20-non-reasoning",
+   "file": "2d81e4f4b8af6408.md",
+   "quote": "| Input | $1.25 | $2.50 |\n| Cached input | $0.20 | $0.40 |\n| Output | $2.50 | $5.00 |",
+   "supports": "The current official xAI model page lists the post-change tiered prices.",
+   "extracted_as": "research/sources/2d81e4f4b8af6408.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
   },
   {
    "url": "https://docs.x.ai/developers/pricing",
-   "saved_as": "sources/docs.x.ai_developers_pricing.html",
-   "quote": "grok-4.20-0309-non-reasoning Long context \u2265 200k tokens 1M $1.25 $0.20 $2.50 $2.50 $0.40 $5.00",
-   "supports": "xAI's published pricing table currently lists $2.50 input, $0.40 cached input, and $5.00 output for this model's long-context tier.",
+   "file": "dedf56167aa34815.md",
+   "quote": "| grok-4.20-0309-non-reasoning (\u2265 200k prompt tokens) | 1M | $2.50 | $0.40 | $5.00 |",
+   "supports": "xAI's current pricing table lists the lower long-context rates.",
    "extracted_as": "research/sources/dedf56167aa34815.md",
-   "quote_verified": false,
-   "verified_in": null
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "xAI's archived catalog shows the lower long-context rates by 2026-05-21 08:14:15 UTC, but this is after the earlier models.dev observation began on 2026-05-20 21:02:38Z. No provider source found establishes whether the $4/$12 tier was official before that archive capture, so the evidence does not decide between a provider price change and a models.dev correction.",
- "verified": false
+ "notes": "The official pages available here confirm the lower long-context prices currently listed but do not establish whether the earlier $4 input/$12 output rates were ever official. Internet Archive CDX requests for xAI pricing history returned service errors, so no archival bracket or effective date could be established.",
+ "verified": true
 }

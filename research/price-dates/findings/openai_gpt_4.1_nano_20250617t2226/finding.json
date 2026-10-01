@@ -14,14 +14,32 @@
  "sources": [
   {
    "url": "https://developers.openai.com/api/docs/models/gpt-4.1-nano",
-   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-4.1-nano.html",
-   "quote": "Input $0.10 Cached input $0.025 Output $0.40",
-   "supports": "OpenAI's model documentation lists the official input, cached input, and output prices, showing cached input was $0.025 per million tokens rather than the catalog's newly recorded $0.03.",
+   "file": "35a29609b7f6c436.md",
+   "quote": "| Cached input | $0.025 | 1M tokens |",
+   "supports": "OpenAI lists cached input at $0.025 per million tokens for GPT-4.1 nano.",
    "extracted_as": "research/sources/35a29609b7f6c436.md",
-   "quote_verified": false,
-   "verified_in": null
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-4.1-nano",
+   "file": "35a29609b7f6c436.md",
+   "quote": "| Input | $0.1 | 1M tokens |",
+   "supports": "OpenAI lists input at $0.1 per million tokens.",
+   "extracted_as": "research/sources/35a29609b7f6c436.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-4.1-nano",
+   "file": "35a29609b7f6c436.md",
+   "quote": "| Output | $0.4 | 1M tokens |",
+   "supports": "OpenAI lists output at $0.4 per million tokens.",
+   "extracted_as": "research/sources/35a29609b7f6c436.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "The provider's published GPT-4.1 nano rates match the earlier input and output values, but its cached-input rate is $0.025, not the added $0.03. No provider change date or historical snapshot pair was established, so effective_at is null; the OpenAI announcement page could not be fetched directly (HTTP 403).",
- "verified": false
+ "notes": "OpenAI's pricing documentation lists cached input at $0.025 per million tokens, so the earlier catalog record's omission was not the provider's official rate. The supplied primary sources do not state when the catalog's $0.03 value took effect; the Internet Archive CDX request for contemporaneous pricing snapshots returned HTTP 503.",
+ "verified": true
 }

@@ -14,23 +14,23 @@
  "sources": [
   {
    "url": "https://claude.com/blog/1m-context-ga",
-   "saved_as": "sources/claude.com_blog_1m-context-ga.html",
-   "quote": "Standard pricing now applies across the full 1M window for both models, with no long-context premium.",
-   "supports": "Anthropic's announcement says the full 1M context window began receiving standard pricing without a long-context premium on March 13, 2026.",
+   "file": "sources/2b3a2d5a5ce5d666.md",
+   "quote": "Claude Opus 4.6 and Sonnet 4.6 now include the full 1M context window at standard pricing on the Claude Platform. Standard pricing applies across the full window \u2014 $5/$25 per million tokens for Opus 4.6 and $3/$15 for Sonnet 4.6.",
+   "supports": "Anthropic's March 13 announcement says Sonnet 4.6's full 1M window moved to standard pricing; this confirms removal of the long-context premium on that day.",
    "extracted_as": "research/sources/2b3a2d5a5ce5d666.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
   },
   {
    "url": "https://www.anthropic.com/news/claude-sonnet-4-6",
-   "saved_as": "sources/www.anthropic.com_news_claude-sonnet-4-6.html",
+   "file": "sources/c4a45eed67ee9087.md",
    "quote": "Pricing remains the same as Sonnet 4.5, starting at $3/$15 per million tokens.",
-   "supports": "Anthropic's February 17, 2026 launch announcement established Sonnet 4.6's starting input/output prices as $3/$15 per million tokens.",
+   "supports": "At launch on February 17, Anthropic described Sonnet 4.6 pricing as the same as Sonnet 4.5 and gave $3/$15 as the starting rate, consistent with a long-context premium before the March 13 announcement.",
    "extracted_as": "research/sources/c4a45eed67ee9087.md",
    "quote_verified": false,
    "verified_in": null
   }
  ],
- "notes": "Classified as a provider price change: Anthropic's March 13 announcement explicitly says standard pricing now applies across the full context window with no long-context premium. It states the effective date but no time or timezone; the earlier tier was therefore consistent with a prior premium, while the base price remained $3/$15.",
+ "notes": "Anthropic announced on March 13, 2026 that standard $3/$15 pricing applied across Sonnet 4.6's full 1M context window, removing the long-context premium reflected in the earlier tiered price. The announcement specifies a calendar date but no time or timezone; Internet Archive CDX requests timed out, so no snapshot bracket is available.",
  "verified": false
 }

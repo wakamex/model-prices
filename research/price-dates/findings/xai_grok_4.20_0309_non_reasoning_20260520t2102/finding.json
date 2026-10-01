@@ -14,41 +14,32 @@
  "sources": [
   {
    "url": "https://docs.x.ai/developers/models/grok-4.20-non-reasoning",
-   "saved_as": "sources/grok-4.20-non-reasoning.html",
-   "quote": "$1.25/ 1M tokens",
-   "supports": "xAI's current model documentation lists the model's input price; it does not establish the earlier price or a change date.",
+   "file": "sources/2d81e4f4b8af6408.md",
+   "quote": "| Input | $1.25 | $2.50 |\n| Cached input | $0.20 | $0.40 |\n| Output | $2.50 | $5.00 |",
+   "supports": "xAI's current official model page lists the lower rates and the long-context rates, but does not date when they began.",
    "extracted_as": "research/sources/2d81e4f4b8af6408.md",
-   "quote_verified": false,
-   "verified_in": null
+   "quote_verified": true,
+   "verified_in": "independent extract"
   },
   {
    "url": "https://docs.x.ai/developers/pricing",
-   "saved_as": "sources/pricing.html",
-   "quote": "grok-4.20-0309-non-reasoningLong context \u2265 200k tokens  | 1M  | $1.25  | $0.20  | $2.50  | $2.50  | $0.40  | $5.00",
-   "supports": "xAI's current pricing table lists current short and long context input, cached input, and output prices for the model.",
+   "file": "sources/dedf56167aa34815.md",
+   "quote": "| grok-4.20-0309-non-reasoning (< 200k prompt tokens) | 1M | $1.25 | $0.20 | $2.50 |",
+   "supports": "xAI's current official pricing table independently lists the lower standard rates for this exact model.",
    "extracted_as": "research/sources/dedf56167aa34815.md",
-   "quote_verified": false,
-   "verified_in": null
+   "quote_verified": true,
+   "verified_in": "independent extract"
   },
   {
    "url": "https://docs.x.ai/developers/release-notes",
-   "saved_as": "sources/release-notes.html",
-   "quote": "Mar 10\n\n### Grok 4.20 and Grok 4.20 Multi-agent are live",
-   "supports": "xAI's release notes date the model launch, but the entry does not state token prices or a price change.",
+   "file": "sources/2b950d5a745e6c95.md",
+   "quote": "### Grok 4.20 and Grok 4.20 Multi-agent are live",
+   "supports": "xAI's release notes establish that Grok 4.20 was launched, but this entry gives no price or precise date.",
    "extracted_as": "research/sources/2b950d5a745e6c95.md",
-   "quote_verified": false,
-   "verified_in": null
-  },
-  {
-   "url": "https://web.archive.org/cdx/search/cdx?url=docs.x.ai/developers/models/grok-4.20-non-reasoning&output=json&filter=statuscode%3A200&collapse=digest",
-   "saved_as": "sources/web.archive.org-cdx-search.html",
-   "quote": "Internet Archive: Temporarily Offline",
-   "supports": "The Internet Archive CDX request was unavailable, so no archived pricing snapshot could be used to verify historical pricing or bracket the change.",
-   "extracted_as": null,
    "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
   }
  ],
- "notes": "Classification is unclear: xAI's accessible primary sources establish the current $1.25/$2.50 rates and the model's March 10 launch, but do not establish whether $2/$6 was ever the official earlier rate or when any price change took effect. The Internet Archive CDX service returned a temporary-offline page; no effective date or prior official price can be determined from the available sources.",
- "verified": false
+ "notes": "The accessible xAI sources confirm the current lower price but do not establish whether the earlier $2/$6 rate was ever xAI's official price, nor when any reduction took effect. The Internet Archive CDX endpoint returned HTTP 503 for xAI pricing and model-page queries, so no archived before/after bracket could be obtained.",
+ "verified": true
 }

@@ -13,15 +13,24 @@
  },
  "sources": [
   {
-   "url": "https://docs.anthropic.com/en/docs/about-claude/pricing",
-   "saved_as": "sources/docs.anthropic.com_en_docs_about-claude_pricing.html",
-   "quote": "Claude Haiku 3.5 | $0.80 / MTok | $4 / MTok | $1 / MTok | $1.6 / MTok | $0.08 / MTok",
-   "supports": "Anthropic's official pricing table lists the Haiku 3.5 base input, output, 5-minute cache write, 1-hour cache write, and cache-hit prices respectively.",
-   "extracted_as": "research/sources/5770757567c6c228.md",
-   "quote_verified": false,
-   "verified_in": null
+   "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+   "file": "50846cd1ff366c72.md",
+   "quote": "| Claude Haiku 3.5 ([retired, except on Bedrock and Google Cloud](https://platform.claude.com/docs/en/about-claude/model-deprecations)) | $0.80 / MTok | $1 / MTok | $1.60 / MTok | $0.08 / MTok | $4 / MTok |",
+   "supports": "Anthropic's table lists Haiku 3.5's base input, 5-minute and 1-hour cache writes, cache read, and output rates.",
+   "extracted_as": "research/sources/50846cd1ff366c72.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+   "file": "50846cd1ff366c72.md",
+   "quote": "| 5-minute cache write | 1.25x base input price | Cache valid for 5 minutes |",
+   "supports": "Anthropic defines the 5-minute cache-write price as 1.25 times base input, or $1 per million at Haiku 3.5's $0.80 input rate.",
+   "extracted_as": "research/sources/50846cd1ff366c72.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "Anthropic's table distinguishes 5-minute cache writes ($1/MTok) from cache hits ($0.08/MTok), so the earlier $0.08 cache_write value was not Anthropic's official price. The source establishes the official value but does not state when models.dev's correction occurred; effective_at is therefore null.",
- "verified": false
+ "notes": "The earlier $0.08 cache_write matches Anthropic's cache_read rate; Anthropic's Haiku 3.5 table and cache-write multiplier give an official 5-minute write price of $1/MTok. No source states a date for a provider price change; the evidence indicates models.dev corrected its field.",
+ "verified": true
 }

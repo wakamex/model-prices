@@ -13,15 +13,33 @@
  },
  "sources": [
   {
-   "url": "https://api-docs.deepseek.com/news/news250120/",
-   "saved_as": "sources/api-docs.deepseek.com_news_news250120.html",
-   "quote": "$0.14 / million input tokens (cache hit) \ud83d\udcb0 $0.55 / million input tokens (cache miss) \ud83d\udcb0 $2.19 / million output tokens",
-   "supports": "DeepSeek's January 20, 2025 R1 release specified the same cache-hit, cache-miss, and output prices recorded before the models.dev schema change.",
-   "extracted_as": "research/sources/f75bec4ecc98ee0e.md",
-   "quote_verified": false,
-   "verified_in": null
+   "url": "https://web.archive.org/web/20250609162358id_/https://api-docs.deepseek.com/quick_start/pricing/",
+   "file": "deepseek-pricing-20250609.md",
+   "quote": "STANDARD PRICE\n\uff08UTC 00:30-16:30\uff09| 1M TOKENS INPUT (CACHE HIT)(4)| $0.07| $0.14",
+   "supports": "DeepSeek's June 9, 2025 archived pricing page listed $0.14 per million tokens for deepseek-reasoner cache hits.",
+   "extracted_as": "research/sources/c131cb1b9ef92ba8.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://web.archive.org/web/20250609162358id_/https://api-docs.deepseek.com/quick_start/pricing/",
+   "file": "deepseek-pricing-20250609.md",
+   "quote": "1M TOKENS INPUT (CACHE MISS)| $0.27| $0.55",
+   "supports": "The same official price table listed deepseek-reasoner's cache-miss input at $0.55 per million tokens.",
+   "extracted_as": "research/sources/c131cb1b9ef92ba8.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://web.archive.org/web/20250609162358id_/https://api-docs.deepseek.com/quick_start/pricing/",
+   "file": "deepseek-pricing-20250609.md",
+   "quote": "1M TOKENS OUTPUT(5)| $1.10| $2.19",
+   "supports": "The same official price table listed deepseek-reasoner's output at $2.19 per million tokens.",
+   "extracted_as": "research/sources/c131cb1b9ef92ba8.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "The earlier models.dev record omitted the cache-hit price even though DeepSeek's R1 release listed it as $0.14 per million input tokens; the $0.55 input and $2.19 output rates were also official. The Wayback CDX endpoint listed a June 9, 2025 pricing-page snapshot, but fetching the snapshot from web.archive.org failed, so no precise change date or archived table quote is asserted.",
- "verified": false
+ "notes": "The provider's archived pricing page, captured June 9, 2025, already listed deepseek-reasoner cache-hit input at $0.14/M alongside $0.55/M cache-miss input and $2.19/M output. This supports a models.dev correction to its recorded fields; the source does not establish a provider price-change date.",
+ "verified": true
 }

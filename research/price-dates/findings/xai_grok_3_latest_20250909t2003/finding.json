@@ -26,7 +26,7 @@
    "saved_as": "sources/web.archive.org-web-20250911090812-docs.x.ai-docs-models.html",
    "quote": "\\\"aliases\\\":[\\\"grok-3-latest\\\",\\\"grok-3-beta\\\"],\\\"name\\\":\\\"grok-3\\\",\\\"version\\\":\\\"1.0\\\",\\\"promptTextTokenPrice\\\":\\\"30000\\\",\\\"promptImageTokenPrice\\\":0,\\\"completionTextTokenPrice\\\":\\\"150000\\\",\\\"rps\\\":\\\"10\\\",\\\"cluster\\\":\\\"us-east-1\\\",\\\"maxPromptLength\\\":131072,\\\"cachedPromptTokenPrice\\\":\\\"7500\\\"",
    "supports": "The first archived xAI catalog capture after the recorded models.dev edit still lists Grok 3 at the same input, completion, and cached-token rates, with no cache-write rate.",
-   "extracted_as": null,
+   "extracted_as": "research/sources/16fab1bf9a0a9e72.md",
    "quote_verified": true,
    "verified_in": "agent copy"
   }

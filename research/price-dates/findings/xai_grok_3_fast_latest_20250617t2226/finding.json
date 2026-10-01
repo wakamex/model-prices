@@ -13,15 +13,24 @@
  },
  "sources": [
   {
-   "url": "https://docs.x.ai/developers/rest-api-reference/management/auth",
-   "saved_as": "sources/docs.x.ai_developers_rest-api-reference_management_auth.html",
-   "quote": "\"name\" : \"grok-3\" , \"version\" : \"1.0\" , \"inputModalities\" : [ \"TEXT\" ] , \"outputModalities\" : [ \"TEXT\" ] , \"promptTextTokenPrice\" : \"30000\" , \"promptImageTokenPrice\" : \"0\" , \"promptTextTokenPriceLongContext\" : \"0\" , \"cachedPromptTokenPrice\" : \"7500\" , \"completionTextTokenPrice\" : \"150000\" , \"completionTokenPriceLongContext\" : \"0\" , \"searchPrice\" : \"2500\" , \"rps\" : \"10\" , \"rpm\" : \"600\" , \"tpm\" : \"0\" , \"cluster\" : \"us-east-1\" , \"maxPromptLength\" : 131072 , \"aliases\" : [ \"grok-3-latest\" , \"grok-3-beta\" , \"grok-3-fast\" , \"grok-3-fast-latest\" , \"grok-3-fast-beta\" ]",
-   "supports": "The current provider reference groups the Grok 3 Fast aliases with a Grok 3 model entry, but it does not date this pricing or establish what was official during June 2025.",
-   "extracted_as": "research/sources/c34a6dcd600fb7db.md",
-   "quote_verified": false,
-   "verified_in": null
+   "url": "https://docs.x.ai/developers/release-notes",
+   "file": "2b950d5a745e6c95.md",
+   "quote": "Our latest flagship `Grok 3` models are now generally available via\nthe API. For more info, see [models](/developers/models).",
+   "supports": "Provider release notes establish Grok 3 API availability by April 2025, but do not give prices or caching rates.",
+   "extracted_as": "research/sources/2b950d5a745e6c95.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing",
+   "file": "e56927861559295b.md",
+   "quote": "Cached tokens are billed at the **cached prompt token price**, which is substantially lower than the regular prompt token price. The exact rates vary by model \u2014 check the [Pricing](/developers/pricing) page for current prices.",
+   "supports": "Provider says cached-token pricing is model-specific; this current documentation does not establish when the Grok 3 Fast cached rates began.",
+   "extracted_as": "research/sources/e56927861559295b.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "The available current xAI reference does not establish the historical June 2025 price or whether the added cache prices reflected a provider change. Internet Archive CDX queries for xAI documentation were attempted but returned no snapshots for the queried model route, then failed with connection refused for subsequent queries; there is no snapshot pair or provider-stated effective date here, so the classification remains unclear.",
- "verified": false
+ "notes": "The available provider sources establish that Grok 3 was available through the API and that cached tokens have model-specific discounted rates, but they do not show the historical Grok 3 Fast cache rates or when they took effect. Internet Archive CDX requests returned HTTP 503, so no before/after pricing snapshots were available; the classification and effective date therefore remain unclear.",
+ "verified": true
 }

@@ -13,51 +13,15 @@
  },
  "sources": [
   {
-   "url": "https://x.ai/news/api",
-   "saved_as": "sources/x.ai_news_api.html",
-   "quote": "In addition to the text-only version of the model grok-beta, we will also release a multi-modal version that can ingest images. The vision model will be available next week.",
-   "supports": "xAI announced the vision model as a forthcoming API model in November 2024; it does not state a price.",
-   "extracted_as": "research/sources/a0d1a4244309656a.md",
-   "quote_verified": true,
-   "verified_in": "independent extract"
-  },
-  {
    "url": "https://x.ai/news/grok-1212",
-   "saved_as": "sources/x.ai_news_grok-1212.html",
-   "quote": "Today we are adding two new models coming to our API: grok-2-1212 and grok-2-vision-1212. These models bring improvements in accuracy, instruction-following, and multi-lingual capabilities and offer a great option for developers looking for a highly-steerable and intelligent model.",
-   "supports": "The announcement separates the preview Grok models from the new Grok 2 models.",
-   "extracted_as": "research/sources/e0c44d30e87131f4.md",
-   "quote_verified": false,
-   "verified_in": null
-  },
-  {
-   "url": "https://x.ai/news/grok-1212",
-   "saved_as": "sources/x.ai_news_grok-1212.html",
-   "quote": "As a result of our efficiency improvements, we are also lowering the price of these models to $2 / 1M input tokens and $10 / 1M output tokens.",
-   "supports": "The price reduction refers to the just-announced Grok 2 models; it does not establish a changed Grok Vision Beta price.",
+   "file": "e0c44d30e87131f4.md",
+   "quote": "One month ago we released the public beta of our enterprise API along with preview models `grok-beta` and `grok-vision-beta`. Today we are adding two new models coming to our API: `grok-2-1212` and `grok-2-vision-1212`.",
+   "supports": "xAI announced grok-vision-beta as a preview model for its API, but this announcement does not state its price.",
    "extracted_as": "research/sources/e0c44d30e87131f4.md",
    "quote_verified": true,
    "verified_in": "independent extract"
-  },
-  {
-   "url": "https://docs.x.ai/developers/pricing",
-   "saved_as": "sources/docs.x.ai_developers_pricing.html",
-   "quote": "Prices per 1M tokens",
-   "supports": "The current official pricing page shows pricing is model-specific, but the fetched page does not list Grok Vision Beta.",
-   "extracted_as": "research/sources/dedf56167aa34815.md",
-   "quote_verified": true,
-   "verified_in": "agent copy"
-  },
-  {
-   "url": "https://web.archive.org/cdx/search/cdx?url=docs.x.ai%2Fdevelopers%2Fpricing&output=json&filter=statuscode%3A200&filter=timestamp%3A2025&fl=timestamp%2Coriginal&collapse=digest",
-   "saved_as": "sources/web.archive.org_cdx_docs.x.ai_developers_pricing_2025.html",
-   "quote": "Internet Archive services are temporarily offline.",
-   "supports": "The requested 2025 archive lookup could not be completed because the archive service returned its offline page.",
-   "extracted_as": null,
-   "quote_verified": true,
-   "verified_in": "agent copy"
   }
  ],
- "notes": "The available provider announcements do not state Grok Vision Beta\u2019s earlier $5/$15 price or a cache-write price, and the current pricing page does not list this beta model. The Internet Archive CDX service returned its \u201ctemporarily offline\u201d page for the 2025 lookup, so no dated provider snapshot pair was available; neither a provider price change nor a models.dev correction can be established.",
- "verified": false
+ "notes": "The available primary source confirms the model's API preview status but does not establish any token rates or a price-change date. Internet Archive lookup for xAI's pricing page did not yield usable snapshots (direct date requests returned 404 and the CDX request timed out), so the evidence cannot decide whether models.dev corrected an error or recorded a provider price change.",
+ "verified": true
 }

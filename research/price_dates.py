@@ -3,12 +3,13 @@
 models.dev dates a price by the commit that recorded it, which can lag the provider's
 change by days or fix a price that was never right. This tool lists every recorded
 change, writes one research task per change for an AOP batch of cheap web-research
-agents, and verifies their findings: every cited source is saved as Markdown under
-research/sources/ and each quote must appear in it.
+agents, and verifies their findings. Cited pages form a shared Markdown library under
+research/sources/, one file per URL, which each agent reads and adds to; every quote
+must appear in the library copy of its page.
 
     uv run --no-config python research/price_dates.py changes MODELS_DEV_CHECKOUT
     uv run --no-config python research/price_dates.py manifest [--only ID ...]
-    aop batch research/price-dates/batch.toml --jobs 8        (from research/price-dates)
+    aop batch research/price-dates/batch.toml --jobs 4        (from research/price-dates)
     uv run --no-config python research/price_dates.py collect BATCH_JSON
     uv run --no-config python research/price_dates.py verify
 """
@@ -26,6 +27,9 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parent
+EXTRACT = Path("/code/scripts/extract_web.py")
+# The sealed runs have the system Python but neither uv nor the user's packages.
+EXTRACT_DEPS = ROOT / "price-dates" / "extract-deps"
 WORK = ROOT / "price-dates"
 SOURCES = ROOT / "sources"
 PRICES = ROOT.parent / "src" / "llm_prices" / "data" / "prices.json"
@@ -60,8 +64,22 @@ https://web.archive.org/web/TIMESTAMP/URL). A snapshot pair bracketing the chang
 before and one after, is good evidence when no announcement gives the date. models.dev
 pull requests and third-party articles are leads, not evidence.
 
-Save every page you rely on into $AOP_OUTPUT_DIR/sources/ as fetched (for example with
-curl), named after its host and path. Then write $AOP_OUTPUT_DIR/finding.json:
+Pages are read and quoted as Markdown. /inputs/sources/ holds pages earlier research
+already extracted, one file per URL; /inputs/sources/index.tsv lists each URL and file.
+Use a library copy when the page you need is there. To read any other page, extract it:
+
+    PYTHONPATH=/inputs/extract-deps python3 /inputs/extract_web.py URL -o $AOP_OUTPUT_DIR/sources/NAME.md
+
+where NAME is the first 16 hex digits of the SHA-256 of the exact URL
+(printf %s URL | sha256sum | cut -c1-16). It returns the site's own Markdown copy when
+there is one and otherwise converts the HTML. For an Internet Archive snapshot extract
+https://web.archive.org/web/TIMESTAMPid_/URL, which serves the archived page itself. If
+the archive answers 429, wait a minute before the next request. A page that cannot be
+extracted, for example because it needs JavaScript, cannot be cited; find another
+source for the claim. Copy each library file you quote into $AOP_OUTPUT_DIR/sources/
+as well, so that directory holds every page your finding cites.
+
+Then write $AOP_OUTPUT_DIR/finding.json:
 
 {{
   "classification": "price_change" | "models_dev_fix" | "unclear",
@@ -70,17 +88,17 @@ curl), named after its host and path. Then write $AOP_OUTPUT_DIR/finding.json:
   "bracket": {{"last_before": "ISO time or null", "first_after": "ISO time or null"}},
   "official_previous_price": {{"input": null, "output": null, "cache_read": null}},
   "sources": [
-    {{"url": "the exact URL you fetched", "saved_as": "sources/FILE",
-      "quote": "a verbatim passage copied from the page text, under 300 characters",
+    {{"url": "the exact URL you extracted", "file": "the Markdown file you quoted",
+      "quote": "a verbatim passage copied from that file, under 300 characters",
       "supports": "what this source shows"}}
   ],
   "notes": "one or two sentences"
 }}
 
-Every claim must rest on a quote copied verbatim from a saved page; the quotes are
-checked by machine against the page text. Copy one contiguous passage exactly as it
-appears, never cells joined from different parts of a table; for a table, quote a single
-row. Do not guess a date: when the sources do not state or bracket it, set effective_at
+Every claim must rest on a quote copied verbatim from the Markdown file of its page;
+the quotes are checked by machine against that file. Copy one contiguous passage exactly
+as it appears in the file, never text joined from different parts of it; for a table,
+quote a single row. Do not guess a date: when the sources do not state or bracket it, set effective_at
 to null and say so in notes. If a source you need, such as web.archive.org, is
 unavailable, say so in notes rather than concluding there is no evidence.
 """
@@ -122,9 +140,32 @@ def list_changes(models_dev: Path) -> list[dict]:
     return changes
 
 
+def source_path(url: str) -> Path:
+    return SOURCES / f"{hashlib.sha256(url.encode()).hexdigest()[:16]}.md"
+
+
+def library_entry(path: Path, url: str, retrieved: str, body: str) -> None:
+    path.write_text(f"---\nurl: {url}\nretrieved: {retrieved}\n---\n\n{body}")
+
+
+def write_index() -> None:
+    """List each library file's URL and retrieval time for agents."""
+    rows = []
+    for path in sorted(SOURCES.glob("*.md")):
+        header = dict(line.split(": ", 1) for line in
+                      path.read_text().split("\n---\n", 1)[0].splitlines()[1:])
+        rows.append(f"{header['url']}\t{path.name}\t{header['retrieved']}")
+    (SOURCES / "index.tsv").write_text("url\tfile\tretrieved\n" + "\n".join(sorted(rows)) + "\n")
+
+
 def write_manifest(changes: list[dict], only: set[str], model: str, effort: str) -> Path:
     tasks = WORK / "tasks"
     tasks.mkdir(parents=True, exist_ok=True)
+    write_index()
+    if not EXTRACT_DEPS.exists():
+        subprocess.run(["uv", "--no-config", "pip", "install", "--quiet", "--python",
+                        "/usr/bin/python3", "--target", str(EXTRACT_DEPS),
+                        "html2text", "readability-lxml", "requests"], check=True)
     blocks = []
     for change in changes:
         if only and change["id"] not in only:
@@ -136,6 +177,7 @@ def write_manifest(changes: list[dict], only: set[str], model: str, effort: str)
             f'[[tasks]]\nid = "{change["id"]}"\nagent = "codex"\nmodel = "{model}"\n'
             f'effort = "{effort}"\nprofile = "sealed"\ntimeout = 1200\n'
             f'prompt_file = "tasks/{change["id"]}.md"\n'
+            f'inputs = ["../sources", "{EXTRACT}", "extract-deps"]\n'
             f'artifacts = ["finding.json", "sources"]\n'
         )
     manifest = WORK / "batch.toml"
@@ -144,7 +186,8 @@ def write_manifest(changes: list[dict], only: set[str], model: str, effort: str)
 
 
 def collect(batch: Path) -> None:
-    """Copy each run's finding and saved sources into price-dates/findings/<id>/.
+    """Copy each run's finding into price-dates/findings/<id>/ and add the pages it
+    extracted to the source library.
 
     AOP writes the batch summary to .aop/batches/<batch>.json and archives each run's
     artifacts under .aop/runs/<run_id>/artifacts/.
@@ -160,11 +203,32 @@ def collect(batch: Path) -> None:
         if destination.exists():
             shutil.rmtree(destination)
         shutil.copytree(artifacts, destination)
+        add_extracts(destination, runs / str(result["run_id"]) / "result.json")
         (destination / "run.json").write_text(json.dumps({
             key: result.get(key) for key in (
                 "run_id", "status", "model", "effort", "duration_seconds", "input_tokens",
                 "cached_input_tokens", "output_tokens", "calculated_cost_usd")
         }, indent=1) + "\n")
+
+
+def add_extracts(finding_dir: Path, result: Path) -> None:
+    """Add the pages a run extracted to the library, keyed by URL. The run keeps its own
+    copies, which can differ from an earlier library copy of a page that has changed."""
+    try:
+        finding = json.loads((finding_dir / "finding.json").read_text())
+    except json.JSONDecodeError:
+        return
+    retrieved = json.loads(result.read_text())["finished_at"]
+    SOURCES.mkdir(parents=True, exist_ok=True)
+    for source in finding.get("sources", []):
+        # Agents are asked to name extracts by URL hash but sometimes name them freely.
+        named = finding_dir / "sources" / Path(source.get("file", "")).name
+        extract = named if named.is_file() else finding_dir / "sources" / source_path(source["url"]).name
+        if (extract.is_file() and not source_path(source["url"]).exists()
+                and not extract.read_text().startswith("---\nurl: ")):  # a library copy
+            library_entry(source_path(source["url"]), source["url"], retrieved,
+                          extract.read_text())
+    write_index()
 
 
 def _normalize(text: str) -> str:
@@ -174,23 +238,14 @@ def _normalize(text: str) -> str:
 def save_source(url: str) -> Path | None:
     """Extract a cited page to research/sources/ as Markdown with its provenance."""
     SOURCES.mkdir(parents=True, exist_ok=True)
-    name = hashlib.sha256(url.encode()).hexdigest()[:16]
-    path = SOURCES / f"{name}.md"
+    path = source_path(url)
     if path.exists():
         return path
     retrieved = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    body = None
-    if re.search(r"\.(md|txt|toml|json)(\?|$)|raw\.githubusercontent", url):
-        fetched = subprocess.run(["curl", "-fsSL", "-A", "Mozilla/5.0", url],
-                                 capture_output=True, text=True)
-        body = fetched.stdout if fetched.returncode == 0 else None
-    else:
-        fetched = subprocess.run(["/code/scripts/extract_web.py", url, "--min-chars", "200"],
-                                 capture_output=True, text=True)
-        body = fetched.stdout if fetched.returncode == 0 else None
-    if not body:
+    fetched = subprocess.run([str(EXTRACT), url], capture_output=True, text=True)
+    if fetched.returncode != 0 or not fetched.stdout:
         return None
-    path.write_text(f"---\nurl: {url}\nretrieved: {retrieved}\n---\n\n{body}")
+    library_entry(path, url, retrieved, fetched.stdout)
     return path
 
 
@@ -206,7 +261,8 @@ def verify() -> None:
         for source in finding.get("sources", []):
             saved = save_source(source["url"])
             texts = [saved.read_text()] if saved else []
-            agent_copy = own_sources / source.get("saved_as", "")
+            agent_copy = (own_sources / "sources" / Path(source["file"]).name if source.get("file")
+                          else own_sources / source.get("saved_as", ""))
             if agent_copy.is_file():
                 texts.append(agent_copy.read_text(errors="replace"))
             quote = _normalize(source.get("quote", ""))

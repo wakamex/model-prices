@@ -7,39 +7,30 @@
   "first_after": null
  },
  "official_previous_price": {
-  "input": 2.0,
-  "output": 10.0,
+  "input": null,
+  "output": null,
   "cache_read": null
  },
  "sources": [
   {
    "url": "https://x.ai/news/grok-1212",
-   "saved_as": "sources/x.ai_news_grok-1212.html",
+   "file": "sources/e0c44d30e87131f4.md",
    "quote": "As a result of our efficiency improvements, we are also lowering the price of these models to $2 / 1M input tokens and $10 / 1M output tokens.",
-   "supports": "xAI's December 12, 2024 announcement explicitly prices grok-2-vision-1212 at the $2 input and $10 output rates.",
+   "supports": "xAI's official $2 input and $10 output rates for the Grok-2-vision-1212 launch; it does not state cache pricing.",
    "extracted_as": "research/sources/e0c44d30e87131f4.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
-   "url": "https://docs.x.ai/developers/release-notes",
-   "saved_as": "sources/docs.x.ai_developers_release-notes.html",
-   "quote": "May 29 Cached prompt is now available You can now use cached prompt to save on repeated prompts.",
-   "supports": "xAI dates the availability of cached prompts to May 29, 2025, before the models.dev record, but this passage gives no Grok 2 Vision 1212 cache price.",
-   "extracted_as": "research/sources/2b950d5a745e6c95.md",
-   "quote_verified": false,
-   "verified_in": null
-  },
-  {
-   "url": "https://docs.x.ai/developers/pricing",
-   "saved_as": "sources/docs.x.ai_developers_pricing.html",
-   "quote": "Cached prompt tokens: Prompt tokens that were served from cache rather than recomputed",
-   "supports": "xAI describes cached prompt tokens as a distinct prompt token type; the page available today does not provide historical Grok 2 Vision 1212 pricing.",
-   "extracted_as": "research/sources/dedf56167aa34815.md",
-   "quote_verified": false,
-   "verified_in": null
+   "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing.md",
+   "file": "sources/fdb8e6a04853b79d.md",
+   "quote": "Cached tokens are billed at the **cached prompt token price**, which is substantially lower than the regular prompt token price. The exact rates vary by model \u2014 check the [Pricing](/developers/pricing) page for current prices.",
+   "supports": "xAI distinguishes cached-token rates, which vary by model, but this current documentation gives no historical Grok-2-vision-1212 rate.",
+   "extracted_as": "research/sources/fdb8e6a04853b79d.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "The provider confirms the earlier $2/$10 input/output rates, while the June 17 models.dev commit only establishes a cache-field schema change. The available provider sources do not establish that the added cache_read/cache_write values were official prices for this model or when any provider price changed; the Wayback CDX request failed with HTTP 503, so classification and effective date remain unclear.",
- "verified": false
+ "notes": "The launch announcement establishes the original input/output rates, but the available primary sources do not establish the official cache-read rate before June 17, 2025 or when a cache-rate change took effect. Internet Archive could not be reached from this environment (connection refused), so no dated pricing-page snapshots were available to resolve whether models.dev surfaced a prior official rate or fixed its own omission.",
+ "verified": true
 }

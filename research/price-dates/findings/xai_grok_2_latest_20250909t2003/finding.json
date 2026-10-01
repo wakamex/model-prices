@@ -14,32 +14,23 @@
  "sources": [
   {
    "url": "https://x.ai/news/grok-1212",
-   "saved_as": "sources/x.ai_news_grok-1212.html",
+   "file": "8dd.md",
    "quote": "As a result of our efficiency improvements, we are also lowering the price of these models to $2 / 1M input tokens and $10 / 1M output tokens.",
-   "supports": "xAI stated the official Grok-2 API input and output rates as $2 and $10 per million tokens in its December 12, 2024 announcement.",
+   "supports": "xAI's official announcement specifies Grok-2 API input and output prices of $2 and $10 per million tokens.",
    "extracted_as": "research/sources/e0c44d30e87131f4.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
    "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing",
-   "saved_as": "sources/docs.x.ai_developers_advanced-api-usage_prompt-caching_usage-and-pricing.html",
-   "quote": "Cached tokens are billed at the cached prompt token price, which is substantially lower than the regular prompt token price. The exact rates vary by model \u2014 check the Pricing page for details.",
-   "supports": "xAI describes cached prompt tokens as a separate reduced prompt price, not as an output-priced cache write; this does not provide a historical Grok-2 cache rate.",
+   "file": "9c1.md",
+   "quote": "Cached tokens are billed at the **cached prompt token price**, which is substantially lower than the regular prompt token price. The exact rates vary by model \u2014 check the [Pricing](/developers/pricing) page for current prices.",
+   "supports": "xAI describes cached prompt tokens as a distinct reduced-price category; the cited provider documentation does not describe a cache-write price.",
    "extracted_as": "research/sources/e56927861559295b.md",
-   "quote_verified": false,
-   "verified_in": null
-  },
-  {
-   "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing",
-   "saved_as": "sources/docs.x.ai_developers_advanced-api-usage_prompt-caching_usage-and-pricing.html",
-   "quote": "Cached prompt tokensReduced cached prompt token price",
-   "supports": "The provider's billing categories distinguish cached prompt tokens from completion tokens; the former receive a reduced cached prompt price.",
-   "extracted_as": "research/sources/e56927861559295b.md",
-   "quote_verified": false,
-   "verified_in": null
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "The recorded difference only removes cache_write; xAI's primary source establishes the same $2/M input and $10/M output price well before the earlier models.dev record. xAI's current cache documentation indicates cached prompt tokens use a reduced prompt rate, but does not establish a historical Grok-2 cache_read rate or a date for this models.dev correction.",
- "verified": false
+ "notes": "The official Grok-2 announcement gives $2 input and $10 output pricing, matching the recorded rates, while the provider's caching documentation describes reduced-price cached prompt tokens rather than a separately priced cache-write token type. This supports treating the cache_write=$10 field as a models.dev categorization error; no source located states an effective date or historical cache-read rate, and the Internet Archive CDX request failed with HTTP 503.",
+ "verified": true
 }

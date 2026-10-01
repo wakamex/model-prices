@@ -1,11 +1,11 @@
 {
- "run_id": "22a110ab-ce6a-4959-856c-25fa9617490b",
+ "run_id": "744e137f-e9c0-45bf-85c1-1c03ed652554",
  "status": "succeeded",
  "model": "gpt-6-luna",
  "effort": "medium",
- "duration_seconds": 120.75642,
- "input_tokens": 451969,
- "cached_input_tokens": 417280,
- "output_tokens": 3914,
- "calculated_cost_usd": 0.0095987
+ "duration_seconds": 47.394469,
+ "input_tokens": 168919,
+ "cached_input_tokens": 134400,
+ "output_tokens": 1809,
+ "calculated_cost_usd": 0.0057004
 }

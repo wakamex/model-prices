@@ -14,41 +14,23 @@
  "sources": [
   {
    "url": "https://developers.openai.com/api/docs/models/gpt-3.5-turbo",
-   "saved_as": "sources/developers.openai.com-api-docs-models-gpt-3.5-turbo.html",
-   "quote": "Input $0.50 Output $1.50",
-   "supports": "OpenAI lists the GPT-3.5 Turbo input and output prices as $0.50 and $1.50 per million tokens; it does not list a cached-input rate on this model page.",
+   "file": "sources/514e875c65c1b9a3.md",
+   "quote": "| GPT-3.5 Turbo | $0.5 | - | $1.5 |",
+   "supports": "OpenAI lists GPT-3.5 Turbo input and output prices as $0.50 and $1.50 and has no cached-input price.",
    "extracted_as": "research/sources/514e875c65c1a9b3.md",
-   "quote_verified": false,
-   "verified_in": null
-  },
-  {
-   "url": "https://developers.openai.com/api/docs/guides/prompt-caching",
-   "saved_as": "sources/developers.openai.com-api-docs-guides-prompt-caching.html",
-   "quote": "Prompt caching is enabled by default for supported OpenAI models.",
-   "supports": "OpenAI scopes prompt caching to supported models, so a cache rate cannot be presumed for every model.",
-   "extracted_as": "research/sources/c86beef864f4e446.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
-   "url": "https://web.archive.org/web/20260525035751/https://openai.com/api/pricing/",
-   "saved_as": "sources/web.archive.org-web-20260525035751-openai-api-pricing.html",
-   "quote": "Cached input:<br/>$0.50 / 1M tokens",
-   "supports": "The archived OpenAI pricing page itemizes cached-input rates for models where they apply.",
-   "extracted_as": "research/sources/ec1a955d62cd3426.md",
+   "url": "https://developers.openai.com/api/docs/pricing",
+   "file": "sources/00eaf917ab1113cf.md",
+   "quote": "| gpt-3.5-turbo | $0.50 | - | - | $1.50 | - | - | - | - |",
+   "supports": "OpenAI's API pricing table lists GPT-3.5 Turbo input at $0.50, no cached-input rate, and output at $1.50.",
+   "extracted_as": "research/sources/00eaf917ab1113cf.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
-  },
-  {
-   "url": "https://web.archive.org/web/20260528153327/https://openai.com/api/pricing/",
-   "saved_as": "sources/web.archive.org-web-20260528153327-openai-api-pricing.html",
-   "quote": "Cached input:<br/>$0.50 / 1M tokens",
-   "supports": "The post-recording archived pricing page shows the same pricing-page structure and model-specific cached-input rates.",
-   "extracted_as": null,
-   "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
   }
  ],
- "notes": "OpenAI\u2019s GPT-3.5 Turbo page lists $0.50 input and $1.50 output, while its prompt-caching documentation limits caching to supported models and the GPT-3.5 page has no cached-input price; this indicates models.dev was correcting an unsupported cache_read field rather than recording a provider price change. The archived pricing snapshots around the commit date do not establish a date for any GPT-3.5 cache-price change, and OpenAI\u2019s archive/CDX endpoint for the prompt-caching announcement was temporarily unavailable; no effective date is claimed.",
- "verified": false
+ "notes": "The provider's published pricing has no cached-input rate for GPT-3.5 Turbo, so models.dev's $1.25 cache-read value was not an official price. Wayback's capture-index request did not return, so the date of the correction cannot be established or bracketed.",
+ "verified": true
 }

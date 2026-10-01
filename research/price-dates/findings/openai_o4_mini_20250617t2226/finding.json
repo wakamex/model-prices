@@ -7,30 +7,21 @@
   "first_after": null
  },
  "official_previous_price": {
-  "input": null,
-  "output": null,
+  "input": 1.1,
+  "output": 4.4,
   "cache_read": 0.275
  },
  "sources": [
   {
    "url": "https://developers.openai.com/api/docs/models/o4-mini",
-   "saved_as": "sources/developers.openai.com_api_docs_models_o4-mini.html",
-   "quote": "Cached input $0.275",
-   "supports": "OpenAI's model documentation states the cached input rate is $0.275 per million tokens, equivalent to the catalog's rounded $0.28 cache_read value.",
+   "file": "9c147f9a8e6a8e52.md",
+   "quote": "| o4-mini | $1.1 | $0.275 | $4.4 |",
+   "supports": "OpenAI's official model documentation lists o4-mini input, cached input, and output prices, showing the cache price was $0.275 per million tokens alongside the unchanged $1.1 input and $4.4 output prices.",
    "extracted_as": "research/sources/9c147f9a8e6a8e52.md",
    "quote_verified": true,
    "verified_in": "independent extract"
-  },
-  {
-   "url": "https://openai.com/index/introducing-o3-and-o4-mini/",
-   "saved_as": "sources/openai.com_index_introducing-o3-and-o4-mini.html",
-   "quote": "April 16, 2025",
-   "supports": "OpenAI dates the announcement introducing o4-mini to April 16, 2025; the current model documentation supplies its cached input rate.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
   }
  ],
- "notes": "The $0.28 cache_read entry corresponds to OpenAI's $0.275 cached input rate, so the earlier omission appears to be a models.dev data correction rather than a provider price change. OpenAI's dated announcement does not give this price, and the Wayback CDX endpoint timed out, so no contemporaneous snapshot establishes when the official rate was first published; effective_at is therefore unknown.",
- "verified": false
+ "notes": "OpenAI's official documentation lists cached input at $0.275 per million tokens, so the models.dev record's earlier omission of cache_read was not the provider's full price. The page does not date when this price applied, and the Internet Archive CDX request failed with a connection error, so the effective time is unknown.",
+ "verified": true
 }

@@ -1,5 +1,5 @@
 {
- "classification": "models_dev_fix",
+ "classification": "unclear",
  "effective_at": null,
  "effective_precision": "unknown",
  "bracket": {
@@ -7,66 +7,39 @@
   "first_after": null
  },
  "official_previous_price": {
-  "input": 0.435,
-  "output": 0.87,
-  "cache_read": 0.0145
+  "input": null,
+  "output": null,
+  "cache_read": null
  },
  "sources": [
   {
-   "url": "https://www.deepseek.com/images/blog/v4-preview/v4-price-en.png",
-   "saved_as": "sources/www.deepseek.com_images_blog_v4-preview_v4-price-en.png",
-   "quote": "deepseek - v4 - pro | $ 0.145 | $ 1.74 | $ 3.48",
-   "supports": "DeepSeek's official V4 launch price table lists the uncached input, output, and cached input list prices; the official account later characterizes the 75% V4-Pro discount and cache reduction.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
+   "url": "https://api-docs.deepseek.com/news/news260424/",
+   "file": "57fb8eea07a5cdcc.md",
+   "quote": "API is updated & available today!",
+   "supports": "DeepSeek's official announcement says the V4 API was available on the April 24 launch date; it does not state the API rates in extractable text.",
+   "extracted_as": "research/sources/57fb8eea07a5cdcc.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   },
   {
-   "url": "https://t.me/s/deepseek_ai",
-   "saved_as": "sources/t.me_s_deepseek_ai.txt",
-   "quote": "\ud83d\udcccReminder: The DeepSeek-V4-Pro 75% OFF promotion is still active\u2026",
-   "supports": "DeepSeek's official account says the 75% V4-Pro promotion was active, so $1.74/$3.48 were not the charged V4-Pro rates throughout the earlier period.",
-   "extracted_as": "research/sources/87ab28b115c79d0e.md",
+   "url": "https://api-docs.deepseek.com/quick_start/pricing",
+   "file": "8eb12065b9344787.md",
+   "quote": "Product prices may vary and DeepSeek reserves the right to adjust them. We recommend topping up based on your actual usage and regularly checking this page for the most recent pricing information.",
+   "supports": "DeepSeek's official pricing documentation warns that prices can change, but this extracted version contains no dated historical price values.",
+   "extracted_as": "research/sources/8eb12065b9344787.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
   },
   {
-   "url": "https://t.me/s/deepseek_ai",
-   "saved_as": "sources/t.me_s_deepseek_ai.txt",
-   "quote": "The DeepSeek-V4-Pro discount has been extended until May 31, 2026, 15:59 UTC!",
-   "supports": "The official promotion remained active through the earlier period surrounding the models.dev correction.",
-   "extracted_as": "research/sources/87ab28b115c79d0e.md",
+   "url": "https://api-docs.deepseek.com/updates/",
+   "file": "e547d0d8cbe359a0.md",
+   "quote": "The new prices will take effect at 16:00 (UTC Time) on August 16, 2026.",
+   "supports": "DeepSeek's official changelog dates a later August 2026 pricing change, not the May change under investigation.",
+   "extracted_as": "research/sources/e547d0d8cbe359a0.md",
    "quote_verified": true,
-   "verified_in": "agent copy"
-  },
-  {
-   "url": "https://t.me/s/deepseek_ai",
-   "saved_as": "sources/t.me_s_deepseek_ai.txt",
-   "quote": "We are making our discount permanent! \ud83c\udf89",
-   "supports": "DeepSeek said it was making the discounted price permanent, consistent with a models.dev correction rather than a provider price changing from the undiscounted list price on May 25.",
-   "extracted_as": "research/sources/87ab28b115c79d0e.md",
-   "quote_verified": true,
-   "verified_in": "agent copy"
-  },
-  {
-   "url": "https://t.me/s/deepseek_ai",
-   "saved_as": "sources/t.me_s_deepseek_ai.txt",
-   "quote": "Effective immediately, the price for input cache hits across the ENTIRE DeepSeek API series is reduced to just 1/10th of the original price!",
-   "supports": "DeepSeek's official account states cache-hit prices were reduced to one tenth, yielding a prior V4-Pro cache rate of $0.0145 from the official launch table's $0.145.",
-   "extracted_as": "research/sources/87ab28b115c79d0e.md",
-   "quote_verified": true,
-   "verified_in": "agent copy"
-  },
-  {
-   "url": "https://www.deepseek.com/en/news/v4-preview/",
-   "saved_as": "sources/www.deepseek.com_en_news_v4-preview.html.txt",
-   "quote": "News April 24, 2026\n# DeepSeek-V4 Preview: Entering the Era of Affordable Million-Token Context",
-   "supports": "DeepSeek announced the V4 preview and API launch on April 24, 2026, the beginning of the earlier period under review.",
-   "extracted_as": "research/sources/ac1656ce70df9aca.md",
-   "quote_verified": true,
-   "verified_in": "agent copy"
+   "verified_in": "independent extract"
   }
  ],
- "notes": "Classified as models_dev_fix: the models.dev earlier values match DeepSeek's undiscounted launch list price, but DeepSeek's official account confirms the 75% V4-Pro promotion remained active and later says the discount was made permanent. During that period the official charged rates were $0.435 input, $0.87 output, and $0.0145 cache hit (the launch table's $0.145 cache rate reduced to one tenth). The permanent-discount announcement gives no effective timestamp in the saved text, and the Wayback CDX endpoint was unavailable (HTTP 503 / connection refused), so no date or snapshot bracket is asserted.",
- "verified": false
+ "notes": "The supplied first-party extracts do not establish whether $1.74/$3.48/$0.145 was ever DeepSeek's charged price or give the May effective date. Internet Archive was temporarily offline during lookup, and the provider's announcement post could not be extracted; therefore the classification and earlier official rates remain unresolved.",
+ "verified": true
 }

@@ -13,33 +13,42 @@
  },
  "sources": [
   {
-   "url": "https://web.archive.org/web/20260408161245id_/https://developers.openai.com/api/docs/models/gpt-5.4",
-   "saved_as": "sources/web.archive.org_web_20260408161245_developers.openai.com_api_docs_models_gpt-5.4.html",
-   "quote": "Input $2.50 Cached input $0.25 Output $15.00",
-   "supports": "OpenAI's documented standard GPT-5.4 input, cached input, and output prices during the earlier period.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
+   "url": "https://web.archive.org/web/20260407122011id_/https://developers.openai.com/api/docs/pricing",
+   "file": "sources/price-before.md",
+   "quote": "gpt-5.4| $2.50| $0.25| $15.00| $5.00| $0.50| $22.50",
+   "supports": "OpenAI's archived pricing table immediately before the models.dev record lists the same GPT-5.4 short and long context rates.",
+   "extracted_as": "research/sources/0dbc680de63c4d55.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   },
   {
-   "url": "https://web.archive.org/web/20260408161245id_/https://developers.openai.com/api/docs/models/gpt-5.4",
-   "saved_as": "sources/web.archive.org_web_20260408161245_developers.openai.com_api_docs_models_gpt-5.4.html",
-   "quote": "For models with a 1.05M context window (GPT-5.4 and GPT-5.4 pro), prompts with >272K input tokens are priced at 2x input and 1.5x output for the full session for standard, batch, and flex.",
-   "supports": "OpenAI had documented the 272K long-context pricing threshold on the April 8 snapshot, before the models.dev correction.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
+   "url": "https://web.archive.org/web/20260409215024id_/https://developers.openai.com/api/docs/pricing",
+   "file": "sources/price-after.md",
+   "quote": "gpt-5.4| $2.50| $0.25| $15.00| $5.00| $0.50| $22.50",
+   "supports": "OpenAI's archived pricing table after the models.dev initial recording still lists those same rates.",
+   "extracted_as": "research/sources/acb47f2082df8462.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   },
   {
-   "url": "https://web.archive.org/web/20260305180656id_/https://developers.openai.com/api/docs/models/gpt-5.4",
-   "saved_as": "sources/web.archive.org_web_20260305180656_developers.openai.com_api_docs_models_gpt-5.4.html",
-   "quote": "For models with a 1.05M context window (GPT-5.4 and GPT-5.4 pro), prompts with >272K input tokens are priced at 2x input and 1.5x output for the full session for standard, batch, and flex.",
-   "supports": "OpenAI documented the 272K threshold in its March 5 model-page snapshot at launch, indicating 200K was not the official threshold.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
+   "url": "https://developers.openai.com/api/docs/pricing.md",
+   "file": "sources/openai-current-pricing.md",
+   "quote": "Short context: \u2264272K input tokens. Long context: >272K input tokens.",
+   "supports": "OpenAI defines its current short/long context pricing boundary at 272K tokens, matching the corrected models.dev tier threshold.",
+   "extracted_as": "research/sources/6d28d1d0210a5ba7.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/pricing.md",
+   "file": "sources/openai-current-pricing.md",
+   "quote": "| gpt-5.4 (<272K context length) | $2.50 | $0.25 | - | $15.00 | $5.00 | $0.50 | - | $22.50 |",
+   "supports": "The official current GPT-5.4 pricing row gives the same rates across short and long context bands as in the archived earlier tables.",
+   "extracted_as": "research/sources/6d28d1d0210a5ba7.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "The earlier 200,000-token tier was a models.dev error: OpenAI's archived model page already specified the 272K threshold on March 5 and still did so on April 8, when models.dev began recording the earlier value. These sources establish the threshold, not an effective date for any provider price change; no price change is supported, so effective_at is null.",
- "verified": false
+ "notes": "Classified as a models.dev correction: the provider's archived pricing rows before and after the initial models.dev recording give the same rates, and current OpenAI documentation defines the corresponding boundary as 272K. The archive extraction omitted a historical boundary definition, and an archived model-page request returned HTTP 429; no effective date for a provider price change is established.",
+ "verified": true
 }

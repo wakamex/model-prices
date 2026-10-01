@@ -14,32 +14,32 @@
  "sources": [
   {
    "url": "https://api-docs.deepseek.com/news/news260424/",
-   "saved_as": "sources/api-docs.deepseek.com_news_news260424.html",
-   "quote": "deepseek-chat & deepseek-reasoner will be fully retired and inaccessible after Jul 24th, 2026, 15:59 (UTC Time). (Currently routing to deepseek-v4-flash non-thinking/thinking).",
-   "supports": "DeepSeek states its legacy API model names were routing to V4 Flash during the period, but does not state a historical price for those names.",
+   "file": "deepseek-v4-preview.md",
+   "quote": "\ud83d\udd39 Keep base_url, just update model to deepseek-v4-pro or deepseek-v4-flash.\n\ud83d\udd39 Supports OpenAI ChatCompletions & Anthropic APIs.\n\ud83d\udd39 Both models support 1M context & dual modes (Thinking / Non-Thinking): <https://api-docs.deepseek.com/guides/thinking_mode>",
+   "supports": "DeepSeek announced the V4 API and models in April, but this announcement gives no prices or effective pricing date.",
    "extracted_as": "research/sources/57fb8eea07a5cdcc.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
    "url": "https://api-docs.deepseek.com/quick_start/pricing",
-   "saved_as": "sources/api-docs.deepseek.com_quick_start_pricing.html",
-   "quote": "1M INPUT TOKENS (CACHE HIT) OFF-PEAK $0.003 $0.022 PEAK $0.006 $0.044",
-   "supports": "The current official pricing table gives rates for DeepSeek Flash and V4 Pro, not the legacy model names, and does not establish the historical rate in question.",
+   "file": "wayback-before.md",
+   "quote": "* The model names `deepseek-chat` and `deepseek-reasoner` will be deprecated in the future. For compatibility, they correspond to the non-thinking mode and thinking mode of `deepseek-v4-flash`, respectively.",
+   "supports": "The April 25 archived provider page says the legacy reasoner name corresponded to V4 Flash, but the extracted copy omits its pricing table.",
    "extracted_as": "research/sources/8eb12065b9344787.md",
-   "quote_verified": false,
-   "verified_in": null
+   "quote_verified": true,
+   "verified_in": "agent copy"
   },
   {
-   "url": "https://api-docs.deepseek.com/news/news250120/",
-   "saved_as": "sources/api-docs.deepseek.com_news_news250120.html",
-   "quote": "Use DeepSeek-R1 by setting model=deepseek-reasoner \ud83d\udcb0 $0.14 / million input tokens (cache hit) \ud83d\udcb0 $0.55 / million input tokens (cache miss) \ud83d\udcb0 $2.19 / million output tokens",
-   "supports": "An earlier official release priced deepseek-reasoner differently; this does not resolve its price during April-June 2026.",
-   "extracted_as": "research/sources/f75bec4ecc98ee0e.md",
-   "quote_verified": false,
-   "verified_in": null
+   "url": "https://api-docs.deepseek.com/quick_start/pricing",
+   "file": "deepseek-pricing-current.md",
+   "quote": "Product prices may vary and DeepSeek reserves the right to adjust them. We recommend topping up based on your actual usage and regularly checking this page for the most recent pricing information.",
+   "supports": "The current provider pricing page does not establish historical cache pricing.",
+   "extracted_as": "research/sources/8eb12065b9344787.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "The official live pricing page now lists DeepSeek Flash and V4 Pro, while DeepSeek says deepseek-reasoner was routing to V4 Flash; the pages retrieved do not establish whether $0.028 was ever official during the earlier period or when $0.0028 became effective. The Internet Archive CDX request was unavailable, so no snapshot bracket could be established.",
- "verified": false
+ "notes": "The available provider materials establish that deepseek-reasoner mapped to V4 Flash by the April 25 snapshot, but do not expose a cache price for that earlier period or date a cache-price change. Attempts to extract a June 8 Internet Archive pricing snapshot failed because web.archive.org refused the connection, so the evidence does not decide whether 0.028 was an official earlier price or a models.dev error.",
+ "verified": true
 }

@@ -13,24 +13,15 @@
  },
  "sources": [
   {
-   "url": "https://x.ai/news/grok-1212",
-   "saved_as": "sources/x.ai_news_grok-1212.html",
-   "quote": "lowering the price of these models to $2 / 1M input tokens and $10 / 1M output tokens.",
-   "supports": "xAI announced a $2 input and $10 output rate for the Grok-2-1212 API model family, but does not identify grok-2-latest or address cache pricing.",
-   "extracted_as": "research/sources/e0c44d30e87131f4.md",
+   "url": "https://x.ai/news/grok-2",
+   "file": "sources/1572648d0de93018.md",
+   "quote": "We are also releasing Grok-2 and Grok-2 mini to developers through our new enterprise API platform later this month.",
+   "supports": "xAI announced Grok-2 API availability, but this announcement does not state its API token prices or caching prices.",
+   "extracted_as": "research/sources/1572648d0de93018.md",
    "quote_verified": true,
    "verified_in": "independent extract"
-  },
-  {
-   "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing",
-   "saved_as": "sources/docs.x.ai_developers_advanced-api-usage_prompt-caching_usage-and-pricing.html",
-   "quote": "Cached tokens are billed at the cached prompt token price, which is substantially lower than the regular prompt token price. The exact rates vary by model \u2014 check the Pricing page for current prices.",
-   "supports": "xAI currently documents distinct cached-token rates that vary by model, but this page does not state the historical Grok-2 cache rate or when it applied.",
-   "extracted_as": "research/sources/e56927861559295b.md",
-   "quote_verified": false,
-   "verified_in": null
   }
  ],
- "notes": "The official announcement supports the recorded base input/output rates for Grok-2-1212, but does not establish that grok-2-latest had those rates or show whether its cache rates changed on June 17, 2025. Internet Archive CDX requests for x.ai and docs.x.ai returned 503, so no snapshot pair was available to date or bracket the change.",
- "verified": false
+ "notes": "The available primary announcement confirms API availability but gives no pricing, and the available xAI pricing documentation does not establish historical Grok-2 rates. The Internet Archive CDX request for historical pricing snapshots timed out, so the evidence does not determine whether the earlier rate was official or when cache pricing took effect.",
+ "verified": true
 }

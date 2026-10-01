@@ -1,10 +1,10 @@
 {
- "classification": "models_dev_fix",
+ "classification": "unclear",
  "effective_at": null,
  "effective_precision": "unknown",
  "bracket": {
-  "last_before": "2026-06-14T13:55:08Z",
-  "first_after": "2026-06-16T17:58:42Z"
+  "last_before": null,
+  "first_after": null
  },
  "official_previous_price": {
   "input": null,
@@ -13,24 +13,15 @@
  },
  "sources": [
   {
-   "url": "https://web.archive.org/web/20260614135508id_/https://docs.z.ai/guides/overview/pricing",
-   "saved_as": "sources/web.archive.org_web_20260614135508_docs.z.ai_guides_overview_pricing.html",
-   "quote": "GLM-5.1 $1.4 $0.26 Limited-time Free $4.4",
-   "supports": "The provider's pricing table on June 14 lists GLM-5.1 but has no GLM-5.2 row.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
-  },
-  {
-   "url": "https://web.archive.org/web/20260616175842id_/https://docs.z.ai/guides/overview/pricing",
-   "saved_as": "sources/web.archive.org_web_20260616175842_docs.z.ai_guides_overview_pricing.html",
-   "quote": "GLM-5.2 $1.4 $0.26 Limited-time Free $4.4",
-   "supports": "The provider's pricing table lists GLM-5.2 at $1.4 input, $0.26 cache read, limited-time free cache writes, and $4.4 output.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
+   "url": "https://docs.z.ai/guides/overview/pricing",
+   "file": "sources/667e800254a1c2b1.md",
+   "quote": "| GLM-5.2 | \\$1.4 | \\$0.26 | Limited-time Free | \\$4.4 |",
+   "supports": "Z.AI's current pricing page lists GLM-5.2 at $1.4 input, $4.4 output, and $0.26 cached input per 1M tokens. It does not state when those rates began.",
+   "extracted_as": "research/sources/667e800254a1c2b1.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "The Z.AI pricing page's June 14 snapshot does not list GLM-5.2; its June 16 snapshot lists the nonzero rates, so models.dev's earlier zero was not the provider's official rate. These snapshots bracket the catalog correction but do not state the exact launch or price-effective time.",
- "verified": false
+ "notes": "The available provider page confirms the after price but does not establish whether the earlier zero price was ever official or when the listed rates took effect. An Internet Archive CDX lookup did not return within the available request window, so there is no usable snapshot pair to bracket the change.",
+ "verified": true
 }

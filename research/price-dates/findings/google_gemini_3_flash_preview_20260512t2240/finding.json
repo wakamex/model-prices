@@ -14,59 +14,50 @@
  "sources": [
   {
    "url": "https://web.archive.org/web/20260501160638/https://ai.google.dev/gemini-api/docs/pricing",
-   "saved_as": "sources/web.archive.org_web_20260501160638_ai.google.dev_gemini-api_docs_pricing.html",
-   "quote": "Input price Free of charge $0.50 (text / image / video) / $1.00 (audio)",
-   "supports": "Google's archived pricing table before the models.dev commit listed Gemini 3 Flash's standard input price and contained no context-length price tier.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
-  },
-  {
-   "url": "https://web.archive.org/web/20260501160638/https://ai.google.dev/gemini-api/docs/pricing",
-   "saved_as": "sources/web.archive.org_web_20260501160638_ai.google.dev_gemini-api_docs_pricing.html",
-   "quote": "Output price (including thinking tokens) Free of charge $3.00",
-   "supports": "The same pre-commit archived pricing table lists output at $3.00.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
-  },
-  {
-   "url": "https://web.archive.org/web/20260501160638/https://ai.google.dev/gemini-api/docs/pricing",
-   "saved_as": "sources/web.archive.org_web_20260501160638_ai.google.dev_gemini-api_docs_pricing.html",
-   "quote": "Context caching price Free of charge $0.05 (text / image / video) / $0.10 (audio) / $1.00 / 1,000,000 tokens per hour (storage price)",
-   "supports": "The pre-commit archived pricing table lists the cached-token price as $0.05 for text/image/video, with no context-length tier.",
+   "file": "72eb48018b1809c8.md",
+   "quote": "Input price | Free of charge | $0.50 (text / image / video)  \n$1.00 (audio)  ",
+   "supports": "Google's May 1, 2026 archived pricing page lists $0.50 input for text, image, and video, without a context-length price tier.",
    "extracted_as": "research/sources/72eb48018b1809c8.md",
-   "quote_verified": false,
-   "verified_in": null
-  },
-  {
-   "url": "https://web.archive.org/web/20260602081519/https://ai.google.dev/gemini-api/docs/pricing",
-   "saved_as": "sources/web.archive.org_web_20260602081519_ai.google.dev_gemini-api_docs_pricing.html",
-   "quote": "Input price Free of charge $0.50 (text / image / video) / $1.00 (audio)",
-   "supports": "Google's post-commit archived pricing table shows the same standard input price, confirming there was no provider price change.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
-  },
-  {
-   "url": "https://web.archive.org/web/20260602081519/https://ai.google.dev/gemini-api/docs/pricing",
-   "saved_as": "sources/web.archive.org_web_20260602081519_ai.google.dev_gemini-api_docs_pricing.html",
-   "quote": "Output price (including thinking tokens) Free of charge $3.00",
-   "supports": "The post-commit archived pricing table shows the same $3.00 output price.",
-   "extracted_as": "research/sources/a7edd8b14643b5f0.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   },
   {
-   "url": "https://web.archive.org/web/20260602081519/https://ai.google.dev/gemini-api/docs/pricing",
-   "saved_as": "sources/web.archive.org_web_20260602081519_ai.google.dev_gemini-api_docs_pricing.html",
-   "quote": "Context caching price Free of charge $0.05 (text / image / video) / $0.10 (audio) / $1.00 / 1,000,000 tokens per hour (storage price)",
-   "supports": "The post-commit archived pricing table retains the same $0.05 cached-token price and has no context-length tier.",
-   "extracted_as": "research/sources/a7edd8b14643b5f0.md",
-   "quote_verified": false,
-   "verified_in": null
+   "url": "https://web.archive.org/web/20260501160638/https://ai.google.dev/gemini-api/docs/pricing",
+   "file": "72eb48018b1809c8.md",
+   "quote": "Output price (including thinking tokens) | Free of charge | $3.00  ",
+   "supports": "The same pre-commit archived price page lists $3.00 output.",
+   "extracted_as": "research/sources/72eb48018b1809c8.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://web.archive.org/web/20260501160638/https://ai.google.dev/gemini-api/docs/pricing",
+   "file": "72eb48018b1809c8.md",
+   "quote": "Context caching price | Free of charge | $0.05 (text / image / video)  \n$0.10 (audio)  ",
+   "supports": "The same pre-commit archived price page lists $0.05 context caching for text, image, and video, without a context-length tier.",
+   "extracted_as": "research/sources/72eb48018b1809c8.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/pricing",
+   "file": "b88c4950bbf39196.md",
+   "quote": "| Input price | Free of charge | $0.50 (text / image / video) $1.00 (audio) |\n| Output price (including thinking tokens) | Free of charge | $3.00 |\n| Context caching price | Free of charge | $0.05 (text / image / video) $0.10 (audio) $1.00 / 1,000,000 tokens per hour (storage price) |",
+   "supports": "Google's current Gemini 3 Flash Preview pricing table explicitly shows flat token prices for input, output, and cached input.",
+   "extracted_as": "research/sources/b88c4950bbf39196.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://ai.google.dev/gemini-api/docs/changelog",
+   "file": "a24fd97eb3d00730.md",
+   "quote": "## December 17, 2025\n\n- Launched Gemini 3 Flash Preview, `gemini-3-flash-preview`, delivering fast\n  frontier-class performance that rivals larger models at a fraction of the\n  cost.",
+   "supports": "Google's changelog identifies the model's December 17, 2025 launch; it does not announce the tier that models.dev later recorded.",
+   "extracted_as": "research/sources/a24fd97eb3d00730.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "The paired Google pricing snapshots (last before: 2026-05-01T16:06:38Z; first after: 2026-06-02T08:15:19Z) show identical Gemini 3 Flash prices on either side of the models.dev edit, and no tier in Google's table. This supports a models.dev correction; Google does not state a price-change date because the official prices remained unchanged.",
- "verified": false
+ "notes": "The pre-commit May 1, 2026 Google pricing snapshot shows the same flat $0.50/$3.00/$0.05 rates as the current Google page, supporting that the >200,000-token tier was a models.dev metadata error rather than a provider price change. The sources do not establish the complete pricing history back to launch or an effective date; Internet Archive CDX requests returned HTTP 503, so no narrower historical bracket was available.",
+ "verified": true
 }

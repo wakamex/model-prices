@@ -1,23 +1,36 @@
 {
-  "classification": "models_dev_fix",
-  "effective_at": null,
-  "effective_precision": "unknown",
-  "bracket": {
-    "last_before": null,
-    "first_after": null
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 1.25,
+  "output": 10.0,
+  "cache_read": 0.125
+ },
+ "sources": [
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-5.1",
+   "file": "sources/701363943d922ad4.md",
+   "quote": "| Cached input | $0.125 | 1M tokens |",
+   "supports": "OpenAI's official GPT-5.1 model page lists cached input at $0.125 per million tokens.",
+   "extracted_as": "research/sources/701363943d922ad4.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   },
-  "official_previous_price": {
-    "input": 1.25,
-    "output": 10.0,
-    "cache_read": 0.125
-  },
-  "sources": [
-    {
-      "url": "https://developers.openai.com/api/docs/models/gpt-5.1",
-      "saved_as": "sources/developers.openai.com_api_docs_models_gpt-5.1.html",
-      "quote": "<div>Cached input</div><div class=\"text-2xl font-semibold\">$0.125</div>",
-      "supports": "OpenAI's model page lists GPT-5.1 cached input at $0.125 per million tokens."
-    }
-  ],
-  "notes": "OpenAI's official current GPT-5.1 page gives a cached input rate of $0.125, so models.dev's earlier $0.13 was not the official rate. I could not retrieve an official historical page or announcement snapshot that dates when the incorrect models.dev value began or was corrected; the effective time is therefore unknown."
-}\n
+  {
+   "url": "https://developers.openai.com/api/docs/changelog",
+   "file": "sources/49e8d0577a5e1f9d.md",
+   "quote": "### Nov 13\n\nFeature \u00b7 Model: gpt-5.1 \u00b7 Model: gpt-5.1-codex \u00b7 Model: gpt-5.1-chat-latest \u00b7 Model: gpt-5.1-codex-mini \u00b7 API: v1/responses \u00b7 API: v1/chat/completions\n\nReleased [GPT-5.1](https://developers.openai.com/api/docs/models/gpt-5.1), the newest flagship model in the GPT-5 model family.",
+   "supports": "OpenAI's changelog says GPT-5.1 was released on Nov 13, anchoring the official model pricing record to its launch period.",
+   "extracted_as": "research/sources/49e8d0577a5e1f9d.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "OpenAI's official model page gives the cached input rate as $0.125, matching the post-change value. The $0.13 earlier value appears to be an inaccurate rounding in models.dev; no provider source located states a later effective date for a change, so no date is assigned.",
+ "verified": true
+}

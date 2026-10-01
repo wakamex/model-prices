@@ -13,33 +13,15 @@
  },
  "sources": [
   {
-   "url": "https://docs.x.ai/developers/release-notes",
-   "saved_as": "sources/docs.x.ai_developers_release-notes.html",
-   "quote": "Our latest flagship Grok 3 models are now generally available via the API.",
-   "supports": "xAI's release notes date the Grok 3 API launch to April 3, 2025, but do not state the model's token prices or a later price change.",
-   "extracted_as": "research/sources/2b950d5a745e6c95.md",
-   "quote_verified": true,
-   "verified_in": "independent extract"
-  },
-  {
    "url": "https://docs.x.ai/developers/pricing",
-   "saved_as": "sources/docs.x.ai_developers_pricing.html",
-   "quote": "All prices are in USD. For per-model details, see the models page.",
-   "supports": "The current official pricing page directs users to current per-model prices; it does not establish the historical Grok 3 Fast price.",
+   "file": "dedf56167aa34815.md",
+   "quote": "| grok-4.3 (< 200k prompt tokens) | 1M | $1.25 | $0.20 | $2.50 |",
+   "supports": "The currently extracted xAI pricing page contains current model pricing, but does not establish historical Grok 3 Fast prices or the cache-write price in dispute.",
    "extracted_as": "research/sources/dedf56167aa34815.md",
-   "quote_verified": false,
-   "verified_in": null
-  },
-  {
-   "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing",
-   "saved_as": "sources/docs.x.ai_prompt-caching_usage-and-pricing.html",
-   "quote": "Cached tokens appear in",
-   "supports": "xAI documents a cached-token usage field, but the saved current page does not provide historical prices or a separate cache-write rate.",
-   "extracted_as": "research/sources/e56927861559295b.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The available xAI pages establish Grok 3 API availability and current cached-token billing, but do not show whether the earlier $5/$25/$1.25 rates were official or whether cache writes were separately priced. The Internet Archive CDX request for pricing snapshots returned HTTP 503, so there is no provider-source snapshot pair to bracket a change; classification and timing remain unclear.",
- "verified": false
+ "notes": "The provider's current pricing page does not establish whether $25 cache-write was ever official, and no effective date is stated there. The Internet Archive CDX query for xAI's pricing page returned HTTP 503, so a before/after archived snapshot pair could not be checked; without that evidence the classification and timing remain unclear.",
+ "verified": true
 }

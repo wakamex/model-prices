@@ -14,14 +14,23 @@
  "sources": [
   {
    "url": "https://developers.openai.com/api/docs/models/gpt-5",
-   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-5.html",
-   "quote": "Input $1.25 Cached input $0.125 Output $10.00",
-   "supports": "OpenAI lists GPT-5 cached input at $0.125 per million tokens, alongside its $1.25 input and $10.00 output rates.",
+   "file": "sources/2212448829042fd6.md",
+   "quote": "| Input | $1.25 | 1M tokens |\n| Cached input | $0.125 | 1M tokens |\n| Output | $10 | 1M tokens |",
+   "supports": "OpenAI's GPT-5 model documentation lists cached input at $0.125 per million tokens, alongside the unchanged input and output prices.",
    "extracted_as": "research/sources/2212448829042fd6.md",
-   "quote_verified": false,
-   "verified_in": null
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://developers.openai.com/api/docs/models/gpt-5",
+   "file": "sources/2212448829042fd6.md",
+   "quote": "- Default snapshot: `gpt-5-2025-08-07`",
+   "supports": "The documented default GPT-5 snapshot is dated August 7, 2025, consistent with cached input being part of GPT-5's pricing from its initial dated snapshot.",
+   "extracted_as": "research/sources/2212448829042fd6.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "Classified as a models.dev fix: OpenAI\u2019s GPT-5 model page lists cached input at $0.125, consistent with the added $0.13 field being rounded to cents rather than a new provider rate. The page also lists the 2025-08-07 GPT-5 snapshot, but no dated archived pricing snapshot was available, so the exact effective date cannot be independently established.",
- "verified": false
+ "notes": "Classified as models_dev_fix: OpenAI's GPT-5 documentation lists cached input at $0.125/M with input/output at $1.25/$10, so the earlier models.dev record omitted an existing price. The Internet Archive had snapshots bracketing the update (2025-08-07T17:38:34Z and 2025-08-07T20:07:20Z), but extraction returned HTTP 429 even after the required wait; therefore no archive bracket or more precise historical effective time is asserted.",
+ "verified": true
 }

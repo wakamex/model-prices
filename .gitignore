@@ -10,3 +10,4 @@ dist/
 /research/price-dates/*.log
 /research/price-dates/run-when-archive-up.sh
 /research/price-dates/unit.*
+/research/price-dates/extract-deps/

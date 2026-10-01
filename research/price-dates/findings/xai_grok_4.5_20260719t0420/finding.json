@@ -1,10 +1,10 @@
 {
- "classification": "price_change",
+ "classification": "unclear",
  "effective_at": null,
- "effective_precision": "bracketed",
+ "effective_precision": "unknown",
  "bracket": {
-  "last_before": "2026-07-10T20:55:04Z",
-  "first_after": "2026-07-19T17:15:50Z"
+  "last_before": null,
+  "first_after": null
  },
  "official_previous_price": {
   "input": null,
@@ -13,24 +13,33 @@
  },
  "sources": [
   {
-   "url": "https://web.archive.org/web/20260710205504/https://docs.x.ai/developers/models/grok-4.5",
-   "saved_as": "sources/web.archive.org_20260710205504_docs.x.ai_grok-4.5.html",
-   "quote": "$0.50 / 1M tokens",
-   "supports": "xAI's archived Grok 4.5 pricing page listed cached tokens at $0.50 per million tokens on July 10, 2026.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
+   "url": "https://docs.x.ai/developers/pricing",
+   "file": "1914b0f1b14a59a9.md",
+   "quote": "| grok-4.5 (< 200k prompt tokens) | 500k | $2.00 | $0.30 | $6.00 |",
+   "supports": "xAI's current official pricing for Grok 4.5, including cached input.",
+   "extracted_as": "research/sources/dedf56167aa34815.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   },
   {
-   "url": "https://web.archive.org/web/20260719171550/https://docs.x.ai/developers/models/grok-4.5",
-   "saved_as": "sources/web.archive.org_20260719171550_docs.x.ai_grok-4.5.html",
-   "quote": "$0.30 / 1M tokens",
-   "supports": "xAI's archived Grok 4.5 pricing page listed cached tokens at $0.30 per million tokens on July 19, 2026.",
-   "extracted_as": null,
-   "quote_verified": false,
-   "verified_in": null
+   "url": "https://docs.x.ai/developers/release-notes.md",
+   "file": "2b950d5a745e6c95.md",
+   "quote": "Grok 4.5, SpaceXAI's model for coding, agentic tasks, and knowledge work, is now available on the xAI API. Priced at $2 / 1M input tokens and $6 / 1M output tokens, with configurable reasoning effort (low, medium, or high; default high). See the [Grok 4.5 overview](/developers/grok-4-5) and the [announcement](https://x.ai/news/grok-4-5).",
+   "supports": "xAI's launch note confirms input and output prices but does not state the cached input rate or an effective date for a cache price change.",
+   "extracted_as": "research/sources/0d32f204ca3ae411.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.x.ai/developers/models/grok-4.5",
+   "file": "80640d2f1b4eaa52.md",
+   "quote": "| Cached input | $0.30 | $0.60 |",
+   "supports": "xAI's current model page gives cached input pricing for standard and long context.",
+   "extracted_as": "research/sources/80640d2f1b4eaa52.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "The provider's own archived pricing page shows cached input at $0.50/M on July 10 and $0.30/M on July 19, supporting a real price change rather than a models.dev correction. These captures bracket the change; the available sources do not state its exact effective date or time.",
- "verified": false
+ "notes": "The official pages available here state the current cached input rate, but the launch note does not give an earlier cached rate or a date for changing it. July 18 and July 19 archived pricing-page captures were extractable, but their Markdown omits the dynamic model price table, so they do not establish whether $0.50 was once official or bracket when $0.30 took effect.",
+ "verified": true
 }

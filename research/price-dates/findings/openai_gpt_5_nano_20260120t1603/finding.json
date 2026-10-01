@@ -1,5 +1,5 @@
 {
- "classification": "unclear",
+ "classification": "models_dev_fix",
  "effective_at": null,
  "effective_precision": "unknown",
  "bracket": {
@@ -7,30 +7,30 @@
   "first_after": null
  },
  "official_previous_price": {
-  "input": null,
-  "output": null,
-  "cache_read": null
+  "input": 0.05,
+  "output": 0.4,
+  "cache_read": 0.005
  },
  "sources": [
   {
    "url": "https://developers.openai.com/api/docs/models/gpt-5-nano",
-   "saved_as": "sources/developers.openai.com_api_docs_models_gpt-5-nano.html",
-   "quote": "Text tokens Per 1M tokens \u2219 Batch API price Input $0.05 Cached input $0.005 Output $0.40",
-   "supports": "OpenAI's current model page lists the current cached input rate as $0.005, with input and output at $0.05 and $0.40. It does not date the cached price or establish the earlier official rate.",
+   "file": "sources/21fa25aca516d2ed.md",
+   "quote": "| Cached input | $0.005 | 1M tokens |",
+   "supports": "OpenAI's official GPT-5 nano model documentation states cached input pricing of $0.005 per million tokens.",
    "extracted_as": "research/sources/21fa25aca516d2ed.md",
-   "quote_verified": false,
-   "verified_in": null
+   "quote_verified": true,
+   "verified_in": "independent extract"
   },
   {
-   "url": "https://developers.openai.com/api/docs/pricing",
-   "saved_as": "sources/developers.openai.com_api_docs_pricing.html",
-   "quote": "All models Flex Short context Long context Model Input Cached input Cache writes Output",
-   "supports": "OpenAI's current general pricing page is available, but this table excerpt is not a historical record and does not establish whether $0.01 was ever official.",
-   "extracted_as": "research/sources/00eaf917ab1113cf.md",
-   "quote_verified": false,
-   "verified_in": null
+   "url": "https://developers.openai.com/api/docs/models/gpt-5-nano",
+   "file": "sources/21fa25aca516d2ed.md",
+   "quote": "- Default snapshot: `gpt-5-nano-2025-08-07`",
+   "supports": "The documented default snapshot is dated 2025-08-07, before the models.dev price record began on 2025-08-08.",
+   "extracted_as": "research/sources/21fa25aca516d2ed.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
   }
  ],
- "notes": "The accessible primary pricing material confirms $0.005 now but does not say when it began or whether $0.01 was previously official. The Internet Archive CDX endpoint returned no snapshots for the model documentation URL, and an archived OpenAI announcement snapshot could not be retrieved as readable page text, so the evidence does not decide between a provider price change and a models.dev correction.",
- "verified": false
+ "notes": "OpenAI's model page gives $0.005 cached input pricing and identifies the default GPT-5 nano snapshot as 2025-08-07, so the $0.01 figure recorded by models.dev from 2025-08-08 was not the official price. The Wayback CDX query for OpenAI's pricing page returned HTTP 503; no archive bracket or more precise price-effective date was established.",
+ "verified": true
 }

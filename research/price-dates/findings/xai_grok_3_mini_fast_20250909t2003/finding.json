@@ -14,32 +14,23 @@
  "sources": [
   {
    "url": "https://docs.x.ai/developers/pricing",
-   "saved_as": "sources/docs.x.ai_developers_pricing.html",
-   "quote": "Model  | Context  | Short context  | Long context",
-   "supports": "The current xAI API pricing page presents model pricing in input, cached, and output categories; it does not establish what Grok 3 Mini Fast cost in the earlier period.",
+   "file": "dedf56167aa34815.md",
+   "quote": "| Model | Context | Input / 1M tokens | Cached input / 1M tokens | Output / 1M tokens |",
+   "supports": "Current xAI pricing distinguishes cached input from output; it has no cache-write price column.",
    "extracted_as": "research/sources/dedf56167aa34815.md",
-   "quote_verified": false,
-   "verified_in": null
+   "quote_verified": true,
+   "verified_in": "independent extract"
   },
   {
-   "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing",
-   "saved_as": "sources/docs.x.ai_developers_advanced-api-usage_prompt-caching_usage-and-pricing.html",
-   "quote": "Cached tokens are billed at the cached prompt token price, which is substantially lower than the regular prompt token price. The exact rates vary by model \u2014 check the Pricing page for current prices.",
-   "supports": "xAI documents reduced billing for cached prompt tokens but the current documentation does not resolve the historical cache_read or cache_write price in June 2025.",
-   "extracted_as": "research/sources/e56927861559295b.md",
-   "quote_verified": false,
-   "verified_in": null
-  },
-  {
-   "url": "https://docs.x.ai/developers/advanced-api-usage/prompt-caching/usage-and-pricing",
-   "saved_as": "sources/docs.x.ai_developers_advanced-api-usage_prompt-caching_usage-and-pricing.html",
-   "quote": "Reasoning tokens  | Full completion token price",
-   "supports": "The current xAI documentation bills reasoning tokens at the completion rate; it does not state when this billing treatment took effect.",
-   "extracted_as": "research/sources/e56927861559295b.md",
+   "url": "https://docs.x.ai/developers/release-notes",
+   "file": "2b950d5a745e6c95.md",
+   "quote": "### Cached prompt is now available\n\nYou can now use cached prompt to save on repeated prompts. For\nmore info, see [models](/developers/models).",
+   "supports": "xAI announced cached prompts in May 2025, but this passage does not state Grok 3 Mini Fast's price.",
+   "extracted_as": "research/sources/2b950d5a745e6c95.md",
    "quote_verified": true,
    "verified_in": "independent extract"
   }
  ],
- "notes": "The accessible xAI documentation is current (2026) and does not establish Grok 3 Mini Fast's official June 2025 prices or a dated pricing change. Internet Archive CDX and replay requests failed with service unavailable/connection refused, preventing a historical snapshot comparison; therefore the classification and effective date remain unclear.",
- "verified": false
+ "notes": "The primary sources retrieved establish that xAI prices cached input, but do not establish Grok 3 Mini Fast's historical rates or whether the earlier $4 cache_write value was ever official. Internet Archive requests for the needed 2025 pricing snapshots returned 429 (including a redirected archive request), so no effective date or classification can be supported.",
+ "verified": true
 }
