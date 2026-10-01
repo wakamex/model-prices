@@ -132,3 +132,55 @@ $1.50 starting January 1, 2027." from 2026-08-13T18:11:24Z, the day Gemini 3.7 F
 at an introductory price. The promotional price applies from that first observation; models.dev
 updated on 2026-08-21. Research finding google_gemini_3.6_flash_20260821t0642 took the
 promotion for the price since launch."""
+
+# models.dev listed the cache-read price as the cache-write price for these models from
+# 2025-06-17T22:26:49Z until it fixed them at 2025-06-23T20:53:34Z. Anthropic's pricing page
+# archived inside that window lists the 5-minute cache write at 1.25x input.
+
+[[correction]]
+provider = "anthropic"
+model = "claude-3-opus-20240229"
+valid_from = "2025-06-17T22:26:49Z"
+valid_until = "2025-06-23T20:53:34Z"
+input = 15.0
+output = 75.0
+cache_read = 1.5
+cache_write = 18.75
+source = "https://web.archive.org/web/20250619162725/https://docs.anthropic.com/en/docs/about-claude/pricing"
+note = "\"Claude Opus 3 | $15 / MTok | $18.75 / MTok | $30 / MTok | $1.50 / MTok | $75 / MTok\""
+
+[[correction]]
+provider = "anthropic"
+model = "claude-opus-4-20250514"
+valid_from = "2025-06-17T22:26:49Z"
+valid_until = "2025-06-23T20:53:34Z"
+input = 15.0
+output = 75.0
+cache_read = 1.5
+cache_write = 18.75
+source = "https://web.archive.org/web/20250619162725/https://docs.anthropic.com/en/docs/about-claude/pricing"
+note = "\"Claude Opus 4 | $15 / MTok | $18.75 / MTok | $30 / MTok | $1.50 / MTok | $75 / MTok\""
+
+[[correction]]
+provider = "anthropic"
+model = "claude-3-7-sonnet-20250219"
+valid_from = "2025-06-17T22:26:49Z"
+valid_until = "2025-06-23T20:53:34Z"
+input = 3.0
+output = 15.0
+cache_read = 0.3
+cache_write = 3.75
+source = "https://web.archive.org/web/20250619162725/https://docs.anthropic.com/en/docs/about-claude/pricing"
+note = "\"Claude Sonnet 3.7 | $3 / MTok | $3.75 / MTok | $6 / MTok | $0.30 / MTok | $15 / MTok\""
+
+[[correction]]
+provider = "anthropic"
+model = "claude-haiku-4-5-20251001"
+valid_from = "2025-10-15T17:51:46Z"
+valid_until = "2025-10-15T22:14:20Z"
+input = 1.0
+output = 5.0
+cache_read = 0.1
+cache_write = 1.25
+source = "https://www.anthropic.com/news/claude-haiku-4-5"
+note = "Launched at \"$1/$5 per million input and output tokens\"; models.dev listed $1.25 output until 22:14Z. Cache prices follow Anthropic's 1.25x and 0.1x of input."
