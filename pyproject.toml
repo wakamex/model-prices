@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Effective-dated LLM API prices from models.dev history, with sourced corrections"
 readme = "README.md"
 license = "MIT"
-license-files = ["LICENSE"]
+license-files = ["LICENSE", "src/llm_prices/data/LICENSE.models.dev"]
 requires-python = ">=3.11"
 dependencies = []
 

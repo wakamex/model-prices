@@ -29,6 +29,7 @@ MODEL_NAMES = [
     ("claude-sonnet-4.5", None, ("anthropic", "claude-sonnet-4-5")),
     ("grok-4.6-build", None, ("xai", "grok-4.6")),
     ("grok-4.7-build", "grok", ("xai", "grok-4.7")),
+    ("grok-4.6-build-high", None, ("xai", "grok-4.6")),
     ("grok-build-0.1", None, ("xai", "grok-build-0.1")),
     ("codex-auto-review", None, None),
 ]

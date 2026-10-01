@@ -179,8 +179,6 @@ def _candidates(name: str, strict: bool) -> list[tuple[str, str]]:
     marker = _CONTEXT_MARKER.search(name)
     if marker:
         found.append((name[:marker.start()], marker.group(0)))
-    found += [(match.group(1), match.group(2) + removed) for candidate, removed in found
-              if (match := _GROK_BUILD_ALIAS.match(candidate))]
     # Anthropic ids write versions with hyphens: claude-sonnet-4.5 is claude-sonnet-4-5.
     found += [(candidate.replace(".", "-"), removed) for candidate, removed in found
               if candidate.startswith("claude-") and "." in candidate]
@@ -189,6 +187,9 @@ def _candidates(name: str, strict: bool) -> list[tuple[str, str]]:
             match = pattern.search(candidate)
             if match:
                 found.append((candidate[:match.start()], match.group(0) + removed))
+    # After suffix removal, so grok-4.6-build-high reaches grok-4.6 as well.
+    found += [(match.group(1), match.group(2) + removed) for candidate, removed in found
+              if (match := _GROK_BUILD_ALIAS.match(candidate))]
     unique: dict[str, str] = {}
     for candidate, removed in found:
         unique.setdefault(candidate, removed)
