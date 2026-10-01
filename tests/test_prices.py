@@ -282,3 +282,22 @@ def test_rates_between_returns_each_distinct_price():
     # A Chinese holiday weekday has no peak hours.
     assert len(rates_between("deepseek-flash", "2026-10-01T00:00:00Z", "2026-10-01T23:00:00Z")) == 1
     assert rates_between("codex-auto-review", "2026-09-01", "2026-09-02") == []
+
+
+def test_open_ended_correction_stops_when_models_dev_changes(monkeypatch):
+    found = rates("deepseek-v4-pro", at="2026-09-30T13:00:00Z")
+    assert (found.input, found.valid_from_basis) == (0.66, "documented")
+
+    import copy
+    data = copy.deepcopy(llm_prices._prices())
+    entry = data["providers"]["deepseek"]["deepseek-v4-pro"][-1]
+    data["providers"]["deepseek"]["deepseek-v4-pro"].append(
+        {"valid_from": "2026-09-29T00:00:00Z", "commit": "fixed",
+         "rates": {**entry["rates"], "input": 0.70}})
+    monkeypatch.setattr(llm_prices, "_prices", lambda: data)
+    llm_prices._entry_times.cache_clear()
+    try:
+        fixed = rates("deepseek-v4-pro", at="2026-09-30T13:00:00Z")
+        assert (fixed.input, fixed.valid_from_basis) == (0.70, "models.dev commit")
+    finally:
+        llm_prices._entry_times.cache_clear()

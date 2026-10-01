@@ -13,7 +13,7 @@ import re
 from typing import Callable, Iterable
 import urllib.request
 
-from llm_prices import _period, _schedule, rates, resolve
+from llm_prices import _config, _period, _schedule, rates, resolve
 
 FIELDS = ("input", "cache_write", "cache_read", "output")
 
@@ -241,6 +241,23 @@ def compare_terms(provider: str, language: str, page: str, today: datetime) -> R
                   expected, None, "ok" if match.group(0) == expected else "mismatch")
 
 
+CALENDAR_WARNING_DAYS = 45
+
+
+def check_calendars(providers: set[str], today: datetime) -> list[Result]:
+    """Fail when a schedule's holiday calendar ends within CALENDAR_WARNING_DAYS."""
+    config = _config("schedules.toml")
+    results = []
+    for name in sorted({schedule["holidays"] for schedule in config.get("schedule", [])
+                        if schedule["provider"] in providers and "holidays" in schedule}):
+        ends = datetime.fromisoformat(config["holidays"][name]["covers_through"]).date()
+        remaining = (ends - today.date()).days
+        status = "ok" if remaining > CALENDAR_WARNING_DAYS else "mismatch"
+        results.append(Result("holidays", name, "holiday_calendar", None, None,
+                              f"covers through {ends}", f"{remaining} days left", None, status))
+    return results
+
+
 SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "anthropic": ("https://platform.claude.com/docs/en/about-claude/pricing.md", parse_anthropic),
     "deepseek": ("https://api-docs.deepseek.com/quick_start/pricing", parse_deepseek),
@@ -316,6 +333,7 @@ def run(providers: Iterable[str] | None = None, today: datetime | None = None,
             else:
                 terms_page = pages[key] if pages and key in pages else fetch(terms_url)
             results.append(compare_terms(provider, language, terms_page, moment))
+    results.extend(check_calendars(set(providers or SOURCES), moment))
     return results
 
 
@@ -323,6 +341,10 @@ def report(results: list[Result]) -> str:
     lines = []
     for result in results:
         if result.status in {"ok", "untracked"}:
+            continue
+        if result.field == "holiday_calendar":
+            lines.append(f"{result.status:9} {result.model} holiday calendar {result.official}, "
+                         f"{result.effective}; add the next year's holidays to schedules.toml")
             continue
         if result.field.startswith("peak_terms:"):
             language = result.field.partition(":")[2]

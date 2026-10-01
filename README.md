@@ -33,7 +33,9 @@ uv add llm-prices
 
 Prices come from the git history of [models.dev](https://github.com/sst/models.dev), an open catalog of model metadata that records each model's price in one TOML file per provider. Every commit on its main branch that changed a tracked model's price becomes an entry effective from that commit's time. The tracked providers are the labs that sell their own models: Alibaba, Anthropic, DeepSeek, Google, Moonshot AI, OpenAI, xAI, and Z.ai.
 
-models.dev sometimes records a change days after the provider made it, or lists a wrong price for a while. `corrections.toml` overrides those periods, and every correction cites its source.
+models.dev sometimes records a change days after the provider made it, or lists a wrong price for a while. `corrections.toml` overrides those periods, and every correction cites its source. A correction without an end date names the models.dev values it replaces and stops applying as soon as models.dev records anything else, so it cannot outlive a later fix or price change.
+
+`Rates.valid_from_basis` says how a start date was found: `models.dev commit` dates usually lag the provider's real change by days, while `documented` dates come from a correction's cited source.
 
 Usage from before a model's first recorded price is priced at that first price, because models.dev often adds a model after its launch. `Rates.valid_from` is then later than the requested time, which a caller can check to reject implausible times, such as a zero timestamp. Usage after the last sync, given by `data_as_of()`, assumes no price changed since.
 
@@ -45,7 +47,7 @@ Each entry keeps input, output, cache read, and cache write rates, long-context 
 
 Some providers charge more at busy hours. `schedules.toml` records each provider's peak windows, weekday rules, and holiday calendar, with the dates each version of the rules applied. The recorded rate is the off-peak rate, and inside a peak window every rate is multiplied by the schedule's peak multiplier. `Rates.period` says which applied: `"peak"`, `"off_peak"`, or `None` for providers without time-of-day pricing.
 
-DeepSeek is the one provider with such pricing so far. Since 16:00 UTC on August 16, 2026, its peak hours have been 01:00-04:00 and 06:00-10:00 UTC on weekdays other than Chinese public holidays, at twice the off-peak rate. The pricing page added the weekday and holiday exceptions in late August and mid-September without an announcement; llm-prices applies the current rule from the start of peak pricing. [DeepSeek pricing history](docs/deepseek-pricing-history.md) records the evidence for each date.
+Holiday calendars record the last date they cover, and `llm-prices check` fails 45 days before that date so the next year's holidays are added in time. DeepSeek is the one provider with such pricing so far. Since 16:00 UTC on August 16, 2026, its peak hours have been 01:00-04:00 and 06:00-10:00 UTC on weekdays other than Chinese public holidays, at twice the off-peak rate. The pricing page added the weekday and holiday exceptions in late August and mid-September without an announcement; llm-prices applies the current rule from the start of peak pricing. [DeepSeek pricing history](docs/deepseek-pricing-history.md) records the evidence for each date.
 
 ## Official price checks
 

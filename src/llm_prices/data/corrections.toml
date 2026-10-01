@@ -1,6 +1,8 @@
 # Rates that override models.dev history for a period, because models.dev recorded a
 # price change late or recorded a wrong price. valid_until is exclusive; each entry
-# needs an authoritative source. Remove an entry only if models.dev history is fixed.
+# needs an authoritative source. An open-ended correction names the models.dev values it
+# replaces in `replaces`, and stops applying once models.dev records anything else, so
+# a later fix or price change in models.dev ends it without an edit here.
 
 [[correction]]
 provider = "openai"
@@ -94,6 +96,7 @@ valid_from = "2026-08-16T16:00:00Z"
 input = 0.66
 output = 1.98
 cache_read = 0.022
+replaces = { input = 0.435, output = 0.87, cache_read = 0.003625 }
 source = "https://api-docs.deepseek.com/quick_start/pricing"
 note = "Unchanged since peak and off-peak pricing started 2026-08-16T16:00Z; models.dev still lists the earlier flat rate."
 
@@ -103,5 +106,6 @@ model = "gemini-omni-flash-preview"
 valid_from = "2026-07-08T21:27:04Z"
 input = 1.5
 output = 9.0
+replaces = { output = 17.5 }
 source = "https://ai.google.dev/gemini-api/docs/pricing"
 note = "Text output is $9.00; models.dev records the $17.50 video output price. Checked 2026-09-30; the page does not date the price."

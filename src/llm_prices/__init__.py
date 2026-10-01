@@ -58,6 +58,9 @@ class Rates:
     period: str | None = None
     # Suffix text removed from the requested name to find this model, such as "-max".
     removed_suffix: str = ""
+    # How valid_from was dated: "models.dev commit", which usually lags the provider's
+    # change by days, or "documented", a date from the correction's cited source.
+    valid_from_basis: str = "models.dev commit"
 
     def price_key(self) -> tuple:
         """The prices alone, without provenance, for comparing rates from different sources."""
@@ -238,11 +241,16 @@ def _entry_times(provider: str, model: str) -> tuple[datetime, ...]:
 def _correction(provider: str, model: str, at: datetime) -> Rates | None:
     for start, end, item in _corrections(provider, model):
         if start <= at and (end is None or at < end):
+            if "replaces" in item:
+                recorded = _history_rates(provider, model, at, None)
+                if recorded is None or any(getattr(recorded, key) != value
+                                           for key, value in item["replaces"].items()):
+                    continue
             return Rates(
                 provider=provider, model=model, valid_from=item["valid_from"],
                 source=item["source"], input=item["input"], output=item["output"],
                 cache_read=item.get("cache_read"), cache_write=item.get("cache_write"),
-                tiers=_tiers(item.get("tiers")),
+                tiers=_tiers(item.get("tiers")), valid_from_basis="documented",
             )
     return None
 

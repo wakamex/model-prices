@@ -29,6 +29,9 @@ zh = "空闲时段价格为高峰时段价格的一半。北京时间周一至�
 # workdays are not listed: DeepSeek treats all weekends as off-peak.
 [holidays.cn]
 utc_offset_hours = 8
+# The last date the list is known to cover. llm-prices check fails 45 days before it,
+# so the next year's schedule is added before weekday holidays would price as peak.
+covers_through = "2026-12-31"
 source = "https://www.gov.cn/zhengce/content/202511/content_7047090.htm"
 dates = [
   "2026-01-01", "2026-01-02", "2026-01-03",

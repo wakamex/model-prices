@@ -105,3 +105,12 @@ def test_peak_hour_terms_must_match_in_both_languages():
     terms = _terms(changed)
     assert (terms["peak_terms:en"].status, terms["peak_terms:zh"].status) == ("ok", "mismatch")
     assert "14:00 - 19:00" in checks.report(checks.run(["deepseek"], today=TODAY, pages=changed))
+
+
+def test_holiday_calendar_must_cover_the_coming_weeks():
+    ok, = checks.check_calendars({"deepseek"}, TODAY)
+    late, = checks.check_calendars({"deepseek"}, datetime(2026, 11, 30, tzinfo=timezone.utc))
+
+    assert (ok.status, late.status) == ("ok", "mismatch")
+    assert "add the next year's holidays" in checks.report([late])
+    assert checks.check_calendars({"anthropic"}, TODAY) == []
