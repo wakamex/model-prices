@@ -477,7 +477,7 @@ def derive_corrections() -> tuple[list[dict], list[str]]:
         """models.dev's rates once it stopped fixing the model: after the last of a run of
         consecutive fixes. Its first fix was sometimes still wrong in other fields."""
         while (later := following.get((item["provider"], item["model"], item["recorded_at"]))) \
-                and classification(later) == "models_dev_fix":
+                and classification(later) == "models_dev_fix" and REVIEWED.get(later["id"]) != "skip":
             item = later
         return item["after"]
 
