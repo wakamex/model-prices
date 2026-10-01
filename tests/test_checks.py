@@ -10,7 +10,7 @@ from llm_prices.checks import Observed
 
 FIXTURES = Path(__file__).parent / "fixtures"
 TODAY = datetime(2026, 9, 30, 12, tzinfo=timezone.utc)
-# Official pricing pages as fetched on 2026-09-30.
+# Synthetic pages in the layouts of the official pricing pages, with their 2026-09-30 prices.
 PAGES = {
     "anthropic": (FIXTURES / "anthropic.md").read_text(),
     "deepseek": (FIXTURES / "deepseek.html").read_text(),
