@@ -18,64 +18,22 @@ from datetime import datetime, timezone
 from functools import cache
 import json
 from pathlib import Path
-import re
 import subprocess
 import tomllib
 
 import llm_prices
+from llm_prices import genai_prices
+from llm_prices.genai_prices import FIELDS, _time
 
 DATA = Path(__file__).resolve().parent.parent / "src" / "llm_prices" / "data"
-PROVIDERS = {"anthropic": "anthropic", "deepseek": "deepseek", "google": "google",
-             "moonshotai": "moonshotai", "openai": "openai", "xai": "x-ai", "zai": "zhipuai"}
-FIELDS = {"input": "input_mtok", "output": "output_mtok", "cache_read": "cache_read_mtok",
-          "cache_write": "cache_write_mtok"}
-
-
-def _time(value: str) -> datetime:
-    if len(value) == 10:
-        value += "T00:00:00Z"
-    return datetime.fromisoformat(value.replace("Z", "+00:00")).astimezone(timezone.utc)
-
-
-def _matches(rule: dict, name: str) -> bool:
-    if "or" in rule:
-        return any(_matches(item, name) for item in rule["or"])
-    if "and" in rule:
-        return all(_matches(item, name) for item in rule["and"])
-    if "equals" in rule:
-        return name == rule["equals"]
-    if "starts_with" in rule:
-        return name.startswith(rule["starts_with"])
-    if "ends_with" in rule:
-        return name.endswith(rule["ends_with"])
-    if "contains" in rule:
-        return rule["contains"] in name
-    if "regex" in rule:
-        return re.search(rule["regex"], name) is not None
-    return False
-
-
-def _base(value: object) -> float | None:
-    return value["base"] if isinstance(value, dict) else value
 
 
 def genai_rates(data: list, provider: str, model: str, at: datetime) -> dict | None:
-    """The model's prices at a moment, the first matching model winning as in genai-prices."""
-    found = next((item for item in data if item["id"] == PROVIDERS.get(provider)), None)
-    if found is None:
+    """The model's prices at a moment, with the prompt size its higher tier starts at."""
+    if genai_prices.model_prices(data, provider, model, at) is None:
         return None
-    entry = next((item for item in found["models"] if _matches(item["match"], model.lower())), None)
-    if entry is None:
-        return None
-    prices = entry["prices"]
-    if isinstance(prices, list):
-        dated = [item for item in prices
-                 if _time((item.get("constraint") or {}).get("start_date", "1970-01-01")) <= at]
-        prices = dated[-1]["prices"] if dated else prices[0]["prices"]
-    rates = {field: _base(prices.get(key)) for field, key in FIELDS.items()}
-    tiered = prices.get("input_mtok")
-    tiers = [item["start"] for item in tiered.get("tiers", [])] if isinstance(tiered, dict) else []
-    return {**rates, "tier": min(tiers) if tiers else None, "id": entry["id"]}
+    return {**{field: genai_prices.price(data, provider, model, field, at) for field in FIELDS},
+            "tier": genai_prices.tier_start(data, provider, model, at)}
 
 
 @cache

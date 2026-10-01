@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+import json
 from pathlib import Path
 
 import pytest
@@ -69,6 +70,21 @@ def test_official_pages_match_effective_prices():
     corrected = {(r.model, r.field) for r in results if r.status == "corrected"}
     assert ("deepseek/deepseek-v4-pro", "input") in corrected
     assert ("google/gemini-omni-flash-preview", "output") in corrected
+
+
+def test_check_scores_genai_prices_against_official_pages(capsys):
+    # Anthropic and OpenAI entries of genai-prices' data.json at commit 36d4e77c (2026-09-29).
+    genai = json.loads((FIXTURES / "genai-prices.json").read_text())
+    results = checks.run(["anthropic", "openai"], pages=PAGES, today=TODAY, genai=genai)
+    listed = {(r.model, r.field, r.above): r.genai_prices for r in results}
+
+    # genai-prices has no Opus 5.5 entry, and its Opus 5 rule accepts the name as a prefix.
+    assert listed[("anthropic/claude-opus-5-5", "input", None)] == 5
+    assert listed[("openai/gpt-5.6-sol", "input", None)] == 5
+    assert listed[("openai/gpt-5.6-sol", "input", 272000)] == 10
+    report = checks.report(results, genai=True)
+    assert "genai     anthropic/claude-opus-5-5 input: official $4, genai-prices 5" in report
+    assert "in genai-prices: " in report.splitlines()[-1]
 
 
 def test_compare_flags_prices_that_differ():

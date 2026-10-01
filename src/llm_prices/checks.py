@@ -13,7 +13,7 @@ import re
 from typing import Callable, Iterable
 import urllib.request
 
-from llm_prices import _config, _period, _schedule, rates, resolve
+from llm_prices import _config, _parse_time, _period, _schedule, genai_prices, rates, resolve
 
 FIELDS = ("input", "cache_write", "cache_read", "output")
 
@@ -41,6 +41,7 @@ class Result:
     effective: float | str | None
     models_dev: float | None
     status: str
+    genai_prices: float | None = None
 
 
 def _price(cell: str) -> float | None:
@@ -309,8 +310,10 @@ def _value(found, field: str, above: int | None) -> float | None:
     return values[field]
 
 
-def compare(observed: Iterable[Observed], today: datetime) -> list[Result]:
-    """Classify each official price against llm-prices and against models.dev alone."""
+def compare(observed: Iterable[Observed], today: datetime,
+            genai: list | None = None) -> list[Result]:
+    """Classify each official price against llm-prices and against models.dev alone, and
+    record what genai-prices lists for it when its data is given."""
     results = []
     for item in observed:
         at = item.at or today.isoformat()
@@ -329,13 +332,16 @@ def compare(observed: Iterable[Observed], today: datetime) -> list[Result]:
         else:
             status = "mismatch"
         model = f"{effective.provider}/{effective.model}" if effective else item.model
+        api_name = resolved[1] if resolved else item.model
+        listed = (genai_prices.price(genai, item.provider, api_name, item.field,
+                                     _parse_time(at), item.above) if genai is not None else None)
         results.append(Result(item.provider, model, item.field, item.above, item.at,
-                              item.value, effective_value, raw_value, status))
+                              item.value, effective_value, raw_value, status, listed))
     return results
 
 
 def run(providers: Iterable[str] | None = None, today: datetime | None = None,
-        pages: dict[str, str] | None = None) -> list[Result]:
+        pages: dict[str, str] | None = None, genai: list | None = None) -> list[Result]:
     moment = today or datetime.now(timezone.utc)
     results = []
     for provider in providers or SOURCES:
@@ -344,7 +350,7 @@ def run(providers: Iterable[str] | None = None, today: datetime | None = None,
         observed = parser(page, moment)
         if not observed:
             raise ValueError(f"{provider}: no prices parsed from {url}; the page format changed")
-        results.extend(compare(observed, moment))
+        results.extend(compare(observed, moment, genai))
         for language, (terms_url, _) in TERMS.get(provider, {}).items():
             key = f"{provider}:{language}"
             if terms_url == url:
@@ -356,7 +362,16 @@ def run(providers: Iterable[str] | None = None, today: datetime | None = None,
     return results
 
 
-def report(results: list[Result]) -> str:
+def _score(results: list[Result], field: str) -> str:
+    """How many official prices a source lists correctly, lists wrongly, or omits."""
+    values = [(result.official, getattr(result, field)) for result in results
+              if isinstance(result.official, (int, float))]
+    right = sum(value is not None and abs(value - official) < 1e-9 for official, value in values)
+    missing = sum(value is None for _, value in values)
+    return f"{right} right, {len(values) - right - missing} wrong, {missing} not listed"
+
+
+def report(results: list[Result], genai: bool = False) -> str:
     lines = []
     for result in results:
         if result.status in {"ok", "untracked"}:
@@ -377,9 +392,20 @@ def report(results: list[Result]) -> str:
             f"official ${result.official:g}, llm-prices {result.effective}, "
             f"models.dev {result.models_dev}"
         )
+    if genai:
+        for result in results:
+            if (isinstance(result.official, (int, float)) and result.genai_prices is not None
+                    and abs(result.genai_prices - result.official) >= 1e-9):
+                tier = f" above {result.above:,}" if result.above else ""
+                when = f" at {result.at}" if result.at else ""
+                lines.append(f"genai     {result.model} {result.field}{tier}{when}: "
+                             f"official ${result.official:g}, genai-prices {result.genai_prices:g}")
     counts = {status: sum(r.status == status for r in results)
               for status in ("ok", "corrected", "mismatch", "untracked")}
     lines.append(", ".join(f"{count} {status}" for status, count in counts.items()))
+    if genai:
+        lines.append(f"official prices in models.dev: {_score(results, 'models_dev')}; "
+                     f"in genai-prices: {_score(results, 'genai_prices')}")
     return "\n".join(lines)
 
 

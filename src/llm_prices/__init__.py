@@ -499,15 +499,25 @@ def main(argv: list[str] | None = None) -> int:
     )
     check.add_argument("providers", nargs="*", help="Providers to check (default: all)")
     check.add_argument("--json", action="store_true")
+    check.add_argument(
+        "--genai-prices", nargs="?", const="url", metavar="SOURCE",
+        help="Also score Pydantic's genai-prices against the official pages, from its data.json "
+             "URL (the default), the file, or a checkout")
     args = parser.parse_args(argv)
 
     if args.command == "check":
+        from llm_prices import genai_prices
         from llm_prices.checks import SOURCES, as_json, report, run
         unknown = sorted(set(args.providers) - set(SOURCES))
         if unknown:
             parser.error(f"no official pricing check for: {', '.join(unknown)}")
-        results = run(args.providers or None)
-        print(json.dumps(as_json(results), indent=2) if args.json else report(results))
+        genai = None
+        if args.genai_prices:
+            source = genai_prices.DATA_URL if args.genai_prices == "url" else args.genai_prices
+            genai = genai_prices.load(source)
+        results = run(args.providers or None, genai=genai)
+        print(json.dumps(as_json(results), indent=2) if args.json
+              else report(results, genai=genai is not None))
         return 1 if any(result.status == "mismatch" for result in results) else 0
 
     if args.command == "update":

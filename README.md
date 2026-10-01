@@ -60,6 +60,8 @@ Holiday calendars record the last date they cover, and `llm-prices check` fails 
 
 Page model names must match models.dev ids exactly, with no suffix removal, so a dated model is never compared with a different undated one. For DeepSeek, peak and off-peak prices are checked at the next hours the schedule classifies as each, and the peak-hour rule on both the English and Chinese pricing pages must match the wording recorded in `schedules.toml`, so a change to the hours, multiplier, or exceptions fails the check. Google's dated future prices are read for the check date. A page that yields no prices fails the check, because its format has changed.
 
+`llm-prices check --genai-prices` also scores [Pydantic's genai-prices](https://github.com/pydantic/genai-prices) against the same official prices, reading its `data.json` from GitHub, or from a file or checkout given as `--genai-prices PATH`. It lists each price genai-prices gets wrong and ends with how many official prices each source lists correctly, wrongly, or not at all. Its disagreements never change the exit status. On 2026-10-01, models.dev listed 340 of 411 official prices correctly and 7 wrongly; genai-prices listed 176 correctly and 68 wrongly, mostly by matching newer models such as Claude Opus 5.5 to an older model's prices and by missing recent price cuts.
+
 ## Not modeled
 
 llm-prices prices standard synchronous requests. It does not model batch, flex, or priority service tiers; Anthropic's separate 1-hour cache-write price, which it treats as the 5-minute price; regional or data-residency surcharges; storage charges for cached context; or tool fees such as web search. Modes listed by models.dev, such as fast mode, are available through `mode`.
