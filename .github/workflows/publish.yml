@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   validate:
-    uses: ./.github/workflows/validation.yml
+    uses: wakamex/release-actions/.github/workflows/python-validation.yml@stable
 
   publish:
     needs: validate

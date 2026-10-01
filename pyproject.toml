@@ -15,9 +15,6 @@ llm-prices = "llm_prices:main"
 Homepage = "https://github.com/wakamex/llm-prices"
 Source = "https://github.com/wakamex/llm-prices"
 
-[dependency-groups]
-dev = ["pytest"]
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

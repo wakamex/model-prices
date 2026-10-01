@@ -108,7 +108,7 @@ uv run --locked llm-prices update /tmp/models.dev
 ## Development
 
 ```sh
-uv run --locked pytest
+uv run --locked python -m unittest discover -s tests
 ```
 
 ## License

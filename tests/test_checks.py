@@ -1,8 +1,9 @@
 from datetime import datetime, timezone
+import io
 import json
 from pathlib import Path
-
-import pytest
+import unittest
+from unittest import mock
 
 from llm_prices import checks, main
 from llm_prices.checks import Observed
@@ -26,124 +27,126 @@ def _prices(provider):
             for item in checks.SOURCES[provider][1](PAGES[provider], TODAY)}
 
 
-def test_parsers_read_official_tables():
-    anthropic = _prices("anthropic")
-    assert anthropic[("claude-opus-5-5", "input", None, None)] == 4
-    assert anthropic[("claude-opus-5-5", "cache_write", None, None)] == 5
-    assert anthropic[("claude-opus-5-5", "cache_read", None, None)] == 0.2
-
-    openai = _prices("openai")
-    assert openai[("gpt-6-astra", "output", 272_000, None)] == 75
-    assert ("gpt-5.4-mini", "input", 272_000, None) not in openai
-
-    assert _prices("zai")[("GLM-5.3", "cache_read", None, None)] == 0.26
-
-    xai = _prices("xai")
-    assert xai[("grok-4.6", "input", None, None)] == 2
-    assert xai[("grok-4.6", "output", 200_000, None)] == 12
-
-    google = _prices("google")
-    assert google[("Gemini 3.8 Flash", "input", None, None)] == 0.75
-    assert google[("Gemini 2.5 Pro", "input", 200_000, None)] == 2.5
-    assert google[("Gemini 2.5 Flash", "cache_read", None, None)] == 0.03
-    assert ("Gemini 3.8 Flash", "cache_read", None, None) in google
-    assert 0.5 not in {value for (model, field, _, _), value in google.items()
-                       if model == "Gemini 3.8 Flash" and field == "cache_read"}
-
-    deepseek = _prices("deepseek")
-    assert sorted(value for (model, field, _, _), value in deepseek.items()
-                  if model == "deepseek-flash" and field == "input") == [0.15, 0.3]
-
-
-def test_google_section_pricing_several_models_prices_each():
-    google = _prices("google")
-    names = {model for model, *_ in google}
-
-    assert {"Gemini 3.8 Live", "Gemini 3.8 Live Extended Thinking",
-            "Gemini 3.1 Flash Live Preview"} <= names
-    assert not any(", " in name or " and Gemini" in name for name in names)
-    # "$0.75 (text) $3.00 or $0.005/min (audio)": only the text price counts.
-    assert google[("Gemini 3.1 Flash Live Preview", "input", None, None)] == 0.75
-
-
-def test_google_dated_prices_follow_the_check_date():
-    cell = "$0.75 through December 31, 2026. $1.50 starting January 1, 2027."
-
-    assert checks._google_price(cell, TODAY) == [(0.75, None)]
-    assert checks._google_price(cell, datetime(2027, 1, 2, tzinfo=timezone.utc)) == [(1.5, None)]
-
-
-def test_official_pages_match_effective_prices():
-    results = checks.run(pages=PAGES, today=TODAY)
-    statuses = {result.status for result in results}
-
-    assert "mismatch" not in statuses
-    corrected = {(r.model, r.field) for r in results if r.status == "corrected"}
-    assert ("deepseek/deepseek-v4-pro", "input") in corrected
-    assert ("google/gemini-omni-flash-preview", "output") in corrected
-
-
-def test_check_scores_genai_prices_against_official_pages(capsys):
-    # Anthropic and OpenAI entries of genai-prices' data.json at commit 36d4e77c (2026-09-29).
-    genai = json.loads((FIXTURES / "genai-prices.json").read_text())
-    results = checks.run(["anthropic", "openai"], pages=PAGES, today=TODAY, genai=genai)
-    listed = {(r.model, r.field, r.above): r.genai_prices for r in results}
-
-    # genai-prices lacks Opus 5.5; its Opus 5 rule would accept the name only as a prefix.
-    assert listed[("anthropic/claude-opus-5-5", "input", None)] is None
-    # It still lists GPT-5.6 Sol at the price before the 2026-08-21 cut.
-    assert listed[("openai/gpt-5.6-sol", "input", None)] == 5
-    assert listed[("openai/gpt-5.6-sol", "input", 272000)] == 10
-    report = checks.report(results, genai=True)
-    assert "genai     openai/gpt-5.6-sol input: official $4, genai-prices 5" in report
-    assert "in genai-prices: " in report.splitlines()[-1]
-
-
-def test_compare_flags_prices_that_differ():
-    wrong = Observed("anthropic", "claude-opus-5-5", "input", 3.0)
-    unknown = Observed("anthropic", "claude-mythos-5-1", "input", 10.0)
-
-    mismatch, untracked = checks.compare([wrong, unknown], TODAY)
-
-    assert (mismatch.status, mismatch.effective) == ("mismatch", 4.0)
-    assert untracked.status == "untracked"
-
-
-def test_changed_page_format_fails_loudly():
-    with pytest.raises(ValueError, match="page format changed"):
-        checks.run(["zai"], today=TODAY, pages={"zai": "# Pricing\n"})
-
-
-def test_check_command_exit_status(monkeypatch, capsys):
-    monkeypatch.setattr(checks, "fetch", lambda url: PAGES["zai"])
-    assert main(["check", "zai"]) == 0
-    assert "0 mismatch" in capsys.readouterr().out
-
-    monkeypatch.setattr(checks, "fetch", lambda url: PAGES["zai"].replace("\\$1.4", "\\$9.9"))
-    assert main(["check", "zai"]) == 1
-
-
 def _terms(pages):
     results = checks.run(["deepseek"], today=TODAY, pages=pages)
     return {result.field: result for result in results if result.field.startswith("peak_terms")}
 
 
-def test_peak_hour_terms_must_match_in_both_languages():
-    pages = {"deepseek": PAGES["deepseek"], "deepseek:zh": PAGES["deepseek:zh"]}
-    assert {field: result.status for field, result in _terms(pages).items()} == {
-        "peak_terms:en": "ok", "peak_terms:zh": "ok",
-    }
+class CheckTests(unittest.TestCase):
+    def test_parsers_read_official_tables(self):
+        anthropic = _prices("anthropic")
+        self.assertEqual(anthropic[("claude-opus-5-5", "input", None, None)], 4)
+        self.assertEqual(anthropic[("claude-opus-5-5", "cache_write", None, None)], 5)
+        self.assertEqual(anthropic[("claude-opus-5-5", "cache_read", None, None)], 0.2)
 
-    changed = {**pages, "deepseek:zh": pages["deepseek:zh"].replace("14:00 - 18:00", "14:00 - 19:00")}
-    terms = _terms(changed)
-    assert (terms["peak_terms:en"].status, terms["peak_terms:zh"].status) == ("ok", "mismatch")
-    assert "14:00 - 19:00" in checks.report(checks.run(["deepseek"], today=TODAY, pages=changed))
+        openai = _prices("openai")
+        self.assertEqual(openai[("gpt-6-astra", "output", 272_000, None)], 75)
+        self.assertNotIn(("gpt-5.4-mini", "input", 272_000, None), openai)
+
+        self.assertEqual(_prices("zai")[("GLM-5.3", "cache_read", None, None)], 0.26)
+
+        xai = _prices("xai")
+        self.assertEqual(xai[("grok-4.6", "input", None, None)], 2)
+        self.assertEqual(xai[("grok-4.6", "output", 200_000, None)], 12)
+
+        google = _prices("google")
+        self.assertEqual(google[("Gemini 3.8 Flash", "input", None, None)], 0.75)
+        self.assertEqual(google[("Gemini 2.5 Pro", "input", 200_000, None)], 2.5)
+        self.assertEqual(google[("Gemini 2.5 Flash", "cache_read", None, None)], 0.03)
+        self.assertIn(("Gemini 3.8 Flash", "cache_read", None, None), google)
+        self.assertNotIn(0.5, {value for (model, field, _, _), value in google.items()
+                               if model == "Gemini 3.8 Flash" and field == "cache_read"})
+
+        deepseek = _prices("deepseek")
+        self.assertEqual(sorted(value for (model, field, _, _), value in deepseek.items()
+                                if model == "deepseek-flash" and field == "input"), [0.15, 0.3])
+
+    def test_google_section_pricing_several_models_prices_each(self):
+        google = _prices("google")
+        names = {model for model, *_ in google}
+
+        self.assertLessEqual({"Gemini 3.8 Live", "Gemini 3.8 Live Extended Thinking",
+                              "Gemini 3.1 Flash Live Preview"}, names)
+        self.assertFalse(any(", " in name or " and Gemini" in name for name in names))
+        # "$0.75 (text) $3.00 or $0.005/min (audio)": only the text price counts.
+        self.assertEqual(google[("Gemini 3.1 Flash Live Preview", "input", None, None)], 0.75)
+
+    def test_google_dated_prices_follow_the_check_date(self):
+        cell = "$0.75 through December 31, 2026. $1.50 starting January 1, 2027."
+
+        self.assertEqual(checks._google_price(cell, TODAY), [(0.75, None)])
+        self.assertEqual(checks._google_price(cell, datetime(2027, 1, 2, tzinfo=timezone.utc)),
+                         [(1.5, None)])
+
+    def test_official_pages_match_effective_prices(self):
+        results = checks.run(pages=PAGES, today=TODAY)
+        statuses = {result.status for result in results}
+
+        self.assertNotIn("mismatch", statuses)
+        corrected = {(r.model, r.field) for r in results if r.status == "corrected"}
+        self.assertIn(("deepseek/deepseek-v4-pro", "input"), corrected)
+        self.assertIn(("google/gemini-omni-flash-preview", "output"), corrected)
+
+    def test_check_scores_genai_prices_against_official_pages(self):
+        # Anthropic and OpenAI entries of genai-prices' data.json at commit 36d4e77c (2026-09-29).
+        genai = json.loads((FIXTURES / "genai-prices.json").read_text())
+        results = checks.run(["anthropic", "openai"], pages=PAGES, today=TODAY, genai=genai)
+        listed = {(r.model, r.field, r.above): r.genai_prices for r in results}
+
+        # genai-prices lacks Opus 5.5; its Opus 5 rule would accept the name only as a prefix.
+        self.assertIsNone(listed[("anthropic/claude-opus-5-5", "input", None)])
+        # It still lists GPT-5.6 Sol at the price before the 2026-08-21 cut.
+        self.assertEqual(listed[("openai/gpt-5.6-sol", "input", None)], 5)
+        self.assertEqual(listed[("openai/gpt-5.6-sol", "input", 272000)], 10)
+        report = checks.report(results, genai=True)
+        self.assertIn("genai     openai/gpt-5.6-sol input: official $4, genai-prices 5", report)
+        self.assertIn("in genai-prices: ", report.splitlines()[-1])
+
+    def test_compare_flags_prices_that_differ(self):
+        wrong = Observed("anthropic", "claude-opus-5-5", "input", 3.0)
+        unknown = Observed("anthropic", "claude-mythos-5-1", "input", 10.0)
+
+        mismatch, untracked = checks.compare([wrong, unknown], TODAY)
+
+        self.assertEqual((mismatch.status, mismatch.effective), ("mismatch", 4.0))
+        self.assertEqual(untracked.status, "untracked")
+
+    def test_changed_page_format_fails_loudly(self):
+        with self.assertRaisesRegex(ValueError, "page format changed"):
+            checks.run(["zai"], today=TODAY, pages={"zai": "# Pricing\n"})
+
+    def test_check_command_exit_status(self):
+        with (mock.patch.object(checks, "fetch", lambda url: PAGES["zai"]),
+              mock.patch("sys.stdout", new_callable=io.StringIO) as stdout):
+            self.assertEqual(main(["check", "zai"]), 0)
+        self.assertIn("0 mismatch", stdout.getvalue())
+
+        changed = PAGES["zai"].replace("\\$1.4", "\\$9.9")
+        with (mock.patch.object(checks, "fetch", lambda url: changed),
+              mock.patch("sys.stdout", new_callable=io.StringIO)):
+            self.assertEqual(main(["check", "zai"]), 1)
+
+    def test_peak_hour_terms_must_match_in_both_languages(self):
+        pages = {"deepseek": PAGES["deepseek"], "deepseek:zh": PAGES["deepseek:zh"]}
+        self.assertEqual({field: result.status for field, result in _terms(pages).items()},
+                         {"peak_terms:en": "ok", "peak_terms:zh": "ok"})
+
+        changed = {**pages,
+                   "deepseek:zh": pages["deepseek:zh"].replace("14:00 - 18:00", "14:00 - 19:00")}
+        terms = _terms(changed)
+        self.assertEqual((terms["peak_terms:en"].status, terms["peak_terms:zh"].status),
+                         ("ok", "mismatch"))
+        self.assertIn("14:00 - 19:00",
+                      checks.report(checks.run(["deepseek"], today=TODAY, pages=changed)))
+
+    def test_holiday_calendar_must_cover_the_coming_weeks(self):
+        ok, = checks.check_calendars({"deepseek"}, TODAY)
+        late, = checks.check_calendars({"deepseek"}, datetime(2026, 11, 30, tzinfo=timezone.utc))
+
+        self.assertEqual((ok.status, late.status), ("ok", "mismatch"))
+        self.assertIn("add the next year's holidays", checks.report([late]))
+        self.assertEqual(checks.check_calendars({"anthropic"}, TODAY), [])
 
 
-def test_holiday_calendar_must_cover_the_coming_weeks():
-    ok, = checks.check_calendars({"deepseek"}, TODAY)
-    late, = checks.check_calendars({"deepseek"}, datetime(2026, 11, 30, tzinfo=timezone.utc))
-
-    assert (ok.status, late.status) == ("ok", "mismatch")
-    assert "add the next year's holidays" in checks.report([late])
-    assert checks.check_calendars({"anthropic"}, TODAY) == []
+if __name__ == "__main__":
+    unittest.main()
