@@ -223,6 +223,31 @@ class PriceTests(unittest.TestCase):
                 self.assertEqual(found.period, period)
                 self.assertAlmostEqual(found.input, input_price)
 
+    def test_deepseek_2025_off_peak_discount(self):
+        # 2025-02-26T16:30Z to 2025-09-05T16:00Z: 50% off V3 and 75% off R1, 16:30-00:30 UTC.
+        cases = [
+            ("deepseek-chat", "2025-03-10T17:00:00Z", "off_peak", 0.135),
+            ("deepseek-chat", "2025-03-11T00:15:00Z", "off_peak", 0.135),  # past midnight
+            ("deepseek-chat", "2025-03-11T00:45:00Z", "standard", 0.27),
+            ("deepseek-reasoner", "2025-03-10T17:00:00Z", "off_peak", 0.55 * 0.25),
+            ("deepseek-chat", "2025-02-26T12:00:00Z", None, 0.27),  # announced, not yet started
+        ]
+        for model, at, period, input_price in cases:
+            with self.subTest(model=model, at=at):
+                found = rates(model, at=at)
+                self.assertEqual(found.period, period)
+                self.assertAlmostEqual(found.input, input_price)
+
+    def test_current_price_list_keeps_the_time_of_day_rule_of_the_request(self):
+        # A 2025 off-peak request priced from today's list keeps its 75% discount.
+        then = rates("deepseek-reasoner", at="2025-03-10T17:00:00Z")
+        today = rates("deepseek-reasoner", at="2025-03-10T17:00:00Z",
+                      prices_at="2026-09-30T13:00:00Z")
+        listed = rates("deepseek-reasoner", at="2026-09-30T13:00:00Z")
+
+        self.assertEqual((then.period, today.period), ("off_peak", "off_peak"))
+        self.assertAlmostEqual(today.input, listed.input * 0.25)
+
     def test_peak_multiplier_scales_every_rate(self):
         off_peak = rates("deepseek-v4-pro", at="2026-09-30T13:00:00Z")
         peak = rates("deepseek-v4-pro", at="2026-09-30T02:00:00Z")

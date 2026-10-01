@@ -1,7 +1,26 @@
-# Time-of-day pricing. The recorded rate (models.dev history plus corrections) is the
-# off-peak rate; inside a peak window every rate, including long-context tiers, is
-# multiplied by peak_multiplier. Peak windows are UTC. A date listed under a holiday
-# calendar is off-peak all day, judged by that calendar's local date.
+# Time-of-day pricing, in one of two forms. With peak_hours_utc, the recorded rate
+# (models.dev history plus corrections) is the off-peak rate, and inside a peak window every
+# rate, including long-context tiers, is multiplied by peak_multiplier. With
+# off_peak_hours_utc, the recorded rate is the standard rate, and inside an off-peak window
+# each listed model's rates are multiplied by its off_peak_multiplier. Windows are UTC and
+# may run past midnight. A date listed under a holiday calendar is off-peak all day, judged
+# by that calendar's local date.
+
+[[schedule]]
+provider = "deepseek"
+valid_from = "2025-02-26T16:30:00Z"
+valid_until = "2025-09-05T16:00:00Z"
+off_peak_hours_utc = [["16:30", "00:30"]]
+off_peak_multiplier = { deepseek-chat = 0.5, deepseek-reasoner = 0.25 }
+source = "https://x.com/deepseek_ai/status/1894710448676884671"
+note = """
+DeepSeek announced on 2025-02-26 at 11:25Z: "Starting today, enjoy off-peak discounts on
+the DeepSeek API Platform from 16:30–00:30 UTC daily: DeepSeek-V3 at 50% off, DeepSeek-R1
+at a massive 75% off." The archived pricing page of 2025-02-26T11:11Z lists the discount
+(https://web.archive.org/web/20250226111135/https://api-docs.deepseek.com/quick_start/pricing).
+It printed R1's discount prices as $0.035/$0.135/$0.550, within 2% of an exact 75% off, and
+said the completion time of each request decides its price. The discount ended with the
+V3.1 price list at 2025-09-05T16:00Z (https://www.deepseek.com/en/news/deepseek-v3-1/)."""
 
 [[schedule]]
 provider = "deepseek"

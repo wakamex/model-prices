@@ -47,9 +47,9 @@ Each entry keeps input, output, cache read, and cache write rates, long-context 
 
 ## Time-of-day pricing
 
-Some providers charge more at busy hours. `schedules.toml` records each provider's peak windows, weekday rules, and holiday calendar, with the dates each version of the rules applied. The recorded rate is the off-peak rate, and inside a peak window every rate is multiplied by the schedule's peak multiplier. `Rates.period` says which applied: `"peak"`, `"off_peak"`, or `None` for providers without time-of-day pricing.
+Some providers price by time of day. `schedules.toml` records each version of a provider's rules with the dates it applied: either peak windows that multiply the recorded rate, or off-peak windows that discount it for listed models. `Rates.period` says which applied: `"peak"` or `"off_peak"`, `"standard"` outside a discount window, or `None` when no time-of-day rule applies.
 
-Holiday calendars record the last date they cover, and `llm-prices check` fails 45 days before that date so the next year's holidays are added in time. DeepSeek is the one provider with such pricing so far. Since 16:00 UTC on August 16, 2026, its peak hours have been 01:00-04:00 and 06:00-10:00 UTC on weekdays other than Chinese public holidays, at twice the off-peak rate. The pricing page added the weekday and holiday exceptions in late August and mid-September without an announcement; llm-prices applies the current rule from the start of peak pricing. [DeepSeek pricing history](https://github.com/wakamex/llm-prices/blob/main/docs/deepseek-pricing-history.md) records the evidence for each date.
+Holiday calendars record the last date they cover, and `llm-prices check` fails 45 days before that date so the next year's holidays are added in time. DeepSeek is the one provider with such pricing so far. From 16:30 UTC on February 26, 2025 until 16:00 UTC on September 5, 2025, it took 50% off DeepSeek-V3 (`deepseek-chat`) and 75% off DeepSeek-R1 (`deepseek-reasoner`) from 16:30 to 00:30 UTC daily. Since 16:00 UTC on August 16, 2026, its peak hours have been 01:00-04:00 and 06:00-10:00 UTC on weekdays other than Chinese public holidays, at twice the off-peak rate. The pricing page added the weekday and holiday exceptions in late August and mid-September without an announcement; llm-prices applies the current rule from the start of peak pricing. [DeepSeek pricing history](https://github.com/wakamex/llm-prices/blob/main/docs/deepseek-pricing-history.md) records the evidence for each 2026 date. DeepSeek decides the period by when a request completes, so pass the completion time as `at` where it is known.
 
 ## Official price checks
 
@@ -80,7 +80,7 @@ Long-context tiers apply when a request's prompt exceeds the tier size. Provider
 
 ## Current prices for past requests
 
-`rates()` and `cost()` take `prices_at` to price a request from a different date's price list while `at`, the time the request ran, still decides peak or off-peak. Pricing every past request with `prices_at` set to today compares usage across weeks without price changes appearing as usage changes.
+`rates()` and `cost()` take `prices_at` to price a request from a different date's price list. The time-of-day rule in force at `at`, the time the request ran, still applies: a request made in a 2025 DeepSeek discount hour keeps its discount on today's prices. Pricing every past request with `prices_at` set to today compares usage across weeks without price changes appearing as usage changes.
 
 ## Prices over a span
 

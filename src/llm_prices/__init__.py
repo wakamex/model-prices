@@ -334,8 +334,11 @@ def _history_rates(provider: str, model: str, at: datetime, mode: str | None) ->
 
 
 def _in_window(moment: datetime, window: list[str]) -> bool:
+    """Whether a UTC time falls in a window; a window may run past midnight."""
     start, end = (datetime.strptime(value, "%H:%M").time() for value in window)
-    return start <= moment.time() < end
+    if start <= end:
+        return start <= moment.time() < end
+    return moment.time() >= start or moment.time() < end
 
 
 @cache
@@ -357,14 +360,22 @@ def _schedule(provider: str, moment: datetime) -> dict[str, Any] | None:
 
 
 def _period(provider: str, moment: datetime,
-            schedule_at: datetime | None = None) -> tuple[str, float] | None:
-    """Return the time-of-day period and its multiplier on recorded rates, if any.
+            model: str | None = None) -> tuple[str, float] | None:
+    """Return the time-of-day period at `moment` and its multiplier on recorded rates.
 
-    schedule_at selects which version of the schedule applies; it defaults to `moment`.
+    A schedule either raises prices inside peak hours or, like DeepSeek's 2025 discount,
+    lowers them for listed models inside off-peak hours; outside those hours the recorded
+    price is the standard price.
     """
-    schedule = _schedule(provider, schedule_at or moment)
+    schedule = _schedule(provider, moment)
     if schedule is None:
         return None
+    if "off_peak_hours_utc" in schedule:
+        factor = schedule["off_peak_multiplier"].get(model or "")
+        if factor is None:
+            return None
+        off_peak = any(_in_window(moment, window) for window in schedule["off_peak_hours_utc"])
+        return ("off_peak", factor) if off_peak else ("standard", 1.0)
     peak = any(_in_window(moment, window) for window in schedule["peak_hours_utc"])
     if schedule.get("weekdays_only") and moment.weekday() >= 5:
         peak = False
@@ -394,9 +405,9 @@ def rates(model: str, at: datetime | str | None = None, provider: str | None = N
           prices_at: datetime | str | None = None) -> Rates | None:
     """Return the rates for a request made at `at` (default now), or None for an unknown model.
 
-    Time-of-day pricing applies peak rates inside the provider's peak windows.
-    prices_at selects a different price list, such as today's, while `at` still decides
-    whether the request fell in peak hours; it defaults to `at`.
+    Time-of-day pricing applies the provider's peak or off-peak rates for `at`.
+    prices_at selects a different price list, such as today's, while the time-of-day rule
+    in force at `at` still applies to it; it defaults to `at`.
     corrected=False returns models.dev's recorded rates without local corrections.
     """
     details = resolve_details(model, provider)
@@ -416,7 +427,8 @@ def rates(model: str, at: datetime | str | None = None, provider: str | None = N
     if found is None:
         return None
     found = replace(found, removed_suffix=removed) if removed else found
-    period = _period(resolved[0], moment, schedule_at=listed)
+    # The time-of-day rule in force when the request ran applies to the chosen price list.
+    period = _period(resolved[0], moment, resolved[1])
     return _scaled(found, *period) if period else found
 
 
@@ -435,7 +447,7 @@ def _change_times(provider: str, model: str, start: datetime, end: datetime) -> 
         day = start.replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=1)
         while day <= end:
             times.add(day)  # weekday rules change at UTC midnight
-            for window in schedule["peak_hours_utc"]:
+            for window in schedule.get("peak_hours_utc", schedule.get("off_peak_hours_utc", [])):
                 for clock in window:
                     hour, minute = map(int, clock.split(":"))
                     times.add(day.replace(hour=hour, minute=minute))
