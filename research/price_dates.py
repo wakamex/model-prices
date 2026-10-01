@@ -403,8 +403,8 @@ def verify() -> None:
 
 
 # Findings read by hand, which settles them whatever the agent review says: "after" applies
-# the models.dev fix's own rates, ignoring the finding's official price, and "skip" leaves
-# the finding out.
+# the models.dev fix's own rates, ignoring the finding's official price; "quoted" applies only
+# the quoted prices to models.dev's earlier entry; and "skip" leaves the finding out.
 REVIEWED = {
     # The official cache_read of 0 is xAI's price for a model without caching; the fix was
     # dropping models.dev's cache_write, which its fixed entry already does.
@@ -421,6 +421,11 @@ REVIEWED = {
     # Classified as a fix of the earlier entry, but its notes say the later entry added a
     # wrong cache_write, and its price quote is about Claude 3.5 Sonnet.
     "anthropic_claude_3_sonnet_20240229_20250617t2226": "skip",
+    # xAI charges no cache writes; models.dev's fix added one and removed it in a later change
+    # whose finding is unclear, so only the quoted cache read applies.
+    "xai_grok_3_mini_20250617t2226": "quoted",
+    # Applies new base prices for 3.5 months on an inferred classification with no date.
+    "alibaba_qwen3.7_plus_20260928t0401": "skip",
 }
 
 
@@ -446,9 +451,9 @@ def _toml_value(value: object) -> str:
 def derive_corrections() -> tuple[list[dict], list[str]]:
     """Turn verified findings into corrections, and list the findings left out and why.
 
-    A models_dev_fix keeps models.dev's earlier entry over its whole period and replaces only
-    the prices the finding quotes, so a correction never copies an unquoted value from
-    models.dev's later entry. A dated price_change moves the start of the
+    A models_dev_fix replaces models.dev's earlier entry over its whole period with the
+    prices the finding quotes, and takes every other field from the rates models.dev
+    settled on after its last consecutive fix. A dated price_change moves the start of the
     new rates to the documented time, or keeps the old rates until it when models.dev
     recorded the change early; a bracketed one applies the new rates from the first
     observation of them.
@@ -459,6 +464,23 @@ def derive_corrections() -> tuple[list[dict], list[str]]:
     # corrects. When models.dev fixed a model twice in a row, a corrected period also takes
     # the prices quoted for the fix that directly follows it.
     fixed: dict[tuple[str, str, str], dict] = {}
+    following = {(item["provider"], item["model"], item["previous_at"]): item for item in changes}
+
+    def classification(item: dict) -> str | None:
+        try:
+            path = WORK / "findings" / item["id"] / "finding.json"
+            return json.loads(path.read_text()).get("classification")
+        except (FileNotFoundError, json.JSONDecodeError):
+            return None
+
+    def settled(item: dict) -> dict:
+        """models.dev's rates once it stopped fixing the model: after the last of a run of
+        consecutive fixes. Its first fix was sometimes still wrong in other fields."""
+        while (later := following.get((item["provider"], item["model"], item["recorded_at"]))) \
+                and classification(later) == "models_dev_fix":
+            item = later
+        return item["after"]
+
     for change in sorted(changes, key=lambda item: item["recorded_at"], reverse=True):
         try:
             finding = json.loads((WORK / "findings" / change["id"] / "finding.json").read_text())
@@ -487,7 +509,11 @@ def derive_corrections() -> tuple[list[dict], list[str]]:
             later = fixed.get((change["provider"], change["model"], change["recorded_at"]), {})
             quoted = {**later, **quoted}
             fixed[(change["provider"], change["model"], change["previous_at"])] = quoted
-            rates = dict(change["after"]) if review == "after" else {**change["before"], **quoted}
+            # Quoted prices are the evidence; other fields take the value models.dev settled
+            # on, since the earlier entry was the wrong one.
+            rates = (dict(change["after"]) if review == "after"
+                     else {**change["before"], **quoted} if review == "quoted"
+                     else {**settled(change), **quoted})
             if rates == change["before"]:
                 skipped.append(f"{change['id']}: no quoted price differs from models.dev")
                 continue
