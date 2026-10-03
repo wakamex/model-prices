@@ -43,13 +43,15 @@ class CorrectionDataTests(unittest.TestCase):
         for item in self.each():
             if item.get("cache_read") is not None:
                 self.assertLessEqual(item["cache_read"], item["input"])
-            # Anthropic prices cache writes at 1.25x input and reads at 0.1x; Claude 3 Haiku,
-            # its oldest cached model, at 1.2x and 0.12x.
+            # Anthropic prices cache writes at 1.25x input and reads at 0.1x, except Claude 3
+            # Haiku (1.2x and 0.12x), Opus 5.5 (reads at 0.05x), and Fable 5.1 and Mythos 5.1
+            # (reads at 0.025x).
             if item["provider"] == "anthropic":
                 if item.get("cache_write") is not None:
                     self.assertIn(round(item["cache_write"] / item["input"], 3), {1.25, 1.2})
                 if item.get("cache_read") is not None:
-                    self.assertIn(round(item["cache_read"] / item["input"], 3), {0.1, 0.12})
+                    self.assertIn(round(item["cache_read"] / item["input"], 3),
+                                  {0.1, 0.12, 0.05, 0.025})
 
     def test_corrections_in_one_file_do_not_overlap(self):
         for name in FILES:
