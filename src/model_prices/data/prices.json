@@ -1657,6 +1657,15 @@
       "output": 0.87
      },
      "valid_from": "2026-05-25T05:18:18Z"
+    },
+    {
+     "commit": "b2ab9735fe23",
+     "rates": {
+      "cache_read": 0.022,
+      "input": 0.66,
+      "output": 1.98
+     },
+     "valid_from": "2026-10-02T16:20:50Z"
     }
    ]
   },
@@ -5629,6 +5638,6 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "2100e94dcee36a3180feb734251883d6c7dd696e",
- "source_committed_at": "2026-10-02T06:44:16Z"
+ "source_commit": "798a1d8e158fc2d5394f81ec1868aeeb9c6963bc",
+ "source_committed_at": "2026-10-03T05:36:14Z"
 }
