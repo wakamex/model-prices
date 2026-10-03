@@ -38,6 +38,7 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(anthropic[("claude-opus-5-5", "input", None, None)], 4)
         self.assertEqual(anthropic[("claude-opus-5-5", "cache_write", None, None)], 5)
         self.assertEqual(anthropic[("claude-opus-5-5", "cache_read", None, None)], 0.2)
+        self.assertEqual(anthropic[("claude-opus-5-5", "cache_write_1h", None, None)], 8)
 
         openai = _prices("openai")
         self.assertEqual(openai[("gpt-6-astra", "output", 272_000, None)], 75)
@@ -86,6 +87,9 @@ class CheckTests(unittest.TestCase):
         corrected = {(r.model, r.field) for r in results if r.status == "corrected"}
         self.assertIn(("deepseek/deepseek-v4-pro", "input"), corrected)
         self.assertIn(("google/gemini-omni-flash-preview", "output"), corrected)
+        one_hour = [r for r in results if r.field == "cache_write_1h"]
+        self.assertTrue(one_hour)
+        self.assertEqual({r.status for r in one_hour}, {"ok"})
 
     def test_check_scores_genai_prices_against_official_pages(self):
         # Anthropic and OpenAI entries of genai-prices' data.json at commit 36d4e77c (2026-09-29).

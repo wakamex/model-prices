@@ -43,7 +43,7 @@ Usage from before a model's first recorded price is priced at that first price, 
 
 Pass the time the provider billed the request as `at`. Providers do not document whether a request that spans a peak boundary bills at its start or its end; agent harnesses usually report completion times, which is a reasonable choice.
 
-Each entry keeps input, output, cache read, and cache write rates, long-context tiers, and alternate modes such as fast mode. A tier applies when one request's whole prompt, meaning uncached input plus cache reads and writes, exceeds the tier size. A missing cache price falls back to the input price.
+Each entry keeps input, output, cache read, and cache write rates, long-context tiers, and alternate modes such as fast mode. `cache_write_tokens` are five-minute cache writes; pass one-hour cache writes as `cache_write_1h_tokens`. Anthropic prices those at twice the input price, a rule `model-prices check` compares with Anthropic's pricing page; other providers' one-hour writes are priced as cache writes. A tier applies when one request's whole prompt, meaning uncached input plus cache reads and writes, exceeds the tier size. A missing cache price falls back to the input price.
 
 ## Time-of-day pricing
 
@@ -66,7 +66,7 @@ Page model names must match models.dev ids exactly, with no suffix removal, so a
 
 ## Not modeled
 
-model-prices prices standard synchronous requests. It does not model batch, flex, or priority service tiers; Anthropic's separate 1-hour cache-write price, which it treats as the 5-minute price; regional or data-residency surcharges; storage charges for cached context; or tool fees such as web search. Modes listed by models.dev, such as fast mode, are available through `mode`. While a correction applies, a mode's price is the corrected price scaled by the mode's ratio to models.dev's standard price at that time, since corrections record standard prices only.
+model-prices prices standard synchronous requests. It does not model batch, flex, or priority service tiers; regional or data-residency surcharges; storage charges for cached context; or tool fees such as web search. Modes listed by models.dev, such as fast mode, are available through `mode`. While a correction applies, a mode's price is the corrected price scaled by the mode's ratio to models.dev's standard price at that time, since corrections record standard prices only.
 
 Where a model has no cache-write price, cache writes are priced as input. That matches providers whose caching is automatic and bills the first, cache-filling request as normal input, such as Google's implicit caching, DeepSeek, xAI, and Z.ai. Providers that charge more for writing a cache list a cache-write price in models.dev.
 

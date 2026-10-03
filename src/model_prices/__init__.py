@@ -41,6 +41,13 @@ class Tier:
     cache_write: float | None = None
 
 
+# One-hour cache writes as a multiple of the input price, for providers that price them
+# apart from five-minute writes. Anthropic charges 2x base input for every model
+# (https://platform.claude.com/docs/en/about-claude/pricing); model-prices check compares
+# this with the "1h cache writes" column of that page.
+CACHE_WRITE_1H_MULTIPLES = {"anthropic": 2.0}
+
+
 @dataclass(frozen=True)
 class CostBreakdown:
     """USD cost of one request by token type, and the long-context tier applied, if any."""
@@ -50,10 +57,11 @@ class CostBreakdown:
     output: float
     cache_read: float
     cache_write: float
+    cache_write_1h: float = 0.0
 
     @property
     def total(self) -> float:
-        return self.input + self.output + self.cache_read + self.cache_write
+        return self.input + self.output + self.cache_read + self.cache_write + self.cache_write_1h
 
 
 @dataclass(frozen=True)
@@ -76,20 +84,25 @@ class Rates:
     # How valid_from was dated: "models.dev commit", which usually lags the provider's
     # change by days, or "documented", a date from the correction's cited source.
     valid_from_basis: str = "models.dev commit"
+    # A one-hour cache write's price as a multiple of the input price, for providers that
+    # price it separately from the five-minute cache write; None prices it as cache_write.
+    cache_write_1h_multiple: float | None = None
 
     def price_key(self) -> tuple:
         """The prices alone, without provenance, for comparing rates from different sources."""
         return (self.input, self.output, self.cache_read, self.cache_write, self.tiers,
-                self.period)
+                self.period, self.cache_write_1h_multiple)
 
     def breakdown(self, input_tokens: int = 0, output_tokens: int = 0,
-                  cache_read_tokens: int = 0, cache_write_tokens: int = 0) -> CostBreakdown:
+                  cache_read_tokens: int = 0, cache_write_tokens: int = 0,
+                  cache_write_1h_tokens: int = 0) -> CostBreakdown:
         """Price one request by token type; input_tokens excludes cache reads and writes.
 
-        Long-context tiers apply when the request's whole prompt exceeds the tier size.
-        Missing cache prices fall back to the input price.
+        cache_write_tokens are five-minute cache writes and cache_write_1h_tokens one-hour
+        ones. Long-context tiers apply when the request's whole prompt exceeds the tier
+        size. Missing cache prices fall back to the input price.
         """
-        prompt = input_tokens + cache_read_tokens + cache_write_tokens
+        prompt = input_tokens + cache_read_tokens + cache_write_tokens + cache_write_1h_tokens
         rates: dict[str, float | None] = {
             "input": self.input, "output": self.output,
             "cache_read": self.cache_read, "cache_write": self.cache_write,
@@ -105,19 +118,23 @@ class Rates:
         input_rate = rates["input"]
         cache_read = rates["cache_read"] if rates["cache_read"] is not None else input_rate
         cache_write = rates["cache_write"] if rates["cache_write"] is not None else input_rate
+        cache_write_1h = (input_rate * self.cache_write_1h_multiple
+                          if self.cache_write_1h_multiple is not None else cache_write)
         return CostBreakdown(
             tier_above=applied,
             input=input_tokens * input_rate / 1e6,
             output=output_tokens * rates["output"] / 1e6,
             cache_read=cache_read_tokens * cache_read / 1e6,
             cache_write=cache_write_tokens * cache_write / 1e6,
+            cache_write_1h=cache_write_1h_tokens * cache_write_1h / 1e6,
         )
 
     def cost(self, input_tokens: int = 0, output_tokens: int = 0,
-             cache_read_tokens: int = 0, cache_write_tokens: int = 0) -> float:
+             cache_read_tokens: int = 0, cache_write_tokens: int = 0,
+             cache_write_1h_tokens: int = 0) -> float:
         """Price one request in USD; input_tokens excludes cache reads and writes."""
         return self.breakdown(input_tokens, output_tokens, cache_read_tokens,
-                              cache_write_tokens).total
+                              cache_write_tokens, cache_write_1h_tokens).total
 
 
 @cache
@@ -427,6 +444,8 @@ def rates(model: str, at: datetime | str | None = None, provider: str | None = N
     if found is None:
         return None
     found = replace(found, removed_suffix=removed) if removed else found
+    if resolved[0] in CACHE_WRITE_1H_MULTIPLES:
+        found = replace(found, cache_write_1h_multiple=CACHE_WRITE_1H_MULTIPLES[resolved[0]])
     # The time-of-day rule in force when the request ran applies to the chosen price list.
     period = _period(resolved[0], moment, resolved[1])
     return _scaled(found, *period) if period else found
@@ -479,13 +498,18 @@ def rates_between(model: str, start: datetime | str, end: datetime | str,
 
 def cost(model: str, *, input_tokens: int = 0, output_tokens: int = 0,
          cache_read_tokens: int = 0, cache_write_tokens: int = 0,
+         cache_write_1h_tokens: int = 0,
          at: datetime | str | None = None, provider: str | None = None,
          mode: str | None = None, prices_at: datetime | str | None = None) -> float | None:
-    """Price one request made at `at`; input_tokens excludes cache reads and writes."""
+    """Price one request made at `at`; input_tokens excludes cache reads and writes.
+
+    cache_write_tokens are five-minute cache writes and cache_write_1h_tokens one-hour ones.
+    """
     found = rates(model, at=at, provider=provider, mode=mode, prices_at=prices_at)
     if found is None:
         return None
-    return found.cost(input_tokens, output_tokens, cache_read_tokens, cache_write_tokens)
+    return found.cost(input_tokens, output_tokens, cache_read_tokens, cache_write_tokens,
+                      cache_write_1h_tokens)
 
 
 @dataclass(frozen=True)

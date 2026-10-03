@@ -132,6 +132,19 @@ class PriceTests(unittest.TestCase):
             (10 + 20 + 30) * 2.0 / 1e6)
         self.assertAlmostEqual(price.cost(input_tokens=100, cache_read_tokens=1), 101 * 4.0 / 1e6)
 
+    def test_one_hour_cache_writes_cost_twice_the_input_price_at_anthropic(self):
+        opus = rates("claude-opus-5-5", at="2026-09-25")
+        long_cache = opus.breakdown(cache_write_tokens=1_000_000, cache_write_1h_tokens=1_000_000)
+
+        self.assertEqual((long_cache.cache_write, long_cache.cache_write_1h), (5.0, 8.0))
+        self.assertAlmostEqual(cost("claude-opus-5-5", cache_write_1h_tokens=1_000_000,
+                                    at="2026-09-25"), 8.0)
+        # Other providers price one-hour writes like any cache write.
+        sol = rates("gpt-6-astra", at="2026-09-20")
+        self.assertIsNone(sol.cache_write_1h_multiple)
+        self.assertAlmostEqual(sol.breakdown(cache_write_1h_tokens=100_000).cache_write_1h,
+                               100_000 * sol.cache_write / 1e6)
+
     def test_alternate_mode_prices(self):
         fast = rates("claude-opus-5-5", at="2026-09-25", mode="fast")
 

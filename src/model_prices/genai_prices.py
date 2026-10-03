@@ -86,7 +86,8 @@ def price(data: list, provider: str, model: str, field: str, at: datetime,
           above: int | None = None) -> float | None:
     """One price in USD per million tokens, or None when genai-prices lists none."""
     found = model_prices(data, provider, model, at)
-    value = found[1].get(FIELDS[field]) if found else None
+    # genai-prices has no price for some fields, such as one-hour cache writes.
+    value = found[1].get(FIELDS[field]) if found and field in FIELDS else None
     if isinstance(value, dict):
         if above is None:
             return value["base"]

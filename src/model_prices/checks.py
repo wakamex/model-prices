@@ -80,6 +80,7 @@ def _markdown_tables(text: str) -> Iterable[tuple[dict[int, str], list[str], lis
 
 def parse_anthropic(text: str, today: datetime) -> list[Observed]:
     columns = {"Base input tokens": "input", "5m cache writes": "cache_write",
+               "1h cache writes": "cache_write_1h",
                "Cache hits and refreshes": "cache_read", "Output tokens": "output"}
     found = []
     for _, header, rows in _markdown_tables(text):
@@ -304,6 +305,10 @@ def _value(found, field: str, above: int | None) -> float | None:
         return None
     values = {"input": found.input, "output": found.output,
               "cache_read": found.cache_read, "cache_write": found.cache_write}
+    if field == "cache_write_1h":
+        if found.cache_write_1h_multiple is None or above is not None:
+            return None
+        return found.input * found.cache_write_1h_multiple
     if above is not None:
         tier = next((tier for tier in found.tiers if tier.above == above), None)
         if tier is None:
