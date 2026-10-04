@@ -1,3 +1,7 @@
+# Audience
+
+- model-prices is for general users, so coverage should match what people use, not what the maintainer's own logs contain. Track every lab that sells its own models through an API, and do not defer a provider because local usage data shows no calls to it. Local usage is evidence of a gap, never evidence that a provider is unneeded.
+
 # Price sources
 
 - Prefer prices read automatically from an official page over hand-entered ones. When models.dev lacks a provider or model whose official page publishes prices, make that page the source: have the daily job parse it and record a new entry whenever the price changes, dated by the first run that saw it, and backfill earlier periods through `research/price_dates.py gaps`. Hand-entered prices go stale silently, while a parsed page fails loudly when its layout changes. Check every format a page offers before calling it unparseable: Cursor's Markdown copies omit the rate tables that its HTML pages contain.
