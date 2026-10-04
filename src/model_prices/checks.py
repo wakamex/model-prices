@@ -149,6 +149,121 @@ def parse_xai(text: str, today: datetime) -> list[Observed]:
     return found
 
 
+def parse_moonshot(text: str, today: datetime) -> list[Observed]:
+    columns = {"Input Price": "input", "Input Price (Cache Miss)": "input",
+               "Cached Input Price": "cache_read", "Input Price (Cache Hit)": "cache_read",
+               "Cache Write Price (TTL 5min)": "cache_write",
+               "Cache Write Price (TTL 1h)": "cache_write_1h", "Output Price": "output"}
+    found = []
+    # Each table is a <DocTable columns={[{ title: ... }]} rows={[[...], ...]} /> component,
+    # with prices written as <>{"$"}3.00</>.
+    for table in re.finditer(r"<DocTable\s+columns=\{\[(.*?)\]\}\s+rows=\{\[(.*?)\]\}\s*/>",
+                             text, re.S):
+        titles = re.findall(r'title:\s*"([^"]*)"', table.group(1))
+        for row in re.findall(r"^\s*\[(.*)\],?\s*$", table.group(2), re.M):
+            cells = [cell.replace('{"$"}', "$") for cell in
+                     re.findall(r'<>(.*?)</>|"((?:[^"\\]|\\.)*)"', row)
+                     for cell in (cell[0] or cell[1],)]
+            if len(cells) != len(titles) or titles[0] != "Model":
+                continue
+            for title, cell in zip(titles, cells):
+                value = _price(cell) if title in columns else None
+                if value is not None:
+                    found.append(Observed("moonshotai", cells[0], columns[title], value))
+    return found
+
+
+def _mdx_cell(cell: str) -> str:
+    text = re.sub(r"<[^>]+>", " ", cell.replace("\\", ""))
+    return re.sub(r"\s+", " ", html.unescape(text)).strip()
+
+
+def _mdx_grid(table: str) -> tuple[list[list[str]], list[list[str]]]:
+    """Header rows and body rows of an MDX <table>, each cell repeated across the rows and
+    columns it spans."""
+    grids: list[list[list[str]]] = []
+    for section in ("thead", "tbody"):
+        part = re.search(rf"<{section}>(.*?)</{section}>", table, re.S)
+        rows: list[list[str]] = []
+        spanning: dict[int, tuple[str, int]] = {}
+        for row in re.findall(r"<tr>(.*?)</tr>", part.group(1) if part else "", re.S):
+            cells = iter(re.findall(r"<t[hd]([^>]*)>(.*?)</t[hd]>", row, re.S))
+            line: list[str] = []
+            while True:
+                while len(line) in spanning:
+                    value, left = spanning.pop(len(line))
+                    if left > 1:
+                        spanning[len(line)] = (value, left - 1)
+                    line.append(value)
+                cell = next(cells, None)
+                if cell is None:
+                    break
+                attributes, body = cell
+                down = int((re.search(r"rowSpan=\{(\d+)\}", attributes) or [0, 1])[1])
+                across = int((re.search(r"colSpan=\{(\d+)\}", attributes) or [0, 1])[1])
+                for _ in range(across):
+                    if down > 1:
+                        spanning[len(line)] = (_mdx_cell(body), down - 1)
+                    line.append(_mdx_cell(body))
+            rows.append(line)
+        grids.append(rows)
+    return grids[0], grids[1]
+
+
+def _alibaba_tier(cell: str) -> int | None:
+    """The tier a row's "Input tokens per request" cell starts above: "32K<Token≤128K" and
+    "32K" start above 32,000; "0<Token≤1M", "0", and untiered rows are the base price."""
+    match = re.match(r"([0-9]+)\s*([KM]?)", cell)
+    if not match or match.group(1) == "0":
+        return None
+    return int(match.group(1)) * {"": 1, "K": 1_000, "M": 1_000_000}[match.group(2)]
+
+
+def parse_alibaba(text: str, today: datetime) -> list[Observed]:
+    """Read text-generation prices for the Singapore (international) deployment, which
+    models.dev's Alibaba provider uses.
+
+    A table that splits input prices by modality is skipped, as is a cell that prices busy
+    and idle hours separately. Output is the non-thinking price, or for a thinking-only
+    model its thinking price; thinking prices of hybrid models are not modeled.
+    """
+    found = []
+    heading = tab = ""
+    for match in re.finditer(r'^(##) ([^\n]*)$|<Tab title="([^"]*)"|<table.*?</table>',
+                             text, re.M | re.S):
+        if match.group(1):
+            heading, tab = match.group(2), ""
+            continue
+        if match.group(3) is not None:
+            tab = match.group(3)
+            continue
+        if not heading.startswith("Text generation") or tab != "Singapore":
+            continue
+        header, rows = _mdx_grid(match.group(0))
+        if not header or header[0][0] != "Model ID":
+            continue
+        titles = header[0]
+        detail = header[1] if len(header) > 1 else titles
+        inputs = [index for index, title in enumerate(titles) if title.startswith("Input price")]
+        outputs = [index for index, title in enumerate(titles) if title.startswith("Output price")]
+        if len(inputs) != 1 or not outputs or (len(outputs) > 1 and not all(
+                "Thinking mode" in detail[index] for index in outputs)):
+            continue
+        tiers = titles.index("Input tokens per request") if (
+            "Input tokens per request" in titles) else None
+        for row in rows:
+            model = row[0].split()[0]
+            above = _alibaba_tier(row[tiers]) if tiers is not None else None
+            prices = {"input": row[inputs[0]],
+                      "output": next((row[index] for index in outputs
+                                      if _price(row[index]) is not None), "")}
+            for field, cell in prices.items():
+                value = None if "Busy hours" in cell else _price(cell)
+                if value is not None:
+                    found.append(Observed("alibaba", model, field, value, above=above))
+    return found
+
+
 _GOOGLE_DATE = r"([A-Z][a-z]+ [0-9]{1,2}, [0-9]{4})"
 
 
@@ -285,9 +400,12 @@ def check_calendars(providers: set[str], today: datetime) -> list[Result]:
 
 
 SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
+    "alibaba": ("https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+                parse_alibaba),
     "anthropic": ("https://platform.claude.com/docs/en/about-claude/pricing.md", parse_anthropic),
     "deepseek": ("https://api-docs.deepseek.com/quick_start/pricing", parse_deepseek),
     "google": ("https://ai.google.dev/gemini-api/docs/pricing.md.txt", parse_google),
+    "moonshotai": ("https://platform.kimi.ai/docs/pricing/chat.md", parse_moonshot),
     "openai": ("https://developers.openai.com/api/docs/pricing.md", parse_openai),
     "xai": ("https://docs.x.ai/developers/pricing.md", parse_xai),
     "zai": ("https://docs.z.ai/guides/overview/pricing.md", parse_zai),
@@ -331,6 +449,10 @@ def compare(observed: Iterable[Observed], today: datetime,
         # Official names must match exactly: a fuzzy match such as gpt-3.5-turbo-1106 to
         # gpt-3.5-turbo would compare different models.
         resolved = resolve(item.model, item.provider, strict=True)
+        # A page compares only its own provider's prices: Alibaba's page also lists the
+        # prices it resells DeepSeek and Kimi models at, which are not DeepSeek's or Moonshot's.
+        if resolved and resolved[0] != item.provider:
+            resolved = None
         name = "/".join(resolved) if resolved else item.model
         effective = rates(name, at=at, provider=item.provider) if resolved else None
         raw = rates(name, at=at, provider=item.provider, corrected=False) if resolved else None

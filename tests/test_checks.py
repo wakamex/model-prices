@@ -12,10 +12,12 @@ FIXTURES = Path(__file__).parent / "fixtures"
 TODAY = datetime(2026, 9, 30, 12, tzinfo=timezone.utc)
 # Synthetic pages in the layouts of the official pricing pages, with their 2026-09-30 prices.
 PAGES = {
+    "alibaba": (FIXTURES / "alibaba.md").read_text(),
     "anthropic": (FIXTURES / "anthropic.md").read_text(),
     "deepseek": (FIXTURES / "deepseek.html").read_text(),
     "deepseek:zh": (FIXTURES / "deepseek-zh.html").read_text(),
     "google": (FIXTURES / "google.md").read_text(),
+    "moonshotai": (FIXTURES / "moonshot.md").read_text(),
     "openai": (FIXTURES / "openai.md").read_text(),
     "xai": (FIXTURES / "xai.md").read_text(),
     "zai": (FIXTURES / "zai.md").read_text(),
@@ -61,6 +63,34 @@ class CheckTests(unittest.TestCase):
         deepseek = _prices("deepseek")
         self.assertEqual(sorted(value for (model, field, _, _), value in deepseek.items()
                                 if model == "deepseek-flash" and field == "input"), [0.15, 0.3])
+
+    def test_moonshot_parser_reads_both_table_layouts(self):
+        moonshot = _prices("moonshotai")
+
+        self.assertEqual(moonshot[("kimi-k3", "cache_write_1h", None, None)], 6)
+        self.assertEqual(moonshot[("kimi-k3", "cache_read", None, None)], 0.3)
+        self.assertEqual(moonshot[("kimi-k2.6", "cache_read", None, None)], 0.16)
+        self.assertEqual(moonshot[("kimi-k2.6", "input", None, None)], 0.95)
+
+    def test_alibaba_parser_reads_singapore_text_prices(self):
+        alibaba = _prices("alibaba")
+
+        # Merged cells repeat down their rows; a tier starts above its lower bound.
+        self.assertEqual(alibaba[("qwen3.7-plus", "input", None, None)], 0.4)
+        self.assertEqual(alibaba[("qwen3.7-plus", "output", 256_000, None)], 4.8)
+        self.assertEqual(alibaba[("qwen3-coder-480b-a35b-instruct", "input", 32_000, None)], 2.7)
+        # Output is the non-thinking price.
+        self.assertEqual(alibaba[("qwen-turbo", "output", None, None)], 0.2)
+        # Other regions, per-modality tables, busy-hour prices, and images are skipped.
+        self.assertNotIn(0.115, alibaba.values())
+        models = {model for model, *_ in alibaba}
+        self.assertFalse(models & {"qwen3.5-omni-plus", "deepseek-v4-flash-0731", "qwen-image"})
+
+    def test_resold_models_are_not_compared_with_their_lab(self):
+        results = checks.run(["alibaba"], pages=PAGES, today=TODAY)
+        resold = [r for r in results if r.model == "deepseek-v4-pro"]
+
+        self.assertEqual({r.status for r in resold}, {"untracked"})
 
     def test_google_section_pricing_several_models_prices_each(self):
         google = _prices("google")

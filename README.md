@@ -69,20 +69,22 @@ Holiday calendars record the last date they cover, and `model-prices check` fail
 
 ## Official price checks
 
-`model-prices check` fetches each supported provider's official pricing page, reads it with a parser written for that page's table layout, and compares every price with the rate model-prices uses today. It covers Anthropic, DeepSeek, Google, OpenAI, xAI, and Z.ai. Each price is reported as:
+`model-prices check` fetches each supported provider's official pricing page, reads it with a parser written for that page's table layout, and compares every price with the rate model-prices uses today. It covers every tracked provider: Alibaba, Anthropic, DeepSeek, Google, Moonshot AI, OpenAI, xAI, and Z.ai. Alibaba's page is read for its Singapore (international) deployment, which models.dev's Alibaba prices describe; its page lists cache prices as a rule rather than per model, so only input, output, and long-context tiers are compared there. Each price is reported as:
 
 - `ok`: models.dev and the official page agree.
 - `corrected`: models.dev differs, but a correction in `corrections.toml` or `research_corrections.toml` supplies the official price.
 - `mismatch`: model-prices differs from the official page. The command exits with status 1.
 - `untracked`: the page lists a model that models.dev does not price.
 
-Page model names must match models.dev ids exactly, with no suffix removal, so a dated model is never compared with a different undated one. For DeepSeek, peak and off-peak prices are checked at the next hours the schedule classifies as each, and the peak-hour rule on both the English and Chinese pricing pages must match the wording recorded in `schedules.toml`, so a change to the hours, multiplier, or exceptions fails the check. Google's dated future prices are read for the check date. A page that yields no prices fails the check, because its format has changed.
+Page model names must match models.dev ids exactly, with no suffix removal, so a dated model is never compared with a different undated one. A page is compared only for its own provider's models: Alibaba's page also lists the prices it resells DeepSeek and Kimi models at, which are not DeepSeek's or Moonshot AI's prices. For DeepSeek, peak and off-peak prices are checked at the next hours the schedule classifies as each, and the peak-hour rule on both the English and Chinese pricing pages must match the wording recorded in `schedules.toml`, so a change to the hours, multiplier, or exceptions fails the check. Google's dated future prices are read for the check date. A page that yields no prices fails the check, because its format has changed.
 
 `model-prices check --genai-prices` also scores [Pydantic's genai-prices](https://github.com/pydantic/genai-prices) against the same official prices, reading its `data.json` from GitHub, or from a file or checkout given as `--genai-prices PATH`. It lists each price genai-prices gets wrong and ends with how many official prices each source lists correctly, wrongly, or not at all. Its disagreements never change the exit status. genai-prices is read by exact model id only: it also matches names by prefix, which would give a model it lacks, such as Claude Opus 5.5, an older model's prices. Z.ai is not compared, because genai-prices' Zhipu entry is the mainland China API. On 2026-10-01, models.dev listed 342 official prices correctly and 7 wrongly; genai-prices listed 173 correctly and 40 wrongly, almost all from missing price cuts such as GPT-5.6's.
 
 ## Not modeled
 
 model-prices prices standard synchronous requests. It does not model batch, flex, or priority service tiers; regional or data-residency surcharges; storage charges for cached context; or tool fees such as web search. Modes listed by models.dev, such as fast mode, are available through `mode`. While a correction applies, a mode's price is the corrected price scaled by the mode's ratio to models.dev's standard price at that time, since corrections record standard prices only.
+
+Alibaba prices thinking-mode output separately for hybrid Qwen models, often above the non-thinking price, such as $4 against $1.2 per million output tokens for `qwen-plus`; model-prices uses the non-thinking price. Alibaba's resale of DeepSeek models has busy-hour and idle-hour prices, which are not modeled.
 
 Where a model has no cache-write price, cache writes are priced as input. That matches providers whose caching is automatic and bills the first, cache-filling request as normal input, such as Google's implicit caching, DeepSeek, xAI, and Z.ai. Providers that charge more for writing a cache list a cache-write price in models.dev.
 
@@ -114,7 +116,7 @@ Aliases are part of the published data, while the normalization rules above are 
 
 ## Updating prices
 
-A daily workflow clones models.dev and rebuilds `data/prices.json` with `model-prices update`, which also compiles the snapshot. Each provider whose history changed then runs its official price check. A provider that passes goes straight to `main`. A provider that fails its check, or has no check, as Alibaba and Moonshot AI have none, is held at its current history and goes to the `update-prices` pull request for review instead; the workflow fails when a check failed. Fix a failure with a correction, or with a models.dev pull request when models.dev is wrong. Before merging the pull request, check each changed model's effective date against the provider's announcement and add a correction when models.dev recorded the change late. The workflow publishes the snapshot to the `data` branch after every run and after every push that changes the data, such as a merged correction.
+A daily workflow clones models.dev and rebuilds `data/prices.json` with `model-prices update`, which also compiles the snapshot. Each provider whose history changed then runs its official price check. A provider that passes goes straight to `main`. A provider that fails its check is held at its current history and goes to the `update-prices` pull request for review instead, and the workflow fails. Fix a failure with a correction, or with a models.dev pull request when models.dev is wrong. Before merging the pull request, check each changed model's effective date against the provider's announcement and add a correction when models.dev recorded the change late. The workflow publishes the snapshot to the `data` branch after every run and after every push that changes the data, such as a merged correction.
 
 Prices that go straight to `main` are dated by their models.dev commit. A correction for a late date arrives in a later snapshot; costs already computed keep the basis that priced them.
 

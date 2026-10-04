@@ -7,3 +7,9 @@ provider = "anthropic"
 multiple = 2.0
 source = "https://platform.claude.com/docs/en/about-claude/pricing"
 note = "Anthropic charges 2x base input for one-hour cache writes on every model; see the \"1h cache writes\" column."
+
+[[cache_write_1h]]
+provider = "moonshotai"
+multiple = 2.0
+source = "https://platform.kimi.ai/docs/pricing/chat"
+note = "Kimi K3 lists a $6.00 one-hour cache write against a $3.00 input price. Only the K3 series offers a one-hour TTL."
