@@ -19,6 +19,7 @@ TRACKED_PROVIDERS = (
     "google",
     "moonshotai",
     "openai",
+    "thinkingmachines",
     "xai",
     "zai",
 )

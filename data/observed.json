@@ -1,5 +1,205 @@
 {
  "providers": {
+  "cognition": {
+   "adaptive": [
+    {
+     "rates": {
+      "cache_read": 0.1,
+      "cache_write": 0.5,
+      "input": 0.5,
+      "output": 2.0
+     },
+     "source": "https://web.archive.org/web/20260730201836/https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-07-30T20:18:36Z"
+    }
+   ],
+   "arena-fast": [
+    {
+     "rates": {
+      "cache_read": 0.0,
+      "cache_write": 0.0,
+      "input": 0.1,
+      "output": 0.5
+     },
+     "source": "https://web.archive.org/web/20260730201836/https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-07-30T20:18:36Z"
+    }
+   ],
+   "arena-mixed": [
+    {
+     "rates": {
+      "cache_read": 0.1,
+      "cache_write": 1.25,
+      "input": 1.0,
+      "output": 5.0
+     },
+     "source": "https://web.archive.org/web/20260730201836/https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-07-30T20:18:36Z"
+    }
+   ],
+   "arena-smart": [
+    {
+     "rates": {
+      "cache_read": 0.3,
+      "cache_write": 3.75,
+      "input": 3.0,
+      "output": 15.0
+     },
+     "source": "https://web.archive.org/web/20260730201836/https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-07-30T20:18:36Z"
+    }
+   ],
+   "swe-1-6": [
+    {
+     "rates": {
+      "cache_read": 0.0,
+      "cache_write": 0.0,
+      "input": 0.0,
+      "output": 0.0
+     },
+     "source": "https://web.archive.org/web/20260730201836/https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-07-30T20:18:36Z"
+    },
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 0.0,
+      "input": 0.5,
+      "output": 2.5
+     },
+     "source": "https://web.archive.org/web/20260912031810/https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-09-12T03:18:10Z"
+    }
+   ],
+   "swe-1-6-fast": [
+    {
+     "rates": {
+      "cache_read": 0.03,
+      "cache_write": 0.0,
+      "input": 0.3,
+      "output": 1.5
+     },
+     "source": "https://web.archive.org/web/20260730201836/https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-07-30T20:18:36Z"
+    },
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 0.0,
+      "input": 0.5,
+      "output": 2.5
+     },
+     "source": "https://web.archive.org/web/20260912031810/https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-09-12T03:18:10Z"
+    }
+   ],
+   "swe-1-7": [
+    {
+     "rates": {
+      "cache_read": 0.0,
+      "cache_write": 0.0,
+      "input": 0.0,
+      "output": 0.0
+     },
+     "source": "https://web.archive.org/web/20260730201836/https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-07-30T20:18:36Z"
+    },
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 0.0,
+      "input": 0.5,
+      "output": 2.5
+     },
+     "source": "https://web.archive.org/web/20260912031810/https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-09-12T03:18:10Z"
+    }
+   ],
+   "swe-1-7-lightning": [
+    {
+     "rates": {
+      "cache_read": 1.0,
+      "cache_write": 0.0,
+      "input": 2.5,
+      "output": 12.5
+     },
+     "source": "https://web.archive.org/web/20260730201836/https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-07-30T20:18:36Z"
+    }
+   ],
+   "swe-1-7-lightning-medium": [
+    {
+     "rates": {
+      "cache_read": 1.0,
+      "cache_write": 0.0,
+      "input": 2.5,
+      "output": 12.5
+     },
+     "source": "https://web.archive.org/web/20260912031810/https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-09-12T03:18:10Z"
+    }
+   ],
+   "swe-1-7-medium": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 0.0,
+      "input": 0.5,
+      "output": 2.5
+     },
+     "source": "https://web.archive.org/web/20260912031810/https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-09-12T03:18:10Z"
+    }
+   ],
+   "swe-2-high": [
+    {
+     "rates": {
+      "cache_read": 0.075,
+      "cache_write": 0.0,
+      "input": 0.75,
+      "output": 3.75
+     },
+     "source": "https://web.archive.org/web/20260912031810/https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-09-12T03:18:10Z"
+    }
+   ],
+   "swe-2-max": [
+    {
+     "rates": {
+      "cache_read": 0.075,
+      "cache_write": 0.0,
+      "input": 0.75,
+      "output": 3.75
+     },
+     "source": "https://web.archive.org/web/20260912031810/https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-09-12T03:18:10Z"
+    }
+   ],
+   "swe-2-medium": [
+    {
+     "rates": {
+      "cache_read": 0.075,
+      "cache_write": 0.0,
+      "input": 0.75,
+      "output": 3.75
+     },
+     "source": "https://web.archive.org/web/20260912031810/https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-09-12T03:18:10Z"
+    }
+   ],
+   "swe-check": [
+    {
+     "rates": {
+      "cache_read": 0.0,
+      "cache_write": 0.0,
+      "input": 0.0,
+      "output": 0.0
+     },
+     "source": "https://web.archive.org/web/20260730201836/https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-07-30T20:18:36Z"
+    }
+   ]
+  },
   "cursor": {
    "composer-2.5": [
     {

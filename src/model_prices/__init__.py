@@ -21,7 +21,8 @@ import warnings
 
 # Search order for model names given without a known provider.
 LAB_PROVIDERS = (
-    "anthropic", "openai", "google", "zai", "deepseek", "xai", "moonshotai", "alibaba", "cursor",
+    "anthropic", "openai", "google", "zai", "deepseek", "xai", "moonshotai", "alibaba",
+    "thinkingmachines", "cognition", "cursor",
 )
 
 _EFFORT_SUFFIX = re.compile(r"-(minimal|low|medium|high|xhigh|max|thinking)$")

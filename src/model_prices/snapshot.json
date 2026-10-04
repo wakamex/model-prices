@@ -5,7 +5,8 @@
    "claude-opus-4": "anthropic/claude-opus-4-0",
    "claude-sonnet-4": "anthropic/claude-sonnet-4-0",
    "composer-2.5": "cursor/composer-2.5",
-   "grok-4-6": "xai/grok-4.6"
+   "grok-4-6": "xai/grok-4.6",
+   "inkling": "thinkingmachines/thinkingmachines/Inkling"
   },
   "providers": {
    "agy": "google",
@@ -31,13 +32,16 @@
    "gpt-5.6-cyber": "gpt-daybreak-red-latest",
    "gpt-5.6-sol": "gpt-5.6"
   },
+  "thinkingmachines": {
+   "inkling": "thinkingmachines/Inkling"
+  },
   "zai": {
    "glm-5.3-flash": "glm-5.3-flashx"
   }
  },
  "models_dev": {
-  "commit": "bb573fbd312d8a31e7f1a09945ba2442e6eb3679",
-  "committed_at": "2026-10-04T01:36:17Z",
+  "commit": "89d3c62961297a825bbe961ae8126f380936348c",
+  "committed_at": "2026-10-04T19:25:11Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -3059,6 +3063,268 @@
        "source": "https://github.com/sst/models.dev/commit/3a3d83e481d9",
        "valid_from": "2026-09-28T18:40:37Z",
        "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   }
+  },
+  "cognition": {
+   "adaptive": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "cache_write": 0.5,
+       "input": 0.5,
+       "output": 2.0,
+       "source": "https://web.archive.org/web/20260730201836/https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-07-30T20:18:36Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "arena-fast": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.0,
+       "cache_write": 0.0,
+       "input": 0.1,
+       "output": 0.5,
+       "source": "https://web.archive.org/web/20260730201836/https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-07-30T20:18:36Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "arena-mixed": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "cache_write": 1.25,
+       "input": 1.0,
+       "output": 5.0,
+       "source": "https://web.archive.org/web/20260730201836/https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-07-30T20:18:36Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "arena-smart": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.3,
+       "cache_write": 3.75,
+       "input": 3.0,
+       "output": 15.0,
+       "source": "https://web.archive.org/web/20260730201836/https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-07-30T20:18:36Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "swe-1-6": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.0,
+       "cache_write": 0.0,
+       "input": 0.0,
+       "output": 0.0,
+       "source": "https://web.archive.org/web/20260730201836/https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-07-30T20:18:36Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 0.0,
+       "input": 0.5,
+       "output": 2.5,
+       "source": "https://web.archive.org/web/20260912031810/https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-09-12T03:18:10Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-09-12T03:18:10Z"
+     }
+    ]
+   },
+   "swe-1-6-fast": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.03,
+       "cache_write": 0.0,
+       "input": 0.3,
+       "output": 1.5,
+       "source": "https://web.archive.org/web/20260730201836/https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-07-30T20:18:36Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 0.0,
+       "input": 0.5,
+       "output": 2.5,
+       "source": "https://web.archive.org/web/20260912031810/https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-09-12T03:18:10Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-09-12T03:18:10Z"
+     }
+    ]
+   },
+   "swe-1-7": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.0,
+       "cache_write": 0.0,
+       "input": 0.0,
+       "output": 0.0,
+       "source": "https://web.archive.org/web/20260730201836/https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-07-30T20:18:36Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 0.0,
+       "input": 0.5,
+       "output": 2.5,
+       "source": "https://web.archive.org/web/20260912031810/https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-09-12T03:18:10Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-09-12T03:18:10Z"
+     }
+    ]
+   },
+   "swe-1-7-lightning": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 1.0,
+       "cache_write": 0.0,
+       "input": 2.5,
+       "output": 12.5,
+       "source": "https://web.archive.org/web/20260730201836/https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-07-30T20:18:36Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "swe-1-7-lightning-medium": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 1.0,
+       "cache_write": 0.0,
+       "input": 2.5,
+       "output": 12.5,
+       "source": "https://web.archive.org/web/20260912031810/https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-09-12T03:18:10Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "swe-1-7-medium": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 0.0,
+       "input": 0.5,
+       "output": 2.5,
+       "source": "https://web.archive.org/web/20260912031810/https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-09-12T03:18:10Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "swe-2-high": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.075,
+       "cache_write": 0.0,
+       "input": 0.75,
+       "output": 3.75,
+       "source": "https://web.archive.org/web/20260912031810/https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-09-12T03:18:10Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "swe-2-max": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.075,
+       "cache_write": 0.0,
+       "input": 0.75,
+       "output": 3.75,
+       "source": "https://web.archive.org/web/20260912031810/https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-09-12T03:18:10Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "swe-2-medium": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.075,
+       "cache_write": 0.0,
+       "input": 0.75,
+       "output": 3.75,
+       "source": "https://web.archive.org/web/20260912031810/https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-09-12T03:18:10Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "swe-check": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.0,
+       "cache_write": 0.0,
+       "input": 0.0,
+       "output": 0.0,
+       "source": "https://web.archive.org/web/20260730201836/https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-07-30T20:18:36Z",
+       "valid_from_basis": "first observed"
       },
       "start": null
      }
@@ -8119,6 +8385,53 @@
     ]
    }
   },
+  "thinkingmachines": {
+   "inkling": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.748,
+       "input": 3.74,
+       "output": 9.36,
+       "source": "https://github.com/sst/models.dev/commit/a0c8c6b3895f",
+       "valid_from": "2026-07-16T15:24:52Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "thinkingmachines/Inkling": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.374,
+       "input": 1.87,
+       "output": 4.68,
+       "source": "https://github.com/sst/models.dev/commit/44c89b7256f2",
+       "valid_from": "2026-07-23T16:17:56Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "thinkingmachines/Inkling:peft:262144": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.748,
+       "input": 3.74,
+       "output": 9.36,
+       "source": "https://github.com/sst/models.dev/commit/44c89b7256f2",
+       "valid_from": "2026-07-23T16:17:56Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   }
+  },
   "xai": {
    "grok-2": {
     "standard": [
@@ -9881,5 +10194,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-04T17:31:03Z"
+ "updated_at": "2026-10-04T19:37:43Z"
 }

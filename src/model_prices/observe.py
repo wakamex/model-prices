@@ -68,7 +68,44 @@ def read_cursor(get: Callable[[str], str]) -> dict[str, tuple[str, dict[str, Any
     return found
 
 
+DEVIN_MODELS = "https://docs.devin.ai/desktop/models"
+# Enterprise plans are billed these per-token prices directly; self-serve plans include some
+# of Cognition's models at no charge for a period, which is no per-token price.
+_DEVIN_TIER = "TEAMS_TIER_ENTERPRISE_SAAS"
+_DEVIN_FIELDS = {"input_cost_per_million_usd": "input", "output_cost_per_million_usd": "output",
+                 "cache_read_cost_per_million_usd": "cache_read",
+                 "cache_write_cost_per_million_usd": "cache_write"}
+
+
+def parse_devin(page: str) -> dict[str, dict[str, Any]]:
+    """Rates of Cognition's own models, by the model ids Devin reports, from the price list
+    embedded in Devin's models page."""
+    models: dict[str, dict[str, Any]] = {}
+    for record in re.findall(r'\{[^{}]*"input_cost_per_million_usd"[^{}]*\}',
+                             page.replace('\\"', '"')):
+        fields = {key: text if text else number for key, text, number in
+                  re.findall(r'"(\w+)":(?:`([^`]*)`|([^,}]*))', record)}
+        # Records with internal enum ids, such as MODEL_SWE_1_5, name no model Devin reports.
+        if (fields.get("tier") != _DEVIN_TIER
+                or fields.get("model_provider") != "MODEL_PROVIDER_WINDSURF"
+                or not re.fullmatch(r"[a-z0-9.-]+", fields.get("model_uid", ""))):
+            continue
+        try:
+            models[fields["model_uid"]] = {field: float(fields[key])
+                                           for key, field in _DEVIN_FIELDS.items()}
+        except (KeyError, ValueError):
+            raise ValueError(f"cognition: unreadable price record {record[:200]}") from None
+    if not models:
+        raise ValueError("cognition: no prices parsed; the page format changed")
+    return models
+
+
+def read_cognition(get: Callable[[str], str]) -> dict[str, tuple[str, dict[str, Any]]]:
+    return {model: (DEVIN_MODELS, rates) for model, rates in parse_devin(get(DEVIN_MODELS)).items()}
+
+
 SOURCES: dict[str, Callable[[Callable[[str], str]], dict[str, tuple[str, dict[str, Any]]]]] = {
+    "cognition": read_cognition,
     "cursor": read_cursor,
 }
 
@@ -76,13 +113,22 @@ SOURCES: dict[str, Callable[[Callable[[str], str]], dict[str, tuple[str, dict[st
 def observe(output: Path, get: Callable[[str], str] = fetch,
             now: datetime | None = None) -> list[str]:
     """Append each model whose page rates differ from its last entry; return the providers
-    that changed."""
+    that changed.
+
+    A provider whose pages cannot be read keeps its entries, and the others are still
+    recorded before the failures are raised together.
+    """
     data = json.loads(output.read_text()) if output.exists() else {"providers": {}}
     stamp = (now or datetime.now(timezone.utc)).replace(microsecond=0)
-    changed = []
+    changed, failures = [], []
     for provider, read in SOURCES.items():
+        try:
+            found = read(get)
+        except (OSError, ValueError, KeyError) as error:
+            failures.append(f"{provider}: {error}")
+            continue
         models = data["providers"].setdefault(provider, {})
-        for model, (url, rates) in sorted(read(get).items()):
+        for model, (url, rates) in sorted(found.items()):
             entries = models.setdefault(model, [])
             if entries and entries[-1]["rates"] == rates:
                 continue
@@ -92,4 +138,6 @@ def observe(output: Path, get: Callable[[str], str] = fetch,
                 changed.append(provider)
     if changed:
         output.write_text(json.dumps(data, indent=1, sort_keys=True) + "\n")
+    if failures:
+        raise ValueError("; ".join(failures))
     return changed

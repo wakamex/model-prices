@@ -11,6 +11,9 @@
    "gpt-5.6-cyber": "gpt-daybreak-red-latest",
    "gpt-5.6-sol": "gpt-5.6"
   },
+  "thinkingmachines": {
+   "inkling": "thinkingmachines/Inkling"
+  },
   "zai": {
    "glm-5.3-flash": "glm-5.3-flashx"
   }
@@ -4392,6 +4395,41 @@
     }
    ]
   },
+  "thinkingmachines": {
+   "inkling": [
+    {
+     "commit": "a0c8c6b3895f",
+     "rates": {
+      "cache_read": 0.748,
+      "input": 3.74,
+      "output": 9.36
+     },
+     "valid_from": "2026-07-16T15:24:52Z"
+    }
+   ],
+   "thinkingmachines/Inkling": [
+    {
+     "commit": "44c89b7256f2",
+     "rates": {
+      "cache_read": 0.374,
+      "input": 1.87,
+      "output": 4.68
+     },
+     "valid_from": "2026-07-23T16:17:56Z"
+    }
+   ],
+   "thinkingmachines/Inkling:peft:262144": [
+    {
+     "commit": "44c89b7256f2",
+     "rates": {
+      "cache_read": 0.748,
+      "input": 3.74,
+      "output": 9.36
+     },
+     "valid_from": "2026-07-23T16:17:56Z"
+    }
+   ]
+  },
   "xai": {
    "grok-2": [
     {
@@ -5638,6 +5676,6 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "bb573fbd312d8a31e7f1a09945ba2442e6eb3679",
- "source_committed_at": "2026-10-04T01:36:17Z"
+ "source_commit": "89d3c62961297a825bbe961ae8126f380936348c",
+ "source_committed_at": "2026-10-04T19:25:11Z"
 }
