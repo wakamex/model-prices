@@ -1,6 +1,7 @@
 """Compile the input data into the price snapshot that model_prices reads.
 
-The inputs in data/ are models.dev price history and the files that adjust it: corrections,
+The inputs in data/ are models.dev price history, prices observed on official pages for
+models models.dev does not list (observed.json), and the files that adjust them: corrections,
 one-hour cache-write multiples, time-of-day schedules, name aliases, and plans. Combining
 them happens here, once, rather than in every client: each model's snapshot entry is its
 final timeline, a list of intervals that each give the rates from their start. A client
@@ -30,6 +31,10 @@ class _Inputs:
 
     def __init__(self, data: Path):
         self.prices = json.loads((data / "prices.json").read_text())
+        observed = data / "observed.json"
+        for provider, models in (json.loads(observed.read_text())["providers"].items()
+                                 if observed.exists() else ()):
+            self.prices["providers"].setdefault(provider, {}).update(models)
         self.config = {name: tomllib.loads((data / name).read_text()) for name in (
             "aliases.toml", "cache_writes.toml", "corrections.toml", "plans.toml",
             "research_corrections.toml", "schedules.toml")}
@@ -95,12 +100,14 @@ class _Inputs:
                 return None
             values.update(modes[mode])
             tiers = None
+        # An observed entry names its page, and is dated by the run that first saw it.
         return Rates(
             provider=provider, model=model, valid_from=entry["valid_from"],
-            source=f"{self.prices['source']}/commit/{entry['commit']}",
+            source=entry.get("source") or f"{self.prices['source']}/commit/{entry['commit']}",
             input=values["input"], output=values["output"],
             cache_read=values.get("cache_read"), cache_write=values.get("cache_write"),
             tiers=_tiers(tiers),
+            valid_from_basis="first observed" if "source" in entry else "models.dev commit",
         )
 
     def rates(self, provider: str, model: str, at: datetime, mode: str | None,

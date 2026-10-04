@@ -179,14 +179,14 @@ def _mdx_cell(cell: str) -> str:
 
 
 def _mdx_grid(table: str) -> tuple[list[list[str]], list[list[str]]]:
-    """Header rows and body rows of an MDX <table>, each cell repeated across the rows and
-    columns it spans."""
+    """Header rows and body rows of an HTML or MDX <table>, each cell repeated across the
+    rows and columns it spans."""
     grids: list[list[list[str]]] = []
     for section in ("thead", "tbody"):
-        part = re.search(rf"<{section}>(.*?)</{section}>", table, re.S)
+        part = re.search(rf"<{section}[^>]*>(.*?)</{section}>", table, re.S)
         rows: list[list[str]] = []
         spanning: dict[int, tuple[str, int]] = {}
-        for row in re.findall(r"<tr>(.*?)</tr>", part.group(1) if part else "", re.S):
+        for row in re.findall(r"<tr[^>]*>(.*?)</tr>", part.group(1) if part else "", re.S):
             cells = iter(re.findall(r"<t[hd]([^>]*)>(.*?)</t[hd]>", row, re.S))
             line: list[str] = []
             while True:

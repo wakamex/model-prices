@@ -4,6 +4,7 @@
    "claude-haiku-3-5": "anthropic/claude-3-5-haiku-latest",
    "claude-opus-4": "anthropic/claude-opus-4-0",
    "claude-sonnet-4": "anthropic/claude-sonnet-4-0",
+   "composer-2.5": "cursor/composer-2.5",
    "grok-4-6": "xai/grok-4.6"
   },
   "providers": {
@@ -3058,6 +3059,36 @@
        "source": "https://github.com/sst/models.dev/commit/3a3d83e481d9",
        "valid_from": "2026-09-28T18:40:37Z",
        "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   }
+  },
+  "cursor": {
+   "composer-2.5": {
+    "fast": [
+     {
+      "rates": {
+       "cache_read": 0.5,
+       "input": 3.0,
+       "output": 15.0,
+       "source": "https://web.archive.org/web/20260823213243/https://cursor.com/docs/models/cursor-composer-2-5",
+       "valid_from": "2026-08-23T21:32:43Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ],
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "input": 0.5,
+       "output": 2.5,
+       "source": "https://web.archive.org/web/20260823213243/https://cursor.com/docs/models/cursor-composer-2-5",
+       "valid_from": "2026-08-23T21:32:43Z",
+       "valid_from_basis": "first observed"
       },
       "start": null
      }
@@ -9850,5 +9881,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-04T02:31:41Z"
+ "updated_at": "2026-10-04T17:31:03Z"
 }

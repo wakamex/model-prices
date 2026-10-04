@@ -1,8 +1,9 @@
 name: Update prices
 
-# Daily: rebuild price history from models.dev. A changed provider whose prices all match
-# its official pricing page goes straight to main; one that fails its check, or has no
-# check, is held for review in the update-prices pull request. Every run, and every push
+# Daily: record prices from official pages for models models.dev lacks, such as Cursor's,
+# and rebuild price history from models.dev. A changed models.dev provider whose prices all
+# match its official pricing page goes straight to main; one that fails its check, or has
+# no check, is held for review in the update-prices pull request. Every run, and every push
 # that changes the data, publishes the compiled snapshot to the data branch, where
 # model_prices.refresh() fetches it.
 
@@ -45,6 +46,10 @@ jobs:
         if: github.event_name != 'push'
         run: |
           git clone --quiet https://github.com/sst/models.dev.git "$RUNNER_TEMP/models.dev"
+          # The page is the source for observed prices, so a change needs no other check.
+          if ! uv --no-config run --locked model-prices observe; then
+            echo "OBSERVE_FAILED=1" >> "$GITHUB_ENV"
+          fi
           changed="$(uv --no-config run --locked model-prices update "$RUNNER_TEMP/models.dev" --json \
             | jq -r '.changed[]')"
           held=""
@@ -63,7 +68,7 @@ jobs:
           echo "HELD=$held" >> "$GITHUB_ENV"
           echo "FAILED=$failed" >> "$GITHUB_ENV"
           if [ -n "$held" ]; then
-            git checkout -- data src/model_prices/snapshot.json
+            git checkout -- data/prices.json src/model_prices/snapshot.json
             uv --no-config run --locked model-prices update "$RUNNER_TEMP/models.dev" --hold $held
           fi
           if ! git diff --quiet; then
@@ -125,6 +130,10 @@ jobs:
         run: |
           if [ -n "$FAILED" ]; then
             echo "Held after failing the official check:$FAILED"
+            exit 1
+          fi
+          if [ -n "${OBSERVE_FAILED:-}" ]; then
+            echo "Reading an official page for observed prices failed; see the step above."
             exit 1
           fi
           # Any other disagreement, such as a page that changed before models.dev did.

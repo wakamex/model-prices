@@ -21,7 +21,7 @@ import warnings
 
 # Search order for model names given without a known provider.
 LAB_PROVIDERS = (
-    "anthropic", "openai", "google", "zai", "deepseek", "xai", "moonshotai", "alibaba",
+    "anthropic", "openai", "google", "zai", "deepseek", "xai", "moonshotai", "alibaba", "cursor",
 )
 
 _EFFORT_SUFFIX = re.compile(r"-(minimal|low|medium|high|xhigh|max|thinking)$")
@@ -77,7 +77,8 @@ class Rates:
     # Suffix text removed from the requested name to find this model, such as "-max".
     removed_suffix: str = ""
     # How valid_from was dated: "models.dev commit", which usually lags the provider's
-    # change by days, or "documented", a date from the correction's cited source.
+    # change by days; "documented", a date from the correction's cited source; or "first
+    # observed", the first time model-prices read the price on the provider's page.
     valid_from_basis: str = "models.dev commit"
     # A one-hour cache write's price as a multiple of the input price, for providers that
     # price it separately from the five-minute cache write; None prices it as cache_write.
@@ -621,10 +622,15 @@ def main(argv: list[str] | None = None) -> int:
                         help="Keep these providers' current history")
     update.add_argument("--json", action="store_true",
                         help="Print the providers whose history changed as JSON")
+    watch = commands.add_parser(
+        "observe", help="Record prices from official pages for models models.dev lacks, and compile"
+    )
+    watch.add_argument("--json", action="store_true",
+                       help="Print the providers whose prices changed as JSON")
     compiler = commands.add_parser(
         "compile", help="Compile the input data into the snapshot model_prices reads"
     )
-    for command in (update, compiler):
+    for command in (update, watch, compiler):
         command.add_argument("--data", type=Path, default=Path("data"),
                              help="Input data directory (default: data)")
         command.add_argument("--snapshot", type=Path, default=Path(SNAPSHOT_PATH),
@@ -660,8 +666,15 @@ def main(argv: list[str] | None = None) -> int:
         print(f"{status.basis}, published {status.published_at.isoformat()}")
         return 1 if status.error else 0
 
-    if args.command in {"update", "compile"}:
+    if args.command in {"update", "observe", "compile"}:
         from model_prices import backfill, compiler
+        if args.command == "observe":
+            from model_prices.observe import observe
+            changed = observe(args.data / "observed.json")
+            if args.json:
+                print(json.dumps({"changed": changed}))
+            else:
+                print(f"Changed: {', '.join(changed)}" if changed else "No observed price changes.")
         if args.command == "update":
             output = args.data / "prices.json"
             data = backfill.hold(backfill.build(args.models_dev), output, set(args.hold))

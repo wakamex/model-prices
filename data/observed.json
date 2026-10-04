@@ -1,0 +1,24 @@
+{
+ "providers": {
+  "cursor": {
+   "composer-2.5": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "input": 0.5,
+      "modes": {
+       "fast": {
+        "cache_read": 0.5,
+        "input": 3.0,
+        "output": 15.0
+       }
+      },
+      "output": 2.5
+     },
+     "source": "https://web.archive.org/web/20260823213243/https://cursor.com/docs/models/cursor-composer-2-5",
+     "valid_from": "2026-08-23T21:32:43Z"
+    }
+   ]
+  }
+ }
+}
