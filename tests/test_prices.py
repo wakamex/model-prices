@@ -222,6 +222,29 @@ class PriceTests(unittest.TestCase):
             self.assertEqual(held["providers"]["openai"], data["providers"]["openai"])
             self.assertEqual(changed_providers(output, held), ["xai"])
 
+    def test_backfill_follows_links_into_another_provider(self):
+        # StepFun's global models link to the files of its China provider.
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory) / "models.dev"
+            china = repo / "providers" / "stepfun" / "models"
+            world = repo / "providers" / "stepfun-ai" / "models"
+            china.mkdir(parents=True)
+            world.mkdir(parents=True)
+            _git(repo, "init", "-q", "-b", "main")
+            (china / "step-9.toml").write_text('[cost]\ninput = 1.0\noutput = 2.0\n')
+            (world / "step-9.toml").symlink_to("../../stepfun/models/step-9.toml")
+            _commit(repo, "add step-9", "2026-09-04T10:00:00+00:00")
+
+            data = build(repo, ("stepfun-ai",))
+
+        self.assertEqual(data["links"], {})
+        self.assertEqual(data["providers"]["stepfun-ai"]["step-9"][0]["rates"],
+                         {"input": 1.0, "output": 2.0})
+
+    def test_ids_match_regardless_of_case(self):
+        self.assertEqual(resolve("minimax-m2.7"), ("minimax", "MiniMax-M2.7"))
+        self.assertEqual(resolve("MiniMax-M2.7-high"), ("minimax", "MiniMax-M2.7"))
+
     def test_parse_rates_reads_legacy_long_context_prices(self):
         parsed = parse_rates({"cost": {"input": 1, "output": 2, "context_over_200k": {"input": 3}}})
 

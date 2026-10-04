@@ -22,7 +22,9 @@ import warnings
 # Search order for model names given without a known provider.
 LAB_PROVIDERS = (
     "anthropic", "openai", "google", "zai", "deepseek", "xai", "moonshotai", "alibaba",
-    "thinkingmachines", "cognition", "cursor",
+    "mistral", "minimax", "xiaomi", "meta", "cohere", "stepfun-ai", "perplexity", "volcengine",
+    "tencent-tokenhub", "nova", "sakana", "inception", "ai21", "upstage", "poolside", "arcee",
+    "longcat", "bailing", "sensenova", "sarvam", "thinkingmachines", "cognition", "cursor",
 )
 
 _EFFORT_SUFFIX = re.compile(r"-(minimal|low|medium|high|xhigh|max|thinking)$")
@@ -175,7 +177,7 @@ def _bundled() -> tuple[dict[str, Any], str, datetime]:
 def _activate(found: tuple[dict[str, Any], str, datetime]) -> None:
     global _active
     _active = found
-    for function in (pricing_basis, resolve_details, _intervals, _schedules):
+    for function in (pricing_basis, resolve_details, _ids, _intervals, _schedules):
         function.cache_clear()
 
 
@@ -298,8 +300,12 @@ def refresh(max_age: timedelta | None = timedelta(days=1), timeout: float = 10) 
     return DataStatus(pricing_basis(), newest[2], error)
 
 
-def _known(provider: str, model: str) -> bool:
-    return model in _data()["prices"].get(provider, {})
+@cache
+def _ids(provider: str) -> tuple[dict[str, str], dict[str, str]]:
+    """A provider's model ids and its lab model names, keyed by lowercase name, since
+    names are matched lowercased while some labs use ids such as MiniMax-M2.7."""
+    return ({model.lower(): model for model in _data()["prices"].get(provider, {})},
+            {name.lower(): model for name, model in _data()["bases"].get(provider, {}).items()})
 
 
 def _candidates(name: str, strict: bool) -> list[tuple[str, str]]:
@@ -353,13 +359,13 @@ def resolve_details(model: str, provider: str | None = None,
     ]
     # Prefer the model's own lab over another lab that also serves a variant of it.
     # A lab model name resolves to the first-party id that serves and prices it.
-    bases = _data()["bases"]
     for lab in order:
+        models, bases = _ids(lab)
         for candidate, removed in candidates:
-            if _known(lab, candidate):
-                return lab, candidate, removed
-            if candidate in bases.get(lab, {}):
-                return lab, bases[lab][candidate], removed
+            if candidate in models:
+                return lab, models[candidate], removed
+            if candidate in bases:
+                return lab, bases[candidate], removed
     return None
 
 

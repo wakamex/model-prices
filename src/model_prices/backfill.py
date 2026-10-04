@@ -13,21 +13,41 @@ SOURCE_URL = "https://github.com/sst/models.dev"
 
 # Labs whose first-party API prices define API-equivalent cost.
 TRACKED_PROVIDERS = (
+    "ai21",
     "alibaba",
     "anthropic",
+    "arcee",
+    "bailing",
+    "cohere",
     "deepseek",
     "google",
+    "inception",
+    "longcat",
+    "meta",
+    "minimax",
+    "mistral",
     "moonshotai",
+    "nova",
     "openai",
+    "perplexity",
+    "poolside",
+    "sakana",
+    "sarvam",
+    "sensenova",
+    "stepfun-ai",
+    "tencent-tokenhub",
     "thinkingmachines",
+    "upstage",
+    "volcengine",
     "xai",
+    "xiaomi",
     "zai",
 )
 
 RATE_FIELDS = ("input", "output", "cache_read", "cache_write")
 
 # models.dev lab ids that differ from the id of the lab's own API provider.
-LAB_PROVIDERS = {"zhipuai": "zai"}
+LAB_PROVIDERS = {"bytedance-seed": "volcengine", "stepfun": "stepfun-ai", "zhipuai": "zai"}
 
 
 def _utc(value: str) -> str:
@@ -129,8 +149,8 @@ def _read_blobs(repo: Path, specs: list[str]) -> list[bytes | None]:
     return blobs
 
 
-def build(repo: Path, providers: tuple[str, ...] = TRACKED_PROVIDERS) -> dict[str, Any]:
-    """Replay every price change of the tracked providers into effective-dated entries."""
+def _replay(repo: Path, providers: tuple[str, ...]) -> tuple[dict, dict, dict]:
+    """Each provider's price history, its aliases, and the lab model each file serves."""
     changes = list(_changes(repo, providers))
     blobs = iter(_read_blobs(repo, [
         f"{commit}:{path}" for status, commit, _, path in changes if status != "D"
@@ -171,6 +191,24 @@ def build(repo: Path, providers: tuple[str, ...] = TRACKED_PROVIDERS) -> dict[st
         if entries and entries[-1]["rates"] == rates:
             continue
         entries.append({"valid_from": committed_at, "commit": commit[:12], "rates": rates})
+    return history, links, serves
+
+
+def build(repo: Path, providers: tuple[str, ...] = TRACKED_PROVIDERS) -> dict[str, Any]:
+    """Replay every price change of the tracked providers into effective-dated entries."""
+    history, links, serves = _replay(repo, providers)
+    # An alias of another provider's file, such as StepFun's global models linking to its
+    # China ones, takes that file's history.
+    foreign = {(provider, model): target.split("/", 3)
+               for provider, models in links.items() for model, target in models.items()
+               if target.startswith("../../")}
+    if foreign:
+        other, _, _ = _replay(repo, tuple(sorted({parts[2] for parts in foreign.values()})))
+        for (provider, model), (_, _, source, path) in foreign.items():
+            del links[provider][model]
+            entries = other.get(source, {}).get(path.removeprefix("models/"))
+            if entries:
+                history.setdefault(provider, {})[model] = entries
 
     head = _git(repo, "log", "-1", "--format=%H %cI").split()
     return {
