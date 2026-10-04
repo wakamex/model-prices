@@ -13,7 +13,7 @@ import re
 from typing import Callable, Iterable
 import urllib.request
 
-from model_prices import _config, _parse_time, _period, _schedule, genai_prices, rates, resolve
+from model_prices import _data, _parse_time, _period, _schedule, genai_prices, rates, resolve
 
 FIELDS = ("input", "cache_write", "cache_read", "output")
 
@@ -272,7 +272,7 @@ CALENDAR_WARNING_DAYS = 45
 
 def check_calendars(providers: set[str], today: datetime) -> list[Result]:
     """Fail when a schedule's holiday calendar ends within CALENDAR_WARNING_DAYS."""
-    config = _config("schedules.toml")
+    config = _data()["schedules"]
     results = []
     for name in sorted({schedule["holidays"] for schedule in config.get("schedule", [])
                         if schedule["provider"] in providers and "holidays" in schedule}):

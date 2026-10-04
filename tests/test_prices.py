@@ -1,17 +1,23 @@
-import copy
+from datetime import datetime, timedelta, timezone
+import hashlib
 from importlib.metadata import version
 import io
 import json
+import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tempfile
 import unittest
 from unittest import mock
+import warnings
 
 import model_prices
-from model_prices import Rates, Tier, cost, main, rates, rates_between, resolve
-from model_prices.backfill import build, parse_rates, write
+from model_prices import Rates, Tier, compiler, cost, main, rates, rates_between, resolve
+from model_prices.backfill import build, changed_providers, hold, parse_rates, write
+
+DATA = Path(__file__).resolve().parent.parent / "data"
 
 MODEL_NAMES = [
     ("claude-opus-5-5", None, ("anthropic", "claude-opus-5-5")),
@@ -79,7 +85,18 @@ def _commit(repo: Path, message: str, when: str) -> None:
     )
 
 
+def _use(snapshot: dict, updated_at: str = "2026-10-01T00:00:00Z") -> bytes:
+    """Make `snapshot` the active price data and return its published bytes."""
+    text = compiler.serialize({**snapshot, "updated_at": updated_at})
+    model_prices._activate((json.loads(text), hashlib.sha256(text).hexdigest(),
+                            model_prices._parse_time(updated_at)))
+    return text
+
+
 class PriceTests(unittest.TestCase):
+    def tearDown(self):
+        model_prices._activate(model_prices._bundled())
+
     def test_resolves_log_and_harness_model_names(self):
         for name, provider, expected in MODEL_NAMES:
             with self.subTest(name=name, provider=provider):
@@ -191,10 +208,19 @@ class PriceTests(unittest.TestCase):
             self.assertEqual(data["bases"], {"openai": {"gpt-6-astra-lab": "gpt-6-astra"}})
 
             output = Path(directory) / "prices.json"
+            self.assertEqual(changed_providers(output, data), ["openai"])
             self.assertTrue(write(data, output))
             unchanged = {**data, "source_commit": "later"}
             self.assertFalse(write(unchanged, output))
             self.assertEqual(json.loads(output.read_text())["source_commit"], data["source_commit"])
+
+            # A held provider keeps its current history while another's change goes ahead.
+            cut = json.loads(json.dumps(data))
+            cut["providers"]["openai"]["gpt-6-astra"][-1]["rates"]["input"] = 8.0
+            cut["providers"]["xai"] = {"grok-9": entries[:1]}
+            held = hold(cut, output, {"openai"})
+            self.assertEqual(held["providers"]["openai"], data["providers"]["openai"])
+            self.assertEqual(changed_providers(output, held), ["xai"])
 
     def test_parse_rates_reads_legacy_long_context_prices(self):
         parsed = parse_rates({"cost": {"input": 1, "output": 2, "context_over_200k": {"input": 3}}})
@@ -211,10 +237,11 @@ class PriceTests(unittest.TestCase):
         self.assertIn("+models.dev@", basis)
 
     def test_cli_prints_rates(self):
-        with mock.patch("sys.stdout", new_callable=io.StringIO) as stdout:
+        with (tempfile.TemporaryDirectory() as directory,
+              mock.patch.dict(os.environ, {"MODEL_PRICES_CACHE": directory}),
+              mock.patch("sys.stdout", new_callable=io.StringIO) as stdout):
             self.assertEqual(main(["rate", "claude-opus-5-5", "--at", "2026-09-25", "--json"]), 0)
-        self.assertEqual(json.loads(stdout.getvalue())["cache_read"], 0.2)
-        with mock.patch("sys.stdout", new_callable=io.StringIO):
+            self.assertEqual(json.loads(stdout.getvalue())["cache_read"], 0.2)
             self.assertEqual(main(["rate", "codex-auto-review"]), 1)
 
     def test_cli_rejects_an_invalid_time(self):
@@ -350,18 +377,32 @@ class PriceTests(unittest.TestCase):
         found = rates("deepseek-v4-pro", at="2026-09-30T13:00:00Z")
         self.assertEqual((found.input, found.valid_from_basis), (0.66, "documented"))
 
-        data = copy.deepcopy(model_prices._prices())
-        entry = data["providers"]["deepseek"]["deepseek-v4-pro"][-1]
-        data["providers"]["deepseek"]["deepseek-v4-pro"].append(
-            {"valid_from": "2026-09-29T00:00:00Z", "commit": "fixed",
-             "rates": {**entry["rates"], "input": 0.70}})
-        model_prices._entry_times.cache_clear()
-        try:
-            with mock.patch.object(model_prices, "_prices", lambda: data):
-                fixed = rates("deepseek-v4-pro", at="2026-09-30T13:00:00Z")
-            self.assertEqual((fixed.input, fixed.valid_from_basis), (0.70, "models.dev commit"))
-        finally:
-            model_prices._entry_times.cache_clear()
+        with tempfile.TemporaryDirectory() as directory:
+            inputs = Path(shutil.copytree(DATA, Path(directory) / "data"))
+            data = json.loads((inputs / "prices.json").read_text())
+            entries = data["providers"]["deepseek"]["deepseek-v4-pro"]
+            entry = [item for item in entries if item["valid_from"] < "2026-09-29"][-1]
+            entries.append({"valid_from": "2026-09-29T00:00:00Z", "commit": "fixed",
+                            "rates": {**entry["rates"], "input": 0.70}})
+            entries.sort(key=lambda item: item["valid_from"])
+            (inputs / "prices.json").write_text(json.dumps(data))
+            _use(compiler.build(inputs))
+        fixed = rates("deepseek-v4-pro", at="2026-09-30T13:00:00Z")
+        self.assertEqual((fixed.input, fixed.valid_from_basis), (0.70, "models.dev commit"))
+
+    def test_bundled_snapshot_is_compiled_from_the_inputs(self):
+        bundled = json.loads(Path(model_prices.__file__).with_name("snapshot.json").read_text())
+        del bundled["updated_at"]
+        self.assertEqual(bundled, compiler.build(DATA), "run model-prices compile")
+
+    def test_compiling_unchanged_inputs_keeps_the_snapshot(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "snapshot.json"
+            self.assertTrue(compiler.write(DATA, output, datetime(2026, 10, 1, tzinfo=timezone.utc)))
+            first = output.read_bytes()
+            self.assertFalse(compiler.write(DATA, output))
+            self.assertEqual(output.read_bytes(), first)
+            self.assertEqual(json.loads(first)["updated_at"], "2026-10-01T00:00:00Z")
 
     def test_aliases_take_the_corrections_of_their_model(self):
         # claude-haiku-4-5 links to claude-haiku-4-5-20251001, which models.dev first
@@ -395,6 +436,123 @@ class PriceTests(unittest.TestCase):
             self.assertAlmostEqual(found_cost, expected)
         self.assertAlmostEqual(long.total, found.cost(10_000, 1_000, 300_000))
         self.assertIsNone(short.tier_above)
+
+
+
+class RefreshTests(unittest.TestCase):
+    """refresh() against a fake publisher serving latest.json and snapshots by hash."""
+
+    def setUp(self):
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        self.cache = Path(directory.name)
+        environment = mock.patch.dict(os.environ, {"MODEL_PRICES_CACHE": directory.name})
+        environment.start()
+        self.addCleanup(environment.stop)
+        self.addCleanup(lambda: model_prices._activate(model_prices._bundled()))
+        self.published: dict[str, bytes] = {}
+        self.requests: list[str] = []
+        download = mock.patch.object(model_prices, "_download", self.download)
+        download.start()
+        self.addCleanup(download.stop)
+
+    def download(self, url: str, timeout: float) -> bytes:
+        self.requests.append(url.removeprefix(model_prices.SNAPSHOT_URL))
+        if url.removeprefix(model_prices.SNAPSHOT_URL) not in self.published:
+            raise OSError("404")
+        return self.published[url.removeprefix(model_prices.SNAPSHOT_URL)]
+
+    def publish(self, text: bytes, published_at: str = "2026-10-02T06:30:00Z",
+                name: str | None = None) -> str:
+        digest = hashlib.sha256(text).hexdigest()
+        self.published[name or f"{digest}.json"] = text
+        self.published["latest.json"] = json.dumps(
+            {"sha256": digest, "published_at": published_at}).encode()
+        return digest
+
+    def cheaper(self, updated_at: str = "2099-01-01T00:00:00Z") -> bytes:
+        """The bundled data with a later Opus 5.5 price cut."""
+        snapshot = json.loads(Path(model_prices.__file__).with_name("snapshot.json").read_text())
+        timeline = snapshot["prices"]["anthropic"]["claude-opus-5-5"]["standard"]
+        timeline.append({"start": "2026-10-02T00:00:00Z", "rates": {
+            **timeline[-1]["rates"], "input": 3.0, "valid_from": "2026-10-02T00:00:00Z"}})
+        return compiler.serialize({**snapshot, "updated_at": updated_at})
+
+    def test_refresh_uses_the_published_snapshot_and_records_its_basis(self):
+        bundled_basis = model_prices.pricing_basis()
+        digest = self.publish(self.cheaper())
+
+        status = model_prices.refresh()
+
+        self.assertIsNone(status.error)
+        self.assertEqual(status.published_at, datetime(2026, 10, 2, 6, 30, tzinfo=timezone.utc))
+        self.assertTrue(status.basis.endswith(f"+data@{digest[:12]}"))
+        self.assertNotEqual(status.basis, bundled_basis)
+        self.assertEqual(rates("claude-opus-5-5", at="2026-10-03").input, 3.0)
+        self.assertEqual(rates("claude-opus-5-5", at="2026-09-25").input, 4.0)
+
+    def test_a_fresh_cache_is_used_without_downloading(self):
+        self.publish(self.cheaper())
+        model_prices.refresh()
+        self.requests.clear()
+        model_prices._activate(model_prices._bundled())
+
+        model_prices.refresh(max_age=timedelta(hours=1))
+        self.assertEqual(self.requests, [])
+        self.assertEqual(rates("claude-opus-5-5", at="2026-10-03").input, 3.0)
+        model_prices.refresh(max_age=timedelta(0))
+        self.assertEqual(self.requests, ["latest.json"])  # the snapshot is already cached
+
+    def test_a_failed_download_keeps_the_newest_local_data(self):
+        self.publish(self.cheaper())
+        model_prices.refresh()
+        self.published.clear()
+
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter("always")
+            status = model_prices.refresh(max_age=timedelta(0))
+        self.assertIn("404", status.error)
+        self.assertEqual(len(caught), 1)
+        self.assertEqual(rates("claude-opus-5-5", at="2026-10-03").input, 3.0)
+
+    def test_snapshots_that_fail_their_hash_or_schema_are_rejected(self):
+        bundled_basis = model_prices.pricing_basis()
+        digest = self.publish(self.cheaper())
+        self.published[f"{digest}.json"] = b"tampered"
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            self.assertIn("does not match", model_prices.refresh().error)
+            self.assertEqual(model_prices.pricing_basis(), bundled_basis)
+
+            future = json.loads(self.cheaper())
+            self.publish(compiler.serialize({**future, "schema": model_prices.SCHEMA + 1}))
+            self.assertIn("schema", model_prices.refresh().error)
+            self.assertEqual(model_prices.pricing_basis(), bundled_basis)
+        self.assertFalse(any(self.cache.rglob("*.json")))
+
+    def test_bundled_data_newer_than_the_cache_wins(self):
+        # As after upgrading the package while offline.
+        self.publish(self.cheaper(updated_at="2000-01-01T00:00:00Z"))
+        status = model_prices.refresh()
+
+        self.assertEqual(rates("claude-opus-5-5", at="2026-10-03").input, 4.0)
+        self.assertEqual(status.basis, model_prices.pricing_basis())
+        self.assertEqual(status.published_at, model_prices._bundled()[2])
+
+    def test_without_a_refresh_prices_come_from_the_bundled_data(self):
+        self.publish(self.cheaper())
+        model_prices.refresh()
+        model_prices._activate(model_prices._bundled())
+
+        self.assertEqual(rates("claude-opus-5-5", at="2026-10-03").input, 4.0)
+        model_prices.refresh(max_age=None)
+        self.assertEqual(rates("claude-opus-5-5", at="2026-10-03").input, 3.0)
+
+    def test_cli_refresh(self):
+        self.publish(self.cheaper())
+        with mock.patch("sys.stdout", new_callable=io.StringIO) as stdout:
+            self.assertEqual(main(["refresh"]), 0)
+        self.assertIn("published 2026-10-02T06:30:00+00:00", stdout.getvalue())
 
 
 if __name__ == "__main__":

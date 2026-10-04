@@ -1,13 +1,14 @@
 from datetime import datetime
-from importlib.resources import files
+from pathlib import Path
 import tomllib
 import unittest
 
+DATA = Path(__file__).resolve().parent.parent / "data"
 FILES = ("corrections.toml", "research_corrections.toml")
 
 
 def _corrections(name):
-    return tomllib.loads(files("model_prices").joinpath("data", name).read_text())["correction"]
+    return tomllib.loads((DATA / name).read_text())["correction"]
 
 
 def _time(value):

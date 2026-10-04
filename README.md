@@ -31,9 +31,25 @@ Requires Python 3.11 or newer.
 uv add model-prices
 ```
 
+## Keeping prices current
+
+Each release bundles the price data from when it was built. Price data is also published on its own, so new prices reach an installed release without upgrading it:
+
+```python
+status = model_prices.refresh()   # downloads when the cached copy is over a day old
+status.basis                      # the pricing basis now in use
+status.published_at               # when that data was last confirmed current
+```
+
+Prices change only when `refresh()` is called; until then, the bundled data applies. `refresh(max_age=...)` sets how old a downloaded copy may get before it downloads again, and `refresh(max_age=None)` never downloads and uses the newest copy already downloaded or bundled. When a download fails, `refresh()` keeps the newest local copy, sets `status.error`, and warns, so a caller can keep working and decide how stale is too stale from `published_at`. `model-prices refresh` downloads from the command line, and `model-prices rate` uses the newest local copy. Downloads are cached in `~/.cache/model-prices`, `%LOCALAPPDATA%\model-prices` on Windows, or the directory in `MODEL_PRICES_CACHE`.
+
+Published data is a single file, the snapshot, holding every model's final price timeline plus the aliases, schedules, and plans. It is served from the repository's [`data` branch](https://github.com/wakamex/model-prices/tree/data): `v1/latest.json` names the current snapshot by its SHA-256 hash, and `v1/<sha256>.json` keeps every snapshot ever published, so the data behind any recorded basis can be fetched again. `refresh()` checks each download's hash and schema version before using it. The `v1` is the schema version, which changes only when looking up a price changes, so a release keeps reading every later snapshot of its schema.
+
 ## Where the prices come from
 
 Prices come from the git history of [models.dev](https://github.com/sst/models.dev), an open catalog of model metadata that records each model's price in one TOML file per provider. Every commit on its main branch that changed a tracked model's price becomes an entry effective from that commit's time. The tracked providers are the labs that sell their own models: Alibaba, Anthropic, DeepSeek, Google, Moonshot AI, OpenAI, xAI, and Z.ai.
+
+The inputs live in [`data/`](https://github.com/wakamex/model-prices/tree/main/data): `prices.json` holds the models.dev history, and the TOML files beside it adjust it. `model-prices compile` combines them into the snapshot that the package reads, applying every rule in this section once, so a client only looks prices up by time.
 
 models.dev sometimes records a change days after the provider made it, or lists a wrong price for a while. `corrections.toml` overrides those periods, and every correction cites its source. `research_corrections.toml` adds corrections generated from agent research into every recorded change, each verified against quotes from its sources (see [research/README.md](https://github.com/wakamex/model-prices/blob/main/research/README.md)); hand corrections take precedence. A correction without an end date names the models.dev values it replaces and stops applying as soon as models.dev records anything else, so it cannot outlive a later fix or price change.
 
@@ -43,7 +59,7 @@ Usage from before a model's first recorded price is priced at that first price, 
 
 Pass the time the provider billed the request as `at`. Providers do not document whether a request that spans a peak boundary bills at its start or its end; agent harnesses usually report completion times, which is a reasonable choice.
 
-Each entry keeps input, output, cache read, and cache write rates, long-context tiers, and alternate modes such as fast mode. `cache_write_tokens` are five-minute cache writes; pass one-hour cache writes as `cache_write_1h_tokens`. Anthropic prices those at twice the input price, a rule `model-prices check` compares with Anthropic's pricing page; other providers' one-hour writes are priced as cache writes. A tier applies when one request's whole prompt, meaning uncached input plus cache reads and writes, exceeds the tier size. A missing cache price falls back to the input price.
+Each entry keeps input, output, cache read, and cache write rates, long-context tiers, and alternate modes such as fast mode. `cache_write_tokens` are five-minute cache writes; pass one-hour cache writes as `cache_write_1h_tokens`. `cache_writes.toml` records Anthropic's price for those, twice the input price, which `model-prices check` compares with Anthropic's pricing page; other providers' one-hour writes are priced as cache writes. A tier applies when one request's whole prompt, meaning uncached input plus cache reads and writes, exceeds the tier size. A missing cache price falls back to the input price.
 
 ## Time-of-day pricing
 
@@ -78,6 +94,8 @@ Long-context tiers apply when a request's prompt exceeds the tier size. Provider
 
 `resolve()` maps the names that logs and agent harnesses use to models.dev ids. It lowercases the name and normalizes display names such as `Gemini 3.5 Flash (High)` and dotted Claude versions such as `claude-sonnet-4.5`. It reads a `provider/` prefix or the `provider` argument as a hint, and when the full name is unknown it removes context markers such as `[1m]`, the `-build` suffix that xAI's subscription endpoint adds to Grok versions such as `grok-4.6-build`, effort suffixes such as `-high`, and date suffixes such as `-20251001` or `-2026-04-23`. `Rates.removed_suffix` records any text removed this way, and `resolve_details()` returns it, so a caller can tell when a price belongs to a related name: `-max` is both an effort level and part of some model names, such as `qwen3.8-max`. A model is looked up at its own lab before other labs that also serve it. A lab model name resolves to the first-party API id that serves it, using models.dev's `base_model` links and preferring ids that are not deprecated: DeepSeek serves `deepseek-v4.1-flash` as `deepseek-flash`, so that name gets `deepseek-flash`'s price. `aliases.toml` holds the few names that need an explicit mapping. Unknown models return `None` rather than a guessed price.
 
+Aliases are part of the published data, while the normalization rules above are code. A name that resolves wrongly or not at all is fixed with an alias where possible, so the fix reaches every installed release on its next `refresh()`. A normalization change covers a whole class of names, such as the `-build` suffix, and reaches only new releases; older releases keep resolving names as before, so a name they could not resolve still returns `None`.
+
 ## Current prices for past requests
 
 `rates()` and `cost()` take `prices_at` to price a request from a different date's price list. The time-of-day rule in force at `at`, the time the request ran, still applies: a request made in a 2025 DeepSeek discount hour keeps its discount on today's prices. Pricing every past request with `prices_at` set to today compares usage across weeks without price changes appearing as usage changes.
@@ -92,18 +110,22 @@ Long-context tiers apply when a request's prompt exceeds the tier size. Provider
 
 ## Recording what was used
 
-`pricing_basis()` returns an identifier such as `model-prices-0.0.1+models.dev@e2bf2e470a1b+synced@2026-09-30+data@3f1c09a2b7de`, naming the package version, the models.dev commit its data came from and that commit's date, and a hash of all its data files, so any change to prices, corrections, schedules, or aliases changes it. Store it next to computed costs.
+`pricing_basis()` returns an identifier such as `model-prices-0.0.1+models.dev@e2bf2e470a1b+synced@2026-09-30+data@3f1c09a2b7de`, naming the package version, the models.dev commit its data came from and that commit's date, and the start of the SHA-256 hash of the snapshot in use, so any change to prices, corrections, schedules, or aliases changes it. Store it next to computed costs.
 
 ## Updating prices
 
-A daily workflow clones models.dev, rebuilds `src/model_prices/data/prices.json` with `model-prices update`, and opens a pull request when a tracked price changed. It then runs `model-prices check` and fails when an official price disagrees; fix that with a correction, or with a models.dev pull request when models.dev is wrong. Before merging, check each changed model's effective date against the provider's announcement and add a correction when models.dev recorded the change late.
+A daily workflow clones models.dev and rebuilds `data/prices.json` with `model-prices update`, which also compiles the snapshot. Each provider whose history changed then runs its official price check. A provider that passes goes straight to `main`. A provider that fails its check, or has no check, as Alibaba and Moonshot AI have none, is held at its current history and goes to the `update-prices` pull request for review instead; the workflow fails when a check failed. Fix a failure with a correction, or with a models.dev pull request when models.dev is wrong. Before merging the pull request, check each changed model's effective date against the provider's announcement and add a correction when models.dev recorded the change late. The workflow publishes the snapshot to the `data` branch after every run and after every push that changes the data, such as a merged correction.
 
-To rebuild locally:
+Prices that go straight to `main` are dated by their models.dev commit. A correction for a late date arrives in a later snapshot; costs already computed keep the basis that priced them.
+
+To rebuild locally, from the repository root:
 
 ```sh
 git clone https://github.com/sst/models.dev.git /tmp/models.dev
 uv run --locked model-prices update /tmp/models.dev
 ```
+
+After editing a file in `data/`, run `uv run --locked model-prices compile`. A test fails when the bundled snapshot does not match its inputs.
 
 ## Development
 
@@ -113,4 +135,4 @@ uv run --locked python -m unittest discover -s tests
 
 ## License
 
-The code and the corrections are MIT licensed. `src/model_prices/data/prices.json` is derived from [models.dev](https://github.com/sst/models.dev), whose MIT license is in `src/model_prices/data/LICENSE.models.dev`. The test fixture `tests/fixtures/genai-prices.json` is an excerpt of [genai-prices](https://github.com/pydantic/genai-prices), whose MIT license is in `tests/fixtures/LICENSE.genai-prices`.
+The code and the corrections are MIT licensed. `data/prices.json` and the snapshot compiled from it are derived from [models.dev](https://github.com/sst/models.dev), whose MIT license is in `data/LICENSE.models.dev`. The test fixture `tests/fixtures/genai-prices.json` is an excerpt of [genai-prices](https://github.com/pydantic/genai-prices), whose MIT license is in `tests/fixtures/LICENSE.genai-prices`.

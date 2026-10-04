@@ -1,6 +1,6 @@
 # DeepSeek API pricing history, July to September 2026
 
-DeepSeek's first-party API prices changed three times between July and September 2026, and models.dev recorded most of those changes late or not at all. This page records what DeepSeek charged in each period and the evidence behind each date, so the corrections and schedule in `src/model_prices/data/` can be audited.
+DeepSeek's first-party API prices changed three times between July and September 2026, and models.dev recorded most of those changes late or not at all. This page records what DeepSeek charged in each period and the evidence behind each date, so the corrections and schedule in `data/` can be audited.
 
 The short version: DeepSeek moved from flat pricing to peak and off-peak pricing at 16:00 UTC on August 16, 2026, charging twice the off-peak rate from 01:00 to 04:00 and 06:00 to 10:00 UTC. It cut the V4 Flash price when V4.1 Flash launched at 04:00 UTC on September 10. The weekday-only and Chinese public holiday exceptions to peak hours appeared on the pricing page later, without an announcement, and model-prices applies them from the start of peak pricing.
 

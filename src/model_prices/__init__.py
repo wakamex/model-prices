@@ -11,11 +11,13 @@ import hashlib
 from importlib.metadata import PackageNotFoundError, version
 from importlib.resources import files
 import json
+import os
 from pathlib import Path
 import re
 import sys
-import tomllib
 from typing import Any
+import urllib.request
+import warnings
 
 # Search order for model names given without a known provider.
 LAB_PROVIDERS = (
@@ -39,13 +41,6 @@ class Tier:
     output: float | None = None
     cache_read: float | None = None
     cache_write: float | None = None
-
-
-# One-hour cache writes as a multiple of the input price, for providers that price them
-# apart from five-minute writes. Anthropic charges 2x base input for every model
-# (https://platform.claude.com/docs/en/about-claude/pricing); model-prices check compares
-# this with the "1h cache writes" column of that page.
-CACHE_WRITE_1H_MULTIPLES = {"anthropic": 2.0}
 
 
 @dataclass(frozen=True)
@@ -137,14 +132,55 @@ class Rates:
                               cache_write_tokens, cache_write_1h_tokens).total
 
 
-@cache
-def _prices() -> dict[str, Any]:
-    return json.loads(files(__package__).joinpath("data/prices.json").read_text())
+# The snapshot format this version reads. It changes only when looking up a price changes,
+# so a client prices every later snapshot of its schema correctly.
+SCHEMA = 1
+# Published snapshots: v1/latest.json names the current one, and v1/<sha256>.json holds
+# each snapshot ever published, so a recorded pricing basis can be fetched again.
+SNAPSHOT_URL = f"https://raw.githubusercontent.com/wakamex/model-prices/data/v{SCHEMA}/"
+# Where a checkout keeps the bundled snapshot, relative to its root.
+SNAPSHOT_PATH = "src/model_prices/snapshot.json"
 
 
-@cache
-def _config(name: str) -> dict[str, Any]:
-    return tomllib.loads(files(__package__).joinpath(f"data/{name}").read_text())
+@dataclass(frozen=True)
+class DataStatus:
+    """The price data in use, as refresh() reports it."""
+
+    basis: str
+    # When the data was last confirmed current: the time it was published, or for the data
+    # bundled with this release, when its content last changed.
+    published_at: datetime
+    # Why fetching newer data failed, if it did.
+    error: str | None = None
+
+
+_active: tuple[dict[str, Any], str, datetime] | None = None
+
+
+def _load(text: bytes) -> dict[str, Any]:
+    snapshot = json.loads(text)
+    if snapshot.get("schema") != SCHEMA:
+        raise ValueError(f"snapshot schema {snapshot.get('schema')!r}, not {SCHEMA}")
+    return snapshot
+
+
+def _bundled() -> tuple[dict[str, Any], str, datetime]:
+    text = files(__package__).joinpath("snapshot.json").read_bytes()
+    snapshot = _load(text)
+    return snapshot, hashlib.sha256(text).hexdigest(), _parse_time(snapshot["updated_at"])
+
+
+def _activate(found: tuple[dict[str, Any], str, datetime]) -> None:
+    global _active
+    _active = found
+    for function in (pricing_basis, resolve_details, _intervals, _schedules):
+        function.cache_clear()
+
+
+def _data() -> dict[str, Any]:
+    if _active is None:
+        _activate(_bundled())
+    return _active[0]
 
 
 def _parse_time(value: datetime | str | None) -> datetime:
@@ -164,30 +200,104 @@ def data_as_of() -> datetime:
 
     The history is rebuilt only when a tracked price changes, so this is when models.dev
     last changed a tracked price as of the build. Rates for requests after this time
-    assume no price has changed since; callers can mark such costs provisional or warn
-    when the installed data is old.
+    assume no price has changed since.
     """
-    return _parse_time(_prices()["source_committed_at"])
+    return _parse_time(_data()["models_dev"]["committed_at"])
 
 
 @cache
 def pricing_basis() -> str:
     """Identify the price data, for recording alongside computed costs.
 
-    Names the package version and models.dev commit, plus a hash of every data file,
+    Names the package version, the models.dev commit, and a hash of the whole snapshot,
     so a change to corrections, schedules, or aliases also changes the basis.
     """
-    digest = hashlib.sha256()
-    for item in sorted(files(__package__).joinpath("data").iterdir(), key=lambda f: f.name):
-        digest.update(item.name.encode() + b"\0" + item.read_bytes())
-    return (f"model-prices-{_version()}+models.dev@{_prices()['source_commit'][:12]}"
-            f"+synced@{data_as_of().date().isoformat()}+data@{digest.hexdigest()[:12]}")
+    commit = _data()["models_dev"]["commit"]
+    return (f"model-prices-{_version()}+models.dev@{commit[:12]}"
+            f"+synced@{data_as_of().date().isoformat()}+data@{_active[1][:12]}")
+
+
+def _cache_dir() -> Path:
+    base = os.environ.get("LOCALAPPDATA") if sys.platform == "win32" else (
+        os.environ.get("XDG_CACHE_HOME"))
+    root = os.environ.get("MODEL_PRICES_CACHE") or Path(base or Path.home() / ".cache") / (
+        "model-prices")
+    return Path(root) / f"v{SCHEMA}"
+
+
+def _download(url: str, timeout: float) -> bytes:
+    request = urllib.request.Request(url, headers={"User-Agent": "model-prices"})
+    with urllib.request.urlopen(request, timeout=timeout) as response:
+        return response.read()
+
+
+def _save(path: Path, content: bytes) -> None:
+    """Write a cache file whole, so a concurrent reader never sees part of it."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(f".{path.name}.{os.getpid()}")
+    temporary.write_bytes(content)
+    os.replace(temporary, path)
+
+
+def _cached() -> tuple[tuple[dict[str, Any], str, datetime] | None, datetime | None]:
+    """The cached latest snapshot with its publication time, and when it was fetched."""
+    try:
+        manifest = json.loads((_cache_dir() / "latest.json").read_text())
+        text = (_cache_dir() / f"{manifest['sha256']}.json").read_bytes()
+        if hashlib.sha256(text).hexdigest() != manifest["sha256"]:
+            return None, None
+        return ((_load(text), manifest["sha256"], _parse_time(manifest["published_at"])),
+                _parse_time(manifest["fetched_at"]))
+    except (OSError, ValueError, KeyError):
+        return None, None
+
+
+def _fetch(timeout: float) -> None:
+    """Download the latest published snapshot into the cache, checking its hash and schema."""
+    manifest = json.loads(_download(SNAPSHOT_URL + "latest.json", timeout))
+    name = f"{manifest['sha256']}.json"
+    if not (_cache_dir() / name).exists():
+        text = _download(SNAPSHOT_URL + name, timeout)
+        if hashlib.sha256(text).hexdigest() != manifest["sha256"]:
+            raise ValueError(f"{name} does not match its hash")
+        _load(text)
+        _save(_cache_dir() / name, text)
+    fetched = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+    _save(_cache_dir() / "latest.json", json.dumps({**manifest, "fetched_at": fetched}).encode())
+
+
+def refresh(max_age: timedelta | None = timedelta(days=1), timeout: float = 10) -> DataStatus:
+    """Use the newest published price data, downloading it when the cached copy is older
+    than max_age.
+
+    Prices change only when this is called: until then, and without a cache, the data
+    bundled with the installed release applies. max_age=None never downloads and uses the
+    newest copy already cached or bundled. A failed download keeps the newest cached or
+    bundled copy, reports why in DataStatus.error, and warns.
+    """
+    error = None
+    cached, fetched_at = _cached()
+    if max_age is not None and (fetched_at is None
+                                or datetime.now(timezone.utc) - fetched_at > max_age):
+        try:
+            _fetch(timeout)
+            cached, _ = _cached()
+        except (OSError, ValueError, KeyError) as failure:
+            error = f"could not fetch price data from {SNAPSHOT_URL}: {failure}"
+            warnings.warn(f"model-prices: {error}; using the newest local price data",
+                          stacklevel=2)
+    bundled = _bundled()
+    # updated_at orders snapshots by when their content changed, so an upgrade's bundled
+    # data replaces an older cached copy.
+    newest = (cached if cached and _parse_time(cached[0]["updated_at"])
+              >= _parse_time(bundled[0]["updated_at"]) else bundled)
+    if _active is None or newest[1] != _active[1]:
+        _activate(newest)
+    return DataStatus(pricing_basis(), newest[2], error)
 
 
 def _known(provider: str, model: str) -> bool:
-    data = _prices()
-    return (model in data["providers"].get(provider, {})
-            or model in data["links"].get(provider, {}))
+    return model in _data()["prices"].get(provider, {})
 
 
 def _candidates(name: str, strict: bool) -> list[tuple[str, str]]:
@@ -224,7 +334,7 @@ def resolve_details(model: str, provider: str | None = None,
     names what was dropped, such as "-max" or "-2026-04-23", so callers can record
     that the price belongs to a related name.
     """
-    aliases = _config("aliases.toml")
+    aliases = _data()["aliases"]
     name = re.sub(r"[\s_]+", "-", re.sub(r"[()]", "", model.strip().lower())).strip("-")
     if "/" in name:
         prefix, name = name.split("/", 1)
@@ -236,12 +346,12 @@ def resolve_details(model: str, provider: str | None = None,
         if candidate in aliases["models"]:
             target_provider, target_model = aliases["models"][candidate].split("/", 1)
             return target_provider, target_model, removed
-    order = ([hint] if hint in _prices()["providers"] else []) + [
+    order = ([hint] if hint in _data()["prices"] else []) + [
         lab for lab in LAB_PROVIDERS if lab != hint
     ]
     # Prefer the model's own lab over another lab that also serves a variant of it.
     # A lab model name resolves to the first-party id that serves and prices it.
-    bases = _prices()["bases"]
+    bases = _data()["bases"]
     for lab in order:
         for candidate, removed in candidates:
             if _known(lab, candidate):
@@ -267,87 +377,29 @@ def _tiers(raw: list[dict[str, Any]] | None) -> tuple[Tier, ...]:
 
 
 @cache
-def _corrections(provider: str, model: str) -> tuple[tuple[datetime, datetime | None, dict], ...]:
-    return tuple(
-        (_parse_time(item["valid_from"]),
-         _parse_time(item["valid_until"]) if "valid_until" in item else None, item)
-        # Hand corrections first, so they take precedence over researched ones.
-        for name in ("corrections.toml", "research_corrections.toml")
-        for item in _config(name).get("correction", [])
-        if item["provider"] == provider and item["model"] == model
-    )
+def _intervals(provider: str, model: str,
+               mode: str | None) -> tuple[tuple[datetime, ...], list[dict[str, Any]]]:
+    """A model's compiled intervals in a mode, with their start times for bisection."""
+    intervals = _data()["prices"].get(provider, {}).get(model, {}).get(mode or "standard", [])
+    starts = tuple(_parse_time(item["start"]) for item in intervals[1:])
+    return starts, intervals
 
 
-@cache
-def _entry_times(provider: str, model: str) -> tuple[datetime, ...]:
-    entries = _prices()["providers"].get(provider, {}).get(model, [])
-    return tuple(_parse_time(entry["valid_from"]) for entry in entries)
-
-
-def _correction(provider: str, model: str, at: datetime) -> Rates | None:
-    for start, end, item in _corrections(provider, model):
-        if start <= at and (end is None or at < end):
-            if "replaces" in item:
-                recorded = _history_rates(provider, model, at, None)
-                if recorded is None or any(getattr(recorded, key) != value
-                                           for key, value in item["replaces"].items()):
-                    continue
-            return Rates(
-                provider=provider, model=model, valid_from=item["valid_from"],
-                source=item["source"], input=item["input"], output=item["output"],
-                cache_read=item.get("cache_read"), cache_write=item.get("cache_write"),
-                tiers=_tiers(item.get("tiers")), valid_from_basis="documented",
-            )
-    # An alias without its own history at this time takes the corrections of the model it
-    # points to, just as it takes that model's price history.
-    link = _link(provider, model, at)
-    return _correction(provider, link, at) if link else None
-
-
-def _link(provider: str, model: str, at: datetime) -> str | None:
-    """The model an alias points to at `at`, when the alias has no price of its own then."""
-    link = _prices()["links"].get(provider, {}).get(model)
-    times = _entry_times(provider, model)
-    return link if link and (not times or at < times[0]) else None
-
-
-def _in_mode(corrected: Rates, standard: Rates, moded: Rates) -> Rates:
-    """Corrected rates in a mode, scaled by the mode's ratio to models.dev's standard rates."""
-    def scaled(field: str) -> float | None:
-        value, base, mode_value = (getattr(item, field) for item in (corrected, standard, moded))
-        if value is None or not base or mode_value is None:
-            return value
-        return value * mode_value / base
-    return replace(corrected, input=scaled("input"), output=scaled("output"),
-                   cache_read=scaled("cache_read"), cache_write=scaled("cache_write"), tiers=())
-
-
-def _history_rates(provider: str, model: str, at: datetime, mode: str | None) -> Rates | None:
-    data = _prices()
-    entries = data["providers"].get(provider, {}).get(model, [])
-    times = _entry_times(provider, model)
-    link = _link(provider, model, at)
-    if link:
-        return _history_rates(provider, link, at, mode)
-    if not entries:
+def _lookup(provider: str, model: str, at: datetime, mode: str | None,
+            corrected: bool) -> Rates | None:
+    """The compiled rates in effect at `at`, before any time-of-day rule."""
+    starts, intervals = _intervals(provider, model, mode)
+    if not intervals:
         return None
-    # Usage before a model's first recorded price uses that first price.
-    entry = entries[max(bisect_right(times, at) - 1, 0)]
-    values = dict(entry["rates"])
-    tiers = values.pop("tiers", None)
-    modes = values.pop("modes", {})
-    if mode is not None:
-        if mode not in modes:
-            return None
-        values.update(modes[mode])
-        tiers = None
-    return Rates(
-        provider=provider, model=model, valid_from=entry["valid_from"],
-        source=f"{data['source']}/commit/{entry['commit']}",
-        input=values["input"], output=values["output"],
-        cache_read=values.get("cache_read"), cache_write=values.get("cache_write"),
-        tiers=_tiers(tiers),
-    )
+    # The first interval also covers every earlier time.
+    interval = intervals[bisect_right(starts, at)]
+    stored = interval["rates"] if corrected else interval.get("recorded", interval["rates"])
+    if stored is None:
+        return None
+    values = dict(stored)
+    values.setdefault("model", model)
+    values["tiers"] = _tiers(values.get("tiers"))
+    return Rates(provider=provider, **values)
 
 
 def _in_window(moment: datetime, window: list[str]) -> bool:
@@ -363,7 +415,7 @@ def _schedules(provider: str) -> tuple[tuple[datetime, datetime | None, dict], .
     return tuple(
         (_parse_time(item["valid_from"]),
          _parse_time(item["valid_until"]) if "valid_until" in item else None, item)
-        for item in _config("schedules.toml").get("schedule", [])
+        for item in _data()["schedules"].get("schedule", [])
         if item["provider"] == provider
     )
 
@@ -396,7 +448,7 @@ def _period(provider: str, moment: datetime,
     peak = any(_in_window(moment, window) for window in schedule["peak_hours_utc"])
     if schedule.get("weekdays_only") and moment.weekday() >= 5:
         peak = False
-    calendar = _config("schedules.toml").get("holidays", {}).get(schedule.get("holidays", ""))
+    calendar = _data()["schedules"].get("holidays", {}).get(schedule.get("holidays", ""))
     if calendar:
         local = moment + timedelta(hours=calendar["utc_offset_hours"])
         peak = peak and local.date().isoformat() not in calendar["dates"]
@@ -433,19 +485,10 @@ def rates(model: str, at: datetime | str | None = None, provider: str | None = N
     resolved, removed = details[:2], details[2]
     moment = _parse_time(at)
     listed = _parse_time(prices_at) if prices_at is not None else moment
-    found = _correction(*resolved, listed) if corrected else None
-    if found is not None and mode is not None:
-        # Corrections give standard rates; a mode keeps its models.dev ratio to them.
-        standard, moded = (_history_rates(*resolved, listed, name) for name in (None, mode))
-        found = _in_mode(found, standard, moded) if moded is not None and standard else None
-        if moded is None:
-            return None
-    found = found or _history_rates(*resolved, listed, mode)
+    found = _lookup(*resolved, listed, mode, corrected)
     if found is None:
         return None
     found = replace(found, removed_suffix=removed) if removed else found
-    if resolved[0] in CACHE_WRITE_1H_MULTIPLES:
-        found = replace(found, cache_write_1h_multiple=CACHE_WRITE_1H_MULTIPLES[resolved[0]])
     # The time-of-day rule in force when the request ran applies to the chosen price list.
     period = _period(resolved[0], moment, resolved[1])
     return _scaled(found, *period) if period else found
@@ -453,14 +496,10 @@ def rates(model: str, at: datetime | str | None = None, provider: str | None = N
 
 def _change_times(provider: str, model: str, start: datetime, end: datetime) -> set[datetime]:
     """Every moment in (start, end) at which the model's rates could change."""
-    times: set[datetime] = set(_entry_times(provider, model))
-    link = _prices()["links"].get(provider, {}).get(model)
-    if link:
-        times |= set(_entry_times(provider, link))
-    linked = _corrections(provider, link) if link else ()
-    for begin, until, _ in (*_corrections(provider, model), *linked, *_schedules(provider)):
+    times: set[datetime] = set(_intervals(provider, model, None)[0])
+    for begin, until, _ in _schedules(provider):
         times |= {begin} | ({until} if until else set())
-    calendars = _config("schedules.toml").get("holidays", {})
+    calendars = _data()["schedules"].get("holidays", {})
     for _, _, schedule in _schedules(provider):
         calendar = calendars.get(schedule.get("holidays", ""))
         day = start.replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=1)
@@ -523,7 +562,7 @@ class Plan:
 
 def plan_ids(provider: str, at: datetime | str | None = None) -> list[str]:
     """Return the provider's plan ids with a price in effect at `at` (default now)."""
-    ids = {item["id"] for item in _config("plans.toml").get("plan", [])
+    ids = {item["id"] for item in _data()["plans"]
            if item["provider"] == provider}
     return sorted(plan_id for plan_id in ids if plan(provider, plan_id, at) is not None)
 
@@ -532,7 +571,7 @@ def plan(provider: str, plan_id: str, at: datetime | str | None = None) -> Plan 
     """Return a subscription plan's monthly price in effect at `at` (default now)."""
     moment = _parse_time(at)
     found = None
-    for item in _config("plans.toml").get("plan", []):
+    for item in _data()["plans"]:
         if item["provider"] != provider or item["id"] != plan_id:
             continue
         if "valid_from" in item and _parse_time(item["valid_from"]) > moment:
@@ -570,13 +609,26 @@ def main(argv: list[str] | None = None) -> int:
     show.add_argument("--at", type=_cli_time, help="ISO 8601 time (default: now)")
     show.add_argument("--mode", help="Alternate pricing mode, such as fast")
     show.add_argument("--json", action="store_true")
+    fetch = commands.add_parser("refresh", help="Download the latest published price data")
+    fetch.add_argument("--max-age", type=float, default=0, metavar="HOURS",
+                       help="Download only when the cached copy is older (default: 0)")
+    # Maintainer commands, run from a checkout's root.
     update = commands.add_parser(
-        "update", help="Rebuild price history from a models.dev git checkout"
+        "update", help="Rebuild price history from a models.dev git checkout, and compile it"
     )
     update.add_argument("models_dev", type=Path)
-    update.add_argument("--output", type=Path,
-                        default=Path(str(files(__package__).joinpath("data", "prices.json"))),
-                        help="File to write (default: this installation's prices.json)")
+    update.add_argument("--hold", nargs="*", default=[], metavar="PROVIDER",
+                        help="Keep these providers' current history")
+    update.add_argument("--json", action="store_true",
+                        help="Print the providers whose history changed as JSON")
+    compiler = commands.add_parser(
+        "compile", help="Compile the input data into the snapshot model_prices reads"
+    )
+    for command in (update, compiler):
+        command.add_argument("--data", type=Path, default=Path("data"),
+                             help="Input data directory (default: data)")
+        command.add_argument("--snapshot", type=Path, default=Path(SNAPSHOT_PATH),
+                             help=f"Snapshot to write (default: {SNAPSHOT_PATH})")
     check = commands.add_parser(
         "check", help="Compare effective prices with official provider pricing pages"
     )
@@ -603,12 +655,29 @@ def main(argv: list[str] | None = None) -> int:
               else report(results, genai=genai is not None))
         return 1 if any(result.status == "mismatch" for result in results) else 0
 
-    if args.command == "update":
-        from model_prices.backfill import build, write
-        changed = write(build(args.models_dev), args.output)
-        print(f"Updated {args.output}" if changed else "No tracked price changes.")
+    if args.command == "refresh":
+        status = refresh(timedelta(hours=args.max_age))
+        print(f"{status.basis}, published {status.published_at.isoformat()}")
+        return 1 if status.error else 0
+
+    if args.command in {"update", "compile"}:
+        from model_prices import backfill, compiler
+        if args.command == "update":
+            output = args.data / "prices.json"
+            data = backfill.hold(backfill.build(args.models_dev), output, set(args.hold))
+            changed = backfill.changed_providers(output, data)
+            backfill.write(data, output)
+            if args.json:
+                print(json.dumps({"changed": changed}))
+            else:
+                print(f"Changed: {', '.join(changed)}" if changed else "No tracked price changes.")
+        compiled = compiler.write(args.data, args.snapshot)
+        if not getattr(args, "json", False):
+            print(f"Compiled {args.snapshot}" if compiled else f"{args.snapshot} is current.")
         return 0
 
+    # The newest data already downloaded, without going online.
+    refresh(max_age=None)
     found = rates(args.model, at=args.at, provider=args.provider, mode=args.mode)
     if found is None:
         print(f"No price found for {args.model}", file=sys.stderr)

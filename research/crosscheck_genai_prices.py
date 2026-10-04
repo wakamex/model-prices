@@ -25,7 +25,7 @@ import model_prices
 from model_prices import genai_prices
 from model_prices.genai_prices import FIELDS, _time
 
-DATA = Path(__file__).resolve().parent.parent / "src" / "model_prices" / "data"
+DATA = Path(__file__).resolve().parent.parent / "data"
 
 
 def genai_rates(data: list, provider: str, model: str, at: datetime) -> dict | None:

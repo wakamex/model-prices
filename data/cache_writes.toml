@@ -1,0 +1,9 @@
+# One-hour cache writes as a multiple of the input price, for providers that price them apart
+# from five-minute writes. Other providers' one-hour writes are priced as cache writes.
+# model-prices check compares each multiple with the provider's pricing page.
+
+[[cache_write_1h]]
+provider = "anthropic"
+multiple = 2.0
+source = "https://platform.claude.com/docs/en/about-claude/pricing"
+note = "Anthropic charges 2x base input for one-hour cache writes on every model; see the \"1h cache writes\" column."

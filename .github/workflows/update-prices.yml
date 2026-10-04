@@ -1,13 +1,26 @@
 name: Update prices
 
+# Daily: rebuild price history from models.dev. A changed provider whose prices all match
+# its official pricing page goes straight to main; one that fails its check, or has no
+# check, is held for review in the update-prices pull request. Every run, and every push
+# that changes the data, publishes the compiled snapshot to the data branch, where
+# model_prices.refresh() fetches it.
+
 on:
   schedule:
     - cron: "17 6 * * *"
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["data/**", "src/model_prices/snapshot.json"]
 
 permissions:
   contents: write
   pull-requests: write
+
+concurrency:
+  group: prices
+  cancel-in-progress: false
 
 # Opening the pull request needs the repository setting that allows GitHub Actions to
 # create pull requests.
@@ -19,36 +32,100 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: main
           fetch-depth: 0
       - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
         with:
           enable-cache: false
-      - name: Continue an open price pull request, keeping any corrections added to it
+      - run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Apply price changes that match the official pages
+        if: github.event_name != 'push'
+        run: |
+          git clone --quiet https://github.com/sst/models.dev.git "$RUNNER_TEMP/models.dev"
+          changed="$(uv --no-config run --locked model-prices update "$RUNNER_TEMP/models.dev" --json \
+            | jq -r '.changed[]')"
+          held=""
+          failed=""
+          for provider in $changed; do
+            status=0
+            uv --no-config run --locked model-prices check "$provider" || status=$?
+            # Status 2 means the provider has no official check, so its changes need review.
+            if [ "$status" -ne 0 ]; then
+              held="$held $provider"
+            fi
+            if [ "$status" -ne 0 ] && [ "$status" -ne 2 ]; then
+              failed="$failed $provider"
+            fi
+          done
+          echo "HELD=$held" >> "$GITHUB_ENV"
+          echo "FAILED=$failed" >> "$GITHUB_ENV"
+          if [ -n "$held" ]; then
+            git checkout -- data src/model_prices/snapshot.json
+            uv --no-config run --locked model-prices update "$RUNNER_TEMP/models.dev" --hold $held
+          fi
+          if ! git diff --quiet; then
+            git commit -am "Update prices from models.dev"
+            git push origin main
+          fi
+
+      - name: Open or update the pull request for held providers
+        if: github.event_name != 'push' && env.HELD != ''
         run: |
           open="$(gh pr list --head update-prices --state open --json number --jq '.[].number')"
-          echo "OPEN_PR=$open" >> "$GITHUB_ENV"
           if [ -n "$open" ]; then
-            git switch --track origin/update-prices
+            # Keep corrections added to the pull request. The generated files are rebuilt
+            # below, so take main's copies when the merge conflicts on them.
+            git switch -C update-prices origin/update-prices
+            git merge --no-edit origin/main || {
+              git checkout origin/main -- data/prices.json src/model_prices/snapshot.json
+              git commit --no-edit
+            }
           else
             git switch -C update-prices
           fi
-      - run: git clone --quiet https://github.com/sst/models.dev.git "$RUNNER_TEMP/models.dev"
-      - run: uv --no-config run --locked model-prices update "$RUNNER_TEMP/models.dev"
-      - name: Open or update the price pull request
-        run: |
-          if git diff --quiet; then
-            echo "No price changes."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -am "Update prices from models.dev"
-          if [ -n "$OPEN_PR" ]; then
+          uv --no-config run --locked model-prices update "$RUNNER_TEMP/models.dev"
+          git add -A
+          git diff --cached --quiet || git commit -m "Update prices from models.dev"
+          if [ -n "$open" ]; then
             git push origin update-prices
           else
             # No open pull request, so the branch holds nothing worth keeping.
             git push --force origin update-prices
-            gh pr create --fill --body "Rebuilt from models.dev. Check each changed model's valid_from against the provider's announcement and add a correction when models.dev recorded the change late."
+            gh pr create --fill --body "Rebuilt from models.dev. Held from automatic publishing:${HELD}. Providers that failed their official check:${FAILED:- none}; the others have no official check. Check each changed model's valid_from against the provider's announcement and add a correction when models.dev recorded the change late."
           fi
-      - name: Compare with official pricing pages
-        run: uv --no-config run --locked model-prices check
+          git switch main
+
+      - name: Publish the snapshot to the data branch
+        run: |
+          uv --no-config run --locked model-prices compile
+          git diff --exit-code -- src/model_prices/snapshot.json
+          uv --no-config run --locked python -m unittest discover -s tests
+          schema="$(uv --no-config run --locked python -c 'import model_prices; print(model_prices.SCHEMA)')"
+          hash="$(sha256sum src/model_prices/snapshot.json | cut -d ' ' -f 1)"
+          published="$RUNNER_TEMP/published"
+          if git fetch --quiet origin data; then
+            git worktree add "$published" FETCH_HEAD
+            git -C "$published" switch -C data
+          else
+            git worktree add --orphan -b data "$published"
+          fi
+          mkdir -p "$published/v$schema"
+          cp src/model_prices/snapshot.json "$published/v$schema/$hash.json"
+          jq -n --arg sha256 "$hash" --arg at "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            '{sha256: $sha256, published_at: $at}' > "$published/v$schema/latest.json"
+          git -C "$published" add -A
+          git -C "$published" commit -qm "Publish ${hash:0:12}"
+          git -C "$published" push origin data
+
+      - name: Fail when a provider failed its official check
+        if: github.event_name != 'push'
+        run: |
+          if [ -n "$FAILED" ]; then
+            echo "Held after failing the official check:$FAILED"
+            exit 1
+          fi
+          # Any other disagreement, such as a page that changed before models.dev did.
+          uv --no-config run --locked model-prices check

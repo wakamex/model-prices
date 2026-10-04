@@ -199,6 +199,35 @@ def _bases(serves: dict[tuple[str, str], tuple[str, bool]]) -> dict[str, dict[st
     return {provider: dict(sorted(models.items())) for provider, models in sorted(bases.items())}
 
 
+_PER_PROVIDER = ("providers", "links", "bases")
+
+
+def _current(output: Path) -> dict[str, Any]:
+    return json.loads(output.read_text()) if output.exists() else {}
+
+
+def changed_providers(output: Path, data: dict[str, Any]) -> list[str]:
+    """The providers whose history, aliases, or served ids differ from those in `output`."""
+    current = _current(output)
+    return sorted({provider for key in _PER_PROVIDER
+                   for provider in {*current.get(key, {}), *data[key]}
+                   if current.get(key, {}).get(provider) != data[key].get(provider)})
+
+
+def hold(data: dict[str, Any], output: Path, providers: set[str]) -> dict[str, Any]:
+    """Keep the history of `providers` as `output` has it, such as while their changes
+    await review."""
+    current = _current(output)
+    held = dict(data)
+    for key in _PER_PROVIDER:
+        merged = {provider: value for provider, value in data[key].items()
+                  if provider not in providers}
+        merged |= {provider: value for provider, value in current.get(key, {}).items()
+                   if provider in providers}
+        held[key] = dict(sorted(merged.items()))
+    return held
+
+
 def write(data: dict[str, Any], output: Path) -> bool:
     """Write the price history if any tracked price changed; return whether it did."""
     if output.exists():
