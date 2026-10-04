@@ -1657,6 +1657,15 @@
       "output": 0.87
      },
      "valid_from": "2026-05-25T05:18:18Z"
+    },
+    {
+     "commit": "b2ab9735fe23",
+     "rates": {
+      "cache_read": 0.022,
+      "input": 0.66,
+      "output": 1.98
+     },
+     "valid_from": "2026-10-02T16:20:50Z"
     }
    ]
   },
@@ -2797,6 +2806,22 @@
       "output": 8.0
      },
      "valid_from": "2025-06-17T22:26:49Z"
+    },
+    {
+     "commit": "e60ca76d45b4",
+     "rates": {
+      "cache_read": 0.5,
+      "input": 2.0,
+      "modes": {
+       "fast": {
+        "cache_read": 0.875,
+        "input": 3.5,
+        "output": 14.0
+       }
+      },
+      "output": 8.0
+     },
+     "valid_from": "2026-10-01T01:47:31Z"
     }
    ],
    "gpt-4.1-mini": [
@@ -2816,6 +2841,22 @@
       "output": 1.6
      },
      "valid_from": "2025-06-17T22:26:49Z"
+    },
+    {
+     "commit": "e60ca76d45b4",
+     "rates": {
+      "cache_read": 0.1,
+      "input": 0.4,
+      "modes": {
+       "fast": {
+        "cache_read": 0.175,
+        "input": 0.7,
+        "output": 2.8
+       }
+      },
+      "output": 1.6
+     },
+     "valid_from": "2026-10-01T01:47:31Z"
     }
    ],
    "gpt-4.1-nano": [
@@ -2844,6 +2885,22 @@
       "output": 0.4
      },
      "valid_from": "2026-05-26T17:06:15Z"
+    },
+    {
+     "commit": "e60ca76d45b4",
+     "rates": {
+      "cache_read": 0.025,
+      "input": 0.1,
+      "modes": {
+       "fast": {
+        "cache_read": 0.05,
+        "input": 0.2,
+        "output": 0.8
+       }
+      },
+      "output": 0.4
+     },
+     "valid_from": "2026-10-01T01:47:31Z"
     }
    ],
    "gpt-4.5-preview": [
@@ -2882,6 +2939,22 @@
       "output": 10.0
      },
      "valid_from": "2025-06-17T22:26:49Z"
+    },
+    {
+     "commit": "e60ca76d45b4",
+     "rates": {
+      "cache_read": 1.25,
+      "input": 2.5,
+      "modes": {
+       "fast": {
+        "cache_read": 2.125,
+        "input": 4.25,
+        "output": 17.0
+       }
+      },
+      "output": 10.0
+     },
+     "valid_from": "2026-10-01T01:47:31Z"
     }
    ],
    "gpt-4o-2024-05-13": [
@@ -2892,6 +2965,20 @@
       "output": 15.0
      },
      "valid_from": "2025-09-26T16:42:56Z"
+    },
+    {
+     "commit": "e60ca76d45b4",
+     "rates": {
+      "input": 5.0,
+      "modes": {
+       "fast": {
+        "input": 8.75,
+        "output": 26.25
+       }
+      },
+      "output": 15.0
+     },
+     "valid_from": "2026-10-01T01:47:31Z"
     }
    ],
    "gpt-4o-2024-08-06": [
@@ -2942,6 +3029,22 @@
       "output": 0.6
      },
      "valid_from": "2026-05-26T17:06:15Z"
+    },
+    {
+     "commit": "e60ca76d45b4",
+     "rates": {
+      "cache_read": 0.075,
+      "input": 0.15,
+      "modes": {
+       "fast": {
+        "cache_read": 0.125,
+        "input": 0.25,
+        "output": 1.0
+       }
+      },
+      "output": 0.6
+     },
+     "valid_from": "2026-10-01T01:47:31Z"
     }
    ],
    "gpt-5": [
@@ -2970,6 +3073,27 @@
       "output": 10.0
      },
      "valid_from": "2026-01-20T16:03:07Z"
+    },
+    {
+     "commit": "e60ca76d45b4",
+     "rates": {
+      "cache_read": 0.125,
+      "input": 1.25,
+      "modes": {
+       "fast": {
+        "cache_read": 0.25,
+        "input": 2.5,
+        "output": 20.0
+       },
+       "flex": {
+        "cache_read": 0.0625,
+        "input": 0.625,
+        "output": 5.0
+       }
+      },
+      "output": 10.0
+     },
+     "valid_from": "2026-10-01T01:47:31Z"
     }
    ],
    "gpt-5-chat-latest": [
@@ -3028,6 +3152,27 @@
       "output": 2.0
      },
      "valid_from": "2026-01-20T16:03:07Z"
+    },
+    {
+     "commit": "e60ca76d45b4",
+     "rates": {
+      "cache_read": 0.025,
+      "input": 0.25,
+      "modes": {
+       "fast": {
+        "cache_read": 0.045,
+        "input": 0.45,
+        "output": 3.6
+       },
+       "flex": {
+        "cache_read": 0.0125,
+        "input": 0.125,
+        "output": 1.0
+       }
+      },
+      "output": 2.0
+     },
+     "valid_from": "2026-10-01T01:47:31Z"
     }
    ],
    "gpt-5-nano": [
@@ -3056,6 +3201,22 @@
       "output": 0.4
      },
      "valid_from": "2026-01-20T16:03:07Z"
+    },
+    {
+     "commit": "e60ca76d45b4",
+     "rates": {
+      "cache_read": 0.005,
+      "input": 0.05,
+      "modes": {
+       "flex": {
+        "cache_read": 0.0025,
+        "input": 0.025,
+        "output": 0.2
+       }
+      },
+      "output": 0.4
+     },
+     "valid_from": "2026-10-01T01:47:31Z"
     }
    ],
    "gpt-5-pro": [
@@ -3086,6 +3247,27 @@
       "output": 10.0
      },
      "valid_from": "2026-05-26T17:06:15Z"
+    },
+    {
+     "commit": "e60ca76d45b4",
+     "rates": {
+      "cache_read": 0.125,
+      "input": 1.25,
+      "modes": {
+       "fast": {
+        "cache_read": 0.25,
+        "input": 2.5,
+        "output": 20.0
+       },
+       "flex": {
+        "cache_read": 0.0625,
+        "input": 0.625,
+        "output": 5.0
+       }
+      },
+      "output": 10.0
+     },
+     "valid_from": "2026-10-01T01:47:31Z"
     }
    ],
    "gpt-5.1-chat-latest": [
@@ -3141,6 +3323,27 @@
       "output": 14.0
      },
      "valid_from": "2025-12-11T19:12:41Z"
+    },
+    {
+     "commit": "e60ca76d45b4",
+     "rates": {
+      "cache_read": 0.175,
+      "input": 1.75,
+      "modes": {
+       "fast": {
+        "cache_read": 0.35,
+        "input": 3.5,
+        "output": 28.0
+       },
+       "flex": {
+        "cache_read": 0.0875,
+        "input": 0.875,
+        "output": 7.0
+       }
+      },
+      "output": 14.0
+     },
+     "valid_from": "2026-10-01T01:47:31Z"
     }
    ],
    "gpt-5.2-chat-latest": [
@@ -3195,6 +3398,22 @@
       "output": 14.0
      },
      "valid_from": "2026-02-05T18:26:24Z"
+    },
+    {
+     "commit": "e60ca76d45b4",
+     "rates": {
+      "cache_read": 0.175,
+      "input": 1.75,
+      "modes": {
+       "fast": {
+        "cache_read": 0.35,
+        "input": 3.5,
+        "output": 28.0
+       }
+      },
+      "output": 14.0
+     },
+     "valid_from": "2026-10-01T01:47:31Z"
     }
    ],
    "gpt-5.3-codex-spark": [
@@ -3311,6 +3530,27 @@
       "output": 4.5
      },
      "valid_from": "2026-04-08T04:47:19Z"
+    },
+    {
+     "commit": "e60ca76d45b4",
+     "rates": {
+      "cache_read": 0.075,
+      "input": 0.75,
+      "modes": {
+       "fast": {
+        "cache_read": 0.15,
+        "input": 1.5,
+        "output": 9.0
+       },
+       "flex": {
+        "cache_read": 0.0375,
+        "input": 0.375,
+        "output": 2.25
+       }
+      },
+      "output": 4.5
+     },
+     "valid_from": "2026-10-01T01:47:31Z"
     }
    ],
    "gpt-5.4-nano": [
@@ -3322,6 +3562,22 @@
       "output": 1.25
      },
      "valid_from": "2026-03-17T19:31:24Z"
+    },
+    {
+     "commit": "e60ca76d45b4",
+     "rates": {
+      "cache_read": 0.02,
+      "input": 0.2,
+      "modes": {
+       "flex": {
+        "cache_read": 0.01,
+        "input": 0.1,
+        "output": 0.625
+       }
+      },
+      "output": 1.25
+     },
+     "valid_from": "2026-10-01T01:47:31Z"
     }
    ],
    "gpt-5.4-pro": [
@@ -3982,6 +4238,27 @@
       "output": 8.0
      },
      "valid_from": "2025-06-17T22:26:49Z"
+    },
+    {
+     "commit": "e60ca76d45b4",
+     "rates": {
+      "cache_read": 0.5,
+      "input": 2.0,
+      "modes": {
+       "fast": {
+        "cache_read": 0.875,
+        "input": 3.5,
+        "output": 14.0
+       },
+       "flex": {
+        "cache_read": 0.25,
+        "input": 1.0,
+        "output": 4.0
+       }
+      },
+      "output": 8.0
+     },
+     "valid_from": "2026-10-01T01:47:31Z"
     }
    ],
    "o3-deep-research": [
@@ -4050,6 +4327,27 @@
       "output": 4.4
      },
      "valid_from": "2026-05-26T17:06:15Z"
+    },
+    {
+     "commit": "e60ca76d45b4",
+     "rates": {
+      "cache_read": 0.275,
+      "input": 1.1,
+      "modes": {
+       "fast": {
+        "cache_read": 0.5,
+        "input": 2.0,
+        "output": 8.0
+       },
+       "flex": {
+        "cache_read": 0.138,
+        "input": 0.55,
+        "output": 2.2
+       }
+      },
+      "output": 4.4
+     },
+     "valid_from": "2026-10-01T01:47:31Z"
     }
    ],
    "o4-mini-deep-research": [
@@ -5340,6 +5638,6 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "e2bf2e47076399413fbb1fefacd6036ffcfc4975",
- "source_committed_at": "2026-09-30T20:30:47Z"
+ "source_commit": "bb573fbd312d8a31e7f1a09945ba2442e6eb3679",
+ "source_committed_at": "2026-10-04T01:36:17Z"
 }
