@@ -244,7 +244,7 @@
          "output": 2.0
         }
        ],
-       "valid_from": "2026-10-04T00:00:00Z",
+       "valid_from": "2025-10-14T17:34:46Z",
        "valid_from_basis": "documented"
       },
       "recorded": {
@@ -254,7 +254,7 @@
        "valid_from": "2025-10-14T17:34:46Z",
        "valid_from_basis": "models.dev commit"
       },
-      "start": "2026-10-04T00:00:00Z"
+      "start": "2025-10-14T17:34:46Z"
      }
     ]
    },
@@ -352,7 +352,7 @@
          "output": 3.6
         }
        ],
-       "valid_from": "2026-10-04T00:00:00Z",
+       "valid_from": "2025-10-14T17:34:46Z",
        "valid_from_basis": "documented"
       },
       "recorded": {
@@ -362,7 +362,7 @@
        "valid_from": "2025-10-14T17:34:46Z",
        "valid_from_basis": "models.dev commit"
       },
-      "start": "2026-10-04T00:00:00Z"
+      "start": "2025-10-14T17:34:46Z"
      }
     ]
    },
@@ -595,8 +595,8 @@
       "rates": {
        "input": 0.16,
        "output": 0.64,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
-       "valid_from": "2026-10-04T00:00:00Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "documented"
       },
       "recorded": {
@@ -606,7 +606,7 @@
        "valid_from": "2025-10-14T17:34:46Z",
        "valid_from_basis": "models.dev commit"
       },
-      "start": "2026-10-04T00:00:00Z"
+      "start": "2026-01-16T07:29:01Z"
      }
     ]
    },
@@ -726,7 +726,7 @@
       "rates": {
        "input": 0.3,
        "output": 1.5,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 32000,
@@ -744,7 +744,7 @@
          "output": 9.6
         }
        ],
-       "valid_from": "2026-10-04T00:00:00Z",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "documented"
       },
       "recorded": {
@@ -754,7 +754,7 @@
        "valid_from": "2025-10-14T17:34:46Z",
        "valid_from_basis": "models.dev commit"
       },
-      "start": "2026-10-04T00:00:00Z"
+      "start": "2026-01-16T07:29:01Z"
      }
     ]
    },
@@ -792,7 +792,7 @@
          "output": 60.0
         }
        ],
-       "valid_from": "2026-10-04T00:00:00Z",
+       "valid_from": "2025-07-29T14:21:12Z",
        "valid_from_basis": "documented"
       },
       "recorded": {
@@ -802,7 +802,7 @@
        "valid_from": "2025-07-29T14:21:12Z",
        "valid_from_basis": "models.dev commit"
       },
-      "start": "2026-10-04T00:00:00Z"
+      "start": "2025-07-29T14:21:12Z"
      }
     ]
    },
@@ -849,7 +849,7 @@
          "output": 15.0
         }
        ],
-       "valid_from": "2026-10-04T00:00:00Z",
+       "valid_from": "2025-10-14T17:34:46Z",
        "valid_from_basis": "documented"
       },
       "recorded": {
@@ -859,7 +859,7 @@
        "valid_from": "2025-10-14T17:34:46Z",
        "valid_from_basis": "models.dev commit"
       },
-      "start": "2026-10-04T00:00:00Z"
+      "start": "2025-10-14T17:34:46Z"
      }
     ]
    },
@@ -880,7 +880,7 @@
        "input": 0.15,
        "output": 1.2,
        "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
-       "valid_from": "2026-10-04T00:00:00Z",
+       "valid_from": "2025-10-14T17:34:46Z",
        "valid_from_basis": "documented"
       },
       "recorded": {
@@ -890,7 +890,7 @@
        "valid_from": "2025-10-14T17:34:46Z",
        "valid_from_basis": "models.dev commit"
       },
-      "start": "2026-10-04T00:00:00Z"
+      "start": "2025-10-14T17:34:46Z"
      }
     ]
    },
@@ -911,7 +911,7 @@
        "input": 0.15,
        "output": 1.2,
        "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
-       "valid_from": "2026-10-04T00:00:00Z",
+       "valid_from": "2025-10-14T17:34:46Z",
        "valid_from_basis": "documented"
       },
       "recorded": {
@@ -921,7 +921,7 @@
        "valid_from": "2025-10-14T17:34:46Z",
        "valid_from_basis": "models.dev commit"
       },
-      "start": "2026-10-04T00:00:00Z"
+      "start": "2025-10-14T17:34:46Z"
      }
     ]
    },
@@ -1010,7 +1010,7 @@
          "output": 4.8
         }
        ],
-       "valid_from": "2026-10-04T00:00:00Z",
+       "valid_from": "2025-10-14T17:34:46Z",
        "valid_from_basis": "documented"
       },
       "recorded": {
@@ -1020,7 +1020,7 @@
        "valid_from": "2025-10-14T17:34:46Z",
        "valid_from_basis": "models.dev commit"
       },
-      "start": "2026-10-04T00:00:00Z"
+      "start": "2025-10-14T17:34:46Z"
      }
     ]
    },
@@ -1112,7 +1112,7 @@
       "rates": {
        "input": 0.4,
        "output": 2.4,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "source": "https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -1120,7 +1120,7 @@
          "output": 3.0
         }
        ],
-       "valid_from": "2026-10-04T00:00:00Z",
+       "valid_from": "2026-09-09T19:28:20Z",
        "valid_from_basis": "documented"
       },
       "recorded": {
@@ -1130,7 +1130,7 @@
        "valid_from": "2026-02-16T22:06:32Z",
        "valid_from_basis": "models.dev commit"
       },
-      "start": "2026-10-04T00:00:00Z"
+      "start": "2026-09-09T19:28:20Z"
      }
     ]
    },
@@ -1165,7 +1165,7 @@
        "input": 0.375,
        "output": 2.25,
        "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
-       "valid_from": "2026-10-04T00:00:00Z",
+       "valid_from": "2026-04-27T19:36:51Z",
        "valid_from_basis": "documented"
       },
       "recorded": {
@@ -1175,7 +1175,7 @@
        "valid_from": "2026-04-27T19:36:51Z",
        "valid_from_basis": "models.dev commit"
       },
-      "start": "2026-10-04T00:00:00Z"
+      "start": "2026-04-27T19:36:51Z"
      }
     ]
    },
@@ -1206,7 +1206,7 @@
          "output": 4.0
         }
        ],
-       "valid_from": "2026-10-04T00:00:00Z",
+       "valid_from": "2026-05-22T21:58:08Z",
        "valid_from_basis": "documented"
       },
       "recorded": {
@@ -1217,7 +1217,7 @@
        "valid_from": "2026-05-22T21:58:08Z",
        "valid_from_basis": "models.dev commit"
       },
-      "start": "2026-10-04T00:00:00Z"
+      "start": "2026-05-22T21:58:08Z"
      }
     ]
    },
@@ -1251,7 +1251,7 @@
          "output": 12.0
         }
        ],
-       "valid_from": "2026-10-04T00:00:00Z",
+       "valid_from": "2026-05-03T02:35:02Z",
        "valid_from_basis": "documented"
       },
       "recorded": {
@@ -1263,7 +1263,7 @@
        "valid_from": "2026-05-03T02:35:02Z",
        "valid_from_basis": "models.dev commit"
       },
-      "start": "2026-10-04T00:00:00Z"
+      "start": "2026-05-03T02:35:02Z"
      }
     ]
    },
@@ -9850,5 +9850,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-04T01:54:51Z"
+ "updated_at": "2026-10-04T02:31:41Z"
 }

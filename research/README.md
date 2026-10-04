@@ -36,6 +36,12 @@ Single reviews are noisy: across three passes of the same prompt over 111 findin
 
 The command lists every verified finding it leaves out: changes without a documented date, changes dated before the earlier price was even recorded (usually a quote about a different event), findings marked in its `REVIEWED` table after reading them, and periods that `corrections.toml` already covers. Hand corrections in `corrections.toml` take precedence over researched ones.
 
+## Dating official prices models.dev never recorded
+
+When `model-prices check` finds an official price that models.dev never recorded, such as a long-context tier it omits, the hand correction supplying it starts at the date it was observed. `price_dates.py gaps PROVIDER/MODEL ...` writes one task per such correction to `price-dates/gaps.json` and `batch.toml`, asking whether the provider changed its price at some time or the official price applied all along. Gap findings run through the same `collect`, `verify`, and three-review steps, with `review-manifest --gaps` for their own review prompt. They are applied to `corrections.toml` by hand: a supported finding that the official price applied all along extends the correction over models.dev's whole record, and otherwise the correction starts at the earliest verified copy of a page showing the price.
+
+The first run covered 14 Alibaba models on 2026-10-04. Ten corrections now cover models.dev's whole record: Alibaba's own tables give the omitted tiers to each model's launch snapshot, and models.dev's other prices were a promotional rate or Alibaba's Global deployment price. Three start at the earliest archived copy showing the price, and qwen-vl-ocr stays at its observation date, because its dated change cited the China (Beijing) table.
+
 ## Cross-check against genai-prices
 
 `crosscheck_genai_prices.py GENAI_PRICES_CHECKOUT` prices every correction's period with [Pydantic's genai-prices](https://github.com/pydantic/genai-prices), both from its current data, which dates a few changes, and from the `data.json` it had committed at that time. Each corrected field is reported as agreeing with the correction, with models.dev, with neither, or as missing from genai-prices.

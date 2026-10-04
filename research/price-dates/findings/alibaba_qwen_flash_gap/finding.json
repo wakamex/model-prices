@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://web.archive.org/web/20260116072901id_/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "8705807b97d1933d.md",
+   "quote": "qwen-flash-2025-07-28| 0<Token\u2264256K| $0.05| $0.4  \n256K<Token\u22641M| $0.25| $2",
+   "supports": "Archived official pricing lists both tiers for the dated qwen-flash-2025-07-28 model version.",
+   "extracted_as": "research/sources/8705807b97d1933d.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://docs.modelstudio.console.alibabacloud.com/en/model-studio/qwen-flash",
+   "file": "qwen-flash.md",
+   "quote": "It supports a 1M context length and is billed on a tiered model corresponding to context usage. This model version is functionally equivalent to the snapshot model qwen-flash-2025-07-28.",
+   "supports": "Provider documentation identifies the current Qwen Flash version as functionally equivalent to the dated July 28, 2025 snapshot.",
+   "extracted_as": "research/sources/f8766c6fc4aceccb.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "Classified as models_dev_fix: the provider's archived pricing associates the exact $0.05/$0.40 base rate and $0.25/$2 long-context tier with qwen-flash-2025-07-28, the snapshot named as the recorded model version. The available archive is from 2026-01-16, so no effective date for introducing the tier can be established.",
+ "verified": true
+}

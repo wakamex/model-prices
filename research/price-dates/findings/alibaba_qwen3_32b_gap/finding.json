@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://docs.modelstudio.console.alibabacloud.com/en/model-studio/qwen3-32b",
+   "file": "sources/1b68e353c7607ff9.md",
+   "quote": "The inference service provider for `qwen3-32b` is Alibaba Cloud Model Studio.",
+   "supports": "Identifies the official provider model documentation; its price table lists the original API price as input $0.287 and output $1.147 (thinking output $2.868).",
+   "extracted_as": "research/sources/1b68e353c7607ff9.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "http://web.archive.org/web/20260909192820id_/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "sources/491ef46e79507fd2.md",
+   "quote": "qwen3-32b| International| Non-Thinking and Thinking modes| $0.16| $0.64| $0.64| 1 million tokens",
+   "supports": "Official archived pricing row shows the newer international price, distinct from models.dev's $0.70/$2.80.",
+   "extracted_as": "research/sources/491ef46e79507fd2.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The provider's model-specific documentation gives original API prices of $0.287 input and $1.147 output ($2.868 for thinking output), so models.dev's $0.70/$2.80 is not supported as the official qwen3-32b price. The supplied captures do not establish when the later $0.16/$0.64 price took effect or show the official price at the October 2025 start of models.dev's period.",
+ "verified": true
+}

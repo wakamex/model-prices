@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "http://web.archive.org/web/20260909192820id_/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "491ef46e79507fd2.md",
+   "quote": "qwen3-vl-plus-2025-09-23| International| Non-Thinking and Thinking modes| 0<Token\u226432K| $0.2| $1.6| 1 million tokens  \n32K<Token\u2264128K| $0.3| $2.4  \n128K<Token\u2264256K| $0.6| $4.8",
+   "supports": "The archived official pricing page lists base and both long-context price tiers for the dated 2025-09-23 model version.",
+   "extracted_as": "research/sources/491ef46e79507fd2.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/newly-released-models",
+   "file": "eac8dfbeb78c6d30.md",
+   "quote": "<p>2025-09-23</p></td><td><p>Global</p></td><td><p><code>qwen3-vl-plus</code></p> <p><code>qwen3-vl-plus-2025-09-23</code></p>",
+   "supports": "Provider\u2019s release listing dates qwen3-vl-plus and its dated version to 2025-09-23, before models.dev began recording its price.",
+   "extracted_as": "research/sources/eac8dfbeb78c6d30.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The provider\u2019s pricing page associates all three tiers with the 2025-09-23 version, and its release listing dates that version to 2025-09-23. This supports classifying the omitted long-context tiers as models_dev_fix; no effective date for a subsequent price change is established.",
+ "verified": true
+}

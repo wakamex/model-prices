@@ -1,0 +1,54 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/newly-released-models",
+   "file": "eac8dfbeb78c6d30.md",
+   "quote": "<tr><td><p>Text generation</p></td><td><p>2025-09-11</p></td><td><p>International</p></td><td><p><code>qwen3-next-80b-a3b-instruct</code></p></td>",
+   "supports": "Alibaba lists this exact model as an international release on 2025-09-11, before the models.dev period began.",
+   "extracted_as": "research/sources/eac8dfbeb78c6d30.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-next-80b-a3b-instruct",
+   "file": "17afa2732ef7cfbe.md",
+   "quote": "This page only shows the original pricing for model API calls, excluding any limited-time promotions.",
+   "supports": "The model-specific official page identifies its listed API rates as original pricing, not a temporary promotion.",
+   "extracted_as": "research/sources/17afa2732ef7cfbe.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-next-80b-a3b-instruct",
+   "file": "17afa2732ef7cfbe.md",
+   "quote": "<tr><td><p>Input</p></td><td><p>0.15</p></td><td><p>Per 1M tokens</p></td></tr>",
+   "supports": "The model-specific page lists the international input price as USD 0.15 per million tokens.",
+   "extracted_as": "research/sources/17afa2732ef7cfbe.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-next-80b-a3b-instruct",
+   "file": "17afa2732ef7cfbe.md",
+   "quote": "<tr><td><p>Output</p></td><td><p>1.2</p></td><td><p>Per 1M tokens</p></td></tr>",
+   "supports": "The model-specific page lists the international output price as USD 1.2 per million tokens.",
+   "extracted_as": "research/sources/17afa2732ef7cfbe.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The provider\u2019s release listing places the model\u2019s international launch on 2025-09-11, and its model-specific page labels $0.15/$1.2 as original API pricing, so the $0.5/$2 entry is a models.dev fix. The Wayback snapshot request for a contemporaneous pricing page returned HTTP 429, so no exact price-change date or bracket is available.",
+ "verified": true
+}

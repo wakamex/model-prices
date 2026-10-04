@@ -1,0 +1,45 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "http://web.archive.org/web/20260909192820id_/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "sources/491ef46e79507fd2.md",
+   "quote": "qwen3-max-2025-09-23| International| Non-Thinking mode only| 0<Token\u226432K| $1.2| $6| 1 million tokens  \n32K<Token\u2264128K| $2.4| $12  \n128K<Token\u2264256K| $3| $15",
+   "supports": "Provider pricing page lists the recorded $1.2/$6 base tier and the $2.4/$12 and $3/$15 long-context tiers for the dated qwen3-max-2025-09-23 snapshot.",
+   "extracted_as": "research/sources/491ef46e79507fd2.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/model-qwen3-max",
+   "file": "sources/6cd5f0e3b366e1e2.md",
+   "quote": "This version is a snapshot as of September 23, 2025.",
+   "supports": "Provider model documentation dates the released snapshot before models.dev's recorded period began on 2025-10-14.",
+   "extracted_as": "research/sources/6cd5f0e3b366e1e2.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/model-qwen3-max",
+   "file": "sources/6cd5f0e3b366e1e2.md",
+   "quote": "<Accordion title=\"32k<Input<=128k\">\n      <table><thead><tr><th>Billing Item</th><th>Price (USD)</th><th>Unit</th></tr></thead><tbody><tr><td><p>Input</p></td><td><p>2.4</p></td><td><p>Per 1M tokens</p></td></tr><tr><td><p>Output</p></td><td><p>12</p></td><td><p>Per 1M tokens</p></td></tr>",
+   "supports": "The provider's model-specific documentation gives the long-context input and output price as $2.4 and $12 per million tokens.",
+   "extracted_as": "research/sources/6cd5f0e3b366e1e2.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "Classified as models_dev_fix: the provider's pricing page assigns all three tiers to the immutable qwen3-max-2025-09-23 snapshot, whose model documentation says it is the September 23, 2025 version; thus the recorded $1.2/$6 is only its first tier. The available provider snapshots do not establish a separate later effective date, so effective_at is null.",
+ "verified": true
+}

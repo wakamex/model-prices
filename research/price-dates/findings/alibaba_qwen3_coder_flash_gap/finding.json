@@ -1,0 +1,45 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://web.archive.org/web/20260116072901id_/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "8705807b97d1933d.md",
+   "quote": "qwen3-coder-flash-2025-07-28| 0<Token\u226432K| $0.3| $1.5",
+   "supports": "An archived official pricing page lists the model's base tier at $0.3 input and $1.5 output per million tokens.",
+   "extracted_as": "research/sources/8705807b97d1933d.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://web.archive.org/web/20260116072901id_/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "8705807b97d1933d.md",
+   "quote": "32K<Token\u2264128K| $0.5| $2.5  \n128K<Token\u2264256K| $0.8| $4  \n256K<Token\u22641M| $1.6| $9.6",
+   "supports": "The archived official page lists three higher context tiers for the dated model.",
+   "extracted_as": "research/sources/8705807b97d1933d.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "http://web.archive.org/web/20260909192820id_/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "491ef46e79507fd2.md",
+   "quote": "| 0<Token\u226432K| $0.3| $1.5  \n32K<Token\u2264128K| $0.5| $2.5  \n128K<Token\u2264256K| $0.8| $4  \n256K<Token\u22641M| $1.6| $9.6",
+   "supports": "A later archive again shows all four tiers at the stated rates.",
+   "extracted_as": "research/sources/491ef46e79507fd2.md",
+   "quote_verified": false,
+   "verified_in": null
+  }
+ ],
+ "notes": "The supplied archive captures show the official tiers by January 16, 2026 and again in September 2026, but the CDX query returned no 2025 snapshots and no provider source found here dates when the higher tiers began. These sources therefore do not decide whether the tiers were already official at models.dev's October 14, 2025 start or took effect later; no change date or prior official price can be established.",
+ "verified": false
+}

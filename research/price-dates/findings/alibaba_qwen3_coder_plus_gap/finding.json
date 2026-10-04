@@ -1,0 +1,63 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "http://web.archive.org/web/20260909192820id_/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "sources/491ef46e79507fd2.md",
+   "quote": "qwen3-coder-plus-2025-07-22| International| 0<Token\u226432K| $1| $5| 1 million tokens  ",
+   "supports": "Provider pricing page lists the $1 input and $5 output base tier for the dated July 22, 2025 model version.",
+   "extracted_as": "research/sources/491ef46e79507fd2.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "http://web.archive.org/web/20260909192820id_/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "sources/491ef46e79507fd2.md",
+   "quote": "32K<Token\u2264128K| $1.8| $9  ",
+   "supports": "Provider pricing page lists the 32K\u2013128K tier for that dated version.",
+   "extracted_as": "research/sources/491ef46e79507fd2.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "http://web.archive.org/web/20260909192820id_/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "sources/491ef46e79507fd2.md",
+   "quote": "128K<Token\u2264256K| $3| $15  ",
+   "supports": "Provider pricing page lists the 128K\u2013256K tier for that dated version.",
+   "extracted_as": "research/sources/491ef46e79507fd2.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "http://web.archive.org/web/20260909192820id_/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "sources/491ef46e79507fd2.md",
+   "quote": "256K<Token\u22641M| $6| $60  ",
+   "supports": "Provider pricing page lists the 256K\u20131M tier for that dated version.",
+   "extracted_as": "research/sources/491ef46e79507fd2.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/newly-released-models",
+   "file": "sources/eac8dfbeb78c6d30.md",
+   "quote": "<p>2025-07-23</p></td><td><p>Global</p></td><td><p><code>qwen3-coder-plus</code></p> <p><code>qwen3-coder-plus-2025-07-22</code></p>",
+   "supports": "Provider release listing dates the alias and the exact dated version to July 23, 2025, near the start of the models.dev record.",
+   "extracted_as": "research/sources/eac8dfbeb78c6d30.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "Classified as models_dev_fix: the provider\u2019s pricing table assigns all four tiers to the dated 2025-07-22 version, and its release listing dates that version to 2025-07-23, near the start of models.dev\u2019s record. No source states a price-change date or brackets one; this is version-specific official evidence rather than a pre-change snapshot.",
+ "verified": true
+}

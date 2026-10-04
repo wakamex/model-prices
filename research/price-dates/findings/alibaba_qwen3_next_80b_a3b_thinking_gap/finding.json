@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-next-80b-a3b-thinking",
+   "file": "8b1234ece7332b5b.md",
+   "quote": "This page only shows the original pricing for model API calls, excluding any limited-time promotions. Visit [Model Studio Console](https://modelstudio.console.alibabacloud.com/ap-southeast-1/model/market) for promotional offers.",
+   "supports": "Alibaba distinguishes the model's original/API price from temporary console promotions, making the models.dev 0.5/6 values consistent with promotional rather than official listed pricing.",
+   "extracted_as": "research/sources/8b1234ece7332b5b.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "http://web.archive.org/web/20260909192820id_/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "491ef46e79507fd2.md",
+   "quote": "qwen3-next-80b-a3b-thinking| International| Thinking mode only| $0.15| -| $1.2| 1 million tokens",
+   "supports": "Alibaba's archived official pricing table lists the International thinking model at $0.15 input and $1.2 output per million tokens.",
+   "extracted_as": "research/sources/491ef46e79507fd2.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "Classified as models_dev_fix because Alibaba identifies its model page figures as original pricing and separates limited-time promotional offers. The provider materials available here establish the official price and promotional distinction, but do not timestamp whether that distinction already applied on 2025-10-14; the archive set has no launch-period pricing snapshot, so no effective date or before/after bracket is claimed.",
+ "verified": true
+}

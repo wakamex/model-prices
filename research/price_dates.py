@@ -16,6 +16,12 @@ must appear in the library copy of its page.
     aop batch research/price-dates/review-batch.toml --jobs 4
     uv run --locked python research/price_dates.py collect-reviews BATCH_JSON
     uv run --locked python research/price_dates.py corrections
+
+A hand correction that supplies an official price models.dev never recorded starts at the
+date the price was observed. `gaps PROVIDER/MODEL ...` writes one task per such correction,
+asking when the official price took effect and what applied before; its findings go through
+the same batch, collect, verify, and review steps, and are applied to corrections.toml by
+hand.
 """
 
 from __future__ import annotations
@@ -112,6 +118,35 @@ unavailable, say so in notes rather than concluding there is no evidence.
 """
 
 
+GAP_PROMPT = """\
+You are researching one API price for model-prices, an open dataset of LLM API prices over
+time.
+
+models.dev, an open model catalog, recorded these prices for {provider}/{model} (USD per
+million tokens), each from the time models.dev recorded it until the next:
+
+{history}
+
+On {observed_at} the provider's official pricing page, {source}, listed:
+
+{official}
+
+{difference} models.dev never recorded the official price. Find out:
+
+1. Classification. Did the provider change its price from the one models.dev records to
+   the official one at some time ("price_change"), or was models.dev's price never the
+   provider's official price, so the official price applied all along ("models_dev_fix")?
+   A long-context tier the provider charged that models.dev omits counts as a models_dev_fix
+   when the tier applied since the model's launch. Use "unclear" if the evidence does not
+   decide.
+2. For a price_change: when the official price took effect, as precisely as the sources
+   state, with the timezone if given, and the official price before it.
+3. For a models_dev_fix: whether a source shows the official price, including any tiers,
+   at or near the start of models.dev's recorded period.
+
+""" + PROMPT[PROMPT.index("Use primary sources"):]
+
+
 REVIEW_PROMPT = """\
 You are checking one finding written by another researcher for model-prices, an open dataset
 of LLM API prices over time. The finding explains a price change recorded by models.dev,
@@ -158,6 +193,37 @@ Use "supported" only when every check passes.
 """
 
 
+GAP_REVIEW_PROMPT = """\
+You are checking one finding written by another researcher for model-prices, an open dataset
+of LLM API prices over time. models.dev, an open model catalog, recorded these prices for
+{provider}/{model} (USD per million tokens), each from the time it recorded it until the next:
+
+{history}
+
+On {observed_at} the provider's official pricing page listed:
+
+{official}
+
+{difference} The finding explains when the official price applied.
+""" + REVIEW_PROMPT[REVIEW_PROMPT.index("\nThe finding is /inputs/"):].replace(
+    """2. The classification holds. "price_change": the provider's price changed from the before
+   price to the after price. "models_dev_fix": during the period it was recorded, the
+   before entry differed from the provider's official price in at least one field, either
+   a wrong value or a missing price the provider charged, such as cached input; the after
+   entry is models.dev's correction.""",
+    """2. The classification holds. "price_change": the provider changed its price from the one
+   models.dev records to the official one, at the time the finding gives. "models_dev_fix":
+   the official price, including any long-context tiers, applied throughout models.dev's
+   recorded period, so models.dev's price was never official.""").replace(
+    """For a price_change, the
+   effective_at date or bracket is stated in the cited pages, in a quote or the page's own
+   date, and should not fall before the before price was recorded unless the sources show
+   models.dev recorded both prices late.""",
+    """For a price_change, the
+   effective_at date or bracket is stated in the cited pages, in a quote or the page's own
+   date.""")
+
+
 def _git(repo: Path, *args: str) -> str:
     return subprocess.run(["git", "-C", str(repo), *args], check=True,
                           capture_output=True, text=True).stdout
@@ -194,6 +260,49 @@ def list_changes(models_dev: Path) -> list[dict]:
     return changes
 
 
+def _price_text(rates: dict) -> str:
+    parts = [f"{field} {rates[field]:g}" for field in ("input", "output", "cache_read", "cache_write")
+             if rates.get(field) is not None]
+    for tier in rates.get("tiers", []):
+        values = ", ".join(f"{key} {value:g}" for key, value in tier.items() if key != "above")
+        parts.append(f"above {tier['above']:,} prompt tokens: {values}")
+    return "; ".join(parts)
+
+
+def list_gaps(models: list[str]) -> list[dict]:
+    """One gap per named model: its open-ended hand correction and models.dev's history."""
+    import tomllib  # noqa: PLC0415
+    data = json.loads(PRICES.read_text())
+    manual = tomllib.loads((DATA / "corrections.toml").read_text()).get("correction", [])
+    gaps = []
+    for name in models:
+        provider, model = name.split("/", 1)
+        correction = next(item for item in manual if (item["provider"], item["model"]) == (
+            provider, model) and "valid_until" not in item)
+        # Only the input and output prices: the page states no cache prices per model.
+        official = {key: correction[key] for key in ("input", "output")}
+        if correction.get("tiers"):
+            official["tiers"] = [{key: tier[key] for key in ("above", "input", "output")}
+                                 for tier in correction["tiers"]]
+        entries = data["providers"][provider][model]
+        recorded = _rates(entries[-1])
+        differences = [f"its {field} price differs" for field in ("input", "output")
+                       if recorded.get(field) != official.get(field)]
+        if official.get("tiers") and not recorded.get("tiers"):
+            differences.append("it lists no long-context tiers")
+        gaps.append({
+            "id": re.sub(r"[^a-z0-9.]+", "_", f"{provider}__{model}__gap".lower()),
+            "provider": provider, "model": model,
+            "history": "\n".join(f"- from {entry['valid_from']}: {_price_text(_rates(entry))}"
+                                 for entry in entries),
+            "observed_at": correction["valid_from"][:10], "source": correction["source"],
+            "official": _price_text(official),
+            "difference": f"Compared with that page, models.dev's latest entry differs: "
+                          f"{', '.join(differences)}.",
+        })
+    return gaps
+
+
 def source_path(url: str) -> Path:
     return SOURCES / f"{hashlib.sha256(url.encode()).hexdigest()[:16]}.md"
 
@@ -212,7 +321,13 @@ def write_index() -> None:
     (SOURCES / "index.tsv").write_text("url\tfile\tretrieved\n" + "\n".join(sorted(rows)) + "\n")
 
 
-def write_manifest(changes: list[dict], only: set[str], model: str, effort: str) -> Path:
+def _prompt(template: str, item: dict) -> str:
+    return template.format(**{key: json.dumps(value) if isinstance(value, dict) else value
+                              for key, value in item.items()})
+
+
+def write_manifest(changes: list[dict], only: set[str], model: str, effort: str,
+                   template: str = PROMPT) -> Path:
     tasks = WORK / "tasks"
     tasks.mkdir(parents=True, exist_ok=True)
     write_index()
@@ -224,9 +339,7 @@ def write_manifest(changes: list[dict], only: set[str], model: str, effort: str)
     for change in changes:
         if only and change["id"] not in only:
             continue
-        prompt = PROMPT.format(**{key: json.dumps(value) if isinstance(value, dict) else value
-                                  for key, value in change.items()})
-        (tasks / f"{change['id']}.md").write_text(prompt)
+        (tasks / f"{change['id']}.md").write_text(_prompt(template, change))
         blocks.append(
             f'[[tasks]]\nid = "{change["id"]}"\nagent = "codex"\nmodel = "{model}"\n'
             f'effort = "{effort}"\nprofile = "sealed"\ntimeout = 1200\n'
@@ -239,7 +352,8 @@ def write_manifest(changes: list[dict], only: set[str], model: str, effort: str)
     return manifest
 
 
-def write_review_manifest(changes: list[dict], only: set[str], model: str, effort: str) -> Path:
+def write_review_manifest(changes: list[dict], only: set[str], model: str, effort: str,
+                          template: str = REVIEW_PROMPT) -> Path:
     """One review task per verified finding that could become a correction."""
     tasks = WORK / "review-tasks"
     tasks.mkdir(parents=True, exist_ok=True)
@@ -254,9 +368,7 @@ def write_review_manifest(changes: list[dict], only: set[str], model: str, effor
             continue
         if not finding.get("verified") or finding.get("classification") == "unclear":
             continue
-        prompt = REVIEW_PROMPT.format(**{key: json.dumps(value) if isinstance(value, dict) else value
-                                         for key, value in change.items()})
-        (tasks / f"{change['id']}.md").write_text(prompt)
+        (tasks / f"{change['id']}.md").write_text(_prompt(template, change))
         blocks.append(
             f'[[tasks]]\nid = "{change["id"]}"\nagent = "codex"\nmodel = "{model}"\n'
             f'effort = "{effort}"\nprofile = "sealed"\nno_web = true\ntimeout = 900\n'
@@ -269,8 +381,10 @@ def write_review_manifest(changes: list[dict], only: set[str], model: str, effor
     return manifest
 
 
-def review_prompt_id() -> str:
-    return hashlib.sha256(REVIEW_PROMPT.encode()).hexdigest()[:12]
+def review_prompt_id(task: str = "") -> str:
+    """The hash of the review prompt a task uses: gap tasks have their own."""
+    template = GAP_REVIEW_PROMPT if task.endswith("_gap") else REVIEW_PROMPT
+    return hashlib.sha256(template.encode()).hexdigest()[:12]
 
 
 def collect_reviews(batch: Path) -> None:
@@ -284,7 +398,7 @@ def collect_reviews(batch: Path) -> None:
         except (FileNotFoundError, json.JSONDecodeError) as error:
             print(f"skip {result['task']}: {result['status']}, {error}", file=sys.stderr)
             continue
-        record = {"run_id": result["run_id"], "prompt": review_prompt_id(), **review}
+        record = {"run_id": result["run_id"], "prompt": review_prompt_id(result["task"]), **review}
         with (WORK / "findings" / result["task"] / "reviews.jsonl").open("a") as log:
             log.write(json.dumps(record) + "\n")
 
@@ -297,7 +411,7 @@ def review_verdict(change_id: str) -> tuple[str | None, list[str]]:
     """
     path = WORK / "findings" / change_id / "reviews.jsonl"
     reviews = [json.loads(line) for line in path.read_text().splitlines()] if path.exists() else []
-    reviews = [review for review in reviews if review["prompt"] == review_prompt_id()]
+    reviews = [review for review in reviews if review["prompt"] == review_prompt_id(change_id)]
     if len(reviews) < 3:
         return None, []
     supported = sum(review.get("verdict") == "supported" for review in reviews)
@@ -583,6 +697,9 @@ def main() -> int:
     commands = parser.add_subparsers(dest="command", required=True)
     listing = commands.add_parser("changes")
     listing.add_argument("models_dev", type=Path)
+    gaps = commands.add_parser("gaps", help="Write tasks dating hand corrections' official prices")
+    gaps.add_argument("models", nargs="+", metavar="PROVIDER/MODEL")
+    gaps.add_argument("--only", nargs="*", default=[], help="Write tasks only for these gap ids")
     manifest = commands.add_parser("manifest")
     manifest.add_argument("--only", nargs="*", default=[])
     manifest.add_argument("--model", default="gpt-6-luna")
@@ -592,6 +709,7 @@ def main() -> int:
     commands.add_parser("verify")
     reviews = commands.add_parser("review-manifest")
     reviews.add_argument("--only", nargs="*", default=[])
+    reviews.add_argument("--gaps", action="store_true", help="Review gap findings")
     reviews.add_argument("--model", default="gpt-6-luna")
     reviews.add_argument("--effort", default="medium")
     gather_reviews = commands.add_parser("collect-reviews")
@@ -605,6 +723,12 @@ def main() -> int:
         changes = list_changes(args.models_dev)
         changes_file.write_text(json.dumps(changes, indent=1) + "\n")
         print(f"{len(changes)} changes written to {changes_file}")
+    elif args.command == "gaps":
+        WORK.mkdir(parents=True, exist_ok=True)
+        found = list_gaps(args.models)
+        (WORK / "gaps.json").write_text(json.dumps(found, indent=1) + "\n")
+        path = write_manifest(found, set(args.only), "gpt-6-luna", "medium", GAP_PROMPT)
+        print(f"{len(found)} gaps written to {WORK / 'gaps.json'}; wrote {path}")
     elif args.command == "manifest":
         changes = json.loads(changes_file.read_text())
         path = write_manifest(changes, set(args.only), args.model, args.effort)
@@ -612,8 +736,13 @@ def main() -> int:
     elif args.command == "collect":
         collect(args.batch)
     elif args.command == "review-manifest":
-        changes = json.loads(changes_file.read_text())
-        path = write_review_manifest(changes, set(args.only), args.model, args.effort)
+        if args.gaps:
+            items = json.loads((WORK / "gaps.json").read_text())
+            path = write_review_manifest(items, set(args.only), args.model, args.effort,
+                                         GAP_REVIEW_PROMPT)
+        else:
+            path = write_review_manifest(json.loads(changes_file.read_text()), set(args.only),
+                                         args.model, args.effort)
         print(f"wrote {path}")
     elif args.command == "collect-reviews":
         collect_reviews(args.batch)

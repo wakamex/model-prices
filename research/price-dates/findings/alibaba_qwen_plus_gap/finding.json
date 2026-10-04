@@ -1,0 +1,27 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "http://web.archive.org/web/20260909192820id_/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "sources/491ef46e79507fd2.md",
+   "quote": "qwen-plus-2025-07-28| International| 0<Token\u2264256K| $0.4| $1.2| $4| 1 million tokens  \n256K<Token\u22641M| $1.2| $3.6| $12",
+   "supports": "Alibaba's archived pricing table shows the qwen-plus-2025-07-28 version with the higher long-context tier, whose version date predates the 2025-10-14 models.dev record.",
+   "extracted_as": "research/sources/491ef46e79507fd2.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "Classified as models_dev_fix: Alibaba's official pricing table associates the 256K\u20131M tier with qwen-plus-2025-07-28, a version predating the models.dev recorded period. No usable pricing snapshot from near 2025-10-14 was available to verify the exact first effective date, so it is left unknown.",
+ "verified": true
+}

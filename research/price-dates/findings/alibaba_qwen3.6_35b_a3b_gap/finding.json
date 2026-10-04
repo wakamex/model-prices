@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "http://web.archive.org/web/20260909192820id_/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "sources/491ef46e79507fd2.md",
+   "quote": "qwen3.6-35b-a3b| International| 0<Token\u2264256K| $0.375| $2.25| $2.25| 1 million tokens  ",
+   "supports": "The archived official pricing page gives $0.375 input and $2.25 output for the Singapore International deployment scope.",
+   "extracted_as": "research/sources/491ef46e79507fd2.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "http://web.archive.org/web/20260909192820id_/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "sources/491ef46e79507fd2.md",
+   "quote": "qwen3.6-35b-a3b| Global| 0<Token\u2264256K| $0.248| $1.485| $1.485  ",
+   "supports": "The same official pricing page gives the models.dev $0.248/$1.485 price for Global deployment scope; the lower value is a deployment scope distinction, not an indicated later price change.",
+   "extracted_as": "research/sources/491ef46e79507fd2.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "Classified as models_dev_fix because Alibaba's own page distinguishes the higher Singapore International price from the $0.248/$1.485 Global price. No captured source establishes that tier structure at or near 2026-04-27; an attempt to extract an April 2026 Internet Archive pricing snapshot returned HTTP 429, so the launch-era point remains unverified.",
+ "verified": true
+}

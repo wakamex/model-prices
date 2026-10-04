@@ -1,0 +1,36 @@
+{
+ "classification": "unclear",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "http://web.archive.org/web/20260909192820id_/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "491ef46e79507fd2.md",
+   "quote": "qwen3.5-plus\n\n> Currently equivalent to qwen3.5-plus-2026-02-15\n\n| International| 0<Token\u2264256K| $0.4| $2.4| $2.4| 1 million tokens  \n256K<Token\u22641M| $0.5| $3| $3",
+   "supports": "Provider archive from 2026-09-09 lists the long-context tier for the model and its 2026-02-15 snapshot.",
+   "extracted_as": "research/sources/491ef46e79507fd2.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "3a2df24851aa546e.md",
+   "quote": "qwen3.5-plus\n\n            > Currently equivalent to qwen3.5-plus-2026-02-15",
+   "supports": "Current provider pricing page identifies the endpoint with the 2026-02-15 snapshot; the archived pricing page supplies its prices.",
+   "extracted_as": "research/sources/3a2df24851aa546e.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "The provider\u2019s 2026-09-09 archive lists $0.5/$3 for 256K<Token\u22641M on qwen3.5-plus and the 2026-02-15 snapshot, showing the tier by then. A Feb. 17, 2026 archive retrieval returned HTTP 429, and the available sources do not establish whether this tier applied at the start of models.dev\u2019s recorded period; therefore the classification and effective date remain unclear.",
+ "verified": true
+}

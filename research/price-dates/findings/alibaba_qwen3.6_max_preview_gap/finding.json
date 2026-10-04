@@ -1,0 +1,36 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "http://web.archive.org/web/20260909192820id_/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "491ef46e79507fd2.md",
+   "quote": "| International| Non-Thinking and Thinking modes| 0<Token\u2264128K| $1.3| $7.8| 1 million tokens  \n128K<Token\u2264256K| $2| $12",
+   "supports": "Archived provider pricing lists the base price and a higher 128K\u2013256K tier.",
+   "extracted_as": "research/sources/491ef46e79507fd2.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-6-max",
+   "file": "qwenmodel.md",
+   "quote": "This page only shows the original pricing for model API calls, excluding any limited-time promotions.",
+   "supports": "Provider identifies the shown prices as original pricing, supporting that the tiered official schedule was not introduced as a later price change.",
+   "extracted_as": "research/sources/447f440a9d63843c.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "Classified as models_dev_fix: the provider's original-pricing model page and archived pricing show that the $1.3/$7.8 base rate coexisted with a $2/$12 long-context tier that models.dev omitted. The sources establish the original schedule but do not state or bracket its effective date, so no date is assigned.",
+ "verified": true
+}

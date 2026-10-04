@@ -1,0 +1,142 @@
+[
+ {
+  "id": "alibaba_qwen_flash_gap",
+  "provider": "alibaba",
+  "model": "qwen-flash",
+  "history": "- from 2025-10-14T17:34:46Z: input 0.05; output 0.4",
+  "observed_at": "2026-10-04",
+  "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+  "official": "input 0.05; output 0.4; above 256,000 prompt tokens: input 0.25, output 2",
+  "difference": "Compared with that page, models.dev's latest entry differs: it lists no long-context tiers."
+ },
+ {
+  "id": "alibaba_qwen_plus_gap",
+  "provider": "alibaba",
+  "model": "qwen-plus",
+  "history": "- from 2025-10-14T17:34:46Z: input 0.4; output 1.2",
+  "observed_at": "2026-10-04",
+  "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+  "official": "input 0.4; output 1.2; above 256,000 prompt tokens: input 1.2, output 3.6",
+  "difference": "Compared with that page, models.dev's latest entry differs: it lists no long-context tiers."
+ },
+ {
+  "id": "alibaba_qwen_vl_ocr_gap",
+  "provider": "alibaba",
+  "model": "qwen-vl-ocr",
+  "history": "- from 2025-10-14T17:34:46Z: input 0.72; output 0.72",
+  "observed_at": "2026-10-04",
+  "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+  "official": "input 0.07; output 0.16",
+  "difference": "Compared with that page, models.dev's latest entry differs: its input price differs, its output price differs."
+ },
+ {
+  "id": "alibaba_qwen3_32b_gap",
+  "provider": "alibaba",
+  "model": "qwen3-32b",
+  "history": "- from 2025-10-14T17:34:46Z: input 0.7; output 2.8",
+  "observed_at": "2026-10-04",
+  "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+  "official": "input 0.16; output 0.64",
+  "difference": "Compared with that page, models.dev's latest entry differs: its input price differs, its output price differs."
+ },
+ {
+  "id": "alibaba_qwen3_coder_flash_gap",
+  "provider": "alibaba",
+  "model": "qwen3-coder-flash",
+  "history": "- from 2025-10-14T17:34:46Z: input 0.3; output 1.5",
+  "observed_at": "2026-10-04",
+  "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+  "official": "input 0.3; output 1.5; above 32,000 prompt tokens: input 0.5, output 2.5; above 128,000 prompt tokens: input 0.8, output 4; above 256,000 prompt tokens: input 1.6, output 9.6",
+  "difference": "Compared with that page, models.dev's latest entry differs: it lists no long-context tiers."
+ },
+ {
+  "id": "alibaba_qwen3_coder_plus_gap",
+  "provider": "alibaba",
+  "model": "qwen3-coder-plus",
+  "history": "- from 2025-07-29T14:21:12Z: input 1; output 5",
+  "observed_at": "2026-10-04",
+  "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+  "official": "input 1; output 5; above 32,000 prompt tokens: input 1.8, output 9; above 128,000 prompt tokens: input 3, output 15; above 256,000 prompt tokens: input 6, output 60",
+  "difference": "Compared with that page, models.dev's latest entry differs: it lists no long-context tiers."
+ },
+ {
+  "id": "alibaba_qwen3_max_gap",
+  "provider": "alibaba",
+  "model": "qwen3-max",
+  "history": "- from 2025-10-14T17:34:46Z: input 1.2; output 6",
+  "observed_at": "2026-10-04",
+  "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+  "official": "input 1.2; output 6; above 32,000 prompt tokens: input 2.4, output 12; above 128,000 prompt tokens: input 3, output 15",
+  "difference": "Compared with that page, models.dev's latest entry differs: it lists no long-context tiers."
+ },
+ {
+  "id": "alibaba_qwen3_next_80b_a3b_instruct_gap",
+  "provider": "alibaba",
+  "model": "qwen3-next-80b-a3b-instruct",
+  "history": "- from 2025-10-14T17:34:46Z: input 0.5; output 2",
+  "observed_at": "2026-10-04",
+  "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+  "official": "input 0.15; output 1.2",
+  "difference": "Compared with that page, models.dev's latest entry differs: its input price differs, its output price differs."
+ },
+ {
+  "id": "alibaba_qwen3_next_80b_a3b_thinking_gap",
+  "provider": "alibaba",
+  "model": "qwen3-next-80b-a3b-thinking",
+  "history": "- from 2025-10-14T17:34:46Z: input 0.5; output 6",
+  "observed_at": "2026-10-04",
+  "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+  "official": "input 0.15; output 1.2",
+  "difference": "Compared with that page, models.dev's latest entry differs: its input price differs, its output price differs."
+ },
+ {
+  "id": "alibaba_qwen3_vl_plus_gap",
+  "provider": "alibaba",
+  "model": "qwen3-vl-plus",
+  "history": "- from 2025-10-14T17:34:46Z: input 0.2; output 1.6",
+  "observed_at": "2026-10-04",
+  "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+  "official": "input 0.2; output 1.6; above 32,000 prompt tokens: input 0.3, output 2.4; above 128,000 prompt tokens: input 0.6, output 4.8",
+  "difference": "Compared with that page, models.dev's latest entry differs: it lists no long-context tiers."
+ },
+ {
+  "id": "alibaba_qwen3.5_plus_gap",
+  "provider": "alibaba",
+  "model": "qwen3.5-plus",
+  "history": "- from 2026-02-16T22:06:32Z: input 0.4; output 2.4",
+  "observed_at": "2026-10-04",
+  "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+  "official": "input 0.4; output 2.4; above 256,000 prompt tokens: input 0.5, output 3",
+  "difference": "Compared with that page, models.dev's latest entry differs: it lists no long-context tiers."
+ },
+ {
+  "id": "alibaba_qwen3.6_35b_a3b_gap",
+  "provider": "alibaba",
+  "model": "qwen3.6-35b-a3b",
+  "history": "- from 2026-04-27T19:36:51Z: input 0.248; output 1.485",
+  "observed_at": "2026-10-04",
+  "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+  "official": "input 0.375; output 2.25",
+  "difference": "Compared with that page, models.dev's latest entry differs: its input price differs, its output price differs."
+ },
+ {
+  "id": "alibaba_qwen3.6_flash_gap",
+  "provider": "alibaba",
+  "model": "qwen3.6-flash",
+  "history": "- from 2026-05-22T21:58:08Z: input 0.1875; output 1.125; cache_write 0.234375",
+  "observed_at": "2026-10-04",
+  "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+  "official": "input 0.25; output 1.5; above 256,000 prompt tokens: input 1, output 4",
+  "difference": "Compared with that page, models.dev's latest entry differs: its input price differs, its output price differs, it lists no long-context tiers."
+ },
+ {
+  "id": "alibaba_qwen3.6_max_preview_gap",
+  "provider": "alibaba",
+  "model": "qwen3.6-max-preview",
+  "history": "- from 2026-05-03T02:35:02Z: input 1.3; output 7.8; cache_read 0.13; cache_write 1.625",
+  "observed_at": "2026-10-04",
+  "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+  "official": "input 1.3; output 7.8; above 128,000 prompt tokens: input 2, output 12",
+  "difference": "Compared with that page, models.dev's latest entry differs: it lists no long-context tiers."
+ }
+]

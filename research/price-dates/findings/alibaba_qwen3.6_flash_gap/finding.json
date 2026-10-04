@@ -1,0 +1,54 @@
+{
+ "classification": "models_dev_fix",
+ "effective_at": null,
+ "effective_precision": "unknown",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": null,
+  "output": null,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-6-flash",
+   "file": "3660effcc67a4e20.md",
+   "quote": "This page only shows the original pricing for model API calls, excluding any limited-time promotions.",
+   "supports": "Alibaba distinguishes its original model API prices from temporary promotional offers.",
+   "extracted_as": "research/sources/3660effcc67a4e20.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-6-flash",
+   "file": "3660effcc67a4e20.md",
+   "quote": "<tr><td><p>Input</p></td><td><p>0.25</p></td><td><p>Per 1M tokens</p></td></tr><tr><td><p>Output</p></td><td><p>1.5</p></td><td><p>Per 1M tokens</p></td></tr>",
+   "supports": "The official Singapore (International) rate for prompts up to 256k: input $0.25, output $1.5 per million tokens.",
+   "extracted_as": "research/sources/3660effcc67a4e20.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://www.alibabacloud.com/help/en/model-studio/qwen3-6-flash",
+   "file": "3660effcc67a4e20.md",
+   "quote": "<tr><td><p>Input</p></td><td><p>1</p></td><td><p>Per 1M tokens</p></td></tr><tr><td><p>Output</p></td><td><p>4</p></td><td><p>Per 1M tokens</p></td></tr>",
+   "supports": "The official Singapore (International) rate for prompts above 256k and up to 1m: input $1, output $4 per million tokens.",
+   "extracted_as": "research/sources/3660effcc67a4e20.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "https://web.archive.org/web/20260909192820id_/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "491ef46e79507fd2.md",
+   "quote": "| International| 0<Token\u2264256K| $0.25| $1.5| 1 million tokens  \n256K<Token\u22641M| $1| $4",
+   "supports": "The archived provider pricing page records the same standard and long-context tiers in September 2026.",
+   "extracted_as": null,
+   "quote_verified": true,
+   "verified_in": "agent copy"
+  }
+ ],
+ "notes": "The available official model page labels its figures original pricing excluding limited-time promotions; the models.dev figures are 25% below these rates, consistent with promotional rather than standard prices. The source set does not show these official rates at or near the May 22 start: the May 1 and June 1 pricing-page snapshots omit qwen3.6-flash, so the start-period timing cannot be independently established.",
+ "verified": true
+}

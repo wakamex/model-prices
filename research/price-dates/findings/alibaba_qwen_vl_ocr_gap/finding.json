@@ -1,0 +1,45 @@
+{
+ "classification": "price_change",
+ "effective_at": "2025-11-21T00:00:00+08:00",
+ "effective_precision": "exact",
+ "bracket": {
+  "last_before": null,
+  "first_after": null
+ },
+ "official_previous_price": {
+  "input": 0.72,
+  "output": 0.72,
+  "cache_read": null
+ },
+ "sources": [
+  {
+   "url": "https://www.alibabacloud.com/en/notice/model_studio_update_of_qwenvlocr_60b?_p_lc=1",
+   "file": "notice.md",
+   "quote": "Model Studio will update the Qwen-VL-OCR models on November 21, 2025:\n\n  * qwen-vl-ocr will release a new snapshot: qwen-vl-ocr-2025-11-20. Its billable items change to input_token and output_token.\n  * qwen-vl-ocr-latest will be updated to qwen-vl-ocr-2025-11-20, with the same pricing:",
+   "supports": "Provider notice dates the OCR model update to November 21, 2025, and says the stable/latest model moves to the new snapshot. The page specifies 00:00 UTC+08 as affected time.",
+   "extracted_as": "research/sources/9d0d3d7705dbd3ed.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "http://web.archive.org/web/20260909192820id_/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "491ef46e79507fd2.md",
+   "quote": "qwen-vl-ocr-2025-08-28| $0.717| $0.717  \nqwen-vl-ocr-2025-04-13| $0.717| $0.717  \nqwen-vl-ocr-2024-10-28| $0.717| $0.717",
+   "supports": "Provider's archived pricing page shows the older OCR snapshots at approximately $0.72 input and output per million tokens.",
+   "extracted_as": "research/sources/491ef46e79507fd2.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  },
+  {
+   "url": "http://web.archive.org/web/20260909192820id_/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+   "file": "491ef46e79507fd2.md",
+   "quote": "| International| $0.07| $0.16| 1 million tokens",
+   "supports": "Provider's pricing page gives the newer international Qwen-VL-OCR price as $0.07 input and $0.16 output per million tokens.",
+   "extracted_as": "research/sources/491ef46e79507fd2.md",
+   "quote_verified": true,
+   "verified_in": "independent extract"
+  }
+ ],
+ "notes": "Alibaba's update notice states the affected time as 2025-11-21 00:00:00 (UTC+08), depending on actual release time, so that precision is retained. The older dated snapshots remain listed at $0.717/$0.717 on the archived provider price page; the new snapshot/current International price is $0.07/$0.16.",
+ "verified": true
+}
