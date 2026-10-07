@@ -3090,6 +3090,16 @@
       "output": 2.4
      },
      "valid_from": "2026-02-17T06:23:10Z"
+    },
+    {
+     "commit": "c2634caf7f88",
+     "rates": {
+      "cache_read": 0.03,
+      "cache_write": 0.375,
+      "input": 0.6,
+      "output": 2.4
+     },
+     "valid_from": "2026-10-07T14:53:51Z"
     }
    ],
    "MiniMax-M2.7": [
@@ -7721,6 +7731,6 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "b12a6ba65ba4e5e620c8ae5dc10000c6f737af4c",
- "source_committed_at": "2026-10-07T15:43:02Z"
+ "source_commit": "366e192c9fde0b02fa7dc25517fa6b342976ac41",
+ "source_committed_at": "2026-10-07T16:33:49Z"
 }
