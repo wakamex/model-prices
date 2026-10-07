@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 from datetime import datetime, timedelta, timezone
+import gzip
 import html
 import inspect
 import json
@@ -92,10 +93,13 @@ def parse_anthropic(text: str, today: datetime) -> list[Observed]:
         for row in rows:
             name = re.sub(r"\s*\(.*\)", "", row[0]).strip()
             model = "-".join(name.lower().replace(".", " ").split())
+            # Prices for long prompts: "(for prompts over 100,000 tokens)".
+            tier = re.search(r"\(for prompts over ([0-9,]+) tokens\)", row[0])
             for title, field in columns.items():
                 value = _price(row[header.index(title)])
                 if value is not None:
-                    found.append(Observed("anthropic", model, field, value))
+                    found.append(Observed("anthropic", model, field, value,
+                                          above=int(tier.group(1).replace(",", "")) if tier else None))
         break
     return found
 
@@ -524,6 +528,66 @@ def parse_meta(text: str, today: datetime, get: Callable[[str], str]) -> list[Ob
     return found
 
 
+BEDROCK_PRICES = ("https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrock/USD/current/"
+                  "bedrock.json")
+_BEDROCK_REGION = "US East (N. Virginia)"
+_BEDROCK_FIELDS = {"Price per 1M input tokens": "input",
+                   "Price per 1M input tokens (cache read)": "cache_read",
+                   "Price per 1M output tokens": "output"}
+
+
+def parse_bedrock(text: str, today: datetime, get: Callable[[str], str]) -> list[Observed]:
+    """Read Amazon Nova's on-demand prices on Amazon Bedrock, in US East (N. Virginia).
+
+    The pricing page's tables are templates whose cells name a price in AWS's published
+    price data. A table under "Global Cross-region Inference" prices the global. ids, and
+    one under "Geo Cross-region inference and in-region" the unprefixed and us. ids. A
+    separate table adds cache-read prices, which apply to whichever of those routes its
+    input price matches.
+    """
+    prices = json.loads(get(BEDROCK_PRICES))["regions"][_BEDROCK_REGION]
+    routes = {"Global Cross-region Inference": ("global.",),
+              "Geo Cross-region inference and in-region": ("", "us.")}
+    standard: dict[tuple[str, str], dict[str, float]] = {}
+    cached: dict[str, dict[str, float]] = {}
+    for match in re.finditer(r'data-pricing-markup="([^"]*)"', text):
+        table = re.sub(r"(\s*\|\s*)+", " | ",
+                       re.sub(r"<[^>]+>", " | ", html.unescape(match.group(1))))
+        if "Amazon Nova" not in table:
+            continue
+        titles = [title.strip() for title in
+                  re.findall(r"Price per 1M [a-z ]+(?:\([a-z ]+\))?", table)]
+        if not titles or not set(titles) <= set(_BEDROCK_FIELDS):
+            continue
+        before = text[:match.start()]
+        route = max(routes, key=before.rfind)
+        on_demand = "| On Demand Inference |" in table
+        if not on_demand and ("| Standard Tier |" not in table or before.rfind(route) < 0):
+            continue
+        rows = (re.match(r"(?:([0-9.]+) )?([A-Za-z]+) \|((?: \{priceOf![^}]+\} \|?)+)", row)
+                for row in table.split("| Amazon Nova ")[1:])
+        for version, family, cells in (row.groups() for row in rows if row):
+            slug = f"nova-{version.removesuffix('.0') + '-' if version else ''}{family.lower()}"
+            values = {}
+            for title, (code, scale) in zip(titles, re.findall(
+                    r"\{priceOf!bedrock/bedrock!([^!}]+)!\*!(\d+)", cells)):
+                if code in prices:
+                    values[_BEDROCK_FIELDS[title]] = round(float(prices[code]["price"]) * int(scale), 10)
+            if on_demand:
+                cached[slug] = values
+            else:
+                standard[(route, slug)] = values
+    found = []
+    for (route, slug), values in standard.items():
+        extra = cached.get(slug, {})
+        if "cache_read" in extra and extra.get("input") == values.get("input"):
+            values = {**values, "cache_read": extra["cache_read"]}
+        for prefix in routes[route]:
+            found += [Observed("amazon-bedrock", f"{prefix}amazon.{slug}-v1:0", field, value)
+                      for field, value in values.items()]
+    return found
+
+
 MISTRAL_DOCS = "https://docs.mistral.ai"
 
 
@@ -705,6 +769,7 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "ai21": ("https://www.ai21.com/pricing/", parse_ai21),
     "arcee": ("https://docs.arcee.ai/get-started/pricing.md", parse_arcee),
     "cohere": ("https://cohere.com/pricing", parse_cohere),
+    "amazon-bedrock": ("https://aws.amazon.com/bedrock/pricing/", parse_bedrock),
     "anthropic": ("https://platform.claude.com/docs/en/about-claude/pricing.md", parse_anthropic),
     "deepseek": ("https://api-docs.deepseek.com/quick_start/pricing", parse_deepseek),
     "google": ("https://ai.google.dev/gemini-api/docs/pricing.md.txt", parse_google),
@@ -730,7 +795,11 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
 def fetch(url: str) -> str:
     request = urllib.request.Request(url, headers={"User-Agent": "model-prices"})
     with urllib.request.urlopen(request, timeout=30) as response:
-        return response.read().decode()
+        body = response.read()
+        # Some hosts, such as AWS's price data, send gzip whatever the request accepts.
+        if response.headers.get("Content-Encoding") == "gzip":
+            body = gzip.decompress(body)
+        return body.decode()
 
 
 def _value(found, field: str, above: int | None) -> float | None:
@@ -738,16 +807,16 @@ def _value(found, field: str, above: int | None) -> float | None:
         return None
     values = {"input": found.input, "output": found.output,
               "cache_read": found.cache_read, "cache_write": found.cache_write}
-    if field == "cache_write_1h":
-        if found.cache_write_1h_multiple is None or above is not None:
-            return None
-        return found.input * found.cache_write_1h_multiple
     if above is not None:
         tier = next((tier for tier in found.tiers if tier.above == above), None)
         if tier is None:
             return None
         values = {key: getattr(tier, key) if getattr(tier, key) is not None else values[key]
                   for key in values}
+    if field == "cache_write_1h":
+        if found.cache_write_1h_multiple is None:
+            return None
+        return values["input"] * found.cache_write_1h_multiple
     # Missing cache prices are charged at the input price.
     if values[field] is None and field in {"cache_read", "cache_write"}:
         return values["input"]

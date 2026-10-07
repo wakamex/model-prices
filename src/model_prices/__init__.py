@@ -23,7 +23,7 @@ import warnings
 LAB_PROVIDERS = (
     "anthropic", "openai", "google", "zai", "deepseek", "xai", "moonshotai", "alibaba",
     "mistral", "minimax", "xiaomi", "meta", "cohere", "stepfun-ai", "perplexity", "volcengine",
-    "tencent-tokenhub", "nova", "sakana", "inception", "ai21", "upstage", "poolside", "arcee",
+    "tencent-tokenhub", "nova", "amazon-bedrock", "sakana", "inception", "ai21", "upstage", "poolside", "arcee",
     "longcat", "bailing", "sensenova", "sarvam", "thinkingmachines", "cognition", "cursor",
 )
 

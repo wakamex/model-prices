@@ -5,6 +5,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 import json
 from pathlib import Path
+import re
 import subprocess
 import tomllib
 from typing import Any, Iterator
@@ -15,6 +16,7 @@ SOURCE_URL = "https://github.com/sst/models.dev"
 TRACKED_PROVIDERS = (
     "ai21",
     "alibaba",
+    "amazon-bedrock",
     "anthropic",
     "arcee",
     "bailing",
@@ -43,6 +45,17 @@ TRACKED_PROVIDERS = (
     "xiaomi",
     "zai",
 )
+
+# Providers tracked only for some models: Amazon Bedrock hosts many labs' models, and is
+# tracked for Amazon's own Nova models, which it sells.
+TRACKED_MODELS = {"amazon-bedrock": re.compile(r"(^|\.)amazon\.nova-")}
+
+def _tracked(path: str) -> bool:
+    """Whether a model file belongs to a tracked model of its provider."""
+    _, provider, _, *model_parts = path.removesuffix(".toml").split("/")
+    pattern = TRACKED_MODELS.get(provider)
+    return pattern is None or bool(pattern.search("/".join(model_parts)))
+
 
 RATE_FIELDS = ("input", "output", "cache_read", "cache_write")
 
@@ -151,7 +164,7 @@ def _read_blobs(repo: Path, specs: list[str]) -> list[bytes | None]:
 
 def _replay(repo: Path, providers: tuple[str, ...]) -> tuple[dict, dict, dict]:
     """Each provider's price history, its aliases, and the lab model each file serves."""
-    changes = list(_changes(repo, providers))
+    changes = [change for change in _changes(repo, providers) if _tracked(change[3])]
     blobs = iter(_read_blobs(repo, [
         f"{commit}:{path}" for status, commit, _, path in changes if status != "D"
     ]))

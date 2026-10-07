@@ -1,0 +1,55 @@
+{
+ "_comment": "Synthetic fixture: the shape of AWS's published Bedrock price data, with 2026-10-07 US East prices per 1,000 tokens.",
+ "regions": {
+  "US East (N. Virginia)": {
+   "G-IN": {
+    "price": "0.0003000000",
+    "RegionlessRateCode": "G-IN"
+   },
+   "G-OUT": {
+    "price": "0.0025000000",
+    "RegionlessRateCode": "G-OUT"
+   },
+   "G-CACHE": {
+    "price": "0.0000750000",
+    "RegionlessRateCode": "G-CACHE"
+   },
+   "R-IN": {
+    "price": "0.0003300000",
+    "RegionlessRateCode": "R-IN"
+   },
+   "R-OUT": {
+    "price": "0.0027500000",
+    "RegionlessRateCode": "R-OUT"
+   },
+   "M-IN": {
+    "price": "0.0000350000",
+    "RegionlessRateCode": "M-IN"
+   },
+   "M-OUT": {
+    "price": "0.0001400000",
+    "RegionlessRateCode": "M-OUT"
+   },
+   "M-CACHE": {
+    "price": "0.0000087500",
+    "RegionlessRateCode": "M-CACHE"
+   },
+   "L-IN": {
+    "price": "0.0010000000",
+    "RegionlessRateCode": "L-IN"
+   },
+   "L-OUT": {
+    "price": "0.0040000000",
+    "RegionlessRateCode": "L-OUT"
+   },
+   "B-IN": {
+    "price": "0.0000175000",
+    "RegionlessRateCode": "B-IN"
+   },
+   "B-OUT": {
+    "price": "0.0000700000",
+    "RegionlessRateCode": "B-OUT"
+   }
+  }
+ }
+}

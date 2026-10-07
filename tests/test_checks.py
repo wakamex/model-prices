@@ -14,6 +14,8 @@ TODAY = datetime(2026, 9, 30, 12, tzinfo=timezone.utc)
 PAGES = {
     "alibaba": (FIXTURES / "alibaba.md").read_text(),
     "ai21": (FIXTURES / "ai21.html").read_text(),
+    "amazon-bedrock": (FIXTURES / "bedrock.html").read_text(),
+    checks.BEDROCK_PRICES: (FIXTURES / "bedrock-prices.json").read_text(),
     "anthropic": (FIXTURES / "anthropic.md").read_text(),
     "arcee": (FIXTURES / "arcee.md").read_text(),
     "cohere": (FIXTURES / "cohere.html").read_text(),
@@ -45,7 +47,7 @@ PAGES = {
 
 def _prices(provider):
     parser = checks.SOURCES[provider][1]
-    extra = (PAGES.__getitem__,) if provider in {"meta", "mistral"} else ()
+    extra = (PAGES.__getitem__,) if provider in {"amazon-bedrock", "meta", "mistral"} else ()
     return {(item.model, item.field, item.above, item.at): item.value
             for item in parser(PAGES[provider], TODAY, *extra)}
 
@@ -176,6 +178,27 @@ class CheckTests(unittest.TestCase):
         meta = _prices("meta")
         self.assertEqual(meta[("muse-spark-1.3", "output", None, None)], 4.25)
         self.assertEqual(meta[("muse-spark-1.3-contributor", "cache_read", None, None)], 0.002)
+
+    def test_bedrock_prices_nova_by_inference_route(self):
+        bedrock = _prices("amazon-bedrock")
+
+        self.assertEqual(bedrock[("global.amazon.nova-2-lite-v1:0", "input", None, None)], 0.3)
+        self.assertEqual(bedrock[("us.amazon.nova-2-lite-v1:0", "input", None, None)], 0.33)
+        self.assertEqual(bedrock[("amazon.nova-micro-v1:0", "output", None, None)], 0.14)
+        # The caching table's cache price applies where its input price matches the route.
+        self.assertEqual(bedrock[("global.amazon.nova-2-lite-v1:0", "cache_read", None, None)], 0.075)
+        self.assertNotIn(("us.amazon.nova-2-lite-v1:0", "cache_read", None, None), bedrock)
+        self.assertEqual(bedrock[("us.amazon.nova-micro-v1:0", "cache_read", None, None)], 0.00875)
+        # Batch and latency-optimized prices are not read.
+        self.assertFalse(any(value in {0.0175, 1.0} for value in bedrock.values()))
+
+    def test_anthropic_long_prompt_rows_are_tiers(self):
+        page = (FIXTURES / "anthropic.md").read_text().replace(
+            "| Claude Opus 5.5 ", "| Claude Haiku 5.5 (for prompts over 100,000 tokens) | $0.50 / MTok "
+            "| $0.625 / MTok | $1 / MTok | $0.05 / MTok | $2.50 / MTok |\n| Claude Opus 5.5 ", 1)
+        found = {(item.model, item.field, item.above): item.value
+                 for item in checks.parse_anthropic(page, TODAY)}
+        self.assertEqual(found[("claude-haiku-5-5", "output", 100_000)], 2.5)
 
     def test_ids_with_a_slash_match_exactly(self):
         results = checks.run(["arcee"], pages=PAGES, today=TODAY)
