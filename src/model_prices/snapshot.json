@@ -5831,6 +5831,25 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.03,
+       "cache_write": 0.375,
+       "input": 0.3,
+       "output": 1.2,
+       "source": "https://platform.minimax.io/docs/guides/pricing-paygo",
+       "valid_from": "2026-10-07T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.3,
+       "output": 1.2,
+       "source": "https://github.com/sst/models.dev/commit/619dbe3b4c20",
+       "valid_from": "2025-11-14T17:55:50Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-07T00:00:00Z"
      }
     ]
    },
@@ -12902,5 +12921,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-07T16:32:41Z"
+ "updated_at": "2026-10-07T16:33:48Z"
 }

@@ -367,3 +367,15 @@ cache_read = 0.01
 replaces = { input = 0.04, output = 0.04 }
 source = "https://mistral.ai/pricing/api"
 note = "Ministral 3 3B, whose docs page lists ministral-3b-latest among its API names, at $0.1 input, $0.01 cached input, and $0.1 output per 1M tokens, observed 2026-10-07. models.dev lists $0.04/$0.04."
+
+[[correction]]
+provider = "minimax"
+model = "MiniMax-M2"
+valid_from = "2026-10-07T00:00:00Z"
+input = 0.3
+output = 1.2
+cache_read = 0.03
+cache_write = 0.375
+replaces = { input = 0.3, output = 1.2 }
+source = "https://platform.minimax.io/docs/guides/pricing-paygo"
+note = "MiniMax's pay-as-you-go legacy models table lists MiniMax-M2 at $0.3 input, $1.2 output, $0.03 prompt caching read, and $0.375 prompt caching write per 1M tokens, observed 2026-10-07. models.dev lists no cache prices, which priced cache reads and writes as input."

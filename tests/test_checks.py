@@ -17,6 +17,7 @@ PAGES = {
     "deepseek": (FIXTURES / "deepseek.html").read_text(),
     "deepseek:zh": (FIXTURES / "deepseek-zh.html").read_text(),
     "google": (FIXTURES / "google.md").read_text(),
+    "minimax": (FIXTURES / "minimax.md").read_text(),
     "mistral": (FIXTURES / "mistral.html").read_text(),
     "https://docs.mistral.ai/models/mistral-large-3-25-12":
         (FIXTURES / "mistral-docs-large-3.html").read_text(),
@@ -104,6 +105,15 @@ class CheckTests(unittest.TestCase):
         # Rows priced per page are not token prices.
         self.assertEqual({model for model, *_ in mistral},
                          {"mistral-large-4", "mistral-large-2512", "mistral-large-latest"})
+
+    def test_minimax_parser_reads_discounted_standard_prices_and_tiers(self):
+        minimax = _prices("minimax")
+
+        self.assertEqual(minimax[("MiniMax-M3", "input", None, None)], 0.3)
+        self.assertEqual(minimax[("MiniMax-M3", "output", 512_000, None)], 2.4)
+        self.assertEqual(minimax[("MiniMax-M2.7", "cache_write", None, None)], 0.375)
+        # The Priority tab's faster service tier is not read.
+        self.assertNotIn(0.45, minimax.values())
 
     def test_resold_models_are_not_compared_with_their_lab(self):
         results = checks.run(["alibaba"], pages=PAGES, today=TODAY)

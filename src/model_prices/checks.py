@@ -265,6 +265,32 @@ def parse_alibaba(text: str, today: datetime) -> list[Observed]:
     return found
 
 
+def parse_minimax(text: str, today: datetime) -> list[Observed]:
+    """Read MiniMax's pay-as-you-go text model prices. The Priority tab prices a faster
+    service tier, which model-prices does not model, so it is skipped. A struck-out price
+    is the list price before a discount; the price after it is charged."""
+    columns = {"Input": "input", "Output": "output", "Prompt caching Read": "cache_read",
+               "Prompt caching Write": "cache_write"}
+    text = re.sub(r'<Tab title="Priority[^"]*">.*?</Tab>', "", text, flags=re.S)
+    found = []
+    for _, header, rows in _markdown_tables(text):
+        if header[:2] != ["Model", "Input"]:
+            continue
+        for row in rows:
+            name = re.match(r"\*\*([^*]+)\*\*(.*)", row[0])
+            if name is None:
+                continue
+            tier = re.search(r">\s*([0-9]+)k input tokens", name.group(2))
+            for title, field in columns.items():
+                if title not in header:
+                    continue
+                amounts = re.findall(r"\$\s*([0-9]+(?:\.[0-9]+)?)", row[header.index(title)].replace("\\$", "$"))
+                if amounts:
+                    found.append(Observed("minimax", name.group(1), field, float(amounts[-1]),
+                                          above=int(tier.group(1)) * 1000 if tier else None))
+    return found
+
+
 MISTRAL_DOCS = "https://docs.mistral.ai"
 
 
@@ -446,6 +472,7 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "anthropic": ("https://platform.claude.com/docs/en/about-claude/pricing.md", parse_anthropic),
     "deepseek": ("https://api-docs.deepseek.com/quick_start/pricing", parse_deepseek),
     "google": ("https://ai.google.dev/gemini-api/docs/pricing.md.txt", parse_google),
+    "minimax": ("https://platform.minimax.io/docs/guides/pricing-paygo.md", parse_minimax),
     "mistral": ("https://mistral.ai/pricing/api", parse_mistral),
     "moonshotai": ("https://platform.kimi.ai/docs/pricing/chat.md", parse_moonshot),
     "openai": ("https://developers.openai.com/api/docs/pricing.md", parse_openai),
