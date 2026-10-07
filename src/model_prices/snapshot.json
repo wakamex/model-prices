@@ -5889,6 +5889,18 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.03,
+       "cache_write": 0.375,
+       "input": 0.6,
+       "output": 2.4,
+       "source": "https://github.com/sst/models.dev/commit/c2634caf7f88",
+       "valid_from": "2026-10-07T14:53:51Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-07T14:53:51Z"
      }
     ]
    },
@@ -12902,5 +12914,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-07T16:32:41Z"
+ "updated_at": "2026-10-07T16:32:45Z"
 }
