@@ -2,8 +2,8 @@ name: Update prices
 
 # Daily: record prices from official pages for models models.dev lacks, such as Cursor's,
 # and rebuild price history from models.dev. A changed models.dev provider whose prices all
-# match its official pricing page goes straight to main; one that fails its check, or has
-# no check, is held for review in the update-prices pull request. Every run, and every push
+# match its official pricing page, or that has no official page to check against, goes
+# straight to main; one that fails its check is held in the update-prices pull request. Every run, and every push
 # that changes the data, publishes the compiled snapshot to the data branch, where
 # model_prices.refresh() fetches it.
 
@@ -53,20 +53,16 @@ jobs:
           changed="$(uv --no-config run --locked model-prices update "$RUNNER_TEMP/models.dev" --json \
             | jq -r '.changed[]')"
           held=""
-          failed=""
           for provider in $changed; do
             status=0
             uv --no-config run --locked model-prices check "$provider" || status=$?
-            # Status 2 means the provider has no official check, so its changes need review.
-            if [ "$status" -ne 0 ]; then
-              held="$held $provider"
-            fi
+            # Status 2 means the provider has no official check, so models.dev's prices publish
+            # as they are.
             if [ "$status" -ne 0 ] && [ "$status" -ne 2 ]; then
-              failed="$failed $provider"
+              held="$held $provider"
             fi
           done
           echo "HELD=$held" >> "$GITHUB_ENV"
-          echo "FAILED=$failed" >> "$GITHUB_ENV"
           if [ -n "$held" ]; then
             git checkout -- data/prices.json src/model_prices/snapshot.json
             uv --no-config run --locked model-prices update "$RUNNER_TEMP/models.dev" --hold $held
@@ -99,7 +95,7 @@ jobs:
           else
             # No open pull request, so the branch holds nothing worth keeping.
             git push --force origin update-prices
-            gh pr create --fill --body "Rebuilt from models.dev. Held from automatic publishing:${HELD}. Providers that failed their official check:${FAILED:- none}; the others have no official check. Check each changed model's valid_from against the provider's announcement and add a correction when models.dev recorded the change late."
+            gh pr create --fill --body "Rebuilt from models.dev. Held after failing their official check:${HELD}. Fix each failure with a correction, or with a models.dev pull request when models.dev is wrong. Check each changed model's valid_from against the provider's announcement and add a correction when models.dev recorded the change late."
           fi
           git switch main
 
@@ -128,8 +124,8 @@ jobs:
       - name: Fail when a provider failed its official check
         if: github.event_name != 'push'
         run: |
-          if [ -n "$FAILED" ]; then
-            echo "Held after failing the official check:$FAILED"
+          if [ -n "$HELD" ]; then
+            echo "Held after failing the official check:$HELD"
             exit 1
           fi
           if [ -n "${OBSERVE_FAILED:-}" ]; then
