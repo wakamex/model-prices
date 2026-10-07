@@ -10341,6 +10341,25 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-07-13T05:52:59Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.04,
+       "input": 0.2,
+       "output": 1.15,
+       "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details",
+       "valid_from": "2026-10-07T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.037,
+       "input": 0.185,
+       "output": 1.11,
+       "source": "https://github.com/sst/models.dev/commit/12c9f299cd08",
+       "valid_from": "2026-07-13T05:52:59Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-07T00:00:00Z"
      }
     ]
    },
@@ -12933,5 +12952,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-07T16:34:54Z"
+ "updated_at": "2026-10-07T16:36:16Z"
 }

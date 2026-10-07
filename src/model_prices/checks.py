@@ -10,11 +10,13 @@ from dataclasses import asdict, dataclass
 from datetime import datetime, timedelta, timezone
 import html
 import inspect
+import json
 import re
 from typing import Callable, Iterable
 import urllib.request
 
-from model_prices import _data, _parse_time, _period, _schedule, genai_prices, rates, resolve
+from model_prices import (_data, _ids, _parse_time, _period, _schedule, genai_prices, rates,
+                          resolve)
 
 FIELDS = ("input", "cache_write", "cache_read", "output")
 
@@ -291,6 +293,76 @@ def parse_minimax(text: str, today: datetime) -> list[Observed]:
     return found
 
 
+def parse_perplexity(text: str, today: datetime) -> list[Observed]:
+    """Read Sonar token prices from the price data Perplexity's pricing page embeds. Its
+    per-request search fees and Deep Research's citation and reasoning token prices are
+    not modeled."""
+    models = re.search(r'"sonar":\s*\{\s*"models":\s*(\[.*?\])\s*\}', text, re.S)
+    if models is None:
+        return []
+    return [Observed("perplexity", model["id"], field, float(model[field]))
+            for model in json.loads(models.group(1)) for field in ("input", "output")
+            if field in model]
+
+
+def parse_stepfun(text: str, today: datetime) -> list[Observed]:
+    """Read token prices from StepFun's global pricing tables."""
+    columns = {"Input (cache miss)": "input", "Input (cache hit)": "cache_read", "Output": "output"}
+    found = []
+    for _, header, rows in _markdown_tables(text):
+        if header[:2] != ["Model", "Billing unit"] or not set(columns) <= set(header):
+            continue
+        for row in rows:
+            if row[header.index("Billing unit")] != "1M tokens":
+                continue
+            model = row[0].strip("`")
+            for title, field in columns.items():
+                value = _price(row[header.index(title)])
+                if value is not None:
+                    found.append(Observed("stepfun-ai", model, field, value))
+    return found
+
+
+def parse_arcee(text: str, today: datetime) -> list[Observed]:
+    """Read text model prices from Arcee's pricing page, which lists its own and resold
+    models under their Arcee ids."""
+    columns = {"Input": "input", "Output": "output", "Cached Input": "cache_read"}
+    found = []
+    for table in re.findall(r"<table.*?</table>", text, re.S):
+        header, rows = _mdx_grid(table)
+        titles = header[0] if header else []
+        if titles[:1] != ["Model Name"]:
+            continue
+        for row in rows:
+            for title, field in columns.items():
+                value = _price(row[titles.index(title)]) if title in titles else None
+                if value is not None:
+                    found.append(Observed("arcee", row[0], field, value))
+    return found
+
+
+def parse_thinkingmachines(text: str, today: datetime) -> list[Observed]:
+    """Read Tinker's sampling prices: prefill is input, with its cached price, and sample is
+    output. A struck-out list price is followed by the discounted price charged."""
+    found = []
+    for _, header, rows in _markdown_tables(text):
+        if "Tinker ID" not in header or "Sample" not in header:
+            continue
+        prefill = next(title for title in header if title.startswith("Prefill"))
+        for row in rows:
+            model = row[header.index("Tinker ID")]
+            cell = re.sub(r"~~[^~]*~~", "", row[header.index(prefill)]).replace("\\$", "$")
+            cached = re.search(r"\$([0-9.]+) \(cached\)", cell)
+            uncached = re.search(r"\$([0-9.]+)(?! \(cached\))", cell)
+            sample = re.findall(r"\$([0-9.]+)", re.sub(r"~~[^~]*~~", "", row[header.index("Sample")]))
+            for field, match in (("input", uncached), ("cache_read", cached)):
+                if match:
+                    found.append(Observed("thinkingmachines", model, field, float(match.group(1))))
+            if sample:
+                found.append(Observed("thinkingmachines", model, "output", float(sample[-1])))
+    return found
+
+
 MISTRAL_DOCS = "https://docs.mistral.ai"
 
 
@@ -469,11 +541,17 @@ def check_calendars(providers: set[str], today: datetime) -> list[Result]:
 SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "alibaba": ("https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
                 parse_alibaba),
+    "arcee": ("https://docs.arcee.ai/get-started/pricing.md", parse_arcee),
     "anthropic": ("https://platform.claude.com/docs/en/about-claude/pricing.md", parse_anthropic),
     "deepseek": ("https://api-docs.deepseek.com/quick_start/pricing", parse_deepseek),
     "google": ("https://ai.google.dev/gemini-api/docs/pricing.md.txt", parse_google),
     "minimax": ("https://platform.minimax.io/docs/guides/pricing-paygo.md", parse_minimax),
     "mistral": ("https://mistral.ai/pricing/api", parse_mistral),
+    "perplexity": ("https://docs.perplexity.ai/docs/getting-started/pricing.md", parse_perplexity),
+    "thinkingmachines": (
+        "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+        parse_thinkingmachines),
+    "stepfun-ai": ("https://platform.stepfun.ai/docs/en/guides/pricing/details.md", parse_stepfun),
     "moonshotai": ("https://platform.kimi.ai/docs/pricing/chat.md", parse_moonshot),
     "openai": ("https://developers.openai.com/api/docs/pricing.md", parse_openai),
     "xai": ("https://docs.x.ai/developers/pricing.md", parse_xai),
@@ -517,7 +595,10 @@ def compare(observed: Iterable[Observed], today: datetime,
         at = item.at or today.isoformat()
         # Official names must match exactly: a fuzzy match such as gpt-3.5-turbo-1106 to
         # gpt-3.5-turbo would compare different models.
-        resolved = resolve(item.model, item.provider, strict=True)
+        # An exact id comes first: some ids contain a slash, such as Arcee's
+        # deepseek/deepseek-v4-flash-latest, which resolve would read as a provider prefix.
+        exact = _ids(item.provider)[0].get(item.model.lower())
+        resolved = (item.provider, exact) if exact else resolve(item.model, item.provider, strict=True)
         # A page compares only its own provider's prices: Alibaba's page also lists the
         # prices it resells DeepSeek and Kimi models at, which are not DeepSeek's or Moonshot's.
         if resolved and resolved[0] != item.provider:

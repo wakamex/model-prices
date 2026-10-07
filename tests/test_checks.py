@@ -14,6 +14,7 @@ TODAY = datetime(2026, 9, 30, 12, tzinfo=timezone.utc)
 PAGES = {
     "alibaba": (FIXTURES / "alibaba.md").read_text(),
     "anthropic": (FIXTURES / "anthropic.md").read_text(),
+    "arcee": (FIXTURES / "arcee.md").read_text(),
     "deepseek": (FIXTURES / "deepseek.html").read_text(),
     "deepseek:zh": (FIXTURES / "deepseek-zh.html").read_text(),
     "google": (FIXTURES / "google.md").read_text(),
@@ -24,6 +25,9 @@ PAGES = {
     "https://docs.mistral.ai/models/mistral-large-4-0":
         (FIXTURES / "mistral-docs-large-4.html").read_text(),
     "moonshotai": (FIXTURES / "moonshot.md").read_text(),
+    "perplexity": (FIXTURES / "perplexity.md").read_text(),
+    "stepfun-ai": (FIXTURES / "stepfun.md").read_text(),
+    "thinkingmachines": (FIXTURES / "thinkingmachines.md").read_text(),
     "openai": (FIXTURES / "openai.md").read_text(),
     "xai": (FIXTURES / "xai.md").read_text(),
     "zai": (FIXTURES / "zai.md").read_text(),
@@ -114,6 +118,22 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(minimax[("MiniMax-M2.7", "cache_write", None, None)], 0.375)
         # The Priority tab's faster service tier is not read.
         self.assertNotIn(0.45, minimax.values())
+
+    def test_perplexity_stepfun_arcee_and_tinker_parsers(self):
+        self.assertEqual(_prices("perplexity")[("sonar-pro", "output", None, None)], 15)
+        stepfun = _prices("stepfun-ai")
+        self.assertEqual(stepfun[("step-3.5-flash", "cache_read", None, None)], 0.02)
+        # A free preview has no token price to read.
+        self.assertFalse(any(model == "stepaudio-3-chat-preview" for model, *_ in stepfun))
+        self.assertEqual(_prices("arcee")[("moonshotai/kimi-k3", "cache_read", None, None)], 0.3)
+        tinker = _prices("thinkingmachines")
+        self.assertEqual(tinker[("thinkingmachines/Inkling", "input", None, None)], 1.87)
+        self.assertEqual(tinker[("thinkingmachines/Inkling", "cache_read", None, None)], 0.374)
+        self.assertEqual(tinker[("thinkingmachines/Inkling", "output", None, None)], 4.68)
+
+    def test_ids_with_a_slash_match_exactly(self):
+        results = checks.run(["arcee"], pages=PAGES, today=TODAY)
+        self.assertIn("arcee/moonshotai/kimi-k3", {r.model for r in results if r.status == "ok"})
 
     def test_resold_models_are_not_compared_with_their_lab(self):
         results = checks.run(["alibaba"], pages=PAGES, today=TODAY)

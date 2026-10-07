@@ -379,3 +379,14 @@ cache_write = 0.375
 replaces = { input = 0.3, output = 1.2 }
 source = "https://platform.minimax.io/docs/guides/pricing-paygo"
 note = "MiniMax's pay-as-you-go legacy models table lists MiniMax-M2 at $0.3 input, $1.2 output, $0.03 prompt caching read, and $0.375 prompt caching write per 1M tokens, observed 2026-10-07. models.dev lists no cache prices, which priced cache reads and writes as input."
+
+[[correction]]
+provider = "stepfun-ai"
+model = "step-3.7-flash"
+valid_from = "2026-10-07T00:00:00Z"
+input = 0.2
+output = 1.15
+cache_read = 0.04
+replaces = { input = 0.185, output = 1.11 }
+source = "https://platform.stepfun.ai/docs/en/guides/pricing/details"
+note = "StepFun's global pricing page lists step-3.7-flash at $0.20 input (cache miss), $0.04 input (cache hit), and $1.15 output per 1M tokens, observed 2026-10-07. models.dev's global entry links to its China file, which lists $0.185/$0.037/$1.11."
