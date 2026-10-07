@@ -69,8 +69,8 @@
   }
  },
  "models_dev": {
-  "commit": "8ead8a84b5030f71926a2db7f9042b23d8f6c42f",
-  "committed_at": "2026-10-04T19:37:41Z",
+  "commit": "bd75d9c36119dfb4dc8609304dc0b7e77adcff73",
+  "committed_at": "2026-10-07T06:44:28Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -6206,6 +6206,21 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-09-29T00:37:26Z"
+     }
+    ]
+   },
+   "mistral-large-4": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.07,
+       "input": 0.68,
+       "output": 2.09,
+       "source": "https://github.com/sst/models.dev/commit/2abfde8241a8",
+       "valid_from": "2026-10-06T15:35:03Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
      }
     ]
    },
@@ -12720,5 +12735,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-04T19:45:40Z"
+ "updated_at": "2026-10-07T06:44:40Z"
 }

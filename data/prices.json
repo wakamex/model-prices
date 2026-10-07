@@ -3327,6 +3327,17 @@
      "valid_from": "2026-09-29T00:37:26Z"
     }
    ],
+   "mistral-large-4": [
+    {
+     "commit": "2abfde8241a8",
+     "rates": {
+      "cache_read": 0.07,
+      "input": 0.68,
+      "output": 2.09
+     },
+     "valid_from": "2026-10-06T15:35:03Z"
+    }
+   ],
    "mistral-large-latest": [
     {
      "commit": "024e4bdbf253",
@@ -7612,6 +7623,6 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "8ead8a84b5030f71926a2db7f9042b23d8f6c42f",
- "source_committed_at": "2026-10-04T19:37:41Z"
+ "source_commit": "bd75d9c36119dfb4dc8609304dc0b7e77adcff73",
+ "source_committed_at": "2026-10-07T06:44:28Z"
 }
