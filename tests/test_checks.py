@@ -20,6 +20,7 @@ PAGES = {
     "deepseek": (FIXTURES / "deepseek.html").read_text(),
     "deepseek:zh": (FIXTURES / "deepseek-zh.html").read_text(),
     "google": (FIXTURES / "google.md").read_text(),
+    "inception": (FIXTURES / "inception.md").read_text(),
     "minimax": (FIXTURES / "minimax.md").read_text(),
     "mistral": (FIXTURES / "mistral.html").read_text(),
     "https://docs.mistral.ai/models/mistral-large-3-25-12":
@@ -30,6 +31,7 @@ PAGES = {
     "perplexity": (FIXTURES / "perplexity.md").read_text(),
     "sakana": (FIXTURES / "sakana.html").read_text(),
     "stepfun-ai": (FIXTURES / "stepfun.md").read_text(),
+    "upstage": (FIXTURES / "upstage.html").read_text(),
     "thinkingmachines": (FIXTURES / "thinkingmachines.md").read_text(),
     "openai": (FIXTURES / "openai.md").read_text(),
     "xai": (FIXTURES / "xai.md").read_text(),
@@ -142,6 +144,23 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(sakana[("fugu-ultra", "output", 272_000, None)], 45)
         self.assertEqual(sakana[("fugu-ultra", "cache_read", None, None)], 0.5)
         self.assertEqual(_prices("ai21")[("jamba-large", "output", None, None)], 8)
+
+    def test_inception_sale_prices_and_upstage_dated_promotions(self):
+        inception = _prices("inception")
+        self.assertEqual(inception[("mercury-2.5", "input", None, None)], 0.04)
+        self.assertEqual(inception[("mercury-2", "cache_read", None, None)], 0.025)
+
+        page = PAGES["upstage"]
+        def solar_pro4(day):
+            moment = datetime.fromisoformat(f"{day}T12:00:00+00:00")
+            return {item.field: item.value for item in checks.parse_upstage(page, moment)
+                    if item.model == "solar-pro4"}
+        self.assertEqual(solar_pro4("2026-08-08")["input"], 0.0)
+        self.assertEqual(solar_pro4("2026-08-20"), {"input": 0.03, "cache_read": 0.006,
+                                                    "output": 0.12})
+        self.assertEqual(solar_pro4("2026-10-15")["output"], 1.2)
+        # "Solar Pro 4" is models.dev's solar-pro4.
+        self.assertIn(("solar-pro4", "input", None, None), _prices("upstage"))
 
     def test_ids_with_a_slash_match_exactly(self):
         results = checks.run(["arcee"], pages=PAGES, today=TODAY)

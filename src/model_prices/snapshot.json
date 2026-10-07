@@ -10501,6 +10501,24 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.015,
+       "input": 0.15,
+       "output": 0.6,
+       "source": "https://www.upstage.ai/pricing",
+       "valid_from": "2026-10-07T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.25,
+       "output": 0.25,
+       "source": "https://github.com/sst/models.dev/commit/5ee76694e18d",
+       "valid_from": "2025-07-27T23:38:05Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-07T00:00:00Z"
      }
     ]
    },
@@ -10515,6 +10533,24 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.015,
+       "input": 0.15,
+       "output": 0.6,
+       "source": "https://www.upstage.ai/pricing",
+       "valid_from": "2026-10-07T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.25,
+       "output": 0.25,
+       "source": "https://github.com/sst/models.dev/commit/6e6d31f803f8",
+       "valid_from": "2026-01-13T00:54:34Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-07T00:00:00Z"
      }
     ]
    },
@@ -10530,6 +10566,74 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.0,
+       "input": 0.0,
+       "output": 0.0,
+       "source": "https://www.upstage.ai/pricing",
+       "valid_from": "2026-08-05T22:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.06,
+       "input": 0.3,
+       "output": 1.2,
+       "source": "https://github.com/sst/models.dev/commit/f1f6a6efdaff",
+       "valid_from": "2026-08-06T15:29:28Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-08-05T22:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.006,
+       "input": 0.03,
+       "output": 0.12,
+       "source": "https://www.upstage.ai/pricing",
+       "valid_from": "2026-08-11T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.06,
+       "input": 0.3,
+       "output": 1.2,
+       "source": "https://github.com/sst/models.dev/commit/f1f6a6efdaff",
+       "valid_from": "2026-08-06T15:29:28Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-08-11T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.018,
+       "input": 0.09,
+       "output": 0.36,
+       "source": "https://www.upstage.ai/pricing",
+       "valid_from": "2026-09-11T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.06,
+       "input": 0.3,
+       "output": 1.2,
+       "source": "https://github.com/sst/models.dev/commit/f1f6a6efdaff",
+       "valid_from": "2026-08-06T15:29:28Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-09-11T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.06,
+       "input": 0.3,
+       "output": 1.2,
+       "source": "https://github.com/sst/models.dev/commit/f1f6a6efdaff",
+       "valid_from": "2026-08-06T15:29:28Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-11T00:00:00Z"
      }
     ]
    }
@@ -12952,5 +13056,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-07T16:36:16Z"
+ "updated_at": "2026-10-07T16:41:07Z"
 }

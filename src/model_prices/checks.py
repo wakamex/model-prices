@@ -369,8 +369,10 @@ def _display_id(provider: str, name: str) -> str:
     command-a-plus-05-2026."""
     slug = re.sub(r"[\s_]+", "-", name.strip().lower().replace("+", "-plus")).replace("--", "-")
     ids = _ids(provider)[0]
-    if slug in ids:
-        return ids[slug]
+    # Some labs join a trailing version to the name, such as solar-pro4 for "Solar Pro 4".
+    for candidate in (slug, re.sub(r"-(\d+(?:\.\d+)?)$", r"\1", slug)):
+        if candidate in ids:
+            return ids[candidate]
     dated = [key for key in ids if re.fullmatch(re.escape(slug) + r"-(\d{2})-(\d{4})", key)]
     if dated:
         return ids[max(dated, key=lambda key: (key[-4:], key[-7:-5]))]
@@ -430,6 +432,51 @@ def parse_ai21(text: str, today: datetime) -> list[Observed]:
         model = _display_id("ai21", name)
         found += [Observed("ai21", model, "input", float(prompt)),
                   Observed("ai21", model, "output", float(completion))]
+    return found
+
+
+def parse_inception(text: str, today: datetime) -> list[Observed]:
+    """Read Inception's models table; a struck-out list price is followed by the price
+    charged."""
+    columns = {"Input Price (1M Tokens)": "input", "Cached Input Price (1M Tokens)": "cache_read",
+               "Output Price (1M Tokens)": "output"}
+    found = []
+    for _, header, rows in _markdown_tables(text):
+        if header[:1] != ["Model"] or not set(columns) <= set(header):
+            continue
+        for row in rows:
+            model = _display_id("inception", row[0].strip("*"))
+            for title, field in columns.items():
+                amounts = re.findall(r"\$([0-9.]+)", re.sub(r"~~[^~]*~~", "", row[header.index(title)].replace("\\$", "$")))
+                if amounts:
+                    found.append(Observed("inception", model, field, float(amounts[-1])))
+    return found
+
+
+_UPSTAGE_WINDOW = re.compile(
+    r"(\d{4}-\d\d-\d\dT[\d:]+Z) \| (\d{4}-\d\d-\d\dT[\d:]+Z) \| "
+    r"(free|input=([0-9.]+) \| cached=([0-9.]+) \| output=([0-9.]+))")
+
+
+def parse_upstage(text: str, today: datetime) -> list[Observed]:
+    """Read Upstage's LLM price cards: a list price, and dated promotional windows whose
+    prices apply instead within them."""
+    found = []
+    card = re.compile(
+        r"((?:Solar|Syn) [^|]+?) \|(?: New \|)? [^|]+ \|(?: \* End of service[^|]* \|)? "
+        r"Input \| ([0-9.]+) \| 1M tokens \| Input\(Cached\) \| ([0-9.]+) \| 1M tokens \| "
+        r"Output \| ([0-9.]+) \| 1M tokens(.*)")
+    # One chunk per card, so each card's promotional windows stay with it.
+    chunks = re.split(r"\| (?=(?:Solar|Syn) )", _html_text(text))
+    cards = (match.groups() for match in map(card.match, chunks) if match)
+    for name, prompt, cached, completion, windows in cards:
+        prices = {"input": float(prompt), "cache_read": float(cached), "output": float(completion)}
+        for start, end, kind, w_in, w_cached, w_out in _UPSTAGE_WINDOW.findall(windows):
+            if _parse_time(start) <= today < _parse_time(end):
+                prices = ({field: 0.0 for field in prices} if kind == "free" else
+                          {"input": float(w_in), "cache_read": float(w_cached), "output": float(w_out)})
+        model = _display_id("upstage", name)
+        found += [Observed("upstage", model, field, value) for field, value in prices.items()]
     return found
 
 
@@ -617,6 +664,7 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "anthropic": ("https://platform.claude.com/docs/en/about-claude/pricing.md", parse_anthropic),
     "deepseek": ("https://api-docs.deepseek.com/quick_start/pricing", parse_deepseek),
     "google": ("https://ai.google.dev/gemini-api/docs/pricing.md.txt", parse_google),
+    "inception": ("https://docs.inceptionlabs.ai/get-started/models.md", parse_inception),
     "minimax": ("https://platform.minimax.io/docs/guides/pricing-paygo.md", parse_minimax),
     "mistral": ("https://mistral.ai/pricing/api", parse_mistral),
     "perplexity": ("https://docs.perplexity.ai/docs/getting-started/pricing.md", parse_perplexity),
@@ -624,6 +672,7 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
         "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
         parse_thinkingmachines),
     "sakana": ("https://console.sakana.ai/pricing", parse_sakana),
+    "upstage": ("https://www.upstage.ai/pricing", parse_upstage),
     "stepfun-ai": ("https://platform.stepfun.ai/docs/en/guides/pricing/details.md", parse_stepfun),
     "moonshotai": ("https://platform.kimi.ai/docs/pricing/chat.md", parse_moonshot),
     "openai": ("https://developers.openai.com/api/docs/pricing.md", parse_openai),

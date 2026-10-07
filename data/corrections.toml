@@ -390,3 +390,61 @@ cache_read = 0.04
 replaces = { input = 0.185, output = 1.11 }
 source = "https://platform.stepfun.ai/docs/en/guides/pricing/details"
 note = "StepFun's global pricing page lists step-3.7-flash at $0.20 input (cache miss), $0.04 input (cache hit), and $1.15 output per 1M tokens, observed 2026-10-07. models.dev's global entry links to its China file, which lists $0.185/$0.037/$1.11."
+
+# Upstage's pricing page dates each promotional window for Solar Pro 4; models.dev lists only
+# its list price, which applies again from 2026-10-11.
+
+[[correction]]
+provider = "upstage"
+model = "solar-pro4"
+valid_from = "2026-08-05T22:00:00Z"
+valid_until = "2026-08-11T00:00:00Z"
+input = 0.0
+output = 0.0
+cache_read = 0.0
+source = "https://www.upstage.ai/pricing"
+note = "Upstage's pricing page lists Solar Pro 4 as free from 2026-08-05T22:00:00Z to 2026-08-11T00:00:00Z."
+
+[[correction]]
+provider = "upstage"
+model = "solar-pro4"
+valid_from = "2026-08-11T00:00:00Z"
+valid_until = "2026-09-11T00:00:00Z"
+input = 0.03
+output = 0.12
+cache_read = 0.006
+source = "https://www.upstage.ai/pricing"
+note = "Upstage's pricing page lists Solar Pro 4 at input=0.03, cached=0.006, output=0.12 per 1M tokens from 2026-08-11T00:00:00Z to 2026-09-11T00:00:00Z."
+
+[[correction]]
+provider = "upstage"
+model = "solar-pro4"
+valid_from = "2026-09-11T00:00:00Z"
+valid_until = "2026-10-11T00:00:00Z"
+input = 0.09
+output = 0.36
+cache_read = 0.018
+source = "https://www.upstage.ai/pricing"
+note = "Upstage's pricing page lists Solar Pro 4 at input=0.09, cached=0.018, output=0.36 per 1M tokens from 2026-09-11T00:00:00Z to 2026-10-11T00:00:00Z."
+
+[[correction]]
+provider = "upstage"
+model = "solar-pro3"
+valid_from = "2026-10-07T00:00:00Z"
+input = 0.15
+output = 0.6
+cache_read = 0.015
+replaces = { input = 0.25, output = 0.25 }
+source = "https://www.upstage.ai/pricing"
+note = "Upstage's pricing page lists Solar Pro 3 at $0.15 input, $0.015 cached input, and $0.6 output per 1M tokens, observed 2026-10-07. models.dev lists $0.25/$0.25."
+
+[[correction]]
+provider = "upstage"
+model = "solar-pro2"
+valid_from = "2026-10-07T00:00:00Z"
+input = 0.15
+output = 0.6
+cache_read = 0.015
+replaces = { input = 0.25, output = 0.25 }
+source = "https://www.upstage.ai/pricing"
+note = "Upstage's pricing page lists Solar Pro 2 at $0.15 input, $0.015 cached input, and $0.6 output per 1M tokens, observed 2026-10-07. models.dev lists $0.25/$0.25."
