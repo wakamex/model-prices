@@ -363,6 +363,76 @@ def parse_thinkingmachines(text: str, today: datetime) -> list[Observed]:
     return found
 
 
+def _display_id(provider: str, name: str) -> str:
+    """The model id a display name denotes: its slug, such as command-a-plus for
+    "Command A+", or the newest id that adds a date or version to the slug, such as
+    command-a-plus-05-2026."""
+    slug = re.sub(r"[\s_]+", "-", name.strip().lower().replace("+", "-plus")).replace("--", "-")
+    ids = _ids(provider)[0]
+    if slug in ids:
+        return ids[slug]
+    dated = [key for key in ids if re.fullmatch(re.escape(slug) + r"-(\d{2})-(\d{4})", key)]
+    if dated:
+        return ids[max(dated, key=lambda key: (key[-4:], key[-7:-5]))]
+    versions = [key for key in ids if re.fullmatch(re.escape(slug) + r"-\d+(-\d+)?", key)]
+    return ids[versions[0]] if len(versions) == 1 else slug
+
+
+def parse_cohere(text: str, today: datetime) -> list[Observed]:
+    """Read model prices from the content data Cohere's pricing page embeds, which names
+    models for display. A card marked Free, such as an open-weights model's, states no API
+    price and is skipped."""
+    found = []
+    data = text.replace('\\"', '"')
+    for record in re.finditer(r'"_type":"model".*?"modelName":"([^"]+)","per":"([^"]*)"', data):
+        if record.group(2) == "Free":
+            continue
+        pricing = re.search(r'"pricings":\[\{[^]]*?"inputPrice":([0-9.]+)[^]]*?"outputPrice":([0-9.]+)',
+                            data[record.end():record.end() + 4000])
+        following = data.find('"_type":"model"', record.end())
+        if pricing is None or (following != -1 and record.end() + pricing.start() > following):
+            continue
+        model = _display_id("cohere", record.group(1))
+        found += [Observed("cohere", model, "input", float(pricing.group(1))),
+                  Observed("cohere", model, "output", float(pricing.group(2)))]
+    return found
+
+
+def parse_sakana(text: str, today: datetime) -> list[Observed]:
+    """Read Sakana AI's pay-as-you-go tables, each under a heading naming its model."""
+    fields = {"Input": "input", "Output": "output", "Cached input": "cache_read"}
+    found = []
+    for table in re.finditer(r"<table.*?</table>", text, re.S):
+        headings = re.findall(r"<h[1-4][^>]*>(.*?)</h[1-4]>", text[:table.start()], re.S)
+        header, rows = _mdx_grid(table.group(0))
+        titles = header[0] if header else []
+        if not headings or titles[:1] != ["Token type"]:
+            continue
+        name = _mdx_cell(headings[-1])
+        model = _display_id("sakana", re.sub(r"-v\d+(\.\d+)?$", "", name))
+        for row in rows:
+            field = fields.get(row[0])
+            for title in titles[1:]:
+                tier = re.search(r"> ?([0-9]+)K", title)
+                value = _price(row[titles.index(title)])
+                if field and value is not None:
+                    found.append(Observed("sakana", model, field, value,
+                                          above=int(tier.group(1)) * 1000 if tier else None))
+    return found
+
+
+def parse_ai21(text: str, today: datetime) -> list[Observed]:
+    """Read Jamba prices, which AI21's pricing page states in prose."""
+    found = []
+    for name, prompt, completion in re.findall(
+            r"\| (Jamba [A-Za-z0-9 .]+?) \|[^$]*?\$([0-9.]+) / 1M input tokens \| \$([0-9.]+) / 1M output tokens",
+            _html_text(text)):
+        model = _display_id("ai21", name)
+        found += [Observed("ai21", model, "input", float(prompt)),
+                  Observed("ai21", model, "output", float(completion))]
+    return found
+
+
 MISTRAL_DOCS = "https://docs.mistral.ai"
 
 
@@ -541,7 +611,9 @@ def check_calendars(providers: set[str], today: datetime) -> list[Result]:
 SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "alibaba": ("https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
                 parse_alibaba),
+    "ai21": ("https://www.ai21.com/pricing/", parse_ai21),
     "arcee": ("https://docs.arcee.ai/get-started/pricing.md", parse_arcee),
+    "cohere": ("https://cohere.com/pricing", parse_cohere),
     "anthropic": ("https://platform.claude.com/docs/en/about-claude/pricing.md", parse_anthropic),
     "deepseek": ("https://api-docs.deepseek.com/quick_start/pricing", parse_deepseek),
     "google": ("https://ai.google.dev/gemini-api/docs/pricing.md.txt", parse_google),
@@ -551,6 +623,7 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "thinkingmachines": (
         "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
         parse_thinkingmachines),
+    "sakana": ("https://console.sakana.ai/pricing", parse_sakana),
     "stepfun-ai": ("https://platform.stepfun.ai/docs/en/guides/pricing/details.md", parse_stepfun),
     "moonshotai": ("https://platform.kimi.ai/docs/pricing/chat.md", parse_moonshot),
     "openai": ("https://developers.openai.com/api/docs/pricing.md", parse_openai),

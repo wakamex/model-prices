@@ -13,8 +13,10 @@ TODAY = datetime(2026, 9, 30, 12, tzinfo=timezone.utc)
 # Synthetic pages in the layouts of the official pricing pages, with their 2026-09-30 prices.
 PAGES = {
     "alibaba": (FIXTURES / "alibaba.md").read_text(),
+    "ai21": (FIXTURES / "ai21.html").read_text(),
     "anthropic": (FIXTURES / "anthropic.md").read_text(),
     "arcee": (FIXTURES / "arcee.md").read_text(),
+    "cohere": (FIXTURES / "cohere.html").read_text(),
     "deepseek": (FIXTURES / "deepseek.html").read_text(),
     "deepseek:zh": (FIXTURES / "deepseek-zh.html").read_text(),
     "google": (FIXTURES / "google.md").read_text(),
@@ -26,6 +28,7 @@ PAGES = {
         (FIXTURES / "mistral-docs-large-4.html").read_text(),
     "moonshotai": (FIXTURES / "moonshot.md").read_text(),
     "perplexity": (FIXTURES / "perplexity.md").read_text(),
+    "sakana": (FIXTURES / "sakana.html").read_text(),
     "stepfun-ai": (FIXTURES / "stepfun.md").read_text(),
     "thinkingmachines": (FIXTURES / "thinkingmachines.md").read_text(),
     "openai": (FIXTURES / "openai.md").read_text(),
@@ -130,6 +133,15 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(tinker[("thinkingmachines/Inkling", "input", None, None)], 1.87)
         self.assertEqual(tinker[("thinkingmachines/Inkling", "cache_read", None, None)], 0.374)
         self.assertEqual(tinker[("thinkingmachines/Inkling", "output", None, None)], 4.68)
+
+    def test_display_names_map_to_dated_ids(self):
+        # Cohere names Command R, whose models.dev id adds a date; a Free card has no price.
+        self.assertEqual(_prices("cohere"), {("command-r-08-2024", "input", None, None): 0.15,
+                                             ("command-r-08-2024", "output", None, None): 0.6})
+        sakana = _prices("sakana")
+        self.assertEqual(sakana[("fugu-ultra", "output", 272_000, None)], 45)
+        self.assertEqual(sakana[("fugu-ultra", "cache_read", None, None)], 0.5)
+        self.assertEqual(_prices("ai21")[("jamba-large", "output", None, None)], 8)
 
     def test_ids_with_a_slash_match_exactly(self):
         results = checks.run(["arcee"], pages=PAGES, today=TODAY)
