@@ -342,3 +342,28 @@ tiers = [{ above = 128000, input = 2.0, output = 12.0, cache_read = 0.2, cache_w
 replaces = { input = 1.3, output = 7.8 }
 source = "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
 note = "Singapore tab, on 2026-10-04: $1.3 input, $7.8 output per 1M tokens; above 128K $2.0/$12.0. models.dev lists no tiers. Cache prices keep models.dev's ratio to the input price. Alibaba's model page and pricing table give the $2/$12 tier above 128K alongside the $1.3/$7.8 base price. Applies from models.dev's first record, since research found the official price applied throughout (finding research/price-dates/findings/alibaba_qwen3.6_max_preview_gap)."
+
+# Mistral's -latest aliases moved to its Ministral 3 models, priced on Mistral's API pricing
+# page; models.dev still lists the earlier models' prices for them.
+
+[[correction]]
+provider = "mistral"
+model = "ministral-8b-latest"
+valid_from = "2026-10-07T00:00:00Z"
+input = 0.15
+output = 0.15
+cache_read = 0.015
+replaces = { input = 0.1, output = 0.1 }
+source = "https://mistral.ai/pricing/api"
+note = "Ministral 3 8B, whose docs page lists ministral-8b-latest among its API names, at $0.15 input, $0.015 cached input, and $0.15 output per 1M tokens, observed 2026-10-07. models.dev lists $0.1/$0.1."
+
+[[correction]]
+provider = "mistral"
+model = "ministral-3b-latest"
+valid_from = "2026-10-07T00:00:00Z"
+input = 0.1
+output = 0.1
+cache_read = 0.01
+replaces = { input = 0.04, output = 0.04 }
+source = "https://mistral.ai/pricing/api"
+note = "Ministral 3 3B, whose docs page lists ministral-3b-latest among its API names, at $0.1 input, $0.01 cached input, and $0.1 output per 1M tokens, observed 2026-10-07. models.dev lists $0.04/$0.04."

@@ -9,6 +9,7 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 from datetime import datetime, timedelta, timezone
 import html
+import inspect
 import re
 from typing import Callable, Iterable
 import urllib.request
@@ -264,6 +265,46 @@ def parse_alibaba(text: str, today: datetime) -> list[Observed]:
     return found
 
 
+MISTRAL_DOCS = "https://docs.mistral.ai"
+
+
+def _mistral_ids(page: str) -> list[str]:
+    """Every API name a Mistral docs model page lists for its model, such as
+    ["mistral-medium-3-5", "mistral-medium-3", "mistral-medium-latest"]."""
+    names = re.search(r'"names":\[((?:"[a-z0-9.-]+",?)+)\]', page.replace('\\"', '"'))
+    if names is None:
+        raise ValueError("mistral: no model ids on a docs model page; the page format changed")
+    return re.findall(r'"([a-z0-9.-]+)"', names.group(1))
+
+
+def parse_mistral(text: str, today: datetime, get: Callable[[str], str]) -> list[Observed]:
+    """Read token prices from Mistral's API pricing tables. Rows name models by display
+    name and link to a docs page that gives the API id. A sale price is the price charged."""
+    columns = {"Input": "input", "Cached input": "cache_read", "Output": "output"}
+    found = []
+    for table in re.findall(r"<table.*?</table>", text, re.S):
+        header, rows = _mdx_grid(table)
+        titles = header[0] if header else []
+        if titles[:1] != ["Model"] or not set(columns) <= set(titles):
+            continue
+        body = re.search(r"<tbody[^>]*>(.*?)</tbody>", table, re.S)
+        for row_html, row in zip(re.findall(r"<tr[^>]*>(.*?)</tr>", body.group(1), re.S), rows):
+            cells = {title: row[titles.index(title)] for title in columns}
+            # Rows priced per page, minute, or character are not token prices.
+            if any(re.search(r"/\s*(1000 Pages|Min|M Chars)", cell) for cell in cells.values()):
+                continue
+            link = re.search(r'href="(/models/[^"]+)"', row_html)
+            if link is None:
+                continue
+            models = _mistral_ids(get(MISTRAL_DOCS + link.group(1)))
+            for title, field in columns.items():
+                amounts = re.findall(r"\$\s*([0-9]+(?:\.[0-9]+)?)", cells[title])
+                value = float(amounts[-1]) if amounts else (0.0 if cells[title] == "Free" else None)
+                if value is not None:
+                    found.extend(Observed("mistral", model, field, value) for model in models)
+    return found
+
+
 _GOOGLE_DATE = r"([A-Z][a-z]+ [0-9]{1,2}, [0-9]{4})"
 
 
@@ -405,6 +446,7 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "anthropic": ("https://platform.claude.com/docs/en/about-claude/pricing.md", parse_anthropic),
     "deepseek": ("https://api-docs.deepseek.com/quick_start/pricing", parse_deepseek),
     "google": ("https://ai.google.dev/gemini-api/docs/pricing.md.txt", parse_google),
+    "mistral": ("https://mistral.ai/pricing/api", parse_mistral),
     "moonshotai": ("https://platform.kimi.ai/docs/pricing/chat.md", parse_moonshot),
     "openai": ("https://developers.openai.com/api/docs/pricing.md", parse_openai),
     "xai": ("https://docs.x.ai/developers/pricing.md", parse_xai),
@@ -480,7 +522,12 @@ def run(providers: Iterable[str] | None = None, today: datetime | None = None,
     for provider in providers or SOURCES:
         url, parser = SOURCES[provider]
         page = pages[provider] if pages and provider in pages else fetch(url)
-        observed = parser(page, moment)
+        # A check that reads further pages, such as Mistral's per-model docs, gets a fetcher.
+        if len(inspect.signature(parser).parameters) == 3:
+            observed = parser(page, moment, lambda other: pages[other] if pages and other in pages
+                              else fetch(other))
+        else:
+            observed = parser(page, moment)
         if not observed:
             raise ValueError(f"{provider}: no prices parsed from {url}; the page format changed")
         results.extend(compare(observed, moment, genai))

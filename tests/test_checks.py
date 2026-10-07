@@ -17,6 +17,11 @@ PAGES = {
     "deepseek": (FIXTURES / "deepseek.html").read_text(),
     "deepseek:zh": (FIXTURES / "deepseek-zh.html").read_text(),
     "google": (FIXTURES / "google.md").read_text(),
+    "mistral": (FIXTURES / "mistral.html").read_text(),
+    "https://docs.mistral.ai/models/mistral-large-3-25-12":
+        (FIXTURES / "mistral-docs-large-3.html").read_text(),
+    "https://docs.mistral.ai/models/mistral-large-4-0":
+        (FIXTURES / "mistral-docs-large-4.html").read_text(),
     "moonshotai": (FIXTURES / "moonshot.md").read_text(),
     "openai": (FIXTURES / "openai.md").read_text(),
     "xai": (FIXTURES / "xai.md").read_text(),
@@ -25,8 +30,10 @@ PAGES = {
 
 
 def _prices(provider):
+    parser = checks.SOURCES[provider][1]
+    extra = (PAGES.__getitem__,) if provider == "mistral" else ()
     return {(item.model, item.field, item.above, item.at): item.value
-            for item in checks.SOURCES[provider][1](PAGES[provider], TODAY)}
+            for item in parser(PAGES[provider], TODAY, *extra)}
 
 
 def _terms(pages):
@@ -85,6 +92,18 @@ class CheckTests(unittest.TestCase):
         self.assertNotIn(0.115, alibaba.values())
         models = {model for model, *_ in alibaba}
         self.assertFalse(models & {"qwen3.5-omni-plus", "deepseek-v4-flash-0731", "qwen-image"})
+
+    def test_mistral_parser_reads_sale_prices_under_every_api_name(self):
+        mistral = _prices("mistral")
+
+        self.assertEqual(mistral[("mistral-large-4", "input", None, None)], 0.68)
+        self.assertEqual(mistral[("mistral-large-4", "output", None, None)], 2.09)
+        # Each docs page lists every API name of its model.
+        self.assertEqual(mistral[("mistral-large-2512", "cache_read", None, None)], 0.05)
+        self.assertEqual(mistral[("mistral-large-latest", "output", None, None)], 1.5)
+        # Rows priced per page are not token prices.
+        self.assertEqual({model for model, *_ in mistral},
+                         {"mistral-large-4", "mistral-large-2512", "mistral-large-latest"})
 
     def test_resold_models_are_not_compared_with_their_lab(self):
         results = checks.run(["alibaba"], pages=PAGES, today=TODAY)
