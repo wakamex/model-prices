@@ -21,6 +21,9 @@ PAGES = {
     "deepseek:zh": (FIXTURES / "deepseek-zh.html").read_text(),
     "google": (FIXTURES / "google.md").read_text(),
     "inception": (FIXTURES / "inception.md").read_text(),
+    "meta": (FIXTURES / "meta.html").read_text(),
+    "https://dev.meta.ai/models/muse-spark/": (FIXTURES / "meta-muse-spark.html").read_text(),
+    "https://dev.meta.ai/models/muse-image/": (FIXTURES / "meta-muse-image.html").read_text(),
     "minimax": (FIXTURES / "minimax.md").read_text(),
     "mistral": (FIXTURES / "mistral.html").read_text(),
     "https://docs.mistral.ai/models/mistral-large-3-25-12":
@@ -32,6 +35,7 @@ PAGES = {
     "sakana": (FIXTURES / "sakana.html").read_text(),
     "stepfun-ai": (FIXTURES / "stepfun.md").read_text(),
     "upstage": (FIXTURES / "upstage.html").read_text(),
+    "xiaomi": (FIXTURES / "xiaomi.md").read_text(),
     "thinkingmachines": (FIXTURES / "thinkingmachines.md").read_text(),
     "openai": (FIXTURES / "openai.md").read_text(),
     "xai": (FIXTURES / "xai.md").read_text(),
@@ -41,7 +45,7 @@ PAGES = {
 
 def _prices(provider):
     parser = checks.SOURCES[provider][1]
-    extra = (PAGES.__getitem__,) if provider == "mistral" else ()
+    extra = (PAGES.__getitem__,) if provider in {"meta", "mistral"} else ()
     return {(item.model, item.field, item.above, item.at): item.value
             for item in parser(PAGES[provider], TODAY, *extra)}
 
@@ -161,6 +165,17 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(solar_pro4("2026-10-15")["output"], 1.2)
         # "Solar Pro 4" is models.dev's solar-pro4.
         self.assertIn(("solar-pro4", "input", None, None), _prices("upstage"))
+
+    def test_xiaomi_overseas_real_time_and_meta_model_pages(self):
+        xiaomi = _prices("xiaomi")
+        # One cell names two models; domestic yuan prices and batch prices are not read.
+        self.assertEqual(xiaomi[("mimo-v2.5", "input", None, None)], 0.14)
+        self.assertEqual(xiaomi[("mimo-v2.6-flash", "cache_read", None, None)], 0.0028)
+        self.assertEqual(xiaomi[("mimo-v2.6-pro", "output", None, None)], 0.87)
+        self.assertNotIn(0.07, xiaomi.values())
+        meta = _prices("meta")
+        self.assertEqual(meta[("muse-spark-1.3", "output", None, None)], 4.25)
+        self.assertEqual(meta[("muse-spark-1.3-contributor", "cache_read", None, None)], 0.002)
 
     def test_ids_with_a_slash_match_exactly(self):
         results = checks.run(["arcee"], pages=PAGES, today=TODAY)

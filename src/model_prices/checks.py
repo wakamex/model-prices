@@ -202,8 +202,10 @@ def _mdx_grid(table: str) -> tuple[list[list[str]], list[list[str]]]:
                 if cell is None:
                     break
                 attributes, body = cell
-                down = int((re.search(r"rowSpan=\{(\d+)\}", attributes) or [0, 1])[1])
-                across = int((re.search(r"colSpan=\{(\d+)\}", attributes) or [0, 1])[1])
+                down, across = (int(next(filter(None, found.groups())) if found else 1)
+                                for found in (re.search(rf'{name}=(?:\{{(\d+)\}}|"(\d+)")',
+                                                        attributes, re.I)
+                                              for name in ("rowspan", "colspan")))
                 for _ in range(across):
                     if down > 1:
                         spanning[len(line)] = (_mdx_cell(body), down - 1)
@@ -480,6 +482,48 @@ def parse_upstage(text: str, today: datetime) -> list[Observed]:
     return found
 
 
+def parse_xiaomi(text: str, today: datetime) -> list[Observed]:
+    """Read Xiaomi MiMo's overseas real-time API prices; batch prices are not modeled. A
+    cell can name several models that share its prices."""
+    columns = {"Input (Cache Miss)": "input", "Input (Cache Hit)": "cache_read", "Output": "output"}
+    start = text.find("### Overseas Pricing")
+    found = []
+    for table in re.findall(r"<table.*?</table>", text[start:] if start >= 0 else "", re.S):
+        header, rows = _mdx_grid(table)
+        titles = [title.strip("* ") for title in header[0]] if header else []
+        if "Model Name" not in titles or not set(columns) <= set(titles):
+            continue
+        for row in rows:
+            if titles[0] == "Inference Type" and "Real-time" not in row[0]:
+                continue
+            for model in re.findall(r"`([^`]+)`", row[titles.index("Model Name")]):
+                for title, field in columns.items():
+                    value = _price(row[titles.index(title)])
+                    if value is not None:
+                        found.append(Observed("xiaomi", model.strip(), field, value))
+    return found
+
+
+META_SITE = "https://dev.meta.ai"
+
+
+def parse_meta(text: str, today: datetime, get: Callable[[str], str]) -> list[Observed]:
+    """Read the "Models and pricing" grid on each Muse model page the Meta developer site
+    links: model id, description, context window, then input, cached input, and output."""
+    found = []
+    for path in sorted(set(re.findall(r'href="(/models/muse-[a-z0-9-]+/)"', text))):
+        page = _html_text(get(META_SITE + path))
+        if "| Input (Mtok) | Cached input (Mtok) | Output (Mtok) |" not in page:
+            continue
+        for model, prompt, cached, completion in re.findall(
+                r"\| (muse-[a-z0-9.-]+) \| [^|]+ \| [^|]+ \| \$([0-9.]+) \| \$([0-9.]+) \| \$([0-9.]+)",
+                page):
+            found += [Observed("meta", model, "input", float(prompt)),
+                      Observed("meta", model, "cache_read", float(cached)),
+                      Observed("meta", model, "output", float(completion))]
+    return found
+
+
 MISTRAL_DOCS = "https://docs.mistral.ai"
 
 
@@ -665,6 +709,7 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "deepseek": ("https://api-docs.deepseek.com/quick_start/pricing", parse_deepseek),
     "google": ("https://ai.google.dev/gemini-api/docs/pricing.md.txt", parse_google),
     "inception": ("https://docs.inceptionlabs.ai/get-started/models.md", parse_inception),
+    "meta": ("https://dev.meta.ai/models/muse-spark/", parse_meta),
     "minimax": ("https://platform.minimax.io/docs/guides/pricing-paygo.md", parse_minimax),
     "mistral": ("https://mistral.ai/pricing/api", parse_mistral),
     "perplexity": ("https://docs.perplexity.ai/docs/getting-started/pricing.md", parse_perplexity),
@@ -672,6 +717,7 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
         "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
         parse_thinkingmachines),
     "sakana": ("https://console.sakana.ai/pricing", parse_sakana),
+    "xiaomi": ("https://mimo.mi.com/static/docs/price/pay-as-you-go.md", parse_xiaomi),
     "upstage": ("https://www.upstage.ai/pricing", parse_upstage),
     "stepfun-ai": ("https://platform.stepfun.ai/docs/en/guides/pricing/details.md", parse_stepfun),
     "moonshotai": ("https://platform.kimi.ai/docs/pricing/chat.md", parse_moonshot),
