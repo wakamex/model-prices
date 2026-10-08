@@ -1011,8 +1011,8 @@
       "rates": {
        "input": 0.07,
        "output": 0.16,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
-       "valid_from": "2026-10-04T00:00:00Z",
+       "source": "https://web.archive.org/web/20260210034228/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-02-10T03:42:28Z",
        "valid_from_basis": "documented"
       },
       "recorded": {
@@ -1022,7 +1022,7 @@
        "valid_from": "2025-10-14T17:34:46Z",
        "valid_from_basis": "models.dev commit"
       },
-      "start": "2026-10-04T00:00:00Z"
+      "start": "2026-02-10T03:42:28Z"
      },
      {
       "rates": {
@@ -2506,7 +2506,7 @@
       "rates": {
        "input": 0.4,
        "output": 2.4,
-       "source": "https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "source": "https://web.archive.org/web/20260402181911/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -2514,7 +2514,7 @@
          "output": 3.0
         }
        ],
-       "valid_from": "2026-09-09T19:28:20Z",
+       "valid_from": "2026-04-02T18:19:11Z",
        "valid_from_basis": "documented"
       },
       "recorded": {
@@ -2524,7 +2524,7 @@
        "valid_from": "2026-02-16T22:06:32Z",
        "valid_from_basis": "models.dev commit"
       },
-      "start": "2026-09-09T19:28:20Z"
+      "start": "2026-04-02T18:19:11Z"
      }
     ],
     "thinking": [
@@ -2542,7 +2542,7 @@
       "rates": {
        "input": 0.4,
        "output": 2.4,
-       "source": "https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "source": "https://web.archive.org/web/20260402181911/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -2550,7 +2550,7 @@
          "output": 3.0
         }
        ],
-       "valid_from": "2026-09-09T19:28:20Z",
+       "valid_from": "2026-04-02T18:19:11Z",
        "valid_from_basis": "documented"
       },
       "recorded": {
@@ -2560,7 +2560,7 @@
        "valid_from": "2026-02-16T22:06:32Z",
        "valid_from_basis": "models.dev commit"
       },
-      "start": "2026-09-09T19:28:20Z"
+      "start": "2026-04-02T18:19:11Z"
      }
     ]
    },
@@ -16295,5 +16295,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-08T18:20:58Z"
+ "updated_at": "2026-10-08T18:26:44Z"
 }
