@@ -74,8 +74,8 @@
   }
  },
  "models_dev": {
-  "commit": "25bd6dc7bd81b8aab672de118526b664249d610a",
-  "committed_at": "2026-10-07T20:33:09Z",
+  "commit": "181c167dafae213a89fd643226e6cff8bcff7473",
+  "committed_at": "2026-10-08T06:46:41Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -3844,6 +3844,19 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-07T20:31:33Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "cache_write": 2.5,
+       "cache_write_1h_multiple": 2.0,
+       "input": 2.0,
+       "output": 10.0,
+       "source": "https://github.com/sst/models.dev/commit/5965293f511d",
+       "valid_from": "2026-10-07T22:27:10Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-07T22:27:10Z"
      }
     ]
    }
@@ -13761,5 +13774,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-07T21:20:29Z"
+ "updated_at": "2026-10-08T06:46:54Z"
 }
