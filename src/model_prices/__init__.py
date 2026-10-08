@@ -22,7 +22,7 @@ import warnings
 # Search order for model names given without a known provider.
 LAB_PROVIDERS = (
     "anthropic", "openai", "google", "zai", "deepseek", "xai", "moonshotai", "alibaba",
-    "mistral", "minimax", "xiaomi", "meta", "cohere", "stepfun-ai", "perplexity", "volcengine",
+    "mistral", "minimax", "xiaomi", "meta", "cohere", "stepfun-ai", "perplexity", "byteplus", "volcengine",
     "tencent-tokenhub", "nova", "amazon-bedrock", "sakana", "inception", "ai21", "upstage", "poolside", "arcee",
     "longcat", "bailing", "sensenova", "sarvam", "thinkingmachines", "cognition", "cursor",
 )

@@ -73,6 +73,15 @@ class ObserveTests(unittest.TestCase):
         self.assertIn("composer-2.5", recorded["cursor"])
         self.assertNotIn("cognition", recorded)
 
+    def test_byteplus_table_gives_seed_models_with_their_long_context_tier(self):
+        # Resold models are left out, and the Flex table gives no standard prices.
+        self.assertEqual(observe.parse_byteplus((FIXTURES / "byteplus.html").read_text()), {
+            "dola-seed-2-1-turbo": {"input": 0.5, "cache_read": 0.1, "output": 2.5},
+            "seed-2-0-lite-260428": {"input": 0.25, "cache_read": 0.05, "output": 2.0, "tiers": [
+                {"above": 128_000, "input": 0.5, "cache_read": 0.1, "output": 4.0}]}})
+        with self.assertRaisesRegex(ValueError, "page format changed"):
+            observe.parse_byteplus("<p>Pricing moved.</p>")
+
     def test_checked_pages_give_own_models_that_models_dev_lacks(self):
         # Renamed so models.dev lacks it: an own model with long-context tiers, beside a
         # model models.dev lists and a DeepSeek model Alibaba resells.
