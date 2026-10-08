@@ -1369,12 +1369,20 @@
    "mistral-medium-3": [
     {
      "rates": {
+      "input": 0.4,
+      "output": 2.0
+     },
+     "source": "https://web.archive.org/web/20260118045426/https://mistral.ai/pricing",
+     "valid_from": "2026-01-18T04:54:26Z"
+    },
+    {
+     "rates": {
       "cache_read": 0.15,
       "input": 1.5,
       "output": 7.5
      },
-     "source": "https://mistral.ai/pricing/api",
-     "valid_from": "2026-10-08T17:55:23Z"
+     "source": "https://docs.mistral.ai/models/overview",
+     "valid_from": "2026-08-31T00:00:00Z"
     }
    ],
    "mistral-moderation-2603": [
