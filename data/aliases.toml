@@ -19,5 +19,7 @@ zcode = "zai"
 "claude-sonnet-4" = "anthropic/claude-sonnet-4-0"
 # Releases before 0.0.4 do not search Cursor's models; this reaches them through the data.
 "composer-2.5" = "cursor/composer-2.5"
+# Mistral Medium 3.5's API name, which its docs list beside mistral-medium-2604.
+"mistral-medium-3-5" = "mistral/mistral-medium-2604"
 # Inkling's models.dev id; an earlier "inkling" file recorded its pre-discount list price.
 "inkling" = "thinkingmachines/thinkingmachines/Inkling"

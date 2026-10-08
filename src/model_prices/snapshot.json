@@ -6,7 +6,8 @@
    "claude-sonnet-4": "anthropic/claude-sonnet-4-0",
    "composer-2.5": "cursor/composer-2.5",
    "grok-4-6": "xai/grok-4.6",
-   "inkling": "thinkingmachines/thinkingmachines/Inkling"
+   "inkling": "thinkingmachines/thinkingmachines/Inkling",
+   "mistral-medium-3-5": "mistral/mistral-medium-2604"
   },
   "providers": {
    "agy": "google",
@@ -352,7 +353,7 @@
       "rates": {
        "input": 0.05,
        "output": 0.4,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -360,7 +361,7 @@
          "output": 2.0
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -387,8 +388,8 @@
       "rates": {
        "input": 0.16,
        "output": 0.49,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -401,8 +402,8 @@
       "rates": {
        "input": 0.12,
        "output": 0.36,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -545,8 +546,8 @@
       "rates": {
        "input": 0.4,
        "output": 1.2,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -559,43 +560,23 @@
       "rates": {
        "input": 0.4,
        "output": 1.2,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.4,
-       "output": 1.2,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ],
     "thinking": [
      {
       "rates": {
        "input": 0.4,
-       "output": 1.2,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "output": 4.0,
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.4,
-       "output": 4.0,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ]
    },
@@ -605,43 +586,23 @@
       "rates": {
        "input": 0.4,
        "output": 1.2,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.4,
-       "output": 1.2,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ],
     "thinking": [
      {
       "rates": {
        "input": 0.4,
-       "output": 1.2,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "output": 4.0,
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.4,
-       "output": 4.0,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ]
    },
@@ -651,7 +612,7 @@
       "rates": {
        "input": 0.4,
        "output": 1.2,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -659,52 +620,18 @@
          "output": 3.6
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.4,
-       "output": 1.2,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "tiers": [
-        {
-         "above": 256000,
-         "input": 1.2,
-         "output": 3.6
-        }
-       ],
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ],
     "thinking": [
      {
       "rates": {
        "input": 0.4,
-       "output": 1.2,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "tiers": [
-        {
-         "above": 256000,
-         "input": 1.2,
-         "output": 3.6
-        }
-       ],
-       "valid_from": "2026-10-08T17:55:23Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": null
-     },
-     {
-      "rates": {
-       "input": 0.4,
        "output": 4.0,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -712,10 +639,10 @@
          "output": 12.0
         }
        ],
-       "valid_from": "2026-10-08T18:11:06Z",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
-      "start": "2026-10-08T18:11:06Z"
+      "start": null
      }
     ]
    },
@@ -725,7 +652,7 @@
       "rates": {
        "input": 0.4,
        "output": 1.2,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -733,52 +660,18 @@
          "output": 3.6
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.4,
-       "output": 1.2,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "tiers": [
-        {
-         "above": 256000,
-         "input": 1.2,
-         "output": 3.6
-        }
-       ],
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ],
     "thinking": [
      {
       "rates": {
        "input": 0.4,
-       "output": 1.2,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "tiers": [
-        {
-         "above": 256000,
-         "input": 1.2,
-         "output": 3.6
-        }
-       ],
-       "valid_from": "2026-10-08T17:55:23Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": null
-     },
-     {
-      "rates": {
-       "input": 0.4,
        "output": 4.0,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -786,10 +679,10 @@
          "output": 12.0
         }
        ],
-       "valid_from": "2026-10-08T18:11:06Z",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
-      "start": "2026-10-08T18:11:06Z"
+      "start": null
      }
     ]
    },
@@ -799,7 +692,7 @@
       "rates": {
        "input": 0.4,
        "output": 1.2,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -807,52 +700,18 @@
          "output": 3.6
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.4,
-       "output": 1.2,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "tiers": [
-        {
-         "above": 256000,
-         "input": 1.2,
-         "output": 3.6
-        }
-       ],
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ],
     "thinking": [
      {
       "rates": {
        "input": 0.4,
-       "output": 1.2,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "tiers": [
-        {
-         "above": 256000,
-         "input": 1.2,
-         "output": 3.6
-        }
-       ],
-       "valid_from": "2026-10-08T17:55:23Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": null
-     },
-     {
-      "rates": {
-       "input": 0.4,
        "output": 4.0,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -860,10 +719,10 @@
          "output": 12.0
         }
        ],
-       "valid_from": "2026-10-08T18:11:06Z",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
-      "start": "2026-10-08T18:11:06Z"
+      "start": null
      }
     ]
    },
@@ -887,7 +746,7 @@
       "rates": {
        "input": 0.4,
        "output": 1.2,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -895,52 +754,18 @@
          "output": 3.6
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.4,
-       "output": 1.2,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "tiers": [
-        {
-         "above": 256000,
-         "input": 1.2,
-         "output": 3.6
-        }
-       ],
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ],
     "thinking": [
      {
       "rates": {
        "input": 0.4,
-       "output": 1.2,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "tiers": [
-        {
-         "above": 256000,
-         "input": 1.2,
-         "output": 3.6
-        }
-       ],
-       "valid_from": "2026-10-08T17:55:23Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": null
-     },
-     {
-      "rates": {
-       "input": 0.4,
        "output": 4.0,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -948,10 +773,10 @@
          "output": 12.0
         }
        ],
-       "valid_from": "2026-10-08T18:11:06Z",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
-      "start": "2026-10-08T18:11:06Z"
+      "start": null
      }
     ]
    },
@@ -1042,8 +867,8 @@
       "rates": {
        "input": 0.07,
        "output": 0.16,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -1220,8 +1045,8 @@
       "rates": {
        "input": 0.23,
        "output": 0.92,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -1234,21 +1059,11 @@
       "rates": {
        "input": 0.23,
        "output": 2.3,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.23,
-       "output": 2.3,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ],
     "thinking": [
@@ -1256,21 +1071,11 @@
       "rates": {
        "input": 0.23,
        "output": 2.3,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.23,
-       "output": 2.3,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ]
    },
@@ -1280,43 +1085,23 @@
       "rates": {
        "input": 0.2,
        "output": 0.8,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.2,
-       "output": 0.8,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ],
     "thinking": [
      {
       "rates": {
        "input": 0.2,
-       "output": 0.8,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "output": 2.4,
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.2,
-       "output": 2.4,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ]
    },
@@ -1326,8 +1111,8 @@
       "rates": {
        "input": 0.2,
        "output": 0.8,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -1340,21 +1125,11 @@
       "rates": {
        "input": 0.2,
        "output": 2.4,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.2,
-       "output": 2.4,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ],
     "thinking": [
@@ -1362,21 +1137,11 @@
       "rates": {
        "input": 0.2,
        "output": 2.4,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.2,
-       "output": 2.4,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ]
    },
@@ -1606,7 +1371,7 @@
       "rates": {
        "input": 0.3,
        "output": 1.5,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 32000,
@@ -1624,7 +1389,7 @@
          "output": 9.6
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -1637,7 +1402,7 @@
       "rates": {
        "input": 0.3,
        "output": 1.5,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260402181911/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 32000,
@@ -1650,7 +1415,7 @@
          "output": 4.0
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-04-02T18:19:11Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -1711,7 +1476,7 @@
       "rates": {
        "input": 1.0,
        "output": 5.0,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 32000,
@@ -1729,7 +1494,7 @@
          "output": 60.0
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -1742,7 +1507,7 @@
       "rates": {
        "input": 1.0,
        "output": 5.0,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 32000,
@@ -1760,7 +1525,7 @@
          "output": 60.0
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -1830,7 +1595,7 @@
       "rates": {
        "input": 1.2,
        "output": 6.0,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 32000,
@@ -1843,7 +1608,7 @@
          "output": 15.0
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -1856,7 +1621,7 @@
       "rates": {
        "input": 1.2,
        "output": 6.0,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260210034228/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 32000,
@@ -1869,7 +1634,7 @@
          "output": 15.0
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-02-10T03:42:28Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -1882,7 +1647,7 @@
       "rates": {
        "input": 1.2,
        "output": 6.0,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 32000,
@@ -1895,7 +1660,7 @@
          "output": 15.0
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -1970,8 +1735,8 @@
       "rates": {
        "input": 3.81,
        "output": 3.06,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -2038,8 +1803,8 @@
       "rates": {
        "input": 0.4,
        "output": 1.6,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -2052,8 +1817,8 @@
       "rates": {
        "input": 0.4,
        "output": 4.0,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -2092,8 +1857,8 @@
       "rates": {
        "input": 0.2,
        "output": 0.8,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -2106,8 +1871,8 @@
       "rates": {
        "input": 0.2,
        "output": 2.4,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -2120,8 +1885,8 @@
       "rates": {
        "input": 0.16,
        "output": 0.64,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -2134,8 +1899,8 @@
       "rates": {
        "input": 0.16,
        "output": 0.64,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -2148,8 +1913,8 @@
       "rates": {
        "input": 0.18,
        "output": 0.7,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -2162,8 +1927,8 @@
       "rates": {
        "input": 0.18,
        "output": 2.1,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -2176,7 +1941,7 @@
       "rates": {
        "input": 0.05,
        "output": 0.4,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 32000,
@@ -2189,7 +1954,7 @@
          "output": 0.96
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -2202,7 +1967,7 @@
       "rates": {
        "input": 0.05,
        "output": 0.4,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 32000,
@@ -2215,7 +1980,7 @@
          "output": 0.96
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -2228,7 +1993,7 @@
       "rates": {
        "input": 0.05,
        "output": 0.4,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260210034228/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 32000,
@@ -2241,7 +2006,7 @@
          "output": 0.96
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-02-10T03:42:28Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -2326,7 +2091,7 @@
       "rates": {
        "input": 0.2,
        "output": 1.6,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 32000,
@@ -2339,7 +2104,7 @@
          "output": 4.8
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -2352,7 +2117,7 @@
       "rates": {
        "input": 0.2,
        "output": 1.6,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 32000,
@@ -2365,7 +2130,7 @@
          "output": 4.8
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-01-16T07:29:01Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -2482,8 +2247,8 @@
       "rates": {
        "input": 0.1,
        "output": 0.4,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260402181911/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-04-02T18:19:11Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -2570,7 +2335,7 @@
       "rates": {
        "input": 0.4,
        "output": 2.4,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260402181911/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -2578,27 +2343,10 @@
          "output": 3.0
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-04-02T18:19:11Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.4,
-       "output": 2.4,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "tiers": [
-        {
-         "above": 256000,
-         "input": 0.5,
-         "output": 3.0
-        }
-       ],
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ],
     "thinking": [
@@ -2606,7 +2354,7 @@
       "rates": {
        "input": 0.4,
        "output": 2.4,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260402181911/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -2614,27 +2362,10 @@
          "output": 3.0
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-04-02T18:19:11Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.4,
-       "output": 2.4,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "tiers": [
-        {
-         "above": 256000,
-         "input": 0.5,
-         "output": 3.0
-        }
-       ],
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ]
    },
@@ -2644,7 +2375,7 @@
       "rates": {
        "input": 0.4,
        "output": 2.4,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -2652,27 +2383,10 @@
          "output": 3.0
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-09-09T19:28:20Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.4,
-       "output": 2.4,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "tiers": [
-        {
-         "above": 256000,
-         "input": 0.5,
-         "output": 3.0
-        }
-       ],
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ],
     "thinking": [
@@ -2680,7 +2394,7 @@
       "rates": {
        "input": 0.4,
        "output": 2.4,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -2688,27 +2402,10 @@
          "output": 3.0
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-09-09T19:28:20Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.4,
-       "output": 2.4,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "tiers": [
-        {
-         "above": 256000,
-         "input": 0.5,
-         "output": 3.0
-        }
-       ],
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ]
    },
@@ -2805,7 +2502,7 @@
       "rates": {
        "input": 0.25,
        "output": 1.5,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -2813,7 +2510,7 @@
          "output": 4.0
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-09-09T19:28:20Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -2909,7 +2606,7 @@
       "rates": {
        "input": 0.5,
        "output": 3.0,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -2917,27 +2614,10 @@
          "output": 6.0
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-09-09T19:28:20Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.5,
-       "output": 3.0,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "tiers": [
-        {
-         "above": 256000,
-         "input": 2.0,
-         "output": 6.0
-        }
-       ],
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ],
     "thinking": [
@@ -2945,7 +2625,7 @@
       "rates": {
        "input": 0.5,
        "output": 3.0,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -2953,27 +2633,10 @@
          "output": 6.0
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-09-09T19:28:20Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.5,
-       "output": 3.0,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "tiers": [
-        {
-         "above": 256000,
-         "input": 2.0,
-         "output": 6.0
-        }
-       ],
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ]
    },
@@ -3015,7 +2678,7 @@
       "rates": {
        "input": 0.03,
        "output": 0.13,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 32000,
@@ -3028,7 +2691,7 @@
          "output": 0.8
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-09-09T19:28:20Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -3057,8 +2720,8 @@
       "rates": {
        "input": 2.5,
        "output": 7.5,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-09-09T19:28:20Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -3071,8 +2734,8 @@
       "rates": {
        "input": 2.5,
        "output": 7.5,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-09-09T19:28:20Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -3085,8 +2748,8 @@
       "rates": {
        "input": 2.5,
        "output": 7.5,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-09-09T19:28:20Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -3099,8 +2762,8 @@
       "rates": {
        "input": 2.5,
        "output": 7.5,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-09-09T19:28:20Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -3180,7 +2843,7 @@
       "rates": {
        "input": 0.4,
        "output": 1.6,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -3188,27 +2851,10 @@
          "output": 4.8
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-09-09T19:28:20Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.4,
-       "output": 1.6,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "tiers": [
-        {
-         "above": 256000,
-         "input": 1.2,
-         "output": 4.8
-        }
-       ],
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ],
     "thinking": [
@@ -3216,7 +2862,7 @@
       "rates": {
        "input": 0.4,
        "output": 1.6,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "source": "https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 256000,
@@ -3224,27 +2870,10 @@
          "output": 4.8
         }
        ],
-       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from": "2026-09-09T19:28:20Z",
        "valid_from_basis": "first observed"
       },
       "start": null
-     },
-     {
-      "rates": {
-       "input": 0.4,
-       "output": 1.6,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "tiers": [
-        {
-         "above": 256000,
-         "input": 1.2,
-         "output": 4.8
-        }
-       ],
-       "valid_from": "2026-10-08T18:11:06Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": "2026-10-08T18:11:06Z"
      }
     ]
    },
@@ -3254,8 +2883,8 @@
       "rates": {
        "input": 2.0,
        "output": 6.0,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-09-09T19:28:20Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -3268,8 +2897,8 @@
       "rates": {
        "input": 0.5,
        "output": 3.0,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-09-09T19:28:20Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -3314,8 +2943,8 @@
       "rates": {
        "input": 2.0,
        "output": 6.0,
-       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-09-09T19:28:20Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -4798,8 +4427,8 @@
        "cache_write_1h_multiple": 2.0,
        "input": 10.0,
        "output": 50.0,
-       "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://platform.claude.com/docs/en/release-notes/overview",
+       "valid_from": "2026-09-01T00:00:00Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -8507,6 +8136,17 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.0,
+       "input": 0.02,
+       "output": 0.0,
+       "source": "https://docs.inceptionlabs.ai/get-started/models.md",
+       "valid_from": "2026-10-08T20:41:30Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-08T20:41:30Z"
      }
     ]
    },
@@ -8728,8 +8368,8 @@
        "cache_write": 0.375,
        "input": 0.6,
        "output": 2.4,
-       "source": "https://platform.minimax.io/docs/guides/pricing-paygo.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260609185057/https://platform.minimax.io/docs/guides/pricing-paygo.md",
+       "valid_from": "2026-06-09T18:50:57Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -9385,21 +9025,6 @@
      }
     ]
    },
-   "mistral-medium-3-5": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.15,
-       "input": 1.5,
-       "output": 7.5,
-       "source": "https://mistral.ai/pricing/api",
-       "valid_from": "2026-10-08T17:55:23Z",
-       "valid_from_basis": "first observed"
-      },
-      "start": null
-     }
-    ]
-   },
    "mistral-medium-latest": {
     "standard": [
      {
@@ -9926,8 +9551,8 @@
       "rates": {
        "input": 0.4,
        "output": 0.4,
-       "source": "https://developers.openai.com/api/docs/pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260401100127/https://developers.openai.com/api/docs/pricing",
+       "valid_from": "2026-04-01T10:01:27Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -9983,8 +9608,8 @@
       "rates": {
        "input": 2.0,
        "output": 2.0,
-       "source": "https://developers.openai.com/api/docs/pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260401100127/https://developers.openai.com/api/docs/pricing",
+       "valid_from": "2026-04-01T10:01:27Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -10042,8 +9667,8 @@
       "rates": {
        "input": 0.5,
        "output": 1.5,
-       "source": "https://developers.openai.com/api/docs/pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260401100127/https://developers.openai.com/api/docs/pricing",
+       "valid_from": "2026-04-01T10:01:27Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -10056,8 +9681,8 @@
       "rates": {
        "input": 1.0,
        "output": 2.0,
-       "source": "https://developers.openai.com/api/docs/pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260401100127/https://developers.openai.com/api/docs/pricing",
+       "valid_from": "2026-04-01T10:01:27Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -10070,8 +9695,8 @@
       "rates": {
        "input": 1.5,
        "output": 2.0,
-       "source": "https://developers.openai.com/api/docs/pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260401100127/https://developers.openai.com/api/docs/pricing",
+       "valid_from": "2026-04-01T10:01:27Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -10125,8 +9750,8 @@
       "rates": {
        "input": 30.0,
        "output": 60.0,
-       "source": "https://developers.openai.com/api/docs/pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260401100127/https://developers.openai.com/api/docs/pricing",
+       "valid_from": "2026-04-01T10:01:27Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -10153,8 +9778,8 @@
       "rates": {
        "input": 10.0,
        "output": 30.0,
-       "source": "https://developers.openai.com/api/docs/pricing.md",
-       "valid_from": "2026-10-08T17:55:23Z",
+       "source": "https://web.archive.org/web/20260401100127/https://developers.openai.com/api/docs/pricing",
+       "valid_from": "2026-04-01T10:01:27Z",
        "valid_from_basis": "first observed"
       },
       "start": null
@@ -16295,5 +15920,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-08T18:26:44Z"
+ "updated_at": "2026-10-08T20:41:48Z"
 }
