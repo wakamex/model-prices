@@ -3826,6 +3826,39 @@
        "cache_write_1h_multiple": 2.0,
        "input": 2.0,
        "output": 10.0,
+       "source": "https://platform.claude.com/docs/en/release-notes/overview",
+       "valid_from": "2026-10-07T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.2,
+       "cache_write": 2.5,
+       "cache_write_1h_multiple": 2.0,
+       "input": 2.0,
+       "output": 10.0,
+       "source": "https://github.com/sst/models.dev/commit/3a3d83e481d9",
+       "valid_from": "2026-09-28T18:40:37Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-07T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "cache_write": 2.5,
+       "cache_write_1h_multiple": 2.0,
+       "input": 2.0,
+       "output": 10.0,
+       "source": "https://platform.claude.com/docs/en/release-notes/overview",
+       "valid_from": "2026-10-07T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.1,
+       "cache_write": 2.5,
+       "cache_write_1h_multiple": 2.0,
+       "input": 2.0,
+       "output": 10.0,
        "source": "https://github.com/sst/models.dev/commit/0acb461e68cd",
        "valid_from": "2026-10-07T19:46:44Z",
        "valid_from_basis": "models.dev commit"
@@ -3834,6 +3867,16 @@
      },
      {
       "rates": {
+       "cache_read": 0.1,
+       "cache_write": 2.5,
+       "cache_write_1h_multiple": 2.0,
+       "input": 2.0,
+       "output": 10.0,
+       "source": "https://platform.claude.com/docs/en/release-notes/overview",
+       "valid_from": "2026-10-07T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
        "cache_read": 0.2,
        "cache_write": 2.5,
        "cache_write_1h_multiple": 2.0,
@@ -13774,5 +13817,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-08T06:46:54Z"
+ "updated_at": "2026-10-08T17:48:12Z"
 }

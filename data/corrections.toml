@@ -133,6 +133,18 @@ at an introductory price. The promotional price applies from that first observat
 updated on 2026-08-21. Research finding google_gemini_3.6_flash_20260821t0642 took the
 promotion for the price since launch."""
 
+[[correction]]
+provider = "anthropic"
+model = "claude-sonnet-5-5"
+valid_from = "2026-10-07T00:00:00Z"
+valid_until = "2026-10-07T22:27:10Z"
+input = 2.0
+output = 10.0
+cache_read = 0.1
+cache_write = 2.5
+source = "https://platform.claude.com/docs/en/release-notes/overview"
+note = "October 7, 2026: \"We've lowered the price of prompt cache reads on Claude Sonnet 5.5 from $0.20 USD to $0.10 USD per million tokens.\" No time of day is given. models.dev recorded $0.10 at 2026-10-07T19:46:44Z, its catalog sync restored $0.20 at 20:31:33Z, and $0.10 returned at 22:27:10Z."
+
 # models.dev listed the cache-read price as the cache-write price for these models from
 # 2025-06-17T22:26:49Z until it fixed them at 2025-06-23T20:53:34Z. Anthropic's pricing page
 # archived inside that window lists the 5-minute cache write at 1.25x input.
