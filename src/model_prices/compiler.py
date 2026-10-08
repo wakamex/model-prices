@@ -20,7 +20,7 @@ from pathlib import Path
 import tomllib
 from typing import Any
 
-from model_prices import SCHEMA, Rates, _parse_time, _tiers
+from model_prices import SCHEMA, THINKING, Rates, _parse_time, _tiers
 
 # Evaluated for usage before every recorded change, which takes a model's first price.
 _EARLIEST = datetime.min.replace(tzinfo=timezone.utc)
@@ -69,7 +69,10 @@ class _Inputs:
         times = self.entry_times(provider, model)
         return link if link and (not times or at < times[0]) else None
 
-    def correction(self, provider: str, model: str, at: datetime) -> Rates | None:
+    def correction(self, provider: str, model: str, at: datetime,
+                   mode: str | None = None) -> Rates | None:
+        """The corrected rates at `at`; in a mode, only when the correction states that
+        mode's prices."""
         for start, end, item in self.corrections(provider, model):
             if start <= at and (end is None or at < end):
                 if "replaces" in item:
@@ -78,16 +81,22 @@ class _Inputs:
                     if recorded is None or any(getattr(recorded, key) != value
                                                for key, value in item["replaces"].items()):
                         continue
+                values = {key: item.get(key) for key in (
+                    "input", "output", "cache_read", "cache_write")}
+                tiers = item.get("tiers")
+                if mode is not None:
+                    if mode not in item.get("modes", {}):
+                        return None
+                    values, tiers = _in_stated_mode(values, tiers, item["modes"][mode])
                 return Rates(
                     provider=provider, model=model, valid_from=item["valid_from"],
-                    source=item["source"], input=item["input"], output=item["output"],
-                    cache_read=item.get("cache_read"), cache_write=item.get("cache_write"),
-                    tiers=_tiers(item.get("tiers")), valid_from_basis="documented",
+                    source=item["source"], **values, tiers=_tiers(tiers),
+                    valid_from_basis="documented",
                 )
         # An alias without its own history at this time takes the corrections of the model
         # it points to, just as it takes that model's price history.
         link = self.link(provider, model, at)
-        return self.correction(provider, link, at) if link else None
+        return self.correction(provider, link, at, mode) if link else None
 
     def history(self, provider: str, model: str, at: datetime, mode: str | None) -> Rates | None:
         link = self.link(provider, model, at)
@@ -101,11 +110,10 @@ class _Inputs:
         values = dict(entry["rates"])
         tiers = values.pop("tiers", None)
         modes = values.pop("modes", {})
-        if mode is not None:
-            if mode not in modes:
-                return None
-            values.update(modes[mode])
-            tiers = None
+        if mode is not None and mode not in modes and mode != THINKING:
+            return None
+        if mode in modes:
+            values, tiers = _in_stated_mode(values, tiers, modes[mode])
         # An observed entry names its page, and is dated by the run that first saw it.
         return Rates(
             provider=provider, model=model, valid_from=entry["valid_from"],
@@ -119,8 +127,12 @@ class _Inputs:
     def rates(self, provider: str, model: str, at: datetime, mode: str | None,
               corrected: bool) -> Rates | None:
         found = self.correction(provider, model, at) if corrected else None
-        if found is not None and mode is not None:
-            # Corrections give standard rates; a mode keeps its models.dev ratio to them.
+        stated = self.correction(provider, model, at, mode) if found and mode else None
+        if stated is not None:
+            found = stated
+        elif found is not None and mode is not None:
+            # A correction without the mode's prices gives standard rates; the mode keeps its
+            # models.dev ratio to them.
             standard, moded = (self.history(provider, model, at, name) for name in (None, mode))
             found = _in_mode(found, standard, moded) if moded is not None and standard else None
             if moded is None:
@@ -146,6 +158,16 @@ class _Inputs:
             for entry in self.prices["providers"].get(provider, {}).get(name or "", []):
                 found |= set(entry["rates"].get("modes", {}))
         return sorted(found)
+
+
+def _in_stated_mode(values: dict[str, Any], tiers: list[dict] | None,
+                    mode: dict[str, Any]) -> tuple[dict[str, Any], list[dict] | None]:
+    """Standard rates with a mode's stated prices. The mode's tiers replace the fields they
+    give in the standard tier of the same size, and a mode without tiers has none."""
+    mode_tiers = {tier["above"]: tier for tier in mode.get("tiers", [])}
+    values = {**values, **{key: value for key, value in mode.items() if key != "tiers"}}
+    return values, [{**tier, **mode_tiers[tier["above"]]} for tier in tiers or []
+                    if tier["above"] in mode_tiers] or None
 
 
 def _in_mode(corrected: Rates, standard: Rates, moded: Rates) -> Rates:

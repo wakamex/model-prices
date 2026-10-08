@@ -62,6 +62,11 @@ RATE_FIELDS = ("input", "output", "cache_read", "cache_write")
 # models.dev lab ids that differ from the id of the lab's own API provider.
 LAB_PROVIDERS = {"bytedance-seed": "volcengine", "stepfun": "stepfun-ai", "zhipuai": "zai"}
 
+# Providers whose models.dev `reasoning` cost is the output price in thinking mode, which bills
+# the chain of thought and the answer alike. Elsewhere the field means other things, such as
+# Perplexity's separate charge for Sonar Deep Research's reasoning tokens.
+THINKING_OUTPUT = {"alibaba"}
+
 
 def _utc(value: str) -> str:
     parsed = datetime.fromisoformat(value).astimezone(timezone.utc)
@@ -76,7 +81,7 @@ def _rate_values(cost: dict[str, Any]) -> dict[str, float]:
     }
 
 
-def parse_rates(document: dict[str, Any]) -> dict[str, Any] | None:
+def parse_rates(document: dict[str, Any], provider: str = "") -> dict[str, Any] | None:
     """Return per-million rates, long-context tiers, and alternate modes from a model file."""
     cost = document.get("cost")
     if not isinstance(cost, dict):
@@ -104,6 +109,9 @@ def parse_rates(document: dict[str, Any]) -> dict[str, Any] | None:
         values = _rate_values(mode.get("cost") or {}) if isinstance(mode, dict) else {}
         if values:
             modes[name] = values
+    reasoning = cost.get("reasoning")
+    if provider in THINKING_OUTPUT and isinstance(reasoning, (int, float)):
+        modes["thinking"] = {"output": float(reasoning)}
     if modes:
         rates["modes"] = dict(sorted(modes.items()))
     return rates
@@ -197,7 +205,7 @@ def _replay(repo: Path, providers: tuple[str, ...]) -> tuple[dict, dict, dict]:
             serves[(provider, model)] = (lab_model, document.get("status") == "deprecated")
         else:
             serves.pop((provider, model), None)
-        rates = parse_rates(document)
+        rates = parse_rates(document, provider)
         if rates is None:
             continue
         entries = history.setdefault(provider, {}).setdefault(model, [])

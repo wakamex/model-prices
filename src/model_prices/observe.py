@@ -150,6 +150,8 @@ def read_checked(provider: str, data: Path, now: datetime,
                 or not own.fullmatch(model)):
             continue
         rates = found.setdefault(model, {})
+        if item.mode:
+            rates = rates.setdefault("modes", {}).setdefault(item.mode, {})
         if item.above:
             tiers = rates.setdefault("tiers", [])
             tier = next((tier for tier in tiers if tier["above"] == item.above), None)

@@ -384,11 +384,19 @@ def _tiers(raw: list[dict[str, Any]] | None) -> tuple[Tier, ...]:
     return tuple(Tier(**tier) for tier in raw or ())
 
 
+# Thinking tokens are billed as output unless a model prices thinking mode separately, as
+# Alibaba's hybrid Qwen models do, so a model without a thinking price uses its standard rates.
+THINKING = "thinking"
+
+
 @cache
 def _intervals(provider: str, model: str,
                mode: str | None) -> tuple[tuple[datetime, ...], list[dict[str, Any]]]:
     """A model's compiled intervals in a mode, with their start times for bisection."""
-    intervals = _data()["prices"].get(provider, {}).get(model, {}).get(mode or "standard", [])
+    timelines = _data()["prices"].get(provider, {}).get(model, {})
+    if mode == THINKING and THINKING not in timelines:
+        mode = None
+    intervals = timelines.get(mode or "standard", [])
     starts = tuple(_parse_time(item["start"]) for item in intervals[1:])
     return starts, intervals
 

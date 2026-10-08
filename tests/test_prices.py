@@ -168,6 +168,17 @@ class PriceTests(unittest.TestCase):
         self.assertEqual((fast.input, fast.output), (8, 40))
         self.assertIsNone(rates("claude-opus-5-5", mode="missing-mode"))
 
+    def test_thinking_mode_prices_alibaba_hybrid_output(self):
+        thinking = rates("qwen-plus", at="2026-10-08", mode="thinking")
+
+        # A correction states the thinking price of each long-context tier.
+        self.assertEqual((thinking.input, thinking.output), (0.4, 4.0))
+        self.assertEqual([(tier.above, tier.input, tier.output) for tier in thinking.tiers],
+                         [(256_000, 1.2, 12.0)])
+        # Other models bill thinking as output.
+        self.assertEqual(rates("claude-opus-5-5", at="2026-10-08", mode="thinking"),
+                         rates("claude-opus-5-5", at="2026-10-08"))
+
     def test_backfill_replays_price_changes_and_symlinks(self):
         with tempfile.TemporaryDirectory() as directory:
             repo = Path(directory) / "models.dev"
@@ -252,6 +263,13 @@ class PriceTests(unittest.TestCase):
                                   "tiers": [{"above": 200_000, "input": 3.0}]})
         self.assertIsNone(parse_rates({"cost": {"output": 2}}))
         self.assertIsNone(parse_rates({"name": "no cost"}))
+
+    def test_parse_rates_reads_alibaba_reasoning_as_thinking_output(self):
+        cost = {"cost": {"input": 0.4, "output": 1.2, "reasoning": 4}}
+
+        self.assertEqual(parse_rates(cost, "alibaba")["modes"], {"thinking": {"output": 4.0}})
+        # Perplexity's reasoning price is a separate charge, not thinking-mode output.
+        self.assertNotIn("modes", parse_rates(cost, "perplexity"))
 
     def test_shipped_data_identifies_its_source(self):
         basis = model_prices.pricing_basis()

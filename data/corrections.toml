@@ -221,9 +221,21 @@ valid_from = "2025-10-14T17:34:46Z"
 input = 0.4
 output = 1.2
 tiers = [{ above = 256000, input = 1.2, output = 3.6 }]
+modes = { thinking = { output = 4.0, tiers = [{ above = 256000, output = 12.0 }] } }
 replaces = { input = 0.4, output = 1.2 }
 source = "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
-note = "Singapore tab, on 2026-10-04: $0.4 input, $1.2 output per 1M tokens; above 256K $1.2/$3.6. models.dev lists no tiers. Alibaba's pricing table gives the 256K-1M tier to qwen-plus-2025-07-28, which predates models.dev's record. Applies from models.dev's first record, since research found the official price applied throughout (finding research/price-dates/findings/alibaba_qwen_plus_gap)."
+note = "Singapore tab, on 2026-10-04: $0.4 input, $1.2 output per 1M tokens; above 256K $1.2/$3.6. models.dev lists no tiers. Alibaba's pricing table gives the 256K-1M tier to qwen-plus-2025-07-28, which predates models.dev's record. Applies from models.dev's first record, since research found the official price applied throughout (finding research/price-dates/findings/alibaba_qwen_plus_gap). Thinking-mode output is $4, and $12 above 256K, which models.dev's $4 thinking price lacks the tier for."
+
+[[correction]]
+provider = "alibaba"
+model = "deepseek-v4-flash-0731"
+valid_from = "2026-08-16T16:00:00Z"
+input = 0.44
+output = 1.32
+cache_read = 0.088
+replaces = { input = 0.2, output = 0.4 }
+source = "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+note = "Singapore tab, on 2026-10-08: \"DeepSeek-V4-Flash-0731 has been adjusted to peak/off-peak pricing since 2026-08-17 00:00\", busy hours $0.44 input and $1.32 output, idle hours $0.22 and $0.66. The time is Beijing time, as the page's peak hours are, which is 2026-08-16T16:00Z. These are the busy-hour prices; schedules.toml halves them in idle hours. Implicit cache hits cost 20% of input (https://www.alibabacloud.com/help/en/model-studio/context-cache). models.dev lists $0.2/$0.4."
 
 [[correction]]
 provider = "alibaba"
@@ -241,9 +253,10 @@ model = "qwen3-32b"
 valid_from = "2026-01-16T07:29:01Z"
 input = 0.16
 output = 0.64
+modes = { thinking = { output = 0.64 } }
 replaces = { input = 0.7, output = 2.8 }
 source = "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing"
-note = "Singapore tab, on 2026-10-04: $0.16 input, $0.64 output per 1M tokens. models.dev lists $0.7/$2.8. Archived on 2026-01-16 at $0.16/$0.64, its earliest copy found; research into whether models.dev's $0.7/$2.8 was ever official did not decide it."
+note = "Singapore tab, on 2026-10-04: $0.16 input, $0.64 output per 1M tokens. models.dev lists $0.7/$2.8. Archived on 2026-01-16 at $0.16/$0.64, its earliest copy found; research into whether models.dev's $0.7/$2.8 was ever official did not decide it. Thinking-mode output also costs $0.64, against models.dev's $8.4."
 
 [[correction]]
 provider = "alibaba"
@@ -316,9 +329,10 @@ valid_from = "2026-09-09T19:28:20Z"
 input = 0.4
 output = 2.4
 tiers = [{ above = 256000, input = 0.5, output = 3.0 }]
+modes = { thinking = { output = 2.4, tiers = [{ above = 256000, output = 3.0 }] } }
 replaces = { input = 0.4, output = 2.4 }
 source = "https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing"
-note = "Singapore tab, on 2026-10-04: $0.4 input, $2.4 output per 1M tokens; above 256K $0.5/$3.0. models.dev lists no tiers. Archived on 2026-09-09 with the 256K-1M tier, its earliest copy found; research did not date the tier's start."
+note = "Singapore tab, on 2026-10-04: $0.4 input, $2.4 output per 1M tokens; above 256K $0.5/$3.0. models.dev lists no tiers. Archived on 2026-09-09 with the 256K-1M tier, its earliest copy found; research did not date the tier's start. Thinking-mode output costs the same as non-thinking output in both tiers."
 
 [[correction]]
 provider = "alibaba"

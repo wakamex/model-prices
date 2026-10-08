@@ -196,6 +196,11 @@
      "commit": "9511348dd73d",
      "rates": {
       "input": 0.4,
+      "modes": {
+       "thinking": {
+        "output": 4.0
+       }
+      },
       "output": 1.2
      },
      "valid_from": "2025-10-14T17:34:46Z"
@@ -216,6 +221,11 @@
      "commit": "9511348dd73d",
      "rates": {
       "input": 0.05,
+      "modes": {
+       "thinking": {
+        "output": 0.5
+       }
+      },
       "output": 0.2
      },
      "valid_from": "2025-10-14T17:34:46Z"
@@ -334,6 +344,11 @@
      "commit": "9511348dd73d",
      "rates": {
       "input": 0.35,
+      "modes": {
+       "thinking": {
+        "output": 4.2
+       }
+      },
       "output": 1.4
      },
      "valid_from": "2025-10-14T17:34:46Z"
@@ -344,6 +359,11 @@
      "commit": "9511348dd73d",
      "rates": {
       "input": 0.7,
+      "modes": {
+       "thinking": {
+        "output": 8.4
+       }
+      },
       "output": 2.8
      },
      "valid_from": "2025-10-14T17:34:46Z"
@@ -354,6 +374,11 @@
      "commit": "9511348dd73d",
      "rates": {
       "input": 0.7,
+      "modes": {
+       "thinking": {
+        "output": 8.4
+       }
+      },
       "output": 2.8
      },
      "valid_from": "2025-10-14T17:34:46Z"
@@ -364,6 +389,11 @@
      "commit": "9511348dd73d",
      "rates": {
       "input": 0.18,
+      "modes": {
+       "thinking": {
+        "output": 2.1
+       }
+      },
       "output": 0.7
      },
      "valid_from": "2025-10-14T17:34:46Z"
@@ -524,6 +554,11 @@
      "commit": "9511348dd73d",
      "rates": {
       "input": 0.7,
+      "modes": {
+       "thinking": {
+        "output": 8.4
+       }
+      },
       "output": 2.8
      },
      "valid_from": "2025-10-14T17:34:46Z"
@@ -534,6 +569,11 @@
      "commit": "9511348dd73d",
      "rates": {
       "input": 0.2,
+      "modes": {
+       "thinking": {
+        "output": 2.4
+       }
+      },
       "output": 0.8
      },
      "valid_from": "2025-10-14T17:34:46Z"
@@ -544,6 +584,11 @@
      "commit": "9511348dd73d",
      "rates": {
       "input": 0.2,
+      "modes": {
+       "thinking": {
+        "output": 4.8
+       }
+      },
       "output": 1.6
      },
      "valid_from": "2025-10-14T17:34:46Z"
@@ -584,9 +629,22 @@
      "commit": "85f5340eebf6",
      "rates": {
       "input": 0.6,
+      "modes": {
+       "thinking": {
+        "output": 3.6
+       }
+      },
       "output": 3.6
      },
      "valid_from": "2026-02-16T22:06:32Z"
+    },
+    {
+     "commit": "fb297153e43f",
+     "rates": {
+      "input": 0.6,
+      "output": 3.6
+     },
+     "valid_from": "2026-04-27T19:36:51Z"
     }
    ],
    "qwen3.5-flash": [
@@ -606,6 +664,11 @@
      "commit": "85f5340eebf6",
      "rates": {
       "input": 0.4,
+      "modes": {
+       "thinking": {
+        "output": 2.4
+       }
+      },
       "output": 2.4
      },
      "valid_from": "2026-02-16T22:06:32Z"
@@ -8293,6 +8356,6 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "181c167dafae213a89fd643226e6cff8bcff7473",
- "source_committed_at": "2026-10-08T06:46:41Z"
+ "source_commit": "6e86030122d473cf3a00f7eb7d8d97670aaf9b89",
+ "source_committed_at": "2026-10-08T17:28:55Z"
 }

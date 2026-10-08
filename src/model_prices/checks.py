@@ -32,6 +32,7 @@ class Observed:
     value: float
     above: int | None = None
     at: str | None = None
+    mode: str | None = None
 
 
 @dataclass(frozen=True)
@@ -234,7 +235,7 @@ def parse_alibaba(text: str, today: datetime) -> list[Observed]:
 
     A table that splits input prices by modality is skipped, as is a cell that prices busy
     and idle hours separately. Output is the non-thinking price, or for a thinking-only
-    model its thinking price; thinking prices of hybrid models are not modeled.
+    model its thinking price; a hybrid model's thinking price is its `thinking` mode output.
     """
     found = []
     heading = tab = ""
@@ -263,13 +264,17 @@ def parse_alibaba(text: str, today: datetime) -> list[Observed]:
         for row in rows:
             model = row[0].split()[0]
             above = _alibaba_tier(row[tiers]) if tiers is not None else None
-            prices = {"input": row[inputs[0]],
-                      "output": next((row[index] for index in outputs
-                                      if _price(row[index]) is not None), "")}
-            for field, cell in prices.items():
+            prices = {("input", None): row[inputs[0]],
+                      ("output", None): next((row[index] for index in outputs
+                                              if _price(row[index]) is not None), "")}
+            thinking = [index for index in outputs if detail[index].startswith("Thinking mode")]
+            if len(outputs) == 2 and len(thinking) == 1:
+                prices["output", "thinking"] = row[thinking[0]]
+            for (field, mode), cell in prices.items():
                 value = None if "Busy hours" in cell else _price(cell)
                 if value is not None:
-                    found.append(Observed("alibaba", model, field, value, above=above))
+                    found.append(Observed("alibaba", model, field, value, above=above,
+                                          mode=mode))
     return found
 
 
@@ -841,8 +846,10 @@ def compare(observed: Iterable[Observed], today: datetime,
         if resolved and resolved[0] != item.provider:
             resolved = None
         name = "/".join(resolved) if resolved else item.model
-        effective = rates(name, at=at, provider=item.provider) if resolved else None
-        raw = rates(name, at=at, provider=item.provider, corrected=False) if resolved else None
+        effective = (rates(name, at=at, provider=item.provider, mode=item.mode)
+                     if resolved else None)
+        raw = (rates(name, at=at, provider=item.provider, mode=item.mode, corrected=False)
+               if resolved else None)
         effective_value = _value(effective, item.field, item.above)
         raw_value = _value(raw, item.field, item.above)
         if effective is None:
@@ -853,9 +860,12 @@ def compare(observed: Iterable[Observed], today: datetime,
             status = "mismatch"
         model = f"{effective.provider}/{effective.model}" if effective else item.model
         api_name = resolved[1] if resolved else item.model
+        # genai-prices lists no thinking-mode prices.
         listed = (genai_prices.price(genai, item.provider, api_name, item.field,
-                                     _parse_time(at), item.above) if genai is not None else None)
-        results.append(Result(item.provider, model, item.field, item.above, item.at,
+                                     _parse_time(at), item.above)
+                  if genai is not None and not item.mode else None)
+        field = f"{item.mode} {item.field}" if item.mode else item.field
+        results.append(Result(item.provider, model, field, item.above, item.at,
                               item.value, effective_value, raw_value, status, listed))
     return results
 

@@ -63,3 +63,14 @@ dates = [
   "2026-10-01", "2026-10-02", "2026-10-03", "2026-10-04", "2026-10-05",
   "2026-10-06", "2026-10-07",
 ]
+
+[[schedule]]
+provider = "alibaba"
+valid_from = "2026-08-16T16:00:00Z"
+off_peak_hours_utc = [["14:00", "00:00"]]
+off_peak_multiplier = { deepseek-v4-flash-0731 = 0.5 }
+source = "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
+note = """
+Alibaba resells DeepSeek-V4-Flash-0731 with "Busy hours" and "Idle hours" prices since
+2026-08-17 00:00 Beijing time: "Peak hours refer to UTC+8 8:00 - 22:00, and off-peak hours
+refer to UTC+8 22:00 - 8:00 the next day." Idle prices are half the busy ones, every day."""

@@ -45,11 +45,11 @@ PAGES = {
 }
 
 
-def _prices(provider):
+def _prices(provider, mode=None):
     parser = checks.SOURCES[provider][1]
     extra = (PAGES.__getitem__,) if provider in {"amazon-bedrock", "meta", "mistral"} else ()
     return {(item.model, item.field, item.above, item.at): item.value
-            for item in parser(PAGES[provider], TODAY, *extra)}
+            for item in parser(PAGES[provider], TODAY, *extra) if item.mode == mode}
 
 
 def _terms(pages):
@@ -102,8 +102,9 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(alibaba[("qwen3.7-plus", "input", None, None)], 0.4)
         self.assertEqual(alibaba[("qwen3.7-plus", "output", 256_000, None)], 4.8)
         self.assertEqual(alibaba[("qwen3-coder-480b-a35b-instruct", "input", 32_000, None)], 2.7)
-        # Output is the non-thinking price.
+        # Output is the non-thinking price, and a hybrid model's thinking price is its mode.
         self.assertEqual(alibaba[("qwen-turbo", "output", None, None)], 0.2)
+        self.assertEqual(_prices("alibaba", "thinking")[("qwen-turbo", "output", None, None)], 0.5)
         # Other regions, per-modality tables, busy-hour prices, and images are skipped.
         self.assertNotIn(0.115, alibaba.values())
         models = {model for model, *_ in alibaba}
