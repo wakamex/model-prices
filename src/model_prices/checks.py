@@ -726,9 +726,9 @@ def parse_deepseek(page: str, today: datetime) -> list[Observed]:
 # schedules.toml: {provider: {language: (url, pattern matching the terms)}}.
 TERMS: dict[str, dict[str, tuple[str, str]]] = {
     "deepseek": {
-        "en": ("https://api-docs.deepseek.com/quick_start/pricing",
+        "en": ("https://api-docs.deepseek.com/quick_start/pricing/",
                r"Off-peak rates are half of the peak rates\. Peak hours are .*? in full\."),
-        "zh": ("https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+        "zh": ("https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
                r"空闲时段价格为高峰时段价格的一半。.*?空闲时段。"),
     },
 }
@@ -771,7 +771,7 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "cohere": ("https://cohere.com/pricing", parse_cohere),
     "amazon-bedrock": ("https://aws.amazon.com/bedrock/pricing/", parse_bedrock),
     "anthropic": ("https://platform.claude.com/docs/en/about-claude/pricing.md", parse_anthropic),
-    "deepseek": ("https://api-docs.deepseek.com/quick_start/pricing", parse_deepseek),
+    "deepseek": ("https://api-docs.deepseek.com/quick_start/pricing/", parse_deepseek),
     "google": ("https://ai.google.dev/gemini-api/docs/pricing.md.txt", parse_google),
     "inception": ("https://docs.inceptionlabs.ai/get-started/models.md", parse_inception),
     "meta": ("https://dev.meta.ai/models/muse-spark/", parse_meta),
