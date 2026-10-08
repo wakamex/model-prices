@@ -327,6 +327,27 @@
      }
     ]
    },
+   "qwen-flash-2025-07-28": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.05,
+       "output": 0.4,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 256000,
+         "input": 0.25,
+         "output": 2.0
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "qwen-max": {
     "standard": [
      {
@@ -336,6 +357,34 @@
        "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
        "valid_from": "2025-10-14T17:34:46Z",
        "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen-mt-flash": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.16,
+       "output": 0.49,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen-mt-lite": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.12,
+       "output": 0.36,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
       },
       "start": null
      }
@@ -435,6 +484,111 @@
      }
     ]
    },
+   "qwen-plus-2025-01-25": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.4,
+       "output": 1.2,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen-plus-2025-04-28": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.4,
+       "output": 1.2,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen-plus-2025-07-14": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.4,
+       "output": 1.2,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen-plus-2025-07-28": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.4,
+       "output": 1.2,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 256000,
+         "input": 1.2,
+         "output": 3.6
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen-plus-2025-09-11": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.4,
+       "output": 1.2,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 256000,
+         "input": 1.2,
+         "output": 3.6
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen-plus-2025-12-01": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.4,
+       "output": 1.2,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 256000,
+         "input": 1.2,
+         "output": 3.6
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "qwen-plus-character-ja": {
     "standard": [
      {
@@ -444,6 +598,27 @@
        "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
        "valid_from": "2025-10-14T17:34:46Z",
        "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen-plus-latest": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.4,
+       "output": 1.2,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 256000,
+         "input": 1.2,
+         "output": 3.6
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
       },
       "start": null
      }
@@ -515,6 +690,20 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-07T15:06:43Z"
+     }
+    ]
+   },
+   "qwen-vl-ocr-2025-11-20": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.07,
+       "output": 0.16,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
      }
     ]
    },
@@ -653,6 +842,76 @@
        "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
        "valid_from": "2025-10-14T17:34:46Z",
        "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3-235b-a22b-instruct-2507": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.23,
+       "output": 0.92,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3-235b-a22b-thinking-2507": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.23,
+       "output": 2.3,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3-30b-a3b": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.2,
+       "output": 0.8,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3-30b-a3b-instruct-2507": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.2,
+       "output": 0.8,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3-30b-a3b-thinking-2507": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.2,
+       "output": 2.4,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
       },
       "start": null
      }
@@ -837,6 +1096,63 @@
      }
     ]
    },
+   "qwen3-coder-flash-2025-07-28": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.3,
+       "output": 1.5,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 32000,
+         "input": 0.5,
+         "output": 2.5
+        },
+        {
+         "above": 128000,
+         "input": 0.8,
+         "output": 4.0
+        },
+        {
+         "above": 256000,
+         "input": 1.6,
+         "output": 9.6
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3-coder-next": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.3,
+       "output": 1.5,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 32000,
+         "input": 0.5,
+         "output": 2.5
+        },
+        {
+         "above": 128000,
+         "input": 0.8,
+         "output": 4.0
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "qwen3-coder-plus": {
     "standard": [
      {
@@ -882,6 +1198,68 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2025-07-29T14:21:12Z"
+     }
+    ]
+   },
+   "qwen3-coder-plus-2025-07-22": {
+    "standard": [
+     {
+      "rates": {
+       "input": 1.0,
+       "output": 5.0,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 32000,
+         "input": 1.8,
+         "output": 9.0
+        },
+        {
+         "above": 128000,
+         "input": 3.0,
+         "output": 15.0
+        },
+        {
+         "above": 256000,
+         "input": 6.0,
+         "output": 60.0
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3-coder-plus-2025-09-23": {
+    "standard": [
+     {
+      "rates": {
+       "input": 1.0,
+       "output": 5.0,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 32000,
+         "input": 1.8,
+         "output": 9.0
+        },
+        {
+         "above": 128000,
+         "input": 3.0,
+         "output": 15.0
+        },
+        {
+         "above": 256000,
+         "input": 6.0,
+         "output": 60.0
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
      }
     ]
    },
@@ -939,6 +1317,84 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2025-10-14T17:34:46Z"
+     }
+    ]
+   },
+   "qwen3-max-2025-09-23": {
+    "standard": [
+     {
+      "rates": {
+       "input": 1.2,
+       "output": 6.0,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 32000,
+         "input": 2.4,
+         "output": 12.0
+        },
+        {
+         "above": 128000,
+         "input": 3.0,
+         "output": 15.0
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3-max-2026-01-23": {
+    "standard": [
+     {
+      "rates": {
+       "input": 1.2,
+       "output": 6.0,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 32000,
+         "input": 2.4,
+         "output": 12.0
+        },
+        {
+         "above": 128000,
+         "input": 3.0,
+         "output": 15.0
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3-max-preview": {
+    "standard": [
+     {
+      "rates": {
+       "input": 1.2,
+       "output": 6.0,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 32000,
+         "input": 2.4,
+         "output": 12.0
+        },
+        {
+         "above": 128000,
+         "input": 3.0,
+         "output": 15.0
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
      }
     ]
    },
@@ -1004,6 +1460,20 @@
      }
     ]
    },
+   "qwen3-omni-30b-a3b-captioner": {
+    "standard": [
+     {
+      "rates": {
+       "input": 3.81,
+       "output": 3.06,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "qwen3-omni-flash": {
     "standard": [
      {
@@ -1046,6 +1516,34 @@
      }
     ]
    },
+   "qwen3-vl-235b-a22b-instruct": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.4,
+       "output": 1.6,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3-vl-235b-a22b-thinking": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.4,
+       "output": 4.0,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "qwen3-vl-30b-a3b": {
     "standard": [
      {
@@ -1055,6 +1553,168 @@
        "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
        "valid_from": "2025-10-14T17:34:46Z",
        "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3-vl-30b-a3b-instruct": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.2,
+       "output": 0.8,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3-vl-30b-a3b-thinking": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.2,
+       "output": 2.4,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3-vl-32b-instruct": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.16,
+       "output": 0.64,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3-vl-32b-thinking": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.16,
+       "output": 0.64,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3-vl-8b-instruct": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.18,
+       "output": 0.7,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3-vl-8b-thinking": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.18,
+       "output": 2.1,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3-vl-flash": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.05,
+       "output": 0.4,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 32000,
+         "input": 0.075,
+         "output": 0.6
+        },
+        {
+         "above": 128000,
+         "input": 0.12,
+         "output": 0.96
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3-vl-flash-2025-10-15": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.05,
+       "output": 0.4,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 32000,
+         "input": 0.075,
+         "output": 0.6
+        },
+        {
+         "above": 128000,
+         "input": 0.12,
+         "output": 0.96
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3-vl-flash-2026-01-22": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.05,
+       "output": 0.4,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 32000,
+         "input": 0.075,
+         "output": 0.6
+        },
+        {
+         "above": 128000,
+         "input": 0.12,
+         "output": 0.96
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
       },
       "start": null
      }
@@ -1100,6 +1760,58 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2025-10-14T17:34:46Z"
+     }
+    ]
+   },
+   "qwen3-vl-plus-2025-09-23": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.2,
+       "output": 1.6,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 32000,
+         "input": 0.3,
+         "output": 2.4
+        },
+        {
+         "above": 128000,
+         "input": 0.6,
+         "output": 4.8
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3-vl-plus-2025-12-19": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.2,
+       "output": 1.6,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 32000,
+         "input": 0.3,
+         "output": 2.4
+        },
+        {
+         "above": 128000,
+         "input": 0.6,
+         "output": 4.8
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
      }
     ]
    },
@@ -1175,6 +1887,20 @@
      }
     ]
    },
+   "qwen3.5-flash-2026-02-23": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.1,
+       "output": 0.4,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "qwen3.5-plus": {
     "standard": [
      {
@@ -1210,6 +1936,48 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-09-09T19:28:20Z"
+     }
+    ]
+   },
+   "qwen3.5-plus-2026-02-15": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.4,
+       "output": 2.4,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 256000,
+         "input": 0.5,
+         "output": 3.0
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3.5-plus-2026-04-20": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.4,
+       "output": 2.4,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 256000,
+         "input": 0.5,
+         "output": 3.0
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
      }
     ]
    },
@@ -1300,6 +2068,27 @@
      }
     ]
    },
+   "qwen3.6-flash-2026-04-16": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.25,
+       "output": 1.5,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 256000,
+         "input": 1.0,
+         "output": 4.0
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "qwen3.6-max-preview": {
     "standard": [
      {
@@ -1383,6 +2172,27 @@
      }
     ]
    },
+   "qwen3.6-plus-2026-04-02": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.5,
+       "output": 3.0,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 256000,
+         "input": 2.0,
+         "output": 6.0
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "qwen3.7-flash": {
     "standard": [
      {
@@ -1415,6 +2225,32 @@
      }
     ]
    },
+   "qwen3.7-flash-2026-07-15": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.03,
+       "output": 0.13,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 32000,
+         "input": 0.1,
+         "output": 0.4
+        },
+        {
+         "above": 256000,
+         "input": 0.2,
+         "output": 0.8
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "qwen3.7-max": {
     "standard": [
      {
@@ -1426,6 +2262,62 @@
        "source": "https://github.com/sst/models.dev/commit/1ab2ff81634d",
        "valid_from": "2026-05-21T22:58:29Z",
        "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3.7-max-2026-05-17": {
+    "standard": [
+     {
+      "rates": {
+       "input": 2.5,
+       "output": 7.5,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3.7-max-2026-05-20": {
+    "standard": [
+     {
+      "rates": {
+       "input": 2.5,
+       "output": 7.5,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3.7-max-2026-06-08": {
+    "standard": [
+     {
+      "rates": {
+       "input": 2.5,
+       "output": 7.5,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3.7-max-preview": {
+    "standard": [
+     {
+      "rates": {
+       "input": 2.5,
+       "output": 7.5,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
       },
       "start": null
      }
@@ -1498,6 +2390,55 @@
      }
     ]
    },
+   "qwen3.7-plus-2026-05-26": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.4,
+       "output": 1.6,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 256000,
+         "input": 1.2,
+         "output": 4.8
+        }
+       ],
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3.8-2.4t-a95b": {
+    "standard": [
+     {
+      "rates": {
+       "input": 2.0,
+       "output": 6.0,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3.8-27b": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.5,
+       "output": 3.0,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "qwen3.8-flash": {
     "standard": [
      {
@@ -1525,6 +2466,20 @@
        "source": "https://github.com/sst/models.dev/commit/b9f3acd5bf56",
        "valid_from": "2026-08-04T14:21:35Z",
        "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "qwen3.8-max-0902": {
+    "standard": [
+     {
+      "rates": {
+       "input": 2.0,
+       "output": 6.0,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
       },
       "start": null
      }
@@ -2975,6 +3930,40 @@
        ],
        "valid_from": "2026-10-07T19:43:35Z",
        "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "claude-mythos-5": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 1.0,
+       "cache_write": 12.5,
+       "cache_write_1h_multiple": 2.0,
+       "input": 10.0,
+       "output": 50.0,
+       "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "claude-mythos-5-1": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.25,
+       "cache_write": 12.5,
+       "cache_write_1h_multiple": 2.0,
+       "input": 10.0,
+       "output": 50.0,
+       "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
       },
       "start": null
      }
@@ -6445,6 +7434,21 @@
      }
     ]
    },
+   "mercury-decide": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.0,
+       "input": 0.04,
+       "output": 0.0,
+       "source": "https://docs.inceptionlabs.ai/get-started/models.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "mercury-edit": {
     "standard": [
      {
@@ -6470,6 +7474,21 @@
        "source": "https://github.com/sst/models.dev/commit/7220310828e1",
        "valid_from": "2026-04-15T02:49:22Z",
        "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "mercury-voice": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.02,
+       "input": 0.2,
+       "output": 0.75,
+       "source": "https://docs.inceptionlabs.ai/get-started/models.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
       },
       "start": null
      }
@@ -6637,6 +7656,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-08-01T15:43:28Z"
+     }
+    ]
+   },
+   "MiniMax-M2.1-highspeed": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.03,
+       "cache_write": 0.375,
+       "input": 0.6,
+       "output": 2.4,
+       "source": "https://platform.minimax.io/docs/guides/pricing-paygo.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
      }
     ]
    },
@@ -6994,6 +8029,21 @@
      }
     ]
    },
+   "ministral-14b-latest": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.02,
+       "input": 0.2,
+       "output": 0.2,
+       "source": "https://mistral.ai/pricing/api",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "ministral-3b-2512": {
     "standard": [
      {
@@ -7156,6 +8206,21 @@
      }
     ]
    },
+   "mistral-large-4-0": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.07,
+       "input": 0.68,
+       "output": 2.09,
+       "source": "https://mistral.ai/pricing/api",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "mistral-large-latest": {
     "standard": [
      {
@@ -7244,6 +8309,36 @@
      }
     ]
    },
+   "mistral-medium-3": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.15,
+       "input": 1.5,
+       "output": 7.5,
+       "source": "https://mistral.ai/pricing/api",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "mistral-medium-3-5": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.15,
+       "input": 1.5,
+       "output": 7.5,
+       "source": "https://mistral.ai/pricing/api",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "mistral-medium-latest": {
     "standard": [
      {
@@ -7296,6 +8391,21 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-09-29T00:37:26Z"
+     }
+    ]
+   },
+   "mistral-moderation-2603": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.0,
+       "input": 0.0,
+       "output": 0.0,
+       "source": "https://mistral.ai/pricing/api",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
      }
     ]
    },
@@ -7749,6 +8859,20 @@
    }
   },
   "openai": {
+   "babbage-002": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.4,
+       "output": 0.4,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "codex-mini-latest": {
     "standard": [
      {
@@ -7789,6 +8913,20 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2025-06-17T22:26:49Z"
+     }
+    ]
+   },
+   "davinci-002": {
+    "standard": [
+     {
+      "rates": {
+       "input": 2.0,
+       "output": 2.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
      }
     ]
    },
@@ -7837,6 +8975,48 @@
      }
     ]
    },
+   "gpt-3.5-turbo-0125": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.5,
+       "output": 1.5,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "gpt-3.5-turbo-1106": {
+    "standard": [
+     {
+      "rates": {
+       "input": 1.0,
+       "output": 2.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "gpt-3.5-turbo-instruct": {
+    "standard": [
+     {
+      "rates": {
+       "input": 1.5,
+       "output": 2.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "gpt-4": {
     "standard": [
      {
@@ -7878,6 +9058,20 @@
      }
     ]
    },
+   "gpt-4-0613": {
+    "standard": [
+     {
+      "rates": {
+       "input": 30.0,
+       "output": 60.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "gpt-4-turbo": {
     "standard": [
      {
@@ -7887,6 +9081,20 @@
        "source": "https://github.com/sst/models.dev/commit/674c4a5e8c24",
        "valid_from": "2025-06-05T20:31:32Z",
        "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "gpt-4-turbo-2024-04-09": {
+    "standard": [
+     {
+      "rates": {
+       "input": 10.0,
+       "output": 30.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
       },
       "start": null
      }
@@ -10857,6 +12065,21 @@
    }
   },
   "sakana": {
+   "fugu-max": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.25,
+       "input": 2.0,
+       "output": 6.0,
+       "source": "https://console.sakana.ai/pricing",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "fugu-ultra": {
     "standard": [
      {
@@ -11012,6 +12235,36 @@
      }
     ]
    },
+   "step-1o-audio": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.71,
+       "input": 3.57,
+       "output": 8.57,
+       "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "step-1o-turbo-vision": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.07,
+       "input": 0.36,
+       "output": 1.15,
+       "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "step-2-16k": {
     "standard": [
      {
@@ -11138,6 +12391,66 @@
       "start": null
      }
     ]
+   },
+   "step-audio-2": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.29,
+       "input": 1.43,
+       "output": 10.0,
+       "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "step-audio-r1.5": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.29,
+       "input": 1.43,
+       "output": 15.0,
+       "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "stepaudio-2.5-chat": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.3,
+       "input": 1.5,
+       "output": 3.5,
+       "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "stepaudio-2.5-realtime": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.3,
+       "input": 1.5,
+       "output": 10.0,
+       "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
    }
   },
   "tencent-tokenhub": {
@@ -11220,6 +12533,36 @@
      }
     ]
    },
+   "thinkingmachines/Inkling-Small": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.116,
+       "input": 0.58,
+       "output": 1.44,
+       "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "thinkingmachines/Inkling-Small:peft:262144": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.232,
+       "input": 1.16,
+       "output": 2.89,
+       "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "thinkingmachines/Inkling:peft:262144": {
     "standard": [
      {
@@ -11246,6 +12589,21 @@
        "source": "https://github.com/sst/models.dev/commit/5ee76694e18d",
        "valid_from": "2025-07-27T23:38:05Z",
        "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "solar-mini-4": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.003,
+       "input": 0.03,
+       "output": 0.12,
+       "source": "https://www.upstage.ai/pricing",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
       },
       "start": null
      }
@@ -13387,6 +14745,20 @@
    }
   },
   "zai": {
+   "glm-4-32b-0414-128k": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.1,
+       "output": 0.1,
+       "source": "https://docs.z.ai/guides/overview/pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "glm-4.5": {
     "standard": [
      {
@@ -13419,6 +14791,21 @@
      }
     ]
    },
+   "glm-4.5-airx": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.22,
+       "input": 1.1,
+       "output": 4.5,
+       "source": "https://docs.z.ai/guides/overview/pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "glm-4.5-flash": {
     "standard": [
      {
@@ -13430,6 +14817,21 @@
        "source": "https://github.com/sst/models.dev/commit/6d3491f8d509",
        "valid_from": "2025-08-15T05:20:07Z",
        "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "glm-4.5-x": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.45,
+       "input": 2.2,
+       "output": 8.9,
+       "source": "https://docs.z.ai/guides/overview/pricing.md",
+       "valid_from": "2026-10-08T17:55:23Z",
+       "valid_from_basis": "first observed"
       },
       "start": null
      }
@@ -13817,5 +15219,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-08T17:48:12Z"
+ "updated_at": "2026-10-08T17:55:40Z"
 }

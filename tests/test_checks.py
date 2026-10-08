@@ -256,7 +256,7 @@ class CheckTests(unittest.TestCase):
 
     def test_compare_flags_prices_that_differ(self):
         wrong = Observed("anthropic", "claude-opus-5-5", "input", 3.0)
-        unknown = Observed("anthropic", "claude-mythos-5-1", "input", 10.0)
+        unknown = Observed("anthropic", "claude-unreleased-9", "input", 10.0)
 
         mismatch, untracked = checks.compare([wrong, unknown], TODAY)
 

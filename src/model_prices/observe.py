@@ -1,7 +1,8 @@
 """Record prices from official pages for models that models.dev does not list.
 
-The daily job reads each provider's pricing pages and, when a model's rates differ from the
-last entry in data/observed.json, appends an entry dated by that run. Entries have the shape
+The daily job reads Cursor's and Devin's pages, and the pricing page of each provider that
+`model-prices check` reads, and, when a model's rates differ from the last entry in
+data/observed.json, appends an entry dated by that run. Entries have the shape
 of models.dev history entries, with the page's URL in place of a commit, so the compiler
 merges them into the same timelines. A page whose layout changed fails loudly, as a price
 check does, rather than recording a guessed price.
@@ -10,11 +11,14 @@ check does, rather than recording a guessed price.
 from __future__ import annotations
 
 from datetime import datetime, timezone
+from functools import cache, partial
 import json
 from pathlib import Path
 import re
-from typing import Any, Callable
+from typing import Any, Callable, Iterable
+import tomllib
 
+from model_prices import checks
 from model_prices.checks import _mdx_grid, _price, fetch
 
 CURSOR_INDEX = "https://cursor.com/llms.txt"
@@ -109,9 +113,59 @@ SOURCES: dict[str, Callable[[Callable[[str], str]], dict[str, tuple[str, dict[st
     "cursor": read_cursor,
 }
 
+# The provider's own models on its checked pricing page, where the page also resells other
+# labs' models, such as Alibaba's DeepSeek and Kimi models, at its own prices.
+OWN_MODELS = {"alibaba": r"qwen.*", "arcee": r"trinity-.*", "mistral": r"(?!zai-).*",
+              "thinkingmachines": r"thinkingmachines/.*"}
+# Google's page names models for display, such as "Gemini 3.8 Live", and prices images and
+# audio by the unit, so its models are left to models.dev.
+CHECKED = [provider for provider in checks.SOURCES if provider != "google"]
 
-def observe(output: Path, get: Callable[[str], str] = fetch,
-            now: datetime | None = None) -> list[str]:
+
+@cache
+def listed(data: Path) -> dict[str, set[str]]:
+    """The lowercase ids that models.dev or an alias already gives each provider."""
+    found = {provider: {model.lower() for model in models} for provider, models in
+             json.loads((data / "prices.json").read_text())["providers"].items()}
+    for name, target in tomllib.loads((data / "aliases.toml").read_text())["models"].items():
+        found.setdefault(target.split("/", 1)[0], set()).add(name.lower())
+    return found
+
+
+def read_checked(provider: str, data: Path, now: datetime,
+                 get: Callable[[str], str]) -> dict[str, tuple[str, dict[str, Any]]]:
+    """Rates of the provider's own models on its checked page that models.dev lacks.
+
+    Prices for a stated time, such as DeepSeek's peak hours or Upstage's promotions, are left
+    out, as are models without an input and output price, such as embedding models.
+    """
+    url = checks.SOURCES[provider][0]
+    own = re.compile(OWN_MODELS.get(provider, ".*"))
+    known = listed(data).get(provider, set())
+    found: dict[str, dict[str, Any]] = {}
+    for item in checks.parse(provider, get(url), now, get):
+        # Z.ai's page writes ids in capitals, such as GLM-4.5-X; its API ids are lowercase.
+        model = item.model.lower() if provider == "zai" else item.model
+        if (item.at or item.field not in checks.FIELDS or model.lower() in known
+                or not own.fullmatch(model)):
+            continue
+        rates = found.setdefault(model, {})
+        if item.above:
+            tiers = rates.setdefault("tiers", [])
+            tier = next((tier for tier in tiers if tier["above"] == item.above), None)
+            if tier is None:
+                tiers.append(tier := {"above": item.above})
+                tiers.sort(key=lambda tier: tier["above"])
+            rates = tier
+        if rates.get(item.field, item.value) != item.value:
+            raise ValueError(f"{provider}: {model} lists two {item.field} prices")
+        rates[item.field] = item.value
+    return {model: (url, rates) for model, rates in found.items()
+            if "input" in rates and "output" in rates}
+
+
+def observe(output: Path, get: Callable[[str], str] = fetch, now: datetime | None = None,
+            providers: Iterable[str] | None = None) -> list[str]:
     """Append each model whose page rates differ from its last entry; return the providers
     that changed.
 
@@ -120,16 +174,19 @@ def observe(output: Path, get: Callable[[str], str] = fetch,
     """
     data = json.loads(output.read_text()) if output.exists() else {"providers": {}}
     stamp = (now or datetime.now(timezone.utc)).replace(microsecond=0)
+    readers = {**SOURCES, **{provider: partial(read_checked, provider, output.parent, stamp)
+                             for provider in CHECKED}}
     changed, failures = [], []
-    for provider, read in SOURCES.items():
+    for provider, read in readers.items():
+        if providers is not None and provider not in providers:
+            continue
         try:
             found = read(get)
         except (OSError, ValueError, KeyError) as error:
             failures.append(f"{provider}: {error}")
             continue
-        models = data["providers"].setdefault(provider, {})
         for model, (url, rates) in sorted(found.items()):
-            entries = models.setdefault(model, [])
+            entries = data["providers"].setdefault(provider, {}).setdefault(model, [])
             if entries and entries[-1]["rates"] == rates:
                 continue
             entries.append({"valid_from": stamp.isoformat().replace("+00:00", "Z"),

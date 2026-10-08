@@ -1,5 +1,784 @@
 {
  "providers": {
+  "alibaba": {
+   "qwen-flash-2025-07-28": [
+    {
+     "rates": {
+      "input": 0.05,
+      "output": 0.4,
+      "tiers": [
+       {
+        "above": 256000,
+        "input": 0.25,
+        "output": 2.0
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen-mt-flash": [
+    {
+     "rates": {
+      "input": 0.16,
+      "output": 0.49
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen-mt-lite": [
+    {
+     "rates": {
+      "input": 0.12,
+      "output": 0.36
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen-plus-2025-01-25": [
+    {
+     "rates": {
+      "input": 0.4,
+      "output": 1.2
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen-plus-2025-04-28": [
+    {
+     "rates": {
+      "input": 0.4,
+      "output": 1.2
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen-plus-2025-07-14": [
+    {
+     "rates": {
+      "input": 0.4,
+      "output": 1.2
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen-plus-2025-07-28": [
+    {
+     "rates": {
+      "input": 0.4,
+      "output": 1.2,
+      "tiers": [
+       {
+        "above": 256000,
+        "input": 1.2,
+        "output": 3.6
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen-plus-2025-09-11": [
+    {
+     "rates": {
+      "input": 0.4,
+      "output": 1.2,
+      "tiers": [
+       {
+        "above": 256000,
+        "input": 1.2,
+        "output": 3.6
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen-plus-2025-12-01": [
+    {
+     "rates": {
+      "input": 0.4,
+      "output": 1.2,
+      "tiers": [
+       {
+        "above": 256000,
+        "input": 1.2,
+        "output": 3.6
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen-plus-latest": [
+    {
+     "rates": {
+      "input": 0.4,
+      "output": 1.2,
+      "tiers": [
+       {
+        "above": 256000,
+        "input": 1.2,
+        "output": 3.6
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen-vl-ocr-2025-11-20": [
+    {
+     "rates": {
+      "input": 0.07,
+      "output": 0.16
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-235b-a22b-instruct-2507": [
+    {
+     "rates": {
+      "input": 0.23,
+      "output": 0.92
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-235b-a22b-thinking-2507": [
+    {
+     "rates": {
+      "input": 0.23,
+      "output": 2.3
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-30b-a3b": [
+    {
+     "rates": {
+      "input": 0.2,
+      "output": 0.8
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-30b-a3b-instruct-2507": [
+    {
+     "rates": {
+      "input": 0.2,
+      "output": 0.8
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-30b-a3b-thinking-2507": [
+    {
+     "rates": {
+      "input": 0.2,
+      "output": 2.4
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-coder-flash-2025-07-28": [
+    {
+     "rates": {
+      "input": 0.3,
+      "output": 1.5,
+      "tiers": [
+       {
+        "above": 32000,
+        "input": 0.5,
+        "output": 2.5
+       },
+       {
+        "above": 128000,
+        "input": 0.8,
+        "output": 4.0
+       },
+       {
+        "above": 256000,
+        "input": 1.6,
+        "output": 9.6
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-coder-next": [
+    {
+     "rates": {
+      "input": 0.3,
+      "output": 1.5,
+      "tiers": [
+       {
+        "above": 32000,
+        "input": 0.5,
+        "output": 2.5
+       },
+       {
+        "above": 128000,
+        "input": 0.8,
+        "output": 4.0
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-coder-plus-2025-07-22": [
+    {
+     "rates": {
+      "input": 1.0,
+      "output": 5.0,
+      "tiers": [
+       {
+        "above": 32000,
+        "input": 1.8,
+        "output": 9.0
+       },
+       {
+        "above": 128000,
+        "input": 3.0,
+        "output": 15.0
+       },
+       {
+        "above": 256000,
+        "input": 6.0,
+        "output": 60.0
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-coder-plus-2025-09-23": [
+    {
+     "rates": {
+      "input": 1.0,
+      "output": 5.0,
+      "tiers": [
+       {
+        "above": 32000,
+        "input": 1.8,
+        "output": 9.0
+       },
+       {
+        "above": 128000,
+        "input": 3.0,
+        "output": 15.0
+       },
+       {
+        "above": 256000,
+        "input": 6.0,
+        "output": 60.0
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-max-2025-09-23": [
+    {
+     "rates": {
+      "input": 1.2,
+      "output": 6.0,
+      "tiers": [
+       {
+        "above": 32000,
+        "input": 2.4,
+        "output": 12.0
+       },
+       {
+        "above": 128000,
+        "input": 3.0,
+        "output": 15.0
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-max-2026-01-23": [
+    {
+     "rates": {
+      "input": 1.2,
+      "output": 6.0,
+      "tiers": [
+       {
+        "above": 32000,
+        "input": 2.4,
+        "output": 12.0
+       },
+       {
+        "above": 128000,
+        "input": 3.0,
+        "output": 15.0
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-max-preview": [
+    {
+     "rates": {
+      "input": 1.2,
+      "output": 6.0,
+      "tiers": [
+       {
+        "above": 32000,
+        "input": 2.4,
+        "output": 12.0
+       },
+       {
+        "above": 128000,
+        "input": 3.0,
+        "output": 15.0
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-omni-30b-a3b-captioner": [
+    {
+     "rates": {
+      "input": 3.81,
+      "output": 3.06
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-vl-235b-a22b-instruct": [
+    {
+     "rates": {
+      "input": 0.4,
+      "output": 1.6
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-vl-235b-a22b-thinking": [
+    {
+     "rates": {
+      "input": 0.4,
+      "output": 4.0
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-vl-30b-a3b-instruct": [
+    {
+     "rates": {
+      "input": 0.2,
+      "output": 0.8
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-vl-30b-a3b-thinking": [
+    {
+     "rates": {
+      "input": 0.2,
+      "output": 2.4
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-vl-32b-instruct": [
+    {
+     "rates": {
+      "input": 0.16,
+      "output": 0.64
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-vl-32b-thinking": [
+    {
+     "rates": {
+      "input": 0.16,
+      "output": 0.64
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-vl-8b-instruct": [
+    {
+     "rates": {
+      "input": 0.18,
+      "output": 0.7
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-vl-8b-thinking": [
+    {
+     "rates": {
+      "input": 0.18,
+      "output": 2.1
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-vl-flash": [
+    {
+     "rates": {
+      "input": 0.05,
+      "output": 0.4,
+      "tiers": [
+       {
+        "above": 32000,
+        "input": 0.075,
+        "output": 0.6
+       },
+       {
+        "above": 128000,
+        "input": 0.12,
+        "output": 0.96
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-vl-flash-2025-10-15": [
+    {
+     "rates": {
+      "input": 0.05,
+      "output": 0.4,
+      "tiers": [
+       {
+        "above": 32000,
+        "input": 0.075,
+        "output": 0.6
+       },
+       {
+        "above": 128000,
+        "input": 0.12,
+        "output": 0.96
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-vl-flash-2026-01-22": [
+    {
+     "rates": {
+      "input": 0.05,
+      "output": 0.4,
+      "tiers": [
+       {
+        "above": 32000,
+        "input": 0.075,
+        "output": 0.6
+       },
+       {
+        "above": 128000,
+        "input": 0.12,
+        "output": 0.96
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-vl-plus-2025-09-23": [
+    {
+     "rates": {
+      "input": 0.2,
+      "output": 1.6,
+      "tiers": [
+       {
+        "above": 32000,
+        "input": 0.3,
+        "output": 2.4
+       },
+       {
+        "above": 128000,
+        "input": 0.6,
+        "output": 4.8
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3-vl-plus-2025-12-19": [
+    {
+     "rates": {
+      "input": 0.2,
+      "output": 1.6,
+      "tiers": [
+       {
+        "above": 32000,
+        "input": 0.3,
+        "output": 2.4
+       },
+       {
+        "above": 128000,
+        "input": 0.6,
+        "output": 4.8
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3.5-flash-2026-02-23": [
+    {
+     "rates": {
+      "input": 0.1,
+      "output": 0.4
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3.5-plus-2026-02-15": [
+    {
+     "rates": {
+      "input": 0.4,
+      "output": 2.4,
+      "tiers": [
+       {
+        "above": 256000,
+        "input": 0.5,
+        "output": 3.0
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3.5-plus-2026-04-20": [
+    {
+     "rates": {
+      "input": 0.4,
+      "output": 2.4,
+      "tiers": [
+       {
+        "above": 256000,
+        "input": 0.5,
+        "output": 3.0
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3.6-flash-2026-04-16": [
+    {
+     "rates": {
+      "input": 0.25,
+      "output": 1.5,
+      "tiers": [
+       {
+        "above": 256000,
+        "input": 1.0,
+        "output": 4.0
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3.6-plus-2026-04-02": [
+    {
+     "rates": {
+      "input": 0.5,
+      "output": 3.0,
+      "tiers": [
+       {
+        "above": 256000,
+        "input": 2.0,
+        "output": 6.0
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3.7-flash-2026-07-15": [
+    {
+     "rates": {
+      "input": 0.03,
+      "output": 0.13,
+      "tiers": [
+       {
+        "above": 32000,
+        "input": 0.1,
+        "output": 0.4
+       },
+       {
+        "above": 256000,
+        "input": 0.2,
+        "output": 0.8
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3.7-max-2026-05-17": [
+    {
+     "rates": {
+      "input": 2.5,
+      "output": 7.5
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3.7-max-2026-05-20": [
+    {
+     "rates": {
+      "input": 2.5,
+      "output": 7.5
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3.7-max-2026-06-08": [
+    {
+     "rates": {
+      "input": 2.5,
+      "output": 7.5
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3.7-max-preview": [
+    {
+     "rates": {
+      "input": 2.5,
+      "output": 7.5
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3.7-plus-2026-05-26": [
+    {
+     "rates": {
+      "input": 0.4,
+      "output": 1.6,
+      "tiers": [
+       {
+        "above": 256000,
+        "input": 1.2,
+        "output": 4.8
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3.8-2.4t-a95b": [
+    {
+     "rates": {
+      "input": 2.0,
+      "output": 6.0
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3.8-27b": [
+    {
+     "rates": {
+      "input": 0.5,
+      "output": 3.0
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "qwen3.8-max-0902": [
+    {
+     "rates": {
+      "input": 2.0,
+      "output": 6.0
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ]
+  },
+  "anthropic": {
+   "claude-mythos-5": [
+    {
+     "rates": {
+      "cache_read": 1.0,
+      "cache_write": 12.5,
+      "input": 10.0,
+      "output": 50.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "claude-mythos-5-1": [
+    {
+     "rates": {
+      "cache_read": 0.25,
+      "cache_write": 12.5,
+      "input": 10.0,
+      "output": 50.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ]
+  },
   "cognition": {
    "adaptive": [
     {
@@ -217,6 +996,325 @@
      },
      "source": "https://web.archive.org/web/20260823213243/https://cursor.com/docs/models/cursor-composer-2-5",
      "valid_from": "2026-08-23T21:32:43Z"
+    }
+   ]
+  },
+  "inception": {
+   "mercury-decide": [
+    {
+     "rates": {
+      "cache_read": 0.0,
+      "input": 0.04,
+      "output": 0.0
+     },
+     "source": "https://docs.inceptionlabs.ai/get-started/models.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "mercury-voice": [
+    {
+     "rates": {
+      "cache_read": 0.02,
+      "input": 0.2,
+      "output": 0.75
+     },
+     "source": "https://docs.inceptionlabs.ai/get-started/models.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ]
+  },
+  "minimax": {
+   "MiniMax-M2.1-highspeed": [
+    {
+     "rates": {
+      "cache_read": 0.03,
+      "cache_write": 0.375,
+      "input": 0.6,
+      "output": 2.4
+     },
+     "source": "https://platform.minimax.io/docs/guides/pricing-paygo.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ]
+  },
+  "mistral": {
+   "ministral-14b-latest": [
+    {
+     "rates": {
+      "cache_read": 0.02,
+      "input": 0.2,
+      "output": 0.2
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "mistral-large-4-0": [
+    {
+     "rates": {
+      "cache_read": 0.07,
+      "input": 0.68,
+      "output": 2.09
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "mistral-medium-3": [
+    {
+     "rates": {
+      "cache_read": 0.15,
+      "input": 1.5,
+      "output": 7.5
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "mistral-medium-3-5": [
+    {
+     "rates": {
+      "cache_read": 0.15,
+      "input": 1.5,
+      "output": 7.5
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "mistral-moderation-2603": [
+    {
+     "rates": {
+      "cache_read": 0.0,
+      "input": 0.0,
+      "output": 0.0
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ]
+  },
+  "openai": {
+   "babbage-002": [
+    {
+     "rates": {
+      "input": 0.4,
+      "output": 0.4
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "davinci-002": [
+    {
+     "rates": {
+      "input": 2.0,
+      "output": 2.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "gpt-3.5-turbo-0125": [
+    {
+     "rates": {
+      "input": 0.5,
+      "output": 1.5
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "gpt-3.5-turbo-1106": [
+    {
+     "rates": {
+      "input": 1.0,
+      "output": 2.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "gpt-3.5-turbo-instruct": [
+    {
+     "rates": {
+      "input": 1.5,
+      "output": 2.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "gpt-4-0613": [
+    {
+     "rates": {
+      "input": 30.0,
+      "output": 60.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "gpt-4-turbo-2024-04-09": [
+    {
+     "rates": {
+      "input": 10.0,
+      "output": 30.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ]
+  },
+  "sakana": {
+   "fugu-max": [
+    {
+     "rates": {
+      "cache_read": 0.25,
+      "input": 2.0,
+      "output": 6.0
+     },
+     "source": "https://console.sakana.ai/pricing",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ]
+  },
+  "stepfun-ai": {
+   "step-1o-audio": [
+    {
+     "rates": {
+      "cache_read": 0.71,
+      "input": 3.57,
+      "output": 8.57
+     },
+     "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "step-1o-turbo-vision": [
+    {
+     "rates": {
+      "cache_read": 0.07,
+      "input": 0.36,
+      "output": 1.15
+     },
+     "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "step-audio-2": [
+    {
+     "rates": {
+      "cache_read": 0.29,
+      "input": 1.43,
+      "output": 10.0
+     },
+     "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "step-audio-r1.5": [
+    {
+     "rates": {
+      "cache_read": 0.29,
+      "input": 1.43,
+      "output": 15.0
+     },
+     "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "stepaudio-2.5-chat": [
+    {
+     "rates": {
+      "cache_read": 0.3,
+      "input": 1.5,
+      "output": 3.5
+     },
+     "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "stepaudio-2.5-realtime": [
+    {
+     "rates": {
+      "cache_read": 0.3,
+      "input": 1.5,
+      "output": 10.0
+     },
+     "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ]
+  },
+  "thinkingmachines": {
+   "thinkingmachines/Inkling-Small": [
+    {
+     "rates": {
+      "cache_read": 0.116,
+      "input": 0.58,
+      "output": 1.44
+     },
+     "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "thinkingmachines/Inkling-Small:peft:262144": [
+    {
+     "rates": {
+      "cache_read": 0.232,
+      "input": 1.16,
+      "output": 2.89
+     },
+     "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ]
+  },
+  "upstage": {
+   "solar-mini-4": [
+    {
+     "rates": {
+      "cache_read": 0.003,
+      "input": 0.03,
+      "output": 0.12
+     },
+     "source": "https://www.upstage.ai/pricing",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ]
+  },
+  "zai": {
+   "glm-4-32b-0414-128k": [
+    {
+     "rates": {
+      "input": 0.1,
+      "output": 0.1
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "glm-4.5-airx": [
+    {
+     "rates": {
+      "cache_read": 0.22,
+      "input": 1.1,
+      "output": 4.5
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "glm-4.5-x": [
+    {
+     "rates": {
+      "cache_read": 0.45,
+      "input": 2.2,
+      "output": 8.9
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-10-08T17:55:23Z"
     }
    ]
   }

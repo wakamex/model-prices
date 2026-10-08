@@ -329,8 +329,8 @@ class PriceTests(unittest.TestCase):
         self.assertIsNone(rates("claude-opus-5-5", at="2026-09-30T02:00:00Z").period)
 
     def test_strict_resolution_keeps_suffixes(self):
-        self.assertEqual(resolve("gpt-3.5-turbo-1106"), ("openai", "gpt-3.5-turbo"))
-        self.assertIsNone(resolve("gpt-3.5-turbo-1106", strict=True))
+        self.assertEqual(resolve("gpt-3.5-turbo-0613"), ("openai", "gpt-3.5-turbo"))
+        self.assertIsNone(resolve("gpt-3.5-turbo-0613", strict=True))
 
     def test_current_price_list_keeps_the_request_time_of_day(self):
         # A V4 Flash peak hour in August, priced from the September price list.

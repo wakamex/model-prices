@@ -860,18 +860,26 @@ def compare(observed: Iterable[Observed], today: datetime,
     return results
 
 
-def _check(provider: str, moment: datetime, pages: dict[str, str] | None,
-           genai: list | None) -> list[Result]:
+def parse(provider: str, page: str, moment: datetime,
+          get: Callable[[str], str]) -> list[Observed]:
+    """The prices a provider's pricing page states; `get` fetches any further pages."""
     url, parser = SOURCES[provider]
-    page = pages[provider] if pages and provider in pages else fetch(url)
     # A check that reads further pages, such as Mistral's per-model docs, gets a fetcher.
     if len(inspect.signature(parser).parameters) == 3:
-        observed = parser(page, moment, lambda other: pages[other] if pages and other in pages
-                          else fetch(other))
+        observed = parser(page, moment, get)
     else:
         observed = parser(page, moment)
     if not observed:
         raise ValueError(f"{provider}: no prices parsed from {url}; the page format changed")
+    return observed
+
+
+def _check(provider: str, moment: datetime, pages: dict[str, str] | None,
+           genai: list | None) -> list[Result]:
+    url = SOURCES[provider][0]
+    page = pages[provider] if pages and provider in pages else fetch(url)
+    observed = parse(provider, page, moment,
+                     lambda other: pages[other] if pages and other in pages else fetch(other))
     results = compare(observed, moment, genai)
     for language, (terms_url, _) in TERMS.get(provider, {}).items():
         key = f"{provider}:{language}"

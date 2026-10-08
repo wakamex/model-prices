@@ -34,7 +34,13 @@ class _Inputs:
         observed = data / "observed.json"
         for provider, models in (json.loads(observed.read_text())["providers"].items()
                                  if observed.exists() else ()):
-            self.prices["providers"].setdefault(provider, {}).update(models)
+            listed = self.prices["providers"].setdefault(provider, {})
+            for model, entries in models.items():
+                # Once models.dev lists an observed model, its history takes over from its
+                # first entry.
+                start = _parse_time(listed[model][0]["valid_from"]) if model in listed else None
+                listed[model] = [entry for entry in entries if start is None
+                                 or _parse_time(entry["valid_from"]) < start] + listed.get(model, [])
         self.config = {name: tomllib.loads((data / name).read_text()) for name in (
             "aliases.toml", "cache_writes.toml", "corrections.toml", "plans.toml",
             "research_corrections.toml", "schedules.toml")}
