@@ -666,7 +666,7 @@ def main(argv: list[str] | None = None) -> int:
         results = run(args.providers or None, genai=genai)
         print(json.dumps(as_json(results), indent=2) if args.json
               else report(results, genai=genai is not None))
-        return 1 if any(result.status == "mismatch" for result in results) else 0
+        return 1 if any(result.status in {"mismatch", "error"} for result in results) else 0
 
     if args.command == "refresh":
         status = refresh(timedelta(hours=args.max_age))

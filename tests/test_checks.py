@@ -264,8 +264,28 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(untracked.status, "untracked")
 
     def test_changed_page_format_fails_loudly(self):
-        with self.assertRaisesRegex(ValueError, "page format changed"):
-            checks.run(["zai"], today=TODAY, pages={"zai": "# Pricing\n"})
+        results = checks.run(["zai"], today=TODAY, pages={"zai": "# Pricing\n"})
+
+        self.assertEqual([(r.provider, r.status) for r in results], [("zai", "error")])
+        self.assertIn("page format changed", checks.report(results))
+
+    def test_unreachable_page_fails_only_its_provider(self):
+        def fetch(url):
+            if url == checks.SOURCES["xai"][0]:
+                raise TimeoutError("timed out")
+            return PAGES["zai"]
+
+        with mock.patch.object(checks, "fetch", fetch):
+            results = checks.run(["xai", "zai"], today=TODAY)
+
+        self.assertEqual([(r.provider, r.status) for r in results if r.status == "error"],
+                         [("xai", "error")])
+        self.assertIn("ok", {r.status for r in results if r.provider == "zai"})
+        with (mock.patch.object(checks, "fetch", fetch),
+              mock.patch("sys.stdout", new_callable=io.StringIO) as stdout):
+            self.assertEqual(main(["check", "xai", "zai"]), 1)
+        self.assertIn("error     xai page https://docs.x.ai/developers/pricing.md: timed out",
+                      stdout.getvalue())
 
     def test_check_command_exit_status(self):
         with (mock.patch.object(checks, "fetch", lambda url: PAGES["zai"]),

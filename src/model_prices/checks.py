@@ -860,29 +860,41 @@ def compare(observed: Iterable[Observed], today: datetime,
     return results
 
 
+def _check(provider: str, moment: datetime, pages: dict[str, str] | None,
+           genai: list | None) -> list[Result]:
+    url, parser = SOURCES[provider]
+    page = pages[provider] if pages and provider in pages else fetch(url)
+    # A check that reads further pages, such as Mistral's per-model docs, gets a fetcher.
+    if len(inspect.signature(parser).parameters) == 3:
+        observed = parser(page, moment, lambda other: pages[other] if pages and other in pages
+                          else fetch(other))
+    else:
+        observed = parser(page, moment)
+    if not observed:
+        raise ValueError(f"{provider}: no prices parsed from {url}; the page format changed")
+    results = compare(observed, moment, genai)
+    for language, (terms_url, _) in TERMS.get(provider, {}).items():
+        key = f"{provider}:{language}"
+        if terms_url == url:
+            terms_page = page
+        else:
+            terms_page = pages[key] if pages and key in pages else fetch(terms_url)
+        results.append(compare_terms(provider, language, terms_page, moment))
+    return results
+
+
 def run(providers: Iterable[str] | None = None, today: datetime | None = None,
         pages: dict[str, str] | None = None, genai: list | None = None) -> list[Result]:
     moment = today or datetime.now(timezone.utc)
     results = []
     for provider in providers or SOURCES:
-        url, parser = SOURCES[provider]
-        page = pages[provider] if pages and provider in pages else fetch(url)
-        # A check that reads further pages, such as Mistral's per-model docs, gets a fetcher.
-        if len(inspect.signature(parser).parameters) == 3:
-            observed = parser(page, moment, lambda other: pages[other] if pages and other in pages
-                              else fetch(other))
-        else:
-            observed = parser(page, moment)
-        if not observed:
-            raise ValueError(f"{provider}: no prices parsed from {url}; the page format changed")
-        results.extend(compare(observed, moment, genai))
-        for language, (terms_url, _) in TERMS.get(provider, {}).items():
-            key = f"{provider}:{language}"
-            if terms_url == url:
-                terms_page = page
-            else:
-                terms_page = pages[key] if pages and key in pages else fetch(terms_url)
-            results.append(compare_terms(provider, language, terms_page, moment))
+        # A page that cannot be fetched or read fails its own provider's check, and the
+        # other providers are still checked.
+        try:
+            results.extend(_check(provider, moment, pages, genai))
+        except (OSError, ValueError) as error:
+            results.append(Result(provider, provider, "page", None, None, SOURCES[provider][0],
+                                  str(error), None, "error"))
     results.extend(check_calendars(set(providers or SOURCES), moment))
     return results
 
@@ -900,6 +912,9 @@ def report(results: list[Result], genai: bool = False) -> str:
     lines = []
     for result in results:
         if result.status in {"ok", "untracked"}:
+            continue
+        if result.status == "error":
+            lines.append(f"error     {result.provider} page {result.official}: {result.effective}")
             continue
         if result.field == "holiday_calendar":
             lines.append(f"{result.status:9} {result.model} holiday calendar {result.official}, "
@@ -926,7 +941,7 @@ def report(results: list[Result], genai: bool = False) -> str:
                 lines.append(f"genai     {result.model} {result.field}{tier}{when}: "
                              f"official ${result.official:g}, genai-prices {result.genai_prices:g}")
     counts = {status: sum(r.status == status for r in results)
-              for status in ("ok", "corrected", "mismatch", "untracked")}
+              for status in ("ok", "corrected", "mismatch", "untracked", "error")}
     lines.append(", ".join(f"{count} {status}" for status, count in counts.items()))
     if genai:
         lines.append(f"official prices in models.dev: {_score(results, 'models_dev')}; "

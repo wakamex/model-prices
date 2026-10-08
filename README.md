@@ -77,6 +77,7 @@ Holiday calendars record the last date they cover, and `model-prices check` fail
 - `corrected`: models.dev differs, but a correction in `corrections.toml` or `research_corrections.toml` supplies the official price.
 - `mismatch`: model-prices differs from the official page. The command exits with status 1.
 - `untracked`: the page lists a model that models.dev does not price.
+- `error`: the page could not be fetched or no longer matches its parser. The other providers are still checked, and the command exits with status 1.
 
 Page model names must match models.dev ids exactly, with no suffix removal, so a dated model is never compared with a different undated one. A page is compared only for its own provider's models: Alibaba's page also lists the prices it resells DeepSeek and Kimi models at, which are not DeepSeek's or Moonshot AI's prices. For DeepSeek, peak and off-peak prices are checked at the next hours the schedule classifies as each, and the peak-hour rule on both the English and Chinese pricing pages must match the wording recorded in `schedules.toml`, so a change to the hours, multiplier, or exceptions fails the check. Google's dated future prices are read for the check date. A page that yields no prices fails the check, because its format has changed.
 
