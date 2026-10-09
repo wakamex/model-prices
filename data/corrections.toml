@@ -375,6 +375,17 @@ source = "https://www.alibabacloud.com/help/en/model-studio/context-cache"
 note = "models.dev lists cache reads at 10% of input, the explicit cache hit price, on a model Alibaba lists for implicit caching. Cache prices from Alibaba's context cache page, first read on 2026-10-09: a cache read costs 20% of input on the models its Singapore tab lists for implicit caching, which needs no setup, and 10% on those it lists only for explicit caching, and an explicit cache write costs 125% of input. A request uses one mode, so an explicit hit on a model with implicit caching is priced as an implicit one."
 
 [[correction]]
+provider = "tencent-tokenhub"
+model = "hy3"
+valid_from = "2026-07-20T16:00:00Z"
+input = 0.139
+output = 0.556
+cache_read = 0.03475
+replaces = { input = 0.0, output = 0.0 }
+source = "https://cloud.tencent.com/document/product/1823/130055"
+note = "Tencent's TokenHub price list gives Hy3 at 1 yuan input, 4 yuan output, and 0.25 yuan cached input per million tokens, with no free period, on 2026-10-09. Hy3 launched on 2026-07-06 free for two weeks (https://news.qq.com/rain/a/20260709A04UXG00: \"首发限时免费使用两周\" and \"免费期结束后，Hy3 的 API 价格每百万 Tokens，输入 1 元，输出 4 元，输入命中缓存 0.25 元\"), which ended on 2026-07-21 Beijing time; the free use extended to 2026-08-31 covered only WorkBuddy and CodeBuddy users (https://tech.ifeng.com/c/8vJgzqou0No). models.dev lists Hy3 as free. Yuan prices are converted at models.dev's rate for Tencent's hy4-preview, $0.834 for 6 yuan."
+
+[[correction]]
 provider = "alibaba"
 model = "qwen-vl-ocr"
 valid_from = "2026-02-10T03:42:28Z"
