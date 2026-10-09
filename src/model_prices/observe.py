@@ -184,6 +184,55 @@ OWN_MODELS = {"alibaba": r"qwen.*", "arcee": r"trinity-.*", "mistral": r"(?!zai-
 CHECKED = [provider for provider in checks.SOURCES if provider != "google"]
 
 
+ALIBABA_CACHE = "https://www.alibabacloud.com/help/en/model-studio/context-cache.md"
+_ALIBABA_ID = r"(?:qwen|deepseek|glm|kimi)[a-z0-9.-]*[a-z0-9]"
+
+
+def _alibaba_cache_section(page: str, title: str) -> tuple[str, str]:
+    """A cache mode's Singapore supported-model list and its billing text."""
+    section = re.search(rf"^## {title}\b(.*?)(?=^## |\Z)", page, re.M | re.S)
+    tab = section and re.search(r'### Supported models.*?<Tab title="Singapore">(.*?)</Tab>',
+                                section.group(1), re.S)
+    billing = section and re.search(r"^### Billing(.*?)(?=^### |\Z)", section.group(1),
+                                    re.M | re.S)
+    if not tab or not billing:
+        raise ValueError(f"alibaba: no {title} models or billing in {ALIBABA_CACHE}; "
+                         "the page format changed")
+    return tab.group(1), billing.group(1)
+
+
+def parse_alibaba_cache(page: str) -> tuple[set[str], set[str]]:
+    """The Singapore models whose implicit cache hits cost 20% of input, and those whose
+    explicit cache writes cost 125% of input.
+
+    Alibaba bills implicit cache hits, which need no setup, at 20% of input, and explicit
+    cache writes at 125%; it lists exceptions, whose prices only its console shows. One
+    cache-read price per model cannot also give explicit hits, at 10% of input, so they
+    are priced as implicit hits.
+    """
+    implicit, implicit_billing = _alibaba_cache_section(page, "Implicit cache")
+    explicit, explicit_billing = _alibaba_cache_section(page, "Explicit cache")
+    others = re.search(r"For models other than (.*?): The unit price of `cached_token` is "
+                       r"<strong>20%</strong> of the `input_token` unit price", implicit_billing)
+    exceptions = re.search(r"The explicit cache hit price for (.*?) is not 10%", explicit_billing)
+    if (not others or not exceptions or "billed at 125% of the standard input token price"
+            not in explicit_billing):
+        raise ValueError(f"alibaba: cache billing rules changed in {ALIBABA_CACHE}")
+    excluded = set(re.findall(_ALIBABA_ID, others.group(1) + " " + exceptions.group(1)))
+    return (set(re.findall(_ALIBABA_ID, implicit)) - excluded,
+            set(re.findall(_ALIBABA_ID, explicit)) - excluded)
+
+
+def _with_alibaba_cache(found: dict[str, dict[str, Any]], page: str) -> None:
+    implicit, explicit = parse_alibaba_cache(page)
+    for model, rates in found.items():
+        for prices in (rates, *rates.get("tiers", [])):
+            if model in implicit and "input" in prices:
+                prices["cache_read"] = round(prices["input"] * 0.2, 6)
+            if model in explicit and "input" in prices:
+                prices["cache_write"] = round(prices["input"] * 1.25, 6)
+
+
 @cache
 def listed(data: Path) -> dict[str, set[str]]:
     """The lowercase ids that models.dev or an alias already gives each provider."""
@@ -224,8 +273,12 @@ def read_checked(provider: str, data: Path, now: datetime,
         if rates.get(item.field, item.value) != item.value:
             raise ValueError(f"{provider}: {model} lists two {item.field} prices")
         rates[item.field] = item.value
-    return {model: (url, rates) for model, rates in found.items()
-            if "input" in rates and "output" in rates}
+    found = {model: rates for model, rates in found.items()
+             if "input" in rates and "output" in rates}
+    # Alibaba's pricing page states cache prices as rules on its cache page.
+    if provider == "alibaba":
+        _with_alibaba_cache(found, get(ALIBABA_CACHE))
+    return {model: (url, rates) for model, rates in found.items()}
 
 
 def observe(output: Path, get: Callable[[str], str] = fetch, now: datetime | None = None,

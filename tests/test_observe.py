@@ -89,12 +89,26 @@ class ObserveTests(unittest.TestCase):
             "qwen3-coder-480b-a35b-instruct", "qwen3-coder-unlisted")
         url = checks.SOURCES["alibaba"][0]
 
-        found = observe.read_checked("alibaba", DATA, TODAY, {url: page}.__getitem__)
+        cache_page = (FIXTURES / "alibaba-cache.md").read_text()
+        found = observe.read_checked("alibaba", DATA, TODAY,
+                                     {url: page, observe.ALIBABA_CACHE: cache_page}.__getitem__)
 
         self.assertEqual(found, {"qwen3-coder-unlisted": (url, {
             "input": 1.5, "output": 7.5,
             "tiers": [{"above": 32000, "input": 2.7, "output": 13.5},
                       {"above": 128000, "input": 4.5, "output": 22.5}]})})
+
+    def test_alibaba_cache_rules_give_implicit_reads_and_explicit_writes(self):
+        implicit, explicit = observe.parse_alibaba_cache(
+            (FIXTURES / "alibaba-cache.md").read_text())
+
+        # qwen3.8-max is an exception, and the China tab's models are another deployment.
+        self.assertEqual(implicit, {"qwen3.7-max", "qwen3-max-preview", "qwen3.7-plus-2026-05-26"})
+        self.assertEqual(explicit, {"qwen3.7-max", "qwen3.5-plus-2026-04-20",
+                                    "qwen3.7-plus-2026-05-26"})
+        with self.assertRaisesRegex(ValueError, "cache billing rules changed"):
+            observe.parse_alibaba_cache((FIXTURES / "alibaba-cache.md").read_text()
+                                        .replace("<strong>20%</strong>", "<strong>15%</strong>"))
 
     def test_models_dev_history_takes_over_from_its_first_entry(self):
         with tempfile.TemporaryDirectory() as directory:
