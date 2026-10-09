@@ -113,12 +113,6 @@ _BYTEPLUS_COLUMNS = {"Input (non-audio)": "input", "Cache-hit input (non-audio)"
                      "Output": "output"}
 
 
-def _byteplus_cell(cell: str) -> str:
-    """Cell text without Markdown emphasis, escapes, line breaks, or units."""
-    text = re.sub(r"\*\*|<br>", " ", cell.replace("\\", ""))
-    return " ".join(re.sub(r"\((?:USD|K tokens)[^)]*\)", "", text).split())
-
-
 def parse_byteplus(page: str) -> dict[str, dict[str, Any]]:
     """Rates of ByteDance's own Seed models from BytePlus ModelArk's standard online
     inference table, which the page embeds as Markdown in its router data.
@@ -131,29 +125,17 @@ def parse_byteplus(page: str) -> dict[str, dict[str, Any]]:
         markdown = next(value["curDoc"]["MDContent"]
                         for value in json.loads(router.group(1))["loaderData"].values()
                         if isinstance(value, dict) and "curDoc" in value)
-        section = re.search(r"^## Online inference \(standard\)\n(.*?)(?=^#)", markdown,
-                            re.M | re.S).group(1)
     except (AttributeError, StopIteration, KeyError, TypeError, ValueError):
-        raise ValueError("byteplus: no standard online inference table; the page format "
-                         "changed") from None
-    lines = [line for line in section.splitlines() if line.startswith("|")]
-    rows = [line.strip().removeprefix("|").removesuffix("|").split("|") for line in lines]
-    titles = [_byteplus_cell(cell) for cell in rows[0]] if rows else []
-    if not titles or titles[:2] != ["Model ID", "Pricing tiers"] or not set(
-            _BYTEPLUS_COLUMNS) <= set(titles):
-        raise ValueError(f"byteplus: table columns are {titles}; the page format changed")
+        raise ValueError("byteplus: no pricing document; the page format changed") from None
     models: dict[str, dict[str, Any]] = {}
-    model = ""
-    for row in rows[2:]:
-        cells = [_byteplus_cell(cell) for cell in row]
-        model = cells[0] or model
+    for model, condition, rates in checks.ark_rows(markdown, "Online inference (standard)",
+                                                   "byteplus", _BYTEPLUS_COLUMNS):
         if not re.fullmatch(r"(dola-)?seed-[a-z0-9-]+", model):
             continue
-        rates = {field: float(cells[titles.index(title)])
-                 for title, field in _BYTEPLUS_COLUMNS.items()}
-        tier = re.fullmatch(r"Prompt length ([\[(])(\d+), (\d+)\]", cells[1])
-        if cells[1] != "-" and tier is None:
-            raise ValueError(f"byteplus: unknown pricing tier {cells[1]!r} for {model}")
+        rates = {field: price for field, price in rates.items() if price is not None}
+        tier = re.fullmatch(r"Prompt length ([\[(])(\d+), (\d+)\]", condition)
+        if condition != "-" and tier is None:
+            raise ValueError(f"byteplus: unknown pricing tier {condition!r} for {model}")
         if tier and tier.group(1) == "(":
             models[model].setdefault("tiers", []).append({"above": int(tier.group(2)) * 1000,
                                                           **rates})
