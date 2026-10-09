@@ -180,8 +180,10 @@ SOURCES: dict[str, Callable[[Callable[[str], str]], dict[str, tuple[str, dict[st
 OWN_MODELS = {"alibaba": r"qwen.*", "arcee": r"trinity-.*", "mistral": r"(?!zai-).*",
               "thinkingmachines": r"thinkingmachines/.*"}
 # Google's page names models for display, such as "Gemini 3.8 Live", and prices images and
-# audio by the unit, so its models are left to models.dev.
-CHECKED = [provider for provider in checks.SOURCES if provider != "google"]
+# audio by the unit, so its models are left to models.dev, as are those of pages priced in
+# yuan, whose names are not API ids and whose dollar prices are conversions.
+CHECKED = [provider for provider in checks.SOURCES if provider != "google"
+           and provider not in checks.YUAN_TO_USD]
 
 
 ALIBABA_CACHE = "https://www.alibabacloud.com/help/en/model-studio/context-cache.md"

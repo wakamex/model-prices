@@ -42,6 +42,8 @@ PAGES = {
     "openai": (FIXTURES / "openai.md").read_text(),
     "xai": (FIXTURES / "xai.md").read_text(),
     "zai": (FIXTURES / "zai.md").read_text(),
+    "tencent-tokenhub": (FIXTURES / "tencent.html").read_text(),
+    "volcengine": (FIXTURES / "volcengine.json").read_text(),
 }
 
 
@@ -121,6 +123,38 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(found[("qwen3.7-plus", "output", None, "thinking")], 1.28)
         # A night and daytime discount depends on the hour, so it is not compared.
         self.assertNotIn(("qwen3.7-plus", "output", None, None), found)
+
+    def test_volcengine_yuan_prices_reach_dated_ids_in_dollars(self):
+        found = {(item.model, item.field, item.above): item for item in
+                 checks.parse_volcengine(PAGES["volcengine"], TODAY)}
+
+        # A family name reaches its dated id, and the tier starts above 32K tokens.
+        pro = found[("doubao-seed-2-0-pro-260215", "input", 32_000)]
+        self.assertEqual(pro.yuan, 4.8)
+        self.assertAlmostEqual(pro.value, 4.8 / 6.737012)
+        self.assertIn(("deepseek-v4-pro-ga-260813", "output", None), found)
+        # Peak and off-peak rows, superseded prices, and other tables are left out.
+        self.assertFalse({key for key in found if key[0].startswith(
+            ("deepseek-v4-1-flash", "deepseek-v4-pro-preview"))})
+        self.assertNotIn(9.9, {item.yuan for item in found.values()})
+
+    def test_tencent_reads_the_guangzhou_table_in_yuan(self):
+        found = {(item.model, item.field, item.above): item.yuan for item in
+                 checks.parse_tencent(PAGES["tencent-tokenhub"], TODAY)}
+
+        self.assertEqual(found[("hy4-preview", "input", None)], 6)
+        self.assertEqual(found[("hy3", "cache_read", None)], 0.25)
+        self.assertEqual(found[("glm-5.1", "output", 32_000)], 28)
+        self.assertNotIn(9, found.values())
+        self.assertFalse({key for key in found if key[0].startswith("deepseek")})
+
+    def test_a_yuan_price_matches_within_rounding_of_its_conversion(self):
+        # models.dev lists hy4-preview's 18 yuan as $2.501; the conversion gives $2.502.
+        close = checks._yuan("tencent-tokenhub", "hy4-preview", "output", 18)
+        changed = checks._yuan("tencent-tokenhub", "hy4-preview", "output", 20)
+
+        self.assertEqual([r.status for r in checks.compare([close, changed], TODAY)],
+                         ["ok", "mismatch"])
 
     def test_mistral_parser_reads_sale_prices_under_every_api_name(self):
         mistral = _prices("mistral")

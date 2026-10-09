@@ -33,6 +33,8 @@ class Observed:
     above: int | None = None
     at: str | None = None
     mode: str | None = None
+    # The official price in yuan, when value is its conversion to dollars.
+    yuan: float | None = None
 
 
 @dataclass(frozen=True)
@@ -47,6 +49,7 @@ class Result:
     models_dev: float | None
     status: str
     genai_prices: float | None = None
+    yuan: float | None = None
 
 
 def _price(cell: str) -> float | None:
@@ -776,6 +779,120 @@ def check_calendars(providers: set[str], today: datetime) -> list[Result]:
     return results
 
 
+def _ark_cell(cell: str) -> str:
+    """A ModelArk docs table cell without Markdown emphasis, escapes, line breaks, or
+    units, which BytePlus writes in English and Volcengine in Chinese."""
+    text = re.sub(r"\*\*|<br>", " ", cell.replace("\\", ""))
+    text = re.sub(r"\((?:USD|K tokens)[^)]*\)|元/百万token\S*|输入长度：千 token", "", text)
+    return " ".join(text.split())
+
+
+def ark_rows(markdown: str, heading: str, provider: str,
+             columns: dict[str, str]) -> list[tuple[str, str, dict[str, float | None]]]:
+    """The rows of a pricing table on BytePlus's or Volcengine's ModelArk docs, as
+    (model, pricing condition, {field: price}); a row that continues a model's tiers
+    repeats its name, and "-" is no price."""
+    section = re.search(rf"^## {re.escape(heading)}\n(.*?)(?=^#)", markdown, re.M | re.S)
+    lines = [line for line in (section.group(1) if section else "").splitlines()
+             if line.startswith("|")]
+    rows = [line.strip().removeprefix("|").removesuffix("|").split("|") for line in lines]
+    titles = [_ark_cell(cell) for cell in rows[0]] if rows else []
+    if len(titles) < 2 or not set(columns) <= set(titles):
+        raise ValueError(f"{provider}: {heading} table columns are {titles}; the page format "
+                         "changed")
+    found, model = [], ""
+    for row in rows[2:]:
+        cells = [_ark_cell(cell) for cell in row]
+        model = cells[0] or model
+        found.append((model, cells[1], {field: None if cells[titles.index(title)] == "-"
+                                        else float(cells[titles.index(title)])
+                                        for title, field in columns.items()}))
+    return found
+
+
+# Yuan prices are compared in dollars at the rate models.dev converts each provider's prices
+# at, within 1%, so a changed official price fails while models.dev's rounding does not.
+YUAN_TO_USD = {
+    # providers/volcengine/provider.toml: "CNY→USD rate: 6.737012, 2026-08-26".
+    "volcengine": 1 / 6.737012,
+    # providers/tencent-tokenhub/provider.toml converts list price / tax rate × exchange
+    # rate, which gives hy4-preview's 6 yuan as $0.834.
+    "tencent-tokenhub": 0.834 / 6,
+}
+YUAN_TOLERANCE = 0.01
+
+
+def _yuan(provider: str, model: str, field: str, price: float, above: int | None = None) -> Observed:
+    return Observed(provider, model, field, price * YUAN_TO_USD[provider], above=above, yuan=price)
+
+
+VOLCENGINE_COLUMNS = {"输入(非音频)": "input", "缓存命中(非音频)": "cache_read", "输出": "output"}
+
+
+def parse_volcengine(page: str, today: datetime) -> list[Observed]:
+    """Volcengine Ark's standard online inference prices in yuan, from the document API
+    that its pricing page loads.
+
+    The page names model families, such as doubao-seed-2.0-pro, whose API ids add a date,
+    such as doubao-seed-2-0-pro-260215; "正式版" (generally available) is the -ga id. An
+    "输入长度 (32, 128]" row is the tier above 32K input tokens. Peak and off-peak rows,
+    and superseded "调整前价格" rows, are left out.
+    """
+    try:
+        markdown = json.loads(page)["Result"]["MDContent"]
+    except (ValueError, KeyError, TypeError):
+        raise ValueError("volcengine: no pricing document; the page format changed") from None
+    ids = list(_ids("volcengine")[0].values())
+    found = []
+    for name, condition, prices in ark_rows(markdown, "在线推理（常规）", "volcengine",
+                                            VOLCENGINE_COLUMNS):
+        if "调整前" in name or condition in {"空闲时段", "高峰时段"}:
+            continue
+        family = name.split()[0].replace(".", "-").replace("正式版", "-ga").replace(
+            "预览版", "-preview")
+        tier = re.fullmatch(r"输入长度 ([\[(])(\d+), (\d+)\]", condition)
+        if condition != "-" and tier is None:
+            raise ValueError(f"volcengine: unknown pricing condition {condition!r} for {name}")
+        above = int(tier.group(2)) * 1000 if tier and tier.group(1) == "(" else None
+        models = [model for model in ids if re.fullmatch(re.escape(family) + r"(-\d{6})?", model)]
+        for model in models or [family]:
+            found += [_yuan("volcengine", model, field, price, above)
+                      for field, price in prices.items() if price is not None]
+    return found
+
+
+def parse_tencent(page: str, today: datetime) -> list[Observed]:
+    """Tencent TokenHub's language-model prices in yuan for its Guangzhou (China) region,
+    whose list prices models.dev converts. Display names, such as "Hy4 preview", are
+    hy4-preview; a "＞32k" condition is the tier above 32K tokens. Peak and off-peak rows
+    are left out."""
+    table = re.search(r"<table.*?</table>", page, re.S)
+    if table is None:
+        raise ValueError("tencent-tokenhub: no price table; the page format changed")
+    rows = [[" ".join(html.unescape(re.sub(r"<[^>]+>", " ", cell)).replace("\ufeff", "")
+                      .split()) for cell in re.findall(r"<t[hd].*?</t[hd]>", row, re.S)]
+            for row in re.findall(r"<tr.*?</tr>", table.group(0), re.S)]
+    titles = [re.sub(r"\s|（.*", "", cell) for cell in rows[0]] if rows else []
+    columns = {"推理输入": "input", "推理输出": "output", "缓存命中": "cache_read"}
+    if titles[:3] != ["模型名称", "条件", "峰谷计费"] or not set(columns) <= set(titles):
+        raise ValueError(f"tencent-tokenhub: table columns are {titles}; the page format changed")
+    found, name = [], ""
+    for cells in rows[1:]:
+        if len(cells) != len(titles):
+            continue
+        name = cells[0] or name
+        if cells[2] != "-":
+            continue
+        tier = re.search(r"[>＞](\d+)k", cells[1])
+        model = "-".join(name.lower().split())
+        for title, field in columns.items():
+            cell = cells[titles.index(title)]
+            if re.fullmatch(r"[0-9]+(?:\.[0-9]+)?", cell):
+                found.append(_yuan("tencent-tokenhub", model, field, float(cell),
+                                   int(tier.group(1)) * 1000 if tier else None))
+    return found
+
+
 SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "alibaba": ("https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
                 parse_alibaba),
@@ -798,6 +915,9 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "xiaomi": ("https://mimo.mi.com/static/docs/price/pay-as-you-go.md", parse_xiaomi),
     "upstage": ("https://www.upstage.ai/pricing", parse_upstage),
     "stepfun-ai": ("https://platform.stepfun.ai/docs/en/guides/pricing/details.md", parse_stepfun),
+    "tencent-tokenhub": ("https://cloud.tencent.com/document/product/1823/130055", parse_tencent),
+    "volcengine": ("https://www.volcengine.com/api/doc/getDocDetail?LibraryID=82379"
+                   "&DocumentID=1544106&type=online", parse_volcengine),
     "moonshotai": ("https://platform.kimi.ai/docs/pricing/chat.md", parse_moonshot),
     "openai": ("https://developers.openai.com/api/docs/pricing.md", parse_openai),
     "xai": ("https://docs.x.ai/developers/pricing.md", parse_xai),
@@ -860,10 +980,13 @@ def compare(observed: Iterable[Observed], today: datetime,
                if resolved else None)
         effective_value = _value(effective, item.field, item.above)
         raw_value = _value(raw, item.field, item.above)
+        # A price converted from yuan matches within YUAN_TOLERANCE of the conversion.
+        margin = item.value * YUAN_TOLERANCE if item.yuan is not None else 1e-9
         if effective is None:
             status = "untracked"
-        elif effective_value is not None and abs(effective_value - item.value) < 1e-9:
-            status = "ok" if raw_value is not None and abs(raw_value - item.value) < 1e-9 else "corrected"
+        elif effective_value is not None and abs(effective_value - item.value) <= margin:
+            status = ("ok" if raw_value is not None and abs(raw_value - item.value) <= margin
+                      else "corrected")
         else:
             status = "mismatch"
         model = f"{effective.provider}/{effective.model}" if effective else item.model
@@ -871,10 +994,10 @@ def compare(observed: Iterable[Observed], today: datetime,
         # genai-prices lists no thinking-mode prices.
         listed = (genai_prices.price(genai, item.provider, api_name, item.field,
                                      _parse_time(at), item.above)
-                  if genai is not None and not item.mode else None)
+                  if genai is not None and not item.mode and item.yuan is None else None)
         field = f"{item.mode} {item.field}" if item.mode else item.field
         results.append(Result(item.provider, model, field, item.above, item.at,
-                              item.value, effective_value, raw_value, status, listed))
+                              item.value, effective_value, raw_value, status, listed, item.yuan))
     return results
 
 
@@ -953,9 +1076,11 @@ def report(results: list[Result], genai: bool = False) -> str:
             continue
         tier = f" above {result.above:,}" if result.above else ""
         when = f" at {result.at}" if result.at else ""
+        official = (f"¥{result.yuan:g} (${result.official:.4g})" if result.yuan is not None
+                    else f"${result.official:g}")
         lines.append(
             f"{result.status:9} {result.model} {result.field}{tier}{when}: "
-            f"official ${result.official:g}, model-prices {result.effective}, "
+            f"official {official}, model-prices {result.effective}, "
             f"models.dev {result.models_dev}"
         )
     if genai:
