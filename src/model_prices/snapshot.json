@@ -344,6 +344,34 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2025-10-14T17:34:46Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.01,
+       "cache_write": 0.0625,
+       "input": 0.05,
+       "output": 0.4,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "tiers": [
+        {
+         "above": 256000,
+         "cache_read": 0.05,
+         "cache_write": 0.3125,
+         "input": 0.25,
+         "output": 2.0
+        }
+       ],
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.05,
+       "output": 0.4,
+       "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
+       "valid_from": "2025-10-14T17:34:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-09T18:18:19Z"
      }
     ]
    },
@@ -379,6 +407,24 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.32,
+       "input": 1.6,
+       "output": 6.4,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/context-cache",
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 1.6,
+       "output": 6.4,
+       "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
+       "valid_from": "2025-10-14T17:34:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-09T18:18:19Z"
      }
     ]
    },
@@ -501,6 +547,34 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2025-10-14T17:34:46Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.08,
+       "cache_write": 0.5,
+       "input": 0.4,
+       "output": 1.2,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "tiers": [
+        {
+         "above": 256000,
+         "cache_read": 0.24,
+         "cache_write": 1.5,
+         "input": 1.2,
+         "output": 3.6
+        }
+       ],
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.4,
+       "output": 1.2,
+       "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
+       "valid_from": "2025-10-14T17:34:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-09T18:18:19Z"
      }
     ],
     "thinking": [
@@ -537,6 +611,34 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2025-10-14T17:34:46Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.08,
+       "cache_write": 0.5,
+       "input": 0.4,
+       "output": 4.0,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "tiers": [
+        {
+         "above": 256000,
+         "cache_read": 0.24,
+         "cache_write": 1.5,
+         "input": 1.2,
+         "output": 12.0
+        }
+       ],
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.4,
+       "output": 4.0,
+       "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
+       "valid_from": "2025-10-14T17:34:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-09T18:18:19Z"
      }
     ]
    },
@@ -737,6 +839,24 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "input": 0.5,
+       "output": 1.4,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/context-cache",
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.5,
+       "output": 1.4,
+       "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
+       "valid_from": "2025-10-14T17:34:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-09T18:18:19Z"
      }
     ]
    },
@@ -791,6 +911,24 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.01,
+       "input": 0.05,
+       "output": 0.2,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/context-cache",
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.05,
+       "output": 0.2,
+       "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
+       "valid_from": "2025-10-14T17:34:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-09T18:18:19Z"
      }
     ],
     "thinking": [
@@ -803,6 +941,24 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.01,
+       "input": 0.05000000000000001,
+       "output": 0.5,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/context-cache",
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.05,
+       "output": 0.5,
+       "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
+       "valid_from": "2025-10-14T17:34:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-09T18:18:19Z"
      }
     ]
    },
@@ -817,6 +973,24 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.16,
+       "input": 0.8,
+       "output": 3.2,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/context-cache",
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.8,
+       "output": 3.2,
+       "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
+       "valid_from": "2025-10-14T17:34:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-09T18:18:19Z"
      }
     ]
    },
@@ -886,6 +1060,24 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.042,
+       "input": 0.21,
+       "output": 0.63,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/context-cache",
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.21,
+       "output": 0.63,
+       "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
+       "valid_from": "2025-10-14T17:34:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-09T18:18:19Z"
      }
     ]
    },
@@ -1362,6 +1554,48 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-01-16T07:29:01Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.06,
+       "cache_write": 0.375,
+       "input": 0.3,
+       "output": 1.5,
+       "source": "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "tiers": [
+        {
+         "above": 32000,
+         "cache_read": 0.1,
+         "cache_write": 0.625,
+         "input": 0.5,
+         "output": 2.5
+        },
+        {
+         "above": 128000,
+         "cache_read": 0.16,
+         "cache_write": 1.0,
+         "input": 0.8,
+         "output": 4.0
+        },
+        {
+         "above": 256000,
+         "cache_read": 0.32,
+         "cache_write": 2.0,
+         "input": 1.6,
+         "output": 9.6
+        }
+       ],
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.3,
+       "output": 1.5,
+       "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
+       "valid_from": "2025-10-14T17:34:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-09T18:18:19Z"
      }
     ]
    },
@@ -1467,6 +1701,48 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2025-07-29T14:21:12Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 1.25,
+       "input": 1.0,
+       "output": 5.0,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "tiers": [
+        {
+         "above": 32000,
+         "cache_read": 0.36,
+         "cache_write": 2.25,
+         "input": 1.8,
+         "output": 9.0
+        },
+        {
+         "above": 128000,
+         "cache_read": 0.6,
+         "cache_write": 3.75,
+         "input": 3.0,
+         "output": 15.0
+        },
+        {
+         "above": 256000,
+         "cache_read": 1.2,
+         "cache_write": 7.5,
+         "input": 6.0,
+         "output": 60.0
+        }
+       ],
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 1.0,
+       "output": 5.0,
+       "source": "https://github.com/sst/models.dev/commit/7a9f66a08ac9",
+       "valid_from": "2025-07-29T14:21:12Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-09T18:18:19Z"
      }
     ]
    },
@@ -1586,6 +1862,41 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2025-10-14T17:34:46Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.24,
+       "cache_write": 1.5,
+       "input": 1.2,
+       "output": 6.0,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "tiers": [
+        {
+         "above": 32000,
+         "cache_read": 0.48,
+         "cache_write": 3.0,
+         "input": 2.4,
+         "output": 12.0
+        },
+        {
+         "above": 128000,
+         "cache_read": 0.6,
+         "cache_write": 3.75,
+         "input": 3.0,
+         "output": 15.0
+        }
+       ],
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 1.2,
+       "output": 6.0,
+       "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
+       "valid_from": "2025-10-14T17:34:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-09T18:18:19Z"
      }
     ]
    },
@@ -2106,6 +2417,41 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2025-10-14T17:34:46Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.04,
+       "cache_write": 0.25,
+       "input": 0.2,
+       "output": 1.6,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "tiers": [
+        {
+         "above": 32000,
+         "cache_read": 0.06,
+         "cache_write": 0.375,
+         "input": 0.3,
+         "output": 2.4
+        },
+        {
+         "above": 128000,
+         "cache_read": 0.12,
+         "cache_write": 0.75,
+         "input": 0.6,
+         "output": 4.8
+        }
+       ],
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.2,
+       "output": 1.6,
+       "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
+       "valid_from": "2025-10-14T17:34:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-09T18:18:19Z"
      }
     ],
     "thinking": [
@@ -2135,6 +2481,25 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2025-10-14T17:34:46Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.04,
+       "cache_write": 0.25,
+       "input": 0.20000000000000004,
+       "output": 4.8,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.2,
+       "output": 4.8,
+       "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
+       "valid_from": "2025-10-14T17:34:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-09T18:18:19Z"
      }
     ]
    },
@@ -2343,6 +2708,32 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-04-02T18:19:11Z"
+     },
+     {
+      "rates": {
+       "cache_write": 0.5,
+       "input": 0.4,
+       "output": 2.4,
+       "source": "https://web.archive.org/web/20260402181911/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "tiers": [
+        {
+         "above": 256000,
+         "cache_write": 0.625,
+         "input": 0.5,
+         "output": 3.0
+        }
+       ],
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.4,
+       "output": 2.4,
+       "source": "https://github.com/sst/models.dev/commit/85f5340eebf6",
+       "valid_from": "2026-02-16T22:06:32Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-09T18:18:19Z"
      }
     ],
     "thinking": [
@@ -2379,6 +2770,32 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-04-02T18:19:11Z"
+     },
+     {
+      "rates": {
+       "cache_write": 0.5,
+       "input": 0.4,
+       "output": 2.4,
+       "source": "https://web.archive.org/web/20260402181911/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "tiers": [
+        {
+         "above": 256000,
+         "cache_write": 0.625,
+         "input": 0.5,
+         "output": 3.0
+        }
+       ],
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.4,
+       "output": 2.4,
+       "source": "https://github.com/sst/models.dev/commit/85f5340eebf6",
+       "valid_from": "2026-02-16T22:06:32Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-09T18:18:19Z"
      }
     ]
    },
@@ -2584,6 +3001,33 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-05-22T21:58:08Z"
+     },
+     {
+      "rates": {
+       "cache_write": 0.3125,
+       "input": 0.25,
+       "output": 1.5,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
+       "tiers": [
+        {
+         "above": 256000,
+         "cache_write": 1.25,
+         "input": 1.0,
+         "output": 4.0
+        }
+       ],
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_write": 0.234375,
+       "input": 0.1875,
+       "output": 1.125,
+       "source": "https://github.com/sst/models.dev/commit/cfbbb55c4d83",
+       "valid_from": "2026-05-22T21:58:08Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-09T18:18:19Z"
      }
     ]
    },
@@ -16253,5 +16697,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-09T18:18:42Z"
+ "updated_at": "2026-10-09T19:31:24Z"
 }
