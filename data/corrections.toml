@@ -386,6 +386,17 @@ source = "https://cloud.tencent.com/document/product/1823/130055"
 note = "Tencent's TokenHub price list gives Hy3 at 1 yuan input, 4 yuan output, and 0.25 yuan cached input per million tokens, with no free period, on 2026-10-09. Hy3 launched on 2026-07-06 free for two weeks (https://news.qq.com/rain/a/20260709A04UXG00: \"首发限时免费使用两周\" and \"免费期结束后，Hy3 的 API 价格每百万 Tokens，输入 1 元，输出 4 元，输入命中缓存 0.25 元\"), which ended on 2026-07-21 Beijing time; the free use extended to 2026-08-31 covered only WorkBuddy and CodeBuddy users (https://tech.ifeng.com/c/8vJgzqou0No). models.dev lists Hy3 as free. Yuan prices are converted at models.dev's rate for Tencent's hy4-preview, $0.834 for 6 yuan."
 
 [[correction]]
+provider = "stepfun-ai"
+model = "step-5-preview"
+valid_from = "2026-10-09T21:23:19Z"
+input = 1.0
+output = 2.7
+cache_read = 0.1
+replaces = { input = 1.0, output = 2.7 }
+source = "https://platform.stepfun.ai/docs/en/guides/pricing/details"
+note = "StepFun's pricing page lists step-5-preview's cache hit input at $0.10 on 2026-10-09T21:23Z, where models.dev and the page at the 2026-10-09T06:46Z daily check list $0.05. No announcement dates the change, so it applies from its first observation."
+
+[[correction]]
 provider = "alibaba"
 model = "qwen-vl-ocr"
 valid_from = "2026-02-10T03:42:28Z"
