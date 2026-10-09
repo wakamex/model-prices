@@ -202,13 +202,13 @@ def _alibaba_cache_section(page: str, title: str) -> tuple[str, str]:
 
 
 def parse_alibaba_cache(page: str) -> tuple[set[str], set[str]]:
-    """The Singapore models whose implicit cache hits cost 20% of input, and those whose
-    explicit cache writes cost 125% of input.
+    """The Singapore models with implicit caching, and those with explicit caching.
 
     Alibaba bills implicit cache hits, which need no setup, at 20% of input, and explicit
-    cache writes at 125%; it lists exceptions, whose prices only its console shows. One
-    cache-read price per model cannot also give explicit hits, at 10% of input, so they
-    are priced as implicit hits.
+    cache hits at 10% and writes at 125%; it lists exceptions, whose prices only its
+    console shows. A request uses one mode, so a model with implicit caching prices its
+    one cache-read price as an implicit hit, and a model with only explicit caching as an
+    explicit hit.
     """
     implicit, implicit_billing = _alibaba_cache_section(page, "Implicit cache")
     explicit, explicit_billing = _alibaba_cache_section(page, "Explicit cache")
@@ -227,8 +227,10 @@ def _with_alibaba_cache(found: dict[str, dict[str, Any]], page: str) -> None:
     implicit, explicit = parse_alibaba_cache(page)
     for model, rates in found.items():
         for prices in (rates, *rates.get("tiers", [])):
-            if model in implicit and "input" in prices:
-                prices["cache_read"] = round(prices["input"] * 0.2, 6)
+            # A model without implicit caching has only explicit hits, at 10% of input.
+            share = 0.2 if model in implicit else 0.1 if model in explicit else None
+            if share and "input" in prices:
+                prices["cache_read"] = round(prices["input"] * share, 6)
             if model in explicit and "input" in prices:
                 prices["cache_write"] = round(prices["input"] * 1.25, 6)
 

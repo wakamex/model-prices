@@ -2711,6 +2711,7 @@
      },
      {
       "rates": {
+       "cache_read": 0.04,
        "cache_write": 0.5,
        "input": 0.4,
        "output": 2.4,
@@ -2718,6 +2719,7 @@
        "tiers": [
         {
          "above": 256000,
+         "cache_read": 0.05,
          "cache_write": 0.625,
          "input": 0.5,
          "output": 3.0
@@ -2773,6 +2775,7 @@
      },
      {
       "rates": {
+       "cache_read": 0.04,
        "cache_write": 0.5,
        "input": 0.4,
        "output": 2.4,
@@ -2780,6 +2783,7 @@
        "tiers": [
         {
          "above": 256000,
+         "cache_read": 0.05,
          "cache_write": 0.625,
          "input": 0.5,
          "output": 3.0
@@ -2860,6 +2864,7 @@
      },
      {
       "rates": {
+       "cache_read": 0.04,
        "cache_write": 0.5,
        "input": 0.4,
        "output": 2.4,
@@ -2867,6 +2872,7 @@
        "tiers": [
         {
          "above": 256000,
+         "cache_read": 0.05,
          "cache_write": 0.625,
          "input": 0.5,
          "output": 3.0
@@ -2898,6 +2904,7 @@
      },
      {
       "rates": {
+       "cache_read": 0.04,
        "cache_write": 0.5,
        "input": 0.4,
        "output": 2.4,
@@ -2905,6 +2912,7 @@
        "tiers": [
         {
          "above": 256000,
+         "cache_read": 0.05,
          "cache_write": 0.625,
          "input": 0.5,
          "output": 3.0
@@ -3004,6 +3012,7 @@
      },
      {
       "rates": {
+       "cache_read": 0.025,
        "cache_write": 0.3125,
        "input": 0.25,
        "output": 1.5,
@@ -3011,6 +3020,7 @@
        "tiers": [
         {
          "above": 256000,
+         "cache_read": 0.1,
          "cache_write": 1.25,
          "input": 1.0,
          "output": 4.0
@@ -3204,6 +3214,59 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.006,
+       "cache_write": 0.0375,
+       "input": 0.03,
+       "output": 0.13,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/context-cache",
+       "tiers": [
+        {
+         "above": 32000,
+         "cache_read": 0.02,
+         "cache_write": 0.125,
+         "input": 0.1,
+         "output": 0.4
+        },
+        {
+         "above": 256000,
+         "cache_read": 0.04,
+         "cache_write": 0.25,
+         "input": 0.2,
+         "output": 0.8
+        }
+       ],
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.003,
+       "cache_write": 0.0375,
+       "input": 0.03,
+       "output": 0.13,
+       "source": "https://github.com/sst/models.dev/commit/5bb82699001d",
+       "tiers": [
+        {
+         "above": 32000,
+         "cache_read": 0.01,
+         "cache_write": 0.125,
+         "input": 0.1,
+         "output": 0.4
+        },
+        {
+         "above": 256000,
+         "cache_read": 0.02,
+         "cache_write": 0.25,
+         "input": 0.2,
+         "output": 0.8
+        }
+       ],
+       "valid_from": "2026-09-28T04:01:19Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-09T18:18:19Z"
      }
     ]
    },
@@ -3496,6 +3559,45 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-09-28T04:01:19Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.064,
+       "cache_write": 0.4,
+       "input": 0.32,
+       "output": 1.28,
+       "source": "https://www.alibabacloud.com/en/campaign/qwen-plus-discount",
+       "tiers": [
+        {
+         "above": 256000,
+         "cache_read": 0.192,
+         "cache_write": 1.2,
+         "input": 0.96,
+         "output": 3.84
+        }
+       ],
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.04,
+       "cache_write": 0.5,
+       "input": 0.4,
+       "output": 1.6,
+       "source": "https://github.com/sst/models.dev/commit/5bb82699001d",
+       "tiers": [
+        {
+         "above": 256000,
+         "cache_read": 0.12,
+         "cache_write": 1.5,
+         "input": 1.2,
+         "output": 4.8
+        }
+       ],
+       "valid_from": "2026-09-28T04:01:19Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-09T18:18:19Z"
      }
     ]
    },
@@ -16697,5 +16799,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-09T19:31:24Z"
+ "updated_at": "2026-10-09T20:12:22Z"
 }

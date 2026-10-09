@@ -226,7 +226,7 @@ cache_write = 0.0625
 tiers = [{ above = 256000, input = 0.25, output = 2.0, cache_read = 0.05, cache_write = 0.3125 }]
 replaces = { input = 0.05, output = 0.4 }
 source = "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
-note = "Singapore tab, on 2026-10-04: $0.05 input, $0.4 output per 1M tokens; above 256K $0.25/$2.0. models.dev lists no tiers. Alibaba's pricing table gives the 256K-1M tier to qwen-flash-2025-07-28, the snapshot qwen-flash serves. Applies from models.dev's first record, since research found the official price applied throughout (finding research/price-dates/findings/alibaba_qwen_flash_gap). Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: implicit cache hits cost 20% of input on the models its Singapore tab lists for implicit caching, and explicit cache writes 125% of input on those it lists for explicit caching. An explicit cache hit, at 10% of input, is priced as an implicit one."
+note = "Singapore tab, on 2026-10-04: $0.05 input, $0.4 output per 1M tokens; above 256K $0.25/$2.0. models.dev lists no tiers. Alibaba's pricing table gives the 256K-1M tier to qwen-flash-2025-07-28, the snapshot qwen-flash serves. Applies from models.dev's first record, since research found the official price applied throughout (finding research/price-dates/findings/alibaba_qwen_flash_gap). Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: a cache read costs 20% of input on the models its Singapore tab lists for implicit caching, which needs no setup, and 10% on those it lists only for explicit caching, and an explicit cache write costs 125% of input. A request uses one mode, so an explicit hit on a model with implicit caching is priced as an implicit one."
 
 [[correction]]
 provider = "alibaba"
@@ -253,7 +253,7 @@ tiers = [{ above = 256000, input = 1.2, output = 3.6, cache_read = 0.24, cache_w
 modes = { thinking = { output = 4.0, tiers = [{ above = 256000, output = 12.0 }] } }
 replaces = { input = 0.4, output = 1.2 }
 source = "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
-note = "Singapore tab, on 2026-10-04: $0.4 input, $1.2 output per 1M tokens; above 256K $1.2/$3.6. models.dev lists no tiers. Alibaba's pricing table gives the 256K-1M tier to qwen-plus-2025-07-28, which predates models.dev's record. Applies from models.dev's first record, since research found the official price applied throughout (finding research/price-dates/findings/alibaba_qwen_plus_gap). Thinking-mode output is $4, and $12 above 256K, which models.dev's $4 thinking price lacks the tier for. Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: implicit cache hits cost 20% of input on the models its Singapore tab lists for implicit caching, and explicit cache writes 125% of input on those it lists for explicit caching. An explicit cache hit, at 10% of input, is priced as an implicit one."
+note = "Singapore tab, on 2026-10-04: $0.4 input, $1.2 output per 1M tokens; above 256K $1.2/$3.6. models.dev lists no tiers. Alibaba's pricing table gives the 256K-1M tier to qwen-plus-2025-07-28, which predates models.dev's record. Applies from models.dev's first record, since research found the official price applied throughout (finding research/price-dates/findings/alibaba_qwen_plus_gap). Thinking-mode output is $4, and $12 above 256K, which models.dev's $4 thinking price lacks the tier for. Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: a cache read costs 20% of input on the models its Singapore tab lists for implicit caching, which needs no setup, and 10% on those it lists only for explicit caching, and an explicit cache write costs 125% of input. A request uses one mode, so an explicit hit on a model with implicit caching is priced as an implicit one."
 
 [[correction]]
 provider = "alibaba"
@@ -272,6 +272,7 @@ note = "Alibaba's pricing page (Singapore tab) lists qwen3.7-plus at \"List pric
 provider = "alibaba"
 model = "qwen3.7-plus"
 valid_from = "2026-09-28T04:01:19Z"
+valid_until = "2026-10-09T18:18:19Z"
 input = 0.32
 output = 1.28
 cache_read = 0.032
@@ -280,6 +281,19 @@ tiers = [{ above = 256000, input = 0.96, output = 3.84, cache_read = 0.096, cach
 replaces = { input = 0.4, output = 1.6 }
 source = "https://www.alibabacloud.com/en/campaign/qwen-plus-discount"
 note = "Alibaba's pricing page (Singapore tab) lists qwen3.7-plus at \"List price $0.4 (Limited-time 20% off)\" for input and \"List price $1.6 (Limited-time 20% off)\" for output, and $1.2/$4.8 above 256K, on 2026-09-09 (https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing) and 2026-10-08. Alibaba's campaign page (https://www.alibabacloud.com/en/campaign/qwen-plus-discount) gives \"from $0.32\" input and \"from $1.28\" output, and applies the discount to input, output, implicit cache input, and explicit cache creation and reads; it named only the qwen3.7-plus alias, and the dated qwen3.7-plus-2026-05-26 is listed without it. The discount has applied since release, which Alibaba's model list dates 2026-06-01 for the international deployment. Cache prices are models.dev's list prices less 20%."
+
+[[correction]]
+provider = "alibaba"
+model = "qwen3.7-plus"
+valid_from = "2026-10-09T18:18:19Z"
+input = 0.32
+output = 1.28
+cache_read = 0.064
+cache_write = 0.4
+tiers = [{ above = 256000, input = 0.96, output = 3.84, cache_read = 0.192, cache_write = 1.2 }]
+replaces = { input = 0.4, output = 1.6 }
+source = "https://www.alibabacloud.com/en/campaign/qwen-plus-discount"
+note = "Alibaba's pricing page (Singapore tab) lists qwen3.7-plus at \"List price $0.4 (Limited-time 20% off)\" for input and \"List price $1.6 (Limited-time 20% off)\" for output, and $1.2/$4.8 above 256K, on 2026-09-09 (https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing) and 2026-10-08. Alibaba's campaign page (https://www.alibabacloud.com/en/campaign/qwen-plus-discount) gives \"from $0.32\" input and \"from $1.28\" output, and applies the discount to input, output, implicit cache input, and explicit cache creation and reads; it named only the qwen3.7-plus alias, and the dated qwen3.7-plus-2026-05-26 is listed without it. The discount has applied since release, which Alibaba's model list dates 2026-06-01 for the international deployment. Cache prices are models.dev's list prices less 20%. From 2026-10-09, A cache read costs 20% of input on the models its Singapore tab lists for implicit caching, which needs no setup, and 10% on those it lists only for explicit caching, and an explicit cache write costs 125% of input. A request uses one mode, so an explicit hit on a model with implicit caching is priced as an implicit one. (https://www.alibabacloud.com/help/en/model-studio/context-cache); the discount applies to them too."
 
 [[correction]]
 provider = "alibaba"
@@ -301,7 +315,7 @@ output = 6.4
 cache_read = 0.32
 replaces = { input = 1.6, output = 6.4 }
 source = "https://www.alibabacloud.com/help/en/model-studio/context-cache"
-note = "models.dev lists input and output but no cache price. Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: implicit cache hits cost 20% of input on the models its Singapore tab lists for implicit caching, and explicit cache writes 125% of input on those it lists for explicit caching. An explicit cache hit, at 10% of input, is priced as an implicit one."
+note = "models.dev lists input and output but no cache price. Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: a cache read costs 20% of input on the models its Singapore tab lists for implicit caching, which needs no setup, and 10% on those it lists only for explicit caching, and an explicit cache write costs 125% of input. A request uses one mode, so an explicit hit on a model with implicit caching is priced as an implicit one."
 
 [[correction]]
 provider = "alibaba"
@@ -312,7 +326,7 @@ output = 1.4
 cache_read = 0.1
 replaces = { input = 0.5, output = 1.4 }
 source = "https://www.alibabacloud.com/help/en/model-studio/context-cache"
-note = "models.dev lists input and output but no cache price. Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: implicit cache hits cost 20% of input on the models its Singapore tab lists for implicit caching, and explicit cache writes 125% of input on those it lists for explicit caching. An explicit cache hit, at 10% of input, is priced as an implicit one."
+note = "models.dev lists input and output but no cache price. Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: a cache read costs 20% of input on the models its Singapore tab lists for implicit caching, which needs no setup, and 10% on those it lists only for explicit caching, and an explicit cache write costs 125% of input. A request uses one mode, so an explicit hit on a model with implicit caching is priced as an implicit one."
 
 [[correction]]
 provider = "alibaba"
@@ -323,7 +337,7 @@ output = 0.2
 cache_read = 0.01
 replaces = { input = 0.05, output = 0.2 }
 source = "https://www.alibabacloud.com/help/en/model-studio/context-cache"
-note = "models.dev lists input and output but no cache price. Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: implicit cache hits cost 20% of input on the models its Singapore tab lists for implicit caching, and explicit cache writes 125% of input on those it lists for explicit caching. An explicit cache hit, at 10% of input, is priced as an implicit one."
+note = "models.dev lists input and output but no cache price. Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: a cache read costs 20% of input on the models its Singapore tab lists for implicit caching, which needs no setup, and 10% on those it lists only for explicit caching, and an explicit cache write costs 125% of input. A request uses one mode, so an explicit hit on a model with implicit caching is priced as an implicit one."
 
 [[correction]]
 provider = "alibaba"
@@ -334,7 +348,7 @@ output = 3.2
 cache_read = 0.16
 replaces = { input = 0.8, output = 3.2 }
 source = "https://www.alibabacloud.com/help/en/model-studio/context-cache"
-note = "models.dev lists input and output but no cache price. Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: implicit cache hits cost 20% of input on the models its Singapore tab lists for implicit caching, and explicit cache writes 125% of input on those it lists for explicit caching. An explicit cache hit, at 10% of input, is priced as an implicit one."
+note = "models.dev lists input and output but no cache price. Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: a cache read costs 20% of input on the models its Singapore tab lists for implicit caching, which needs no setup, and 10% on those it lists only for explicit caching, and an explicit cache write costs 125% of input. A request uses one mode, so an explicit hit on a model with implicit caching is priced as an implicit one."
 
 [[correction]]
 provider = "alibaba"
@@ -345,7 +359,20 @@ output = 0.63
 cache_read = 0.042
 replaces = { input = 0.21, output = 0.63 }
 source = "https://www.alibabacloud.com/help/en/model-studio/context-cache"
-note = "models.dev lists input and output but no cache price. Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: implicit cache hits cost 20% of input on the models its Singapore tab lists for implicit caching, and explicit cache writes 125% of input on those it lists for explicit caching. An explicit cache hit, at 10% of input, is priced as an implicit one."
+note = "models.dev lists input and output but no cache price. Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: a cache read costs 20% of input on the models its Singapore tab lists for implicit caching, which needs no setup, and 10% on those it lists only for explicit caching, and an explicit cache write costs 125% of input. A request uses one mode, so an explicit hit on a model with implicit caching is priced as an implicit one."
+
+[[correction]]
+provider = "alibaba"
+model = "qwen3.7-flash"
+valid_from = "2026-10-09T18:18:19Z"
+input = 0.03
+output = 0.13
+cache_read = 0.006
+cache_write = 0.0375
+tiers = [{ above = 32000, input = 0.1, output = 0.4, cache_read = 0.02, cache_write = 0.125 }, { above = 256000, input = 0.2, output = 0.8, cache_read = 0.04, cache_write = 0.25 }]
+replaces = { input = 0.03, output = 0.13 }
+source = "https://www.alibabacloud.com/help/en/model-studio/context-cache"
+note = "models.dev lists cache reads at 10% of input, the explicit cache hit price, on a model Alibaba lists for implicit caching. Cache prices from Alibaba's context cache page, first read on 2026-10-09: a cache read costs 20% of input on the models its Singapore tab lists for implicit caching, which needs no setup, and 10% on those it lists only for explicit caching, and an explicit cache write costs 125% of input. A request uses one mode, so an explicit hit on a model with implicit caching is priced as an implicit one."
 
 [[correction]]
 provider = "alibaba"
@@ -391,7 +418,7 @@ cache_write = 0.375
 tiers = [{ above = 32000, input = 0.5, output = 2.5, cache_read = 0.1, cache_write = 0.625 }, { above = 128000, input = 0.8, output = 4.0, cache_read = 0.16, cache_write = 1.0 }, { above = 256000, input = 1.6, output = 9.6, cache_read = 0.32, cache_write = 2.0 }]
 replaces = { input = 0.3, output = 1.5 }
 source = "https://web.archive.org/web/20260116072901/https://www.alibabacloud.com/help/en/model-studio/model-pricing"
-note = "Singapore tab, on 2026-10-04: $0.3 input, $1.5 output per 1M tokens; above 32K $0.5/$2.5; above 128K $0.8/$4.0; above 256K $1.6/$9.6. models.dev lists no tiers. Archived on 2026-01-16 with all three tiers, its earliest copy found; No earlier archived copy of the pricing, models, or Qwen-Coder pages renders its prices, so the tiers apply from their first observation. Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: implicit cache hits cost 20% of input on the models its Singapore tab lists for implicit caching, and explicit cache writes 125% of input on those it lists for explicit caching. An explicit cache hit, at 10% of input, is priced as an implicit one."
+note = "Singapore tab, on 2026-10-04: $0.3 input, $1.5 output per 1M tokens; above 32K $0.5/$2.5; above 128K $0.8/$4.0; above 256K $1.6/$9.6. models.dev lists no tiers. Archived on 2026-01-16 with all three tiers, its earliest copy found; No earlier archived copy of the pricing, models, or Qwen-Coder pages renders its prices, so the tiers apply from their first observation. Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: a cache read costs 20% of input on the models its Singapore tab lists for implicit caching, which needs no setup, and 10% on those it lists only for explicit caching, and an explicit cache write costs 125% of input. A request uses one mode, so an explicit hit on a model with implicit caching is priced as an implicit one."
 
 [[correction]]
 provider = "alibaba"
@@ -416,7 +443,7 @@ cache_write = 1.25
 tiers = [{ above = 32000, input = 1.8, output = 9.0, cache_read = 0.36, cache_write = 2.25 }, { above = 128000, input = 3.0, output = 15.0, cache_read = 0.6, cache_write = 3.75 }, { above = 256000, input = 6.0, output = 60.0, cache_read = 1.2, cache_write = 7.5 }]
 replaces = { input = 1.0, output = 5.0 }
 source = "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
-note = "Singapore tab, on 2026-10-04: $1.0 input, $5.0 output per 1M tokens; above 32K $1.8/$9.0; above 128K $3.0/$15.0; above 256K $6.0/$60.0. models.dev lists no tiers. Alibaba's pricing table gives all four tiers to qwen3-coder-plus-2025-07-22, released 2025-07-23. Applies from models.dev's first record, since research found the official price applied throughout (finding research/price-dates/findings/alibaba_qwen3_coder_plus_gap). Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: implicit cache hits cost 20% of input on the models its Singapore tab lists for implicit caching, and explicit cache writes 125% of input on those it lists for explicit caching. An explicit cache hit, at 10% of input, is priced as an implicit one."
+note = "Singapore tab, on 2026-10-04: $1.0 input, $5.0 output per 1M tokens; above 32K $1.8/$9.0; above 128K $3.0/$15.0; above 256K $6.0/$60.0. models.dev lists no tiers. Alibaba's pricing table gives all four tiers to qwen3-coder-plus-2025-07-22, released 2025-07-23. Applies from models.dev's first record, since research found the official price applied throughout (finding research/price-dates/findings/alibaba_qwen3_coder_plus_gap). Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: a cache read costs 20% of input on the models its Singapore tab lists for implicit caching, which needs no setup, and 10% on those it lists only for explicit caching, and an explicit cache write costs 125% of input. A request uses one mode, so an explicit hit on a model with implicit caching is priced as an implicit one."
 
 [[correction]]
 provider = "alibaba"
@@ -441,7 +468,7 @@ cache_write = 1.5
 tiers = [{ above = 32000, input = 2.4, output = 12.0, cache_read = 0.48, cache_write = 3.0 }, { above = 128000, input = 3.0, output = 15.0, cache_read = 0.6, cache_write = 3.75 }]
 replaces = { input = 1.2, output = 6.0 }
 source = "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
-note = "Singapore tab, on 2026-10-04: $1.2 input, $6.0 output per 1M tokens; above 32K $2.4/$12.0; above 128K $3.0/$15.0. models.dev lists no tiers. Alibaba's pricing table gives all three tiers to the qwen3-max-2025-09-23 snapshot. Applies from models.dev's first record, since research found the official price applied throughout (finding research/price-dates/findings/alibaba_qwen3_max_gap). Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: implicit cache hits cost 20% of input on the models its Singapore tab lists for implicit caching, and explicit cache writes 125% of input on those it lists for explicit caching. An explicit cache hit, at 10% of input, is priced as an implicit one."
+note = "Singapore tab, on 2026-10-04: $1.2 input, $6.0 output per 1M tokens; above 32K $2.4/$12.0; above 128K $3.0/$15.0. models.dev lists no tiers. Alibaba's pricing table gives all three tiers to the qwen3-max-2025-09-23 snapshot. Applies from models.dev's first record, since research found the official price applied throughout (finding research/price-dates/findings/alibaba_qwen3_max_gap). Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: a cache read costs 20% of input on the models its Singapore tab lists for implicit caching, which needs no setup, and 10% on those it lists only for explicit caching, and an explicit cache write costs 125% of input. A request uses one mode, so an explicit hit on a model with implicit caching is priced as an implicit one."
 
 [[correction]]
 provider = "alibaba"
@@ -486,7 +513,7 @@ cache_write = 0.25
 tiers = [{ above = 32000, input = 0.3, output = 2.4, cache_read = 0.06, cache_write = 0.375 }, { above = 128000, input = 0.6, output = 4.8, cache_read = 0.12, cache_write = 0.75 }]
 replaces = { input = 0.2, output = 1.6 }
 source = "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
-note = "Singapore tab, on 2026-10-04: $0.2 input, $1.6 output per 1M tokens; above 32K $0.3/$2.4; above 128K $0.6/$4.8. models.dev lists no tiers. Alibaba's pricing table gives all three tiers to qwen3-vl-plus-2025-09-23, released that day. Applies from models.dev's first record, since research found the official price applied throughout (finding research/price-dates/findings/alibaba_qwen3_vl_plus_gap). Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: implicit cache hits cost 20% of input on the models its Singapore tab lists for implicit caching, and explicit cache writes 125% of input on those it lists for explicit caching. An explicit cache hit, at 10% of input, is priced as an implicit one."
+note = "Singapore tab, on 2026-10-04: $0.2 input, $1.6 output per 1M tokens; above 32K $0.3/$2.4; above 128K $0.6/$4.8. models.dev lists no tiers. Alibaba's pricing table gives all three tiers to qwen3-vl-plus-2025-09-23, released that day. Applies from models.dev's first record, since research found the official price applied throughout (finding research/price-dates/findings/alibaba_qwen3_vl_plus_gap). Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: a cache read costs 20% of input on the models its Singapore tab lists for implicit caching, which needs no setup, and 10% on those it lists only for explicit caching, and an explicit cache write costs 125% of input. A request uses one mode, so an explicit hit on a model with implicit caching is priced as an implicit one."
 
 [[correction]]
 provider = "alibaba"
@@ -507,12 +534,13 @@ model = "qwen3.5-plus"
 valid_from = "2026-10-09T18:18:19Z"
 input = 0.4
 output = 2.4
+cache_read = 0.04
 cache_write = 0.5
-tiers = [{ above = 256000, input = 0.5, output = 3.0, cache_write = 0.625 }]
+tiers = [{ above = 256000, input = 0.5, output = 3.0, cache_read = 0.05, cache_write = 0.625 }]
 modes = { thinking = { output = 2.4, tiers = [{ above = 256000, output = 3.0 }] } }
 replaces = { input = 0.4, output = 2.4 }
 source = "https://web.archive.org/web/20260402181911/https://www.alibabacloud.com/help/en/model-studio/model-pricing"
-note = "Singapore tab, on 2026-10-04: $0.4 input, $2.4 output per 1M tokens; above 256K $0.5/$3.0. models.dev lists no tiers. Archived on 2026-04-02 with the 256K-1M tier at the same prices, thinking output included, the earliest copy that renders its prices; Alibaba released qwen3.5-plus on 2026-02-15. Thinking-mode output costs the same as non-thinking output in both tiers. Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: implicit cache hits cost 20% of input on the models its Singapore tab lists for implicit caching, and explicit cache writes 125% of input on those it lists for explicit caching. An explicit cache hit, at 10% of input, is priced as an implicit one."
+note = "Singapore tab, on 2026-10-04: $0.4 input, $2.4 output per 1M tokens; above 256K $0.5/$3.0. models.dev lists no tiers. Archived on 2026-04-02 with the 256K-1M tier at the same prices, thinking output included, the earliest copy that renders its prices; Alibaba released qwen3.5-plus on 2026-02-15. Thinking-mode output costs the same as non-thinking output in both tiers. Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: a cache read costs 20% of input on the models its Singapore tab lists for implicit caching, which needs no setup, and 10% on those it lists only for explicit caching, and an explicit cache write costs 125% of input. A request uses one mode, so an explicit hit on a model with implicit caching is priced as an implicit one."
 
 [[correction]]
 provider = "alibaba"
@@ -543,11 +571,12 @@ model = "qwen3.6-flash"
 valid_from = "2026-10-09T18:18:19Z"
 input = 0.25
 output = 1.5
+cache_read = 0.025
 cache_write = 0.3125
-tiers = [{ above = 256000, input = 1.0, output = 4.0, cache_write = 1.25 }]
+tiers = [{ above = 256000, input = 1.0, output = 4.0, cache_read = 0.1, cache_write = 1.25 }]
 replaces = { input = 0.1875, output = 1.125 }
 source = "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
-note = "Singapore tab, on 2026-10-04: $0.25 input, $1.5 output per 1M tokens; above 256K $1.0/$4.0. models.dev lists $0.1875/$1.125. models.dev lists no tiers. Cache prices keep models.dev's ratio to the input price. Alibaba's model page gives $0.25/$1.5 as the original price, excluding promotions; models.dev's prices are 25% lower, a promotional rate. Applies from models.dev's first record, since research found the official price applied throughout (finding research/price-dates/findings/alibaba_qwen3.6_flash_gap). Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: implicit cache hits cost 20% of input on the models its Singapore tab lists for implicit caching, and explicit cache writes 125% of input on those it lists for explicit caching. An explicit cache hit, at 10% of input, is priced as an implicit one."
+note = "Singapore tab, on 2026-10-04: $0.25 input, $1.5 output per 1M tokens; above 256K $1.0/$4.0. models.dev lists $0.1875/$1.125. models.dev lists no tiers. Cache prices keep models.dev's ratio to the input price. Alibaba's model page gives $0.25/$1.5 as the original price, excluding promotions; models.dev's prices are 25% lower, a promotional rate. Applies from models.dev's first record, since research found the official price applied throughout (finding research/price-dates/findings/alibaba_qwen3.6_flash_gap). Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: a cache read costs 20% of input on the models its Singapore tab lists for implicit caching, which needs no setup, and 10% on those it lists only for explicit caching, and an explicit cache write costs 125% of input. A request uses one mode, so an explicit hit on a model with implicit caching is priced as an implicit one."
 
 [[correction]]
 provider = "alibaba"

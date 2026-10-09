@@ -750,6 +750,7 @@
     },
     {
      "rates": {
+      "cache_read": 0.04,
       "cache_write": 0.5,
       "input": 0.4,
       "modes": {
@@ -767,6 +768,7 @@
       "tiers": [
        {
         "above": 256000,
+        "cache_read": 0.05,
         "cache_write": 0.625,
         "input": 0.5,
         "output": 3.0
