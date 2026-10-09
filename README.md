@@ -87,7 +87,7 @@ Page model names must match models.dev ids exactly, with no suffix removal, so a
 
 model-prices prices standard synchronous requests. It does not model batch, flex, or priority service tiers; regional or data-residency surcharges; storage charges for cached context; or tool fees such as web search. Modes listed by models.dev, such as fast mode, are available through `mode`. While a correction applies, a mode's price is the corrected price scaled by the mode's ratio to models.dev's standard price at that time, since corrections record standard prices only.
 
-Perplexity's Sonar models add a per-request fee that depends on search context size, and Sonar Deep Research also bills citation tokens, reasoning tokens, and search queries; model-prices prices their input and output tokens.
+Perplexity's Sonar models add a per-request fee that depends on search context size, and Sonar Deep Research also bills citation tokens, reasoning tokens, and search queries; model-prices prices their input and output tokens. These fees, and Alibaba's explicit cache hit price, need a new snapshot field; [docs/schema-v2.md](https://github.com/wakamex/model-prices/blob/main/docs/schema-v2.md) records the plan.
 
 Where a model has no cache-write price, cache writes are priced as input. That matches providers whose caching is automatic and bills the first, cache-filling request as normal input, such as Google's implicit caching, DeepSeek, xAI, and Z.ai. Providers that charge more for writing a cache list a cache-write price in models.dev.
 
