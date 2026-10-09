@@ -236,6 +236,7 @@ def parse_alibaba(text: str, today: datetime) -> list[Observed]:
     A table that splits input prices by modality is skipped, as is a cell that prices busy
     and idle hours separately. Output is the non-thinking price, or for a thinking-only
     model its thinking price; a hybrid model's thinking price is its `thinking` mode output.
+    A limited-time discount gives the price charged while it lasts.
     """
     found = []
     heading = tab = ""
@@ -272,6 +273,13 @@ def parse_alibaba(text: str, today: datetime) -> list[Observed]:
                 prices["output", "thinking"] = row[thinking[0]]
             for (field, mode), cell in prices.items():
                 value = None if "Busy hours" in cell else _price(cell)
+                # A list price "(Limited-time 20% off)" is charged at the discount; a
+                # night and daytime discount depends on the hour and is not modeled.
+                discount = re.search(r"Limited-time (\d+)% off", cell)
+                if "night" in cell.lower():
+                    value = None
+                elif value is not None and discount:
+                    value = round(value * (100 - int(discount.group(1))) / 100, 6)
                 if value is not None:
                     found.append(Observed("alibaba", model, field, value, above=above,
                                           mode=mode))

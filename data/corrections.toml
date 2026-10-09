@@ -228,6 +228,32 @@ note = "Singapore tab, on 2026-10-04: $0.4 input, $1.2 output per 1M tokens; abo
 
 [[correction]]
 provider = "alibaba"
+model = "qwen3.7-plus"
+valid_from = "2026-06-01T00:00:00Z"
+valid_until = "2026-09-28T04:01:19Z"
+input = 0.32
+output = 1.28
+cache_read = 0.032
+cache_write = 0.4
+tiers = [{ above = 256000, input = 0.96, output = 3.84, cache_read = 0.096, cache_write = 1.2 }]
+source = "https://www.alibabacloud.com/en/campaign/qwen-plus-discount"
+note = "Alibaba's pricing page (Singapore tab) lists qwen3.7-plus at \"List price $0.4 (Limited-time 20% off)\" for input and \"List price $1.6 (Limited-time 20% off)\" for output, and $1.2/$4.8 above 256K, on 2026-09-09 (https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing) and 2026-10-08. Alibaba's campaign page (https://www.alibabacloud.com/en/campaign/qwen-plus-discount) gives \"from $0.32\" input and \"from $1.28\" output, and applies the discount to input, output, implicit cache input, and explicit cache creation and reads; it named only the qwen3.7-plus alias, and the dated qwen3.7-plus-2026-05-26 is listed without it. The discount has applied since release, which Alibaba's model list dates 2026-06-01 for the international deployment. Cache prices are models.dev's list prices less 20%."
+
+[[correction]]
+provider = "alibaba"
+model = "qwen3.7-plus"
+valid_from = "2026-09-28T04:01:19Z"
+input = 0.32
+output = 1.28
+cache_read = 0.032
+cache_write = 0.4
+tiers = [{ above = 256000, input = 0.96, output = 3.84, cache_read = 0.096, cache_write = 1.2 }]
+replaces = { input = 0.4, output = 1.6 }
+source = "https://www.alibabacloud.com/en/campaign/qwen-plus-discount"
+note = "Alibaba's pricing page (Singapore tab) lists qwen3.7-plus at \"List price $0.4 (Limited-time 20% off)\" for input and \"List price $1.6 (Limited-time 20% off)\" for output, and $1.2/$4.8 above 256K, on 2026-09-09 (https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing) and 2026-10-08. Alibaba's campaign page (https://www.alibabacloud.com/en/campaign/qwen-plus-discount) gives \"from $0.32\" input and \"from $1.28\" output, and applies the discount to input, output, implicit cache input, and explicit cache creation and reads; it named only the qwen3.7-plus alias, and the dated qwen3.7-plus-2026-05-26 is listed without it. The discount has applied since release, which Alibaba's model list dates 2026-06-01 for the international deployment. Cache prices are models.dev's list prices less 20%."
+
+[[correction]]
+provider = "alibaba"
 model = "deepseek-v4-flash-0731"
 valid_from = "2026-08-16T16:00:00Z"
 input = 0.44

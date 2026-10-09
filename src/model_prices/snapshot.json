@@ -2795,6 +2795,63 @@
      },
      {
       "rates": {
+       "cache_read": 0.032,
+       "cache_write": 0.4,
+       "input": 0.32,
+       "output": 1.28,
+       "source": "https://www.alibabacloud.com/en/campaign/qwen-plus-discount",
+       "tiers": [
+        {
+         "above": 256000,
+         "cache_read": 0.096,
+         "cache_write": 1.2,
+         "input": 0.96,
+         "output": 3.84
+        }
+       ],
+       "valid_from": "2026-06-01T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.05,
+       "cache_write": 0.625,
+       "input": 0.5,
+       "output": 3.0,
+       "source": "https://github.com/sst/models.dev/commit/eeb17ccab41a",
+       "tiers": [
+        {
+         "above": 128000,
+         "cache_read": 0.2,
+         "cache_write": 2.5,
+         "input": 2.0,
+         "output": 6.0
+        }
+       ],
+       "valid_from": "2026-06-03T15:00:39Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-06-01T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.032,
+       "cache_write": 0.4,
+       "input": 0.32,
+       "output": 1.28,
+       "source": "https://www.alibabacloud.com/en/campaign/qwen-plus-discount",
+       "tiers": [
+        {
+         "above": 256000,
+         "cache_read": 0.096,
+         "cache_write": 1.2,
+         "input": 0.96,
+         "output": 3.84
+        }
+       ],
+       "valid_from": "2026-06-01T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
        "cache_read": 0.05,
        "cache_write": 0.625,
        "input": 0.5,
@@ -2816,6 +2873,24 @@
      },
      {
       "rates": {
+       "cache_read": 0.032,
+       "cache_write": 0.4,
+       "input": 0.32,
+       "output": 1.28,
+       "source": "https://www.alibabacloud.com/en/campaign/qwen-plus-discount",
+       "tiers": [
+        {
+         "above": 256000,
+         "cache_read": 0.096,
+         "cache_write": 1.2,
+         "input": 0.96,
+         "output": 3.84
+        }
+       ],
+       "valid_from": "2026-09-28T04:01:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
        "cache_read": 0.04,
        "cache_write": 0.5,
        "input": 0.4,
@@ -15981,5 +16056,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-09T06:47:39Z"
+ "updated_at": "2026-10-09T18:16:24Z"
 }

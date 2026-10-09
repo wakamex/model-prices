@@ -99,8 +99,8 @@ class CheckTests(unittest.TestCase):
         alibaba = _prices("alibaba")
 
         # Merged cells repeat down their rows; a tier starts above its lower bound.
-        self.assertEqual(alibaba[("qwen3.7-plus", "input", None, None)], 0.4)
-        self.assertEqual(alibaba[("qwen3.7-plus", "output", 256_000, None)], 4.8)
+        self.assertEqual(alibaba[("qwen3.7-plus", "input", None, None)], 0.32)
+        self.assertEqual(alibaba[("qwen3.7-plus", "output", 256_000, None)], 3.84)
         self.assertEqual(alibaba[("qwen3-coder-480b-a35b-instruct", "input", 32_000, None)], 2.7)
         # Output is the non-thinking price, and a hybrid model's thinking price is its mode.
         self.assertEqual(alibaba[("qwen-turbo", "output", None, None)], 0.2)
@@ -109,6 +109,18 @@ class CheckTests(unittest.TestCase):
         self.assertNotIn(0.115, alibaba.values())
         models = {model for model, *_ in alibaba}
         self.assertFalse(models & {"qwen3.5-omni-plus", "deepseek-v4-flash-0731", "qwen-image"})
+
+    def test_alibaba_limited_time_discount_is_the_price_charged(self):
+        # The fixture lists qwen3.7-plus at "List price $1.6 (Limited-time 20% off)".
+        night = "List price \\$1.6 (Limited-time night 60% off), daytime 20% off"
+        page = PAGES["alibaba"].replace("List price \\$1.6 (Limited-time 20% off)", night, 1)
+        found = {(item.model, item.field, item.above, item.mode): item.value
+                 for item in checks.parse_alibaba(page, TODAY)}
+
+        self.assertEqual(found[("qwen3.7-plus", "input", None, None)], 0.32)
+        self.assertEqual(found[("qwen3.7-plus", "output", None, "thinking")], 1.28)
+        # A night and daytime discount depends on the hour, so it is not compared.
+        self.assertNotIn(("qwen3.7-plus", "output", None, None), found)
 
     def test_mistral_parser_reads_sale_prices_under_every_api_name(self):
         mistral = _prices("mistral")
