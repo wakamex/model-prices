@@ -408,6 +408,17 @@ source = "https://longcat.chat/platform/docs/pricing/longcat-2.0"
 note = "LongCat's pricing page lists LongCat-2.0 at a \"Discounted Price $/1M Tokens (limited-time)\" of $0.30 uncached input, $0.006 cached input, and $1.20 output on 2026-10-09; models.dev lists the $0.75/$2.95 list price. LongCat's changelog dates LongCat-2.0's release and billing to 2026-06-30, taken as Beijing time, and launch coverage on 2026-07-02 reports the promotion: \"During the promotional period, prices are reduced to $0.30 and $1.20 respectively\" (https://www.kucoin.com/news/flash/meituan-launches-longcat-2-0-with-1-6-trillion-parameters-and-competitive-pricing). The discount applies from release."
 
 [[correction]]
+provider = "thinkingmachines"
+model = "thinkingmachines/Inkling:peft:262144"
+valid_from = "2026-10-10T02:55:52Z"
+input = 1.87
+output = 4.68
+cache_read = 0.374
+replaces = { input = 3.74, output = 9.36 }
+source = "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/"
+note = "Tinker's model table lists Inkling (256K) with a \"Limited-time 50% discount\" at $1.87 prefill, $0.374 cached, and $4.68 sampling, struck through from $3.74 and $9.36, on 2026-10-10T02:55Z; the 2026-10-09T21:23Z check read the list price. No announcement dates the change, so it applies from its first observation, when the daily run also recorded Inkling-Small (256K) at its discount."
+
+[[correction]]
 provider = "alibaba"
 model = "qwen-vl-ocr"
 valid_from = "2026-02-10T03:42:28Z"

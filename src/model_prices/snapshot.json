@@ -14224,6 +14224,25 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.374,
+       "input": 1.87,
+       "output": 4.68,
+       "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/",
+       "valid_from": "2026-10-10T02:55:52Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.748,
+       "input": 3.74,
+       "output": 9.36,
+       "source": "https://github.com/sst/models.dev/commit/44c89b7256f2",
+       "valid_from": "2026-07-23T16:17:56Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-10T02:55:52Z"
      }
     ]
    }
@@ -16883,5 +16902,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-10T02:56:20Z"
+ "updated_at": "2026-10-10T02:57:22Z"
 }
