@@ -14198,6 +14198,17 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.116,
+       "input": 0.58,
+       "output": 1.44,
+       "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+       "valid_from": "2026-10-10T02:55:52Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-10T02:55:52Z"
      }
     ]
    },
@@ -16872,5 +16883,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-10T02:55:12Z"
+ "updated_at": "2026-10-10T02:56:20Z"
 }

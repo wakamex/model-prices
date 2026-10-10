@@ -1749,6 +1749,15 @@
      },
      "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
      "valid_from": "2026-10-08T17:55:23Z"
+    },
+    {
+     "rates": {
+      "cache_read": 0.116,
+      "input": 0.58,
+      "output": 1.44
+     },
+     "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+     "valid_from": "2026-10-10T02:55:52Z"
     }
    ]
   },
