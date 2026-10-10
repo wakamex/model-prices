@@ -16,6 +16,12 @@ Perplexity's Sonar models add a per-request fee that depends on the search conte
 
 Plan: per-request and per-query prices on the rate entry, and matching arguments to `cost()`.
 
+## Prices by modality
+
+Google prices input and output tokens by modality: Gemini 3.1 Flash Image charges $3 per million text and thinking output tokens and $60 per million image tokens, and Gemini 3.8 Live charges $0.75 for text input and $3.00 for audio input ([pricing](https://ai.google.dev/gemini-api/docs/pricing)). Each model has one input and one output price, chosen as models.dev chooses them: the text price, except that an image or video generation model's output is the price of what it generates, and a cell without a text price gives its one price. A request that mixes modalities is priced at that one rate, so an image model's text and thinking output costs the image price, and a Live model's audio costs the text price.
+
+Plan: optional per-modality prices on the rate entry, such as `output_image` and `input_audio`, which models.dev already records for some models, and matching token arguments to `cost()`, with the current single prices kept as the default for tokens given without a modality.
+
 ## Unknown fields
 
 A v2 release should build `Rates` from the fields it knows and ignore the rest, so a later field that only adds information does not need another schema version.
