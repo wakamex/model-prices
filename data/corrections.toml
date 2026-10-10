@@ -108,16 +108,6 @@ note = "Unchanged since peak and off-peak pricing started 2026-08-16T16:00Z; mod
 
 [[correction]]
 provider = "google"
-model = "gemini-omni-flash-preview"
-valid_from = "2026-07-08T21:27:04Z"
-input = 1.5
-output = 9.0
-replaces = { output = 17.5 }
-source = "https://ai.google.dev/gemini-api/docs/pricing"
-note = "Text output is $9.00; models.dev records the $17.50 video output price. Checked 2026-09-30; the page does not date the price."
-
-[[correction]]
-provider = "google"
 model = "gemini-3.6-flash"
 valid_from = "2026-08-13T18:11:24Z"
 valid_until = "2026-08-21T06:42:28Z"

@@ -4,6 +4,8 @@
 
 ## Gemini 3.8 Flash
 
+*[`gemini-3.8-flash`](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash)*
+
 *`gemini-3.8-flash`*
 
 ### Standard
@@ -23,6 +25,8 @@
 
 ## Gemini 3.8 Live, Gemini 3.8 Live Extended Thinking, and Gemini 3.1 Flash Live Preview
 
+*[`gemini-3.8-live`](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live), [`gemini-3.8-live-extended-thinking`](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live-extended-thinking), and [`gemini-3.1-flash-live-preview`](https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-live-preview)*
+
 ### Standard
 
 |   | Free Tier | Paid Tier, per 1M tokens in USD |
@@ -32,6 +36,8 @@
 
 ## Gemini Omni Flash Preview
 
+*[`gemini-omni-flash-preview`](https://ai.google.dev/gemini-api/docs/models/gemini-omni-flash)*
+
 ### Standard
 
 |   | Free Tier | Paid Tier, per 1M tokens in USD |
@@ -40,6 +46,8 @@
 | Output price (including thinking tokens) | Not available | $9.00 (text) $17.50 (video)^\*^ |
 
 ## Gemini 2.5 Pro
+
+*[`gemini-2.5-pro`](https://ai.google.dev/gemini-api/docs/models/gemini-2.5-pro)*
 
 ### Standard
 
@@ -51,6 +59,8 @@
 
 ## Gemini 2.5 Flash
 
+*[`gemini-2.5-flash`](https://ai.google.dev/gemini-api/docs/models/gemini-2.5-flash)*
+
 ### Standard
 
 |   | Free Tier | Paid Tier, per 1M tokens in USD |
@@ -58,3 +68,39 @@
 | Input price | Free of charge | $0.30 (text / image / video) $1.00 (audio) |
 | Output price (including thinking tokens) | Free of charge | $2.50 |
 | Context caching price | Not available | $0.03 (text / image / video) $0.1 (audio) $1.00 / 1,000,000 tokens per hour (storage price) |
+
+## Gemini 3.8 Flash TTS
+
+*[`gemini-3.8-flash-tts`](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash-tts)*
+
+
+
+Our 3.8 Flash Text-to-Speech audio model engineered for studio-grade voice fidelity, expressive acting, and long-form stability.
+
+### Standard
+
+|   | Free Tier | Paid Tier, per 1M tokens in USD |
+|---|---|---|
+| Input price | Free of charge | $0.50 (text) through December 31, 2026. $1.00 (text) starting January 1, 2027. |
+| Output price | Free of charge | $9.00 (audio) through December 31, 2026. $18.00 (audio) starting January 1, 2027. Equivalent to $0.00225 per 10s audio^\*^ through December 31, 2026. Equivalent to $0.0045 per 10s audio^\*^ starting January 1, 2027. |
+| Used to improve our products | [Yes](https://ai.google.dev/gemini-api/terms) | [No](https://ai.google.dev/gemini-api/terms) |
+
+
+## Gemini 3.1 Flash Image (Nano Banana 2) 🍌
+
+*[`gemini-3.1-flash-image`](https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-image)*
+
+
+
+Designed for speed and efficiency, the Gemini 3.1 Flash Image generation model is
+effective for quick, interactive responses and high throughput.
+
+### Standard
+
+|   | Free Tier | Paid Tier, per 1M tokens in USD |
+|---|---|---|
+| Input price | Not available | $0.50 (text/image) |
+| Output price | Not available | $3 (text and thinking) $60.00 (images) Equivalent to $0.045 per 0.5K image^\*^ $0.067 per 1K image^\*^, $0.101 per 2K image^\*^, and $0.151 per 4K image^\*^. |
+| Grounding with Google Web and Image Search^\*\*^ | Not available^\*\*\*^ | 5,000 free search requests per month (shared across all Gemini 3 and newer models), then $14 per 1,000 requests for text and image-based grounding. |
+| Used to improve our products | [Yes](https://ai.google.dev/gemini-api/terms) | [No](https://ai.google.dev/gemini-api/terms) |
+

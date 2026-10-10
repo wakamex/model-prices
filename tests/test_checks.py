@@ -83,12 +83,12 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(xai[("grok-4.6", "output", 200_000, None)], 12)
 
         google = _prices("google")
-        self.assertEqual(google[("Gemini 3.8 Flash", "input", None, None)], 0.75)
-        self.assertEqual(google[("Gemini 2.5 Pro", "input", 200_000, None)], 2.5)
-        self.assertEqual(google[("Gemini 2.5 Flash", "cache_read", None, None)], 0.03)
-        self.assertIn(("Gemini 3.8 Flash", "cache_read", None, None), google)
+        self.assertEqual(google[("gemini-3.8-flash", "input", None, None)], 0.75)
+        self.assertEqual(google[("gemini-2.5-pro", "input", 200_000, None)], 2.5)
+        self.assertEqual(google[("gemini-2.5-flash", "cache_read", None, None)], 0.03)
+        self.assertIn(("gemini-3.8-flash", "cache_read", None, None), google)
         self.assertNotIn(0.5, {value for (model, field, _, _), value in google.items()
-                               if model == "Gemini 3.8 Flash" and field == "cache_read"})
+                               if model == "gemini-3.8-flash" and field == "cache_read"})
 
         deepseek = _prices("deepseek")
         self.assertEqual(sorted(value for (model, field, _, _), value in deepseek.items()
@@ -276,11 +276,21 @@ class CheckTests(unittest.TestCase):
         google = _prices("google")
         names = {model for model, *_ in google}
 
-        self.assertLessEqual({"Gemini 3.8 Live", "Gemini 3.8 Live Extended Thinking",
-                              "Gemini 3.1 Flash Live Preview"}, names)
-        self.assertFalse(any(", " in name or " and Gemini" in name for name in names))
+        # A section names its API ids under its heading.
+        self.assertLessEqual({"gemini-3.8-live", "gemini-3.8-live-extended-thinking",
+                              "gemini-3.1-flash-live-preview"}, names)
         # "$0.75 (text) $3.00 or $0.005/min (audio)": only the text price counts.
-        self.assertEqual(google[("Gemini 3.1 Flash Live Preview", "input", None, None)], 0.75)
+        self.assertEqual(google[("gemini-3.1-flash-live-preview", "input", None, None)], 0.75)
+
+    def test_google_media_models_price_their_generated_output(self):
+        google = _prices("google")
+
+        # An image model's output is its image price, its input the text price.
+        self.assertEqual(google[("gemini-3.1-flash-image", "output", None, None)], 60)
+        self.assertEqual(google[("gemini-3.1-flash-image", "input", None, None)], 0.5)
+        # A speech model's only output price is audio, and the dated price is today's.
+        self.assertEqual(google[("gemini-3.8-flash-tts", "output", None, None)], 9)
+        self.assertEqual(google[("gemini-omni-flash-preview", "output", None, None)], 17.5)
 
     def test_google_dated_prices_follow_the_check_date(self):
         cell = "$0.75 through December 31, 2026. $1.50 starting January 1, 2027."
@@ -296,7 +306,6 @@ class CheckTests(unittest.TestCase):
         self.assertNotIn("mismatch", statuses)
         corrected = {(r.model, r.field) for r in results if r.status == "corrected"}
         self.assertIn(("deepseek/deepseek-v4-pro", "input"), corrected)
-        self.assertIn(("google/gemini-omni-flash-preview", "output"), corrected)
         one_hour = [r for r in results if r.field == "cache_write_1h"]
         self.assertTrue(one_hour)
         self.assertEqual({r.status for r in one_hour}, {"ok"})

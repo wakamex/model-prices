@@ -648,19 +648,24 @@ def parse_mistral(text: str, today: datetime, get: Callable[[str], str]) -> list
 _GOOGLE_DATE = r"([A-Z][a-z]+ [0-9]{1,2}, [0-9]{4})"
 
 
-def _google_price(cell: str, today: datetime) -> list[tuple[float, int | None]]:
-    """Return (price, tier size) pairs for text tokens in effect today from a Paid Tier cell.
+def _google_price(cell: str, today: datetime,
+                  field: str = "input") -> list[tuple[float, int | None]]:
+    """Return (price, tier size) pairs in effect today from a Paid Tier cell.
 
     Each dollar amount is read with the qualifier text that follows it: a date range,
     a modality list such as "(text / image)", or a prompt-size tier such as "prompts > 200k".
+    The text price applies, as it does in models.dev, except that an output cell listing
+    generated images or video gives that price, since image and video generation models
+    output almost only those tokens, and a cell without a text price gives its one price,
+    such as a speech model's audio output.
     """
     cell = cell.replace("\\<", "<").replace("\\>", ">")
     # A per-minute alternative sits between an amount and its modality: "$3.00 or $0.005/min
     # (audio)". Dropping it leaves each amount next to its own modality.
     cell = re.sub(r"\s+or\s+\$[0-9]+(?:\.[0-9]+)?/min", "", cell)
-    prices = []
+    entries = []
     for amount, qualifier in re.findall(r"\$([0-9]+(?:\.[0-9]+)?)([^$]*)", cell):
-        if "per hour" in qualifier:
+        if "per hour" in qualifier or re.match(r"\s*per\b", qualifier):
             continue
         until = re.search(r"through " + _GOOGLE_DATE, qualifier)
         start = re.search(r"starting " + _GOOGLE_DATE, qualifier)
@@ -668,31 +673,52 @@ def _google_price(cell: str, today: datetime) -> list[tuple[float, int | None]]:
             continue
         if start and today.date() < datetime.strptime(start.group(1), "%B %d, %Y").date():
             continue
-        modalities = re.search(r"\(([a-z /]+)\)", qualifier)
-        if modalities and "text" not in modalities.group(1).split(" / "):
-            continue
+        listed = re.search(r"\(([a-z /]+)\)", qualifier)
+        modalities = (set(re.split(r"\s*/\s*|\s+and\s+", listed.group(1))) if listed
+                      else {"text"})
         above = re.search(r"prompts\s*>\s*([0-9]+)k", qualifier)
-        prices.append((float(amount), int(above.group(1)) * 1000 if above else None))
-    return prices
+        entries.append((float(amount), int(above.group(1)) * 1000 if above else None,
+                        modalities))
+    for wanted in ({"images", "video"} if field == "output" else set(), {"text"}):
+        chosen = [(amount, above) for amount, above, modalities in entries
+                  if modalities & wanted]
+        if chosen:
+            return chosen
+    if len({frozenset(modalities) for *_, modalities in entries}) == 1:
+        return [(amount, above) for amount, above, _ in entries]
+    return []
+
+
+def _google_ids(text: str) -> dict[str, list[str]]:
+    """The API ids each pricing section names under its heading, such as
+    "*[`gemini-3.8-flash-tts`](...)*", by heading."""
+    ids = {}
+    for heading, body in re.findall(r"^## ([^\n]+)\n(.*?)(?=^## |\Z)", text, re.M | re.S):
+        names = re.search(r"^\*\[`.*$", body, re.M)
+        if names:
+            ids[heading.strip()] = re.findall(r"\[`([a-z0-9.-]+)`\]", names.group(0))
+    return ids
 
 
 def parse_google(text: str, today: datetime) -> list[Observed]:
     rows = {"Input price": "input", "Output price": "output", "Context caching price": "cache_read"}
+    ids = _google_ids(text)
     found = []
     for headings, header, table in _markdown_tables(text):
         heading = headings.get(2, "")
         if (not heading.startswith("Gemini") or headings.get(3) != "Standard"
                 or header[-1] != "Paid Tier, per 1M tokens in USD"):
             continue
-        # One section can price several models: "Gemini A, Gemini B, and Gemini C".
-        models = re.split(r",\s*(?:and\s+)?|\s+and\s+(?=Gemini)", heading)
+        # A section names the API ids it prices, one or several, under its heading.
+        if heading not in ids:
+            raise ValueError(f"google: no API ids under {heading!r}; the page format changed")
         for row in table:
             field = next((value for key, value in rows.items() if row[0].startswith(key)), None)
             if field is None:
                 continue
-            for value, above in _google_price(row[-1], today):
+            for value, above in _google_price(row[-1], today, field):
                 found.extend(Observed("google", model, field, value, above=above)
-                             for model in models)
+                             for model in ids[heading])
     return found
 
 
