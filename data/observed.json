@@ -1494,6 +1494,19 @@
     }
    ]
   },
+  "longcat": {
+   "LongCat-2.5-Preview": [
+    {
+     "rates": {
+      "cache_read": 0.006,
+      "input": 0.3,
+      "output": 1.2
+     },
+     "source": "https://longcat.chat/platform/docs/",
+     "valid_from": "2026-10-10T02:55:04Z"
+    }
+   ]
+  },
   "minimax": {
    "MiniMax-M2.1-highspeed": [
     {

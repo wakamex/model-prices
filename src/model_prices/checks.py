@@ -14,6 +14,7 @@ import inspect
 import json
 import re
 from typing import Callable, Iterable
+import urllib.parse
 import urllib.request
 
 from model_prices import (_data, _ids, _parse_time, _period, _schedule, genai_prices, rates,
@@ -810,6 +811,29 @@ def ark_rows(markdown: str, heading: str, provider: str,
     return found
 
 
+LONGCAT_DOCS = "https://longcat.chat/platform/docs/"
+_LONGCAT_ITEMS = {"Uncached Input": "input", "Cached Input": "cache_read", "Output": "output"}
+
+
+def parse_longcat(page: str, today: datetime, get: Callable[[str], str]) -> list[Observed]:
+    """Prices of each model on LongCat's pricing pages, which its docs index links to. Each
+    page names its model in "Pay-As-You-Go currently supports LongCat-2.0." and gives a
+    dollar table, then a yuan one; a "Discounted Price (limited-time)" is the price charged."""
+    found = []
+    for path in sorted(set(re.findall(r'href="(/platform/docs/pricing/[^"#]+)"', page))):
+        url = urllib.parse.urljoin(LONGCAT_DOCS, path)
+        text = get(url)
+        model = re.search(r"Pay-As-You-Go currently supports (LongCat-[A-Za-z0-9.-]+)\.", text)
+        table = re.search(r"<table.*?</table>", text, re.S)
+        if model is None or table is None or "$/1M Tokens" not in table.group(0):
+            raise ValueError(f"longcat: no model or dollar price table in {url}; the page "
+                             "format changed")
+        for item, cell in re.findall(r"<tr><td>([^<]+)</td><td>([^<]+)</td></tr>", table.group(0)):
+            if item in _LONGCAT_ITEMS and (price := _price(cell)) is not None:
+                found.append(Observed("longcat", model.group(1), _LONGCAT_ITEMS[item], price))
+    return found
+
+
 # Yuan prices are compared in dollars at the rate models.dev converts each provider's prices
 # at, within 1%, so a changed official price fails while models.dev's rounding does not.
 YUAN_TO_USD = {
@@ -903,6 +927,7 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "anthropic": ("https://platform.claude.com/docs/en/about-claude/pricing.md", parse_anthropic),
     "deepseek": ("https://api-docs.deepseek.com/quick_start/pricing/", parse_deepseek),
     "google": ("https://ai.google.dev/gemini-api/docs/pricing.md.txt", parse_google),
+    "longcat": (LONGCAT_DOCS, parse_longcat),
     "inception": ("https://docs.inceptionlabs.ai/get-started/models.md", parse_inception),
     "meta": ("https://dev.meta.ai/models/muse-spark/", parse_meta),
     "minimax": ("https://platform.minimax.io/docs/guides/pricing-paygo.md", parse_minimax),

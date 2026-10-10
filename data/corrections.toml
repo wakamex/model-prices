@@ -397,6 +397,17 @@ source = "https://platform.stepfun.ai/docs/en/guides/pricing/details"
 note = "StepFun's pricing page lists step-5-preview's cache hit input at $0.10 on 2026-10-09T21:23Z, where models.dev and the page at the 2026-10-09T06:46Z daily check list $0.05. No announcement dates the change, so it applies from its first observation."
 
 [[correction]]
+provider = "longcat"
+model = "LongCat-2.0"
+valid_from = "2026-06-29T16:00:00Z"
+input = 0.3
+output = 1.2
+cache_read = 0.006
+replaces = { input = 0.75, output = 2.95 }
+source = "https://longcat.chat/platform/docs/pricing/longcat-2.0"
+note = "LongCat's pricing page lists LongCat-2.0 at a \"Discounted Price $/1M Tokens (limited-time)\" of $0.30 uncached input, $0.006 cached input, and $1.20 output on 2026-10-09; models.dev lists the $0.75/$2.95 list price. LongCat's changelog dates LongCat-2.0's release and billing to 2026-06-30, taken as Beijing time, and launch coverage on 2026-07-02 reports the promotion: \"During the promotional period, prices are reduced to $0.30 and $1.20 respectively\" (https://www.kucoin.com/news/flash/meituan-launches-longcat-2-0-with-1-6-trillion-parameters-and-competitive-pricing). The discount applies from release."
+
+[[correction]]
 provider = "alibaba"
 model = "qwen-vl-ocr"
 valid_from = "2026-02-10T03:42:28Z"

@@ -43,6 +43,11 @@ PAGES = {
     "xai": (FIXTURES / "xai.md").read_text(),
     "zai": (FIXTURES / "zai.md").read_text(),
     "tencent-tokenhub": (FIXTURES / "tencent.html").read_text(),
+    "longcat": (FIXTURES / "longcat.html").read_text(),
+    "https://longcat.chat/platform/docs/pricing/longcat-2.0":
+        (FIXTURES / "longcat-2.0.html").read_text(),
+    "https://longcat.chat/platform/docs/pricing/longcat-2.5":
+        (FIXTURES / "longcat-2.0.html").read_text().replace("LongCat-2.0.", "LongCat-2.5-Preview."),
     "volcengine": (FIXTURES / "volcengine.json").read_text(),
 }
 
@@ -123,6 +128,16 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(found[("qwen3.7-plus", "output", None, "thinking")], 1.28)
         # A night and daytime discount depends on the hour, so it is not compared.
         self.assertNotIn(("qwen3.7-plus", "output", None, None), found)
+
+    def test_longcat_reads_each_linked_pricing_page(self):
+        found = {(item.model, item.field): item.value for item in
+                 checks.parse_longcat(PAGES["longcat"], TODAY, PAGES.__getitem__)}
+
+        # The limited-time dollar price is charged, and the yuan table is skipped.
+        self.assertEqual(found[("LongCat-2.0", "input")], 0.3)
+        self.assertEqual(found[("LongCat-2.0", "cache_read")], 0.006)
+        self.assertEqual(found[("LongCat-2.5-Preview", "output")], 1.2)
+        self.assertEqual(len(found), 6)
 
     def test_volcengine_yuan_prices_reach_dated_ids_in_dollars(self):
         found = {(item.model, item.field, item.above): item for item in

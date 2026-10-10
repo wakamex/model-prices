@@ -9027,6 +9027,40 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.006,
+       "input": 0.3,
+       "output": 1.2,
+       "source": "https://longcat.chat/platform/docs/pricing/longcat-2.0",
+       "valid_from": "2026-06-29T16:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.015,
+       "input": 0.75,
+       "output": 2.95,
+       "source": "https://github.com/sst/models.dev/commit/496f79bbdd42",
+       "valid_from": "2026-07-04T21:29:04Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-06-29T16:00:00Z"
+     }
+    ]
+   },
+   "LongCat-2.5-Preview": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.006,
+       "input": 0.3,
+       "output": 1.2,
+       "source": "https://longcat.chat/platform/docs/",
+       "valid_from": "2026-10-10T02:55:04Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
      }
     ]
    }
@@ -16838,5 +16872,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-09T21:23:49Z"
+ "updated_at": "2026-10-10T02:55:12Z"
 }
