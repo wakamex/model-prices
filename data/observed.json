@@ -1874,6 +1874,15 @@
      },
      "source": "https://www.upstage.ai/pricing",
      "valid_from": "2026-10-08T17:55:23Z"
+    },
+    {
+     "rates": {
+      "cache_read": 0.005,
+      "input": 0.05,
+      "output": 0.2
+     },
+     "source": "https://www.upstage.ai/pricing",
+     "valid_from": "2026-10-11T06:43:08Z"
     }
    ]
   },
