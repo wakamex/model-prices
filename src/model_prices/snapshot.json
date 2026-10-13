@@ -8678,6 +8678,21 @@
      }
     ]
    },
+   "gemini-4-argon": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "input": 2.0,
+       "output": 10.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing",
+       "valid_from": "2026-10-13T16:04:20Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "gemini-embedding-001": {
     "standard": [
      {
@@ -14555,7 +14570,7 @@
        "valid_from": "2026-08-06T15:29:28Z",
        "valid_from_basis": "models.dev commit"
       },
-      "start": "2026-10-11T00:00:00Z"
+      "start": "2026-10-20T00:00:00Z"
      }
     ]
    }
@@ -17037,5 +17052,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-11T06:43:34Z"
+ "updated_at": "2026-10-13T17:28:02Z"
 }
