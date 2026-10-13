@@ -3316,6 +3316,17 @@
      "valid_from": "2026-09-02T18:53:25Z"
     }
    ],
+   "gemini-4-argon": [
+    {
+     "commit": "0da444719383",
+     "rates": {
+      "cache_read": 0.1,
+      "input": 2.0,
+      "output": 10.0
+     },
+     "valid_from": "2026-10-13T16:18:08Z"
+    }
+   ],
    "gemini-embedding-001": [
     {
      "commit": "bebe28eb3d3f",
@@ -8389,6 +8400,6 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "8591fe17c3431ab5e00a2ad1f26c85140beca8ed",
- "source_committed_at": "2026-10-09T06:46:31Z"
+ "source_commit": "fa8f47b5c5ad2c688d3ab442b952b3b0a51ef697",
+ "source_committed_at": "2026-10-13T17:04:57Z"
 }
