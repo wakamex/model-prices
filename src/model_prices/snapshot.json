@@ -75,8 +75,8 @@
   }
  },
  "models_dev": {
-  "commit": "fa8f47b5c5ad2c688d3ab442b952b3b0a51ef697",
-  "committed_at": "2026-10-13T17:04:57Z",
+  "commit": "63e5bcf38cabb439152e94e0bd90f2801034ebb4",
+  "committed_at": "2026-10-13T19:35:04Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -9300,6 +9300,21 @@
       "start": null
      }
     ]
+   },
+   "muse-wonder-1.0": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "input": 4.0,
+       "output": 20.0,
+       "source": "https://github.com/sst/models.dev/commit/411271587b81",
+       "valid_from": "2026-10-13T19:34:37Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
    }
   },
   "minimax": {
@@ -17063,5 +17078,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-13T17:29:18Z"
+ "updated_at": "2026-10-13T19:35:40Z"
 }
