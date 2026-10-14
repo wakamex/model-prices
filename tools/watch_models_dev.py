@@ -10,7 +10,8 @@ nothing. A change starts `update-prices.yml`, which imports, checks, and publish
 
 Each run also looks at the workflow's latest completed run. A failure is sent once,
 through Panetone, to the session named model-prices, with the run's link and its failed
-check lines; it is marked as reported only once Panetone accepts it. A failure whose only
+check lines; it is marked as reported only once Panetone accepts it, and its Panetone
+message id is derived from the run, so a repeated send delivers nothing. A failure whose only
 errors are fetch timeouts is sent only when the run before it also failed, since such a
 failure usually clears on the next run.
 
@@ -25,6 +26,7 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+import uuid
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
@@ -86,7 +88,11 @@ def report_failure(state: dict) -> None:
             return
         message = (f"The {latest['event']} run of {WORKFLOW} failed: {latest['url']}\n\n"
                    + "\n".join(lines[:30]) + "\n\nFix it, publish, and reply with the commit.")
-        _run(PANETONE, "send", "--as", "model-prices-watch", "--to", SESSION, message)
+        # A message id derived from the run makes a repeated send deliver nothing, such as
+        # when the state could not be saved after the send.
+        message_id = uuid.uuid5(uuid.NAMESPACE_URL, latest["url"])
+        _run(PANETONE, "send", "--as", "model-prices-watch", "--to", SESSION,
+             "--id", str(message_id), message)
         print(f"reported run {latest['databaseId']}")
     state["reported"] = latest["databaseId"]
 
