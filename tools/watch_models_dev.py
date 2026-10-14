@@ -93,7 +93,12 @@ def report_failure(state: dict) -> None:
 
 def main() -> int:
     state = json.loads(STATE.read_text()) if STATE.exists() else {}
-    report_failure(state)
+    # A report that cannot be sent, such as while no model-prices session runs, is retried
+    # next minute and does not stop the models.dev check.
+    try:
+        report_failure(state)
+    except subprocess.CalledProcessError as error:
+        print(f"failure report not sent: {error.stderr.strip() or error}", file=sys.stderr)
     commit = head()
     if commit == state.get("head"):
         STATE.write_text(json.dumps(state, indent=1, sort_keys=True) + "\n")
