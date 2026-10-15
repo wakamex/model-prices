@@ -75,8 +75,8 @@
   }
  },
  "models_dev": {
-  "commit": "63e5bcf38cabb439152e94e0bd90f2801034ebb4",
-  "committed_at": "2026-10-13T19:35:04Z",
+  "commit": "8e4f749acef5a5b428580ac8a9222712b45ab18f",
+  "committed_at": "2026-10-15T02:01:41Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -13937,6 +13937,21 @@
      }
     ]
    },
+   "deepseek-v4.1-flash": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.0,
+       "input": 0.0,
+       "output": 0.0,
+       "source": "https://github.com/sst/models.dev/commit/d666a4eec587",
+       "valid_from": "2026-10-15T02:01:27Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
    "glm-5.2": {
     "standard": [
      {
@@ -17078,5 +17093,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-13T19:35:40Z"
+ "updated_at": "2026-10-15T02:02:51Z"
 }
