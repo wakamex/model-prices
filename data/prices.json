@@ -8220,6 +8220,15 @@
       "output": 1.8
      },
      "valid_from": "2025-08-15T05:20:07Z"
+    },
+    {
+     "commit": "16e3db84110b",
+     "rates": {
+      "cache_read": 0.11,
+      "input": 0.6,
+      "output": 1.8
+     },
+     "valid_from": "2026-10-18T01:46:51Z"
     }
    ],
    "glm-4.6": [
@@ -8242,6 +8251,15 @@
       "output": 0.9
      },
      "valid_from": "2025-12-10T15:13:08Z"
+    },
+    {
+     "commit": "16e3db84110b",
+     "rates": {
+      "cache_read": 0.05,
+      "input": 0.3,
+      "output": 0.9
+     },
+     "valid_from": "2026-10-18T01:46:51Z"
     }
    ],
    "glm-4.6v-flash": [
@@ -8422,6 +8440,6 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "2522f981d9b107ddbd3f8a6957bcd2bfb498faeb",
- "source_committed_at": "2026-10-18T01:34:50Z"
+ "source_commit": "9e96928780bd5aae5259af16dd05a251f62994b5",
+ "source_committed_at": "2026-10-18T01:47:04Z"
 }
