@@ -5,6 +5,7 @@
    "claude-opus-4": "anthropic/claude-opus-4-0",
    "claude-sonnet-4": "anthropic/claude-sonnet-4-0",
    "composer-2.5": "cursor/composer-2.5",
+   "deepseek-v4.1-flash": "deepseek/deepseek-flash",
    "grok-4-6": "xai/grok-4.6",
    "inkling": "thinkingmachines/thinkingmachines/Inkling",
    "mistral-medium-3-5": "mistral/mistral-medium-2604"
@@ -17093,5 +17094,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-18T01:35:47Z"
+ "updated_at": "2026-10-18T01:36:56Z"
 }
