@@ -6608,6 +6608,17 @@
      "valid_from": "2025-07-27T23:38:05Z"
     }
    ],
+   "solar-mini4": [
+    {
+     "commit": "f6d281973903",
+     "rates": {
+      "cache_read": 0.01,
+      "input": 0.1,
+      "output": 0.4
+     },
+     "valid_from": "2026-10-18T23:43:02Z"
+    }
+   ],
    "solar-pro2": [
     {
      "commit": "5ee76694e18d",
@@ -8440,6 +8451,6 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "9e96928780bd5aae5259af16dd05a251f62994b5",
- "source_committed_at": "2026-10-18T01:47:04Z"
+ "source_commit": "276a5ae1034d9224cd17bbc4bf49ab0d054b5a14",
+ "source_committed_at": "2026-10-18T23:43:20Z"
 }
