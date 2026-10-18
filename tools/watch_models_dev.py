@@ -24,6 +24,7 @@ from __future__ import annotations
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import sys
 import uuid
@@ -61,17 +62,21 @@ def tracked_trees(commit: str) -> dict[str, str]:
 
 
 def failed_lines(run: int) -> list[str]:
-    """The check report lines of a failed run, or its last log lines when it has none."""
-    log = _run(GH, "run", "view", str(run), "--repo", REPOSITORY, "--log-failed").splitlines()
-    messages = [line.split("Z ", 1)[-1] for line in log]
-    report = [line for line in messages if line.startswith(("mismatch  ", "error     "))]
-    return report or messages[-15:]
+    """The check report lines and raised errors of a failed run, or its failed step's last
+    lines when it has none. The whole log is read, since a step that records a failure
+    for a later step to report, such as reading an official page, does not fail itself."""
+    def messages(*flags: str) -> list[str]:
+        log = _run(GH, "run", "view", str(run), "--repo", REPOSITORY, *flags).splitlines()
+        return [re.sub(r"\x1b\[[0-9;]*m", "", line.split("Z ", 1)[-1]) for line in log]
+    found = [line for line in messages("--log")
+             if line.startswith(("mismatch  ", "error     ", "FAIL: "))
+             or re.match(r"[A-Za-z]+Error: ", line)]
+    return found or messages("--log-failed")[-15:]
 
 
 def transient(lines: list[str]) -> bool:
     """Whether a failure's only reported errors are fetch timeouts."""
-    return bool(lines) and all(line.startswith("error     ") and "timed out" in line
-                               for line in lines)
+    return bool(lines) and all("timed out" in line for line in lines)
 
 
 def report_failure(state: dict) -> None:
