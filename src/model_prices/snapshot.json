@@ -27,7 +27,7 @@
   },
   "deepseek": {
    "deepseek-v4-pro-0813": "deepseek-v4-pro",
-   "deepseek-v4.1-flash": "deepseek-flash"
+   "deepseek-v4.1-flash-1017": "deepseek-flash"
   },
   "meta": {
    "muse-spark-1.2": "muse-spark-1.2-contributor",
@@ -75,8 +75,8 @@
   }
  },
  "models_dev": {
-  "commit": "8e4f749acef5a5b428580ac8a9222712b45ab18f",
-  "committed_at": "2026-10-15T02:01:41Z",
+  "commit": "2522f981d9b107ddbd3f8a6957bcd2bfb498faeb",
+  "committed_at": "2026-10-18T01:34:50Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -17093,5 +17093,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-15T02:02:51Z"
+ "updated_at": "2026-10-18T01:35:47Z"
 }
