@@ -353,6 +353,10 @@ def resolve_details(model: str, provider: str | None = None,
     for candidate, removed in candidates:
         if candidate in aliases["models"]:
             target_provider, target_model = aliases["models"][candidate].split("/", 1)
+            # A named provider that prices the exact name keeps it, ahead of an alias that
+            # sends the name to another provider, such as SenseNova's deepseek-v4.1-flash.
+            if target_provider != hint and name in _ids(hint)[0]:
+                return hint, _ids(hint)[0][name], ""
             return target_provider, target_model, removed
     order = ([hint] if hint in _data()["prices"] else []) + [
         lab for lab in LAB_PROVIDERS if lab != hint

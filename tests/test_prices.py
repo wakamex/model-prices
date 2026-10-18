@@ -30,6 +30,11 @@ MODEL_NAMES = [
     ("deepseek/deepseek-v4-flash-0731", None, ("deepseek", "deepseek-v4-flash")),
     ("grok-4-6-xhigh", None, ("xai", "grok-4.6")),
     ("opencode/deepseek-v4.1-flash", None, ("deepseek", "deepseek-flash")),
+    # A named provider that prices the exact name keeps it ahead of the alias.
+    ("deepseek-v4.1-flash", "sensenova", ("sensenova", "deepseek-v4.1-flash")),
+    ("sensenova/deepseek-v4.1-flash", None, ("sensenova", "deepseek-v4.1-flash")),
+    # An alias within the named provider still wins: "inkling" is Inkling's renamed id.
+    ("inkling", "thinkingmachines", ("thinkingmachines", "thinkingmachines/Inkling")),
     ("gpt-5.5-2026-04-23", None, ("openai", "gpt-5.5")),
     ("claude-opus-5[1m]", None, ("anthropic", "claude-opus-5")),
     ("claude-sonnet-4.5", None, ("anthropic", "claude-sonnet-4-5")),
