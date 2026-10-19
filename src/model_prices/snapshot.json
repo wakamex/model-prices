@@ -76,8 +76,8 @@
   }
  },
  "models_dev": {
-  "commit": "276a5ae1034d9224cd17bbc4bf49ab0d054b5a14",
-  "committed_at": "2026-10-18T23:43:20Z",
+  "commit": "17c94ea140626b3ad6fa862d094803f3c5787d4c",
+  "committed_at": "2026-10-19T09:09:19Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -9515,6 +9515,21 @@
       "start": "2026-06-25T13:51:11Z"
      }
     ]
+   },
+   "MiniMax-M3.1-Flash": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.015,
+       "input": 0.15,
+       "output": 0.6,
+       "source": "https://github.com/sst/models.dev/commit/17c94ea14062",
+       "valid_from": "2026-10-19T09:09:19Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
    }
   },
   "mistral": {
@@ -17131,5 +17146,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-18T23:44:40Z"
+ "updated_at": "2026-10-19T09:10:46Z"
 }
