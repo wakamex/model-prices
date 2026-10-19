@@ -13733,6 +13733,24 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.0625,
+       "input": 0.25,
+       "output": 2.5,
+       "source": "https://docs.perplexity.ai/docs/agent-api/models",
+       "valid_from": "2026-10-19T18:07:43Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 1.0,
+       "output": 1.0,
+       "source": "https://github.com/sst/models.dev/commit/c18843b550b6",
+       "valid_from": "2025-09-19T04:54:35Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T18:07:43Z"
      }
     ]
    },
@@ -17161,5 +17179,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-19T18:07:45Z"
+ "updated_at": "2026-10-19T18:10:14Z"
 }

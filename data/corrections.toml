@@ -409,6 +409,17 @@ source = "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_prici
 note = "Tinker's model table lists Inkling (256K) with a \"Limited-time 50% discount\" at $1.87 prefill, $0.374 cached, and $4.68 sampling, struck through from $3.74 and $9.36, on 2026-10-10T02:55Z; the 2026-10-09T21:23Z check read the list price. No announcement dates the change, so it applies from its first observation, when the daily run also recorded Inkling-Small (256K) at its discount."
 
 [[correction]]
+provider = "perplexity"
+model = "sonar"
+valid_from = "2026-10-19T18:07:43Z"
+input = 0.25
+output = 2.5
+cache_read = 0.0625
+replaces = { input = 1.0, output = 1.0 }
+source = "https://docs.perplexity.ai/docs/agent-api/models"
+note = "Perplexity ended Sonar Chat Completions support on 2026-09-27 and reformulates those requests as Agent API requests, \"rolling out gradually by model\" (https://docs.perplexity.ai/docs/agent-api/migrate-from-sonar/overview). Its Agent API model list prices perplexity/sonar at $0.25 input, $2.50 output, and $0.0625 cached input. models.dev lists Sonar Chat Completions' $1/$1, which Perplexity's pricing page listed until 2026-10-19 between 09:10Z and 18:07Z, when it removed Sonar's prices; the Agent API price applies from that first observation."
+
+[[correction]]
 provider = "alibaba"
 model = "qwen-vl-ocr"
 valid_from = "2026-02-10T03:42:28Z"

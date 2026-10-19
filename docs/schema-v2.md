@@ -10,11 +10,11 @@ Alibaba bills an implicit cache hit, which needs no setup, at 20% of input, and 
 
 Plan: follow the one-hour cache write precedent. A per-provider multiple of input for explicit hits, recorded beside `cache_write_1h` in `data/cache_writes.toml` and compiled into each rate entry, and a `cache_read_explicit_tokens` argument to `cost()` and `breakdown()`. A caller can tell explicit hits apart, since it sent the markers and only explicit caching reports `cache_creation_input_tokens`.
 
-## Perplexity per-request fees
+## Perplexity tool fees
 
-Perplexity's Sonar models add a per-request fee that depends on the search context size, and Sonar Deep Research also bills citation tokens, reasoning tokens, and search queries. model-prices prices their input and output tokens only.
+Perplexity's Agent API, which replaced Sonar Chat Completions on 2026-09-27, bills tool calls, such as web search, beside tokens ([models](https://docs.perplexity.ai/docs/agent-api/models)). Sonar Chat Completions added a per-request fee that depended on the search context size, and Sonar Deep Research also billed citation tokens, reasoning tokens, and search queries. model-prices prices input and output tokens only.
 
-Plan: per-request and per-query prices on the rate entry, and matching arguments to `cost()`.
+Plan: per-call tool prices on the rate entry, and matching arguments to `cost()`.
 
 ## Prices by modality
 

@@ -171,6 +171,12 @@ class CheckTests(unittest.TestCase):
         self.assertEqual([r.status for r in checks.compare([close, changed], TODAY)],
                          ["ok", "mismatch"])
 
+    def test_sonar_is_priced_from_the_agent_api_after_chat_completions(self):
+        after = checks.run(["perplexity"], pages=PAGES,
+                           today=datetime(2026, 10, 20, tzinfo=timezone.utc))
+
+        self.assertEqual({r.status for r in after}, {"corrected"})
+
     def test_mistral_parser_reads_sale_prices_under_every_api_name(self):
         mistral = _prices("mistral")
 
@@ -193,7 +199,11 @@ class CheckTests(unittest.TestCase):
         self.assertNotIn(0.45, minimax.values())
 
     def test_perplexity_stepfun_arcee_and_tinker_parsers(self):
-        self.assertEqual(_prices("perplexity")[("sonar-pro", "output", None, None)], 15)
+        perplexity = _prices("perplexity")
+        self.assertEqual(perplexity[("sonar", "output", None, None)], 2.5)
+        self.assertEqual(perplexity[("sonar", "cache_read", None, None)], 0.0625)
+        # Other tabs resell other labs' models.
+        self.assertEqual({model for model, *_ in perplexity}, {"sonar"})
         stepfun = _prices("stepfun-ai")
         self.assertEqual(stepfun[("step-3.5-flash", "cache_read", None, None)], 0.02)
         # A free preview has no token price to read.
@@ -300,7 +310,9 @@ class CheckTests(unittest.TestCase):
                          [(1.5, None)])
 
     def test_official_pages_match_effective_prices(self):
-        results = checks.run(pages=PAGES, today=TODAY)
+        # Perplexity's fixture lists Sonar's Agent API price, which applies from 2026-10-19.
+        results = checks.run([p for p in checks.SOURCES if p != "perplexity"],
+                             pages=PAGES, today=TODAY)
         statuses = {result.status for result in results}
 
         self.assertNotIn("mismatch", statuses)

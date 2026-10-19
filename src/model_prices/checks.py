@@ -317,15 +317,18 @@ def parse_minimax(text: str, today: datetime) -> list[Observed]:
 
 
 def parse_perplexity(text: str, today: datetime) -> list[Observed]:
-    """Read Sonar token prices from the price data Perplexity's pricing page embeds. Its
-    per-request search fees and Deep Research's citation and reasoning token prices are
-    not modeled."""
-    models = re.search(r'"sonar":\s*\{\s*"models":\s*(\[.*?\])\s*\}', text, re.S)
-    if models is None:
-        return []
-    return [Observed("perplexity", model["id"], field, float(model[field]))
-            for model in json.loads(models.group(1)) for field in ("input", "output")
-            if field in model]
+    """Read Perplexity's own models from the Perplexity tab of its Agent API model list,
+    where `perplexity/sonar` is Sonar; the other tabs resell other labs' models. Tool fees,
+    such as web search calls, are not modeled."""
+    tab = re.search(r'<Tab title="Perplexity">(.*?)</Tab>', text, re.S)
+    found = []
+    for model, *prices in re.findall(
+            r"^\s*\| `perplexity/([a-z0-9.-]+)` \| ([0-9.]+) \| ([0-9.]+) \| ([0-9.]+|—) \|",
+            tab.group(1) if tab else "", re.M):
+        found += [Observed("perplexity", model, field, float(price))
+                  for field, price in zip(("input", "output", "cache_read"), prices)
+                  if price != "—"]
+    return found
 
 
 def parse_stepfun(text: str, today: datetime) -> list[Observed]:
@@ -958,7 +961,7 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "meta": ("https://dev.meta.ai/models/muse-spark/", parse_meta),
     "minimax": ("https://platform.minimax.io/docs/guides/pricing-paygo.md", parse_minimax),
     "mistral": ("https://mistral.ai/pricing/api", parse_mistral),
-    "perplexity": ("https://docs.perplexity.ai/docs/getting-started/pricing.md", parse_perplexity),
+    "perplexity": ("https://docs.perplexity.ai/docs/agent-api/models.md", parse_perplexity),
     "thinkingmachines": (
         "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
         parse_thinkingmachines),
