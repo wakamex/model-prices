@@ -9077,6 +9077,21 @@
      }
     ]
    },
+   "mercury-3": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.01,
+       "input": 0.1,
+       "output": 0.35,
+       "source": "https://docs.inceptionlabs.ai/get-started/models.md",
+       "valid_from": "2026-10-19T18:07:15Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "mercury-coder": {
     "standard": [
      {
@@ -17146,5 +17161,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-19T09:10:46Z"
+ "updated_at": "2026-10-19T18:07:45Z"
 }

@@ -1576,6 +1576,17 @@
    ]
   },
   "inception": {
+   "mercury-3": [
+    {
+     "rates": {
+      "cache_read": 0.01,
+      "input": 0.1,
+      "output": 0.35
+     },
+     "source": "https://docs.inceptionlabs.ai/get-started/models.md",
+     "valid_from": "2026-10-19T18:07:15Z"
+    }
+   ],
    "mercury-decide": [
     {
      "rates": {
