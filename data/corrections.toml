@@ -420,6 +420,17 @@ source = "https://docs.perplexity.ai/docs/agent-api/models"
 note = "Perplexity ended Sonar Chat Completions support on 2026-09-27 and reformulates those requests as Agent API requests, \"rolling out gradually by model\" (https://docs.perplexity.ai/docs/agent-api/migrate-from-sonar/overview). Its Agent API model list prices perplexity/sonar at $0.25 input, $2.50 output, and $0.0625 cached input. models.dev lists Sonar Chat Completions' $1/$1, which Perplexity's pricing page listed until 2026-10-19 between 09:10Z and 18:07Z, when it removed Sonar's prices; the Agent API price applies from that first observation."
 
 [[correction]]
+provider = "inception"
+model = "mercury-2.5"
+valid_from = "2026-10-19T18:07:15Z"
+input = 0.2
+output = 0.75
+cache_read = 0.02
+replaces = { input = 0.04, output = 0.15 }
+source = "https://docs.inceptionlabs.ai/get-started/models"
+note = "Mercury 2.5 launched on 2026-09-08 at an 80% launch discount from its $0.20/$0.75 list price, with no published end date (https://neomanex.com/news/inception-mercury-2-5-diffusion-llm-launch-pricing). Inception's models page listed the $0.04/$0.004/$0.15 discount at the 2026-10-19T09:10Z check, and $0.20 input, $0.02 cached, and $0.75 output, with Mercury 2.5 as the previous generation beside the newly launched Mercury 3, on 2026-10-19T18:07Z. No announcement dates the end, so the list price applies from that first observation, when the daily run also recorded Mercury 3."
+
+[[correction]]
 provider = "alibaba"
 model = "qwen-vl-ocr"
 valid_from = "2026-02-10T03:42:28Z"

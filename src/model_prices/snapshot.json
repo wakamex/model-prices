@@ -9074,6 +9074,25 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.02,
+       "input": 0.2,
+       "output": 0.75,
+       "source": "https://docs.inceptionlabs.ai/get-started/models",
+       "valid_from": "2026-10-19T18:07:15Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.004,
+       "input": 0.04,
+       "output": 0.15,
+       "source": "https://github.com/sst/models.dev/commit/28a2974f5568",
+       "valid_from": "2026-09-10T16:34:13Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T18:07:15Z"
      }
     ]
    },
@@ -17179,5 +17198,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-19T18:10:14Z"
+ "updated_at": "2026-10-19T18:13:10Z"
 }
