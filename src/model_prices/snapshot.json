@@ -73,12 +73,15 @@
    "seed-evolving": "doubao-seed-evolving"
   },
   "zai": {
+   "glm-4.5": "glm-4.5-x",
+   "glm-4.5-air": "glm-4.5-airx",
+   "glm-4.6v-flash": "glm-4.6v-flashx",
    "glm-5.3-flash": "glm-5.3-flashx"
   }
  },
  "models_dev": {
-  "commit": "1a704bf2c019757f1fa080c879bf09d28e27d2c8",
-  "committed_at": "2026-10-20T00:06:10Z",
+  "commit": "262d2c41797a900f4bd8d4309ecb0bfca3e4bad3",
+  "committed_at": "2026-10-20T02:32:55Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -17199,5 +17202,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-20T00:06:42Z"
+ "updated_at": "2026-10-20T02:34:16Z"
 }
