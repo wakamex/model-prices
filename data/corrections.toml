@@ -431,6 +431,17 @@ source = "https://docs.inceptionlabs.ai/get-started/models"
 note = "Mercury 2.5 launched on 2026-09-08 at an 80% launch discount from its $0.20/$0.75 list price, with no published end date (https://neomanex.com/news/inception-mercury-2-5-diffusion-llm-launch-pricing). Inception's models page listed the $0.04/$0.004/$0.15 discount at the 2026-10-19T09:10Z check, and $0.20 input, $0.02 cached, and $0.75 output, with Mercury 2.5 as the previous generation beside the newly launched Mercury 3, on 2026-10-19T18:07Z. No announcement dates the end, so the list price applies from that first observation, when the daily run also recorded Mercury 3."
 
 [[correction]]
+provider = "mistral"
+model = "mistral-large-4"
+valid_from = "2026-10-20T17:33:15Z"
+input = 1.36
+output = 4.18
+cache_read = 0.14
+replaces = { input = 0.68, output = 2.09 }
+source = "https://mistral.ai/pricing/api"
+note = "Mistral's changelog for 2026-10-06 announced Mistral Large 4 with \"Launch pricing: 50% off for 2 weeks\" (https://docs.mistral.ai/getting-started/changelog). Its pricing page listed the $0.68/$0.07/$2.09 sale price at the 2026-10-20T06:41Z check and the $1.36 input, $0.14 cached, and $4.18 output list price at 17:33Z, when the daily run also recorded it for mistral-large-4-0. The changelog gives no end time, so the list price applies from that first observation."
+
+[[correction]]
 provider = "alibaba"
 model = "qwen-vl-ocr"
 valid_from = "2026-02-10T03:42:28Z"
