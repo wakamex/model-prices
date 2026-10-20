@@ -3565,6 +3565,17 @@
      "valid_from": "2026-09-10T16:34:13Z"
     }
    ],
+   "mercury-3": [
+    {
+     "commit": "ee061b35dbfb",
+     "rates": {
+      "cache_read": 0.01,
+      "input": 0.1,
+      "output": 0.35
+     },
+     "valid_from": "2026-10-20T06:37:58Z"
+    }
+   ],
    "mercury-coder": [
     {
      "commit": "27889b89ecd5",
@@ -8467,6 +8478,6 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "955bb8d9b63363d684de222b812554797b13cf12",
- "source_committed_at": "2026-10-20T03:20:56Z"
+ "source_commit": "ee061b35dbfb3a5cfa4dab45c6bba6fb2f12ca47",
+ "source_committed_at": "2026-10-20T06:37:58Z"
 }
