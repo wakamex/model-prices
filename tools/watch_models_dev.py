@@ -12,8 +12,8 @@ Each run also looks at the workflow's latest completed run. A failure is sent on
 through Panetone, to the session named model-prices, with the run's link and its failed
 check lines; it is marked as reported only once Panetone accepts it, and its Panetone
 message id is derived from the run, so a repeated send delivers nothing. A failure whose only
-errors are fetch timeouts is sent only when the run before it also failed, since such a
-failure usually clears on the next run.
+errors are fetch timeouts or HTTP 5xx server errors is sent only when the run before it also
+failed, since such a failure usually clears on the next run.
 
 State is kept in $XDG_STATE_HOME/model-prices/models-dev.json. The workflow's own daily
 schedule still runs, so a missed change is picked up within a day.
@@ -75,8 +75,10 @@ def failed_lines(run: int) -> list[str]:
 
 
 def transient(lines: list[str]) -> bool:
-    """Whether a failure's only reported errors are fetch timeouts."""
-    return bool(lines) and all("timed out" in line for line in lines)
+    """Whether a failure's only reported errors are fetch timeouts or server errors, such
+    as Cloudflare's 522 when a provider's server does not answer."""
+    return bool(lines) and all("timed out" in line or re.search(r"HTTP Error 5\d\d", line)
+                               for line in lines)
 
 
 def report_failure(state: dict) -> None:
