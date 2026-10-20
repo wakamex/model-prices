@@ -43,6 +43,7 @@
    "kimi-k2.7-code": "kimi-k2.7-code-highspeed"
   },
   "openai": {
+   "gpt-5.5-instant": "chat-latest",
    "gpt-5.6-cyber": "gpt-daybreak-red-latest",
    "gpt-5.6-sol": "gpt-5.6"
   },
@@ -76,8 +77,8 @@
   }
  },
  "models_dev": {
-  "commit": "17c94ea140626b3ad6fa862d094803f3c5787d4c",
-  "committed_at": "2026-10-19T09:09:19Z",
+  "commit": "1a704bf2c019757f1fa080c879bf09d28e27d2c8",
+  "committed_at": "2026-10-20T00:06:10Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -17198,5 +17199,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-19T18:13:10Z"
+ "updated_at": "2026-10-20T00:06:42Z"
 }
