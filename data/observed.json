@@ -1779,6 +1779,29 @@
      "source": "https://web.archive.org/web/20260401100127/https://developers.openai.com/api/docs/pricing",
      "valid_from": "2026-04-01T10:01:27Z"
     }
+   ],
+   "gpt-5.5-cyber": [
+    {
+     "rates": {
+      "cache_read": 1.25,
+      "input": 12.5,
+      "output": 75.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-10-20T23:55:24Z"
+    }
+   ],
+   "gpt-5.6-cyber": [
+    {
+     "rates": {
+      "cache_read": 1.25,
+      "cache_write": 15.625,
+      "input": 12.5,
+      "output": 75.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-10-20T23:55:24Z"
+    }
    ]
   },
   "sakana": {

@@ -12569,6 +12569,22 @@
      }
     ]
    },
+   "gpt-5.5-cyber": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 1.25,
+       "cache_write_1h_multiple": 2.5,
+       "input": 12.5,
+       "output": 75.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-10-20T23:55:24Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "gpt-5.5-pro": {
     "standard": [
      {
@@ -12757,6 +12773,23 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-08-25T04:37:24Z"
+     }
+    ]
+   },
+   "gpt-5.6-cyber": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 1.25,
+       "cache_write": 15.625,
+       "cache_write_1h_multiple": 2.5,
+       "input": 12.5,
+       "output": 75.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-10-20T23:55:24Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
      }
     ]
    },
@@ -17472,5 +17505,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-20T23:48:01Z"
+ "updated_at": "2026-10-20T23:55:50Z"
 }
