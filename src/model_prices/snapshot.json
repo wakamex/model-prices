@@ -30,6 +30,9 @@
    "deepseek-v4-pro-0813": "deepseek-v4-pro",
    "deepseek-v4.1-flash-1017": "deepseek-flash"
   },
+  "google": {
+   "gemini-3.1-pro-preview": "gemini-pro-latest"
+  },
   "meta": {
    "muse-spark-1.2": "muse-spark-1.2-contributor",
    "muse-spark-1.3": "muse-spark-1.3-contributor"
@@ -81,8 +84,8 @@
   }
  },
  "models_dev": {
-  "commit": "ee061b35dbfb3a5cfa4dab45c6bba6fb2f12ca47",
-  "committed_at": "2026-10-20T06:37:58Z",
+  "commit": "0399096be0f854a027fa6e75925b83068586d5f7",
+  "committed_at": "2026-10-20T17:32:21Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -10002,6 +10005,17 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.14,
+       "input": 1.36,
+       "output": 4.18,
+       "source": "https://mistral.ai/pricing/api",
+       "valid_from": "2026-10-20T17:33:15Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-20T17:33:15Z"
      }
     ]
    },
@@ -17214,5 +17228,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-20T06:39:05Z"
+ "updated_at": "2026-10-20T17:34:34Z"
 }
