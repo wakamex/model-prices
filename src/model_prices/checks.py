@@ -110,17 +110,24 @@ def parse_anthropic(text: str, today: datetime) -> list[Observed]:
 
 
 def parse_openai(text: str, today: datetime) -> list[Observed]:
+    """Read every table in the page's first "Standard pricing data" section: one with short
+    and long context columns, and one with plain Input, Output, and Cached input columns."""
     found = []
+    section = None
     for headings, header, rows in _markdown_tables(text):
-        if headings.get(3) != "Standard pricing data":
+        if headings.get(3) != "Standard pricing data" or section not in (None, headings.get(2)):
+            if section is not None:
+                break
             continue
+        section = headings.get(2)
         for row in rows:
             model = re.sub(r"\s*\(.*\)", "", row[0]).strip()
             for title, value_text in zip(header[1:], row[1:]):
                 value = _price(value_text)
                 if value is None:
                     continue
-                span, _, kind = title.partition(" context ")
+                span, _, kind = title.partition(" context ") if " context " in title else (
+                    "", "", title.lower())
                 # 30-minute writes are cache writes; 12-hour writes, OpenAI's longer
                 # lifetime, are compared as cache_write_1h.
                 field = {"input": "input", "cached input": "cache_read",
@@ -128,7 +135,6 @@ def parse_openai(text: str, today: datetime) -> list[Observed]:
                          "12h write": "cache_write_1h", "output": "output"}[kind]
                 found.append(Observed("openai", model, field, value,
                                       above=272_000 if span == "Long" else None))
-        break
     return found
 
 

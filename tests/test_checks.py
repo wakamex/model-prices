@@ -124,6 +124,16 @@ class CheckTests(unittest.TestCase):
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | gpt-6.1-sol | $2.00 | $10.00 | $0.10 | $2.50 | $5.00 | $4.00 | $15.00 | $0.20 | $5.00 | $10.00 |
 | gpt-5.5 (<272K context length) | $5.00 | $30.00 | $0.50 | - | - | $10.00 | $45.00 | $1.00 | - | - |
+
+| Model | Input | Output | Cached input |
+| --- | --- | --- | --- |
+| gpt-4.1 | $2.00 | $8.00 | $0.50 |
+
+### Batch pricing data
+
+| Model | Input | Output | Cached input |
+| --- | --- | --- | --- |
+| gpt-4.1 | $1.00 | $4.00 | $0.25 |
 """
         found = {(item.model, item.field, item.above): item.value
                  for item in checks.parse_openai(page, TODAY)}
@@ -131,6 +141,8 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(found[("gpt-6.1-sol", "cache_write", None)], 2.5)
         self.assertEqual(found[("gpt-6.1-sol", "cache_write_1h", 272_000)], 10)
         self.assertNotIn(("gpt-5.5", "cache_write", None), found)
+        # The section's plain table is read too, and the Batch section is not.
+        self.assertEqual(found[("gpt-4.1", "input", None)], 2)
 
     def test_moonshot_parser_reads_both_table_layouts(self):
         moonshot = _prices("moonshotai")
