@@ -301,12 +301,14 @@ def parse_alibaba(text: str, today: datetime) -> list[Observed]:
 
 
 def parse_minimax(text: str, today: datetime) -> list[Observed]:
-    """Read MiniMax's pay-as-you-go text model prices. The Priority tab prices a faster
-    service tier, which model-prices does not model, so it is skipped. A struck-out price
+    """Read MiniMax's pay-as-you-go text model prices. The Priority tab or table prices a
+    faster service tier, which model-prices does not model, so it is skipped. A struck-out price
     is the list price before a discount; the price after it is charged."""
     columns = {"Input": "input", "Output": "output", "Prompt caching Read": "cache_read",
                "Prompt caching Write": "cache_write"}
     text = re.sub(r'<Tab title="Priority[^"]*">.*?</Tab>', "", text, flags=re.S)
+    # The page also labels the Priority table with a bold "**Priority**" line instead.
+    text = re.sub(r"^\*\*Priority\*\*[^\n]*\n\s*\n(?:\|[^\n]*\n)+", "", text, flags=re.M)
     found = []
     for _, header, rows in _markdown_tables(text):
         if header[:2] != ["Model", "Input"]:

@@ -94,6 +94,29 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(sorted(value for (model, field, _, _), value in deepseek.items()
                                 if model == "deepseek-flash" and field == "input"), [0.15, 0.3])
 
+    def test_minimax_skips_a_bold_labeled_priority_table(self):
+        page = """**Standard**
+
+| Model | Input | Output | Prompt caching Read |
+| :- | :- | :- | :- |
+| **MiniMax-M3** ≤ 512k input tokens | \\$0.30 / M tokens | \\$1.20 / M tokens | \\$0.06 / M tokens |
+
+**Priority**\\*
+
+| Model | Input | Output | Prompt caching Read |
+| :- | :- | :- | :- |
+| **MiniMax-M3** ≤ 512k input tokens | \\$0.45 / M tokens | \\$1.80 / M tokens | \\$0.09 / M tokens |
+
+| Model | Input | Output | Prompt caching Read |
+| :- | :- | :- | :- |
+| **MiniMax-M2.7** | \\$0.30 / M tokens | \\$1.20 / M tokens | \\$0.06 / M tokens |
+"""
+        found = [(item.model, item.field, item.value) for item in checks.parse_minimax(page, TODAY)]
+
+        self.assertIn(("MiniMax-M3", "input", 0.3), found)
+        self.assertNotIn(("MiniMax-M3", "input", 0.45), found)
+        self.assertIn(("MiniMax-M2.7", "input", 0.3), found)
+
     def test_openai_parser_reads_30_minute_and_12_hour_writes(self):
         page = """### Standard pricing data
 
