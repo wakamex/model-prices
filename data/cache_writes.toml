@@ -1,5 +1,6 @@
-# One-hour cache writes as a multiple of the input price, for providers that price them apart
-# from five-minute writes. Other providers' one-hour writes are priced as cache writes.
+# Longer-lived cache writes as a multiple of the input price, for providers that price them
+# apart from short-lived writes: one-hour writes for Anthropic and Moonshot AI, 12-hour
+# writes for OpenAI. Other providers' longer-lived writes are priced as cache writes.
 # model-prices check compares each multiple with the provider's pricing page.
 
 [[cache_write_1h]]
@@ -13,3 +14,10 @@ provider = "moonshotai"
 multiple = 2.0
 source = "https://platform.kimi.ai/docs/pricing/chat"
 note = "Kimi K3 lists a $6.00 one-hour cache write against a $3.00 input price. Only the K3 series offers a one-hour TTL."
+
+
+[[cache_write_1h]]
+provider = "openai"
+multiple = 2.5
+source = "https://developers.openai.com/api/docs/pricing"
+note = "OpenAI prices a 12-hour cache write at 2.5x input on every model with cache-write prices, such as $5.00 against a $2.00 input for gpt-6.1-sol, beside a 30-minute write at 1.25x; see the \"12h write\" columns."

@@ -121,8 +121,11 @@ def parse_openai(text: str, today: datetime) -> list[Observed]:
                 if value is None:
                     continue
                 span, _, kind = title.partition(" context ")
+                # 30-minute writes are cache writes; 12-hour writes, OpenAI's longer
+                # lifetime, are compared as cache_write_1h.
                 field = {"input": "input", "cached input": "cache_read",
-                         "cache writes": "cache_write", "output": "output"}[kind]
+                         "cache writes": "cache_write", "30m write": "cache_write",
+                         "12h write": "cache_write_1h", "output": "output"}[kind]
                 found.append(Observed("openai", model, field, value,
                                       above=272_000 if span == "Long" else None))
         break
@@ -162,20 +165,27 @@ def parse_xai(text: str, today: datetime) -> list[Observed]:
 
 
 def parse_moonshot(text: str, today: datetime) -> list[Observed]:
+    """Read Kimi's price tables from its pricing page's HTML. The page builds each table
+    with a compiled DocTable component, `_jsx(DocTable,{columns:[{title:`Model`}, ...],
+    rows:[[`kimi-k3`, _jsxs(_Fragment,{children:[`$`,`3.00`]}), ...]]})`. The page's Markdown
+    copy renders those tables empty."""
     columns = {"Input Price": "input", "Input Price (Cache Miss)": "input",
                "Cached Input Price": "cache_read", "Input Price (Cache Hit)": "cache_read",
                "Cache Write Price (TTL 5min)": "cache_write",
                "Cache Write Price (TTL 1h)": "cache_write_1h", "Output Price": "output"}
     found = []
-    # Each table is a <DocTable columns={[{ title: ... }]} rows={[[...], ...]} /> component,
-    # with prices written as <>{"$"}3.00</>.
-    for table in re.finditer(r"<DocTable\s+columns=\{\[(.*?)\]\}\s+rows=\{\[(.*?)\]\}\s*/>",
+    for table in re.finditer(r"_jsx\(DocTable,\{columns:\[(.*?)\],rows:\[(.*?)\]\]\}\)",
                              text, re.S):
-        titles = re.findall(r'title:\s*"([^"]*)"', table.group(1))
-        for row in re.findall(r"^\s*\[(.*)\],?\s*$", table.group(2), re.M):
-            cells = [cell.replace('{"$"}', "$") for cell in
-                     re.findall(r'<>(.*?)</>|"((?:[^"\\]|\\.)*)"', row)
-                     for cell in (cell[0] or cell[1],)]
+        titles = re.findall(r"title:`([^`]*)`", table.group(1))
+        rows: list[list[str]] = [[]]
+        for match in re.finditer(r"_jsxs\(_Fragment,\{children:\[`\$`,`([^`]*)`\]\}\)"
+                                 r"|`([^`]*)`|(\],\[)", table.group(2)):
+            if match.group(3):
+                rows.append([])
+            else:
+                rows[-1].append(f"${match.group(1)}" if match.group(1) is not None
+                                else match.group(2))
+        for cells in rows:
             if len(cells) != len(titles) or titles[0] != "Model":
                 continue
             for title, cell in zip(titles, cells):
@@ -317,10 +327,12 @@ def parse_minimax(text: str, today: datetime) -> list[Observed]:
 
 
 def parse_perplexity(text: str, today: datetime) -> list[Observed]:
-    """Read Perplexity's own models from the Perplexity tab of its Agent API model list,
-    where `perplexity/sonar` is Sonar; the other tabs resell other labs' models. Tool fees,
+    """Read Perplexity's own models from the Perplexity section of its Agent API model
+    list, a tab or a bold heading, where `perplexity/sonar` is Sonar; the other sections
+    resell other labs' models, some as `perplexity/` ids. Tool fees,
     such as web search calls, are not modeled."""
-    tab = re.search(r'<Tab title="Perplexity">(.*?)</Tab>', text, re.S)
+    tab = (re.search(r'<Tab title="Perplexity">(.*?)</Tab>', text, re.S)
+           or re.search(r"^\*\*Perplexity\*\*\n(.*?)(?=^\*\*|^## )", text, re.M | re.S))
     found = []
     for model, *prices in re.findall(
             r"^\s*\| `perplexity/([a-z0-9.-]+)` \| ([0-9.]+) \| ([0-9.]+) \| ([0-9.]+|—) \|",
@@ -972,7 +984,7 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "tencent-tokenhub": ("https://cloud.tencent.com/document/product/1823/130055", parse_tencent),
     "volcengine": ("https://www.volcengine.com/api/doc/getDocDetail?LibraryID=82379"
                    "&DocumentID=1544106&type=online", parse_volcengine),
-    "moonshotai": ("https://platform.kimi.ai/docs/pricing/chat.md", parse_moonshot),
+    "moonshotai": ("https://platform.kimi.ai/docs/pricing/chat", parse_moonshot),
     "openai": ("https://developers.openai.com/api/docs/pricing.md", parse_openai),
     "xai": ("https://docs.x.ai/developers/pricing.md", parse_xai),
     "zai": ("https://docs.z.ai/guides/overview/pricing.md", parse_zai),

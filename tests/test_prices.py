@@ -161,11 +161,14 @@ class PriceTests(unittest.TestCase):
         self.assertEqual((long_cache.cache_write, long_cache.cache_write_1h), (5.0, 8.0))
         self.assertAlmostEqual(cost("claude-opus-5-5", cache_write_1h_tokens=1_000_000,
                                     at="2026-09-25"), 8.0)
-        # Other providers price one-hour writes like any cache write.
-        sol = rates("gpt-6-astra", at="2026-09-20")
-        self.assertIsNone(sol.cache_write_1h_multiple)
-        self.assertAlmostEqual(sol.breakdown(cache_write_1h_tokens=100_000).cache_write_1h,
-                               100_000 * sol.cache_write / 1e6)
+        # OpenAI prices its 12-hour writes at 2.5x input.
+        astra = rates("gpt-6-astra", at="2026-10-21")
+        self.assertEqual(astra.cache_write_1h_multiple, 2.5)
+        # Other providers price longer-lived writes like any cache write.
+        grok = rates("grok-4.6", at="2026-09-20")
+        self.assertIsNone(grok.cache_write_1h_multiple)
+        self.assertAlmostEqual(grok.breakdown(cache_write_1h_tokens=100_000).cache_write_1h,
+                               100_000 * (grok.cache_write or grok.input) / 1e6)
 
     def test_alternate_mode_prices(self):
         fast = rates("claude-opus-5-5", at="2026-09-25", mode="fast")

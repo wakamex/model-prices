@@ -32,7 +32,7 @@ PAGES = {
         (FIXTURES / "mistral-docs-large-3.html").read_text(),
     "https://docs.mistral.ai/models/mistral-large-4-0":
         (FIXTURES / "mistral-docs-large-4.html").read_text(),
-    "moonshotai": (FIXTURES / "moonshot.md").read_text(),
+    "moonshotai": (FIXTURES / "moonshot.html").read_text(),
     "perplexity": (FIXTURES / "perplexity.md").read_text(),
     "sakana": (FIXTURES / "sakana.html").read_text(),
     "stepfun-ai": (FIXTURES / "stepfun.md").read_text(),
@@ -93,6 +93,21 @@ class CheckTests(unittest.TestCase):
         deepseek = _prices("deepseek")
         self.assertEqual(sorted(value for (model, field, _, _), value in deepseek.items()
                                 if model == "deepseek-flash" and field == "input"), [0.15, 0.3])
+
+    def test_openai_parser_reads_30_minute_and_12_hour_writes(self):
+        page = """### Standard pricing data
+
+| Model | Short context input | Short context output | Short context cached input | Short context 30m write | Short context 12h write | Long context input | Long context output | Long context cached input | Long context 30m write | Long context 12h write |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| gpt-6.1-sol | $2.00 | $10.00 | $0.10 | $2.50 | $5.00 | $4.00 | $15.00 | $0.20 | $5.00 | $10.00 |
+| gpt-5.5 (<272K context length) | $5.00 | $30.00 | $0.50 | - | - | $10.00 | $45.00 | $1.00 | - | - |
+"""
+        found = {(item.model, item.field, item.above): item.value
+                 for item in checks.parse_openai(page, TODAY)}
+
+        self.assertEqual(found[("gpt-6.1-sol", "cache_write", None)], 2.5)
+        self.assertEqual(found[("gpt-6.1-sol", "cache_write_1h", 272_000)], 10)
+        self.assertNotIn(("gpt-5.5", "cache_write", None), found)
 
     def test_moonshot_parser_reads_both_table_layouts(self):
         moonshot = _prices("moonshotai")
