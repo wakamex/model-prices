@@ -17386,6 +17386,21 @@
      }
     ]
    },
+   "glm-5.3-flashx-legal": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.075,
+       "input": 0.37,
+       "output": 1.25,
+       "source": "https://docs.z.ai/guides/overview/pricing.md",
+       "valid_from": "2026-10-21T15:56:13Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "glm-5v-turbo": {
     "standard": [
      {
@@ -17506,5 +17521,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-21T05:59:14Z"
+ "updated_at": "2026-10-21T15:56:40Z"
 }

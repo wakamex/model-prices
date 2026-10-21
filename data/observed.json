@@ -1972,6 +1972,17 @@
      "source": "https://docs.z.ai/guides/overview/pricing.md",
      "valid_from": "2026-10-08T17:55:23Z"
     }
+   ],
+   "glm-5.3-flashx-legal": [
+    {
+     "rates": {
+      "cache_read": 0.075,
+      "input": 0.37,
+      "output": 1.25
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-10-21T15:56:13Z"
+    }
    ]
   }
  }
