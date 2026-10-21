@@ -317,6 +317,8 @@ def parse_minimax(text: str, today: datetime) -> list[Observed]:
     text = re.sub(r"^\*\*Priority\*\*[^\n]*\n\s*\n(?:\|[^\n]*\n)+", "", text, flags=re.M)
     found = []
     for _, header, rows in _markdown_tables(text):
+        # Header cells can be bold and carry the unit: "**Input** \\$ / M tokens".
+        header = [re.sub(r"\*\*|\\?\$\s*/\s*M tokens", "", cell).strip() for cell in header]
         if header[:2] != ["Model", "Input"]:
             continue
         for row in rows:

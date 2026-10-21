@@ -94,12 +94,12 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(sorted(value for (model, field, _, _), value in deepseek.items()
                                 if model == "deepseek-flash" and field == "input"), [0.15, 0.3])
 
-    def test_minimax_skips_a_bold_labeled_priority_table(self):
+    def test_minimax_reads_bold_headers_and_skips_the_priority_table(self):
         page = """**Standard**
 
-| Model | Input | Output | Prompt caching Read |
-| :- | :- | :- | :- |
-| **MiniMax-M3** ≤ 512k input tokens | \\$0.30 / M tokens | \\$1.20 / M tokens | \\$0.06 / M tokens |
+| **Model** | **Input** \\$ / M tokens | **Output** \\$ / M tokens | **Prompt caching Read** \\$ / M tokens |
+| :- | :-: | :-: | :-: |
+| **MiniMax-M3** ≤ 512k input tokens Permanent 50% off | ~~\\$0.60~~ \\$0.30 | ~~\\$2.40~~ \\$1.20 | ~~\\$0.12~~ \\$0.06 |
 
 **Priority**\\*
 
