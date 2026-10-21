@@ -196,11 +196,17 @@ def parse_alibaba_cache(page: str) -> tuple[set[str], set[str]]:
     explicit, explicit_billing = _alibaba_cache_section(page, "Explicit cache")
     others = re.search(r"For models other than (.*?): The unit price of `cached_token` is "
                        r"<strong>20%</strong> of the `input_token` unit price", implicit_billing)
-    exceptions = re.search(r"The explicit cache hit price for (.*?) is not 10%", explicit_billing)
+    # Exceptions are a sentence, "The explicit cache hit price for ... is not 10%", or a
+    # bullet per group of models whose hit or creation price is "not 10%" or "not 125%".
+    exceptions = [names for names in re.findall(
+        r"The explicit cache hit price for (.*?) is not 10%", explicit_billing)] + [
+        names for names, rule in re.findall(r"^\s*- ([^:\n]+): (.*)$", explicit_billing, re.M)
+        if re.search(r"not (?:10|125)%", rule)]
     if (not others or not exceptions or "billed at 125% of the standard input token price"
+            not in explicit_billing or "Billed at 10% of the standard input token price"
             not in explicit_billing):
         raise ValueError(f"alibaba: cache billing rules changed in {ALIBABA_CACHE}")
-    excluded = set(re.findall(_ALIBABA_ID, others.group(1) + " " + exceptions.group(1)))
+    excluded = set(re.findall(_ALIBABA_ID, others.group(1) + " " + " ".join(exceptions)))
     return (set(re.findall(_ALIBABA_ID, implicit)) - excluded,
             set(re.findall(_ALIBABA_ID, explicit)) - excluded)
 

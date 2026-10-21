@@ -106,6 +106,14 @@ class ObserveTests(unittest.TestCase):
         self.assertEqual(implicit, {"qwen3.7-max", "qwen3-max-preview", "qwen3.7-plus-2026-05-26"})
         self.assertEqual(explicit, {"qwen3.7-max", "qwen3.5-plus-2026-04-20",
                                     "qwen3.7-plus-2026-05-26"})
+        # The exceptions can also be bullets, one per group of models.
+        bullets = (FIXTURES / "alibaba-cache.md").read_text().replace(
+            "- <strong>Exception</strong>: The explicit cache hit price for qwen3.8-max is not 10% of the standard input token price.",
+            "- <strong>Exception</strong>: The following models do not follow the general ratios above.\n\n"
+            "  - qwen3.8-max: Cache creation is billed at 125% of the standard input token price, but the cache hit price is not 10% of the standard input token price.\n"
+            "  - qwen3.7-plus-2026-05-26: <strong>The cache creation price is not 125% of the standard input token price</strong>, and the cache hit price is not 10% either.")
+        self.assertNotIn("qwen3.7-plus-2026-05-26", observe.parse_alibaba_cache(bullets)[1])
+        self.assertNotIn("qwen3.8-max", observe.parse_alibaba_cache(bullets)[0])
         with self.assertRaisesRegex(ValueError, "cache billing rules changed"):
             observe.parse_alibaba_cache((FIXTURES / "alibaba-cache.md").read_text()
                                         .replace("<strong>20%</strong>", "<strong>15%</strong>"))
