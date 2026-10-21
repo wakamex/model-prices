@@ -60,7 +60,8 @@
    "fugu-ultra": "fugu-ultra-20260615"
   },
   "thinkingmachines": {
-   "inkling": "thinkingmachines/Inkling"
+   "inkling": "thinkingmachines/Inkling",
+   "inkling-small": "thinkingmachines/Inkling-Small"
   },
   "volcengine": {
    "seed-1-6": "doubao-seed-1-6-251015",
@@ -84,8 +85,8 @@
   }
  },
  "models_dev": {
-  "commit": "0399096be0f854a027fa6e75925b83068586d5f7",
-  "committed_at": "2026-10-20T17:32:21Z",
+  "commit": "0aed167a234ab4e9f42a31507bbc64130bb14fd5",
+  "committed_at": "2026-10-21T05:57:06Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -17505,5 +17506,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-20T23:55:50Z"
+ "updated_at": "2026-10-21T05:59:14Z"
 }
