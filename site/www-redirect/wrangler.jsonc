@@ -1,0 +1,7 @@
+// Redirects www.model-prices.com to model-prices.com, so the site has one address.
+{
+  "name": "model-prices-www",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-22",
+  "routes": [{ "pattern": "www.model-prices.com", "custom_domain": true }]
+}

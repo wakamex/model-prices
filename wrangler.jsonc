@@ -6,8 +6,6 @@
     "directory": "./site/public",
     "not_found_handling": "404-page"
   },
-  "routes": [
-    { "pattern": "model-prices.com", "custom_domain": true },
-    { "pattern": "www.model-prices.com", "custom_domain": true }
-  ]
+  // www.model-prices.com redirects here through site/www-redirect.
+  "routes": [{ "pattern": "model-prices.com", "custom_domain": true }]
 }
