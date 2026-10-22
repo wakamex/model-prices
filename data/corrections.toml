@@ -774,3 +774,35 @@ cache_read = 0.015
 replaces = { input = 0.25, output = 0.25 }
 source = "https://www.upstage.ai/pricing"
 note = "Upstage's pricing page lists Solar Pro 2 at $0.15 input, $0.015 cached input, and $0.6 output per 1M tokens, observed 2026-10-07. models.dev lists $0.25/$0.25."
+
+[[correction]]
+provider = "anthropic"
+model = "claude-3-sonnet-20240229"
+valid_from = "2025-06-17T22:26:49Z"
+input = 3.0
+output = 15.0
+replaces = { cache_read = 0.3, cache_write = 0.3 }
+source = "https://web.archive.org/web/20250304094148/https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching"
+note = "Claude 3 Sonnet never supported prompt caching: Anthropic's prompt caching docs list Claude 3.7 Sonnet, 3.5 Sonnet, 3.5 Haiku, 3 Haiku, and 3 Opus. models.dev added $0.3 cache reads and writes in 2025-06, after the model's retirement, and later deleted the file."
+
+[[correction]]
+provider = "anthropic"
+model = "claude-opus-4-6-20260205"
+valid_from = "2026-03-13T19:13:40Z"
+input = 5.0
+output = 25.0
+cache_read = 0.5
+cache_write = 6.25
+replaces = { input = 5.0, output = 25.0 }
+source = "https://platform.claude.com/docs/en/about-claude/pricing#long-context-pricing"
+note = "Claude Opus 4.6 includes its 1M token context window at standard pricing, which models.dev recorded for claude-opus-4-6 on 2026-03-13. models.dev deleted this dated id two hours after adding it on 2026-02-05, as Anthropic never announced it, so it kept the earlier long-context tier."
+
+[[correction]]
+provider = "mistral"
+model = "voxtral-small-latest"
+valid_from = "2026-08-02T16:08:24Z"
+input = 0.1
+output = 0.4
+replaces = { output = 0.3 }
+source = "https://mistral.ai/pricing/api"
+note = "Voxtral Small, whose docs page lists voxtral-small-latest and voxtral-small-2507 among its API names, at $0.4 output per 1M tokens, observed 2026-10-22; models.dev lists $0.4 for voxtral-small-2507 and $0.3 for voxtral-small-latest. Applies from models.dev's first record, since archived copies of the pricing page render their prices in the browser and show none."

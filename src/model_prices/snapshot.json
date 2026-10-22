@@ -85,8 +85,8 @@
   }
  },
  "models_dev": {
-  "commit": "0aed167a234ab4e9f42a31507bbc64130bb14fd5",
-  "committed_at": "2026-10-21T05:57:06Z",
+  "commit": "79b9c8defc1db4ac52e0b0bfa481171cafb91b3f",
+  "committed_at": "2026-10-22T21:26:52Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -4985,6 +4985,14 @@
      },
      {
       "rates": {
+       "cache_write_1h_multiple": 2.0,
+       "input": 3.0,
+       "output": 15.0,
+       "source": "https://web.archive.org/web/20250304094148/https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching",
+       "valid_from": "2025-06-17T22:26:49Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
        "cache_read": 0.3,
        "cache_write": 0.3,
        "cache_write_1h_multiple": 2.0,
@@ -5655,6 +5663,38 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.5,
+       "cache_write": 6.25,
+       "cache_write_1h_multiple": 2.0,
+       "input": 5.0,
+       "output": 25.0,
+       "source": "https://platform.claude.com/docs/en/about-claude/pricing#long-context-pricing",
+       "valid_from": "2026-03-13T19:13:40Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.5,
+       "cache_write": 6.25,
+       "cache_write_1h_multiple": 2.0,
+       "input": 5.0,
+       "output": 25.0,
+       "source": "https://github.com/sst/models.dev/commit/183dd5c4f326",
+       "tiers": [
+        {
+         "above": 200000,
+         "cache_read": 1.0,
+         "cache_write": 12.5,
+         "input": 10.0,
+         "output": 37.5
+        }
+       ],
+       "valid_from": "2026-02-05T18:39:29Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-03-13T19:13:40Z"
      }
     ]
    },
@@ -6840,20 +6880,6 @@
     ]
    },
    "command-a-reasoning-08-2025": {
-    "standard": [
-     {
-      "rates": {
-       "input": 2.5,
-       "output": 10.0,
-       "source": "https://github.com/sst/models.dev/commit/d8af58764297",
-       "valid_from": "2025-11-22T00:21:16Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "command-a-reasoning-08-2025 ": {
     "standard": [
      {
       "rates": {
@@ -10437,6 +10463,23 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "input": 0.1,
+       "output": 0.4,
+       "source": "https://mistral.ai/pricing/api",
+       "valid_from": "2026-08-02T16:08:24Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.1,
+       "output": 0.3,
+       "source": "https://github.com/sst/models.dev/commit/44fecad3ace8",
+       "valid_from": "2026-08-02T16:08:24Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-08-02T16:08:24Z"
      }
     ]
    },
@@ -17539,5 +17582,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-22T16:12:14Z"
+ "updated_at": "2026-10-22T22:42:22Z"
 }

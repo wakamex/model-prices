@@ -260,6 +260,24 @@ class PriceTests(unittest.TestCase):
         self.assertEqual(data["providers"]["stepfun-ai"]["step-9"][0]["rates"],
                          {"input": 1.0, "output": 2.0})
 
+    def test_backfill_trims_spaces_from_model_ids(self):
+        # models.dev added Cohere's model with a trailing space and renamed it the next day.
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory) / "models.dev"
+            models = repo / "providers" / "cohere" / "models"
+            models.mkdir(parents=True)
+            _git(repo, "init", "-q", "-b", "main")
+            (models / "command-z .toml").write_text('[cost]\ninput = 1.0\noutput = 2.0\n')
+            _commit(repo, "add command-z", "2026-09-04T10:00:00+00:00")
+            (models / "command-z .toml").rename(models / "command-z.toml")
+            _commit(repo, "rename command-z", "2026-09-05T10:00:00+00:00")
+
+            data = build(repo, ("cohere",))
+
+        self.assertEqual(list(data["providers"]["cohere"]), ["command-z"])
+        self.assertEqual(data["providers"]["cohere"]["command-z"][0]["valid_from"],
+                         "2026-09-04T10:00:00Z")
+
     def test_ids_match_regardless_of_case(self):
         self.assertEqual(resolve("minimax-m2.7"), ("minimax", "MiniMax-M2.7"))
         self.assertEqual(resolve("MiniMax-M2.7-high"), ("minimax", "MiniMax-M2.7"))

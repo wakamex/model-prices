@@ -183,7 +183,9 @@ def _replay(repo: Path, providers: tuple[str, ...]) -> tuple[dict, dict, dict]:
     serves: dict[tuple[str, str], tuple[str, bool]] = {}
     for status, commit, committed_at, path in changes:
         _, provider, _, *model_parts = path.removesuffix(".toml").split("/")
-        model = "/".join(model_parts)
+        # No API accepts an id with surrounding spaces, such as a file models.dev later
+        # renamed to drop a trailing space, so its history belongs to the trimmed id.
+        model = "/".join(model_parts).strip()
         blob = None if status == "D" else next(blobs)
         if blob is None:
             serves.pop((provider, model), None)

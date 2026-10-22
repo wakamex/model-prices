@@ -242,6 +242,21 @@ class CheckTests(unittest.TestCase):
 
         self.assertTrue(checks.parse_mistral(page, TODAY, get))
 
+    def test_mistral_reads_token_prices_beside_audio_minute_prices(self):
+        row = ('<tr><td><a href="/models/voxtral-small-25-07">Voxtral Small</a></td>'
+               "<td>$0.004 /Min</td><td>$0.0004 /Min</td><td>$0.4 /M Tokens</td></tr>")
+        page = PAGES["mistral"].replace("<tbody>", "<tbody>" + row, 1)
+
+        def get(url):
+            if url.endswith("/models/voxtral-small-25-07"):
+                return '"names":["voxtral-small-2507","voxtral-small-latest"]'
+            return PAGES[url]
+
+        found = {(item.model, item.field): item.value
+                 for item in checks.parse_mistral(page, TODAY, get)}
+        self.assertEqual(found[("voxtral-small-latest", "output")], 0.4)
+        self.assertNotIn(("voxtral-small-latest", "input"), found)
+
     def test_mistral_parser_reads_sale_prices_under_every_api_name(self):
         mistral = _prices("mistral")
 

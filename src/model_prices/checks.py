@@ -654,10 +654,10 @@ def parse_mistral(text: str, today: datetime, get: Callable[[str], str]) -> list
             continue
         body = re.search(r"<tbody[^>]*>(.*?)</tbody>", table, re.S)
         for row_html, row in zip(re.findall(r"<tr[^>]*>(.*?)</tr>", body.group(1), re.S), rows):
-            cells = {title: row[titles.index(title)] for title in columns}
-            # Rows priced per page, minute, or character are not token prices.
-            if any(re.search(r"/\s*(1000 Pages|Min|M Chars)", cell) for cell in cells.values()):
-                continue
+            # Cells priced per page, minute, or character are not token prices, though an
+            # audio model's row can price its output in tokens.
+            cells = {title: row[titles.index(title)] for title in columns
+                     if not re.search(r"/\s*(1000 Pages|Min|M Chars)", row[titles.index(title)])}
             link = re.search(r'href="(/models/[^"]+)"', row_html)
             # Self-hosted open-weight models have no API price, and their docs pages list
             # no API names.
@@ -665,8 +665,9 @@ def parse_mistral(text: str, today: datetime, get: Callable[[str], str]) -> list
                 continue
             models = _mistral_ids(get(MISTRAL_DOCS + link.group(1)))
             for title, field in columns.items():
-                amounts = re.findall(r"\$\s*([0-9]+(?:\.[0-9]+)?)", cells[title])
-                value = float(amounts[-1]) if amounts else (0.0 if cells[title] == "Free" else None)
+                cell = cells.get(title, "")
+                amounts = re.findall(r"\$\s*([0-9]+(?:\.[0-9]+)?)", cell)
+                value = float(amounts[-1]) if amounts else (0.0 if cell == "Free" else None)
                 if value is not None:
                     found.extend(Observed("mistral", model, field, value) for model in models)
     return found
