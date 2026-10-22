@@ -82,6 +82,16 @@ class ObserveTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "page format changed"):
             observe.parse_byteplus("<p>Pricing moved.</p>")
 
+    def test_byteplus_page_shell_is_fetched_again(self):
+        pages = iter(["<!doctype html><html><head></head><body></body></html>",
+                      (FIXTURES / "byteplus.html").read_text()])
+
+        found = observe.read_byteplus(lambda url: next(pages))
+
+        self.assertIn("seed-2-0-lite-260428", found)
+        with self.assertRaisesRegex(ValueError, "page format changed"):
+            observe.read_byteplus(lambda url: "<p>Pricing moved.</p>")
+
     def test_checked_pages_give_own_models_that_models_dev_lacks(self):
         # Renamed so models.dev lacks it: an own model with long-context tiers, beside a
         # model models.dev lists and a DeepSeek model Alibaba resells.
