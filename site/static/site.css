@@ -1,0 +1,12 @@
+.price-filter { display: block; margin: 1rem 0; }
+.price-filter input { margin-left: 0.5rem; padding: 0.3rem 0.5rem; min-width: 18rem; font: inherit; }
+.prose table td, .prose table th { white-space: nowrap; }
+.prose table { display: block; overflow-x: auto; }
+.calculator fieldset { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 0.75rem 1.25rem; margin: 1rem 0; padding: 1rem; border: 1px solid var(--border, #8884); border-radius: 0.4rem; }
+.calculator legend { padding: 0 0.4rem; font-weight: 600; }
+.calculator label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.9rem; }
+.calculator input, .calculator select { font: inherit; padding: 0.3rem 0.4rem; }
+#result table { margin-top: 1rem; }
+#result .total { font-size: 1.3rem; font-weight: 600; margin: 1rem 0 0.5rem; }
+#result td.number { text-align: right; font-variant-numeric: tabular-nums; }
+.directory { display: none; }

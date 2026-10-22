@@ -15,3 +15,10 @@ dist/
 /research/price-dates/*.out
 /research/price-dates/review-batch.toml
 /research/price-dates/review-tasks/
+# The website's generated content; tools/build_site.py writes it from the snapshot.
+/site/content/_index.md
+/site/content/providers/
+/site/data/
+/site/static/snapshot.json
+/site/static/calculator-models.json
+/site/public/

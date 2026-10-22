@@ -1,0 +1,2 @@
+{% extends "index.html" %}
+{% block scripts %}{{ super() }}<script src="{{ get_url(path='price-filter.js') | safe }}" defer></script>{% endblock scripts %}

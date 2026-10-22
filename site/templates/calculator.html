@@ -1,0 +1,22 @@
+{% extends "page.html" %}
+{% block page_after_content %}
+<form id="calculator" class="calculator" autocomplete="off">
+  <fieldset>
+    <legend>Model</legend>
+    <label>Provider <select id="provider" required></select></label>
+    <label>Model <select id="model" required></select></label>
+    <label>Mode <select id="mode"></select></label>
+    <label>Request time (UTC) <input id="at" type="datetime-local" step="1" required></label>
+  </fieldset>
+  <fieldset>
+    <legend>Tokens</legend>
+    <label>Input, uncached <input id="input" type="number" min="0" step="1" value="0"></label>
+    <label>Output <input id="output" type="number" min="0" step="1" value="0"></label>
+    <label>Cache reads <input id="cache_read" type="number" min="0" step="1" value="0"></label>
+    <label>Cache writes <input id="cache_write" type="number" min="0" step="1" value="0"></label>
+    <label>Longer-lived cache writes <input id="cache_write_1h" type="number" min="0" step="1" value="0"></label>
+  </fieldset>
+</form>
+<div id="result" class="prose" aria-live="polite"></div>
+{% endblock page_after_content %}
+{% block scripts %}{{ super() }}<script type="module" src="{{ get_url(path='calculator.js') | safe }}"></script>{% endblock scripts %}

@@ -1,0 +1,34 @@
+title = "model-prices"
+description = "Current and historical LLM API prices, checked against each provider's own pricing page."
+base_url = "https://wakamex.github.io/model-prices/"
+theme = "zola-docs"
+compile_sass = false
+build_search_index = true
+generate_sitemap = true
+generate_robots_txt = true
+
+[slugify]
+paths = "safe"
+
+[markdown]
+github_alerts = true
+insert_anchor_links = "right"
+
+[search]
+index_format = "fuse_json"
+include_title = true
+include_description = false
+include_content = false
+include_path = true
+
+[extra.zola_docs]
+site_name = "model-prices"
+home_url = ""
+navigation_path = "data/navigation.json"
+navigation_label = "Prices"
+search_label = "Search models and providers"
+search_placeholder = "Search models"
+content_max_width = "none"
+edit_url = ""
+last_updated = false
+extra_styles = ["site.css"]
