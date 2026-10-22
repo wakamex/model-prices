@@ -659,7 +659,9 @@ def parse_mistral(text: str, today: datetime, get: Callable[[str], str]) -> list
             if any(re.search(r"/\s*(1000 Pages|Min|M Chars)", cell) for cell in cells.values()):
                 continue
             link = re.search(r'href="(/models/[^"]+)"', row_html)
-            if link is None:
+            # Self-hosted open-weight models have no API price, and their docs pages list
+            # no API names.
+            if link is None or not any("$" in cell or cell == "Free" for cell in cells.values()):
                 continue
             models = _mistral_ids(get(MISTRAL_DOCS + link.group(1)))
             for title, field in columns.items():

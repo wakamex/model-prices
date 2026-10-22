@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
 import io
+import re
 import json
 from pathlib import Path
 import unittest
@@ -226,6 +227,20 @@ class CheckTests(unittest.TestCase):
                            today=datetime(2026, 10, 20, tzinfo=timezone.utc))
 
         self.assertEqual({r.status for r in after}, {"corrected"})
+
+    def test_mistral_skips_self_hosted_models_without_an_api_price(self):
+        row = ('<tr><td><a href="/models/shieldstral-1-0">Shieldstral 1.0</a></td>'
+               "<td>Costs depend on your own infrastructure</td>"
+               "<td>Costs depend on your own infrastructure</td>"
+               "<td>Costs depend on your own infrastructure</td></tr>")
+        page = PAGES["mistral"].replace("<tbody>", "<tbody>" + row, 1)
+
+        def get(url):
+            if url.endswith("/models/shieldstral-1-0"):
+                raise AssertionError("a self-hosted model's docs page was read")
+            return PAGES[url]
+
+        self.assertTrue(checks.parse_mistral(page, TODAY, get))
 
     def test_mistral_parser_reads_sale_prices_under_every_api_name(self):
         mistral = _prices("mistral")

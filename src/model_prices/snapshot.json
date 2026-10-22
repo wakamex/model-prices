@@ -9937,6 +9937,24 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.01,
+       "input": 0.1,
+       "output": 0.0,
+       "source": "https://mistral.ai/pricing/api",
+       "valid_from": "2026-10-22T16:10:04Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.1,
+       "output": 0.0,
+       "source": "https://github.com/sst/models.dev/commit/3675e0654c77",
+       "valid_from": "2025-12-11T15:57:47Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-22T16:10:04Z"
      }
     ]
    },
@@ -17521,5 +17539,5 @@
   ]
  },
  "schema": 1,
- "updated_at": "2026-10-21T15:56:40Z"
+ "updated_at": "2026-10-22T16:12:14Z"
 }
