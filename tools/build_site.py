@@ -17,7 +17,7 @@ import json
 from pathlib import Path
 import re
 import shutil
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlparse
 import sys
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -47,9 +47,11 @@ PROVIDER_NAMES = {
 MODE_NAMES = {"standard": "Standard", "fast": "Fast mode", "ultrafast": "Ultrafast mode",
               "flex": "Flex", "thinking": "Thinking mode"}
 STATUS_TEXT = {
-    "ok": "Matches {page}",
-    "corrected": "Matches {page} through a correction, where models.dev differs",
-    "mismatch": "Differs from {page}; a fix is pending",
+    "ok": "Matches {page}, checked {ran}.",
+    "corrected": ("Matches {page}, checked {ran}. models.dev lists a different price, which "
+                  "model-prices corrects; the history shows both."),
+    "mismatch": ("Differs from {page}, checked {ran}, so this price may be out of date until "
+                 "a correction lands."),
 }
 
 
@@ -131,7 +133,7 @@ def check_line(provider: str, model: str, found: dict, ran: str | None) -> str:
         return f"{name(provider)}'s [pricing page]({page}) does not list this model under this id."
     status = "mismatch" if "mismatch" in seen else "corrected" if "corrected" in seen else "ok"
     link = f"[{name(provider)}'s pricing page]({page})"
-    return STATUS_TEXT[status].format(page=link) + f", checked {ran}."
+    return STATUS_TEXT[status].format(page=link, ran=ran)
 
 
 def schedule_line(provider: str, model: str, now: datetime) -> str | None:
@@ -172,20 +174,60 @@ def changes(timeline: list[dict]) -> list[dict]:
     return merged
 
 
+def first_start(timeline: list[dict]) -> str:
+    """The first price's date: it also applies to every earlier request."""
+    rates = timeline[0]["rates"] or {}
+    first = day(rates.get("valid_from"))
+    following = day(timeline[1]["start"]) if len(timeline) > 1 else None
+    return f"before {first}" if first and first == following else f"{first} or earlier"
+
+
+def source_name(url: str) -> str:
+    commit = re.search(r"models\.dev/commit/([0-9a-f]{7})", url)
+    if commit:
+        return f"models.dev {commit.group(1)}"
+    archived = re.match(r"https?://web\.archive\.org/web/([0-9]{8})[^/]*/(?:https?://)?([^/]+)", url)
+    if archived:
+        date = archived.group(1)
+        return f"{archived.group(2).removeprefix('www.')}, archived {date[:4]}-{date[4:6]}-{date[6:]}"
+    return urlparse(url).netloc.removeprefix("www.")
+
+
+FIELD_NAMES = (("input", "input"), ("cache_read", "cached input"), ("cache_write", "cache write"),
+               ("output", "output"))
+
+
+def dated_by(interval: dict) -> str:
+    """How the row's start date is known, linked to its source, and the models.dev price a
+    correction replaces."""
+    rates = interval["rates"]
+    basis = rates.get("valid_from_basis", "")
+    url = rates.get("source")
+    label = "models.dev commit" if basis == "models.dev commit" else f"{basis}, {source_name(url or '')}"
+    cell = f"[{escape(label)}]({url})" if url else escape(basis)
+    recorded = interval.get("recorded") or {}
+    replaced = [f"{label} {price(recorded.get(field))}" for field, label in FIELD_NAMES
+                if field in recorded and recorded.get(field) != rates.get(field)]
+    if recorded and recorded.get("tiers") != rates.get("tiers"):
+        replaced.append(f"longer prompts {escape(tiers(recorded))}" if recorded.get("tiers")
+                        else "no longer-prompt prices")
+    return cell + (f"; models.dev lists {', '.join(replaced)}" if replaced else "")
+
+
 def history(timeline: list[dict]) -> list[str]:
-    lines = ["| From | Input | Cached input | Cache write | Output | Longer prompts | Dated by | Source |",
-             "| --- | --- | --- | --- | --- | --- | --- | --- |"]
-    for interval in reversed(changes(timeline)):
+    lines = ["| From | Input | Cached input | Cache write | Output | Longer prompts | Dated by |",
+             "| --- | --- | --- | --- | --- | --- | --- |"]
+    timeline = changes(timeline)
+    for interval in reversed(timeline):
         rates = interval["rates"]
-        start = day(interval["start"]) or (
-            f"{day(rates.get('valid_from'))}, first record" if rates else "first record")
+        start = day(interval["start"]) or first_start(timeline)
         if rates is None:
-            lines.append(f"| {start} | not sold |  |  |  |  |  |  |")
+            lines.append(f"| {start} | not sold |  |  |  |  |  |")
             continue
         lines.append(" | ".join((
             f"| {start}", price(rates["input"]), price(rates.get("cache_read")),
             price(rates.get("cache_write")), price(rates["output"]), tiers(rates),
-            rates.get("valid_from_basis", ""), f"[link]({rates['source']})" if rates.get("source") else "")) + " |")
+            dated_by(interval))) + " |")
     return lines
 
 
@@ -203,28 +245,36 @@ def model_page(provider: str, model: str, timelines: dict, found: dict, ran: str
             "navigation_group": "providers",
             "navigation_branch": f"providers/{slug(provider)}/",
             "page_navigation": False,
+            "toc": len(timelines) > 1,
         },
     }
-    body = [f"{name(provider)} model `{model}`. Prices are in US dollars per million tokens."]
+    intro = [f"{name(provider)} model `{model}`. Prices are in US dollars per million tokens."]
     if rates:
-        body.append(
-            f"Current price, since {day(latest['start']) or day(rates.get('valid_from'))}: "
+        intro[0] += " " + (
+            f"Current price, since {day(latest['start']) or first_start(changes(standard))}: "
             f"input {price(rates['input'])}, output {price(rates['output'])}"
             + (f", cached input {price(rates['cache_read'])}" if rates.get("cache_read") is not None else "")
             + (f", cache write {price(rates['cache_write'])}" if rates.get("cache_write") is not None else "")
             + ".")
-    body.append(check_line(provider, model, found, ran))
+    intro.append(check_line(provider, model, found, ran))
     rule = schedule_line(provider, model, now)
     if rule:
-        body.append(rule)
-    body.append(f"[Price a request with this model](../../../calculator/?{urlencode({'provider': provider, 'model': model})}).")
+        intro.append(rule)
+    intro.append(f"[Price a request with this model](../../../calculator/?{urlencode({'provider': provider, 'model': model})}).")
+    body = []
     for mode in ("standard", *sorted(mode for mode in timelines if mode != "standard")):
         body += ["", f"## {MODE_NAMES.get(mode, mode.title())} price history", "", *history(timelines[mode])]
     body += ["", "A blank cache price is charged at the input price. Longer prompts list the prices for "
-             "requests whose whole prompt exceeds the size given.", "",
+             "requests whose whole prompt exceeds the size given. Dated by says how a row's start "
+             "is known: from the models.dev commit that recorded it, which can lag the provider's "
+             "change by days; documented by the provider; or first observed on the provider's "
+             "pricing page by the daily check. The first price also applies to every earlier "
+             "request. [About the data](../../../about/) explains each source.", "",
+             "Price usage in Python with the [model-prices package](https://pypi.org/project/model-prices/):", "",
+             "```sh", "pip install model-prices", "```", "",
              "```python", "import model_prices", "",
              f"model_prices.rates({json.dumps(model)}, provider={json.dumps(provider)})", "```"]
-    return "+++\n" + toml(front) + "+++\n\n" + "\n".join(body) + "\n"
+    return "+++\n" + toml(front) + "+++\n\n" + "\n\n".join(intro) + "\n" + "\n".join(body) + "\n"
 
 
 def toml(value: dict, prefix: str = "") -> str:
@@ -247,15 +297,25 @@ def toml(value: dict, prefix: str = "") -> str:
     return "\n".join(lines) + "\n"
 
 
-def price_row(provider: str, model: str, rates: dict, start: str, link: str) -> str:
+def price_row(provider: str | None, model: str, rates: dict, start: str, link: str,
+              note: str = "") -> str:
+    """A table row; a provider names the Provider column, which provider pages omit."""
+    longer = min((tier["above"] for tier in rates.get("tiers", [])), default=None)
     return " | ".join((
-        f"| [{escape(model)}]({link})", name(provider), price(rates["input"]),
-        price(rates.get("cache_read")), price(rates.get("cache_write")), price(rates["output"]),
-        "yes" if rates.get("tiers") else "", start)) + " |"
+        f"| [{escape(model)}]({link}){note}", *([name(provider)] if provider else []),
+        price(rates["input"]), price(rates.get("cache_read")), price(rates.get("cache_write")),
+        price(rates["output"]), f"above {longer // 1000:,}K" if longer else "", start)) + " |"
 
 
-TABLE_HEAD = ["| Model | Provider | Input | Cached input | Cache write | Output | Longer prompts | Since |",
-              "| --- | --- | --- | --- | --- | --- | --- | --- |"]
+def table_head(with_provider: bool) -> list[str]:
+    titles = ["Model", *(["Provider"] if with_provider else []), "Input", "Cached input",
+              "Cache write", "Output", "Longer prompts", "Since"]
+    return ["| " + " | ".join(titles) + " |", "|" + " --- |" * len(titles)]
+
+
+def price_filter(placeholder: str) -> str:
+    return ('<label class="price-filter">Filter <input id="price-filter" type="search" '
+            f'placeholder="{placeholder}" autocomplete="off"></label>')
 
 
 def build(check_results: Path | None) -> None:
@@ -287,10 +347,13 @@ def build(check_results: Path | None) -> None:
                                    "model": model, "modes": sorted(timelines)})
             latest = current(timelines["standard"], now) if timelines.get("standard") else None
             if latest and latest["rates"]:
-                start = day(latest["start"]) or day(latest["rates"].get("valid_from"))
-                rows.append(price_row(provider, model, latest["rates"], start, f"{page}/"))
+                start = day(latest["start"]) or first_start(changes(timelines["standard"]))
+                rule = schedule_line(provider, model, now)
+                note = (" (off-peak)" if rule and "peak hours" in rule else
+                        " (time of day)" if rule else "")
+                rows.append(price_row(None, model, latest["rates"], start, f"{page}/", note))
                 overview.append(price_row(provider, model, latest["rates"], start,
-                                          f"providers/{slug(provider)}/{page}/"))
+                                          f"providers/{slug(provider)}/{page}/", note))
         page_url = official_page(provider)
         observed = provider in observe.SOURCES
         intro = (f"model-prices checks these prices daily against [{name(provider)}'s pricing page]({page_url})."
@@ -299,34 +362,39 @@ def build(check_results: Path | None) -> None:
                  f"These prices come from [models.dev](https://models.dev); {name(provider)} has no "
                  "official pricing page that model-prices checks.")
         (section / "_index.md").write_text(
-            "+++\n" + toml({"title": name(provider), "sort_by": "title",
+            "+++\n" + toml({"title": name(provider), "sort_by": "title", "template": "provider.html",
                             "description": f"{name(provider)} API prices with dated price history.",
                             "extra": {"breadcrumbs": [{"title": "Providers", "path": "providers/"}],
                                       "navigation_group": "providers",
                                       "navigation_branch": f"providers/{slug(provider)}/"}})
             + "+++\n\n" + intro + " Prices are in US dollars per million tokens.\n\n"
-            + "\n".join(TABLE_HEAD + rows) + "\n")
+            + price_filter("Model") + "\n\n" + "\n".join(table_head(False) + rows) + "\n")
         navigation.append({"title": name(provider), "path": f"providers/{slug(provider)}/",
                            "sidebar_children": False})
     (providers / "_index.md").write_text(
-        "+++\n" + toml({"title": "Providers", "description": "Every provider model-prices tracks.",
+        "+++\n" + toml({"title": "Providers", "template": "prices.html",
+                        "description": "Every provider model-prices tracks.",
                         "extra": {"navigation_group": "providers", "navigation_branch": "providers/"}})
         + "+++\n\n" + "\n".join(
             f"- [{name(provider)}]({slug(provider)}/): {len(data['prices'][provider])} models"
             for provider in sorted(data["prices"], key=name)) + "\n")
     (CONTENT / "_index.md").write_text(
-        "+++\n" + toml({"title": "LLM API prices", "template": "prices.html",
+        "+++\n" + toml({"title": "LLM API prices with dated history", "template": "prices.html",
                         "description": "Current and historical API prices for LLMs, checked against "
                                        "each provider's own pricing page."})
         + "+++\n\n"
-        f"Current API prices for {len(overview)} models from {len(data['prices'])} providers, in US "
-        "dollars per million tokens. Each model's page lists every past price with the date it took "
-        "effect and its source. A blank cache price is charged at the input price, and models marked "
-        "under longer prompts cost more above a prompt size their page gives. Data as of "
-        f"{data['updated_at'][:10]}.\n\n"
-        '<label class="price-filter">Filter <input id="price-filter" type="search" '
-        'placeholder="Model or provider" autocomplete="off"></label>\n\n'
-        + "\n".join(TABLE_HEAD + sorted(overview, key=str.lower)) + "\n")
+        "What each LLM API cost on any date: every model's page lists each past price with when it "
+        "took effect, how that date is known, and its source. Prices come from the history of "
+        "[models.dev](https://models.dev), corrected where a provider's own pricing page differs, "
+        "and are checked against those pages daily. Price past usage at the rates in effect when it "
+        "ran with the [calculator](calculator/), or in Python with `pip install model-prices`.\n\n"
+        f"Current prices for {len(overview)} models from {len(data['prices'])} providers, in US "
+        "dollars per million tokens, as of "
+        f"{data['updated_at'][:10]}. A blank cache price is charged at the input price. Longer "
+        "prompts gives the prompt size above which a model costs more. A Since date ending in "
+        "\"or earlier\" is when tracking began. Models marked off-peak cost more at peak hours, and "
+        "those marked time of day cost less off-peak; their pages give the hours.\n\n"
+        + price_filter("Model or provider") + "\n\n" + "\n".join(table_head(True) + sorted(overview, key=str.lower)) + "\n")
     (SITE / "data").mkdir(exist_ok=True)
     (SITE / "data" / "navigation.json").write_text(json.dumps({"groups": [
         {"id": "prices", "title": "Prices", "items": [

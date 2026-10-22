@@ -1,0 +1,10 @@
+{% extends "prices.html" %}
+{% block section_header %}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ get_url(path=config.extra.zola_docs.home_url) | safe }}">{{ config.extra.zola_docs.site_name }}</a></li>
+    <li><a href="{{ get_url(path='providers/') | safe }}">Providers</a></li>
+  </ol>
+</nav>
+<h1>{{ section.title }}</h1>
+{% endblock section_header %}
