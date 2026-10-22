@@ -1,6 +1,6 @@
 title = "model-prices"
 description = "Current and historical LLM API prices, checked against each provider's own pricing page."
-base_url = "https://wakamex.github.io/model-prices/"
+base_url = "https://model-prices.com/"
 theme = "zola-docs"
 compile_sass = false
 build_search_index = true
