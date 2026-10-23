@@ -401,8 +401,8 @@ def build(check_results: Path | None) -> None:
             {"title": "All models", "path": ""},
             {"title": "Calculator", "path": "calculator/"},
             {"title": "About the data", "path": "about/"}]},
-        {"id": "providers", "title": "Providers", "items": [
-            {"title": "All providers", "path": "providers/"}, *navigation]},
+        # The group heading links to the list of providers, so the count covers providers only.
+        {"id": "providers", "title": "Providers", "path": "providers/", "items": navigation},
     ]}, indent=1) + "\n")
     shutil.copyfile(ROOT / "src" / "model_prices" / "snapshot.json", SITE / "static" / "snapshot.json")
     (SITE / "static" / "calculator-models.json").write_text(json.dumps(calculator))
