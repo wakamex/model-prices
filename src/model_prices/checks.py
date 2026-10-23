@@ -179,25 +179,31 @@ def parse_xai(text: str, today: datetime) -> list[Observed]:
 
 def parse_moonshot(text: str, today: datetime) -> list[Observed]:
     """Read Kimi's price tables from its pricing page's HTML. The page builds each table
-    with a compiled DocTable component, `_jsx(DocTable,{columns:[{title:`Model`}, ...],
-    rows:[[`kimi-k3`, _jsxs(_Fragment,{children:[`$`,`3.00`]}), ...]]})`. The page's Markdown
-    copy renders those tables empty."""
-    columns = {"Input Price": "input", "Input Price (Cache Miss)": "input",
-               "Cached Input Price": "cache_read", "Input Price (Cache Hit)": "cache_read",
-               "Cache Write Price (TTL 5min)": "cache_write",
-               "Cache Write Price (TTL 1h)": "cache_write_1h", "Output Price": "output"}
+    with a compiled DocTable component, `_jsx(DocTable,{className:..., columns:[{title:`Model`},
+    {title:_jsx(Tooltip,{tip:`...`,children:`Cached Input`})}, ...], rows:[[_jsx(_components.a,
+    {href:`...`,children:`kimi-k3`}), `$3.00 / MTok`, ...]]})`; earlier versions wrote a
+    price as `_jsxs(_Fragment,{children:[`$`,`3.00`]})`. The page's Markdown copy renders
+    those tables empty."""
+    columns = {"Input": "input", "Input Price": "input", "Input Price (Cache Miss)": "input",
+               "Cached Input": "cache_read", "Cached Input Price": "cache_read",
+               "Input Price (Cache Hit)": "cache_read", "5m writes": "cache_write",
+               "Cache Write Price (TTL 5min)": "cache_write", "1h writes": "cache_write_1h",
+               "Cache Write Price (TTL 1h)": "cache_write_1h", "Output": "output",
+               "Output Price": "output"}
     found = []
-    for table in re.finditer(r"_jsx\(DocTable,\{columns:\[(.*?)\],rows:\[(.*?)\]\]\}\)",
+    for table in re.finditer(r"_jsx\(DocTable,\{(?:(?!rows:).)*?columns:\[(.*?)\],rows:\[(.*?)\]\]\}\)",
                              text, re.S):
-        titles = re.findall(r"title:`([^`]*)`", table.group(1))
+        titles = [plain or tooltip for plain, tooltip in re.findall(
+            r"title:(?:`([^`]*)`|_jsx\(Tooltip,\{tip:`[^`]*`,children:`([^`]*)`\}\))", table.group(1))]
         rows: list[list[str]] = [[]]
         for match in re.finditer(r"_jsxs\(_Fragment,\{children:\[`\$`,`([^`]*)`\]\}\)"
+                                 r"|_jsx\(_components\.a,\{href:`[^`]*`,children:`([^`]*)`\}\)"
                                  r"|`([^`]*)`|(\],\[)", table.group(2)):
-            if match.group(3):
+            fragment, link, cell, next_row = match.groups()
+            if next_row:
                 rows.append([])
             else:
-                rows[-1].append(f"${match.group(1)}" if match.group(1) is not None
-                                else match.group(2))
+                rows[-1].append(f"${fragment}" if fragment is not None else link or cell)
         for cells in rows:
             if len(cells) != len(titles) or titles[0] != "Model":
                 continue

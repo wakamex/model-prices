@@ -145,6 +145,24 @@ class CheckTests(unittest.TestCase):
         # The section's plain table is read too, and the Batch section is not.
         self.assertEqual(found[("gpt-4.1", "input", None)], 2)
 
+    def test_moonshot_parser_reads_tooltip_titles_and_linked_models(self):
+        # The 2026-10-23 layout: options before columns, titles in tooltips, model names in
+        # links, and plain "$2.00 / MTok" cells.
+        page = ("_jsx(DocTable,{className:`doc-table-bordered`,corner:{top:`Model`,bottom:`Name`},"
+                "groups:[{title:`Base tokens`,span:2},{title:`Prompt caching`,span:2}],"
+                "columns:[{title:`Model`,width:`25%`},{title:`Input`,width:`15%`},"
+                "{title:`Output`,width:`15%`},{title:_jsx(Tooltip,{tip:`Cached input is billed "
+                "at this rate.`,children:`Cached Input`}),width:`15%`},{title:_jsx(Tooltip,"
+                "{tip:`A 1-hour TTL.`,children:`1h writes`}),width:`15%`}],rows:[[_jsx("
+                "_components.a,{href:`/guide/kimi-k3-quickstart`,children:`kimi-k3`}),"
+                "`$3.00 / MTok`,`$15.00 / MTok`,`$0.30 / MTok`,`$6.00 / MTok`]]})")
+
+        found = {(item.model, item.field): item.value
+                 for item in checks.parse_moonshot(page, TODAY)}
+
+        self.assertEqual(found, {("kimi-k3", "input"): 3.0, ("kimi-k3", "output"): 15.0,
+                                 ("kimi-k3", "cache_read"): 0.3, ("kimi-k3", "cache_write_1h"): 6.0})
+
     def test_moonshot_parser_reads_both_table_layouts(self):
         moonshot = _prices("moonshotai")
 
