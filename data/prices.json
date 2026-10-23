@@ -21,7 +21,8 @@
    "ministral-3-8b-instruct-2512": "ministral-8b-2512"
   },
   "moonshotai": {
-   "kimi-k2.7-code": "kimi-k2.7-code-highspeed"
+   "kimi-k2.7-code": "kimi-k2.7-code-highspeed",
+   "kimi-k3.1-pro": "kimi-k3.1-pro-highspeed"
   },
   "openai": {
    "gpt-5.5-instant": "chat-latest",
@@ -8452,8 +8453,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "120feb1f889e2e25e108f17d90951d0c19bb18f1",
- "source_committed_at": "2026-10-23T01:31:02Z",
+ "source_commit": "4a77c9046b16b24bf15de20c907b2b7485ce3e44",
+ "source_committed_at": "2026-10-23T18:58:46Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
