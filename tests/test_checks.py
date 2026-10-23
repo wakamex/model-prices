@@ -242,6 +242,26 @@ class CheckTests(unittest.TestCase):
 
         self.assertTrue(checks.parse_mistral(page, TODAY, get))
 
+    def test_parsers_read_batch_tables(self):
+        self.assertEqual(_prices("openai", "batch")[("gpt-6-astra", "input", None, None)], 5.0)
+        self.assertEqual(_prices("openai", "batch")[("gpt-6-astra", "output", 272_000, None)], 37.5)
+        self.assertEqual(_prices("anthropic", "batch"),
+                         {("claude-opus-5-5", "input", None, None): 2.0,
+                          ("claude-opus-5-5", "output", None, None): 10.0})
+        self.assertEqual(_prices("google", "batch")[("gemini-3.8-flash", "input", None, None)], 0.375)
+        # A batch table prices generated images per image, not per million tokens.
+        cell = "$6.00 (text and thinking) $0.067 per 1K/2K image $0.12 per 4K image"
+        self.assertEqual(checks._google_price(cell, TODAY, "output"), [])
+        self.assertEqual(checks._google_price("$12.00 (text and thinking) $120.00 (images) "
+                                              "Equivalent to $0.134 per 1K/2K image", TODAY, "output"),
+                         [(120.0, None)])
+
+    def test_prices_shown_rounded_to_the_cent_match(self):
+        self.assertTrue(checks._matches(0.125, 0.13, 1e-9))
+        self.assertTrue(checks._matches(0.015, 0.02, 1e-9))
+        self.assertFalse(checks._matches(0.125, 0.12, 1e-9))
+        self.assertFalse(checks._matches(0.12, 0.13, 1e-9))
+
     def test_mistral_reads_token_prices_beside_audio_minute_prices(self):
         row = ('<tr><td><a href="/models/voxtral-small-25-07">Voxtral Small</a></td>'
                "<td>$0.004 /Min</td><td>$0.0004 /Min</td><td>$0.4 /M Tokens</td></tr>")

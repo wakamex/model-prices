@@ -12,6 +12,7 @@ import gzip
 import html
 import inspect
 import json
+import math
 import re
 from typing import Callable, Iterable
 import urllib.parse
@@ -88,13 +89,17 @@ def _markdown_tables(text: str) -> Iterable[tuple[dict[int, str], list[str], lis
 
 
 def parse_anthropic(text: str, today: datetime) -> list[Observed]:
-    columns = {"Base input tokens": "input", "5m cache writes": "cache_write",
-               "1h cache writes": "cache_write_1h",
-               "Cache hits and refreshes": "cache_read", "Output tokens": "output"}
+    """Read the model pricing table and the Batch API's table, the first of each."""
+    tables = {"Base input tokens": (None, {
+        "Base input tokens": "input", "5m cache writes": "cache_write",
+        "1h cache writes": "cache_write_1h", "Cache hits and refreshes": "cache_read",
+        "Output tokens": "output"}),
+        "Batch input": ("batch", {"Batch input": "input", "Batch output": "output"})}
     found = []
     for _, header, rows in _markdown_tables(text):
-        if header[:2] != ["Model", "Base input tokens"]:
+        if header[0] != "Model" or header[1:2] == [] or header[1] not in tables:
             continue
+        mode, columns = tables.pop(header[1])
         for row in rows:
             name = re.sub(r"\s*\(.*\)", "", row[0]).strip()
             model = "-".join(name.lower().replace(".", " ").split())
@@ -103,21 +108,23 @@ def parse_anthropic(text: str, today: datetime) -> list[Observed]:
             for title, field in columns.items():
                 value = _price(row[header.index(title)])
                 if value is not None:
-                    found.append(Observed("anthropic", model, field, value,
+                    found.append(Observed("anthropic", model, field, value, mode=mode,
                                           above=int(tier.group(1).replace(",", "")) if tier else None))
-        break
     return found
 
 
 def parse_openai(text: str, today: datetime) -> list[Observed]:
-    """Read every table in the page's first "Standard pricing data" section: one with short
-    and long context columns, and one with plain Input, Output, and Cached input columns."""
+    """Read every table in the page's first "Standard pricing data" section, and the Batch
+    tables of the "Batch pricing data" section after it: one with short and long context
+    columns, and one with plain Input, Output, and Cached input columns."""
     found = []
     section = None
     for headings, header, rows in _markdown_tables(text):
-        if headings.get(3) != "Standard pricing data" or section not in (None, headings.get(2)):
-            if section is not None:
-                break
+        if section not in (None, headings.get(2)):
+            break
+        mode = {"Standard pricing data": (None,), "Batch pricing data": ("batch",)}.get(
+            headings.get(3, ""))
+        if mode is None or (mode == ("batch",) and headings.get(4) != "Batch"):
             continue
         section = headings.get(2)
         for row in rows:
@@ -133,7 +140,7 @@ def parse_openai(text: str, today: datetime) -> list[Observed]:
                 field = {"input": "input", "cached input": "cache_read",
                          "cache writes": "cache_write", "30m write": "cache_write",
                          "12h write": "cache_write_1h", "output": "output"}[kind]
-                found.append(Observed("openai", model, field, value,
+                found.append(Observed("openai", model, field, value, mode=mode[0],
                                       above=272_000 if span == "Long" else None))
     return found
 
@@ -685,15 +692,18 @@ def _google_price(cell: str, today: datetime,
     The text price applies, as it does in models.dev, except that an output cell listing
     generated images or video gives that price, since image and video generation models
     output almost only those tokens, and a cell without a text price gives its one price,
-    such as a speech model's audio output.
+    such as a speech model's audio output. An output cell that prices its images or video
+    only per item, as batch tables do, gives no price.
     """
     cell = cell.replace("\\<", "<").replace("\\>", ">")
     # A per-minute alternative sits between an amount and its modality: "$3.00 or $0.005/min
     # (audio)". Dropping it leaves each amount next to its own modality.
     cell = re.sub(r"\s+or\s+\$[0-9]+(?:\.[0-9]+)?/min", "", cell)
     entries = []
+    per_item = False
     for amount, qualifier in re.findall(r"\$([0-9]+(?:\.[0-9]+)?)([^$]*)", cell):
         if "per hour" in qualifier or re.match(r"\s*per\b", qualifier):
+            per_item = per_item or bool(re.search(r"\b(image|video)", qualifier))
             continue
         until = re.search(r"through " + _GOOGLE_DATE, qualifier)
         start = re.search(r"starting " + _GOOGLE_DATE, qualifier)
@@ -707,6 +717,9 @@ def _google_price(cell: str, today: datetime,
         above = re.search(r"prompts\s*>\s*([0-9]+)k", qualifier)
         entries.append((float(amount), int(above.group(1)) * 1000 if above else None,
                         modalities))
+    media = [entry for entry in entries if entry[2] & {"images", "video"}]
+    if field == "output" and per_item and not media:
+        return []
     for wanted in ({"images", "video"} if field == "output" else set(), {"text"}):
         chosen = [(amount, above) for amount, above, modalities in entries
                   if modalities & wanted]
@@ -734,9 +747,11 @@ def parse_google(text: str, today: datetime) -> list[Observed]:
     found = []
     for headings, header, table in _markdown_tables(text):
         heading = headings.get(2, "")
-        if (not heading.startswith("Gemini") or headings.get(3) != "Standard"
+        modes = {"Standard": None, "Batch": "batch"}
+        if (not heading.startswith("Gemini") or headings.get(3) not in modes
                 or header[-1] != "Paid Tier, per 1M tokens in USD"):
             continue
+        mode = modes[headings[3]]
         # A section names the API ids it prices, one or several, under its heading.
         if heading not in ids:
             raise ValueError(f"google: no API ids under {heading!r}; the page format changed")
@@ -745,7 +760,7 @@ def parse_google(text: str, today: datetime) -> list[Observed]:
             if field is None:
                 continue
             for value, above in _google_price(row[-1], today, field):
-                found.extend(Observed("google", model, field, value, above=above)
+                found.extend(Observed("google", model, field, value, above=above, mode=mode)
                              for model in ids[heading])
     return found
 
@@ -1035,6 +1050,15 @@ def _value(found, field: str, above: int | None) -> float | None:
     return values[field]
 
 
+def _matches(value: float | None, official: float, margin: float) -> bool:
+    """Whether a price matches the official one, which a page may show rounded half up to
+    the cent: Google lists half of $0.03 as $0.02, and OpenAI half of $0.25 as $0.13."""
+    if value is None:
+        return False
+    cents = math.floor(value * 100 + 0.5 + 1e-9) / 100
+    return abs(value - official) <= margin or (value != cents and abs(cents - official) < 1e-9)
+
+
 def compare(observed: Iterable[Observed], today: datetime,
             genai: list | None = None) -> list[Result]:
     """Classify each official price against model-prices and against models.dev alone, and
@@ -1063,9 +1087,8 @@ def compare(observed: Iterable[Observed], today: datetime,
         margin = item.value * YUAN_TOLERANCE if item.yuan is not None else 1e-9
         if effective is None:
             status = "untracked"
-        elif effective_value is not None and abs(effective_value - item.value) <= margin:
-            status = ("ok" if raw_value is not None and abs(raw_value - item.value) <= margin
-                      else "corrected")
+        elif _matches(effective_value, item.value, margin):
+            status = "ok" if _matches(raw_value, item.value, margin) else "corrected"
         else:
             status = "mismatch"
         model = f"{effective.provider}/{effective.model}" if effective else item.model

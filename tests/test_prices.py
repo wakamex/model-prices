@@ -129,6 +129,22 @@ class PriceTests(unittest.TestCase):
         self.assertEqual(rates("gpt-5.6-sol", at="2026-08-23").source,
                          "https://openai.com/index/gpt-5-6/")
 
+    def test_batch_mode_discounts_standard_prices(self):
+        standard = rates("claude-opus-5-5", at="2026-10-20")
+        batch = rates("claude-opus-5-5", at="2026-10-20", mode="batch")
+        self.assertEqual((batch.input, batch.output, batch.cache_read, batch.cache_write),
+                         (standard.input / 2, standard.output / 2, standard.cache_read / 2,
+                          standard.cache_write / 2))
+        # Older Gemini models charge batch cache reads at the standard price.
+        flash = rates("gemini-2.5-flash", at="2026-10-20", mode="batch")
+        self.assertEqual(flash.cache_read, rates("gemini-2.5-flash", at="2026-10-20").cache_read)
+        # Batch Mode started on 2025-07-07, and xAI discounts only some models.
+        self.assertIsNone(rates("gemini-2.5-flash", at="2025-07-01", mode="batch"))
+        self.assertEqual(rates("gemini-2.5-flash", at="2025-07-08", mode="batch").valid_from,
+                         "2025-07-07T00:00:00Z")
+        self.assertIsNone(rates("grok-4", provider="xai", mode="batch"))
+        self.assertIsNone(rates("deepseek-v4-flash", provider="deepseek", mode="batch"))
+
     def test_usage_before_first_recorded_price_uses_that_price(self):
         early = rates("claude-opus-5-5", at="2026-01-01")
 

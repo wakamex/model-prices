@@ -2,7 +2,8 @@
 
 The inputs in data/ are models.dev price history, prices observed on official pages for
 models models.dev does not list (observed.json), and the files that adjust them: corrections,
-one-hour cache-write multiples, time-of-day schedules, name aliases, and plans. Combining
+one-hour cache-write multiples, batch discounts, time-of-day schedules, name aliases, and
+plans. Combining
 them happens here, once, rather than in every client: each model's snapshot entry is its
 final timeline, a list of intervals that each give the rates from their start. A client
 looks rates up by time, so a client release prices any later snapshot of the same schema
@@ -17,6 +18,7 @@ from datetime import datetime, timezone
 from functools import cache
 import json
 from pathlib import Path
+import re
 import tomllib
 from typing import Any
 
@@ -24,6 +26,8 @@ from model_prices import SCHEMA, THINKING, Rates, _parse_time, _tiers
 
 # Evaluated for usage before every recorded change, which takes a model's first price.
 _EARLIEST = datetime.min.replace(tzinfo=timezone.utc)
+# The mode that batch.toml derives from each model's standard rates.
+BATCH = "batch"
 
 
 class _Inputs:
@@ -42,12 +46,34 @@ class _Inputs:
                 listed[model] = [entry for entry in entries if start is None
                                  or _parse_time(entry["valid_from"]) < start] + listed.get(model, [])
         self.config = {name: tomllib.loads((data / name).read_text()) for name in (
-            "aliases.toml", "cache_writes.toml", "corrections.toml", "plans.toml",
+            "aliases.toml", "batch.toml", "cache_writes.toml", "corrections.toml", "plans.toml",
             "research_corrections.toml", "schedules.toml")}
         self.cache_write_1h = {item["provider"]: item["multiple"]
                                for item in self.config["cache_writes.toml"]["cache_write_1h"]}
         self.entry_times = cache(self._entry_times)
         self.corrections = cache(self._corrections)
+        self.batches = cache(self._batches)
+
+    def _batches(self, provider: str, model: str) -> tuple[tuple[datetime, dict], ...]:
+        """The batch discounts that apply to the model, oldest first."""
+        return tuple(sorted(
+            ((_parse_time(item["valid_from"]), item) for item in self.config["batch.toml"]["batch"]
+             if item["provider"] == provider and re.search(item.get("models", ""), model)),
+            key=lambda pair: pair[0]))
+
+    def batch(self, provider: str, model: str, at: datetime, corrected: bool) -> Rates | None:
+        """Standard rates scaled by the batch discount in effect at `at`, dated by whichever
+        of the two took effect later."""
+        discount = [item for start, item in self.batches(provider, model) if start <= at]
+        found = self.rates(provider, model, at, None, corrected) if discount else None
+        if found is None:
+            return None
+        item = discount[-1]
+        batched = _batched(found, item)
+        if _parse_time(found.valid_from) >= _parse_time(item["valid_from"]):
+            return batched
+        return replace(batched, valid_from=item["valid_from"], source=item["source"],
+                       valid_from_basis=item.get("valid_from_basis", "documented"))
 
     def _corrections(self, provider: str, model: str):
         return tuple(
@@ -126,6 +152,8 @@ class _Inputs:
 
     def rates(self, provider: str, model: str, at: datetime, mode: str | None,
               corrected: bool) -> Rates | None:
+        if mode == BATCH:
+            return self.batch(provider, model, at, corrected)
         found = self.correction(provider, model, at) if corrected else None
         stated = self.correction(provider, model, at, mode) if found and mode else None
         if stated is not None:
@@ -150,6 +178,7 @@ class _Inputs:
                 times |= set(self.entry_times(provider, name))
                 for start, end, _ in self.corrections(provider, name):
                     times |= {start} | ({end} if end else set())
+        times |= {start for start, _ in self.batches(provider, model)}
         return sorted(times)
 
     def modes(self, provider: str, model: str) -> list[str]:
@@ -157,6 +186,8 @@ class _Inputs:
         for name in (model, self.prices["links"].get(provider, {}).get(model)):
             for entry in self.prices["providers"].get(provider, {}).get(name or "", []):
                 found |= set(entry["rates"].get("modes", {}))
+        if self.batches(provider, model):
+            found.add(BATCH)
         return sorted(found)
 
 
@@ -179,6 +210,20 @@ def _in_mode(corrected: Rates, standard: Rates, moded: Rates) -> Rates:
         return value * mode_value / base
     return replace(corrected, input=scaled("input"), output=scaled("output"),
                    cache_read=scaled("cache_read"), cache_write=scaled("cache_write"), tiers=())
+
+
+RATE_FIELDS = ("input", "output", "cache_read", "cache_write")
+
+
+def _batched(found: Rates, item: dict[str, Any]) -> Rates:
+    """Rates scaled by a batch discount: `multiple`, or a field's own `FIELD_multiple`."""
+    factors = {field: item.get(f"{field}_multiple", item["multiple"]) for field in RATE_FIELDS}
+
+    def scaled(rates: Any) -> dict[str, float | None]:
+        return {field: None if getattr(rates, field) is None else getattr(rates, field) * factor
+                for field, factor in factors.items()}
+    return replace(found, **scaled(found),
+                   tiers=tuple(replace(tier, **scaled(tier)) for tier in found.tiers))
 
 
 def _stored(found: Rates | None, model: str) -> dict[str, Any] | None:
@@ -208,7 +253,8 @@ def _timeline(inputs: _Inputs, provider: str, model: str, mode: str | None) -> l
         recorded = _stored(inputs.rates(provider, model, at, mode, False), model)
         interval: dict[str, Any] = {"start": None if at is _EARLIEST else
                                     at.isoformat().replace("+00:00", "Z"), "rates": effective}
-        if recorded != effective:
+        # models.dev records no batch prices, so a batch interval has nothing to compare.
+        if recorded != effective and mode != BATCH:
             interval["recorded"] = recorded
         if intervals and {**intervals[-1], "start": None} == {**interval, "start": None}:
             continue

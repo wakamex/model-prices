@@ -1,0 +1,52 @@
+# Batch API prices, as a multiple of each model's standard prices for every token type,
+# including cache reads and writes and long-prompt tiers; FIELD_multiple, such as
+# cache_read_multiple, overrides it for one token type. A model's "batch" mode applies the
+# latest entry in effect whose `models` pattern matches its id, or that has no pattern; of
+# entries starting together, the later one in this file. valid_from is when the provider
+# began selling batch requests at that discount. model-prices check compares the results
+# with the batch tables of official pages. Mistral also discounts batch requests by 50%,
+# but its pricing page shows which models qualify only in the browser, so it is not listed.
+
+[[batch]]
+provider = "anthropic"
+valid_from = "2024-10-08T00:00:00Z"
+multiple = 0.5
+source = "https://www.anthropic.com/news/message-batches-api"
+note = "The Message Batches API launched on 2024-10-08 at half the standard price. Anthropic's pricing page: the Batch API discount stacks with prompt caching multipliers."
+
+[[batch]]
+provider = "openai"
+# Realtime, audio, speech, transcription, and search models have no batch prices.
+models = '^(?!.*(realtime|audio|tts|transcribe|search))'
+valid_from = "2024-04-15T00:00:00Z"
+multiple = 0.5
+source = "https://community.openai.com/t/batch-api-is-now-available/718416"
+note = "OpenAI announced the Batch API with a 50% discount on 2024-04-15. Its pricing page's Batch table gives half the standard price for each model it lists, cache reads and writes included."
+
+[[batch]]
+provider = "google"
+# Live, native-audio, transcription, streaming, and omni models have no batch prices.
+models = '^gemini-(?!.*(live|native-audio|transcribe|streaming|omni))'
+valid_from = "2025-07-07T00:00:00Z"
+multiple = 0.5
+source = "https://developers.googleblog.com/en/scale-your-ai-workloads-batch-mode-gemini-api/"
+note = "Batch Mode in the Gemini API launched on 2025-07-07 at half the price of synchronous requests. Google's pricing page lists each model's Batch prices, context caching included, at half its Standard prices."
+
+[[batch]]
+provider = "google"
+# Older models charge batch cache reads at the standard price.
+models = '^gemini-(2\.5-(pro|flash|flash-lite)|3-flash-preview|3\.1-pro-preview)'
+valid_from = "2025-07-07T00:00:00Z"
+multiple = 0.5
+cache_read_multiple = 1.0
+source = "https://ai.google.dev/gemini-api/docs/batch-mode"
+note = "Google's Batch Mode guide: cached tokens in a batch request are priced the same as for non-batch traffic. Google's pricing page shows this for these models, and halves cached input for newer ones."
+
+[[batch]]
+provider = "xai"
+models = '^grok-4\.(7|6|5|3|20-0309-reasoning|20-0309-non-reasoning|20-multi-agent-0309)$'
+valid_from = "2026-10-22T00:00:00Z"
+valid_from_basis = "first observed"
+multiple = 0.8
+source = "https://docs.x.ai/developers/pricing#batch-api-pricing"
+note = "xAI's pricing page, observed 2026-10-22: 20% off standard rates for these models on all token types, cached tokens included; other models have no batch discount."
