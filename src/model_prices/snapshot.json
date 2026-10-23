@@ -85,8 +85,8 @@
   }
  },
  "models_dev": {
-  "commit": "4b4f5ec5eb72f29335d1256e1dbb72cc9048fe02",
-  "committed_at": "2026-10-22T22:54:12Z",
+  "commit": "120feb1f889e2e25e108f17d90951d0c19bb18f1",
+  "committed_at": "2026-10-23T01:31:02Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -5898,6 +5898,19 @@
        "valid_from_basis": "first observed"
       },
       "start": "2024-10-08T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.5,
+       "cache_write": 6.25,
+       "cache_write_1h_multiple": 2.0,
+       "input": 5.0,
+       "output": 25.0,
+       "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+       "valid_from": "2026-10-23T01:31:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-23T01:31:14Z"
      }
     ],
     "standard": [
@@ -5913,6 +5926,19 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 1.0,
+       "cache_write": 12.5,
+       "cache_write_1h_multiple": 2.0,
+       "input": 10.0,
+       "output": 50.0,
+       "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+       "valid_from": "2026-10-23T01:31:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-23T01:31:14Z"
      }
     ]
    },
@@ -5934,6 +5960,19 @@
        "valid_from_basis": "first observed"
       },
       "start": "2024-10-08T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.125,
+       "cache_write": 6.25,
+       "cache_write_1h_multiple": 2.0,
+       "input": 5.0,
+       "output": 25.0,
+       "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+       "valid_from": "2026-10-23T01:31:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-23T01:31:14Z"
      }
     ],
     "standard": [
@@ -5949,6 +5988,19 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.25,
+       "cache_write": 12.5,
+       "cache_write_1h_multiple": 2.0,
+       "input": 10.0,
+       "output": 50.0,
+       "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+       "valid_from": "2026-10-23T01:31:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-23T01:31:14Z"
      }
     ]
    },
@@ -11021,6 +11073,16 @@
        "valid_from_basis": "first observed"
       },
       "start": "2025-07-07T00:00:00Z"
+     },
+     {
+      "rates": {
+       "input": 0.25,
+       "output": 3.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+       "valid_from": "2026-10-23T01:31:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-23T01:31:14Z"
      }
     ],
     "standard": [
@@ -11033,6 +11095,16 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "input": 0.5,
+       "output": 6.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+       "valid_from": "2026-10-23T01:31:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-23T01:31:14Z"
      }
     ]
    },
@@ -11051,6 +11123,16 @@
        "valid_from_basis": "first observed"
       },
       "start": "2025-07-07T00:00:00Z"
+     },
+     {
+      "rates": {
+       "input": 0.25,
+       "output": 4.5,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+       "valid_from": "2026-10-23T01:31:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-23T01:31:14Z"
      }
     ],
     "standard": [
@@ -11063,6 +11145,16 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "input": 0.5,
+       "output": 9.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+       "valid_from": "2026-10-23T01:31:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-23T01:31:14Z"
      }
     ]
    },
@@ -11425,6 +11517,16 @@
        "valid_from_basis": "first observed"
       },
       "start": "2025-07-07T00:00:00Z"
+     },
+     {
+      "rates": {
+       "input": 0.75,
+       "output": 15.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+       "valid_from": "2026-10-23T01:31:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-23T01:31:14Z"
      }
     ],
     "standard": [
@@ -11437,6 +11539,16 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "input": 1.5,
+       "output": 30.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+       "valid_from": "2026-10-23T01:31:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-23T01:31:14Z"
      }
     ]
    },
@@ -11514,6 +11626,17 @@
        "valid_from_basis": "first observed"
       },
       "start": "2025-07-07T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.05,
+       "input": 0.5,
+       "output": 2.5,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+       "valid_from": "2026-10-23T01:31:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-23T01:31:14Z"
      }
     ],
     "standard": [
@@ -11527,6 +11650,17 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "input": 1.0,
+       "output": 5.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+       "valid_from": "2026-10-23T01:31:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-23T01:31:14Z"
      }
     ]
    },
@@ -13542,6 +13676,17 @@
        "valid_from_basis": "first observed"
       },
       "start": "2024-04-15T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_write_1h_multiple": 2.5,
+       "input": 0.25,
+       "output": 0.75,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-10-23T01:31:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-23T01:31:14Z"
      }
     ],
     "standard": [
@@ -13555,6 +13700,17 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_write_1h_multiple": 2.5,
+       "input": 0.5,
+       "output": 1.5,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-10-23T01:31:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-23T01:31:14Z"
      }
     ]
    },
@@ -13722,6 +13878,17 @@
        "valid_from_basis": "first observed"
       },
       "start": "2024-04-15T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_write_1h_multiple": 2.5,
+       "input": 15.0,
+       "output": 30.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-10-23T01:31:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-23T01:31:14Z"
      }
     ],
     "standard": [
@@ -13735,6 +13902,17 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_write_1h_multiple": 2.5,
+       "input": 30.0,
+       "output": 60.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-10-23T01:31:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-23T01:31:14Z"
      }
     ]
    },
@@ -13786,6 +13964,17 @@
        "valid_from_basis": "first observed"
       },
       "start": "2024-04-15T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_write_1h_multiple": 2.5,
+       "input": 5.0,
+       "output": 15.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-10-23T01:31:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-23T01:31:14Z"
      }
     ],
     "standard": [
@@ -13799,6 +13988,17 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_write_1h_multiple": 2.5,
+       "input": 10.0,
+       "output": 30.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-10-23T01:31:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-23T01:31:14Z"
      }
     ]
    },
@@ -19830,6 +20030,17 @@
        "valid_from_basis": "first observed"
       },
       "start": "2026-10-11T06:43:08Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.01,
+       "input": 0.1,
+       "output": 0.4,
+       "source": "https://www.upstage.ai/pricing",
+       "valid_from": "2026-10-23T01:31:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-23T01:31:14Z"
      }
     ]
    },
@@ -22694,13 +22905,13 @@
    "qwen-turbo": "deprecated",
    "qwen-vl-max": "deprecated",
    "qwen-vl-plus": "deprecated",
-   "qwen2-5-14b-instruct": "deprecated",
-   "qwen2-5-32b-instruct": "deprecated",
-   "qwen2-5-72b-instruct": "deprecated",
-   "qwen2-5-7b-instruct": "deprecated",
+   "qwen2-5-14b-instruct": "removed",
+   "qwen2-5-32b-instruct": "removed",
+   "qwen2-5-72b-instruct": "removed",
+   "qwen2-5-7b-instruct": "removed",
    "qwen2-5-omni-7b": "deprecated",
-   "qwen2-5-vl-72b-instruct": "deprecated",
-   "qwen2-5-vl-7b-instruct": "deprecated",
+   "qwen2-5-vl-72b-instruct": "removed",
+   "qwen2-5-vl-7b-instruct": "removed",
    "qwen3-14b": "deprecated",
    "qwen3-235b-a22b": "deprecated",
    "qwen3-32b": "deprecated",
@@ -22794,26 +23005,26 @@
   "mistral": {
    "devstral-2512": "deprecated",
    "devstral-latest": "deprecated",
-   "devstral-medium-2507": "deprecated",
+   "devstral-medium-2507": "removed",
    "devstral-medium-latest": "deprecated",
-   "devstral-small-2505": "deprecated",
-   "devstral-small-2507": "deprecated",
+   "devstral-small-2505": "removed",
+   "devstral-small-2507": "removed",
    "glm-5-2": "deprecated",
    "labs-devstral-small-2512": "deprecated",
    "labs-leanstral-1-5-1": "deprecated",
    "magistral-medium-latest": "deprecated",
    "magistral-small": "removed",
-   "mistral-large-2411": "deprecated",
+   "mistral-large-2411": "removed",
    "mistral-medium-2505": "deprecated",
    "mistral-medium-2508": "deprecated",
-   "mistral-nemo": "deprecated",
+   "mistral-nemo": "removed",
    "mistral-small-2506": "deprecated",
    "open-mistral-7b": "removed",
    "open-mistral-nemo": "deprecated",
    "open-mixtral-8x22b": "removed",
    "open-mixtral-8x7b": "removed",
    "pixtral-12b": "deprecated",
-   "pixtral-large-latest": "deprecated",
+   "pixtral-large-latest": "removed",
    "zai-glm-5-2": "deprecated"
   },
   "moonshotai": {
@@ -22905,13 +23116,13 @@
    "grok-vision-beta": "removed"
   },
   "xiaomi": {
-   "mimo-v2-flash": "deprecated",
-   "mimo-v2-omni": "deprecated",
-   "mimo-v2-pro": "deprecated",
+   "mimo-v2-flash": "removed",
+   "mimo-v2-omni": "removed",
+   "mimo-v2-pro": "removed",
    "mimo-v2.5": "deprecated",
    "mimo-v2.5-pro": "deprecated",
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-10-23T00:35:31Z"
+ "updated_at": "2026-10-23T01:31:50Z"
 }
