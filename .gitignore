@@ -18,6 +18,7 @@ dist/
 # The website's generated content; tools/build_site.py writes it from the snapshot.
 /site/content/_index.md
 /site/content/providers/
+/site/content/corrections.md
 /site/data/
 /site/static/snapshot.json
 /site/static/calculator-models.json

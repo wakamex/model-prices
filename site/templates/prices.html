@@ -1,3 +1,4 @@
 {% extends "index.html" %}
 {% block section_header %}<h1>{{ section.title }}</h1>{% endblock section_header %}
+{% block section_footer %}{% set title = "Wrong price: " ~ section.title %}{% include "report.html" %}{% endblock section_footer %}
 {% block scripts %}{{ super() }}<script src="{{ get_url(path='price-filter.js') | safe }}" defer></script>{% endblock scripts %}

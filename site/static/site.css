@@ -18,3 +18,7 @@
 #result .total { font-size: 1.3rem; font-weight: 600; margin: 1rem 0 0.5rem; }
 #result td.number { text-align: right; font-variant-numeric: tabular-nums; }
 .directory { display: none; }
+.report { margin-top: 2rem; font-size: 0.9rem; }
+.wrapping table td { white-space: normal; overflow-wrap: anywhere; min-width: 8rem; }
+/* A sidebar group heading that links to a page keeps the heading's layout and color. */
+.sidebar h2 a.sidebar-navigation-row { display: flex; color: inherit; text-decoration: none; }

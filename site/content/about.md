@@ -18,7 +18,7 @@ Every day, and within minutes of a models.dev change, model-prices reads each pr
 
 ## Corrections and dates
 
-models.dev sometimes records a change days late, or a wrong price for a while. A correction overrides those periods with the official price, and cites its source, such as the provider's announcement, its changelog, or an archived copy of its pricing page. Each price on a model page says how its start date was found:
+models.dev sometimes records a change days late, or a wrong price for a while. A correction overrides those periods with the official price, and cites its source, such as the provider's announcement, its changelog, or an archived copy of its pricing page. The [Corrections](../corrections/) page lists every one. Each price on a model page says how its start date was found:
 
 - `models.dev commit`: the time models.dev recorded it, which usually lags the provider's change by days.
 - `documented`: a date from a correction's cited source.

@@ -17,6 +17,7 @@ import json
 from pathlib import Path
 import re
 import shutil
+import tomllib
 from urllib.parse import urlencode, urlparse
 import sys
 
@@ -28,7 +29,9 @@ from model_prices import checks, observe  # noqa: E402
 
 SITE = ROOT / "site"
 CONTENT = SITE / "content"
-GENERATED = (CONTENT / "_index.md", CONTENT / "providers", SITE / "data" / "navigation.json",
+REPOSITORY = "https://github.com/wakamex/model-prices"
+GENERATED = (CONTENT / "_index.md", CONTENT / "providers", CONTENT / "corrections.md",
+             SITE / "data" / "navigation.json",
              SITE / "static" / "snapshot.json", SITE / "static" / "calculator-models.json")
 
 PROVIDER_NAMES = {
@@ -71,6 +74,8 @@ def escape(text: str) -> str:
 def price(value: float | None) -> str:
     if value is None:
         return ""
+    if value == 0:
+        return "free"
     text = f"{value:.10f}".rstrip("0")
     whole, _, fraction = text.partition(".")
     return f"${whole}.{fraction.ljust(2, '0')}"
@@ -120,6 +125,19 @@ def official_page(provider: str) -> str | None:
     if provider == "volcengine":
         return "https://www.volcengine.com/docs/82379/1544106"
     return re.sub(r"(index)?\.md(\.txt)?$", "", url)
+
+
+# Providers that set prices in Chinese yuan, which models.dev converts to US dollars.
+YUAN_NOTES = {
+    "volcengine": "at 6.737 yuan per dollar, the exchange rate on 2026-08-26",
+    "tencent-tokenhub": f"at about {1 / checks.YUAN_TO_USD['tencent-tokenhub']:.2f} yuan per dollar",
+}
+
+
+def yuan_note(provider: str) -> str:
+    rate = YUAN_NOTES.get(provider)
+    return (f" {name(provider)} sets its prices in Chinese yuan, which models.dev converts to US "
+            f"dollars {rate}, so a bill in yuan can differ slightly." if rate else "")
 
 
 def check_line(provider: str, model: str, found: dict, ran: str | None) -> str:
@@ -248,7 +266,8 @@ def model_page(provider: str, model: str, timelines: dict, found: dict, ran: str
             "toc": len(timelines) > 1,
         },
     }
-    intro = [f"{name(provider)} model `{model}`. Prices are in US dollars per million tokens."]
+    intro = [f"{name(provider)} model `{model}`. Prices are in US dollars per million tokens."
+             + yuan_note(provider)]
     if rates:
         intro[0] += " " + (
             f"Current price, since {day(latest['start']) or first_start(changes(standard))}: "
@@ -330,6 +349,7 @@ def build(check_results: Path | None) -> None:
     providers = CONTENT / "providers"
     providers.mkdir(parents=True)
     overview, calculator, navigation = [], [], []
+    pages: dict[tuple[str, str], str] = {}
     for provider in sorted(data["prices"], key=name):
         section = providers / slug(provider)
         section.mkdir()
@@ -341,6 +361,7 @@ def build(check_results: Path | None) -> None:
                 page += "-"
             used.add(page)
             (section / f"{page}.md").write_text(model_page(provider, model, timelines, found, ran, now))
+            pages[(provider, model)] = f"../providers/{slug(provider)}/{page}/"
             resolved = model_prices.resolve_details(model, provider)
             if resolved and resolved[:3] == (provider, model, ""):
                 calculator.append({"provider": provider, "provider_name": name(provider),
@@ -367,7 +388,8 @@ def build(check_results: Path | None) -> None:
                             "extra": {"breadcrumbs": [{"title": "Providers", "path": "providers/"}],
                                       "navigation_group": "providers",
                                       "navigation_branch": f"providers/{slug(provider)}/"}})
-            + "+++\n\n" + intro + " Prices are in US dollars per million tokens.\n\n"
+            + "+++\n\n" + intro + " Prices are in US dollars per million tokens." + yuan_note(provider)
+            + "\n\n"
             + price_filter("Model") + "\n\n" + "\n".join(table_head(False) + rows) + "\n")
         navigation.append({"title": name(provider), "path": f"providers/{slug(provider)}/",
                            "sidebar_children": False})
@@ -390,22 +412,65 @@ def build(check_results: Path | None) -> None:
         "ran with the [calculator](calculator/), or in Python with `pip install model-prices`.\n\n"
         f"Current prices for {len(overview)} models from {len(data['prices'])} providers, in US "
         "dollars per million tokens, as of "
-        f"{data['updated_at'][:10]}. A blank cache price is charged at the input price. Longer "
+        f"{data['updated_at'][:10]}. A blank cache price is charged at the input price, and free "
+        "means the provider charges nothing for that token type. Longer "
         "prompts gives the prompt size above which a model costs more. A Since date ending in "
         "\"or earlier\" is when tracking began. Models marked off-peak cost more at peak hours, and "
-        "those marked time of day cost less off-peak; their pages give the hours.\n\n"
+        "those marked time of day cost less off-peak; their pages give the hours. "
+        "[Corrections](corrections/) lists every price that differs from models.dev, and why.\n\n"
         + price_filter("Model or provider") + "\n\n" + "\n".join(table_head(True) + sorted(overview, key=str.lower)) + "\n")
     (SITE / "data").mkdir(exist_ok=True)
     (SITE / "data" / "navigation.json").write_text(json.dumps({"groups": [
         {"id": "prices", "title": "Prices", "items": [
             {"title": "All models", "path": ""},
             {"title": "Calculator", "path": "calculator/"},
+            {"title": "Corrections", "path": "corrections/"},
             {"title": "About the data", "path": "about/"}]},
         # The group heading links to the list of providers, so the count covers providers only.
         {"id": "providers", "title": "Providers", "path": "providers/", "items": navigation},
     ]}, indent=1) + "\n")
+    (CONTENT / "corrections.md").write_text(corrections_page(pages))
     shutil.copyfile(ROOT / "src" / "model_prices" / "snapshot.json", SITE / "static" / "snapshot.json")
     (SITE / "static" / "calculator-models.json").write_text(json.dumps(calculator))
+
+
+def correction_note(note: str) -> str:
+    """A correction's note as table text, with research findings linked."""
+    note = escape(re.sub(r"\s+", " ", re.sub(r"^[a-z_]+: ", "", note.strip())))
+    return re.sub(r"research/price-dates/findings/[A-Za-z0-9.\\_-]+",
+                  lambda found: f"[{found.group(0)}]({REPOSITORY}/tree/main/{found.group(0).replace(chr(92), '')})",
+                  note)
+
+
+def corrections_page(pages: dict[tuple[str, str], str]) -> str:
+    """Every correction to models.dev's prices, with its period, price, source, and reason."""
+    data = ROOT / "data"
+    items = [item for file in ("corrections.toml", "research_corrections.toml")
+             for item in tomllib.loads((data / file).read_text())["correction"]]
+    items.sort(key=lambda item: (name(item["provider"]).lower(), item["model"].lower(), item["valid_from"]))
+    rows = ["| Model | Period | Corrected price | Source and reason |", "| --- | --- | --- | --- |"]
+    for item in items:
+        page = pages.get((item["provider"], item["model"]))
+        label = f"{name(item['provider'])} {escape(item['model'])}"
+        until = f"to {day(item['valid_until'])}" if "valid_until" in item else "until models.dev agrees"
+        prices = ", ".join(f"{label_} {price(item[field])}" for field, label_ in FIELD_NAMES if field in item)
+        if item.get("tiers"):
+            prices += "; " + tiers(item)
+        rows.append(" | ".join((
+            f"| [{label}]({page})" if page else f"| {label}", f"{day(item['valid_from'])} {until}",
+            prices, f"[{escape(source_name(item['source']))}]({item['source']}): "
+            + correction_note(item.get("note", "")))) + " |")
+    front = toml({"title": "Corrections", "description": "Where model-prices replaces models.dev's prices, and why.",
+                  "extra": {"navigation_group": "prices", "toc": False}})
+    return ("+++\n" + front + "+++\n\n"
+            "model-prices takes prices from models.dev's history and replaces them where a provider's own "
+            "documents show a different price or an earlier date. Each correction below gives the period it "
+            "covers, the price it sets, and its source. A correction without an end date stops applying "
+            "once models.dev records anything other than the price it replaced. Prices are in US dollars "
+            "per million tokens. The corrections live in "
+            f"[data/corrections.toml]({REPOSITORY}/blob/main/data/corrections.toml) and, for those "
+            f"found by dating research, [data/research_corrections.toml]({REPOSITORY}/blob/main/data/research_corrections.toml).\n\n"
+            + '<div class="wrapping">\n\n' + "\n".join(rows) + "\n\n</div>\n")
 
 
 def main() -> int:
