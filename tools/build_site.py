@@ -140,6 +140,14 @@ def yuan_note(provider: str) -> str:
             f"dollars {rate}, so a bill in yuan can differ slightly." if rate else "")
 
 
+STATUS_LABELS = {"deprecated": "deprecated", "removed": "delisted"}
+STATUS_TEXT_MODEL = {
+    "deprecated": "models.dev marks this model deprecated: the provider plans to retire it or has.",
+    "removed": "models.dev no longer lists this model, usually because the provider retired it; "
+               "its history ends with the last price models.dev recorded.",
+}
+
+
 def check_line(provider: str, model: str, found: dict, ran: str | None) -> str:
     page = official_page(provider)
     if page is None:
@@ -275,6 +283,9 @@ def model_page(provider: str, model: str, timelines: dict, found: dict, ran: str
             + (f", cached input {price(rates['cache_read'])}" if rates.get("cache_read") is not None else "")
             + (f", cache write {price(rates['cache_write'])}" if rates.get("cache_write") is not None else "")
             + ".")
+    state = model_prices._data()["status"].get(provider, {}).get(model)
+    if state:
+        intro.append(STATUS_TEXT_MODEL[state])
     intro.append(check_line(provider, model, found, ran))
     rule = schedule_line(provider, model, now)
     if rule:
@@ -372,9 +383,13 @@ def build(check_results: Path | None) -> None:
                 rule = schedule_line(provider, model, now)
                 note = (" (off-peak)" if rule and "peak hours" in rule else
                         " (time of day)" if rule else "")
-                rows.append(price_row(None, model, latest["rates"], start, f"{page}/", note))
-                overview.append(price_row(provider, model, latest["rates"], start,
-                                          f"providers/{slug(provider)}/{page}/", note))
+                state = data["status"].get(provider, {}).get(model)
+                note += f" ({STATUS_LABELS[state]})" if state else ""
+                # Deprecated and delisted models follow the current ones.
+                order = (state is not None, model.lower())
+                rows.append((order, price_row(None, model, latest["rates"], start, f"{page}/", note)))
+                overview.append((order, price_row(provider, model, latest["rates"], start,
+                                                  f"providers/{slug(provider)}/{page}/", note)))
         page_url = official_page(provider)
         observed = provider in observe.SOURCES
         intro = (f"model-prices checks these prices daily against [{name(provider)}'s pricing page]({page_url})."
@@ -390,7 +405,7 @@ def build(check_results: Path | None) -> None:
                                       "navigation_branch": f"providers/{slug(provider)}/"}})
             + "+++\n\n" + intro + " Prices are in US dollars per million tokens." + yuan_note(provider)
             + "\n\n"
-            + price_filter("Model") + "\n\n" + "\n".join(table_head(False) + rows) + "\n")
+            + price_filter("Model") + "\n\n" + "\n".join(table_head(False) + [row for _, row in sorted(rows)]) + "\n")
         navigation.append({"title": name(provider), "path": f"providers/{slug(provider)}/",
                            "sidebar_children": False})
     (providers / "_index.md").write_text(
@@ -416,9 +431,10 @@ def build(check_results: Path | None) -> None:
         "means the provider charges nothing for that token type. Longer "
         "prompts gives the prompt size above which a model costs more. A Since date ending in "
         "\"or earlier\" is when tracking began. Models marked off-peak cost more at peak hours, and "
-        "those marked time of day cost less off-peak; their pages give the hours. "
+        "those marked time of day cost less off-peak; their pages give the hours. Deprecated "
+        "models, and delisted ones that models.dev no longer lists, follow the current ones. "
         "[Corrections](corrections/) lists every price that differs from models.dev, and why.\n\n"
-        + price_filter("Model or provider") + "\n\n" + "\n".join(table_head(True) + sorted(overview, key=str.lower)) + "\n")
+        + price_filter("Model or provider") + "\n\n" + "\n".join(table_head(True) + [row for _, row in sorted(overview)]) + "\n")
     (SITE / "data").mkdir(exist_ok=True)
     (SITE / "data" / "navigation.json").write_text(json.dumps({"groups": [
         {"id": "prices", "title": "Prices", "items": [

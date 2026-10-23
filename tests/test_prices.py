@@ -278,6 +278,27 @@ class PriceTests(unittest.TestCase):
         self.assertEqual(data["providers"]["cohere"]["command-z"][0]["valid_from"],
                          "2026-09-04T10:00:00Z")
 
+    def test_backfill_records_deprecated_and_removed_models(self):
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory) / "models.dev"
+            models = repo / "providers" / "openai" / "models"
+            models.mkdir(parents=True)
+            _git(repo, "init", "-q", "-b", "main")
+            for model in ("old", "gone", "back", "current"):
+                (models / f"{model}.toml").write_text('[cost]\ninput = 1.0\noutput = 2.0\n')
+            _commit(repo, "add models", "2026-09-04T10:00:00+00:00")
+            for model in ("old", "back"):
+                (models / f"{model}.toml").write_text(
+                    'status = "deprecated"\n[cost]\ninput = 1.0\noutput = 2.0\n')
+            (models / "gone.toml").unlink()
+            _commit(repo, "retire models", "2026-09-05T10:00:00+00:00")
+            (models / "back.toml").write_text('[cost]\ninput = 1.0\noutput = 2.0\n')
+            _commit(repo, "restore back", "2026-09-06T10:00:00+00:00")
+
+            data = build(repo, ("openai",))
+
+        self.assertEqual(data["status"], {"openai": {"gone": "removed", "old": "deprecated"}})
+
     def test_backfill_skips_models_not_billed_per_token(self):
         self.assertFalse(_tracked("providers/google/models/lyria-3-pro-preview.toml"))
         self.assertTrue(_tracked("providers/google/models/gemini-3.8-flash.toml"))

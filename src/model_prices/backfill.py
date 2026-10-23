@@ -187,6 +187,8 @@ def _replay(repo: Path, providers: tuple[str, ...]) -> tuple[dict, dict, dict]:
     # The lab model each first-party provider file currently serves, and whether the
     # file is deprecated, so lab model names resolve to the id that prices them.
     serves: dict[tuple[str, str], tuple[str, bool]] = {}
+    # Models models.dev marks deprecated, or whose file it deleted.
+    retired: dict[tuple[str, str], str] = {}
     for status, commit, committed_at, path in changes:
         _, provider, _, *model_parts = path.removesuffix(".toml").split("/")
         # No API accepts an id with surrounding spaces, such as a file models.dev later
@@ -195,6 +197,7 @@ def _replay(repo: Path, providers: tuple[str, ...]) -> tuple[dict, dict, dict]:
         blob = None if status == "D" else next(blobs)
         if blob is None:
             serves.pop((provider, model), None)
+            retired[(provider, model)] = "removed"
             continue
         target = _link_target(blob)
         if target is not None:
@@ -207,6 +210,10 @@ def _replay(repo: Path, providers: tuple[str, ...]) -> tuple[dict, dict, dict]:
             document = tomllib.loads(blob.decode())
         except (tomllib.TOMLDecodeError, UnicodeDecodeError):
             continue
+        if document.get("status") == "deprecated":
+            retired[(provider, model)] = "deprecated"
+        else:
+            retired.pop((provider, model), None)
         base = document.get("base_model")
         lab, _, lab_model = base.partition("/") if isinstance(base, str) else ("", "", "")
         if lab_model and LAB_PROVIDERS.get(lab, lab) == provider:
@@ -220,19 +227,23 @@ def _replay(repo: Path, providers: tuple[str, ...]) -> tuple[dict, dict, dict]:
         if entries and entries[-1]["rates"] == rates:
             continue
         entries.append({"valid_from": committed_at, "commit": commit[:12], "rates": rates})
-    return history, links, serves
+    statuses: dict[str, dict[str, str]] = {}
+    for (provider, model), state in sorted(retired.items()):
+        if model in history.get(provider, {}):
+            statuses.setdefault(provider, {})[model] = state
+    return history, links, serves, statuses
 
 
 def build(repo: Path, providers: tuple[str, ...] = TRACKED_PROVIDERS) -> dict[str, Any]:
     """Replay every price change of the tracked providers into effective-dated entries."""
-    history, links, serves = _replay(repo, providers)
+    history, links, serves, statuses = _replay(repo, providers)
     # An alias of another provider's file, such as StepFun's global models linking to its
     # China ones, takes that file's history.
     foreign = {(provider, model): target.split("/", 3)
                for provider, models in links.items() for model, target in models.items()
                if target.startswith("../../")}
     if foreign:
-        other, _, _ = _replay(repo, tuple(sorted({parts[2] for parts in foreign.values()})))
+        other, _, _, _ = _replay(repo, tuple(sorted({parts[2] for parts in foreign.values()})))
         for (provider, model), (_, _, source, path) in foreign.items():
             del links[provider][model]
             entries = other.get(source, {}).get(path.removeprefix("models/"))
@@ -254,6 +265,7 @@ def build(repo: Path, providers: tuple[str, ...] = TRACKED_PROVIDERS) -> dict[st
             for provider, models in sorted(links.items()) if models
         },
         "bases": _bases(serves),
+        "status": statuses,
     }
 
 
@@ -267,7 +279,7 @@ def _bases(serves: dict[tuple[str, str], tuple[str, bool]]) -> dict[str, dict[st
     return {provider: dict(sorted(models.items())) for provider, models in sorted(bases.items())}
 
 
-_PER_PROVIDER = ("providers", "links", "bases")
+_PER_PROVIDER = ("providers", "links", "bases", "status")
 
 
 def _current(output: Path) -> dict[str, Any]:
@@ -301,7 +313,7 @@ def write(data: dict[str, Any], output: Path) -> bool:
     if output.exists():
         current = json.loads(output.read_text())
         if all(current.get(key) == data[key]
-               for key in ("schema_version", "providers", "links", "bases")):
+               for key in ("schema_version", *_PER_PROVIDER)):
             return False
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(data, indent=1, sort_keys=True) + "\n")

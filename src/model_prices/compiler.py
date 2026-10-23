@@ -235,6 +235,8 @@ def build(data: Path) -> dict[str, Any]:
                        "committed_at": inputs.prices["source_committed_at"]},
         "prices": prices,
         "bases": inputs.prices["bases"],
+        # Models models.dev marks deprecated or no longer lists, as "deprecated" or "removed".
+        "status": inputs.prices["status"],
         "aliases": inputs.config["aliases.toml"],
         "schedules": inputs.config["schedules.toml"],
         "plans": inputs.config["plans.toml"].get("plan", []),
