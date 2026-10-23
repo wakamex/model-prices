@@ -48,7 +48,7 @@ PROVIDER_NAMES = {
     "xiaomi": "Xiaomi", "zai": "Z.ai",
 }
 MODE_NAMES = {"standard": "Standard", "fast": "Fast mode", "ultrafast": "Ultrafast mode",
-              "flex": "Flex", "thinking": "Thinking mode"}
+              "flex": "Flex", "thinking": "Thinking mode", "batch": "Batch API"}
 STATUS_TEXT = {
     "ok": "Matches {page}, checked {ran}.",
     "corrected": ("Matches {page}, checked {ran}. models.dev lists a different price, which "
@@ -201,10 +201,13 @@ def changes(timeline: list[dict]) -> list[dict]:
 
 
 def first_start(timeline: list[dict]) -> str:
-    """The first price's date: it also applies to every earlier request."""
+    """The first price's date: it also applies to every earlier request. A model not sold
+    at first, such as before a batch discount began, is not sold until the next change."""
     rates = timeline[0]["rates"] or {}
     first = day(rates.get("valid_from"))
     following = day(timeline[1]["start"]) if len(timeline) > 1 else None
+    if not rates:
+        return f"before {following}"
     return f"before {first}" if first and first == following else f"{first} or earlier"
 
 

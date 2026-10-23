@@ -26,7 +26,7 @@ models.dev sometimes records a change days late, or a wrong price for a while. A
 
 ## What is not priced
 
-Prices are for standard synchronous requests, plus the modes models.dev records for some models, such as OpenAI's flex and fast modes and Anthropic's fast mode, which each model page lists. Batch pricing, regional surcharges, storage for cached context, tool fees such as web search, and per-image or per-second prices are not priced. Each model has one input and one output price: for image and video generation models the output price is that of the media they generate.
+Prices are for standard synchronous requests, plus the modes models.dev records for some models, such as OpenAI's flex and fast modes and Anthropic's fast mode, which each model page lists. Batch API prices are listed for Anthropic, OpenAI, Google, and xAI, at each provider's batch discount from the date it began, and are checked against the batch tables on their pricing pages; Mistral's are not yet. Regional surcharges, storage for cached context, tool fees such as web search, and per-image or per-second prices are not priced. Each model has one input and one output price: for image and video generation models the output price is that of the media they generate.
 
 ## License
 

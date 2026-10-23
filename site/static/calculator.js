@@ -23,7 +23,7 @@ const updateModels = () => {
 };
 const updateModes = () => {
   const entry = models.find((m) => m.provider === field("provider").value && m.model === field("model").value);
-  const modes = entry?.modes || ["standard"];
+  const modes = ["standard", ...(entry?.modes || []).filter((mode) => mode !== "standard")];
   fill(field("mode"), modes.map((mode) => [mode === "standard" ? "" : mode, mode]), "");
   field("mode").closest("label").hidden = modes.length < 2;
 };
