@@ -15,7 +15,7 @@ import warnings
 
 import model_prices
 from model_prices import Rates, Tier, compiler, cost, main, rates, rates_between, resolve
-from model_prices.backfill import build, changed_providers, hold, parse_rates, write
+from model_prices.backfill import _tracked, build, changed_providers, hold, parse_rates, write
 
 DATA = Path(__file__).resolve().parent.parent / "data"
 
@@ -277,6 +277,12 @@ class PriceTests(unittest.TestCase):
         self.assertEqual(list(data["providers"]["cohere"]), ["command-z"])
         self.assertEqual(data["providers"]["cohere"]["command-z"][0]["valid_from"],
                          "2026-09-04T10:00:00Z")
+
+    def test_backfill_skips_models_not_billed_per_token(self):
+        self.assertFalse(_tracked("providers/google/models/lyria-3-pro-preview.toml"))
+        self.assertTrue(_tracked("providers/google/models/gemini-3.8-flash.toml"))
+        self.assertTrue(_tracked("providers/amazon-bedrock/models/amazon.nova-pro-v1:0.toml"))
+        self.assertFalse(_tracked("providers/amazon-bedrock/models/anthropic.claude-opus-5.toml"))
 
     def test_ids_match_regardless_of_case(self):
         self.assertEqual(resolve("minimax-m2.7"), ("minimax", "MiniMax-M2.7"))

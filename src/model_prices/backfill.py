@@ -49,12 +49,18 @@ TRACKED_PROVIDERS = (
 # Providers tracked only for some models: Amazon Bedrock hosts many labs' models, and is
 # tracked for Amazon's own Nova models, which it sells.
 TRACKED_MODELS = {"amazon-bedrock": re.compile(r"(^|\.)amazon\.nova-")}
+# Models billed other than per token, which models.dev records at $0 per token: Google's
+# Lyria music models cost a fixed price per generated song.
+UNPRICED_MODELS = {"google": re.compile(r"^lyria-")}
 
 def _tracked(path: str) -> bool:
     """Whether a model file belongs to a tracked model of its provider."""
     _, provider, _, *model_parts = path.removesuffix(".toml").split("/")
+    model = "/".join(model_parts)
     pattern = TRACKED_MODELS.get(provider)
-    return pattern is None or bool(pattern.search("/".join(model_parts)))
+    unpriced = UNPRICED_MODELS.get(provider)
+    return ((pattern is None or bool(pattern.search(model)))
+            and not (unpriced and unpriced.search(model)))
 
 
 RATE_FIELDS = ("input", "output", "cache_read", "cache_write")
