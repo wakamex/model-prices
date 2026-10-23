@@ -13384,6 +13384,40 @@
       "start": "2026-10-07T15:06:33Z"
      }
     ]
+   },
+   "kimi-k3.1-pro": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 2.0,
+       "cache_write_1h_multiple": 2.0,
+       "input": 2.0,
+       "output": 10.0,
+       "source": "https://platform.kimi.ai/docs/pricing/chat",
+       "valid_from": "2026-10-23T17:54:30Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "kimi-k3.1-pro-highspeed": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 4.0,
+       "cache_write_1h_multiple": 2.0,
+       "input": 4.0,
+       "output": 20.0,
+       "source": "https://platform.kimi.ai/docs/pricing/chat",
+       "valid_from": "2026-10-23T17:54:30Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
    }
   },
   "nova": {
@@ -23124,5 +23158,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-10-23T01:31:50Z"
+ "updated_at": "2026-10-23T17:55:05Z"
 }
