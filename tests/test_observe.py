@@ -74,7 +74,7 @@ class ObserveTests(unittest.TestCase):
         self.assertNotIn("cognition", recorded)
 
     def test_byteplus_table_gives_seed_models_with_their_long_context_tier(self):
-        # Resold models are left out, and the Flex table gives no standard prices.
+        # Resold models are left out, and the Flex and audio tables give no standard prices.
         self.assertEqual(observe.parse_byteplus((FIXTURES / "byteplus.html").read_text()), {
             "dola-seed-2-1-turbo": {"input": 0.5, "cache_read": 0.1, "output": 2.5},
             "seed-2-0-lite-260428": {"input": 0.25, "cache_read": 0.05, "output": 2.0, "tiers": [

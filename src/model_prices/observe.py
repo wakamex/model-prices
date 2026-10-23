@@ -109,16 +109,15 @@ def read_cognition(get: Callable[[str], str]) -> dict[str, tuple[str, dict[str, 
 
 
 BYTEPLUS_PRICING = "https://docs.byteplus.com/en/docs/ModelArk/1544106"
-_BYTEPLUS_COLUMNS = {"Input (non-audio)": "input", "Cache-hit input (non-audio)": "cache_read",
-                     "Output": "output"}
+_BYTEPLUS_COLUMNS = {"Input": "input", "Cached input": "cache_read", "Output": "output"}
 
 
 def parse_byteplus(page: str) -> dict[str, dict[str, Any]]:
-    """Rates of ByteDance's own Seed models from BytePlus ModelArk's standard online
-    inference table, which the page embeds as Markdown in its router data.
+    """Rates of ByteDance's own Seed models from BytePlus ModelArk's Standard table for
+    non-audio input, which the page embeds as Markdown in its router data.
 
-    A "Prompt length (128, 256]" row is the tier above 128K tokens. BytePlus also resells
-    other labs' models, such as DeepSeek's and GLM, which are left out.
+    A "(128, 256]" prompt length row is the tier above 128K tokens. The table also lists
+    other labs' models that BytePlus resells, such as DeepSeek's and GLM, which are left out.
     """
     router = re.search(r"window\._ROUTER_DATA = (\{.*?\});?\s*</script>", page, re.S)
     try:
@@ -127,16 +126,28 @@ def parse_byteplus(page: str) -> dict[str, dict[str, Any]]:
                         if isinstance(value, dict) and "curDoc" in value)
     except (AttributeError, StopIteration, KeyError, TypeError, ValueError):
         raise ValueError("byteplus: no pricing document; the page format changed") from None
+    section = re.search(r"^#### Non\\?-audio input\n.*?\*\*Standard\*\*\n(.*?)(?=^\*\*|^#)",
+                        markdown, re.M | re.S)
+    rows = [[checks._ark_cell(cell).strip("`") for cell in
+             line.strip().removeprefix("|").removesuffix("|").split("|")]
+            for line in (section.group(1) if section else "").splitlines() if line.startswith("|")]
+    titles = rows[0] if rows else []
+    if not {"Provider", "Model ID", "Prompt length", *_BYTEPLUS_COLUMNS} <= set(titles):
+        raise ValueError(f"byteplus: Standard table columns are {titles}; the page format changed")
     models: dict[str, dict[str, Any]] = {}
-    for model, condition, rates in checks.ark_rows(markdown, "Online inference (standard)",
-                                                   "byteplus", _BYTEPLUS_COLUMNS):
-        if not re.fullmatch(r"(dola-)?seed-[a-z0-9-]+", model):
+    provider = model = ""
+    for cells in rows[2:]:
+        row = dict(zip(titles, cells))
+        provider = row["Provider"] or provider
+        model = row["Model ID"] or model
+        if provider != "ByteDance":
             continue
-        rates = {field: price for field, price in rates.items() if price is not None}
-        tier = re.fullmatch(r"Prompt length ([\[(])(\d+), (\d+)\]", condition)
-        if condition != "-" and tier is None:
-            raise ValueError(f"byteplus: unknown pricing tier {condition!r} for {model}")
-        if tier and tier.group(1) == "(":
+        rates = {field: float(row[title].removeprefix("$")) for title, field in _BYTEPLUS_COLUMNS.items()
+                 if row[title] not in {"", "-"}}
+        tier = re.fullmatch(r"([\[(])(\d+), (\d+)\]", row["Prompt length"])
+        if tier is None:
+            raise ValueError(f"byteplus: unknown prompt length {row['Prompt length']!r} for {model}")
+        if tier.group(1) == "(":
             models[model].setdefault("tiers", []).append({"above": int(tier.group(2)) * 1000,
                                                           **rates})
         else:
