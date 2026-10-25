@@ -15,6 +15,10 @@ message id is derived from the run, so a repeated send delivers nothing. A failu
 errors are fetch timeouts or HTTP 5xx server errors is sent only when the run before it also
 failed, since such a failure usually clears on the next run.
 
+A run that cannot reach GitHub, such as during a brief network outage, logs it and exits
+cleanly; only UNREACHABLE_LIMIT such runs in a row fail the unit, so a lasting outage or
+a broken GitHub login still shows as a failed service.
+
 State is kept in $XDG_STATE_HOME/model-prices/models-dev.json. The workflow's own daily
 schedule still runs, so a missed change is picked up within a day.
 """
@@ -44,6 +48,8 @@ STATE = Path(os.environ.get("XDG_STATE_HOME", Path.home() / ".local/state")) / (
 # A tracked provider's files can link to another provider's, such as StepFun's global
 # models to its China ones, so those folders are watched too.
 WATCHED = {*TRACKED_PROVIDERS, *LAB_PROVIDERS}
+# Runs in a row that cannot reach GitHub before the unit fails.
+UNREACHABLE_LIMIT = 10
 
 
 def _run(*command: str) -> str:
@@ -106,6 +112,30 @@ def report_failure(state: dict) -> None:
 
 def main() -> int:
     state = json.loads(STATE.read_text()) if STATE.exists() else {}
+    try:
+        check(state)
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as error:
+        state["unreachable"] = state.get("unreachable", 0) + 1
+        save(state)
+        if state["unreachable"] >= UNREACHABLE_LIMIT:
+            raise
+        detail = getattr(error, "stderr", None) or error
+        print(f"models.dev check skipped ({state['unreachable']} in a row): "
+              f"{str(detail).strip()}", file=sys.stderr)
+        return 0
+    state.pop("unreachable", None)
+    save(state)
+    return 0
+
+
+def save(state: dict) -> None:
+    STATE.parent.mkdir(parents=True, exist_ok=True)
+    STATE.write_text(json.dumps(state, indent=1, sort_keys=True) + "\n")
+
+
+def check(state: dict) -> None:
+    """Report the latest failed workflow run, then start the workflow if models.dev changed
+    a tracked provider since the last run."""
     # A report that cannot be sent, such as while no model-prices session runs, is retried
     # next minute and does not stop the models.dev check.
     try:
@@ -114,8 +144,7 @@ def main() -> int:
         print(f"failure report not sent: {error.stderr.strip() or error}", file=sys.stderr)
     commit = head()
     if commit == state.get("head"):
-        STATE.write_text(json.dumps(state, indent=1, sort_keys=True) + "\n")
-        return 0
+        return
     trees = tracked_trees(commit)
     changed = sorted(name for name in trees.keys() | state.get("trees", {}).keys()
                      if trees.get(name) != state.get("trees", {}).get(name))
@@ -123,10 +152,7 @@ def main() -> int:
     if changed and "trees" in state:
         _run(GH, "workflow", "run", WORKFLOW, "--repo", REPOSITORY)
         print(f"{commit[:9]}: started {WORKFLOW} for {', '.join(changed)}")
-    STATE.parent.mkdir(parents=True, exist_ok=True)
     state.update(head=commit, trees=trees)
-    STATE.write_text(json.dumps(state, indent=1, sort_keys=True) + "\n")
-    return 0
 
 
 if __name__ == "__main__":
