@@ -1,1 +1,5 @@
-<p class="report">Wrong price? <a href="https://github.com/wakamex/model-prices/issues/new?title={{ title | urlencode }}">Report it on GitHub</a>, with a link to the provider's pricing page.</p>
+{#- A link to the "Wrong price" issue form, with the page's model and provider filled in. -#}
+{%- set query = "template=wrong-price.yml&title=" ~ title | urlencode -%}
+{%- if provider %}{% set query = query ~ "&provider=" ~ provider | urlencode %}{% endif -%}
+{%- if model %}{% set query = query ~ "&model=" ~ model | urlencode %}{% endif -%}
+<p class="report">Wrong price? <a href="https://github.com/wakamex/model-prices/issues/new?{{ query | safe }}">Report it on GitHub</a>, with a link to the provider's pricing page.</p>

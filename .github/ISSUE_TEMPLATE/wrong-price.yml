@@ -1,0 +1,48 @@
+name: Wrong price
+description: A price, date, or model on model-prices.com or in the package that differs from the provider's own pricing.
+title: "Wrong price: "
+labels: ["wrong price"]
+body:
+  - type: input
+    id: model
+    attributes:
+      label: Model
+      description: The model id, as on its model-prices page.
+      placeholder: claude-opus-5-5
+    validations:
+      required: true
+  - type: input
+    id: provider
+    attributes:
+      label: Provider
+      description: The provider id, as in the page's address.
+      placeholder: anthropic
+    validations:
+      required: true
+  - type: textarea
+    id: shown
+    attributes:
+      label: What model-prices shows
+      description: The price or date that is wrong, such as "cached input $0.20 since 2026-09-28".
+    validations:
+      required: true
+  - type: textarea
+    id: official
+    attributes:
+      label: What the provider charges
+      description: The provider's price, and since when if you know.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source
+      description: A link to the provider's pricing page, announcement, or changelog that states it.
+      placeholder: https://
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else
+      description: Optional, such as a region, plan, or mode the price applies to.

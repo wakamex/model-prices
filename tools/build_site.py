@@ -275,6 +275,9 @@ def model_page(provider: str, model: str, timelines: dict, found: dict, ran: str
             "navigation_branch": f"providers/{slug(provider)}/",
             "page_navigation": False,
             "toc": len(timelines) > 1,
+            # Prefill the price report form.
+            "provider": provider,
+            "model": model,
         },
     }
     intro = [f"{name(provider)} model `{model}`. Prices are in US dollars per million tokens."
@@ -404,6 +407,7 @@ def build(check_results: Path | None) -> None:
             "+++\n" + toml({"title": name(provider), "sort_by": "title", "template": "provider.html",
                             "description": f"{name(provider)} API prices with dated price history.",
                             "extra": {"breadcrumbs": [{"title": "Providers", "path": "providers/"}],
+                                      "provider": provider,
                                       "navigation_group": "providers",
                                       "navigation_branch": f"providers/{slug(provider)}/"}})
             + "+++\n\n" + intro + " Prices are in US dollars per million tokens." + yuan_note(provider)
