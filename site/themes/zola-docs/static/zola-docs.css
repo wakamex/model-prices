@@ -84,6 +84,9 @@ a:hover { text-decoration-thickness: 0.12em; }
 /* A group heading that links to a page keeps its row layout and the heading's color. */
 .sidebar a.sidebar-navigation-row { display: flex; }
 .sidebar h2 a.sidebar-navigation-row { color: inherit; text-decoration: none; }
+.sidebar h2 a.sidebar-navigation-row:hover { text-decoration: underline; }
+/* In a narrow sidebar the title wraps and the child count keeps its width. */
+.sidebar-child-count { flex: none; white-space: nowrap; }
 .sidebar a[aria-current="page"] { color: var(--docs-text); font-weight: 700; text-decoration-thickness: 0.12em; }
 .content { width: 100%; padding: clamp(1.25rem, 4vw, 3.5rem); }
 .content article { min-width: 0; }
