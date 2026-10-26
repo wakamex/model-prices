@@ -1,3 +1,3 @@
 {% extends "zola-docs/templates/page.html" %}
-{% block header_brand %}{% include "brand.html" %}{% endblock header_brand %}
-{% block page_footer %}{% set title = "Wrong price: " ~ page.title %}{% include "report.html" %}{% endblock page_footer %}
+{% block sidebar_before_navigation %}{% include "site-links.html" %}{% endblock sidebar_before_navigation %}
+{% block page_footer %}{% set title = "Wrong price: " ~ page.title %}{% set provider = page.extra.provider | default(value="") %}{% set model = page.extra.model | default(value="") %}{% include "report.html" %}{% endblock page_footer %}

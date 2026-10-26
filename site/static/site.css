@@ -31,11 +31,8 @@ article > h1 { margin: 0 0 0.5em; }
 .prose p, .prose ul, .prose ol { margin: 0 0 0.7em; }
 .prose li + li { margin-top: 0.15em; }
 .prose table { margin-bottom: 1em; }
-/* Links to the package, source, and data beside the site name. */
-.site-header .site-name { margin-right: 0; align-self: center; }
-.site-links { align-self: center; display: flex; flex-wrap: wrap; gap: 0.3rem 1.1rem; margin-left: 1.5rem; margin-right: auto; font-size: 0.95rem; }
-.site-links a { color: var(--docs-text); text-decoration: none; }
-.site-links a:hover { color: var(--docs-link); text-decoration: underline; }
-@media (max-width: 52rem) {
-  .site-links { margin-left: 0; width: 100%; }
-}
+/* Links to the package, source, and data above the sidebar groups, and in the narrow-screen menu. */
+.site-links { margin: 0 0 1.1rem; padding: 0 0 0.9rem; list-style: none; border-bottom: 1px solid var(--docs-border); }
+.site-links li + li { margin-top: 0.25rem; }
+.site-links a { font-weight: 600; }
+.navigation-dialog .site-links { margin-top: 1rem; }

@@ -121,6 +121,7 @@
       <details>
         <summary>{{ config.extra.zola_docs.navigation_label }}</summary>
         <nav aria-label="{{ config.extra.zola_docs.navigation_label }}">
+          {% block sidebar_before_navigation %}{% endblock sidebar_before_navigation %}
           {% for group in navigation %}
           <section>
             {% set group_id = group.id | default(value="") %}
