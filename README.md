@@ -117,6 +117,8 @@ Aliases are part of the published data, while the normalization rules above are 
 
 `plan(provider, plan_id, at=None)` returns a subscription plan's monthly price from `plans.toml`, keyed by the plan name each lab's usage tools report, such as `max_20x` for Claude or `lite` for the GLM Coding Plan. A plan sold in several price tiers gets one entry per tier, with the price in its id and name, such as `ultra_200` for Google AI Ultra $200 or `pro_500` for ChatGPT Pro $500. When a usage tool reports only the untiered name, that name has no entry, except that ChatGPT's `pro` keeps its original $200 price.
 
+Some models are sold with no per-token price: Meta includes Muse Wonder Full only in its Muse Code subscriptions, which count usage in prompts. `rates()` and `cost()` return None for them. To compare such usage with other models at API prices, pass `estimate=True`, which prices the model at the rates of a stand-in that `data/estimates.toml` names, with its reason and sources, and sets `Rates.estimated_from` to the stand-in, such as `meta/muse-wonder-1.0`, so a caller can label the figure as an estimate. The table is part of the snapshot, so a change to it changes `pricing_basis()`. `model-prices rate MODEL --estimate` does the same from the command line.
+
 ## Recording what was used
 
 `pricing_basis()` returns an identifier such as `model-prices-0.0.1+models.dev@e2bf2e470a1b+synced@2026-09-30+data@3f1c09a2b7de`, naming the package version, the models.dev commit its data came from and that commit's date, and the start of the SHA-256 hash of the snapshot in use, so any change to prices, corrections, schedules, or aliases changes it. Store it next to computed costs.

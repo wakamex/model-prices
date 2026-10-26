@@ -46,7 +46,8 @@ class _Inputs:
                 listed[model] = [entry for entry in entries if start is None
                                  or _parse_time(entry["valid_from"]) < start] + listed.get(model, [])
         self.config = {name: tomllib.loads((data / name).read_text()) for name in (
-            "aliases.toml", "batch.toml", "cache_writes.toml", "corrections.toml", "plans.toml",
+            "aliases.toml", "batch.toml", "cache_writes.toml", "corrections.toml", "estimates.toml",
+            "plans.toml",
             "research_corrections.toml", "schedules.toml")}
         self.cache_write_1h = {item["provider"]: item["multiple"]
                                for item in self.config["cache_writes.toml"]["cache_write_1h"]}
@@ -286,6 +287,8 @@ def build(data: Path) -> dict[str, Any]:
         "aliases": inputs.config["aliases.toml"],
         "schedules": inputs.config["schedules.toml"],
         "plans": inputs.config["plans.toml"].get("plan", []),
+        # Stand-in rates for models with no per-token price, returned only on request.
+        "estimates": inputs.config["estimates.toml"].get("estimate", []),
     }
 
 

@@ -130,6 +130,20 @@ class PriceTests(unittest.TestCase):
         self.assertEqual(rates("gpt-5.6-sol", at="2026-08-23").source,
                          "https://openai.com/index/gpt-5-6/")
 
+    def test_estimates_price_models_without_a_per_token_price_only_on_request(self):
+        self.assertIsNone(rates("muse-wonder-full-1.0"))
+        self.assertIsNone(cost("muse-wonder-full-1.0", input_tokens=1_000_000))
+        wonder = rates("muse-wonder-1.0", at="2026-10-20")
+        full = rates("muse-wonder-full-1.0", at="2026-10-20", provider="muse", estimate=True)
+        self.assertEqual((full.provider, full.model, full.estimated_from),
+                         ("meta", "muse-wonder-full-1.0", "meta/muse-wonder-1.0"))
+        self.assertEqual((full.input, full.cache_read, full.output),
+                         (wonder.input, wonder.cache_read, wonder.output))
+        self.assertEqual(cost("muse-wonder-full-1.0", output_tokens=1_000_000, estimate=True), 20.0)
+        # A priced model is never an estimate, and another provider's hint finds none.
+        self.assertIsNone(rates("muse-wonder-1.0", estimate=True).estimated_from)
+        self.assertIsNone(rates("muse-wonder-full-1.0", provider="openai", estimate=True))
+
     def test_batch_mode_discounts_standard_prices(self):
         standard = rates("claude-opus-5-5", at="2026-10-20")
         batch = rates("claude-opus-5-5", at="2026-10-20", mode="batch")

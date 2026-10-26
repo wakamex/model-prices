@@ -86,6 +86,19 @@
    "glm-5.3-flash": "glm-5.3-flashx"
   }
  },
+ "estimates": [
+  {
+   "like": "meta/muse-wonder-1.0",
+   "model": "muse-wonder-full-1.0",
+   "provider": "meta",
+   "reason": "Meta sells Muse Wonder Full only in Muse Code's Power Usage and Maximum Usage subscriptions, which count usage in prompts rather than tokens, and publishes no per-token price for it. Artificial Analysis measured both at max effort using about 54,000 output tokens per Intelligence Index task, and 6.44M input tokens per task for Wonder Full against 7.69M for Muse Wonder; no source says Wonder Full costs more per token.",
+   "sources": [
+    "https://dev.meta.ai/models/muse-wonder/",
+    "https://dev.meta.ai/docs/muse-code/subscriptions/",
+    "https://artificialanalysis.ai/articles/muse-wonder"
+   ]
+  }
+ ],
  "models_dev": {
   "commit": "4a77c9046b16b24bf15de20c907b2b7485ce3e44",
   "committed_at": "2026-10-23T18:58:46Z",
@@ -23214,5 +23227,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-10-26T18:33:44Z"
+ "updated_at": "2026-10-26T18:46:35Z"
 }

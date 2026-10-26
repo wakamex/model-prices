@@ -1,0 +1,16 @@
+# Stand-in rates for models sold with no per-token price, such as models included only in a
+# subscription. These are estimates, not prices: rates() and cost() return None for these
+# models unless the caller passes estimate=True, which returns the rates of the model named
+# in `like` with Rates.estimated_from set to it. Each entry gives its reason and sources.
+# The table is part of the published snapshot, so changing it changes pricing_basis().
+
+[[estimate]]
+provider = "meta"
+model = "muse-wonder-full-1.0"
+like = "meta/muse-wonder-1.0"
+reason = "Meta sells Muse Wonder Full only in Muse Code's Power Usage and Maximum Usage subscriptions, which count usage in prompts rather than tokens, and publishes no per-token price for it. Artificial Analysis measured both at max effort using about 54,000 output tokens per Intelligence Index task, and 6.44M input tokens per task for Wonder Full against 7.69M for Muse Wonder; no source says Wonder Full costs more per token."
+sources = [
+    "https://dev.meta.ai/models/muse-wonder/",
+    "https://dev.meta.ai/docs/muse-code/subscriptions/",
+    "https://artificialanalysis.ai/articles/muse-wonder",
+]

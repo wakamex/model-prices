@@ -86,6 +86,9 @@ class Rates:
     # A one-hour cache write's price as a multiple of the input price, for providers that
     # price it separately from the five-minute cache write; None prices it as cache_write.
     cache_write_1h_multiple: float | None = None
+    # For an estimate of a model with no per-token price, the "provider/model" whose rates
+    # stand in for it, as data/estimates.toml records; None for a published price.
+    estimated_from: str | None = None
 
     def price_key(self) -> tuple:
         """The prices alone, without provenance, for comparing rates from different sources."""
@@ -333,6 +336,17 @@ def _candidates(name: str, strict: bool) -> list[tuple[str, str]]:
     return list(unique.items())
 
 
+def _normalized(model: str, provider: str | None) -> tuple[str, str]:
+    """A model name as ids are matched, lowercased and hyphenated without any provider
+    prefix, and the provider it names or hints, mapped from harness names such as claude."""
+    name = re.sub(r"[\s_]+", "-", re.sub(r"[()]", "", model.strip().lower())).strip("-")
+    if "/" in name:
+        prefix, name = name.split("/", 1)
+        provider = provider or prefix
+    hint = (provider or "").lower()
+    return name, _data()["aliases"]["providers"].get(hint, hint)
+
+
 @cache
 def resolve_details(model: str, provider: str | None = None,
                     strict: bool = False) -> tuple[str, str, str] | None:
@@ -343,11 +357,7 @@ def resolve_details(model: str, provider: str | None = None,
     that the price belongs to a related name.
     """
     aliases = _data()["aliases"]
-    name = re.sub(r"[\s_]+", "-", re.sub(r"[()]", "", model.strip().lower())).strip("-")
-    if "/" in name:
-        prefix, name = name.split("/", 1)
-        provider = provider or prefix
-    hint = aliases["providers"].get((provider or "").lower(), (provider or "").lower())
+    name, hint = _normalized(model, provider)
 
     candidates = _candidates(name, strict)
     for candidate, removed in candidates:
@@ -491,27 +501,45 @@ def _scaled(found: Rates, period: str, factor: float) -> Rates:
 
 def rates(model: str, at: datetime | str | None = None, provider: str | None = None,
           mode: str | None = None, corrected: bool = True,
-          prices_at: datetime | str | None = None) -> Rates | None:
+          prices_at: datetime | str | None = None, estimate: bool = False) -> Rates | None:
     """Return the rates for a request made at `at` (default now), or None for an unknown model.
 
     Time-of-day pricing applies the provider's peak or off-peak rates for `at`.
     prices_at selects a different price list, such as today's, while the time-of-day rule
     in force at `at` still applies to it; it defaults to `at`.
     corrected=False returns models.dev's recorded rates without local corrections.
+    estimate=True prices a model sold with no per-token price, such as one included only in
+    a subscription, at the rates of the model data/estimates.toml names for it, with
+    Rates.estimated_from set to that model.
     """
     details = resolve_details(model, provider)
-    if details is None:
-        return None
-    resolved, removed = details[:2], details[2]
-    moment = _parse_time(at)
-    listed = _parse_time(prices_at) if prices_at is not None else moment
-    found = _lookup(*resolved, listed, mode, corrected)
+    found = None
+    if details is not None:
+        resolved, removed = details[:2], details[2]
+        moment = _parse_time(at)
+        listed = _parse_time(prices_at) if prices_at is not None else moment
+        found = _lookup(*resolved, listed, mode, corrected)
     if found is None:
-        return None
+        return _estimated(model, at, provider, mode, corrected, prices_at) if estimate else None
     found = replace(found, removed_suffix=removed) if removed else found
     # The time-of-day rule in force when the request ran applies to the chosen price list.
     period = _period(resolved[0], moment, resolved[1])
     return _scaled(found, *period) if period else found
+
+
+def _estimated(model: str, at: datetime | str | None, provider: str | None, mode: str | None,
+               corrected: bool, prices_at: datetime | str | None) -> Rates | None:
+    """The stand-in rates data/estimates.toml gives a model with no per-token price."""
+    name, hint = _normalized(model, provider)
+    candidates = dict(_candidates(name, False))
+    # Snapshots published before estimates existed have none.
+    for item in _data().get("estimates", []):
+        if item["model"].lower() in candidates and hint in ("", item["provider"]):
+            found = rates(item["like"], at=at, mode=mode, corrected=corrected, prices_at=prices_at)
+            return found and replace(found, provider=item["provider"], model=item["model"],
+                                     removed_suffix=candidates[item["model"].lower()],
+                                     estimated_from=item["like"])
+    return None
 
 
 def _change_times(provider: str, model: str, start: datetime, end: datetime) -> set[datetime]:
@@ -559,12 +587,16 @@ def cost(model: str, *, input_tokens: int = 0, output_tokens: int = 0,
          cache_read_tokens: int = 0, cache_write_tokens: int = 0,
          cache_write_1h_tokens: int = 0,
          at: datetime | str | None = None, provider: str | None = None,
-         mode: str | None = None, prices_at: datetime | str | None = None) -> float | None:
+         mode: str | None = None, prices_at: datetime | str | None = None,
+         estimate: bool = False) -> float | None:
     """Price one request made at `at`; input_tokens excludes cache reads and writes.
 
     cache_write_tokens are five-minute cache writes and cache_write_1h_tokens one-hour ones.
+    estimate=True prices a model with no per-token price at its stand-in's rates, as rates()
+    does; check rates(...).estimated_from to tell an estimate from a price.
     """
-    found = rates(model, at=at, provider=provider, mode=mode, prices_at=prices_at)
+    found = rates(model, at=at, provider=provider, mode=mode, prices_at=prices_at,
+                  estimate=estimate)
     if found is None:
         return None
     return found.cost(input_tokens, output_tokens, cache_read_tokens, cache_write_tokens,
@@ -628,6 +660,8 @@ def main(argv: list[str] | None = None) -> int:
     show.add_argument("--provider")
     show.add_argument("--at", type=_cli_time, help="ISO 8601 time (default: now)")
     show.add_argument("--mode", help="Alternate pricing mode, such as fast")
+    show.add_argument("--estimate", action="store_true",
+                      help="Estimate a model with no per-token price from its stand-in")
     show.add_argument("--json", action="store_true")
     fetch = commands.add_parser("refresh", help="Download the latest published price data")
     fetch.add_argument("--max-age", type=float, default=0, metavar="HOURS",
@@ -710,7 +744,8 @@ def main(argv: list[str] | None = None) -> int:
 
     # The newest data already downloaded, without going online.
     refresh(max_age=None)
-    found = rates(args.model, at=args.at, provider=args.provider, mode=args.mode)
+    found = rates(args.model, at=args.at, provider=args.provider, mode=args.mode,
+                  estimate=args.estimate)
     if found is None:
         print(f"No price found for {args.model}", file=sys.stderr)
         return 1
@@ -719,6 +754,8 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     period = f", {found.period.replace('_', '-')} rate" if found.period else ""
     print(f"{found.provider}/{found.model} from {found.valid_from}{period} ({found.source})")
+    if found.estimated_from:
+        print(f"estimate: no per-token price; priced as {found.estimated_from}")
     def usd(value: float | None) -> str:
         return f"${value:g}" if value is not None else "- (input price)"
 
