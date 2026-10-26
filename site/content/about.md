@@ -6,7 +6,7 @@ description = "Where model-prices' prices come from, how they are checked, and h
 navigation_group = "prices"
 +++
 
-model-prices records the API price of every model sold by the labs that sell their own models, and when each price took effect, so usage is priced at the rate in effect when it happened. The same data is published as the [model-prices Python package](https://pypi.org/project/model-prices/) and as a JSON snapshot on the repository's [`data` branch](https://github.com/wakamex/model-prices/tree/data).
+model-prices records the per-token price of every model sold by the labs that sell their own models, and when each price took effect, so usage is priced at the rate in effect when it happened. That prices pay-per-token usage, and shows what a subscription's usage would cost at the same rates. The same data is published as the [model-prices Python package](https://pypi.org/project/model-prices/) and as a JSON snapshot on the repository's [`data` branch](https://github.com/wakamex/model-prices/tree/data).
 
 ## Sources
 

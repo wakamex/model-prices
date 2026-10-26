@@ -1,6 +1,6 @@
 +++
 title = "Calculator"
-description = "Price one LLM API request at the rates in effect at any time."
+description = "Price one LLM request at the per-token rates in effect at any time."
 template = "calculator.html"
 
 [extra]

@@ -267,7 +267,7 @@ def model_page(provider: str, model: str, timelines: dict, found: dict, ran: str
     rates = latest["rates"] if latest else None
     front = {
         "title": model,
-        "description": f"{model} API prices from {name(provider)}, with dated price history.",
+        "description": f"{model} per-token prices from {name(provider)}, with dated price history.",
         "extra": {
             "breadcrumbs": [{"title": "Providers", "path": "providers/"},
                             {"title": name(provider), "path": f"providers/{slug(provider)}/"}],
@@ -405,7 +405,7 @@ def build(check_results: Path | None) -> None:
                  "official pricing page that model-prices checks.")
         (section / "_index.md").write_text(
             "+++\n" + toml({"title": name(provider), "sort_by": "title", "template": "provider.html",
-                            "description": f"{name(provider)} API prices with dated price history.",
+                            "description": f"{name(provider)} per-token prices with dated price history.",
                             "extra": {"breadcrumbs": [{"title": "Providers", "path": "providers/"}],
                                       "provider": provider,
                                       "navigation_group": "providers",
@@ -423,15 +423,16 @@ def build(check_results: Path | None) -> None:
             f"- [{name(provider)}]({slug(provider)}/): {len(data['prices'][provider])} models"
             for provider in sorted(data["prices"], key=name)) + "\n")
     (CONTENT / "_index.md").write_text(
-        "+++\n" + toml({"title": "LLM API prices with dated history", "template": "prices.html",
-                        "description": "Current and historical API prices for LLMs, checked against "
+        "+++\n" + toml({"title": "LLM token prices with dated history", "template": "prices.html",
+                        "description": "Current and historical per-token prices for LLMs, checked against "
                                        "each provider's own pricing page."})
         + "+++\n\n"
-        "What each LLM API cost on any date: every model's page lists each past price with when it "
+        "What each LLM cost per token on any date: every model's page lists each past price with when it "
         "took effect, how that date is known, and its source. Prices come from the history of "
         "[models.dev](https://models.dev), corrected where a provider's own pricing page differs, "
         "and are checked against those pages daily. Price past usage at the rates in effect when it "
-        "ran with the [calculator](calculator/), or in Python with the [model-prices package]"
+        "ran, whether you pay per token or want to see what a subscription's usage would cost at "
+        "those rates, with the [calculator](calculator/), or in Python with the [model-prices package]"
         "(https://pypi.org/project/model-prices/): `pip install model-prices`. The code is on "
         "[GitHub](https://github.com/wakamex/model-prices), and the data is published as a [JSON "
         "snapshot](https://github.com/wakamex/model-prices/tree/data/v1).\n\n"

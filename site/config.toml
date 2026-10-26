@@ -1,5 +1,5 @@
 title = "model-prices"
-description = "Current and historical LLM API prices, checked against each provider's own pricing page."
+description = "Current and historical per-token LLM prices, checked against each provider's own pricing page."
 base_url = "https://model-prices.com/"
 theme = "zola-docs"
 compile_sass = false
