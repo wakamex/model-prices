@@ -20,5 +20,3 @@
 .directory { display: none; }
 .report { margin-top: 2rem; font-size: 0.9rem; }
 .wrapping table td { white-space: normal; overflow-wrap: anywhere; min-width: 8rem; }
-/* A sidebar group heading that links to a page keeps the heading's layout and color. */
-.sidebar h2 a.sidebar-navigation-row { display: flex; color: inherit; text-decoration: none; }
