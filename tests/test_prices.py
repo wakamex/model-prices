@@ -26,6 +26,7 @@ MODEL_NAMES = [
     ("Gemini 3.5 Flash (High)", None, ("google", "gemini-3.5-flash")),
     ("zai/glm-5.3", None, ("zai", "glm-5.3")),
     ("GLM-5.3", "zcode", ("zai", "glm-5.3")),
+    ("muse-wonder-1.0", "muse", ("meta", "muse-wonder-1.0")),
     ("opencode/grok-4.7", None, ("xai", "grok-4.7")),
     ("deepseek/deepseek-v4-flash-0731", None, ("deepseek", "deepseek-v4-flash")),
     ("grok-4-6-xhigh", None, ("xai", "grok-4.6")),

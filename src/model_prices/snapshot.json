@@ -18,6 +18,7 @@
    "gemini": "google",
    "grok": "xai",
    "kimi": "moonshotai",
+   "muse": "meta",
    "qwen": "alibaba",
    "zcode": "zai"
   }
@@ -23159,5 +23160,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-10-23T18:59:52Z"
+ "updated_at": "2026-10-26T14:16:10Z"
 }
