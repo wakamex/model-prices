@@ -27,6 +27,7 @@ PAGES = {
     "meta": (FIXTURES / "meta.html").read_text(),
     "https://dev.meta.ai/models/muse-spark/": (FIXTURES / "meta-muse-spark.html").read_text(),
     "https://dev.meta.ai/models/muse-image/": (FIXTURES / "meta-muse-image.html").read_text(),
+    "https://dev.meta.ai/models/muse-wonder/": (FIXTURES / "meta-muse-wonder.html").read_text(),
     "minimax": (FIXTURES / "minimax.md").read_text(),
     "mistral": (FIXTURES / "mistral.html").read_text(),
     "https://docs.mistral.ai/models/mistral-large-3-25-12":
@@ -368,6 +369,10 @@ class CheckTests(unittest.TestCase):
         meta = _prices("meta")
         self.assertEqual(meta[("muse-spark-1.3", "output", None, None)], 4.25)
         self.assertEqual(meta[("muse-spark-1.3-contributor", "cache_read", None, None)], 0.002)
+        # The Wonder page titles its columns "Mtok input"; Wonder Full, sold only through a
+        # Muse Code subscription, has no per-token price.
+        self.assertEqual(meta[("muse-wonder-1.0", "output", None, None)], 20.0)
+        self.assertNotIn("muse-wonder-full-1.0", {model for model, *_ in meta})
 
     def test_bedrock_prices_nova_by_inference_route(self):
         bedrock = _prices("amazon-bedrock")

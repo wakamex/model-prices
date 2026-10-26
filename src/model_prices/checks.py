@@ -568,11 +568,14 @@ META_SITE = "https://dev.meta.ai"
 
 def parse_meta(text: str, today: datetime, get: Callable[[str], str]) -> list[Observed]:
     """Read the "Models and pricing" grid on each Muse model page the Meta developer site
-    links: model id, description, context window, then input, cached input, and output."""
+    links: model id, description, context window, then input, cached input, and output.
+    Pages title those columns "Input (Mtok)" or "Mtok input". A model sold only through a
+    Muse Code subscription, such as muse-wonder-full-1.0, lists "-" and gives no price."""
     found = []
     for path in sorted(set(re.findall(r'href="(/models/muse-[a-z0-9-]+/)"', text))):
         page = _html_text(get(META_SITE + path))
-        if "| Input (Mtok) | Cached input (Mtok) | Output (Mtok) |" not in page:
+        if not re.search(r"\| (Input \(Mtok\)|Mtok input) \| (Cached input \(Mtok\)"
+                         r"|Mtok cached input \(Mtok\)) \| (Output \(Mtok\)|Mtok output) \|", page):
             continue
         for model, prompt, cached, completion in re.findall(
                 r"\| (muse-[a-z0-9.-]+) \| [^|]+ \| [^|]+ \| \$([0-9.]+) \| \$([0-9.]+) \| \$([0-9.]+)",
