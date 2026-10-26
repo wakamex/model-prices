@@ -1,4 +1,4 @@
-"""Effective-dated LLM API prices from models.dev history, with sourced corrections."""
+"""Effective-dated per-token LLM prices from models.dev history, with sourced corrections."""
 
 from __future__ import annotations
 
