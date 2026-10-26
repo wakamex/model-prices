@@ -20,3 +20,22 @@
 .directory { display: none; }
 .report { margin-top: 2rem; font-size: 0.9rem; }
 .wrapping table td { white-space: normal; overflow-wrap: anywhere; min-width: 8rem; }
+/* Tighter vertical rhythm than the theme's: less space above section headings and after
+   paragraphs, and heading lines set close. */
+.prose h1, .prose h2, .prose h3, article > h1 { line-height: 1.2; }
+article > h1 { margin: 0 0 0.5em; }
+.content { padding-top: 1.5rem; }
+.breadcrumbs + h1 { margin-top: 0.3em; }
+.prose h2 { margin: 1.5em 0 0.4em; }
+.prose h3 { margin: 1.2em 0 0.3em; }
+.prose p, .prose ul, .prose ol { margin: 0 0 0.7em; }
+.prose li + li { margin-top: 0.15em; }
+.prose table { margin-bottom: 1em; }
+/* Links to the package, source, and data beside the site name. */
+.site-header .site-name { margin-right: 0; align-self: center; }
+.site-links { align-self: center; display: flex; flex-wrap: wrap; gap: 0.3rem 1.1rem; margin-left: 1.5rem; margin-right: auto; font-size: 0.95rem; }
+.site-links a { color: var(--docs-text); text-decoration: none; }
+.site-links a:hover { color: var(--docs-link); text-decoration: underline; }
+@media (max-width: 52rem) {
+  .site-links { margin-left: 0; width: 100%; }
+}

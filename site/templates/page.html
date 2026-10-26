@@ -1,2 +1,3 @@
 {% extends "zola-docs/templates/page.html" %}
+{% block header_brand %}{% include "brand.html" %}{% endblock header_brand %}
 {% block page_footer %}{% set title = "Wrong price: " ~ page.title %}{% include "report.html" %}{% endblock page_footer %}
