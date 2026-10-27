@@ -101,11 +101,12 @@ jobs:
 
       - name: Publish the snapshot to the data branch
         run: |
-          uv --no-config run --locked model-prices compile
+          # The schema 1 copy, without fields its readers do not know, serves releases up to
+          # 0.0.5; later releases read the schema 2 snapshot the package bundles.
+          uv --no-config run --locked model-prices compile --v1 "$RUNNER_TEMP/snapshot-v1.json"
           git diff --exit-code -- src/model_prices/snapshot.json
           uv --no-config run --locked python -m unittest discover -s tests
           schema="$(uv --no-config run --locked python -c 'import model_prices; print(model_prices.SCHEMA)')"
-          hash="$(sha256sum src/model_prices/snapshot.json | cut -d ' ' -f 1)"
           published="$RUNNER_TEMP/published"
           if git fetch --quiet origin data; then
             git worktree add "$published" FETCH_HEAD
@@ -113,10 +114,16 @@ jobs:
           else
             git worktree add --orphan -b data "$published"
           fi
-          mkdir -p "$published/v$schema"
-          cp src/model_prices/snapshot.json "$published/v$schema/$hash.json"
-          jq -n --arg sha256 "$hash" --arg at "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
-            '{sha256: $sha256, published_at: $at}' > "$published/v$schema/latest.json"
+          at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          for pair in "$schema:src/model_prices/snapshot.json" "1:$RUNNER_TEMP/snapshot-v1.json"; do
+            version="${pair%%:*}" file="${pair#*:}"
+            hash="$(sha256sum "$file" | cut -d ' ' -f 1)"
+            mkdir -p "$published/v$version"
+            cp "$file" "$published/v$version/$hash.json"
+            jq -n --arg sha256 "$hash" --arg at "$at" \
+              '{sha256: $sha256, published_at: $at}' > "$published/v$version/latest.json"
+          done
+          hash="$(sha256sum src/model_prices/snapshot.json | cut -d ' ' -f 1)"
           git -C "$published" add -A
           git -C "$published" commit -qm "Publish ${hash:0:12}"
           git -C "$published" push origin data

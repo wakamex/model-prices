@@ -296,6 +296,36 @@ def build(data: Path) -> dict[str, Any]:
     }
 
 
+# The rate and tier fields releases up to 0.0.5 know. They build each rate entry from all of
+# its fields and raise on any other, so the schema 1 snapshot keeps exactly these.
+V1_RATE_FIELDS = frozenset({
+    "model", "valid_from", "source", "input", "output", "cache_read", "cache_write", "tiers",
+    "valid_from_basis", "cache_write_1h_multiple"})
+V1_TIER_FIELDS = frozenset({"above", "input", "output", "cache_read", "cache_write"})
+
+
+def as_v1(snapshot: dict[str, Any]) -> dict[str, Any]:
+    """The schema 1 snapshot of a schema 2 one: the same prices and updated_at, without the
+    rate fields schema 1 readers do not know."""
+    def rates(stored: dict[str, Any] | None) -> dict[str, Any] | None:
+        if stored is None:
+            return None
+        kept = {key: value for key, value in stored.items() if key in V1_RATE_FIELDS}
+        if "tiers" in kept:
+            kept["tiers"] = [{key: value for key, value in tier.items() if key in V1_TIER_FIELDS}
+                             for tier in kept["tiers"]]
+        return kept
+
+    prices = {
+        provider: {model: {mode: [
+            {**interval, "rates": rates(interval["rates"]),
+             **({"recorded": rates(interval["recorded"])} if "recorded" in interval else {})}
+            for interval in intervals] for mode, intervals in timelines.items()}
+            for model, timelines in models.items()}
+        for provider, models in snapshot["prices"].items()}
+    return {**snapshot, "schema": 1, "prices": prices}
+
+
 def serialize(snapshot: dict[str, Any]) -> bytes:
     return (json.dumps(snapshot, indent=1, sort_keys=True, ensure_ascii=False) + "\n").encode()
 

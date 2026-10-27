@@ -160,6 +160,32 @@ class PriceTests(unittest.TestCase):
         self.assertIsNone(rates("grok-4", provider="xai", mode="batch"))
         self.assertIsNone(rates("deepseek-v4-flash", provider="deepseek", mode="batch"))
 
+    def test_rate_fields_this_release_does_not_know_are_ignored(self):
+        snapshot = json.loads(compiler.serialize(model_prices._data()))
+        interval = snapshot["prices"]["anthropic"]["claude-haiku-5-5"]["standard"][-1]
+        interval["rates"]["cache_read_explicit"] = 0.01
+        interval["rates"]["tiers"][0]["output_image"] = 30.0
+        _use(snapshot)
+
+        found = rates("claude-haiku-5-5")
+        self.assertEqual((found.input, found.tiers[0].above), (0.1, 100_000))
+
+    def test_schema_1_copy_keeps_only_the_fields_older_releases_know(self):
+        snapshot = json.loads(compiler.serialize(model_prices._data()))
+        interval = snapshot["prices"]["anthropic"]["claude-haiku-5-5"]["standard"][-1]
+        interval["rates"]["cache_read_explicit"] = 0.01
+        interval["rates"]["tiers"][0]["output_image"] = 30.0
+
+        v1 = compiler.as_v1(snapshot)
+        kept = v1["prices"]["anthropic"]["claude-haiku-5-5"]["standard"][-1]["rates"]
+        self.assertEqual((v1["schema"], snapshot["schema"]), (1, 2))
+        self.assertNotIn("cache_read_explicit", kept)
+        self.assertNotIn("output_image", kept["tiers"][0])
+        self.assertEqual(kept["input"], interval["rates"]["input"])
+        # A release up to 0.0.5 builds Rates from every field it is given.
+        Rates(provider="anthropic", model="claude-haiku-5-5",
+              **{**kept, "tiers": tuple(Tier(**tier) for tier in kept["tiers"])})
+
     def test_usage_before_first_recorded_price_uses_that_price(self):
         early = rates("claude-opus-5-5", at="2026-01-01")
 

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import argparse
 from bisect import bisect_right
-from dataclasses import asdict, dataclass, replace
+from dataclasses import asdict, dataclass, fields, replace
 from datetime import datetime, timedelta, timezone
 from functools import cache
 import hashlib
@@ -139,10 +139,11 @@ class Rates:
                               cache_write_tokens, cache_write_1h_tokens).total
 
 
-# The snapshot format this version reads. It changes only when looking up a price changes,
-# so a client prices every later snapshot of its schema correctly.
-SCHEMA = 1
-# Published snapshots: v1/latest.json names the current one, and v1/<sha256>.json holds
+# The snapshot format this version reads. Rate fields it does not know are ignored, so a
+# later snapshot of the same schema may add prices this version leaves out. Schema 1, which
+# releases up to 0.0.5 read and which raise on an unknown field, stays published unchanged.
+SCHEMA = 2
+# Published snapshots: v2/latest.json names the current one, and v2/<sha256>.json holds
 # each snapshot ever published, so a recorded pricing basis can be fetched again.
 SNAPSHOT_URL = f"https://raw.githubusercontent.com/wakamex/model-prices/data/v{SCHEMA}/"
 # Where a checkout keeps the bundled snapshot, relative to its root.
@@ -394,8 +395,14 @@ def resolve(model: str, provider: str | None = None,
     return found[:2] if found else None
 
 
+def _known(cls: type, values: dict[str, Any]) -> dict[str, Any]:
+    """The values of the fields `cls` defines, leaving out any a later snapshot adds."""
+    names = {field.name for field in fields(cls)}
+    return {key: value for key, value in values.items() if key in names}
+
+
 def _tiers(raw: list[dict[str, Any]] | None) -> tuple[Tier, ...]:
-    return tuple(Tier(**tier) for tier in raw or ())
+    return tuple(Tier(**_known(Tier, tier)) for tier in raw or ())
 
 
 # Thinking tokens are billed as output unless a model prices thinking mode separately, as
@@ -426,10 +433,10 @@ def _lookup(provider: str, model: str, at: datetime, mode: str | None,
     stored = interval["rates"] if corrected else interval.get("recorded", interval["rates"])
     if stored is None:
         return None
-    values = dict(stored)
+    values = _known(Rates, stored)
     values.setdefault("model", model)
     values["tiers"] = _tiers(values.get("tiers"))
-    return Rates(provider=provider, **values)
+    return Rates(**{**values, "provider": provider})
 
 
 def _in_window(moment: datetime, window: list[str]) -> bool:
@@ -688,6 +695,8 @@ def main(argv: list[str] | None = None) -> int:
                              help="Input data directory (default: data)")
         command.add_argument("--snapshot", type=Path, default=Path(SNAPSHOT_PATH),
                              help=f"Snapshot to write (default: {SNAPSHOT_PATH})")
+    compiler.add_argument("--v1", type=Path, metavar="PATH",
+                          help="Also write the schema 1 snapshot that releases up to 0.0.5 read")
     check = commands.add_parser(
         "check", help="Compare effective prices with official provider pricing pages"
     )
@@ -740,6 +749,9 @@ def main(argv: list[str] | None = None) -> int:
         compiled = compiler.write(args.data, args.snapshot)
         if not getattr(args, "json", False):
             print(f"Compiled {args.snapshot}" if compiled else f"{args.snapshot} is current.")
+        if getattr(args, "v1", None):
+            args.v1.write_bytes(compiler.serialize(compiler.as_v1(
+                json.loads(args.snapshot.read_text()))))
         return 0
 
     # The newest data already downloaded, without going online.

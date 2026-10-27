@@ -25370,7 +25370,7 @@
    }
   ]
  },
- "schema": 1,
+ "schema": 2,
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
@@ -25610,5 +25610,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-10-27T18:16:22Z"
+ "updated_at": "2026-10-27T22:19:34Z"
 }
