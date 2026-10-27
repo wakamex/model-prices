@@ -15,7 +15,7 @@ import warnings
 
 import model_prices
 from model_prices import Rates, Tier, compiler, cost, main, rates, rates_between, resolve
-from model_prices.backfill import _tracked, build, changed_providers, hold, parse_rates, write
+from model_prices.backfill import _tracked, build, changed_providers, hold, parse_rates, schema1, write
 
 DATA = Path(__file__).resolve().parent.parent / "data"
 
@@ -290,6 +290,62 @@ class PriceTests(unittest.TestCase):
         self.assertEqual(data["links"], {})
         self.assertEqual(data["providers"]["stepfun-ai"]["step-9"][0]["rates"],
                          {"input": 1.0, "output": 2.0})
+
+    def test_schema_2_files_read_as_models_dev_publishes_them_in_schema_1(self):
+        document = {
+            "schema": 2,
+            "cost": {
+                "text": {
+                    "input": {"price": 1, "cache": {"read": 0.1, "write": {"5m": 1.25, "1h": 2}},
+                              "overrides": [{"when": {"context": {"gt": 272_000}}, "price": 2,
+                                             "cache": {"read": 0.2}},
+                                            {"when": {"region": {"equals": "us"}}, "price": 9}]},
+                    "output": {"price": 5, "reasoning": 6,
+                               "overrides": [{"when": {"context": {"gt": 272_000}}, "price": 7.5}]},
+                },
+                "multipliers": [{"when": {"service_tier": {"equals": "priority"}}, "factor": {"text": 2}}],
+            },
+            "experimental": {"modes": {"fast": {"service_tier": "priority"},
+                                       "pro": {"body": {"reasoning": {"mode": "pro"}}}}},
+        }
+
+        self.assertEqual(parse_rates(schema1(document), "alibaba"), {
+            "input": 1.0, "output": 5.0, "cache_read": 0.1, "cache_write": 1.25,
+            "tiers": [{"above": 272_000, "input": 2.0, "output": 7.5, "cache_read": 0.2}],
+            "modes": {"fast": {"input": 2.0, "output": 10.0, "cache_read": 0.2, "cache_write": 2.5},
+                      "thinking": {"output": 6.0}},
+        })
+        # A model priced per second has no per-token price, and an unknown schema stops the build.
+        media = {"schema": 2, "cost": {"text": {"input": {"price": 1},
+                                                "output": {"price": 2, "unit": "second"}}}}
+        self.assertIsNone(parse_rates(schema1(media)))
+        with self.assertRaisesRegex(ValueError, "schema 3"):
+            schema1({"schema": 3})
+
+    def test_backfill_reads_a_link_that_became_a_file(self):
+        # StepFun's global files linked to its China ones until schema 2 made them files.
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory) / "models.dev"
+            china = repo / "providers" / "stepfun" / "models"
+            world = repo / "providers" / "stepfun-ai" / "models"
+            china.mkdir(parents=True)
+            world.mkdir(parents=True)
+            _git(repo, "init", "-q", "-b", "main")
+            (china / "step-9.toml").write_text('[cost]\ninput = 1.0\noutput = 2.0\n')
+            (world / "step-9.toml").symlink_to("../../stepfun/models/step-9.toml")
+            _commit(repo, "add step-9", "2026-09-04T10:00:00+00:00")
+            (china / "step-9.toml").write_text('[cost]\ninput = 1.1\noutput = 2.2\n')
+            (world / "step-9.toml").unlink()
+            (world / "step-9.toml").write_text(
+                'schema = 2\n[cost.text.input]\nprice = 1.0\n[cost.text.output]\nprice = 2.0\n')
+            _commit(repo, "own file", "2026-09-05T10:00:00+00:00")
+
+            data = build(repo, ("stepfun-ai",))
+
+        # The China file's later yuan-converted price does not replace the file's own price.
+        self.assertEqual([(entry["valid_from"], entry["rates"]) for entry in
+                          data["providers"]["stepfun-ai"]["step-9"]],
+                         [("2026-09-04T10:00:00Z", {"input": 1.0, "output": 2.0})])
 
     def test_backfill_trims_spaces_from_model_ids(self):
         # models.dev added Cohere's model with a trailing space and renamed it the next day.

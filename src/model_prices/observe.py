@@ -12,6 +12,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 from functools import cache, partial
+import html
 import json
 from pathlib import Path
 import re
@@ -187,17 +188,37 @@ ALIBABA_CACHE = "https://www.alibabacloud.com/help/en/model-studio/context-cache
 _ALIBABA_ID = r"(?:qwen|deepseek|glm|kimi)[a-z0-9.-]*[a-z0-9]"
 
 
+def _markdown(page: str) -> str:
+    """An HTML docs page as the Markdown its .md address used to serve: headings as #
+    lines, list items as - lines, code in backticks, and <strong> kept. Code samples are
+    left out, since their comments would read as headings."""
+    page = re.sub(r"<(script|style|pre)\b.*?</\1>", "", page, flags=re.S)
+    page = re.sub(r"<h([1-6])\b[^>]*>(.*?)</h\1>",
+                  lambda found: "\n" + "#" * int(found.group(1)) + " " + found.group(2) + "\n",
+                  page, flags=re.S)
+    page = re.sub(r"<li\b[^>]*>", "\n- ", page)
+    page = re.sub(r"</?code\b[^>]*>", "`", page)
+    page = re.sub(r"</?(p|div|section|tr|br|ul|ol|table)\b[^>]*>", "\n", page)
+    page = re.sub(r"<(?!/?strong>)[^>]+>", "", page)
+    lines = (" ".join(html.unescape(line).split()) for line in page.splitlines())
+    return "\n".join(line for line in lines if line)
+
+
 def _alibaba_cache_section(page: str, title: str) -> tuple[str, str]:
-    """A cache mode's Singapore supported-model list and its billing text."""
+    """A cache mode's Singapore supported-model list and its billing text. The page marks
+    regions with <Tab title=...> in Markdown and #### headings in converted HTML."""
+    if re.match(r"\s*<(!doctype|html)", page, re.I):
+        page = _markdown(page)
     section = re.search(rf"^## {title}\b(.*?)(?=^## |\Z)", page, re.M | re.S)
-    tab = section and re.search(r'### Supported models.*?<Tab title="Singapore">(.*?)</Tab>',
-                                section.group(1), re.S)
+    tab = section and re.search(r'### Supported models.*?(?:<Tab title="Singapore">(.*?)</Tab>'
+                                r'|^#### Singapore\n(.*?)(?=^#{3,4} |\Z))',
+                                section.group(1), re.S | re.M)
     billing = section and re.search(r"^### Billing(.*?)(?=^### |\Z)", section.group(1),
                                     re.M | re.S)
     if not tab or not billing:
         raise ValueError(f"alibaba: no {title} models or billing in {ALIBABA_CACHE}; "
                          "the page format changed")
-    return tab.group(1), billing.group(1)
+    return tab.group(1) or tab.group(2), billing.group(1)
 
 
 def parse_alibaba_cache(page: str) -> tuple[set[str], set[str]]:

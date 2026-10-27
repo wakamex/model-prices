@@ -40,6 +40,10 @@ class _Inputs:
                                  if observed.exists() else ()):
             listed = self.prices["providers"].setdefault(provider, {})
             for model, entries in models.items():
+                # A model read from its provider's pricing page is sold, even when models.dev
+                # deleted its file, as it did a claude-mythos-5-1 file added by mistake.
+                if self.prices["status"].get(provider, {}).get(model) == "removed":
+                    del self.prices["status"][provider][model]
                 # Once models.dev lists an observed model, its history takes over from its
                 # first entry.
                 start = _parse_time(listed[model][0]["valid_from"]) if model in listed else None

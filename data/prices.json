@@ -106,6 +106,76 @@
       "output": 0.4
      },
      "valid_from": "2026-08-09T01:58:10Z"
+    },
+    {
+     "commit": "d955efbd1b99",
+     "rates": {
+      "cache_read": 0.088,
+      "input": 0.44,
+      "output": 1.32
+     },
+     "valid_from": "2026-10-20T03:35:36Z"
+    }
+   ],
+   "deepseek-v4-pro": [
+    {
+     "commit": "d955efbd1b99",
+     "rates": {
+      "input": 2.4,
+      "output": 4.8
+     },
+     "valid_from": "2026-10-20T03:35:36Z"
+    }
+   ],
+   "deepseek-v4-pro-0813": [
+    {
+     "commit": "d955efbd1b99",
+     "rates": {
+      "input": 1.32,
+      "output": 3.96
+     },
+     "valid_from": "2026-10-20T03:35:36Z"
+    }
+   ],
+   "deepseek-v4.1-flash": [
+    {
+     "commit": "d955efbd1b99",
+     "rates": {
+      "cache_read": 0.03,
+      "input": 0.3,
+      "output": 1.2
+     },
+     "valid_from": "2026-10-20T03:35:36Z"
+    }
+   ],
+   "deepseek-v4.1-flash-1017": [
+    {
+     "commit": "d955efbd1b99",
+     "rates": {
+      "cache_read": 0.03,
+      "input": 0.3,
+      "output": 1.2
+     },
+     "valid_from": "2026-10-20T03:35:36Z"
+    }
+   ],
+   "glm-5.1": [
+    {
+     "commit": "d955efbd1b99",
+     "rates": {
+      "input": 1.4,
+      "output": 4.4
+     },
+     "valid_from": "2026-10-20T03:35:36Z"
+    },
+    {
+     "commit": "4572483f60cd",
+     "rates": {
+      "cache_read": 0.26,
+      "input": 1.4,
+      "output": 4.4
+     },
+     "valid_from": "2026-10-23T05:56:10Z"
     }
    ],
    "glm-5.2": [
@@ -118,6 +188,27 @@
       "output": 4.4
      },
      "valid_from": "2026-08-09T01:58:10Z"
+    }
+   ],
+   "glm-5.3": [
+    {
+     "commit": "d955efbd1b99",
+     "rates": {
+      "input": 1.4,
+      "output": 4.4
+     },
+     "valid_from": "2026-10-20T03:35:36Z"
+    }
+   ],
+   "kimi-k2.7-code": [
+    {
+     "commit": "d955efbd1b99",
+     "rates": {
+      "cache_read": 0.19,
+      "input": 0.95,
+      "output": 4.0
+     },
+     "valid_from": "2026-10-20T03:35:36Z"
     }
    ],
    "kimi-k3": [
@@ -149,6 +240,40 @@
       "output": 0.4
      },
      "valid_from": "2025-10-14T17:34:46Z"
+    },
+    {
+     "commit": "d955efbd1b99",
+     "rates": {
+      "input": 0.05,
+      "output": 0.4,
+      "tiers": [
+       {
+        "above": 256000,
+        "input": 0.25,
+        "output": 2.0
+       }
+      ]
+     },
+     "valid_from": "2026-10-20T03:35:36Z"
+    },
+    {
+     "commit": "4572483f60cd",
+     "rates": {
+      "cache_read": 0.01,
+      "cache_write": 0.0625,
+      "input": 0.05,
+      "output": 0.4,
+      "tiers": [
+       {
+        "above": 256000,
+        "cache_read": 0.05,
+        "cache_write": 0.3125,
+        "input": 0.25,
+        "output": 2.0
+       }
+      ]
+     },
+     "valid_from": "2026-10-23T05:56:10Z"
     }
    ],
    "qwen-max": [
@@ -214,6 +339,50 @@
       "output": 1.2
      },
      "valid_from": "2025-10-14T17:34:46Z"
+    },
+    {
+     "commit": "d955efbd1b99",
+     "rates": {
+      "input": 0.4,
+      "modes": {
+       "thinking": {
+        "output": 4.0
+       }
+      },
+      "output": 1.2,
+      "tiers": [
+       {
+        "above": 256000,
+        "input": 1.2,
+        "output": 3.6
+       }
+      ]
+     },
+     "valid_from": "2026-10-20T03:35:36Z"
+    },
+    {
+     "commit": "4572483f60cd",
+     "rates": {
+      "cache_read": 0.08,
+      "cache_write": 0.5,
+      "input": 0.4,
+      "modes": {
+       "thinking": {
+        "output": 4.0
+       }
+      },
+      "output": 1.2,
+      "tiers": [
+       {
+        "above": 256000,
+        "cache_read": 0.24,
+        "cache_write": 1.5,
+        "input": 1.2,
+        "output": 3.6
+       }
+      ]
+     },
+     "valid_from": "2026-10-23T05:56:10Z"
     }
    ],
    "qwen-plus-character-ja": [
@@ -487,6 +656,64 @@
       "output": 1.5
      },
      "valid_from": "2025-10-14T17:34:46Z"
+    },
+    {
+     "commit": "d955efbd1b99",
+     "rates": {
+      "input": 0.3,
+      "output": 1.5,
+      "tiers": [
+       {
+        "above": 32000,
+        "input": 0.5,
+        "output": 2.5
+       },
+       {
+        "above": 128000,
+        "input": 0.8,
+        "output": 4.0
+       },
+       {
+        "above": 256000,
+        "input": 1.6,
+        "output": 9.6
+       }
+      ]
+     },
+     "valid_from": "2026-10-20T03:35:36Z"
+    },
+    {
+     "commit": "4572483f60cd",
+     "rates": {
+      "cache_read": 0.06,
+      "cache_write": 0.375,
+      "input": 0.3,
+      "output": 1.5,
+      "tiers": [
+       {
+        "above": 32000,
+        "cache_read": 0.1,
+        "cache_write": 0.625,
+        "input": 0.5,
+        "output": 2.5
+       },
+       {
+        "above": 128000,
+        "cache_read": 0.16,
+        "cache_write": 1.0,
+        "input": 0.8,
+        "output": 4.0
+       },
+       {
+        "above": 256000,
+        "cache_read": 0.32,
+        "cache_write": 2.0,
+        "input": 1.6,
+        "output": 9.6
+       }
+      ]
+     },
+     "valid_from": "2026-10-23T05:56:10Z"
     }
    ],
    "qwen3-coder-plus": [
@@ -602,6 +829,52 @@
       "output": 1.6
      },
      "valid_from": "2025-10-14T17:34:46Z"
+    },
+    {
+     "commit": "d955efbd1b99",
+     "rates": {
+      "input": 0.2,
+      "output": 1.6,
+      "tiers": [
+       {
+        "above": 32000,
+        "input": 0.3,
+        "output": 2.4
+       },
+       {
+        "above": 128000,
+        "input": 0.6,
+        "output": 4.8
+       }
+      ]
+     },
+     "valid_from": "2026-10-20T03:35:36Z"
+    },
+    {
+     "commit": "4572483f60cd",
+     "rates": {
+      "cache_read": 0.04,
+      "cache_write": 0.25,
+      "input": 0.2,
+      "output": 1.6,
+      "tiers": [
+       {
+        "above": 32000,
+        "cache_read": 0.06,
+        "cache_write": 0.375,
+        "input": 0.3,
+        "output": 2.4
+       },
+       {
+        "above": 128000,
+        "cache_read": 0.12,
+        "cache_write": 0.75,
+        "input": 0.6,
+        "output": 4.8
+       }
+      ]
+     },
+     "valid_from": "2026-10-23T05:56:10Z"
     }
    ],
    "qwen3.5-122b-a10b": [
@@ -682,6 +955,26 @@
       "output": 2.4
      },
      "valid_from": "2026-02-16T22:06:32Z"
+    },
+    {
+     "commit": "d955efbd1b99",
+     "rates": {
+      "input": 0.4,
+      "modes": {
+       "thinking": {
+        "output": 2.4
+       }
+      },
+      "output": 2.4,
+      "tiers": [
+       {
+        "above": 256000,
+        "input": 0.5,
+        "output": 3.0
+       }
+      ]
+     },
+     "valid_from": "2026-10-20T03:35:36Z"
     }
    ],
    "qwen3.6-27b": [
@@ -702,6 +995,14 @@
       "output": 1.485
      },
      "valid_from": "2026-04-27T19:36:51Z"
+    },
+    {
+     "commit": "d955efbd1b99",
+     "rates": {
+      "input": 0.375,
+      "output": 2.25
+     },
+     "valid_from": "2026-10-20T03:35:36Z"
     }
    ],
    "qwen3.6-flash": [
@@ -713,6 +1014,25 @@
       "output": 1.125
      },
      "valid_from": "2026-05-22T21:58:08Z"
+    },
+    {
+     "commit": "d955efbd1b99",
+     "rates": {
+      "cache_read": 0.025,
+      "cache_write": 0.3125,
+      "input": 0.25,
+      "output": 1.5,
+      "tiers": [
+       {
+        "above": 256000,
+        "cache_read": 0.1,
+        "cache_write": 1.25,
+        "input": 1.0,
+        "output": 4.0
+       }
+      ]
+     },
+     "valid_from": "2026-10-20T03:35:36Z"
     }
    ],
    "qwen3.6-max-preview": [
@@ -784,6 +1104,32 @@
       ]
      },
      "valid_from": "2026-09-28T04:01:19Z"
+    },
+    {
+     "commit": "4572483f60cd",
+     "rates": {
+      "cache_read": 0.006,
+      "cache_write": 0.0375,
+      "input": 0.03,
+      "output": 0.13,
+      "tiers": [
+       {
+        "above": 32000,
+        "cache_read": 0.02,
+        "cache_write": 0.125,
+        "input": 0.1,
+        "output": 0.4
+       },
+       {
+        "above": 256000,
+        "cache_read": 0.04,
+        "cache_write": 0.25,
+        "input": 0.2,
+        "output": 0.8
+       }
+      ]
+     },
+     "valid_from": "2026-10-23T05:56:10Z"
     }
    ],
    "qwen3.7-max": [
@@ -855,6 +1201,67 @@
       ]
      },
      "valid_from": "2026-09-28T04:01:19Z"
+    },
+    {
+     "commit": "4572483f60cd",
+     "rates": {
+      "cache_read": 0.08,
+      "cache_write": 0.5,
+      "input": 0.4,
+      "output": 1.6,
+      "tiers": [
+       {
+        "above": 256000,
+        "cache_read": 0.24,
+        "cache_write": 1.5,
+        "input": 1.2,
+        "output": 4.8
+       }
+      ]
+     },
+     "valid_from": "2026-10-23T05:56:10Z"
+    }
+   ],
+   "qwen3.8-2.4t-a95b": [
+    {
+     "commit": "d955efbd1b99",
+     "rates": {
+      "cache_write": 2.5,
+      "input": 2.0,
+      "output": 6.0
+     },
+     "valid_from": "2026-10-20T03:35:36Z"
+    },
+    {
+     "commit": "4572483f60cd",
+     "rates": {
+      "cache_read": 0.25,
+      "cache_write": 2.5,
+      "input": 2.0,
+      "output": 6.0
+     },
+     "valid_from": "2026-10-23T05:56:10Z"
+    }
+   ],
+   "qwen3.8-27b": [
+    {
+     "commit": "d955efbd1b99",
+     "rates": {
+      "cache_write": 0.625,
+      "input": 0.5,
+      "output": 3.0
+     },
+     "valid_from": "2026-10-20T03:35:36Z"
+    },
+    {
+     "commit": "4572483f60cd",
+     "rates": {
+      "cache_read": 0.1,
+      "cache_write": 0.625,
+      "input": 0.5,
+      "output": 3.0
+     },
+     "valid_from": "2026-10-23T05:56:10Z"
     }
    ],
    "qwen3.8-flash": [
@@ -879,6 +1286,27 @@
       "output": 6.0
      },
      "valid_from": "2026-08-04T14:21:35Z"
+    }
+   ],
+   "qwen3.8-max-0902": [
+    {
+     "commit": "d955efbd1b99",
+     "rates": {
+      "cache_write": 2.5,
+      "input": 2.0,
+      "output": 6.0
+     },
+     "valid_from": "2026-10-20T03:35:36Z"
+    },
+    {
+     "commit": "4572483f60cd",
+     "rates": {
+      "cache_read": 0.25,
+      "cache_write": 2.5,
+      "input": 2.0,
+      "output": 6.0
+     },
+     "valid_from": "2026-10-23T05:56:10Z"
     }
    ],
    "qwen3.8-omni-flash": [
@@ -1447,14 +1875,14 @@
    ],
    "claude-3-5-haiku-latest": [
     {
-     "commit": "d7a539e5ea5a",
+     "commit": "1548a725f07c",
      "rates": {
       "cache_read": 0.08,
       "cache_write": 1.0,
       "input": 0.8,
       "output": 4.0
      },
-     "valid_from": "2025-12-08T04:08:14Z"
+     "valid_from": "2025-10-24T06:07:31Z"
     }
    ],
    "claude-3-5-sonnet-20240620": [
@@ -1549,14 +1977,14 @@
    ],
    "claude-3-7-sonnet-latest": [
     {
-     "commit": "d7a539e5ea5a",
+     "commit": "1548a725f07c",
      "rates": {
       "cache_read": 0.3,
       "cache_write": 3.75,
       "input": 3.0,
       "output": 15.0
      },
-     "valid_from": "2025-12-08T04:08:14Z"
+     "valid_from": "2025-10-24T06:07:31Z"
     }
    ],
    "claude-3-haiku-20240307": [
@@ -1665,14 +2093,14 @@
    ],
    "claude-haiku-4-5": [
     {
-     "commit": "66ef0ed41109",
+     "commit": "1548a725f07c",
      "rates": {
       "cache_read": 0.1,
       "cache_write": 1.25,
       "input": 1.0,
       "output": 5.0
      },
-     "valid_from": "2025-11-23T20:22:38Z"
+     "valid_from": "2025-10-24T06:07:31Z"
     }
    ],
    "claude-haiku-4-5-20251001": [
@@ -1728,28 +2156,40 @@
      "valid_from": "2026-10-07T19:43:35Z"
     }
    ],
+   "claude-mythos-5-1": [
+    {
+     "commit": "16e8e2175d3d",
+     "rates": {
+      "cache_read": 0.25,
+      "cache_write": 12.5,
+      "input": 10.0,
+      "output": 50.0
+     },
+     "valid_from": "2026-10-24T03:46:07Z"
+    }
+   ],
    "claude-opus-4-0": [
     {
-     "commit": "d7a539e5ea5a",
+     "commit": "1548a725f07c",
      "rates": {
       "cache_read": 1.5,
       "cache_write": 18.75,
       "input": 15.0,
       "output": 75.0
      },
-     "valid_from": "2025-12-08T04:08:14Z"
+     "valid_from": "2025-10-24T06:07:31Z"
     }
    ],
    "claude-opus-4-1": [
     {
-     "commit": "d7a539e5ea5a",
+     "commit": "1548a725f07c",
      "rates": {
       "cache_read": 1.5,
       "cache_write": 18.75,
       "input": 15.0,
       "output": 75.0
      },
-     "valid_from": "2025-12-08T04:08:14Z"
+     "valid_from": "2025-10-24T06:07:31Z"
     }
    ],
    "claude-opus-4-1-20250805": [
@@ -2010,14 +2450,14 @@
    ],
    "claude-sonnet-4-0": [
     {
-     "commit": "d7a539e5ea5a",
+     "commit": "1548a725f07c",
      "rates": {
       "cache_read": 0.3,
       "cache_write": 3.75,
       "input": 3.0,
       "output": 15.0
      },
-     "valid_from": "2025-12-08T04:08:14Z"
+     "valid_from": "2025-10-24T06:07:31Z"
     }
    ],
    "claude-sonnet-4-20250514": [
@@ -2052,14 +2492,14 @@
    ],
    "claude-sonnet-4-5": [
     {
-     "commit": "d7a539e5ea5a",
+     "commit": "1548a725f07c",
      "rates": {
       "cache_read": 0.3,
       "cache_write": 3.75,
       "input": 3.0,
       "output": 15.0
      },
-     "valid_from": "2025-12-08T04:08:14Z"
+     "valid_from": "2025-10-24T06:07:31Z"
     }
    ],
    "claude-sonnet-4-5-20250929": [
@@ -2194,6 +2634,28 @@
      "valid_from": "2026-08-19T04:26:28Z"
     }
    ],
+   "deepseek/deepseek-v4.1-flash": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.007,
+      "input": 0.22,
+      "output": 0.66
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "deepseek/deepseek-v4.1-flash-1017": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.006,
+      "input": 0.3,
+      "output": 1.2
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
    "moonshotai/kimi-k3": [
     {
      "commit": "ab6c64dc8917",
@@ -2237,6 +2699,28 @@
      },
      "valid_from": "2026-08-19T04:26:28Z"
     }
+   ],
+   "zai-org/glm-5.3": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.26,
+      "input": 1.4,
+      "output": 4.4
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "zai-org/glm-5.3-flash": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.03,
+      "input": 0.15,
+      "output": 0.5
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
    ]
   },
   "bailing": {
@@ -2262,6 +2746,16 @@
    ]
   },
   "cohere": {
+   "c4ai-aya-expanse-32b": [
+    {
+     "commit": "2a1b9b279d12",
+     "rates": {
+      "input": 0.5,
+      "output": 1.5
+     },
+     "valid_from": "2026-10-20T04:27:22Z"
+    }
+   ],
    "command-a-03-2025": [
     {
      "commit": "178c0dd5f328",
@@ -2810,6 +3304,16 @@
      "valid_from": "2025-09-26T16:02:13Z"
     }
    ],
+   "gemini-2.5-flash-native-audio-preview-12-2025": [
+    {
+     "commit": "5af55ed252ab",
+     "rates": {
+      "input": 0.5,
+      "output": 2.0
+     },
+     "valid_from": "2026-10-20T01:14:04Z"
+    }
+   ],
    "gemini-2.5-flash-preview-04-17": [
     {
      "commit": "0d3502c677e1",
@@ -3274,6 +3778,26 @@
      "valid_from": "2026-07-23T23:30:23Z"
     }
    ],
+   "gemini-3.5-transcribe": [
+    {
+     "commit": "5af55ed252ab",
+     "rates": {
+      "input": 2.0,
+      "output": 12.0
+     },
+     "valid_from": "2026-10-20T01:14:04Z"
+    }
+   ],
+   "gemini-3.5-transcribe-live": [
+    {
+     "commit": "5af55ed252ab",
+     "rates": {
+      "input": 3.5,
+      "output": 21.0
+     },
+     "valid_from": "2026-10-20T01:14:04Z"
+    }
+   ],
    "gemini-3.6-flash": [
     {
      "commit": "97af27c2d962",
@@ -3314,6 +3838,46 @@
       "output": 3.75
      },
      "valid_from": "2026-09-02T18:53:25Z"
+    }
+   ],
+   "gemini-3.8-flash-lite-tts": [
+    {
+     "commit": "5af55ed252ab",
+     "rates": {
+      "input": 0.5,
+      "output": 6.0
+     },
+     "valid_from": "2026-10-20T01:14:04Z"
+    }
+   ],
+   "gemini-3.8-flash-tts": [
+    {
+     "commit": "5af55ed252ab",
+     "rates": {
+      "input": 0.5,
+      "output": 9.0
+     },
+     "valid_from": "2026-10-20T01:14:04Z"
+    }
+   ],
+   "gemini-3.8-live": [
+    {
+     "commit": "5af55ed252ab",
+     "rates": {
+      "input": 0.75,
+      "output": 4.5
+     },
+     "valid_from": "2026-10-20T01:14:04Z"
+    }
+   ],
+   "gemini-3.8-live-extended-thinking": [
+    {
+     "commit": "5af55ed252ab",
+     "rates": {
+      "input": 0.75,
+      "output": 4.5
+     },
+     "valid_from": "2026-10-20T01:14:04Z"
     }
    ],
    "gemini-4-argon": [
@@ -3434,6 +3998,26 @@
      "valid_from": "2025-09-29T16:21:14Z"
     }
    ],
+   "gemini-nano-banana-2.1": [
+    {
+     "commit": "5af55ed252ab",
+     "rates": {
+      "input": 1.5,
+      "output": 30.0
+     },
+     "valid_from": "2026-10-20T01:14:04Z"
+    }
+   ],
+   "gemini-omni-1.1-flash": [
+    {
+     "commit": "5af55ed252ab",
+     "rates": {
+      "input": 1.5,
+      "output": 17.5
+     },
+     "valid_from": "2026-10-20T01:14:04Z"
+    }
+   ],
    "gemini-omni-flash-preview": [
     {
      "commit": "11d3d5bef1ef",
@@ -3444,6 +4028,25 @@
      "valid_from": "2026-07-08T21:27:04Z"
     }
    ],
+   "gemini-pro-latest": [
+    {
+     "commit": "bdf102b9b084",
+     "rates": {
+      "cache_read": 0.2,
+      "input": 2.0,
+      "output": 12.0,
+      "tiers": [
+       {
+        "above": 200000,
+        "cache_read": 0.4,
+        "input": 4.0,
+        "output": 18.0
+       }
+      ]
+     },
+     "valid_from": "2026-10-20T17:32:09Z"
+    }
+   ],
    "gemini-robotics-er-1.6-preview": [
     {
      "commit": "22e4bf262011",
@@ -3452,6 +4055,27 @@
       "output": 5.0
      },
      "valid_from": "2026-07-23T23:30:08Z"
+    }
+   ],
+   "gemini-robotics-er-2-preview": [
+    {
+     "commit": "5af55ed252ab",
+     "rates": {
+      "cache_read": 0.1,
+      "input": 1.0,
+      "output": 5.0
+     },
+     "valid_from": "2026-10-20T01:14:04Z"
+    }
+   ],
+   "gemini-robotics-er-2-streaming-preview": [
+    {
+     "commit": "5af55ed252ab",
+     "rates": {
+      "input": 1.0,
+      "output": 5.0
+     },
+     "valid_from": "2026-10-20T01:14:04Z"
     }
    ],
    "gemma-3-12b-it": [
@@ -3538,6 +4162,15 @@
       "output": 0.15
      },
      "valid_from": "2026-09-10T16:34:13Z"
+    },
+    {
+     "commit": "8350b992d70f",
+     "rates": {
+      "cache_read": 0.02,
+      "input": 0.2,
+      "output": 0.75
+     },
+     "valid_from": "2026-10-21T05:15:03Z"
     }
    ],
    "mercury-3": [
@@ -3561,6 +4194,16 @@
       "output": 1.0
      },
      "valid_from": "2025-08-03T01:25:37Z"
+    }
+   ],
+   "mercury-decide": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "input": 0.02,
+      "output": 0.0
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
     }
    ],
    "mercury-edit": [
@@ -3596,6 +4239,26 @@
       "output": 2.95
      },
      "valid_from": "2026-07-04T21:29:04Z"
+    },
+    {
+     "commit": "8350b992d70f",
+     "rates": {
+      "cache_read": 0.006,
+      "input": 0.3,
+      "output": 1.2
+     },
+     "valid_from": "2026-10-21T05:15:03Z"
+    }
+   ],
+   "LongCat-2.5-Preview": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.006,
+      "input": 0.3,
+      "output": 1.2
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
     }
    ]
   },
@@ -3826,6 +4489,16 @@
      "valid_from": "2026-10-07T14:52:28Z"
     }
    ],
+   "codestral-embed": [
+    {
+     "commit": "955bb8d9b633",
+     "rates": {
+      "input": 0.15,
+      "output": 0.0
+     },
+     "valid_from": "2026-10-20T03:20:56Z"
+    }
+   ],
    "codestral-latest": [
     {
      "commit": "024e4bdbf253",
@@ -4002,6 +4675,15 @@
       "output": 0.04
      },
      "valid_from": "2025-06-10T16:33:35Z"
+    },
+    {
+     "commit": "955bb8d9b633",
+     "rates": {
+      "cache_read": 0.01,
+      "input": 0.1,
+      "output": 0.1
+     },
+     "valid_from": "2026-10-20T03:20:56Z"
     }
    ],
    "ministral-8b-2512": [
@@ -4023,6 +4705,15 @@
       "output": 0.1
      },
      "valid_from": "2025-06-10T16:33:35Z"
+    },
+    {
+     "commit": "955bb8d9b633",
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.15,
+      "output": 0.15
+     },
+     "valid_from": "2026-10-20T03:20:56Z"
     }
    ],
    "mistral-embed": [
@@ -4073,6 +4764,15 @@
       "output": 2.09
      },
      "valid_from": "2026-10-06T15:35:03Z"
+    },
+    {
+     "commit": "05955d4c12ee",
+     "rates": {
+      "cache_read": 0.14,
+      "input": 1.36,
+      "output": 4.18
+     },
+     "valid_from": "2026-10-22T16:09:12Z"
     }
    ],
    "mistral-large-latest": [
@@ -4182,6 +4882,16 @@
       "output": 7.5
      },
      "valid_from": "2026-09-29T00:37:26Z"
+    }
+   ],
+   "mistral-moderation-2603": [
+    {
+     "commit": "955bb8d9b633",
+     "rates": {
+      "input": 0.0,
+      "output": 0.0
+     },
+     "valid_from": "2026-10-20T03:20:56Z"
     }
    ],
    "mistral-nemo": [
@@ -4328,6 +5038,14 @@
       "output": 0.3
      },
      "valid_from": "2026-08-02T16:08:24Z"
+    },
+    {
+     "commit": "955bb8d9b633",
+     "rates": {
+      "input": 0.1,
+      "output": 0.4
+     },
+     "valid_from": "2026-10-20T03:20:56Z"
     }
    ],
    "zai-glm-5-2": [
@@ -4350,6 +5068,17 @@
       "output": 4.4
      },
      "valid_from": "2026-09-18T01:49:37Z"
+    }
+   ],
+   "zai-glm-5-3-flash": [
+    {
+     "commit": "4b4f5ec5eb72",
+     "rates": {
+      "cache_read": 0.03,
+      "input": 0.15,
+      "output": 0.5
+     },
+     "valid_from": "2026-10-22T22:54:12Z"
     }
    ]
   },
@@ -4483,6 +5212,30 @@
      },
      "valid_from": "2026-10-07T15:06:33Z"
     }
+   ],
+   "kimi-k3.1-pro": [
+    {
+     "commit": "4a77c9046b16",
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 2.0,
+      "input": 2.0,
+      "output": 10.0
+     },
+     "valid_from": "2026-10-23T18:58:46Z"
+    }
+   ],
+   "kimi-k3.1-pro-highspeed": [
+    {
+     "commit": "4a77c9046b16",
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 4.0,
+      "input": 4.0,
+      "output": 20.0
+     },
+     "valid_from": "2026-10-23T18:58:46Z"
+    }
    ]
   },
   "nova": {
@@ -4508,6 +5261,17 @@
    ]
   },
   "openai": {
+   "chat-latest": [
+    {
+     "commit": "efd88a768e7f",
+     "rates": {
+      "cache_read": 0.5,
+      "input": 5.0,
+      "output": 30.0
+     },
+     "valid_from": "2026-10-20T00:05:42Z"
+    }
+   ],
    "codex-mini-latest": [
     {
      "commit": "622348a07a31",
@@ -4833,6 +5597,36 @@
      "valid_from": "2026-10-01T01:47:31Z"
     }
    ],
+   "gpt-4o-mini-transcribe": [
+    {
+     "commit": "efd88a768e7f",
+     "rates": {
+      "input": 1.25,
+      "output": 5.0
+     },
+     "valid_from": "2026-10-20T00:05:42Z"
+    }
+   ],
+   "gpt-4o-transcribe": [
+    {
+     "commit": "efd88a768e7f",
+     "rates": {
+      "input": 2.5,
+      "output": 10.0
+     },
+     "valid_from": "2026-10-20T00:05:42Z"
+    }
+   ],
+   "gpt-4o-transcribe-diarize": [
+    {
+     "commit": "efd88a768e7f",
+     "rates": {
+      "input": 2.5,
+      "output": 10.0
+     },
+     "valid_from": "2026-10-20T00:05:42Z"
+    }
+   ],
    "gpt-5": [
     {
      "commit": "70397b8045e9",
@@ -5013,6 +5807,17 @@
       "output": 120.0
      },
      "valid_from": "2025-10-27T12:12:18Z"
+    }
+   ],
+   "gpt-5-search-api": [
+    {
+     "commit": "efd88a768e7f",
+     "rates": {
+      "cache_read": 0.125,
+      "input": 1.25,
+      "output": 10.0
+     },
+     "valid_from": "2026-10-20T00:05:42Z"
     }
    ],
    "gpt-5.1": [
@@ -5560,6 +6365,18 @@
      "valid_from": "2026-08-25T04:37:24Z"
     }
    ],
+   "gpt-5.6-cyber": [
+    {
+     "commit": "efd88a768e7f",
+     "rates": {
+      "cache_read": 1.25,
+      "cache_write": 15.625,
+      "input": 12.5,
+      "output": 75.0
+     },
+     "valid_from": "2026-10-20T00:05:42Z"
+    }
+   ],
    "gpt-5.6-luna": [
     {
      "commit": "9abddea6bb98",
@@ -5910,6 +6727,65 @@
      "valid_from": "2026-10-08T21:03:51Z"
     }
    ],
+   "gpt-6.1-terra": [
+    {
+     "commit": "f290f5f68cd5",
+     "rates": {
+      "cache_read": 0.05,
+      "cache_write": 1.25,
+      "input": 1.0,
+      "modes": {
+       "fast": {
+        "cache_read": 0.1,
+        "cache_write": 2.5,
+        "input": 2.0,
+        "output": 10.0
+       }
+      },
+      "output": 5.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 0.1,
+        "cache_write": 2.5,
+        "input": 2.0,
+        "output": 7.5
+       }
+      ]
+     },
+     "valid_from": "2026-10-26T18:32:23Z"
+    }
+   ],
+   "gpt-audio": [
+    {
+     "commit": "efd88a768e7f",
+     "rates": {
+      "input": 2.5,
+      "output": 10.0
+     },
+     "valid_from": "2026-10-20T00:05:42Z"
+    }
+   ],
+   "gpt-audio-1.5": [
+    {
+     "commit": "efd88a768e7f",
+     "rates": {
+      "input": 2.5,
+      "output": 10.0
+     },
+     "valid_from": "2026-10-20T00:05:42Z"
+    }
+   ],
+   "gpt-audio-mini": [
+    {
+     "commit": "efd88a768e7f",
+     "rates": {
+      "input": 0.6,
+      "output": 2.4
+     },
+     "valid_from": "2026-10-20T00:05:42Z"
+    }
+   ],
    "gpt-daybreak-blue-latest": [
     {
      "commit": "3013b489616a",
@@ -5954,6 +6830,61 @@
      "valid_from": "2026-06-18T09:46:32Z"
     }
    ],
+   "gpt-image-2.5-flare": [
+    {
+     "commit": "efd88a768e7f",
+     "rates": {
+      "cache_read": 1.25,
+      "input": 5.0,
+      "output": 30.0
+     },
+     "valid_from": "2026-10-20T00:05:42Z"
+    }
+   ],
+   "gpt-image-2.5-sunburst": [
+    {
+     "commit": "efd88a768e7f",
+     "rates": {
+      "cache_read": 1.25,
+      "input": 5.0,
+      "output": 30.0
+     },
+     "valid_from": "2026-10-20T00:05:42Z"
+    }
+   ],
+   "gpt-realtime": [
+    {
+     "commit": "efd88a768e7f",
+     "rates": {
+      "cache_read": 0.4,
+      "input": 4.0,
+      "output": 16.0
+     },
+     "valid_from": "2026-10-20T00:05:42Z"
+    }
+   ],
+   "gpt-realtime-1.5": [
+    {
+     "commit": "efd88a768e7f",
+     "rates": {
+      "cache_read": 0.4,
+      "input": 4.0,
+      "output": 16.0
+     },
+     "valid_from": "2026-10-20T00:05:42Z"
+    }
+   ],
+   "gpt-realtime-2": [
+    {
+     "commit": "efd88a768e7f",
+     "rates": {
+      "cache_read": 0.4,
+      "input": 4.0,
+      "output": 24.0
+     },
+     "valid_from": "2026-10-20T00:05:42Z"
+    }
+   ],
    "gpt-realtime-2.1": [
     {
      "commit": "5a21c5d14e1d",
@@ -5963,6 +6894,28 @@
       "output": 24.0
      },
      "valid_from": "2026-07-10T19:32:05Z"
+    }
+   ],
+   "gpt-realtime-2.1-mini": [
+    {
+     "commit": "efd88a768e7f",
+     "rates": {
+      "cache_read": 0.06,
+      "input": 0.6,
+      "output": 2.4
+     },
+     "valid_from": "2026-10-20T00:05:42Z"
+    }
+   ],
+   "gpt-realtime-mini": [
+    {
+     "commit": "efd88a768e7f",
+     "rates": {
+      "cache_read": 0.06,
+      "input": 0.6,
+      "output": 2.4
+     },
+     "valid_from": "2026-10-20T00:05:42Z"
     }
    ],
    "o1": [
@@ -6167,6 +7120,27 @@
       "output": 4.4
      },
      "valid_from": "2026-10-01T01:47:31Z"
+    },
+    {
+     "commit": "cf8e10925ed6",
+     "rates": {
+      "cache_read": 0.275,
+      "input": 1.1,
+      "modes": {
+       "fast": {
+        "cache_read": 0.5,
+        "input": 2.0,
+        "output": 8.0
+       },
+       "flex": {
+        "cache_read": 0.1375,
+        "input": 0.55,
+        "output": 2.2
+       }
+      },
+      "output": 4.4
+     },
+     "valid_from": "2026-10-19T18:06:59Z"
     }
    ],
    "o4-mini-deep-research": [
@@ -6178,6 +7152,16 @@
       "output": 8.0
      },
      "valid_from": "2025-07-01T05:11:54Z"
+    }
+   ],
+   "omni-moderation-latest": [
+    {
+     "commit": "efd88a768e7f",
+     "rates": {
+      "input": 0.0,
+      "output": 0.0
+     },
+     "valid_from": "2026-10-20T00:05:42Z"
     }
    ],
    "text-embedding-3-large": [
@@ -6364,6 +7348,19 @@
     }
    ]
   },
+  "sarvam": {
+   "sarvam-105b": [
+    {
+     "commit": "e31e476c7181",
+     "rates": {
+      "cache_read": 0.05263423,
+      "input": 0.15790269,
+      "output": 0.63161075
+     },
+     "valid_from": "2026-10-21T16:00:26Z"
+    }
+   ]
+  },
   "sensenova": {
    "deepseek-v4-flash": [
     {
@@ -6513,6 +7510,15 @@
       "output": 1.11
      },
      "valid_from": "2026-07-13T05:52:59Z"
+    },
+    {
+     "commit": "805a22bb94e9",
+     "rates": {
+      "cache_read": 0.04,
+      "input": 0.2,
+      "output": 1.15
+     },
+     "valid_from": "2026-10-21T05:50:38Z"
     }
    ],
    "step-5-preview": [
@@ -6524,6 +7530,15 @@
       "output": 2.7
      },
      "valid_from": "2026-09-21T18:38:49Z"
+    },
+    {
+     "commit": "805a22bb94e9",
+     "rates": {
+      "cache_read": 0.1,
+      "input": 1.0,
+      "output": 2.7
+     },
+     "valid_from": "2026-10-21T05:50:38Z"
     }
    ]
   },
@@ -6565,6 +7580,182 @@
    ]
   },
   "thinkingmachines": {
+   "Qwen/Qwen3-8B": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.039,
+      "input": 0.195,
+      "output": 0.6
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "Qwen/Qwen3.5-35B-A3B-Base": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.108,
+      "input": 0.54,
+      "output": 1.335
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "Qwen/Qwen3.5-397B-A17B": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.33,
+      "input": 1.65,
+      "output": 7.5
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "Qwen/Qwen3.5-397B-A17B:peft:262144": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.33,
+      "input": 1.65,
+      "output": 7.5
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "Qwen/Qwen3.5-4B": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.066,
+      "input": 0.33,
+      "output": 1.005
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "Qwen/Qwen3.5-4B:peft:262144": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.066,
+      "input": 0.33,
+      "output": 1.005
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "Qwen/Qwen3.5-9B": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.06,
+      "input": 0.3,
+      "output": 0.807
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "Qwen/Qwen3.5-9B-Base": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.06,
+      "input": 0.3,
+      "output": 0.807
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "Qwen/Qwen3.6-27B": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.372,
+      "input": 1.86,
+      "output": 5.595
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "Qwen/Qwen3.6-35B-A3B": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.09,
+      "input": 0.45,
+      "output": 1.335
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "Qwen/Qwen3.6-35B-A3B:peft:262144": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.09,
+      "input": 0.45,
+      "output": 1.335
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "Qwen/Qwen3.8-27B": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.1395,
+      "input": 0.6975,
+      "output": 5.595
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "Qwen/Qwen3.8-27B:peft:262144": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.1395,
+      "input": 0.6975,
+      "output": 5.595
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "deepseek-ai/DeepSeek-V3.1": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.339,
+      "input": 1.695,
+      "output": 4.215
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "deepseek-ai/DeepSeek-V4.1-Flash-1017:peft:262144": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.12,
+      "input": 0.6,
+      "output": 3.6
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "deepseek-ai/DeepSeek-V4.1-Flash:peft:262144": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.12,
+      "input": 0.6,
+      "output": 3.6
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
    "inkling": [
     {
      "commit": "a0c8c6b3895f",
@@ -6574,6 +7765,160 @@
       "output": 9.36
      },
      "valid_from": "2026-07-16T15:24:52Z"
+    }
+   ],
+   "moonshotai/Kimi-K2.6": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.441,
+      "input": 2.205,
+      "output": 5.49
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "moonshotai/Kimi-K2.6:peft:131072": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.441,
+      "input": 2.205,
+      "output": 5.49
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.039,
+      "input": 0.195,
+      "output": 0.495
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.114,
+      "input": 0.57,
+      "output": 1.44
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16:peft:262144": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.114,
+      "input": 0.57,
+      "output": 1.44
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.36,
+      "input": 1.8,
+      "output": 6.225
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16:peft:262144": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.36,
+      "input": 1.8,
+      "output": 6.225
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.0368,
+      "input": 0.184,
+      "output": 0.495
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16:peft:262144": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.0368,
+      "input": 0.184,
+      "output": 0.495
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.114,
+      "input": 0.57,
+      "output": 1.44
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16:peft:262144": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.114,
+      "input": 0.57,
+      "output": 1.44
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "openai/gpt-oss-120b": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.066,
+      "input": 0.33,
+      "output": 0.84
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "openai/gpt-oss-120b:peft:131072": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.066,
+      "input": 0.33,
+      "output": 0.84
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "openai/gpt-oss-20b": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.036,
+      "input": 0.18,
+      "output": 0.45
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
     }
    ],
    "thinkingmachines/Inkling": [
@@ -6587,6 +7932,39 @@
      "valid_from": "2026-07-23T16:17:56Z"
     }
    ],
+   "thinkingmachines/Inkling-Small": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.116,
+      "input": 0.58,
+      "output": 1.44
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "thinkingmachines/Inkling-Small:peft:262144": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.116,
+      "input": 0.58,
+      "output": 1.44
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "thinkingmachines/Inkling-Small:peft:262144:sampling-nvfp4": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.06,
+      "input": 0.3,
+      "output": 1.2
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
    "thinkingmachines/Inkling:peft:262144": [
     {
      "commit": "44c89b7256f2",
@@ -6596,6 +7974,48 @@
       "output": 9.36
      },
      "valid_from": "2026-07-23T16:17:56Z"
+    },
+    {
+     "commit": "8350b992d70f",
+     "rates": {
+      "cache_read": 0.374,
+      "input": 1.87,
+      "output": 4.68
+     },
+     "valid_from": "2026-10-21T05:15:03Z"
+    }
+   ],
+   "thinkingmachines/Inkling:peft:262144:sampling-nvfp4": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.17,
+      "input": 1.0,
+      "output": 4.05
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "zai-org/GLM-5.3-Flash:peft:262144": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.168,
+      "input": 0.84,
+      "output": 2.11
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
+    }
+   ],
+   "zai-org/GLM-5.3:peft:262144": [
+    {
+     "commit": "0aed167a234a",
+     "rates": {
+      "cache_read": 0.756,
+      "input": 3.78,
+      "output": 12.15
+     },
+     "valid_from": "2026-10-21T05:57:06Z"
     }
    ]
   },
@@ -8154,6 +9574,36 @@
      "valid_from": "2026-06-09T22:28:51Z"
     }
    ],
+   "mimo-v2.5-tts": [
+    {
+     "commit": "f0f22335998d",
+     "rates": {
+      "input": 0.0,
+      "output": 0.0
+     },
+     "valid_from": "2026-10-21T05:39:36Z"
+    }
+   ],
+   "mimo-v2.5-tts-voiceclone": [
+    {
+     "commit": "f0f22335998d",
+     "rates": {
+      "input": 0.0,
+      "output": 0.0
+     },
+     "valid_from": "2026-10-21T05:39:36Z"
+    }
+   ],
+   "mimo-v2.5-tts-voicedesign": [
+    {
+     "commit": "f0f22335998d",
+     "rates": {
+      "input": 0.0,
+      "output": 0.0
+     },
+     "valid_from": "2026-10-21T05:39:36Z"
+    }
+   ],
    "mimo-v2.6-flash": [
     {
      "commit": "f3fe9e21d073",
@@ -8213,6 +9663,18 @@
      "valid_from": "2025-08-15T05:20:07Z"
     }
    ],
+   "glm-4.5-airx": [
+    {
+     "commit": "262d2c41797a",
+     "rates": {
+      "cache_read": 0.22,
+      "cache_write": 0.0,
+      "input": 1.1,
+      "output": 4.5
+     },
+     "valid_from": "2026-10-20T02:32:55Z"
+    }
+   ],
    "glm-4.5-flash": [
     {
      "commit": "6d3491f8d509",
@@ -8223,6 +9685,18 @@
       "output": 0.0
      },
      "valid_from": "2025-08-15T05:20:07Z"
+    }
+   ],
+   "glm-4.5-x": [
+    {
+     "commit": "262d2c41797a",
+     "rates": {
+      "cache_read": 0.45,
+      "cache_write": 0.0,
+      "input": 2.2,
+      "output": 8.9
+     },
+     "valid_from": "2026-10-20T02:32:55Z"
     }
    ],
    "glm-4.5v": [
@@ -8242,6 +9716,16 @@
       "output": 1.8
      },
      "valid_from": "2026-10-18T01:46:51Z"
+    },
+    {
+     "commit": "262d2c41797a",
+     "rates": {
+      "cache_read": 0.11,
+      "cache_write": 0.0,
+      "input": 0.6,
+      "output": 1.8
+     },
+     "valid_from": "2026-10-20T02:32:55Z"
     }
    ],
    "glm-4.6": [
@@ -8273,6 +9757,16 @@
       "output": 0.9
      },
      "valid_from": "2026-10-18T01:46:51Z"
+    },
+    {
+     "commit": "262d2c41797a",
+     "rates": {
+      "cache_read": 0.05,
+      "cache_write": 0.0,
+      "input": 0.3,
+      "output": 0.9
+     },
+     "valid_from": "2026-10-20T02:32:55Z"
     }
    ],
    "glm-4.6v-flash": [
@@ -8285,6 +9779,18 @@
       "output": 0.0
      },
      "valid_from": "2026-09-21T15:22:26Z"
+    }
+   ],
+   "glm-4.6v-flashx": [
+    {
+     "commit": "262d2c41797a",
+     "rates": {
+      "cache_read": 0.004,
+      "cache_write": 0.0,
+      "input": 0.04,
+      "output": 0.4
+     },
+     "valid_from": "2026-10-20T02:32:55Z"
     }
    ],
    "glm-4.7": [
@@ -8453,8 +9959,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "4a77c9046b16b24bf15de20c907b2b7485ce3e44",
- "source_committed_at": "2026-10-23T18:58:46Z",
+ "source_commit": "30dc6068992b7bda1b7c5e78fe047636d4ef8456",
+ "source_committed_at": "2026-10-27T17:28:59Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
@@ -8501,6 +10007,7 @@
    "claude-3-haiku-20240307": "removed",
    "claude-3-opus-20240229": "removed",
    "claude-3-sonnet-20240229": "removed",
+   "claude-mythos-5-1": "removed",
    "claude-opus-4-0": "removed",
    "claude-opus-4-1": "removed",
    "claude-opus-4-1-20250805": "removed",
@@ -8602,6 +10109,9 @@
    "gpt-4.1-nano": "deprecated",
    "gpt-4.5-preview": "removed",
    "gpt-4o-2024-05-13": "deprecated",
+   "gpt-4o-mini-transcribe": "deprecated",
+   "gpt-4o-transcribe": "deprecated",
+   "gpt-4o-transcribe-diarize": "deprecated",
    "gpt-5-chat-latest": "removed",
    "gpt-5-codex": "removed",
    "gpt-5.1-chat-latest": "removed",
@@ -8612,6 +10122,10 @@
    "gpt-5.2-codex": "removed",
    "gpt-5.3-chat-latest": "removed",
    "gpt-5.3-codex-spark-preview": "removed",
+   "gpt-audio": "deprecated",
+   "gpt-audio-mini": "deprecated",
+   "gpt-realtime": "deprecated",
+   "gpt-realtime-mini": "deprecated",
    "o1": "deprecated",
    "o1-mini": "removed",
    "o1-preview": "removed",
@@ -8630,6 +10144,10 @@
   },
   "poolside": {
    "poolside/laguna-xs.2": "removed"
+  },
+  "stepfun-ai": {
+   "step-1-32k": "removed",
+   "step-2-16k": "removed"
   },
   "thinkingmachines": {
    "inkling": "removed"

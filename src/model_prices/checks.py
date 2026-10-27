@@ -273,13 +273,15 @@ def parse_alibaba(text: str, today: datetime) -> list[Observed]:
     """
     found = []
     heading = tab = ""
-    for match in re.finditer(r'^(##) ([^\n]*)$|<Tab title="([^"]*)"|<table.*?</table>',
-                             text, re.M | re.S):
-        if match.group(1):
-            heading, tab = match.group(2), ""
+    # The page's Markdown copy marks sections with "## " and regions with <Tab title=...>;
+    # its HTML, which the .md address now serves, uses <h2> and <h4> headings.
+    for match in re.finditer(r'^## ([^\n]*)$|<h2[^>]*>([^<]*)|<Tab title="([^"]*)"'
+                             r'|<h4[^>]*>([^<]*)</h4>|<table.*?</table>', text, re.M | re.S):
+        if match.group(1) is not None or match.group(2) is not None:
+            heading, tab = (match.group(1) or match.group(2)).strip(), ""
             continue
-        if match.group(3) is not None:
-            tab = match.group(3)
+        if match.group(3) is not None or match.group(4) is not None:
+            tab = (match.group(3) or match.group(4)).strip()
             continue
         if not heading.startswith("Text generation") or tab != "Singapore":
             continue

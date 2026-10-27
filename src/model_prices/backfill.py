@@ -123,6 +123,129 @@ def parse_rates(document: dict[str, Any], provider: str = "") -> dict[str, Any] 
     return rates
 
 
+# models.dev's schema 2 model files, which every tracked provider uses since 2026-10-21,
+# are read through the translation models.dev itself applies to publish them in schema 1
+# (costV2ToV1 and toV1Experimental in packages/core/src/translate.ts), so their prices
+# continue the schema 1 history unchanged.
+SCHEMAS = (1, 2)
+
+
+def _first_price(write: Any) -> Any:
+    """The first cache write price, the provider's default time to live, of `write`, which
+    may be keyed by time to live, such as {"5m": 5, "1h": 8}."""
+    return next(iter(write.values()), None) if isinstance(write, dict) else write
+
+
+def _cache_write(cache: dict[str, Any] | None) -> Any:
+    """Schema 1 has one cache write price; implicit caching usually has no write fee, so a
+    file with only an explicit write price gives that one."""
+    if cache is None:
+        return None
+    explicit = _first_price((cache.get("explicit") or {}).get("write"))
+    return _first_price(cache.get("write")) if cache.get("write") is not None else explicit
+
+
+def _present(values: dict[str, Any]) -> dict[str, Any]:
+    return {key: value for key, value in values.items() if value is not None}
+
+
+def _schema1_cost(cost: dict[str, Any], where: str) -> dict[str, Any] | None:
+    """A schema 2 cost in schema 1's per-token fields, or None when it has no per-token text
+    input and output price, such as a model priced per image or per second."""
+    text = cost.get("text") or {}
+    given, made = text.get("input"), text.get("output")
+    per_token = lambda price: price.get("unit") in (None, "token")
+    if given is None or made is None or not per_token(given) or not per_token(made):
+        return None
+    tiers: dict[float, dict[str, Any]] = {}
+
+    def tier(when: dict[str, Any]) -> dict[str, Any]:
+        context = when.get("context") if len(when) == 1 else None
+        size = (context or {}).get("gt", (context or {}).get("gte"))
+        if not isinstance(size, (int, float)):
+            raise ValueError(f"{where}: unsupported long-context override {when}")
+        return tiers.setdefault(size, {"tier": {"type": "context", "size": size},
+                                       "input": given["price"], "output": made["price"]})
+
+    # Overrides on other conditions, such as service tier or region, have no schema 1 field.
+    context_only = lambda override: set(override["when"]) <= {"context"}
+    for override in filter(context_only, given.get("overrides") or []):
+        cache = override.get("cache")
+        tier(override["when"]).update(_present({
+            "input": override.get("price"), "cache_read": (cache or {}).get("read"),
+            "cache_write": _cache_write(cache)}))
+    for override in filter(context_only, made.get("overrides") or []):
+        tier(override["when"]).update(_present({
+            "output": override.get("price"), "reasoning": override.get("reasoning")}))
+    cache = given.get("cache")
+    return _present({
+        "input": given["price"], "output": made["price"], "reasoning": made.get("reasoning"),
+        "cache_read": (cache or {}).get("read"), "cache_write": _cache_write(cache),
+        "tiers": list(tiers.values()) or None,
+    })
+
+
+# Where each schema 1 price sits in a schema 2 cost, for reading a multiplier's factor.
+_FACTOR_PATHS = {"input": ("text", "input", "price"), "output": ("text", "output", "price"),
+                 "reasoning": ("text", "output", "reasoning"),
+                 "cache_read": ("text", "input", "cache", "read"),
+                 "cache_write": ("text", "input", "cache", "write")}
+
+
+def _factor(factor: Any, path: tuple[str, ...]) -> float:
+    """A multiplier's factor for one price: a number scales every price below it, and a price
+    an object factor does not name keeps factor 1."""
+    for key in path:
+        if not isinstance(factor, dict):
+            break
+        factor = factor.get(key)
+    if isinstance(factor, dict):
+        factor = _first_price(factor)
+    return factor if isinstance(factor, (int, float)) else 1
+
+
+def _schema1_modes(document: dict[str, Any], cost: dict[str, Any] | None,
+                   where: str) -> dict[str, Any]:
+    """Schema 1 modes, each with its own prices: a mode's stated cost, or the base prices
+    scaled by the multiplier for its service tier, which defaults to the mode's name."""
+    modes = {}
+    multipliers = (document.get("cost") or {}).get("multipliers") or []
+    for name, mode in ((document.get("experimental") or {}).get("modes") or {}).items():
+        tier = mode.get("service_tier", name)
+        factor = next((item["factor"] for item in multipliers
+                       if item.get("when") == {"service_tier": {"equals": tier}}), None)
+        if "cost" in mode:
+            priced = _schema1_cost(mode["cost"], where)
+        elif factor is not None and cost is not None:
+            priced = {key: round(value * _factor(factor, _FACTOR_PATHS[key]), 10)
+                      for key, value in cost.items() if key in _FACTOR_PATHS}
+        else:
+            priced = None
+        if priced:
+            modes[name] = {"cost": {key: value for key, value in priced.items() if key != "tiers"}}
+    return modes
+
+
+def schema1(document: dict[str, Any], where: str = "") -> dict[str, Any]:
+    """A models.dev model file in schema 1's shape, translating a schema 2 file's prices;
+    an unknown schema raises, so a format change stops the history build."""
+    schema = document.get("schema", 1)
+    if schema not in SCHEMAS:
+        raise ValueError(f"{where}: models.dev schema {schema!r} is not supported")
+    if schema == 1:
+        return document
+    cost = _schema1_cost(document["cost"], where) if document.get("cost") else None
+    reasoning = (document.get("capabilities") or {}).get("reasoning")
+    # Schema 1 drops the reasoning price of a model that does not reason.
+    if cost and isinstance(reasoning, dict) and reasoning.get("supported") is False:
+        cost.pop("reasoning", None)
+        for tier in cost.get("tiers", []):
+            tier.pop("reasoning", None)
+    modes = _schema1_modes(document, cost, where)
+    return _present({"base_model": document.get("base_model"), "status": document.get("status"),
+                     "cost": cost, "experimental": {"modes": modes} if modes else None})
+
+
 def _link_target(blob: bytes) -> str | None:
     """Return the target of a symlinked model file, whose blob is just the target path."""
     text = blob.decode(errors="replace").strip()
@@ -150,7 +273,8 @@ def _changes(repo: Path, providers: tuple[str, ...]) -> Iterator[tuple[str, str,
             commit, committed_at = line[1:].split(" ", 1)
             continue
         status, _, path = line.partition("\t")
-        if status in {"A", "M", "D"} and path.endswith(".toml"):
+        # T is a type change, such as a link becoming a file with its own prices.
+        if status in {"A", "M", "D", "T"} and path.endswith(".toml"):
             yield status, commit, _utc(committed_at), path
 
 
@@ -210,6 +334,7 @@ def _replay(repo: Path, providers: tuple[str, ...]) -> tuple[dict, dict, dict]:
             document = tomllib.loads(blob.decode())
         except (tomllib.TOMLDecodeError, UnicodeDecodeError):
             continue
+        document = schema1(document, f"{commit[:12]}:{path}")
         if document.get("status") == "deprecated":
             retired[(provider, model)] = "deprecated"
         else:
@@ -246,9 +371,16 @@ def build(repo: Path, providers: tuple[str, ...] = TRACKED_PROVIDERS) -> dict[st
         other, _, _, _ = _replay(repo, tuple(sorted({parts[2] for parts in foreign.values()})))
         for (provider, model), (_, _, source, path) in foreign.items():
             del links[provider][model]
-            entries = other.get(source, {}).get(path.removeprefix("models/"))
-            if entries:
-                history.setdefault(provider, {})[model] = entries
+            entries = other.get(source, {}).get(path.removeprefix("models/"), [])
+            # The linked history applies until the file's own prices begin, as when StepFun's
+            # global files, links before schema 2, became files with their own prices.
+            own = history.get(provider, {}).get(model, [])
+            start = own[0]["valid_from"] if own else None
+            entries = [entry for entry in entries if start is None or entry["valid_from"] < start]
+            joined = [entry for index, entry in enumerate(entries + own)
+                      if index == 0 or entry["rates"] != (entries + own)[index - 1]["rates"]]
+            if joined:
+                history.setdefault(provider, {})[model] = joined
 
     head = _git(repo, "log", "-1", "--format=%H %cI").split()
     return {

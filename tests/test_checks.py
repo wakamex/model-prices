@@ -6,6 +6,7 @@ from pathlib import Path
 import unittest
 from unittest import mock
 
+from html_fixtures import as_html
 from model_prices import checks, main
 from model_prices.checks import Observed
 
@@ -186,6 +187,12 @@ class CheckTests(unittest.TestCase):
         self.assertNotIn(0.115, alibaba.values())
         models = {model for model, *_ in alibaba}
         self.assertFalse(models & {"qwen3.5-omni-plus", "deepseek-v4-flash-0731", "qwen-image"})
+
+    def test_alibaba_parser_reads_the_html_page(self):
+        # Since 2026-10-27 the page's .md address serves HTML, with <h2> and <h4> headings.
+        page = as_html(PAGES["alibaba"])
+
+        self.assertEqual(checks.parse_alibaba(page, TODAY), checks.parse_alibaba(PAGES["alibaba"], TODAY))
 
     def test_alibaba_limited_time_discount_is_the_price_charged(self):
         # The fixture lists qwen3.7-plus at "List price $1.6 (Limited-time 20% off)".
@@ -401,9 +408,11 @@ class CheckTests(unittest.TestCase):
 
     def test_resold_models_are_not_compared_with_their_lab(self):
         results = checks.run(["alibaba"], pages=PAGES, today=TODAY)
-        resold = [r for r in results if r.model == "deepseek-v4-pro"]
+        resold = [r for r in results if r.model.endswith("deepseek-v4-pro")]
 
-        self.assertEqual({r.status for r in resold}, {"untracked"})
+        # Alibaba's DeepSeek price is compared only with Alibaba's own id, never DeepSeek's.
+        self.assertTrue(resold)
+        self.assertEqual({r.model for r in resold} - {"deepseek-v4-pro"}, {"alibaba/deepseek-v4-pro"})
 
     def test_google_section_pricing_several_models_prices_each(self):
         google = _prices("google")

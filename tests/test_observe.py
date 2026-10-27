@@ -4,6 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
+from html_fixtures import as_html
 from model_prices import checks, compiler, observe, rates, resolve
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -127,6 +128,11 @@ class ObserveTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "cache billing rules changed"):
             observe.parse_alibaba_cache((FIXTURES / "alibaba-cache.md").read_text()
                                         .replace("<strong>20%</strong>", "<strong>15%</strong>"))
+
+    def test_alibaba_cache_rules_read_the_html_page(self):
+        page = (FIXTURES / "alibaba-cache.md").read_text()
+
+        self.assertEqual(observe.parse_alibaba_cache(as_html(page)), observe.parse_alibaba_cache(page))
 
     def test_models_dev_history_takes_over_from_its_first_entry(self):
         with tempfile.TemporaryDirectory() as directory:

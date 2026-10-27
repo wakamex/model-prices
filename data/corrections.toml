@@ -806,3 +806,25 @@ output = 0.4
 replaces = { output = 0.3 }
 source = "https://mistral.ai/pricing/api"
 note = "Voxtral Small, whose docs page lists voxtral-small-latest and voxtral-small-2507 among its API names, at $0.4 output per 1M tokens, observed 2026-10-22; models.dev lists $0.4 for voxtral-small-2507 and $0.3 for voxtral-small-latest. Applies from models.dev's first record, since archived copies of the pricing page render their prices in the browser and show none."
+
+[[correction]]
+provider = "inception"
+model = "mercury-decide"
+valid_from = "2026-10-21T05:57:06Z"
+input = 0.02
+output = 0.0
+cache_read = 0.0
+replaces = { input = 0.02, output = 0.0 }
+source = "https://docs.inceptionlabs.ai/get-started/models"
+note = "Inception's models table lists Mercury Decide at $0.02 input (50% off the regular $0.04), $0 cached input, and $0 output per 1M tokens, observed 2026-10-27; its decisions guide says only input tokens are billed. models.dev lists no cache price, which would charge cached tokens at the input price. Applies from models.dev's first record."
+
+[[correction]]
+provider = "mistral"
+model = "codestral-embed"
+valid_from = "2026-10-20T03:20:56Z"
+input = 0.15
+output = 0.0
+cache_read = 0.015
+replaces = { input = 0.15, output = 0.0 }
+source = "https://mistral.ai/pricing/api"
+note = "Codestral Embed, whose docs page lists codestral-embed and codestral-embed-2505 among its API names, at $0.15 input and $0.015 cached input per 1M tokens, observed 2026-10-27. models.dev lists no cache price, which would charge cached tokens at the input price. Applies from models.dev's first record."
