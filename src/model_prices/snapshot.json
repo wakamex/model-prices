@@ -100,8 +100,8 @@
   }
  ],
  "models_dev": {
-  "commit": "30dc6068992b7bda1b7c5e78fe047636d4ef8456",
-  "committed_at": "2026-10-27T17:28:59Z",
+  "commit": "63d85604f9e3a1f09da54ebb491f1d1517bdbb84",
+  "committed_at": "2026-10-28T15:14:02Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -13551,6 +13551,21 @@
      }
     ]
    },
+   "deepseek-v4-1-flash-1017": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.007,
+       "input": 0.3,
+       "output": 1.2,
+       "source": "https://mistral.ai/pricing/api",
+       "valid_from": "2026-10-28T15:14:16Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "devstral-2512": {
     "standard": [
      {
@@ -25442,6 +25457,7 @@
    "gemini-1.5-pro": "removed",
    "gemini-2.0-flash": "removed",
    "gemini-2.0-flash-lite": "removed",
+   "gemini-2.5-flash-image": "deprecated",
    "gemini-2.5-flash-image-preview": "removed",
    "gemini-2.5-flash-lite-preview-06-17": "removed",
    "gemini-2.5-flash-lite-preview-09-2025": "removed",
@@ -25452,7 +25468,9 @@
    "gemini-2.5-pro-preview-03-25": "removed",
    "gemini-2.5-pro-preview-05-06": "removed",
    "gemini-2.5-pro-preview-06-05": "removed",
+   "gemini-3-pro-image-preview": "removed",
    "gemini-3-pro-preview": "removed",
+   "gemini-3.1-flash-image-preview": "removed",
    "gemini-3.1-flash-lite-preview": "deprecated",
    "gemini-3.1-pro": "removed",
    "gemini-live-2.5-flash": "removed",
@@ -25610,5 +25628,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-10-27T22:19:34Z"
+ "updated_at": "2026-10-28T15:15:01Z"
 }

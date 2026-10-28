@@ -1737,6 +1737,17 @@
    ]
   },
   "mistral": {
+   "deepseek-v4-1-flash-1017": [
+    {
+     "rates": {
+      "cache_read": 0.007,
+      "input": 0.3,
+      "output": 1.2
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-10-28T15:14:16Z"
+    }
+   ],
    "ministral-14b-latest": [
     {
      "rates": {
