@@ -4518,6 +4518,17 @@
      "valid_from": "2026-09-29T00:37:26Z"
     }
    ],
+   "deepseek-v4-1-flash-1017": [
+    {
+     "commit": "e50cc7573288",
+     "rates": {
+      "cache_read": 0.007,
+      "input": 0.3,
+      "output": 1.2
+     },
+     "valid_from": "2026-10-28T20:02:04Z"
+    }
+   ],
    "devstral-2512": [
     {
      "commit": "0836bb84e5f5",
@@ -9959,8 +9970,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "63d85604f9e3a1f09da54ebb491f1d1517bdbb84",
- "source_committed_at": "2026-10-28T15:14:02Z",
+ "source_commit": "e50cc75732888ecced66d5b2d2837d31e67640b0",
+ "source_committed_at": "2026-10-28T20:02:04Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
