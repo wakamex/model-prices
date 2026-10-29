@@ -1,7 +1,9 @@
 # Longer-lived cache writes as a multiple of the input price, for providers that price them
 # apart from short-lived writes: one-hour writes for Anthropic and Moonshot AI, 12-hour
 # writes for OpenAI. Other providers' longer-lived writes are priced as cache writes.
-# model-prices check compares each multiple with the provider's pricing page.
+# model-prices check compares each multiple with the provider's pricing page, and with
+# models.dev's cache write prices by lifetime, such as write = { "5m" = 6.25, "1h" = 10 },
+# which data/prices.json keeps under rules.
 
 [[cache_write_1h]]
 provider = "anthropic"

@@ -260,6 +260,7 @@
      "commit": "4572483f60cd",
      "rates": {
       "cache_read": 0.01,
+      "cache_read_explicit": 0.005,
       "cache_write": 0.0625,
       "input": 0.05,
       "output": 0.4,
@@ -267,6 +268,7 @@
        {
         "above": 256000,
         "cache_read": 0.05,
+        "cache_read_explicit": 0.025,
         "cache_write": 0.3125,
         "input": 0.25,
         "output": 2.0
@@ -364,6 +366,7 @@
      "commit": "4572483f60cd",
      "rates": {
       "cache_read": 0.08,
+      "cache_read_explicit": 0.04,
       "cache_write": 0.5,
       "input": 0.4,
       "modes": {
@@ -376,6 +379,7 @@
        {
         "above": 256000,
         "cache_read": 0.24,
+        "cache_read_explicit": 0.12,
         "cache_write": 1.5,
         "input": 1.2,
         "output": 3.6
@@ -686,6 +690,7 @@
      "commit": "4572483f60cd",
      "rates": {
       "cache_read": 0.06,
+      "cache_read_explicit": 0.03,
       "cache_write": 0.375,
       "input": 0.3,
       "output": 1.5,
@@ -693,6 +698,7 @@
        {
         "above": 32000,
         "cache_read": 0.1,
+        "cache_read_explicit": 0.05,
         "cache_write": 0.625,
         "input": 0.5,
         "output": 2.5
@@ -700,6 +706,7 @@
        {
         "above": 128000,
         "cache_read": 0.16,
+        "cache_read_explicit": 0.08,
         "cache_write": 1.0,
         "input": 0.8,
         "output": 4.0
@@ -707,6 +714,7 @@
        {
         "above": 256000,
         "cache_read": 0.32,
+        "cache_read_explicit": 0.16,
         "cache_write": 2.0,
         "input": 1.6,
         "output": 9.6
@@ -854,6 +862,7 @@
      "commit": "4572483f60cd",
      "rates": {
       "cache_read": 0.04,
+      "cache_read_explicit": 0.02,
       "cache_write": 0.25,
       "input": 0.2,
       "output": 1.6,
@@ -861,6 +870,7 @@
        {
         "above": 32000,
         "cache_read": 0.06,
+        "cache_read_explicit": 0.03,
         "cache_write": 0.375,
         "input": 0.3,
         "output": 2.4
@@ -868,6 +878,7 @@
        {
         "above": 128000,
         "cache_read": 0.12,
+        "cache_read_explicit": 0.06,
         "cache_write": 0.75,
         "input": 0.6,
         "output": 4.8
@@ -1109,6 +1120,7 @@
      "commit": "4572483f60cd",
      "rates": {
       "cache_read": 0.006,
+      "cache_read_explicit": 0.003,
       "cache_write": 0.0375,
       "input": 0.03,
       "output": 0.13,
@@ -1116,6 +1128,7 @@
        {
         "above": 32000,
         "cache_read": 0.02,
+        "cache_read_explicit": 0.01,
         "cache_write": 0.125,
         "input": 0.1,
         "output": 0.4
@@ -1123,6 +1136,7 @@
        {
         "above": 256000,
         "cache_read": 0.04,
+        "cache_read_explicit": 0.02,
         "cache_write": 0.25,
         "input": 0.2,
         "output": 0.8
@@ -1142,6 +1156,17 @@
       "output": 7.5
      },
      "valid_from": "2026-05-21T22:58:29Z"
+    },
+    {
+     "commit": "4572483f60cd",
+     "rates": {
+      "cache_read": 0.5,
+      "cache_read_explicit": 0.25,
+      "cache_write": 3.125,
+      "input": 2.5,
+      "output": 7.5
+     },
+     "valid_from": "2026-10-23T05:56:10Z"
     }
    ],
    "qwen3.7-plus": [
@@ -1206,6 +1231,7 @@
      "commit": "4572483f60cd",
      "rates": {
       "cache_read": 0.08,
+      "cache_read_explicit": 0.04,
       "cache_write": 0.5,
       "input": 0.4,
       "output": 1.6,
@@ -1213,6 +1239,7 @@
        {
         "above": 256000,
         "cache_read": 0.24,
+        "cache_read_explicit": 0.12,
         "cache_write": 1.5,
         "input": 1.2,
         "output": 4.8
@@ -1236,6 +1263,7 @@
      "commit": "4572483f60cd",
      "rates": {
       "cache_read": 0.25,
+      "cache_read_explicit": 0.17,
       "cache_write": 2.5,
       "input": 2.0,
       "output": 6.0
@@ -1257,6 +1285,7 @@
      "commit": "4572483f60cd",
      "rates": {
       "cache_read": 0.1,
+      "cache_read_explicit": 0.05,
       "cache_write": 0.625,
       "input": 0.5,
       "output": 3.0
@@ -1286,6 +1315,17 @@
       "output": 6.0
      },
      "valid_from": "2026-08-04T14:21:35Z"
+    },
+    {
+     "commit": "4572483f60cd",
+     "rates": {
+      "cache_read": 0.25,
+      "cache_read_explicit": 0.17,
+      "cache_write": 2.5,
+      "input": 2.0,
+      "output": 6.0
+     },
+     "valid_from": "2026-10-23T05:56:10Z"
     }
    ],
    "qwen3.8-max-0902": [
@@ -1302,6 +1342,7 @@
      "commit": "4572483f60cd",
      "rates": {
       "cache_read": 0.25,
+      "cache_read_explicit": 0.17,
       "cache_write": 2.5,
       "input": 2.0,
       "output": 6.0
@@ -9968,10 +10009,426 @@
    ]
   }
  },
+ "rules": {
+  "alibaba": {
+   "deepseek-v4-flash-0731": {
+    "multipliers": [
+     {
+      "factor": {
+       "text": 0.5
+      },
+      "when": {
+       "utc_hours": {
+        "gte": "14:00"
+       }
+      }
+     }
+    ]
+   },
+   "deepseek-v4-pro-0813": {
+    "multipliers": [
+     {
+      "factor": {
+       "text": 0.5
+      },
+      "when": {
+       "utc_hours": {
+        "gte": "14:00"
+       }
+      }
+     }
+    ]
+   },
+   "deepseek-v4.1-flash": {
+    "multipliers": [
+     {
+      "factor": 0.5,
+      "when": {
+       "utc_hours": {
+        "gte": "14:00"
+       }
+      }
+     }
+    ]
+   },
+   "deepseek-v4.1-flash-1017": {
+    "multipliers": [
+     {
+      "factor": {
+       "text": 0.5
+      },
+      "when": {
+       "utc_hours": {
+        "gte": "14:00"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "anthropic": {
+   "claude-fable-5": {
+    "cache_write": {
+     "1h": 20,
+     "5m": 12.5
+    },
+    "input": 10
+   },
+   "claude-fable-5-1": {
+    "cache_write": {
+     "1h": 20,
+     "5m": 12.5
+    },
+    "input": 10
+   },
+   "claude-haiku-4-5": {
+    "cache_write": {
+     "1h": 2,
+     "5m": 1.25
+    },
+    "input": 1
+   },
+   "claude-haiku-4-5-20251001": {
+    "cache_write": {
+     "1h": 2,
+     "5m": 1.25
+    },
+    "input": 1
+   },
+   "claude-haiku-5-5": {
+    "cache_write": {
+     "1h": 0.2,
+     "5m": 0.125
+    },
+    "input": 0.1
+   },
+   "claude-opus-4-5": {
+    "cache_write": {
+     "1h": 10,
+     "5m": 6.25
+    },
+    "input": 5
+   },
+   "claude-opus-4-5-20251101": {
+    "cache_write": {
+     "1h": 10,
+     "5m": 6.25
+    },
+    "input": 5
+   },
+   "claude-opus-4-6": {
+    "cache_write": {
+     "1h": 10,
+     "5m": 6.25
+    },
+    "input": 5
+   },
+   "claude-opus-4-7": {
+    "cache_write": {
+     "1h": 10,
+     "5m": 6.25
+    },
+    "input": 5
+   },
+   "claude-opus-4-8": {
+    "cache_write": {
+     "1h": 10,
+     "5m": 6.25
+    },
+    "input": 5
+   },
+   "claude-opus-5": {
+    "cache_write": {
+     "1h": 10,
+     "5m": 6.25
+    },
+    "input": 5
+   },
+   "claude-opus-5-5": {
+    "cache_write": {
+     "1h": 8,
+     "5m": 5
+    },
+    "input": 4
+   },
+   "claude-sonnet-4-5": {
+    "cache_write": {
+     "1h": 6,
+     "5m": 3.75
+    },
+    "input": 3
+   },
+   "claude-sonnet-4-5-20250929": {
+    "cache_write": {
+     "1h": 6,
+     "5m": 3.75
+    },
+    "input": 3
+   },
+   "claude-sonnet-4-6": {
+    "cache_write": {
+     "1h": 6,
+     "5m": 3.75
+    },
+    "input": 3
+   },
+   "claude-sonnet-5": {
+    "cache_write": {
+     "1h": 4,
+     "5m": 2.5
+    },
+    "input": 2
+   },
+   "claude-sonnet-5-5": {
+    "cache_write": {
+     "1h": 4,
+     "5m": 2.5
+    },
+    "input": 2
+   }
+  },
+  "deepseek": {
+   "deepseek-flash": {
+    "multipliers": [
+     {
+      "factor": 2,
+      "when": {
+       "any": [
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "01:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "04:00"
+           }
+          }
+         ]
+        },
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "06:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "10:00"
+           }
+          }
+         ]
+        }
+       ],
+       "not": {
+        "holiday": {
+         "equals": "CN"
+        }
+       },
+       "utc_days": {
+        "in": [
+         "mon",
+         "tue",
+         "wed",
+         "thu",
+         "fri"
+        ]
+       }
+      }
+     }
+    ]
+   },
+   "deepseek-v4-flash": {
+    "multipliers": [
+     {
+      "factor": 2,
+      "when": {
+       "any": [
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "01:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "04:00"
+           }
+          }
+         ]
+        },
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "06:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "10:00"
+           }
+          }
+         ]
+        }
+       ],
+       "not": {
+        "holiday": {
+         "equals": "CN"
+        }
+       },
+       "utc_days": {
+        "in": [
+         "mon",
+         "tue",
+         "wed",
+         "thu",
+         "fri"
+        ]
+       }
+      }
+     }
+    ]
+   },
+   "deepseek-v4-flash-vision-exp": {
+    "multipliers": [
+     {
+      "factor": 2,
+      "when": {
+       "any": [
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "01:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "04:00"
+           }
+          }
+         ]
+        },
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "06:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "10:00"
+           }
+          }
+         ]
+        }
+       ],
+       "not": {
+        "holiday": {
+         "equals": "CN"
+        }
+       },
+       "utc_days": {
+        "in": [
+         "mon",
+         "tue",
+         "wed",
+         "thu",
+         "fri"
+        ]
+       }
+      }
+     }
+    ]
+   },
+   "deepseek-v4-pro": {
+    "multipliers": [
+     {
+      "factor": 2,
+      "when": {
+       "any": [
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "01:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "04:00"
+           }
+          }
+         ]
+        },
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "06:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "10:00"
+           }
+          }
+         ]
+        }
+       ],
+       "not": {
+        "holiday": {
+         "equals": "CN"
+        }
+       },
+       "utc_days": {
+        "in": [
+         "mon",
+         "tue",
+         "wed",
+         "thu",
+         "fri"
+        ]
+       }
+      }
+     }
+    ]
+   }
+  },
+  "moonshotai": {
+   "kimi-k3": {
+    "cache_write": {
+     "1h": 6,
+     "5m": 3
+    },
+    "input": 3
+   },
+   "kimi-k3.1-pro": {
+    "cache_write": {
+     "1h": 4,
+     "5m": 2
+    },
+    "input": 2
+   },
+   "kimi-k3.1-pro-highspeed": {
+    "cache_write": {
+     "1h": 8,
+     "5m": 4
+    },
+    "input": 4
+   }
+  }
+ },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "e50cc75732888ecced66d5b2d2837d31e67640b0",
- "source_committed_at": "2026-10-28T20:02:04Z",
+ "source_commit": "ba5289b8d6c593e54a5271457df79e3966ee934b",
+ "source_committed_at": "2026-10-29T19:21:38Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",

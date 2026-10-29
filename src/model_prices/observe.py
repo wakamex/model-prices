@@ -12,7 +12,6 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 from functools import cache, partial
-import html
 import json
 from pathlib import Path
 import re
@@ -184,83 +183,6 @@ OWN_MODELS = {"alibaba": r"qwen.*", "arcee": r"trinity-.*", "mistral": r"(?!zai-
 CHECKED = [provider for provider in checks.SOURCES if provider not in checks.YUAN_TO_USD]
 
 
-ALIBABA_CACHE = "https://www.alibabacloud.com/help/en/model-studio/context-cache.md"
-_ALIBABA_ID = r"(?:qwen|deepseek|glm|kimi)[a-z0-9.-]*[a-z0-9]"
-
-
-def _markdown(page: str) -> str:
-    """An HTML docs page as the Markdown its .md address used to serve: headings as #
-    lines, list items as - lines, code in backticks, and <strong> kept. Code samples are
-    left out, since their comments would read as headings."""
-    page = re.sub(r"<(script|style|pre)\b.*?</\1>", "", page, flags=re.S)
-    page = re.sub(r"<h([1-6])\b[^>]*>(.*?)</h\1>",
-                  lambda found: "\n" + "#" * int(found.group(1)) + " " + found.group(2) + "\n",
-                  page, flags=re.S)
-    page = re.sub(r"<li\b[^>]*>", "\n- ", page)
-    page = re.sub(r"</?code\b[^>]*>", "`", page)
-    page = re.sub(r"</?(p|div|section|tr|br|ul|ol|table)\b[^>]*>", "\n", page)
-    page = re.sub(r"<(?!/?strong>)[^>]+>", "", page)
-    lines = (" ".join(html.unescape(line).split()) for line in page.splitlines())
-    return "\n".join(line for line in lines if line)
-
-
-def _alibaba_cache_section(page: str, title: str) -> tuple[str, str]:
-    """A cache mode's Singapore supported-model list and its billing text. The page marks
-    regions with <Tab title=...> in Markdown and #### headings in converted HTML."""
-    if re.match(r"\s*<(!doctype|html)", page, re.I):
-        page = _markdown(page)
-    section = re.search(rf"^## {title}\b(.*?)(?=^## |\Z)", page, re.M | re.S)
-    tab = section and re.search(r'### Supported models.*?(?:<Tab title="Singapore">(.*?)</Tab>'
-                                r'|^#### Singapore\n(.*?)(?=^#{3,4} |\Z))',
-                                section.group(1), re.S | re.M)
-    billing = section and re.search(r"^### Billing(.*?)(?=^### |\Z)", section.group(1),
-                                    re.M | re.S)
-    if not tab or not billing:
-        raise ValueError(f"alibaba: no {title} models or billing in {ALIBABA_CACHE}; "
-                         "the page format changed")
-    return tab.group(1) or tab.group(2), billing.group(1)
-
-
-def parse_alibaba_cache(page: str) -> tuple[set[str], set[str]]:
-    """The Singapore models with implicit caching, and those with explicit caching.
-
-    Alibaba bills implicit cache hits, which need no setup, at 20% of input, and explicit
-    cache hits at 10% and writes at 125%; it lists exceptions, whose prices only its
-    console shows. A request uses one mode, so a model with implicit caching prices its
-    one cache-read price as an implicit hit, and a model with only explicit caching as an
-    explicit hit.
-    """
-    implicit, implicit_billing = _alibaba_cache_section(page, "Implicit cache")
-    explicit, explicit_billing = _alibaba_cache_section(page, "Explicit cache")
-    others = re.search(r"For models other than (.*?): The unit price of `cached_token` is "
-                       r"<strong>20%</strong> of the `input_token` unit price", implicit_billing)
-    # Exceptions are a sentence, "The explicit cache hit price for ... is not 10%", or a
-    # bullet per group of models whose hit or creation price is "not 10%" or "not 125%".
-    exceptions = [names for names in re.findall(
-        r"The explicit cache hit price for (.*?) is not 10%", explicit_billing)] + [
-        names for names, rule in re.findall(r"^\s*- ([^:\n]+): (.*)$", explicit_billing, re.M)
-        if re.search(r"not (?:10|125)%", rule)]
-    if (not others or not exceptions or "billed at 125% of the standard input token price"
-            not in explicit_billing or "Billed at 10% of the standard input token price"
-            not in explicit_billing):
-        raise ValueError(f"alibaba: cache billing rules changed in {ALIBABA_CACHE}")
-    excluded = set(re.findall(_ALIBABA_ID, others.group(1) + " " + " ".join(exceptions)))
-    return (set(re.findall(_ALIBABA_ID, implicit)) - excluded,
-            set(re.findall(_ALIBABA_ID, explicit)) - excluded)
-
-
-def _with_alibaba_cache(found: dict[str, dict[str, Any]], page: str) -> None:
-    implicit, explicit = parse_alibaba_cache(page)
-    for model, rates in found.items():
-        for prices in (rates, *rates.get("tiers", [])):
-            # A model without implicit caching has only explicit hits, at 10% of input.
-            share = 0.2 if model in implicit else 0.1 if model in explicit else None
-            if share and "input" in prices:
-                prices["cache_read"] = round(prices["input"] * share, 6)
-            if model in explicit and "input" in prices:
-                prices["cache_write"] = round(prices["input"] * 1.25, 6)
-
-
 @cache
 def listed(data: Path) -> dict[str, set[str]]:
     """The lowercase ids that models.dev or an alias already gives each provider."""
@@ -303,9 +225,6 @@ def read_checked(provider: str, data: Path, now: datetime,
         rates[item.field] = item.value
     found = {model: rates for model, rates in found.items()
              if "input" in rates and "output" in rates}
-    # Alibaba's pricing page states cache prices as rules on its cache page.
-    if provider == "alibaba":
-        _with_alibaba_cache(found, get(ALIBABA_CACHE))
     return {model: (url, rates) for model, rates in found.items()}
 
 

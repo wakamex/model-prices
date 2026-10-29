@@ -15,6 +15,7 @@ TODAY = datetime(2026, 9, 30, 12, tzinfo=timezone.utc)
 # Synthetic pages in the layouts of the official pricing pages, with their 2026-09-30 prices.
 PAGES = {
     "alibaba": (FIXTURES / "alibaba.md").read_text(),
+    checks.ALIBABA_CACHE: (FIXTURES / "alibaba-cache.md").read_text(),
     "ai21": (FIXTURES / "ai21.html").read_text(),
     "amazon-bedrock": (FIXTURES / "bedrock.html").read_text(),
     checks.BEDROCK_PRICES: (FIXTURES / "bedrock-prices.json").read_text(),
@@ -57,7 +58,7 @@ PAGES = {
 
 def _prices(provider, mode=None):
     parser = checks.SOURCES[provider][1]
-    extra = (PAGES.__getitem__,) if provider in {"amazon-bedrock", "meta", "mistral"} else ()
+    extra = (PAGES.__getitem__,) if provider in {"alibaba", "amazon-bedrock", "meta", "mistral"} else ()
     return {(item.model, item.field, item.above, item.at): item.value
             for item in parser(PAGES[provider], TODAY, *extra) if item.mode == mode}
 
@@ -192,14 +193,64 @@ class CheckTests(unittest.TestCase):
         # Since 2026-10-27 the page's .md address serves HTML, with <h2> and <h4> headings.
         page = as_html(PAGES["alibaba"])
 
-        self.assertEqual(checks.parse_alibaba(page, TODAY), checks.parse_alibaba(PAGES["alibaba"], TODAY))
+        self.assertEqual(checks.parse_alibaba(page, TODAY, PAGES.__getitem__),
+                         checks.parse_alibaba(PAGES["alibaba"], TODAY, PAGES.__getitem__))
+
+    def test_alibaba_cache_rules_price_both_kinds_of_cache_hit(self):
+        # qwen3.7-max is on both of the cache page's lists; here qwen3.7-plus takes its place.
+        pages = {**PAGES, checks.ALIBABA_CACHE: PAGES[checks.ALIBABA_CACHE].replace(
+            "qwen3.7-max", "qwen3.7-plus")}
+        found = {(item.model, item.field, item.above): item.value for item in
+                 checks.parse_alibaba(PAGES["alibaba"], TODAY, pages.__getitem__)
+                 if item.mode is None}
+
+        # An implicit hit costs 20% of input and an explicit one 10%, in every tier.
+        self.assertEqual(found[("qwen3.7-plus", "cache_read", None)], 0.064)
+        self.assertEqual(found[("qwen3.7-plus", "cache_read_explicit", None)], 0.032)
+        self.assertEqual(found[("qwen3.7-plus", "cache_write", None)], 0.4)
+        self.assertEqual(found[("qwen3.7-plus", "cache_read_explicit", 256_000)], 0.096)
+        # Models the cache page does not list have no cache prices.
+        self.assertNotIn(("qwen-turbo", "cache_read", None), found)
+
+    def test_models_dev_rules_are_compared_with_schedules_and_cache_writes(self):
+        peak = {"utc_days": {"in": ["mon", "tue", "wed", "thu", "fri"]},
+                "not": {"holiday": {"equals": "CN"}},
+                "any": [{"all": [{"utc_hours": {"gte": "01:00"}}, {"utc_hours": {"lt": "04:00"}}]},
+                        {"all": [{"utc_hours": {"gte": "06:00"}}, {"utc_hours": {"lt": "10:00"}}]}]}
+        idle = {"when": {"utc_hours": {"gte": "14:00"}}, "factor": {"text": 0.5}}
+        rules = {
+            "deepseek": {"deepseek-v4-pro": {"multipliers": [{"when": peak, "factor": 2}]}},
+            "alibaba": {"deepseek-v4-flash-0731": {"multipliers": [idle]},
+                        "deepseek-v4-pro-0813": {"multipliers": [idle]},
+                        "deepseek-v4.1-flash": {"multipliers": [idle]},
+                        "deepseek-v4.1-flash-1017": {"multipliers": [idle]}},
+            "anthropic": {"claude-opus-5-5": {"input": 4, "cache_write": {"1h": 8, "5m": 5}}},
+        }
+        today = datetime(2026, 10, 29, tzinfo=timezone.utc)
+
+        results = checks.compare_rules(rules, None, today)
+        self.assertEqual({r.status for r in results}, {"ok"})
+        self.assertIn(("anthropic/claude-opus-5-5", "rule:cache_write_1h"),
+                      {(r.model, r.field) for r in results})
+        # A changed factor, a condition the comparison cannot read, a dropped rule, and a
+        # different one-hour write price each fail.
+        rules["deepseek"]["deepseek-v4-pro"]["multipliers"][0]["factor"] = 3
+        rules["alibaba"]["deepseek-v4-pro-0813"]["multipliers"][0] = {
+            "when": {"utc_days": {"in": ["sat"]}}, "factor": 0.5}
+        del rules["alibaba"]["deepseek-v4.1-flash"]
+        rules["anthropic"]["claude-opus-5-5"]["cache_write"]["1h"] = 10
+        failed = {r.model for r in checks.compare_rules(rules, None, today)
+                  if r.status == "mismatch"}
+        self.assertEqual(failed, {"deepseek/deepseek-v4-pro", "alibaba/deepseek-v4-pro-0813",
+                                  "alibaba/deepseek-v4.1-flash", "anthropic/claude-opus-5-5"})
+        self.assertEqual(checks.compare_rules(rules, {"openai"}, today), [])
 
     def test_alibaba_limited_time_discount_is_the_price_charged(self):
         # The fixture lists qwen3.7-plus at "List price $1.6 (Limited-time 20% off)".
         night = "List price \\$1.6 (Limited-time night 60% off), daytime 20% off"
         page = PAGES["alibaba"].replace("List price \\$1.6 (Limited-time 20% off)", night, 1)
         found = {(item.model, item.field, item.above, item.mode): item.value
-                 for item in checks.parse_alibaba(page, TODAY)}
+                 for item in checks.parse_alibaba(page, TODAY, PAGES.__getitem__)}
 
         self.assertEqual(found[("qwen3.7-plus", "input", None, None)], 0.32)
         self.assertEqual(found[("qwen3.7-plus", "output", None, "thinking")], 1.28)

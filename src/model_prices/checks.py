@@ -6,7 +6,7 @@ a changed page fails loudly instead of producing a guessed price.
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from datetime import datetime, timedelta, timezone
 import gzip
 import html
@@ -21,7 +21,7 @@ import urllib.request
 from model_prices import (_data, _ids, _parse_time, _period, _schedule, genai_prices, rates,
                           resolve)
 
-FIELDS = ("input", "cache_write", "cache_read", "output")
+FIELDS = ("input", "cache_write", "cache_read", "cache_read_explicit", "output")
 
 
 @dataclass(frozen=True)
@@ -262,9 +262,73 @@ def _alibaba_tier(cell: str) -> int | None:
     return int(match.group(1)) * {"": 1, "K": 1_000, "M": 1_000_000}[match.group(2)]
 
 
-def parse_alibaba(text: str, today: datetime) -> list[Observed]:
+ALIBABA_CACHE = "https://www.alibabacloud.com/help/en/model-studio/context-cache.md"
+_ALIBABA_ID = r"(?:qwen|deepseek|glm|kimi)[a-z0-9.-]*[a-z0-9]"
+
+
+def _markdown(page: str) -> str:
+    """An HTML docs page as the Markdown its .md address used to serve: headings as #
+    lines, list items as - lines, code in backticks, and <strong> kept. Code samples are
+    left out, since their comments would read as headings."""
+    page = re.sub(r"<(script|style|pre)\b.*?</\1>", "", page, flags=re.S)
+    page = re.sub(r"<h([1-6])\b[^>]*>(.*?)</h\1>",
+                  lambda found: "\n" + "#" * int(found.group(1)) + " " + found.group(2) + "\n",
+                  page, flags=re.S)
+    page = re.sub(r"<li\b[^>]*>", "\n- ", page)
+    page = re.sub(r"</?code\b[^>]*>", "`", page)
+    page = re.sub(r"</?(p|div|section|tr|br|ul|ol|table)\b[^>]*>", "\n", page)
+    page = re.sub(r"<(?!/?strong>)[^>]+>", "", page)
+    lines = (" ".join(html.unescape(line).split()) for line in page.splitlines())
+    return "\n".join(line for line in lines if line)
+
+
+def _alibaba_cache_section(page: str, title: str) -> tuple[str, str]:
+    """A cache mode's Singapore supported-model list and its billing text. The page marks
+    regions with <Tab title=...> in Markdown and #### headings in converted HTML."""
+    if re.match(r"\s*<(!doctype|html)", page, re.I):
+        page = _markdown(page)
+    section = re.search(rf"^## {title}\b(.*?)(?=^## |\Z)", page, re.M | re.S)
+    tab = section and re.search(r'### Supported models.*?(?:<Tab title="Singapore">(.*?)</Tab>'
+                                r'|^#### Singapore\n(.*?)(?=^#{3,4} |\Z))',
+                                section.group(1), re.S | re.M)
+    billing = section and re.search(r"^### Billing(.*?)(?=^### |\Z)", section.group(1),
+                                    re.M | re.S)
+    if not tab or not billing:
+        raise ValueError(f"alibaba: no {title} models or billing in {ALIBABA_CACHE}; "
+                         "the page format changed")
+    return tab.group(1) or tab.group(2), billing.group(1)
+
+
+def parse_alibaba_cache(page: str) -> tuple[set[str], set[str]]:
+    """The Singapore models with implicit caching, and those with explicit caching.
+
+    Alibaba bills implicit cache hits, which need no setup, at 20% of input, and explicit
+    cache hits at 10% and writes at 125%; it lists exceptions, whose prices only its
+    console shows. A model with only explicit caching has only explicit hits, which are its
+    cache reads.
+    """
+    implicit, implicit_billing = _alibaba_cache_section(page, "Implicit cache")
+    explicit, explicit_billing = _alibaba_cache_section(page, "Explicit cache")
+    others = re.search(r"For models other than (.*?): The unit price of `cached_token` is "
+                       r"<strong>20%</strong> of the `input_token` unit price", implicit_billing)
+    # Exceptions are a sentence, "The explicit cache hit price for ... is not 10%", or a
+    # bullet per group of models whose hit or creation price is "not 10%" or "not 125%".
+    exceptions = [names for names in re.findall(
+        r"The explicit cache hit price for (.*?) is not 10%", explicit_billing)] + [
+        names for names, rule in re.findall(r"^\s*- ([^:\n]+): (.*)$", explicit_billing, re.M)
+        if re.search(r"not (?:10|125)%", rule)]
+    if (not others or not exceptions or "billed at 125% of the standard input token price"
+            not in explicit_billing or "Billed at 10% of the standard input token price"
+            not in explicit_billing):
+        raise ValueError(f"alibaba: cache billing rules changed in {ALIBABA_CACHE}")
+    excluded = set(re.findall(_ALIBABA_ID, others.group(1) + " " + " ".join(exceptions)))
+    return (set(re.findall(_ALIBABA_ID, implicit)) - excluded,
+            set(re.findall(_ALIBABA_ID, explicit)) - excluded)
+
+
+def parse_alibaba(text: str, today: datetime, get: Callable[[str], str]) -> list[Observed]:
     """Read text-generation prices for the Singapore (international) deployment, which
-    models.dev's Alibaba provider uses.
+    models.dev's Alibaba provider uses, with cache prices from the cache page's rules.
 
     A table that splits input prices by modality is skipped, as is a cell that prices busy
     and idle hours separately. Output is the non-thinking price, or for a thinking-only
@@ -318,6 +382,19 @@ def parse_alibaba(text: str, today: datetime) -> list[Observed]:
                 if value is not None:
                     found.append(Observed("alibaba", model, field, value, above=above,
                                           mode=mode))
+    implicit, explicit = parse_alibaba_cache(get(ALIBABA_CACHE))
+    # The cache rules are checked on Alibaba's own Qwen models: for models it resells, its
+    # pages disagree, such as Qwen Cloud's $0.26 cache read for glm-5.1, 18.57% of input.
+    for item in [item for item in found if item.field == "input" and item.model.startswith("qwen")]:
+        # A model without implicit caching has only explicit hits, priced as its cache reads.
+        shares = {"cache_read": 0.2 if item.model in implicit else 0.1}
+        if item.model in implicit and item.model in explicit:
+            shares["cache_read_explicit"] = 0.1
+        if item.model in explicit:
+            shares["cache_write"] = 1.25
+        if item.model in implicit | explicit:
+            found += [replace(item, field=field, value=round(item.value * share, 6))
+                      for field, share in shares.items()]
     return found
 
 
@@ -860,6 +937,119 @@ def check_calendars(providers: set[str], today: datetime) -> list[Result]:
     return results
 
 
+_WEEKDAYS = ["mon", "tue", "wed", "thu", "fri"]
+
+
+def _clock(when: dict) -> tuple[tuple[tuple[str, str], ...], bool, str | None]:
+    """A models.dev time-of-day condition as schedules.toml writes one: its UTC windows,
+    whether it holds on weekdays only, and the holiday calendar it excludes."""
+    windows: list[tuple[str, str]] = []
+    weekdays, holidays = False, None
+    for key, value in when.items():
+        hours = [item.get("utc_hours") for item in value] if key == "all" else [
+            value if key == "utc_hours" else None]
+        if all(isinstance(bounds, dict) and set(bounds) <= {"gte", "lt"} for bounds in hours):
+            bounds = {name: limit for item in hours for name, limit in item.items()}
+            windows.append((bounds.get("gte", "00:00"), bounds.get("lt", "00:00")))
+        elif key == "any":
+            for item in value:
+                found, *rest = _clock(item)
+                if rest != [False, None]:
+                    raise ValueError(f"unsupported time-of-day condition {when}")
+                windows += found
+        elif key == "utc_days" and value == {"in": _WEEKDAYS}:
+            weekdays = True
+        elif key == "not" and list(value) == ["holiday"] and list(value["holiday"]) == ["equals"]:
+            holidays = value["holiday"]["equals"].lower()
+        else:
+            raise ValueError(f"unsupported time-of-day condition {when}")
+    return tuple(sorted(windows)), weekdays, holidays
+
+
+def _rule(windows, weekdays: bool, holidays: str | None, factor: float) -> str:
+    days = " on weekdays" if weekdays else ""
+    excluded = f" except {holidays} holidays" if holidays else ""
+    return f"{factor:g}x in {', '.join('-'.join(window) for window in windows)} UTC{days}{excluded}"
+
+
+def _time_of_day(provider: str, models: dict, today: datetime) -> list[Result]:
+    """Compare models.dev's time-of-day multipliers with the schedule in effect today."""
+    schedule = _schedule(provider, today) or {}
+    off_peak = schedule.get("off_peak_multiplier", {})
+    results = []
+    for model, rule in sorted(models.items()):
+        for item in rule.get("multipliers", []):
+            factor = item["factor"]
+            # A factor keyed by modality is a text factor for these text models.
+            if isinstance(factor, dict) and list(factor) == ["text"]:
+                factor = factor["text"]
+            try:
+                stated = _rule(*_clock(item["when"]), factor)
+            except (ValueError, TypeError) as error:
+                stated = str(error)
+            # A rise prices peak hours over recorded off-peak rates; a cut prices off-peak
+            # hours under recorded standard rates.
+            if isinstance(factor, (int, float)) and factor > 1 and "peak_hours_utc" in schedule:
+                ours = _rule(tuple(map(tuple, sorted(schedule["peak_hours_utc"]))),
+                             schedule.get("weekdays_only", False), schedule.get("holidays"),
+                             schedule["peak_multiplier"])
+            elif model in off_peak:
+                ours = _rule(tuple(map(tuple, sorted(schedule["off_peak_hours_utc"]))),
+                             False, None, off_peak[model])
+            else:
+                ours = None
+            results.append(Result(provider, f"{provider}/{model}", "rule:time_of_day", None, None,
+                                  stated, ours, None, "ok" if stated == ours else "mismatch"))
+    for model in sorted(set(off_peak) - {model for model, rule in models.items()
+                                         if rule.get("multipliers")}):
+        results.append(Result(provider, f"{provider}/{model}", "rule:time_of_day", None, None,
+                              "no time-of-day rule", "off-peak discount", None, "mismatch"))
+    if "peak_hours_utc" in schedule and not any(rule.get("multipliers")
+                                                 for rule in models.values()):
+        results.append(Result(provider, provider, "rule:time_of_day", None, None,
+                              "no time-of-day rule", "peak hours", None, "mismatch"))
+    return results
+
+
+def _minutes(lifetime: str) -> float:
+    """A cache lifetime such as "5m" or "1h" in minutes."""
+    number, unit = re.fullmatch(r"([0-9.]+)([mhd])", lifetime).groups()
+    return float(number) * {"m": 1, "h": 60, "d": 1440}[unit]
+
+
+def _cache_lifetimes(provider: str, models: dict, today: datetime) -> list[Result]:
+    """Compare models.dev's longer-lived cache write prices, as multiples of input, with
+    the one-hour cache write multiple model-prices charges."""
+    results = []
+    for model, rule in sorted(models.items()):
+        writes = rule.get("cache_write", {})
+        found = rates(f"{provider}/{model}", at=today, provider=provider)
+        # The shortest lifetime is the cache write price, such as Anthropic's five minutes.
+        for lifetime in sorted(writes, key=_minutes)[1:]:
+            price = writes[lifetime]
+            stated = round(price / rule["input"], 6)
+            ours = found.cache_write_1h_multiple if found else None
+            status = "ok" if ours is not None and abs(ours - stated) < 1e-9 else "mismatch"
+            results.append(Result(provider, f"{provider}/{model}", f"rule:cache_write_{lifetime}",
+                                  None, None, f"{stated:g}x input",
+                                  f"{ours:g}x input" if ours is not None else None, None, status))
+    return results
+
+
+def compare_rules(rules: dict[str, dict], providers: set[str] | None,
+                  today: datetime) -> list[Result]:
+    """Compare the rules models.dev now records, as data/prices.json keeps them, with the
+    ones model-prices applies from schedules.toml and cache_writes.toml."""
+    scheduled = {item["provider"] for item in _data()["schedules"].get("schedule", [])}
+    results = []
+    for provider in sorted(set(rules) | scheduled):
+        if providers is None or provider in providers:
+            models = rules.get(provider, {})
+            results += _time_of_day(provider, models, today)
+            results += _cache_lifetimes(provider, models, today)
+    return results
+
+
 def _ark_cell(cell: str) -> str:
     """A ModelArk docs table cell without Markdown emphasis, escapes, line breaks, or
     units, which BytePlus writes in English and Volcengine in Chinese."""
@@ -1043,19 +1233,25 @@ def fetch(url: str) -> str:
 def _value(found, field: str, above: int | None) -> float | None:
     if found is None:
         return None
-    values = {"input": found.input, "output": found.output,
-              "cache_read": found.cache_read, "cache_write": found.cache_write}
+    keys = ("input", "output", "cache_read", "cache_read_explicit", "cache_write")
+    values = {key: getattr(found, key) for key in keys}
     if above is not None:
         tier = next((tier for tier in found.tiers if tier.above == above), None)
         if tier is None:
             return None
+        # A tier's cache read price without an explicit one prices both kinds of hit.
+        if tier.cache_read is not None:
+            values["cache_read_explicit"] = None
         values = {key: getattr(tier, key) if getattr(tier, key) is not None else values[key]
                   for key in values}
     if field == "cache_write_1h":
         if found.cache_write_1h_multiple is None:
             return None
         return values["input"] * found.cache_write_1h_multiple
-    # Missing cache prices are charged at the input price.
+    # A missing explicit hit price is the cache read price, and missing cache prices are
+    # charged at the input price.
+    if values[field] is None and field == "cache_read_explicit":
+        field = "cache_read"
     if values[field] is None and field in {"cache_read", "cache_write"}:
         return values["input"]
     return values[field]
@@ -1146,8 +1342,12 @@ def _check(provider: str, moment: datetime, pages: dict[str, str] | None,
 
 
 def run(providers: Iterable[str] | None = None, today: datetime | None = None,
-        pages: dict[str, str] | None = None, genai: list | None = None) -> list[Result]:
+        pages: dict[str, str] | None = None, genai: list | None = None,
+        rules: dict[str, dict] | None = None) -> list[Result]:
+    """Check each provider's official page and, given `rules` from data/prices.json,
+    models.dev's current rules against model-prices' own."""
     moment = today or datetime.now(timezone.utc)
+    providers = list(providers) if providers else None
     results = []
     for provider in providers or SOURCES:
         # A page that cannot be fetched or read fails its own provider's check, and the
@@ -1158,6 +1358,8 @@ def run(providers: Iterable[str] | None = None, today: datetime | None = None,
             results.append(Result(provider, provider, "page", None, None, SOURCES[provider][0],
                                   str(error), None, "error"))
     results.extend(check_calendars(set(providers or SOURCES), moment))
+    if rules is not None:
+        results.extend(compare_rules(rules, set(providers) if providers else None, moment))
     return results
 
 
@@ -1181,6 +1383,12 @@ def report(results: list[Result], genai: bool = False) -> str:
         if result.field == "holiday_calendar":
             lines.append(f"{result.status:9} {result.model} holiday calendar {result.official}, "
                          f"{result.effective}; add the next year's holidays to schedules.toml")
+            continue
+        if result.field.startswith("rule:"):
+            source = ("schedules.toml" if result.field == "rule:time_of_day"
+                      else "cache_writes.toml")
+            lines.append(f"{result.status:9} {result.model} {result.field[5:]}: models.dev "
+                         f"{result.official}, {source} {result.effective}")
             continue
         if result.field.startswith("peak_terms:"):
             language = result.field.partition(":")[2]

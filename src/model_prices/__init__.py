@@ -44,6 +44,7 @@ class Tier:
     output: float | None = None
     cache_read: float | None = None
     cache_write: float | None = None
+    cache_read_explicit: float | None = None
 
 
 @dataclass(frozen=True)
@@ -56,10 +57,12 @@ class CostBreakdown:
     cache_read: float
     cache_write: float
     cache_write_1h: float = 0.0
+    cache_read_explicit: float = 0.0
 
     @property
     def total(self) -> float:
-        return self.input + self.output + self.cache_read + self.cache_write + self.cache_write_1h
+        return (self.input + self.output + self.cache_read + self.cache_write
+                + self.cache_write_1h + self.cache_read_explicit)
 
 
 @dataclass(frozen=True)
@@ -89,36 +92,50 @@ class Rates:
     # For an estimate of a model with no per-token price, the "provider/model" whose rates
     # stand in for it, as data/estimates.toml records; None for a published price.
     estimated_from: str | None = None
+    # A cache hit on a prefix the request marked for caching, for providers that price it
+    # apart from an implicit hit: Alibaba bills explicit hits at 10% of input and implicit
+    # ones at 20%. None prices it as cache_read.
+    cache_read_explicit: float | None = None
 
     def price_key(self) -> tuple:
         """The prices alone, without provenance, for comparing rates from different sources."""
         return (self.input, self.output, self.cache_read, self.cache_write, self.tiers,
-                self.period, self.cache_write_1h_multiple)
+                self.period, self.cache_write_1h_multiple, self.cache_read_explicit)
 
     def breakdown(self, input_tokens: int = 0, output_tokens: int = 0,
                   cache_read_tokens: int = 0, cache_write_tokens: int = 0,
-                  cache_write_1h_tokens: int = 0) -> CostBreakdown:
+                  cache_write_1h_tokens: int = 0,
+                  cache_read_explicit_tokens: int = 0) -> CostBreakdown:
         """Price one request by token type; input_tokens excludes cache reads and writes.
 
         cache_write_tokens are five-minute cache writes and cache_write_1h_tokens one-hour
-        ones. Long-context tiers apply when the request's whole prompt exceeds the tier
-        size. Missing cache prices fall back to the input price.
+        ones. cache_read_explicit_tokens are cache hits on prefixes the request marked for
+        caching, and cache_read_tokens all other hits. Long-context tiers apply when the
+        request's whole prompt exceeds the tier size. A missing explicit hit price falls
+        back to the cache read price, and missing cache prices to the input price.
         """
-        prompt = input_tokens + cache_read_tokens + cache_write_tokens + cache_write_1h_tokens
+        prompt = (input_tokens + cache_read_tokens + cache_read_explicit_tokens
+                  + cache_write_tokens + cache_write_1h_tokens)
         rates: dict[str, float | None] = {
             "input": self.input, "output": self.output,
             "cache_read": self.cache_read, "cache_write": self.cache_write,
+            "cache_read_explicit": self.cache_read_explicit,
         }
         applied = None
         for tier in self.tiers:
             if prompt > tier.above:
                 applied = tier.above
+                # A tier's cache read price without an explicit one prices both kinds of hit.
+                if tier.cache_read is not None:
+                    rates["cache_read_explicit"] = None
                 rates.update({
                     key: value for key, value in asdict(tier).items()
                     if key != "above" and value is not None
                 })
         input_rate = rates["input"]
         cache_read = rates["cache_read"] if rates["cache_read"] is not None else input_rate
+        explicit = (rates["cache_read_explicit"] if rates["cache_read_explicit"] is not None
+                    else cache_read)
         cache_write = rates["cache_write"] if rates["cache_write"] is not None else input_rate
         cache_write_1h = (input_rate * self.cache_write_1h_multiple
                           if self.cache_write_1h_multiple is not None else cache_write)
@@ -129,14 +146,16 @@ class Rates:
             cache_read=cache_read_tokens * cache_read / 1e6,
             cache_write=cache_write_tokens * cache_write / 1e6,
             cache_write_1h=cache_write_1h_tokens * cache_write_1h / 1e6,
+            cache_read_explicit=cache_read_explicit_tokens * explicit / 1e6,
         )
 
     def cost(self, input_tokens: int = 0, output_tokens: int = 0,
              cache_read_tokens: int = 0, cache_write_tokens: int = 0,
-             cache_write_1h_tokens: int = 0) -> float:
+             cache_write_1h_tokens: int = 0, cache_read_explicit_tokens: int = 0) -> float:
         """Price one request in USD; input_tokens excludes cache reads and writes."""
         return self.breakdown(input_tokens, output_tokens, cache_read_tokens,
-                              cache_write_tokens, cache_write_1h_tokens).total
+                              cache_write_tokens, cache_write_1h_tokens,
+                              cache_read_explicit_tokens).total
 
 
 # The snapshot format this version reads. Rate fields it does not know are ignored, so a
@@ -498,9 +517,11 @@ def _scaled(found: Rates, period: str, factor: float) -> Rates:
     return replace(
         found, period=period, input=found.input * factor, output=found.output * factor,
         cache_read=scale(found.cache_read), cache_write=scale(found.cache_write),
+        cache_read_explicit=scale(found.cache_read_explicit),
         tiers=tuple(
             replace(tier, input=scale(tier.input), output=scale(tier.output),
-                    cache_read=scale(tier.cache_read), cache_write=scale(tier.cache_write))
+                    cache_read=scale(tier.cache_read), cache_write=scale(tier.cache_write),
+                    cache_read_explicit=scale(tier.cache_read_explicit))
             for tier in found.tiers
         ),
     )
@@ -592,13 +613,14 @@ def rates_between(model: str, start: datetime | str, end: datetime | str,
 
 def cost(model: str, *, input_tokens: int = 0, output_tokens: int = 0,
          cache_read_tokens: int = 0, cache_write_tokens: int = 0,
-         cache_write_1h_tokens: int = 0,
+         cache_write_1h_tokens: int = 0, cache_read_explicit_tokens: int = 0,
          at: datetime | str | None = None, provider: str | None = None,
          mode: str | None = None, prices_at: datetime | str | None = None,
          estimate: bool = False) -> float | None:
     """Price one request made at `at`; input_tokens excludes cache reads and writes.
 
     cache_write_tokens are five-minute cache writes and cache_write_1h_tokens one-hour ones.
+    cache_read_explicit_tokens are cache hits on prefixes the request marked for caching.
     estimate=True prices a model with no per-token price at its stand-in's rates, as rates()
     does; check rates(...).estimated_from to tell an estimate from a price.
     """
@@ -607,7 +629,7 @@ def cost(model: str, *, input_tokens: int = 0, output_tokens: int = 0,
     if found is None:
         return None
     return found.cost(input_tokens, output_tokens, cache_read_tokens, cache_write_tokens,
-                      cache_write_1h_tokens)
+                      cache_write_1h_tokens, cache_read_explicit_tokens)
 
 
 @dataclass(frozen=True)
@@ -702,6 +724,9 @@ def main(argv: list[str] | None = None) -> int:
     )
     check.add_argument("providers", nargs="*", help="Providers to check (default: all)")
     check.add_argument("--json", action="store_true")
+    check.add_argument("--data", type=Path, default=Path("data"),
+                       help="Input data directory, whose prices.json records models.dev's "
+                            "current rules to compare (default: data)")
     check.add_argument(
         "--genai-prices", nargs="?", const="url", metavar="SOURCE",
         help="Also score Pydantic's genai-prices against the official pages, from its data.json "
@@ -718,7 +743,9 @@ def main(argv: list[str] | None = None) -> int:
         if args.genai_prices:
             source = genai_prices.DATA_URL if args.genai_prices == "url" else args.genai_prices
             genai = genai_prices.load(source)
-        results = run(args.providers or None, genai=genai)
+        recorded = args.data / "prices.json"
+        rules = json.loads(recorded.read_text()).get("rules") if recorded.exists() else None
+        results = run(args.providers or None, genai=genai, rules=rules)
         print(json.dumps(as_json(results), indent=2) if args.json
               else report(results, genai=genai is not None))
         return 1 if any(result.status in {"mismatch", "error"} for result in results) else 0
@@ -771,10 +798,15 @@ def main(argv: list[str] | None = None) -> int:
     def usd(value: float | None) -> str:
         return f"${value:g}" if value is not None else "- (input price)"
 
+    def explicit(rates: Rates | Tier) -> str:
+        return (f"  explicit cache read {usd(rates.cache_read_explicit)}"
+                if rates.cache_read_explicit is not None else "")
+
     print(f"input {usd(found.input)}  output {usd(found.output)}  "
-          f"cache read {usd(found.cache_read)}  cache write {usd(found.cache_write)}  per 1M tokens")
+          f"cache read {usd(found.cache_read)}{explicit(found)}  "
+          f"cache write {usd(found.cache_write)}  per 1M tokens")
     for tier in found.tiers:
         print(f"above {tier.above:,} prompt tokens: input {usd(tier.input)}  "
-              f"output {usd(tier.output)}  cache read {usd(tier.cache_read)}  "
+              f"output {usd(tier.output)}  cache read {usd(tier.cache_read)}{explicit(tier)}  "
               f"cache write {usd(tier.cache_write)}")
     return 0

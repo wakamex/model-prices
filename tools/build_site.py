@@ -85,11 +85,18 @@ def day(value: str | None) -> str:
     return value[:10] if value else ""
 
 
+def cached(rates: dict) -> str:
+    """The cached input cell, with the explicit cache hit price where one differs."""
+    explicit = rates.get("cache_read_explicit")
+    return price(rates.get("cache_read")) + (f", explicit {price(explicit)}" if explicit is not None else "")
+
+
 def tiers(rates: dict) -> str:
     return "; ".join(
         f"above {tier['above'] // 1000:,}K: " + ", ".join(
             f"{label} {price(tier[field])}" for field, label in (
-                ("input", "in"), ("cache_read", "cached"), ("cache_write", "write"),
+                ("input", "in"), ("cache_read", "cached"),
+                ("cache_read_explicit", "explicit cached"), ("cache_write", "write"),
                 ("output", "out")) if tier.get(field) is not None)
         for tier in rates.get("tiers", []))
 
@@ -110,7 +117,9 @@ def statuses(path: Path | None) -> tuple[dict, str | None]:
         return {}, None
     found: dict[str, set[str]] = {}
     for result in json.loads(path.read_text()):
-        if "/" in result["model"] and result["status"] in STATUS_TEXT:
+        # Comparisons with models.dev's rules say nothing about the pricing page.
+        if ("/" in result["model"] and result["status"] in STATUS_TEXT
+                and not result["field"].startswith("rule:")):
             found.setdefault(result["model"], set()).add(result["status"])
     ran = datetime.fromtimestamp(path.stat().st_mtime, timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     return found, ran
@@ -184,7 +193,8 @@ def schedule_line(provider: str, model: str, now: datetime) -> str | None:
     return None
 
 
-PRICE_KEYS = ("input", "output", "cache_read", "cache_write", "tiers", "cache_write_1h_multiple")
+PRICE_KEYS = ("input", "output", "cache_read", "cache_read_explicit", "cache_write", "tiers",
+              "cache_write_1h_multiple")
 
 
 def changes(timeline: list[dict]) -> list[dict]:
@@ -222,7 +232,8 @@ def source_name(url: str) -> str:
     return urlparse(url).netloc.removeprefix("www.")
 
 
-FIELD_NAMES = (("input", "input"), ("cache_read", "cached input"), ("cache_write", "cache write"),
+FIELD_NAMES = (("input", "input"), ("cache_read", "cached input"),
+               ("cache_read_explicit", "explicit cache hits"), ("cache_write", "cache write"),
                ("output", "output"))
 
 
@@ -254,7 +265,7 @@ def history(timeline: list[dict]) -> list[str]:
             lines.append(f"| {start} | not sold |  |  |  |  |  |")
             continue
         lines.append(" | ".join((
-            f"| {start}", price(rates["input"]), price(rates.get("cache_read")),
+            f"| {start}", price(rates["input"]), cached(rates),
             price(rates.get("cache_write")), price(rates["output"]), tiers(rates),
             dated_by(interval))) + " |")
     return lines
@@ -287,6 +298,8 @@ def model_page(provider: str, model: str, timelines: dict, found: dict, ran: str
             f"Current price, since {day(latest['start']) or first_start(changes(standard))}: "
             f"input {price(rates['input'])}, output {price(rates['output'])}"
             + (f", cached input {price(rates['cache_read'])}" if rates.get("cache_read") is not None else "")
+            + (f", explicit cache hits {price(rates['cache_read_explicit'])}"
+               if rates.get("cache_read_explicit") is not None else "")
             + (f", cache write {price(rates['cache_write'])}" if rates.get("cache_write") is not None else "")
             + ".")
     state = model_prices._data()["status"].get(provider, {}).get(model)
@@ -339,7 +352,7 @@ def price_row(provider: str | None, model: str, rates: dict, start: str, link: s
     longer = min((tier["above"] for tier in rates.get("tiers", [])), default=None)
     return " | ".join((
         f"| [{escape(model)}]({link}){note}", *([name(provider)] if provider else []),
-        price(rates["input"]), price(rates.get("cache_read")), price(rates.get("cache_write")),
+        price(rates["input"]), cached(rates), price(rates.get("cache_write")),
         price(rates["output"]), f"above {longer // 1000:,}K" if longer else "", start)) + " |"
 
 

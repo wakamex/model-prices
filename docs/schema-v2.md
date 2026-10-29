@@ -1,20 +1,10 @@
 # Prices planned for snapshot schema 2
 
-[models.dev](https://models.dev)'s schema 2 model files record prices that model-prices' snapshot does not carry yet: service tiers, regions, dates, and hours as conditions on a price, cache prices by caching mode and lifetime, tool fees, and prices per modality. model-prices reads those files through a translation in `src/model_prices/backfill.py`, a port of the one models.dev uses to publish its data in schema 1, which keeps text prices, cache read and write prices, long-prompt tiers, reasoning prices, and modes.
+[models.dev](https://models.dev)'s schema 2 model files record prices that model-prices' snapshot does not carry yet: service tiers, regions, dates, and hours as conditions on a price, cache write prices by lifetime, tool fees, and prices per modality. model-prices reads those files through a translation in `src/model_prices/backfill.py`, a port of the one models.dev uses to publish its data in schema 1, which keeps text prices, cache read and write prices, long-prompt tiers, reasoning prices, and modes.
 
 From 0.0.6 the package reads the schema 2 snapshot under `v2/` on the `data` branch and ignores rate fields it does not know, so each price below can be added to that snapshot on its own. Releases up to 0.0.5 raise on an unknown field, so `v1/` keeps being published with only the fields they know. Each model's history stays a timeline that clients look up by time: model-prices compiles conditions into the timeline and into fields, and does not ask clients to evaluate models.dev's condition language, which combines conditions with `any`, `all`, and `not` over hours, weekdays, holidays, dates, regions, and service tiers.
 
-The order below puts first the prices that are wrong today in ways callers cannot see.
-
-## Checks against models.dev
-
-`schedules.toml` records DeepSeek's peak hours and Alibaba's off-peak discount, with the dates of each version and an exact holiday calendar, and `cache_writes.toml` records one-hour and 12-hour cache write prices as multiples of input. models.dev records the current version of both, as time-of-day multipliers and as write prices by lifetime, such as `write = { "5m" = 6.25, "1h" = 10 }`. `model-prices check` should fail when the current rule in either file differs from models.dev; both files stay the source, since models.dev keeps earlier rules only in its git history.
-
-## Explicit cache hits
-
-Alibaba bills a cache hit 20% of input when the cache was created implicitly, which needs no setup, and 10% when the request marked what to cache ([context cache](https://www.alibabacloud.com/help/en/model-studio/context-cache)); a model can support both. A rate entry has one cache read price, so every hit on a model with implicit caching is priced at 20%, and an explicit hit on `qwen-plus` costs $0.08 instead of $0.04 per million tokens.
-
-Plan: a `cache_read_explicit` rate field, taken from each model's `cache.explicit.read` in models.dev and checked against Alibaba's cache rules, and a `cache_read_explicit_tokens` argument to `cost()` and `breakdown()`. A caller can tell explicit hits apart, since it sent the markers and only explicit caching reports `cache_creation_input_tokens`.
+Explicit cache hits were the first such price: `cache_read_explicit` carries models.dev's `cache.explicit.read` where it differs from the cache read price, and the check compares models.dev's time-of-day multipliers and cache write prices by lifetime with `schedules.toml` and `cache_writes.toml`. The order below puts first the prices that are wrong today in ways callers cannot see.
 
 ## Prices by modality
 

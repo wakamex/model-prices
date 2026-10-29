@@ -63,7 +63,9 @@ def _tracked(path: str) -> bool:
             and not (unpriced and unpriced.search(model)))
 
 
-RATE_FIELDS = ("input", "output", "cache_read", "cache_write")
+# cache_read_explicit is a cache hit on a prefix the request marked for caching, where a
+# provider prices it apart from an implicit hit, as Alibaba does; absent, it is cache_read.
+RATE_FIELDS = ("input", "output", "cache_read", "cache_read_explicit", "cache_write")
 
 # models.dev lab ids that differ from the id of the lab's own API provider.
 LAB_PROVIDERS = {"bytedance-seed": "volcengine", "stepfun": "stepfun-ai", "zhipuai": "zai"}
@@ -145,6 +147,14 @@ def _cache_write(cache: dict[str, Any] | None) -> Any:
     return _first_price(cache.get("write")) if cache.get("write") is not None else explicit
 
 
+def _explicit_read(cache: dict[str, Any] | None) -> Any:
+    """An explicit cache hit's price, which schema 1 has no field for, where it differs
+    from the cache read price."""
+    read = (cache or {}).get("read")
+    explicit = ((cache or {}).get("explicit") or {}).get("read")
+    return explicit if explicit != read else None
+
+
 def _present(values: dict[str, Any]) -> dict[str, Any]:
     return {key: value for key, value in values.items() if value is not None}
 
@@ -173,15 +183,15 @@ def _schema1_cost(cost: dict[str, Any], where: str) -> dict[str, Any] | None:
         cache = override.get("cache")
         tier(override["when"]).update(_present({
             "input": override.get("price"), "cache_read": (cache or {}).get("read"),
-            "cache_write": _cache_write(cache)}))
+            "cache_read_explicit": _explicit_read(cache), "cache_write": _cache_write(cache)}))
     for override in filter(context_only, made.get("overrides") or []):
         tier(override["when"]).update(_present({
             "output": override.get("price"), "reasoning": override.get("reasoning")}))
     cache = given.get("cache")
     return _present({
         "input": given["price"], "output": made["price"], "reasoning": made.get("reasoning"),
-        "cache_read": (cache or {}).get("read"), "cache_write": _cache_write(cache),
-        "tiers": list(tiers.values()) or None,
+        "cache_read": (cache or {}).get("read"), "cache_read_explicit": _explicit_read(cache),
+        "cache_write": _cache_write(cache), "tiers": list(tiers.values()) or None,
     })
 
 
@@ -189,6 +199,7 @@ def _schema1_cost(cost: dict[str, Any], where: str) -> dict[str, Any] | None:
 _FACTOR_PATHS = {"input": ("text", "input", "price"), "output": ("text", "output", "price"),
                  "reasoning": ("text", "output", "reasoning"),
                  "cache_read": ("text", "input", "cache", "read"),
+                 "cache_read_explicit": ("text", "input", "cache", "explicit", "read"),
                  "cache_write": ("text", "input", "cache", "write")}
 
 
@@ -300,8 +311,9 @@ def _read_blobs(repo: Path, specs: list[str]) -> list[bytes | None]:
     return blobs
 
 
-def _replay(repo: Path, providers: tuple[str, ...]) -> tuple[dict, dict, dict]:
-    """Each provider's price history, its aliases, and the lab model each file serves."""
+def _replay(repo: Path, providers: tuple[str, ...]) -> tuple[dict, dict, dict, dict, dict]:
+    """Each provider's price history, its aliases, the lab model each file serves, the
+    models models.dev retired, and each file's current document."""
     changes = [change for change in _changes(repo, providers) if _tracked(change[3])]
     blobs = iter(_read_blobs(repo, [
         f"{commit}:{path}" for status, commit, _, path in changes if status != "D"
@@ -313,6 +325,7 @@ def _replay(repo: Path, providers: tuple[str, ...]) -> tuple[dict, dict, dict]:
     serves: dict[tuple[str, str], tuple[str, bool]] = {}
     # Models models.dev marks deprecated, or whose file it deleted.
     retired: dict[tuple[str, str], str] = {}
+    current: dict[tuple[str, str], dict[str, Any]] = {}
     for status, commit, committed_at, path in changes:
         _, provider, _, *model_parts = path.removesuffix(".toml").split("/")
         # No API accepts an id with surrounding spaces, such as a file models.dev later
@@ -321,6 +334,7 @@ def _replay(repo: Path, providers: tuple[str, ...]) -> tuple[dict, dict, dict]:
         blob = None if status == "D" else next(blobs)
         if blob is None:
             serves.pop((provider, model), None)
+            current.pop((provider, model), None)
             retired[(provider, model)] = "removed"
             continue
         target = _link_target(blob)
@@ -329,11 +343,13 @@ def _replay(repo: Path, providers: tuple[str, ...]) -> tuple[dict, dict, dict]:
             # later became a regular file.
             linked = (Path(model).parent / target.removesuffix(".toml")).as_posix()
             links.setdefault(provider, {})[model] = linked.removeprefix("./")
+            current.pop((provider, model), None)
             continue
         try:
             document = tomllib.loads(blob.decode())
         except (tomllib.TOMLDecodeError, UnicodeDecodeError):
             continue
+        current[(provider, model)] = document
         document = schema1(document, f"{commit[:12]}:{path}")
         if document.get("status") == "deprecated":
             retired[(provider, model)] = "deprecated"
@@ -356,19 +372,44 @@ def _replay(repo: Path, providers: tuple[str, ...]) -> tuple[dict, dict, dict]:
     for (provider, model), state in sorted(retired.items()):
         if model in history.get(provider, {}):
             statuses.setdefault(provider, {})[model] = state
-    return history, links, serves, statuses
+    return history, links, serves, statuses, current
+
+
+# Conditions on the time of a request, which schedules.toml records for model-prices.
+_CLOCK = re.compile(r"'(utc_hours|utc_days|holiday)'")
+
+
+def _rules(current: dict[tuple[str, str], dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    """The rules models.dev now gives that model-prices keeps in its own files, for the
+    check to compare: time-of-day multipliers, which schedules.toml records, and cache
+    write prices by lifetime, whose longer lifetimes cache_writes.toml records."""
+    rules: dict[str, dict[str, Any]] = {}
+    for (provider, model), document in sorted(current.items()):
+        cost = document.get("cost") or {}
+        given = (cost.get("text") or {}).get("input") or {}
+        write = (given.get("cache") or {}).get("write")
+        rule: dict[str, Any] = {}
+        clock = [item for item in cost.get("multipliers") or []
+                 if _CLOCK.search(repr(item.get("when")))]
+        if clock:
+            rule["multipliers"] = clock
+        if isinstance(write, dict) and len(write) > 1:
+            rule |= {"input": given.get("price"), "cache_write": write}
+        if rule:
+            rules.setdefault(provider, {})[model] = rule
+    return rules
 
 
 def build(repo: Path, providers: tuple[str, ...] = TRACKED_PROVIDERS) -> dict[str, Any]:
     """Replay every price change of the tracked providers into effective-dated entries."""
-    history, links, serves, statuses = _replay(repo, providers)
+    history, links, serves, statuses, current = _replay(repo, providers)
     # An alias of another provider's file, such as StepFun's global models linking to its
     # China ones, takes that file's history.
     foreign = {(provider, model): target.split("/", 3)
                for provider, models in links.items() for model, target in models.items()
                if target.startswith("../../")}
     if foreign:
-        other, _, _, _ = _replay(repo, tuple(sorted({parts[2] for parts in foreign.values()})))
+        other, *_ = _replay(repo, tuple(sorted({parts[2] for parts in foreign.values()})))
         for (provider, model), (_, _, source, path) in foreign.items():
             del links[provider][model]
             entries = other.get(source, {}).get(path.removeprefix("models/"), [])
@@ -398,6 +439,7 @@ def build(repo: Path, providers: tuple[str, ...] = TRACKED_PROVIDERS) -> dict[st
         },
         "bases": _bases(serves),
         "status": statuses,
+        "rules": _rules(current),
     }
 
 
@@ -411,7 +453,7 @@ def _bases(serves: dict[tuple[str, str], tuple[str, bool]]) -> dict[str, dict[st
     return {provider: dict(sorted(models.items())) for provider, models in sorted(bases.items())}
 
 
-_PER_PROVIDER = ("providers", "links", "bases", "status")
+_PER_PROVIDER = ("providers", "links", "bases", "status", "rules")
 
 
 def _current(output: Path) -> dict[str, Any]:

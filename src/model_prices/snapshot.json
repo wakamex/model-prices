@@ -100,8 +100,8 @@
   }
  ],
  "models_dev": {
-  "commit": "e50cc75732888ecced66d5b2d2837d31e67640b0",
-  "committed_at": "2026-10-28T20:02:04Z",
+  "commit": "ba5289b8d6c593e54a5271457df79e3966ee934b",
+  "committed_at": "2026-10-29T19:21:38Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -496,6 +496,7 @@
      {
       "rates": {
        "cache_read": 0.01,
+       "cache_read_explicit": 0.005,
        "cache_write": 0.0625,
        "input": 0.05,
        "output": 0.4,
@@ -504,6 +505,7 @@
         {
          "above": 256000,
          "cache_read": 0.05,
+         "cache_read_explicit": 0.025,
          "cache_write": 0.3125,
          "input": 0.25,
          "output": 2.0
@@ -524,6 +526,7 @@
      {
       "rates": {
        "cache_read": 0.01,
+       "cache_read_explicit": 0.005,
        "cache_write": 0.0625,
        "input": 0.05,
        "output": 0.4,
@@ -532,6 +535,7 @@
         {
          "above": 256000,
          "cache_read": 0.05,
+         "cache_read_explicit": 0.025,
          "cache_write": 0.3125,
          "input": 0.25,
          "output": 2.0
@@ -559,6 +563,7 @@
      {
       "rates": {
        "cache_read": 0.01,
+       "cache_read_explicit": 0.005,
        "cache_write": 0.0625,
        "input": 0.05,
        "output": 0.4,
@@ -567,6 +572,7 @@
         {
          "above": 256000,
          "cache_read": 0.05,
+         "cache_read_explicit": 0.025,
          "cache_write": 0.3125,
          "input": 0.25,
          "output": 2.0
@@ -577,6 +583,7 @@
       },
       "recorded": {
        "cache_read": 0.01,
+       "cache_read_explicit": 0.005,
        "cache_write": 0.0625,
        "input": 0.05,
        "output": 0.4,
@@ -585,6 +592,7 @@
         {
          "above": 256000,
          "cache_read": 0.05,
+         "cache_read_explicit": 0.025,
          "cache_write": 0.3125,
          "input": 0.25,
          "output": 2.0
@@ -773,6 +781,7 @@
      {
       "rates": {
        "cache_read": 0.08,
+       "cache_read_explicit": 0.04,
        "cache_write": 0.5,
        "input": 0.4,
        "output": 1.2,
@@ -781,6 +790,7 @@
         {
          "above": 256000,
          "cache_read": 0.24,
+         "cache_read_explicit": 0.12,
          "cache_write": 1.5,
          "input": 1.2,
          "output": 3.6
@@ -801,6 +811,7 @@
      {
       "rates": {
        "cache_read": 0.08,
+       "cache_read_explicit": 0.04,
        "cache_write": 0.5,
        "input": 0.4,
        "output": 1.2,
@@ -809,6 +820,7 @@
         {
          "above": 256000,
          "cache_read": 0.24,
+         "cache_read_explicit": 0.12,
          "cache_write": 1.5,
          "input": 1.2,
          "output": 3.6
@@ -836,6 +848,7 @@
      {
       "rates": {
        "cache_read": 0.08,
+       "cache_read_explicit": 0.04,
        "cache_write": 0.5,
        "input": 0.4,
        "output": 1.2,
@@ -844,6 +857,7 @@
         {
          "above": 256000,
          "cache_read": 0.24,
+         "cache_read_explicit": 0.12,
          "cache_write": 1.5,
          "input": 1.2,
          "output": 3.6
@@ -854,6 +868,7 @@
       },
       "recorded": {
        "cache_read": 0.08,
+       "cache_read_explicit": 0.04,
        "cache_write": 0.5,
        "input": 0.4,
        "output": 1.2,
@@ -862,6 +877,7 @@
         {
          "above": 256000,
          "cache_read": 0.24,
+         "cache_read_explicit": 0.12,
          "cache_write": 1.5,
          "input": 1.2,
          "output": 3.6
@@ -911,6 +927,7 @@
      {
       "rates": {
        "cache_read": 0.08,
+       "cache_read_explicit": 0.04,
        "cache_write": 0.5,
        "input": 0.4,
        "output": 4.0,
@@ -919,6 +936,7 @@
         {
          "above": 256000,
          "cache_read": 0.24,
+         "cache_read_explicit": 0.12,
          "cache_write": 1.5,
          "input": 1.2,
          "output": 12.0
@@ -939,6 +957,7 @@
      {
       "rates": {
        "cache_read": 0.08,
+       "cache_read_explicit": 0.04,
        "cache_write": 0.5,
        "input": 0.4,
        "output": 4.0,
@@ -947,6 +966,7 @@
         {
          "above": 256000,
          "cache_read": 0.24,
+         "cache_read_explicit": 0.12,
          "cache_write": 1.5,
          "input": 1.2,
          "output": 12.0
@@ -967,6 +987,7 @@
      {
       "rates": {
        "cache_read": 0.08,
+       "cache_read_explicit": 0.04,
        "cache_write": 0.5,
        "input": 0.4,
        "output": 4.0,
@@ -975,6 +996,7 @@
         {
          "above": 256000,
          "cache_read": 0.24,
+         "cache_read_explicit": 0.12,
          "cache_write": 1.5,
          "input": 1.2,
          "output": 12.0
@@ -985,6 +1007,7 @@
       },
       "recorded": {
        "cache_read": 0.08,
+       "cache_read_explicit": 0.04,
        "cache_write": 0.5,
        "input": 0.4,
        "output": 4.0,
@@ -1912,6 +1935,7 @@
      {
       "rates": {
        "cache_read": 0.06,
+       "cache_read_explicit": 0.03,
        "cache_write": 0.375,
        "input": 0.3,
        "output": 1.5,
@@ -1920,6 +1944,7 @@
         {
          "above": 32000,
          "cache_read": 0.1,
+         "cache_read_explicit": 0.05,
          "cache_write": 0.625,
          "input": 0.5,
          "output": 2.5
@@ -1927,6 +1952,7 @@
         {
          "above": 128000,
          "cache_read": 0.16,
+         "cache_read_explicit": 0.08,
          "cache_write": 1.0,
          "input": 0.8,
          "output": 4.0
@@ -1934,6 +1960,7 @@
         {
          "above": 256000,
          "cache_read": 0.32,
+         "cache_read_explicit": 0.16,
          "cache_write": 2.0,
          "input": 1.6,
          "output": 9.6
@@ -1954,6 +1981,7 @@
      {
       "rates": {
        "cache_read": 0.06,
+       "cache_read_explicit": 0.03,
        "cache_write": 0.375,
        "input": 0.3,
        "output": 1.5,
@@ -1962,6 +1990,7 @@
         {
          "above": 32000,
          "cache_read": 0.1,
+         "cache_read_explicit": 0.05,
          "cache_write": 0.625,
          "input": 0.5,
          "output": 2.5
@@ -1969,6 +1998,7 @@
         {
          "above": 128000,
          "cache_read": 0.16,
+         "cache_read_explicit": 0.08,
          "cache_write": 1.0,
          "input": 0.8,
          "output": 4.0
@@ -1976,6 +2006,7 @@
         {
          "above": 256000,
          "cache_read": 0.32,
+         "cache_read_explicit": 0.16,
          "cache_write": 2.0,
          "input": 1.6,
          "output": 9.6
@@ -2013,6 +2044,7 @@
      {
       "rates": {
        "cache_read": 0.06,
+       "cache_read_explicit": 0.03,
        "cache_write": 0.375,
        "input": 0.3,
        "output": 1.5,
@@ -2021,6 +2053,7 @@
         {
          "above": 32000,
          "cache_read": 0.1,
+         "cache_read_explicit": 0.05,
          "cache_write": 0.625,
          "input": 0.5,
          "output": 2.5
@@ -2028,6 +2061,7 @@
         {
          "above": 128000,
          "cache_read": 0.16,
+         "cache_read_explicit": 0.08,
          "cache_write": 1.0,
          "input": 0.8,
          "output": 4.0
@@ -2035,6 +2069,7 @@
         {
          "above": 256000,
          "cache_read": 0.32,
+         "cache_read_explicit": 0.16,
          "cache_write": 2.0,
          "input": 1.6,
          "output": 9.6
@@ -2045,6 +2080,7 @@
       },
       "recorded": {
        "cache_read": 0.06,
+       "cache_read_explicit": 0.03,
        "cache_write": 0.375,
        "input": 0.3,
        "output": 1.5,
@@ -2053,6 +2089,7 @@
         {
          "above": 32000,
          "cache_read": 0.1,
+         "cache_read_explicit": 0.05,
          "cache_write": 0.625,
          "input": 0.5,
          "output": 2.5
@@ -2060,6 +2097,7 @@
         {
          "above": 128000,
          "cache_read": 0.16,
+         "cache_read_explicit": 0.08,
          "cache_write": 1.0,
          "input": 0.8,
          "output": 4.0
@@ -2067,6 +2105,7 @@
         {
          "above": 256000,
          "cache_read": 0.32,
+         "cache_read_explicit": 0.16,
          "cache_write": 2.0,
          "input": 1.6,
          "output": 9.6
@@ -2901,6 +2940,7 @@
      {
       "rates": {
        "cache_read": 0.04,
+       "cache_read_explicit": 0.02,
        "cache_write": 0.25,
        "input": 0.2,
        "output": 1.6,
@@ -2909,6 +2949,7 @@
         {
          "above": 32000,
          "cache_read": 0.06,
+         "cache_read_explicit": 0.03,
          "cache_write": 0.375,
          "input": 0.3,
          "output": 2.4
@@ -2916,6 +2957,7 @@
         {
          "above": 128000,
          "cache_read": 0.12,
+         "cache_read_explicit": 0.06,
          "cache_write": 0.75,
          "input": 0.6,
          "output": 4.8
@@ -2936,6 +2978,7 @@
      {
       "rates": {
        "cache_read": 0.04,
+       "cache_read_explicit": 0.02,
        "cache_write": 0.25,
        "input": 0.2,
        "output": 1.6,
@@ -2944,6 +2987,7 @@
         {
          "above": 32000,
          "cache_read": 0.06,
+         "cache_read_explicit": 0.03,
          "cache_write": 0.375,
          "input": 0.3,
          "output": 2.4
@@ -2951,6 +2995,7 @@
         {
          "above": 128000,
          "cache_read": 0.12,
+         "cache_read_explicit": 0.06,
          "cache_write": 0.75,
          "input": 0.6,
          "output": 4.8
@@ -2983,6 +3028,7 @@
      {
       "rates": {
        "cache_read": 0.04,
+       "cache_read_explicit": 0.02,
        "cache_write": 0.25,
        "input": 0.2,
        "output": 1.6,
@@ -2991,6 +3037,7 @@
         {
          "above": 32000,
          "cache_read": 0.06,
+         "cache_read_explicit": 0.03,
          "cache_write": 0.375,
          "input": 0.3,
          "output": 2.4
@@ -2998,6 +3045,7 @@
         {
          "above": 128000,
          "cache_read": 0.12,
+         "cache_read_explicit": 0.06,
          "cache_write": 0.75,
          "input": 0.6,
          "output": 4.8
@@ -3008,6 +3056,7 @@
       },
       "recorded": {
        "cache_read": 0.04,
+       "cache_read_explicit": 0.02,
        "cache_write": 0.25,
        "input": 0.2,
        "output": 1.6,
@@ -3016,6 +3065,7 @@
         {
          "above": 32000,
          "cache_read": 0.06,
+         "cache_read_explicit": 0.03,
          "cache_write": 0.375,
          "input": 0.3,
          "output": 2.4
@@ -3023,6 +3073,7 @@
         {
          "above": 128000,
          "cache_read": 0.12,
+         "cache_read_explicit": 0.06,
          "cache_write": 0.75,
          "input": 0.6,
          "output": 4.8
@@ -3065,6 +3116,7 @@
      {
       "rates": {
        "cache_read": 0.04,
+       "cache_read_explicit": 0.02,
        "cache_write": 0.25,
        "input": 0.20000000000000004,
        "output": 4.8,
@@ -3084,6 +3136,7 @@
      {
       "rates": {
        "cache_read": 0.04,
+       "cache_read_explicit": 0.02,
        "cache_write": 0.25,
        "input": 0.20000000000000004,
        "output": 1.6000000000000003,
@@ -3115,6 +3168,7 @@
      {
       "rates": {
        "cache_read": 0.04,
+       "cache_read_explicit": 0.02,
        "cache_write": 0.25,
        "input": 0.20000000000000004,
        "output": 1.6000000000000003,
@@ -3124,6 +3178,7 @@
       },
       "recorded": {
        "cache_read": 0.04,
+       "cache_read_explicit": 0.02,
        "cache_write": 0.25,
        "input": 0.2,
        "output": 1.6,
@@ -3132,6 +3187,7 @@
         {
          "above": 32000,
          "cache_read": 0.06,
+         "cache_read_explicit": 0.03,
          "cache_write": 0.375,
          "input": 0.3,
          "output": 2.4
@@ -3139,6 +3195,7 @@
         {
          "above": 128000,
          "cache_read": 0.12,
+         "cache_read_explicit": 0.06,
          "cache_write": 0.75,
          "input": 0.6,
          "output": 4.8
@@ -3960,6 +4017,7 @@
      {
       "rates": {
        "cache_read": 0.006,
+       "cache_read_explicit": 0.003,
        "cache_write": 0.0375,
        "input": 0.03,
        "output": 0.13,
@@ -3968,6 +4026,7 @@
         {
          "above": 32000,
          "cache_read": 0.02,
+         "cache_read_explicit": 0.01,
          "cache_write": 0.125,
          "input": 0.1,
          "output": 0.4
@@ -3975,6 +4034,7 @@
         {
          "above": 256000,
          "cache_read": 0.04,
+         "cache_read_explicit": 0.02,
          "cache_write": 0.25,
          "input": 0.2,
          "output": 0.8
@@ -4013,6 +4073,7 @@
      {
       "rates": {
        "cache_read": 0.006,
+       "cache_read_explicit": 0.003,
        "cache_write": 0.0375,
        "input": 0.03,
        "output": 0.13,
@@ -4021,6 +4082,7 @@
         {
          "above": 32000,
          "cache_read": 0.02,
+         "cache_read_explicit": 0.01,
          "cache_write": 0.125,
          "input": 0.1,
          "output": 0.4
@@ -4028,6 +4090,7 @@
         {
          "above": 256000,
          "cache_read": 0.04,
+         "cache_read_explicit": 0.02,
          "cache_write": 0.25,
          "input": 0.2,
          "output": 0.8
@@ -4038,6 +4101,7 @@
       },
       "recorded": {
        "cache_read": 0.006,
+       "cache_read_explicit": 0.003,
        "cache_write": 0.0375,
        "input": 0.03,
        "output": 0.13,
@@ -4046,6 +4110,7 @@
         {
          "above": 32000,
          "cache_read": 0.02,
+         "cache_read_explicit": 0.01,
          "cache_write": 0.125,
          "input": 0.1,
          "output": 0.4
@@ -4053,6 +4118,7 @@
         {
          "above": 256000,
          "cache_read": 0.04,
+         "cache_read_explicit": 0.02,
          "cache_write": 0.25,
          "input": 0.2,
          "output": 0.8
@@ -4116,6 +4182,37 @@
        "valid_from_basis": "first observed"
       },
       "start": "2026-10-09T18:18:19Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.006,
+       "cache_read_explicit": 0.003,
+       "cache_write": 0.0375,
+       "input": 0.03,
+       "output": 0.13,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 32000,
+         "cache_read": 0.02,
+         "cache_read_explicit": 0.01,
+         "cache_write": 0.125,
+         "input": 0.1,
+         "output": 0.4
+        },
+        {
+         "above": 256000,
+         "cache_read": 0.04,
+         "cache_read_explicit": 0.02,
+         "cache_write": 0.25,
+         "input": 0.2,
+         "output": 0.8
+        }
+       ],
+       "valid_from": "2026-10-29T20:18:46Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-29T20:18:46Z"
      }
     ]
    },
@@ -4132,6 +4229,19 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.5,
+       "cache_read_explicit": 0.25,
+       "cache_write": 3.125,
+       "input": 2.5,
+       "output": 7.5,
+       "source": "https://github.com/sst/models.dev/commit/4572483f60cd",
+       "valid_from": "2026-10-23T05:56:10Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-23T05:56:10Z"
      }
     ]
    },
@@ -4172,6 +4282,19 @@
        "valid_from_basis": "first observed"
       },
       "start": "2026-10-09T18:18:19Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.5,
+       "cache_read_explicit": 0.25,
+       "cache_write": 3.125,
+       "input": 2.5,
+       "output": 7.5,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-29T20:18:46Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-29T20:18:46Z"
      }
     ]
    },
@@ -4198,6 +4321,19 @@
        "valid_from_basis": "first observed"
       },
       "start": "2026-10-09T18:18:19Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.5,
+       "cache_read_explicit": 0.25,
+       "cache_write": 3.125,
+       "input": 2.5,
+       "output": 7.5,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-10-29T20:18:46Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-29T20:18:46Z"
      }
     ]
    },
@@ -4358,6 +4494,7 @@
      {
       "rates": {
        "cache_read": 0.064,
+       "cache_read_explicit": 0.032,
        "cache_write": 0.4,
        "input": 0.32,
        "output": 1.28,
@@ -4366,6 +4503,7 @@
         {
          "above": 256000,
          "cache_read": 0.192,
+         "cache_read_explicit": 0.096,
          "cache_write": 1.2,
          "input": 0.96,
          "output": 3.84
@@ -4397,6 +4535,7 @@
      {
       "rates": {
        "cache_read": 0.064,
+       "cache_read_explicit": 0.032,
        "cache_write": 0.4,
        "input": 0.32,
        "output": 1.28,
@@ -4405,6 +4544,7 @@
         {
          "above": 256000,
          "cache_read": 0.192,
+         "cache_read_explicit": 0.096,
          "cache_write": 1.2,
          "input": 0.96,
          "output": 3.84
@@ -4415,6 +4555,7 @@
       },
       "recorded": {
        "cache_read": 0.08,
+       "cache_read_explicit": 0.04,
        "cache_write": 0.5,
        "input": 0.4,
        "output": 1.6,
@@ -4423,6 +4564,7 @@
         {
          "above": 256000,
          "cache_read": 0.24,
+         "cache_read_explicit": 0.12,
          "cache_write": 1.5,
          "input": 1.2,
          "output": 4.8
@@ -4474,6 +4616,29 @@
        "valid_from_basis": "first observed"
       },
       "start": "2026-10-09T18:18:19Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.08,
+       "cache_read_explicit": 0.04,
+       "cache_write": 0.5,
+       "input": 0.4,
+       "output": 1.6,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 256000,
+         "cache_read": 0.24,
+         "cache_read_explicit": 0.12,
+         "cache_write": 1.5,
+         "input": 1.2,
+         "output": 4.8
+        }
+       ],
+       "valid_from": "2026-10-29T20:18:46Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-29T20:18:46Z"
      }
     ],
     "thinking": [
@@ -4514,6 +4679,29 @@
        "valid_from_basis": "first observed"
       },
       "start": "2026-10-09T18:18:19Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.08,
+       "cache_read_explicit": 0.04,
+       "cache_write": 0.5,
+       "input": 0.4,
+       "output": 1.6,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "tiers": [
+        {
+         "above": 256000,
+         "cache_read": 0.24,
+         "cache_read_explicit": 0.12,
+         "cache_write": 1.5,
+         "input": 1.2,
+         "output": 4.8
+        }
+       ],
+       "valid_from": "2026-10-29T20:18:46Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-29T20:18:46Z"
      }
     ]
    },
@@ -4543,6 +4731,7 @@
      {
       "rates": {
        "cache_read": 0.25,
+       "cache_read_explicit": 0.17,
        "cache_write": 2.5,
        "input": 2.0,
        "output": 6.0,
@@ -4592,6 +4781,7 @@
      {
       "rates": {
        "cache_read": 0.1,
+       "cache_read_explicit": 0.05,
        "cache_write": 0.625,
        "input": 0.5,
        "output": 3.0,
@@ -4632,6 +4822,19 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.25,
+       "cache_read_explicit": 0.17,
+       "cache_write": 2.5,
+       "input": 2.0,
+       "output": 6.0,
+       "source": "https://github.com/sst/models.dev/commit/4572483f60cd",
+       "valid_from": "2026-10-23T05:56:10Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-23T05:56:10Z"
      }
     ]
    },
@@ -4661,6 +4864,7 @@
      {
       "rates": {
        "cache_read": 0.25,
+       "cache_read_explicit": 0.17,
        "cache_write": 2.5,
        "input": 2.0,
        "output": 6.0,
@@ -25380,7 +25584,7 @@
     "weekdays_only": true
    },
    {
-    "note": "Alibaba resells DeepSeek-V4-Flash-0731 with \"Busy hours\" and \"Idle hours\" prices since\n2026-08-17 00:00 Beijing time: \"Peak hours refer to UTC+8 8:00 - 22:00, and off-peak hours\nrefer to UTC+8 22:00 - 8:00 the next day.\" Idle prices are half the busy ones, every day.",
+    "note": "Alibaba resells DeepSeek-V4-Flash-0731 with \"Busy hours\" and \"Idle hours\" prices since\n2026-08-17 00:00 Beijing time: \"Peak hours refer to UTC+8 8:00 - 22:00, and off-peak hours\nrefer to UTC+8 22:00 - 8:00 the next day.\" Idle prices are half the busy ones, every day.\nOn 2026-10-29 the page also lists busy and idle prices, idle half of busy, for\ndeepseek-v4-pro-0813 ($1.32 and $0.66 input), deepseek-v4.1-flash-1017, and\ndeepseek-v4.1-flash ($0.3 and $0.15 input).",
     "off_peak_hours_utc": [
      [
       "14:00",
@@ -25388,7 +25592,10 @@
      ]
     ],
     "off_peak_multiplier": {
-     "deepseek-v4-flash-0731": 0.5
+     "deepseek-v4-flash-0731": 0.5,
+     "deepseek-v4-pro-0813": 0.5,
+     "deepseek-v4.1-flash": 0.5,
+     "deepseek-v4.1-flash-1017": 0.5
     },
     "provider": "alibaba",
     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
@@ -25639,5 +25846,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-10-28T20:04:04Z"
+ "updated_at": "2026-10-29T20:38:57Z"
 }

@@ -211,6 +211,25 @@ class PriceTests(unittest.TestCase):
             (10 + 20 + 30) * 2.0 / 1e6)
         self.assertAlmostEqual(price.cost(input_tokens=100, cache_read_tokens=1), 101 * 4.0 / 1e6)
 
+    def test_explicit_cache_hits_cost_their_own_price(self):
+        qwen = rates("qwen-plus", provider="alibaba", at="2026-10-29")
+
+        self.assertEqual((qwen.cache_read, qwen.cache_read_explicit), (0.08, 0.04))
+        self.assertAlmostEqual(cost("qwen-plus", provider="alibaba", at="2026-10-29",
+                                    cache_read_tokens=100_000,
+                                    cache_read_explicit_tokens=100_000), 0.012)
+        # Explicit hits count toward the prompt, so they reach the 256K tier.
+        self.assertAlmostEqual(qwen.breakdown(cache_read_explicit_tokens=300_000).cache_read_explicit,
+                               300_000 * 0.12 / 1e6)
+        # Without an explicit price, an explicit hit costs a cache read, including a tier's.
+        price = Rates(provider="p", model="m", valid_from="", source="", input=1.0, output=2.0,
+                      cache_read=0.2, cache_read_explicit=0.1,
+                      tiers=(Tier(above=100, input=3.0, cache_read=0.6),))
+        self.assertAlmostEqual(price.breakdown(cache_read_explicit_tokens=101).cache_read_explicit,
+                               101 * 0.6 / 1e6)
+        opus = rates("claude-opus-5-5", at="2026-10-29")
+        self.assertEqual(opus.breakdown(cache_read_explicit_tokens=1_000_000).total, opus.cache_read)
+
     def test_one_hour_cache_writes_cost_twice_the_input_price_at_anthropic(self):
         opus = rates("claude-opus-5-5", at="2026-09-25")
         long_cache = opus.breakdown(cache_write_tokens=1_000_000, cache_write_1h_tokens=1_000_000)
@@ -347,6 +366,51 @@ class PriceTests(unittest.TestCase):
         self.assertIsNone(parse_rates(schema1(media)))
         with self.assertRaisesRegex(ValueError, "schema 3"):
             schema1({"schema": 3})
+
+    def test_explicit_cache_hits_keep_their_own_price_from_schema_2(self):
+        def document(cache, tier_cache):
+            return {"schema": 2, "cost": {"text": {
+                "input": {"price": 0.4, "cache": cache,
+                          "overrides": [{"when": {"context": {"gt": 256_000}}, "price": 1.2,
+                                         "cache": tier_cache}]},
+                "output": {"price": 1.2}}}}
+
+        both = document({"read": 0.08, "explicit": {"read": 0.04, "write": 0.5}},
+                        {"read": 0.24, "explicit": {"read": 0.12, "write": 1.5}})
+        self.assertEqual(parse_rates(schema1(both)), {
+            "input": 0.4, "output": 1.2, "cache_read": 0.08, "cache_read_explicit": 0.04,
+            "cache_write": 0.5, "tiers": [{"above": 256_000, "input": 1.2, "output": 1.2,
+                                           "cache_read": 0.24, "cache_read_explicit": 0.12,
+                                           "cache_write": 1.5}]})
+        # Without an explicit hit price, or with the cache read price, hits cost cache_read.
+        for explicit in ({"write": 0.5}, {"read": 0.08, "write": 0.5}):
+            rates = parse_rates(schema1(document({"read": 0.08, "explicit": explicit}, None)))
+            self.assertNotIn("cache_read_explicit", rates)
+
+    def test_backfill_records_the_rules_models_dev_now_gives(self):
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory) / "models.dev"
+            deepseek = repo / "providers" / "deepseek" / "models"
+            anthropic = repo / "providers" / "anthropic" / "models"
+            deepseek.mkdir(parents=True)
+            anthropic.mkdir(parents=True)
+            _git(repo, "init", "-q", "-b", "main")
+            text = 'schema = 2\n[cost.text.input]\nprice = 1\n[cost.text.output]\nprice = 2\n'
+            (deepseek / "deepseek-v9.toml").write_text(
+                text + '[[cost.multipliers]]\nwhen = { utc_hours = { gte = "01:00" } }\nfactor = 2\n'
+                '[[cost.multipliers]]\nwhen = { service_tier = { equals = "flex" } }\nfactor = 0.5\n')
+            (anthropic / "claude-9.toml").write_text(text.replace(
+                "price = 1\n", 'price = 1\ncache = { read = 0.1, write = { "5m" = 1.25, "1h" = 2 } }\n', 1))
+            (anthropic / "claude-8.toml").write_text(text)
+            _commit(repo, "add", "2026-10-21T10:00:00+00:00")
+
+            data = build(repo, ("anthropic", "deepseek"))
+
+        # Time-of-day multipliers and cache writes by lifetime, and nothing else.
+        self.assertEqual(data["rules"], {
+            "anthropic": {"claude-9": {"input": 1, "cache_write": {"5m": 1.25, "1h": 2}}},
+            "deepseek": {"deepseek-v9": {"multipliers": [
+                {"when": {"utc_hours": {"gte": "01:00"}}, "factor": 2}]}}})
 
     def test_backfill_reads_a_link_that_became_a_file(self):
         # StepFun's global files linked to its China ones until schema 2 made them files.

@@ -24,6 +24,8 @@ from typing import Any
 
 from model_prices import SCHEMA, THINKING, Rates, _parse_time, _tiers
 
+RATE_FIELDS = ("input", "output", "cache_read", "cache_read_explicit", "cache_write")
+
 # Evaluated for usage before every recorded change, which takes a model's first price.
 _EARLIEST = datetime.min.replace(tzinfo=timezone.utc)
 # The mode that batch.toml derives from each model's standard rates.
@@ -112,8 +114,7 @@ class _Inputs:
                     if recorded is None or any(getattr(recorded, key) != value
                                                for key, value in item["replaces"].items()):
                         continue
-                values = {key: item.get(key) for key in (
-                    "input", "output", "cache_read", "cache_write")}
+                values = {key: item.get(key) for key in RATE_FIELDS}
                 tiers = item.get("tiers")
                 if mode is not None:
                     if mode not in item.get("modes", {}):
@@ -151,7 +152,7 @@ class _Inputs:
             source=entry.get("source") or f"{self.prices['source']}/commit/{entry['commit']}",
             input=values["input"], output=values["output"],
             cache_read=values.get("cache_read"), cache_write=values.get("cache_write"),
-            tiers=_tiers(tiers),
+            cache_read_explicit=values.get("cache_read_explicit"), tiers=_tiers(tiers),
             valid_from_basis="first observed" if "source" in entry else "models.dev commit",
         )
 
@@ -213,11 +214,7 @@ def _in_mode(corrected: Rates, standard: Rates, moded: Rates) -> Rates:
         if value is None or not base or mode_value is None:
             return value
         return value * mode_value / base
-    return replace(corrected, input=scaled("input"), output=scaled("output"),
-                   cache_read=scaled("cache_read"), cache_write=scaled("cache_write"), tiers=())
-
-
-RATE_FIELDS = ("input", "output", "cache_read", "cache_write")
+    return replace(corrected, **{field: scaled(field) for field in RATE_FIELDS}, tiers=())
 
 
 def _batched(found: Rates, item: dict[str, Any]) -> Rates:

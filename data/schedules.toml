@@ -4,7 +4,8 @@
 # off_peak_hours_utc, the recorded rate is the standard rate, and inside an off-peak window
 # each listed model's rates are multiplied by its off_peak_multiplier. Windows are UTC and
 # may run past midnight. A date listed under a holiday calendar is off-peak all day, judged
-# by that calendar's local date.
+# by that calendar's local date. model-prices check compares the schedule in effect with
+# models.dev's time-of-day multipliers, which data/prices.json keeps under rules.
 
 [[schedule]]
 provider = "deepseek"
@@ -68,9 +69,12 @@ dates = [
 provider = "alibaba"
 valid_from = "2026-08-16T16:00:00Z"
 off_peak_hours_utc = [["14:00", "00:00"]]
-off_peak_multiplier = { deepseek-v4-flash-0731 = 0.5 }
+off_peak_multiplier = { deepseek-v4-flash-0731 = 0.5, deepseek-v4-pro-0813 = 0.5, "deepseek-v4.1-flash" = 0.5, "deepseek-v4.1-flash-1017" = 0.5 }
 source = "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
 note = """
 Alibaba resells DeepSeek-V4-Flash-0731 with "Busy hours" and "Idle hours" prices since
 2026-08-17 00:00 Beijing time: "Peak hours refer to UTC+8 8:00 - 22:00, and off-peak hours
-refer to UTC+8 22:00 - 8:00 the next day." Idle prices are half the busy ones, every day."""
+refer to UTC+8 22:00 - 8:00 the next day." Idle prices are half the busy ones, every day.
+On 2026-10-29 the page also lists busy and idle prices, idle half of busy, for
+deepseek-v4-pro-0813 ($1.32 and $0.66 input), deepseek-v4.1-flash-1017, and
+deepseek-v4.1-flash ($0.3 and $0.15 input)."""

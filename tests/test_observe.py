@@ -102,7 +102,7 @@ class ObserveTests(unittest.TestCase):
 
         cache_page = (FIXTURES / "alibaba-cache.md").read_text()
         found = observe.read_checked("alibaba", DATA, TODAY,
-                                     {url: page, observe.ALIBABA_CACHE: cache_page}.__getitem__)
+                                     {url: page, checks.ALIBABA_CACHE: cache_page}.__getitem__)
 
         self.assertEqual(found, {"qwen3-coder-unlisted": (url, {
             "input": 1.5, "output": 7.5,
@@ -110,7 +110,7 @@ class ObserveTests(unittest.TestCase):
                       {"above": 128000, "input": 4.5, "output": 22.5}]})})
 
     def test_alibaba_cache_rules_give_implicit_reads_and_explicit_writes(self):
-        implicit, explicit = observe.parse_alibaba_cache(
+        implicit, explicit = checks.parse_alibaba_cache(
             (FIXTURES / "alibaba-cache.md").read_text())
 
         # qwen3.8-max is an exception, and the China tab's models are another deployment.
@@ -123,16 +123,16 @@ class ObserveTests(unittest.TestCase):
             "- <strong>Exception</strong>: The following models do not follow the general ratios above.\n\n"
             "  - qwen3.8-max: Cache creation is billed at 125% of the standard input token price, but the cache hit price is not 10% of the standard input token price.\n"
             "  - qwen3.7-plus-2026-05-26: <strong>The cache creation price is not 125% of the standard input token price</strong>, and the cache hit price is not 10% either.")
-        self.assertNotIn("qwen3.7-plus-2026-05-26", observe.parse_alibaba_cache(bullets)[1])
-        self.assertNotIn("qwen3.8-max", observe.parse_alibaba_cache(bullets)[0])
+        self.assertNotIn("qwen3.7-plus-2026-05-26", checks.parse_alibaba_cache(bullets)[1])
+        self.assertNotIn("qwen3.8-max", checks.parse_alibaba_cache(bullets)[0])
         with self.assertRaisesRegex(ValueError, "cache billing rules changed"):
-            observe.parse_alibaba_cache((FIXTURES / "alibaba-cache.md").read_text()
+            checks.parse_alibaba_cache((FIXTURES / "alibaba-cache.md").read_text()
                                         .replace("<strong>20%</strong>", "<strong>15%</strong>"))
 
     def test_alibaba_cache_rules_read_the_html_page(self):
         page = (FIXTURES / "alibaba-cache.md").read_text()
 
-        self.assertEqual(observe.parse_alibaba_cache(as_html(page)), observe.parse_alibaba_cache(page))
+        self.assertEqual(checks.parse_alibaba_cache(as_html(page)), checks.parse_alibaba_cache(page))
 
     def test_models_dev_history_takes_over_from_its_first_entry(self):
         with tempfile.TemporaryDirectory() as directory:

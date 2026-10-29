@@ -870,6 +870,35 @@
      },
      "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
      "valid_from": "2026-10-09T18:18:19Z"
+    },
+    {
+     "rates": {
+      "cache_read": 0.006,
+      "cache_read_explicit": 0.003,
+      "cache_write": 0.0375,
+      "input": 0.03,
+      "output": 0.13,
+      "tiers": [
+       {
+        "above": 32000,
+        "cache_read": 0.02,
+        "cache_read_explicit": 0.01,
+        "cache_write": 0.125,
+        "input": 0.1,
+        "output": 0.4
+       },
+       {
+        "above": 256000,
+        "cache_read": 0.04,
+        "cache_read_explicit": 0.02,
+        "cache_write": 0.25,
+        "input": 0.2,
+        "output": 0.8
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-29T20:18:46Z"
     }
    ],
    "qwen3.7-max-2026-05-17": [
@@ -900,6 +929,17 @@
      },
      "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
      "valid_from": "2026-10-09T18:18:19Z"
+    },
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "cache_read_explicit": 0.25,
+      "cache_write": 3.125,
+      "input": 2.5,
+      "output": 7.5
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-29T20:18:46Z"
     }
    ],
    "qwen3.7-max-2026-06-08": [
@@ -920,6 +960,17 @@
      },
      "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
      "valid_from": "2026-10-09T18:18:19Z"
+    },
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "cache_read_explicit": 0.25,
+      "cache_write": 3.125,
+      "input": 2.5,
+      "output": 7.5
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-29T20:18:46Z"
     }
    ],
    "qwen3.7-max-preview": [
@@ -988,6 +1039,38 @@
      },
      "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
      "valid_from": "2026-10-09T18:18:19Z"
+    },
+    {
+     "rates": {
+      "cache_read": 0.08,
+      "cache_read_explicit": 0.04,
+      "cache_write": 0.5,
+      "input": 0.4,
+      "modes": {
+       "thinking": {
+        "output": 1.6,
+        "tiers": [
+         {
+          "above": 256000,
+          "output": 4.8
+         }
+        ]
+       }
+      },
+      "output": 1.6,
+      "tiers": [
+       {
+        "above": 256000,
+        "cache_read": 0.24,
+        "cache_read_explicit": 0.12,
+        "cache_write": 1.5,
+        "input": 1.2,
+        "output": 4.8
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-10-29T20:18:46Z"
     }
    ],
    "qwen3.8-2.4t-a95b": [
