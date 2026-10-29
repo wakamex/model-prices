@@ -1860,6 +1860,15 @@
      },
      "source": "https://mistral.ai/pricing/api",
      "valid_from": "2026-10-20T17:33:15Z"
+    },
+    {
+     "rates": {
+      "cache_read": 0.07,
+      "input": 0.7,
+      "output": 2.1
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-10-29T20:36:59Z"
     }
    ],
    "mistral-medium-3": [

@@ -14215,6 +14215,25 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-22T16:09:12Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.07,
+       "input": 0.7,
+       "output": 2.1,
+       "source": "https://mistral.ai/pricing/api",
+       "valid_from": "2026-10-29T20:36:59Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.14,
+       "input": 1.36,
+       "output": 4.18,
+       "source": "https://github.com/sst/models.dev/commit/05955d4c12ee",
+       "valid_from": "2026-10-22T16:09:12Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-29T20:36:59Z"
      }
     ]
    },
@@ -14241,6 +14260,17 @@
        "valid_from_basis": "first observed"
       },
       "start": "2026-10-20T17:33:15Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.07,
+       "input": 0.7,
+       "output": 2.1,
+       "source": "https://mistral.ai/pricing/api",
+       "valid_from": "2026-10-29T20:36:59Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-10-29T20:36:59Z"
      }
     ]
    },
@@ -25846,5 +25876,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-10-29T20:38:57Z"
+ "updated_at": "2026-10-29T20:39:05Z"
 }
