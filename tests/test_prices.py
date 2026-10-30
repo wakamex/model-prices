@@ -727,9 +727,10 @@ class PriceTests(unittest.TestCase):
 
         self.assertEqual((alias.input, alias.output, alias.valid_from_basis),
                          (dated.input, dated.output, "documented"))
-        boundaries = [when.isoformat() for when, _ in rates_between(
-            "claude-haiku-4-5", "2025-10-15T17:00:00Z", "2025-10-15T18:00:00Z")]
-        self.assertIn("2025-10-15T17:24:36+00:00", boundaries)
+        # The corrected first price also covers requests before models.dev's first record,
+        # so the hour around it has one price.
+        segments = rates_between("claude-haiku-4-5", "2025-10-15T17:00:00Z", "2025-10-15T18:00:00Z")
+        self.assertEqual([(found.input, found.output) for _, found in segments], [(1.0, 5.0)])
 
     def test_modes_follow_corrections(self):
         # Fast mode costs twice the standard rate, before and during the Sol correction.

@@ -162,8 +162,12 @@ class _Inputs:
               corrected: bool) -> Rates | None:
         if mode == BATCH:
             return self.batch(provider, model, at, corrected)
-        found = self.correction(provider, model, at) if corrected else None
-        stated = self.correction(provider, model, at, mode) if found and mode else None
+        # Usage before the first recorded price takes that first price, corrected as it is.
+        firsts = [times[0] for name in (model, self.prices["links"].get(provider, {}).get(model))
+                  if name and (times := self.entry_times(provider, name))]
+        listed = max(at, min(firsts)) if firsts else at
+        found = self.correction(provider, model, listed) if corrected else None
+        stated = self.correction(provider, model, listed, mode) if found and mode else None
         if stated is not None:
             found = stated
         elif found is not None and mode is not None:
