@@ -243,7 +243,8 @@ def dated_by(interval: dict) -> str:
     rates = interval["rates"]
     basis = rates.get("valid_from_basis", "")
     url = rates.get("source")
-    label = "models.dev commit" if basis == "models.dev commit" else f"{basis}, {source_name(url or '')}"
+    label = {"models.dev commit": basis, "scheduled": "scheduled in models.dev"}.get(
+        basis, f"{basis}, {source_name(url or '')}")
     cell = f"[{escape(label)}]({url})" if url else escape(basis)
     recorded = interval.get("recorded") or {}
     replaced = [f"{label} {price(recorded.get(field))}" for field, label in FIELD_NAMES
@@ -302,6 +303,14 @@ def model_page(provider: str, model: str, timelines: dict, found: dict, ran: str
                if rates.get("cache_read_explicit") is not None else "")
             + (f", cache write {price(rates['cache_write'])}" if rates.get("cache_write") is not None else "")
             + ".")
+    upcoming = [interval for interval in changes(standard)
+                if interval["start"] and model_prices._parse_time(interval["start"]) > now
+                and interval["rates"]]
+    for interval in upcoming:
+        intro.append(f"Scheduled from {day(interval['start'])}: input {price(interval['rates']['input'])}, "
+                     f"output {price(interval['rates']['output'])}"
+                     + (f", cached input {price(interval['rates']['cache_read'])}"
+                        if interval["rates"].get("cache_read") is not None else "") + ".")
     state = model_prices._data()["status"].get(provider, {}).get(model)
     if state:
         intro.append(STATUS_TEXT_MODEL[state])
@@ -316,8 +325,9 @@ def model_page(provider: str, model: str, timelines: dict, found: dict, ran: str
     body += ["", "A blank cache price is charged at the input price. Longer prompts list the prices for "
              "requests whose whole prompt exceeds the size given. Dated by says how a row's start "
              "is known: from the models.dev commit that recorded it, which can lag the provider's "
-             "change by days; documented by the provider; or first observed on the provider's "
-             "pricing page by the daily check. The first price also applies to every earlier "
+             "change by days; documented by the provider; first observed on the provider's "
+             "pricing page by the daily check; or scheduled, a change the provider announced ahead, "
+             "which models.dev recorded and which takes effect at 00:00 UTC on its date. The first price also applies to every earlier "
              "request. [About the data](../../../about/) explains each source.", "",
              "Price usage in Python with the [model-prices package](https://pypi.org/project/model-prices/):", "",
              "```sh", "pip install model-prices", "```", "",

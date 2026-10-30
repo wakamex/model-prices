@@ -3858,6 +3858,16 @@
       "output": 3.75
      },
      "valid_from": "2026-08-21T06:42:28Z"
+    },
+    {
+     "commit": "157d58343785",
+     "rates": {
+      "cache_read": 0.15,
+      "input": 1.5,
+      "output": 7.5
+     },
+     "scheduled": true,
+     "valid_from": "2027-01-01T00:00:00Z"
     }
    ],
    "gemini-3.7-flash": [
@@ -3880,6 +3890,16 @@
       "output": 3.75
      },
      "valid_from": "2026-09-02T18:53:25Z"
+    },
+    {
+     "commit": "157d58343785",
+     "rates": {
+      "cache_read": 0.15,
+      "input": 1.5,
+      "output": 7.5
+     },
+     "scheduled": true,
+     "valid_from": "2027-01-01T00:00:00Z"
     }
    ],
    "gemini-3.8-flash-lite-tts": [
@@ -3890,6 +3910,15 @@
       "output": 6.0
      },
      "valid_from": "2026-10-20T01:14:04Z"
+    },
+    {
+     "commit": "fa4cbe25e6e4",
+     "rates": {
+      "input": 1.0,
+      "output": 12.0
+     },
+     "scheduled": true,
+     "valid_from": "2027-01-01T00:00:00Z"
     }
    ],
    "gemini-3.8-flash-tts": [
@@ -3900,6 +3929,15 @@
       "output": 9.0
      },
      "valid_from": "2026-10-20T01:14:04Z"
+    },
+    {
+     "commit": "d24949e2fe39",
+     "rates": {
+      "input": 1.0,
+      "output": 18.0
+     },
+     "scheduled": true,
+     "valid_from": "2027-01-01T00:00:00Z"
     }
    ],
    "gemini-3.8-live": [
@@ -3931,6 +3969,16 @@
       "output": 10.0
      },
      "valid_from": "2026-10-13T16:18:08Z"
+    },
+    {
+     "commit": "157d58343785",
+     "rates": {
+      "cache_read": 0.2,
+      "input": 4.0,
+      "output": 20.0
+     },
+     "scheduled": true,
+     "valid_from": "2026-12-01T00:00:00Z"
     }
    ],
    "gemini-embedding-001": [
@@ -4108,6 +4156,16 @@
       "output": 5.0
      },
      "valid_from": "2026-10-20T01:14:04Z"
+    },
+    {
+     "commit": "157d58343785",
+     "rates": {
+      "cache_read": 0.2,
+      "input": 2.0,
+      "output": 10.0
+     },
+     "scheduled": true,
+     "valid_from": "2027-01-01T00:00:00Z"
     }
    ],
    "gemini-robotics-er-2-streaming-preview": [
@@ -4118,6 +4176,15 @@
       "output": 5.0
      },
      "valid_from": "2026-10-20T01:14:04Z"
+    },
+    {
+     "commit": "23affac1328e",
+     "rates": {
+      "input": 2.0,
+      "output": 10.0
+     },
+     "scheduled": true,
+     "valid_from": "2027-01-01T00:00:00Z"
     }
    ],
    "gemma-3-12b-it": [

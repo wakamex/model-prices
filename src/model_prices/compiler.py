@@ -146,14 +146,16 @@ class _Inputs:
             return None
         if mode in modes:
             values, tiers = _in_stated_mode(values, tiers, modes[mode])
-        # An observed entry names its page, and is dated by the run that first saw it.
+        # An observed entry names its page, and is dated by the run that first saw it; a
+        # scheduled one takes effect on the date a models.dev file announces.
         return Rates(
             provider=provider, model=model, valid_from=entry["valid_from"],
             source=entry.get("source") or f"{self.prices['source']}/commit/{entry['commit']}",
             input=values["input"], output=values["output"],
             cache_read=values.get("cache_read"), cache_write=values.get("cache_write"),
             cache_read_explicit=values.get("cache_read_explicit"), tiers=_tiers(tiers),
-            valid_from_basis="first observed" if "source" in entry else "models.dev commit",
+            valid_from_basis=("first observed" if "source" in entry else "scheduled"
+                              if entry.get("scheduled") else "models.dev commit"),
         )
 
     def rates(self, provider: str, model: str, at: datetime, mode: str | None,

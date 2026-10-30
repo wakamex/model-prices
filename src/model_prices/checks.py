@@ -852,6 +852,15 @@ def parse_google(text: str, today: datetime) -> list[Observed]:
             for value, above in _google_price(row[-1], today, field):
                 found.extend(Observed("google", model, field, value, above=above, mode=mode)
                              for model in ids[heading])
+            # An announced price is checked at its start, against the scheduled entry the
+            # history gives it: "$4.00 starting December 1, 2026".
+            for start in re.findall(r"starting " + _GOOGLE_DATE, row[-1]):
+                at = datetime.strptime(start, "%B %d, %Y").replace(tzinfo=timezone.utc)
+                if at > today:
+                    found.extend(Observed("google", model, field, value, above=above,
+                                          at=at.isoformat().replace("+00:00", "Z"), mode=mode)
+                                 for value, above in _google_price(row[-1], at, field)
+                                 for model in ids[heading])
     return found
 
 

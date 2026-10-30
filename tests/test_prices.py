@@ -15,7 +15,7 @@ import warnings
 
 import model_prices
 from model_prices import Rates, Tier, compiler, cost, main, rates, rates_between, resolve
-from model_prices.backfill import _tracked, build, changed_providers, hold, parse_rates, schema1, write
+from model_prices.backfill import _date_rules, _tracked, build, changed_providers, hold, parse_rates, schema1, write
 
 DATA = Path(__file__).resolve().parent.parent / "data"
 
@@ -388,6 +388,48 @@ class PriceTests(unittest.TestCase):
         for explicit in ({"write": 0.5}, {"read": 0.08, "write": 0.5}):
             rates = parse_rates(schema1(document({"read": 0.08, "explicit": explicit}, None)))
             self.assertNotIn("cache_read_explicit", rates)
+
+    def test_backfill_dates_announced_price_changes(self):
+        dated = ('[[cost.multipliers]]\nwhen = {{ date = {{ gte = "{date}" }} }}\n'
+                 'factor = {{ text = {{ input = {{ price = 2 }}, output = {{ price = 2 }} }} }}\n')
+        base = ('schema = 2\n[cost.text.input]\nprice = {input}\ncache = {{ read = 0.1 }}\n'
+                '[cost.text.output]\nprice = {output}\n')
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory) / "models.dev"
+            models = repo / "providers" / "google" / "models"
+            models.mkdir(parents=True)
+            _git(repo, "init", "-q", "-b", "main")
+            argon = models / "gemini-9.toml"
+            moved = models / "gemini-8.toml"
+            argon.write_text(base.format(input=2, output=10) + dated.format(date="2026-12-01"))
+            moved.write_text(base.format(input=1, output=5) + dated.format(date="2026-11-01"))
+            _commit(repo, "announce", "2026-10-20T10:00:00+00:00")
+            # One announcement moves before its date; the other is folded into the base
+            # prices after its date.
+            moved.write_text(base.format(input=1, output=5) + dated.format(date="2027-02-01"))
+            _commit(repo, "move", "2026-10-25T10:00:00+00:00")
+            argon.write_text(base.format(input=4, output=20))
+            _commit(repo, "fold in", "2026-12-03T10:00:00+00:00")
+
+            data = build(repo, ("google",))
+
+        history = data["providers"]["google"]
+        # Prices the factor names double at 00:00 UTC; the cache price it does not name stays.
+        self.assertEqual([(e["valid_from"], e.get("scheduled"), e["rates"]) for e in history["gemini-9"]], [
+            ("2026-10-20T10:00:00Z", None, {"input": 2.0, "output": 10.0, "cache_read": 0.1}),
+            ("2026-12-01T00:00:00Z", True, {"input": 4.0, "output": 20.0, "cache_read": 0.1})])
+        # A change moved before its date takes effect only on the new date.
+        self.assertEqual([e["valid_from"] for e in history["gemini-8"]],
+                         ["2026-10-20T10:00:00Z", "2027-02-01T00:00:00Z"])
+        # Any other date condition stops the build until it is handled.
+        window = {"schema": 2, "cost": {"multipliers": [
+            {"when": {"date": {"lt": "2027-01-01"}}, "factor": 2}]}}
+        with self.assertRaisesRegex(ValueError, "unsupported date condition"):
+            _date_rules(window, "x")
+        # The snapshot labels a scheduled change, and prices requests by it from its date.
+        argon = rates("gemini-4-argon", at="2026-12-02")
+        self.assertEqual((argon.input, argon.valid_from_basis), (4.0, "scheduled"))
+        self.assertEqual(rates("gemini-4-argon", at="2026-11-30T23:59:59Z").input, 2.0)
 
     def test_backfill_records_the_rules_models_dev_now_gives(self):
         with tempfile.TemporaryDirectory() as directory:

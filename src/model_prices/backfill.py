@@ -257,6 +257,107 @@ def schema1(document: dict[str, Any], where: str = "") -> dict[str, Any]:
                      "cost": cost, "experimental": {"modes": modes} if modes else None})
 
 
+def _date_rules(document: dict[str, Any], where: str) -> list[tuple[str, Any]]:
+    """A schema 2 file's dated price changes, as (UTC start, factor): multipliers whose only
+    condition is a start date, which take effect at 00:00 UTC on that date. Any other date
+    condition stops the build until it is handled."""
+    rules = []
+    for item in (document.get("cost") or {}).get("multipliers") or []:
+        when = item.get("when") or {}
+        if "date" not in repr(when):
+            continue
+        bounds = when.get("date") if list(when) == ["date"] else None
+        if not isinstance(bounds, dict) or list(bounds) != ["gte"]:
+            raise ValueError(f"{where}: unsupported date condition {when}")
+        start = datetime.fromisoformat(bounds["gte"])
+        start = start if start.tzinfo else start.replace(tzinfo=timezone.utc)
+        rules.append((_utc(start.isoformat()), item["factor"]))
+    return rules
+
+
+_MODALITIES = ("text", "audio", "image", "video")
+
+
+def _scaled(value: Any, factor: Any) -> Any:
+    """Schema 2 prices multiplied by a multiplier's factor, as models.dev applies them: a
+    number scales every price below it, and an object scales the prices it names. A
+    long-context override takes the factor of the prices it replaces."""
+    if isinstance(value, list):
+        return [_scaled(item, factor) for item in value]
+    if isinstance(value, dict):
+        scaled = dict(value)
+        for key, item in value.items():
+            if key == "when":
+                continue
+            if isinstance(factor, (int, float)) or key == "overrides":
+                scaled[key] = _scaled(item, factor)
+            elif key in factor:
+                scaled[key] = _scaled(item, factor[key])
+        return scaled
+    if isinstance(value, (int, float)) and isinstance(factor, (int, float)):
+        return round(value * factor, 10)
+    return value
+
+
+def _priced(cost: dict[str, Any], factor: Any) -> dict[str, Any]:
+    """A schema 2 cost with its token prices scaled; tool fees, such as web_search, are not."""
+    sections = {key: cost[key] for key in _MODALITIES if key in cost}
+    return {**cost, **_scaled(sections, factor)}
+
+
+def _on(document: dict[str, Any], at: str, where: str) -> dict[str, Any]:
+    """A schema 2 file as it prices requests at `at`: every dated change in effect by then
+    multiplies the prices it covers, including those a mode states."""
+    factors = [factor for start, factor in _date_rules(document, where) if start <= at]
+    if not factors:
+        return document
+    cost = {**document["cost"], "multipliers": [
+        item for item in document["cost"].get("multipliers") or []
+        if "date" not in repr(item.get("when"))]}
+    modes = (document.get("experimental") or {}).get("modes") or {}
+    for factor in factors:
+        cost = _priced(cost, factor)
+        modes = {name: {**mode, "cost": _priced(mode["cost"], factor)} if "cost" in mode else mode
+                 for name, mode in modes.items()}
+    dated = {**document, "cost": cost}
+    if modes:
+        dated["experimental"] = {**document["experimental"], "modes": modes}
+    return dated
+
+
+def _entries(versions: list[tuple[str, str, dict[str, Any] | None]], provider: str,
+             model: str) -> list[dict[str, Any]]:
+    """A file's price history: an entry at each commit that changed its prices, and one at
+    each dated change its file carries at the last commit before that date, so a change
+    models.dev drops or moves first never enters the history. A dated entry is marked
+    scheduled, since its date comes from the announcement models.dev recorded."""
+    where = f"providers/{provider}/models/{model}.toml"
+    starts = {start for _, _, document in versions if document and document.get("schema") == 2
+              for start, _ in _date_rules(document, where)}
+    commits = {committed_at for committed_at, _, _ in versions}
+    entries: list[dict[str, Any]] = []
+    index = -1
+    for at in sorted(commits | starts, key=lambda value: datetime.fromisoformat(
+            value.replace("Z", "+00:00"))):
+        moment = datetime.fromisoformat(at.replace("Z", "+00:00"))
+        while (index + 1 < len(versions) and datetime.fromisoformat(
+                versions[index + 1][0].replace("Z", "+00:00")) <= moment):
+            index += 1
+        if index < 0 or versions[index][2] is None:
+            continue
+        _, commit, document = versions[index]
+        if document.get("schema") == 2:
+            document = _on(document, at, f"{commit[:12]}:{where}")
+        rates = parse_rates(schema1(document, f"{commit[:12]}:{where}"), provider)
+        if rates is None or (entries and entries[-1]["rates"] == rates):
+            continue
+        entry = {"valid_from": at, "commit": commit[:12], "rates": rates}
+        if at not in commits:
+            entry["scheduled"] = True
+        entries.append(entry)
+    return entries
+
+
 def _link_target(blob: bytes) -> str | None:
     """Return the target of a symlinked model file, whose blob is just the target path."""
     text = blob.decode(errors="replace").strip()
@@ -326,6 +427,8 @@ def _replay(repo: Path, providers: tuple[str, ...]) -> tuple[dict, dict, dict, d
     # Models models.dev marks deprecated, or whose file it deleted.
     retired: dict[tuple[str, str], str] = {}
     current: dict[tuple[str, str], dict[str, Any]] = {}
+    # Each file's versions, with None while it is deleted or a link.
+    versions: dict[tuple[str, str], list[tuple[str, str, dict[str, Any] | None]]] = {}
     for status, commit, committed_at, path in changes:
         _, provider, _, *model_parts = path.removesuffix(".toml").split("/")
         # No API accepts an id with surrounding spaces, such as a file models.dev later
@@ -335,6 +438,7 @@ def _replay(repo: Path, providers: tuple[str, ...]) -> tuple[dict, dict, dict, d
         if blob is None:
             serves.pop((provider, model), None)
             current.pop((provider, model), None)
+            versions.setdefault((provider, model), []).append((committed_at, commit, None))
             retired[(provider, model)] = "removed"
             continue
         target = _link_target(blob)
@@ -344,12 +448,14 @@ def _replay(repo: Path, providers: tuple[str, ...]) -> tuple[dict, dict, dict, d
             linked = (Path(model).parent / target.removesuffix(".toml")).as_posix()
             links.setdefault(provider, {})[model] = linked.removeprefix("./")
             current.pop((provider, model), None)
+            versions.setdefault((provider, model), []).append((committed_at, commit, None))
             continue
         try:
             document = tomllib.loads(blob.decode())
         except (tomllib.TOMLDecodeError, UnicodeDecodeError):
             continue
         current[(provider, model)] = document
+        versions.setdefault((provider, model), []).append((committed_at, commit, document))
         document = schema1(document, f"{commit[:12]}:{path}")
         if document.get("status") == "deprecated":
             retired[(provider, model)] = "deprecated"
@@ -361,13 +467,10 @@ def _replay(repo: Path, providers: tuple[str, ...]) -> tuple[dict, dict, dict, d
             serves[(provider, model)] = (lab_model, document.get("status") == "deprecated")
         else:
             serves.pop((provider, model), None)
-        rates = parse_rates(document, provider)
-        if rates is None:
-            continue
-        entries = history.setdefault(provider, {}).setdefault(model, [])
-        if entries and entries[-1]["rates"] == rates:
-            continue
-        entries.append({"valid_from": committed_at, "commit": commit[:12], "rates": rates})
+    for (provider, model), changes_ in versions.items():
+        entries = _entries(changes_, provider, model)
+        if entries:
+            history.setdefault(provider, {})[model] = entries
     statuses: dict[str, dict[str, str]] = {}
     for (provider, model), state in sorted(retired.items()):
         if model in history.get(provider, {}):

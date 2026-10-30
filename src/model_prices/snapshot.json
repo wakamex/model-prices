@@ -12180,6 +12180,17 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-08-21T06:42:28Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.075,
+       "input": 0.75,
+       "output": 3.75,
+       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "valid_from": "2027-01-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-01-01T00:00:00Z"
      }
     ],
     "standard": [
@@ -12223,6 +12234,17 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-08-21T06:42:28Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.15,
+       "input": 1.5,
+       "output": 7.5,
+       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "valid_from": "2027-01-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-01-01T00:00:00Z"
      }
     ]
    },
@@ -12274,6 +12296,17 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2025-07-07T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.075,
+       "input": 0.75,
+       "output": 3.75,
+       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "valid_from": "2027-01-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-01-01T00:00:00Z"
      }
     ],
     "standard": [
@@ -12287,6 +12320,17 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.15,
+       "input": 1.5,
+       "output": 7.5,
+       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "valid_from": "2027-01-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-01-01T00:00:00Z"
      }
     ]
    },
@@ -12315,6 +12359,16 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-20T01:14:04Z"
+     },
+     {
+      "rates": {
+       "input": 0.5,
+       "output": 6.0,
+       "source": "https://github.com/sst/models.dev/commit/fa4cbe25e6e4",
+       "valid_from": "2027-01-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-01-01T00:00:00Z"
      }
     ],
     "standard": [
@@ -12337,6 +12391,16 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-20T01:14:04Z"
+     },
+     {
+      "rates": {
+       "input": 1.0,
+       "output": 12.0,
+       "source": "https://github.com/sst/models.dev/commit/fa4cbe25e6e4",
+       "valid_from": "2027-01-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-01-01T00:00:00Z"
      }
     ]
    },
@@ -12365,6 +12429,16 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-20T01:14:04Z"
+     },
+     {
+      "rates": {
+       "input": 0.5,
+       "output": 9.0,
+       "source": "https://github.com/sst/models.dev/commit/d24949e2fe39",
+       "valid_from": "2027-01-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-01-01T00:00:00Z"
      }
     ],
     "standard": [
@@ -12387,6 +12461,16 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-20T01:14:04Z"
+     },
+     {
+      "rates": {
+       "input": 1.0,
+       "output": 18.0,
+       "source": "https://github.com/sst/models.dev/commit/d24949e2fe39",
+       "valid_from": "2027-01-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-01-01T00:00:00Z"
      }
     ]
    },
@@ -12465,6 +12549,17 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-13T16:18:08Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "input": 2.0,
+       "output": 10.0,
+       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "valid_from": "2026-12-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2026-12-01T00:00:00Z"
      }
     ],
     "standard": [
@@ -12489,6 +12584,17 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-13T16:18:08Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "input": 4.0,
+       "output": 20.0,
+       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "valid_from": "2026-12-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2026-12-01T00:00:00Z"
      }
     ]
    },
@@ -12947,6 +13053,17 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-20T01:14:04Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "input": 1.0,
+       "output": 5.0,
+       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "valid_from": "2027-01-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-01-01T00:00:00Z"
      }
     ],
     "standard": [
@@ -12971,6 +13088,17 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-20T01:14:04Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "input": 2.0,
+       "output": 10.0,
+       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "valid_from": "2027-01-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-01-01T00:00:00Z"
      }
     ]
    },
@@ -12995,6 +13123,16 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-20T01:14:04Z"
+     },
+     {
+      "rates": {
+       "input": 2.0,
+       "output": 10.0,
+       "source": "https://github.com/sst/models.dev/commit/23affac1328e",
+       "valid_from": "2027-01-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-01-01T00:00:00Z"
      }
     ]
    },
@@ -25991,5 +26129,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-10-31T06:25:26Z"
+ "updated_at": "2026-10-31T06:27:25Z"
 }

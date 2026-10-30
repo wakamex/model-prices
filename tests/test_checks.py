@@ -511,6 +511,15 @@ class CheckTests(unittest.TestCase):
                           for item in checks.parse_perplexity(page, TODAY)},
                          {("sonar", "input"): 0.25, ("sonar", "output"): 2.5,
                           ("sonar", "cache_read"): 0.0625})
+    def test_google_announced_prices_are_checked_at_their_start(self):
+        found = [item for item in checks.parse_google(PAGES["google"], TODAY)
+                 if item.model == "gemini-3.8-flash" and item.field == "input" and item.mode is None]
+
+        # Today's price, and the announced one at 00:00 UTC on its date.
+        self.assertEqual({(item.value, item.at) for item in found},
+                         {(0.75, None), (1.5, "2027-01-01T00:00:00Z")})
+        results = checks.compare(found, TODAY)
+        self.assertEqual({r.status for r in results}, {"ok"})
 
     def test_official_pages_match_effective_prices(self):
         # Perplexity's fixture lists Sonar's Agent API price, which applies from 2026-10-19.

@@ -83,8 +83,10 @@ class Rates:
     # Suffix text removed from the requested name to find this model, such as "-max".
     removed_suffix: str = ""
     # How valid_from was dated: "models.dev commit", which usually lags the provider's
-    # change by days; "documented", a date from the correction's cited source; or "first
-    # observed", the first time model-prices read the price on the provider's page.
+    # change by days; "documented", a date from the correction's cited source; "first
+    # observed", the first time model-prices read the price on the provider's page; or
+    # "scheduled", the date of a change the provider announced and models.dev recorded
+    # ahead of it, at 00:00 UTC, which may lie in the future.
     valid_from_basis: str = "models.dev commit"
     # A one-hour cache write's price as a multiple of the input price, for providers that
     # price it separately from the five-minute cache write; None prices it as cache_write.

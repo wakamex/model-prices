@@ -4,25 +4,13 @@
 
 From 0.0.6 the package reads the schema 2 snapshot under `v2/` on the `data` branch and ignores rate fields it does not know, so each price below can be added to that snapshot on its own. Releases up to 0.0.5 raise on an unknown field, so `v1/` keeps being published with only the fields they know. Each model's history stays a timeline that clients look up by time: model-prices compiles conditions into the timeline and into fields, and does not ask clients to evaluate models.dev's condition language, which combines conditions with `any`, `all`, and `not` over hours, weekdays, holidays, dates, regions, and service tiers.
 
-Explicit cache hits were the first such price: `cache_read_explicit` carries models.dev's `cache.explicit.read` where it differs from the cache read price, and the check compares models.dev's time-of-day multipliers and cache write prices by lifetime with `schedules.toml` and `cache_writes.toml`. The order below puts first the prices that are wrong today in ways callers cannot see.
+Dated price changes, which models.dev records as a multiplier from a date, are history entries labeled `scheduled`, as the README describes. Explicit cache hits were the first new price field: `cache_read_explicit` carries models.dev's `cache.explicit.read` where it differs from the cache read price, and the check compares models.dev's time-of-day multipliers and cache write prices by lifetime with `schedules.toml` and `cache_writes.toml`. The order below puts first the prices that are wrong today in ways callers cannot see.
 
 ## Prices by modality
 
 Google prices tokens by modality: Gemini 3.1 Flash Image charges $3 per million text and thinking output tokens and $60 per million image tokens, and Gemini 3.8 Live charges $0.75 for text input and $3.00 for audio input ([pricing](https://ai.google.dev/gemini-api/docs/pricing)). A rate entry has one input and one output price, chosen as models.dev's schema 1 chooses them: the text price, except that an image or video generation model's output is the price of what it generates. So an image model's text output costs the image price, and a Live model's audio costs the text price.
 
 Plan: optional per-modality rate fields, such as `input_audio` and `output_image`, from models.dev's `cost.audio`, `cost.image`, and `cost.video`, and token arguments per modality in `cost()`, with the current single prices kept for tokens given without one. A multiplier's factor is keyed by modality, as in `factor = { text = 1.8, audio = 1.8 }`, so modes and dated changes scale each modality's price by its own factor.
-
-## Dated price changes
-
-Google announces some changes ahead of time, and models.dev records them as a multiplier with a lone `date` condition, such as `when = { date = { gte = "2026-12-01" } }` with `factor = { text = 2, audio = 2 }` on Gemini 4 Argon, whose prices double that day. These need no new field; they become history entries.
-
-Rules:
-
-- A date multiplier seen while replaying models.dev's history is a pending change. It becomes a history entry at its date only if the file still carries it at the last commit before that date, so a change models.dev drops or reschedules first never enters the history.
-- The entry's prices are the base prices scaled by that multiplier, and each mode's prices by its tier multiplier as well: every factor that applies multiplies, price by price, and tool fees stay unscaled.
-- The date takes effect at 00:00 UTC, and the official-page check confirms the price on the day.
-- The entry's `valid_from_basis` is `scheduled`, and the website labels such rows. Clients already look prices up by time; a tool reading a timeline's last entry as the current price would need to compare dates.
-- Any other date condition, such as `lt` or a bounded window, stops the build until it is handled.
 
 ## Service tiers
 
