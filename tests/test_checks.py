@@ -492,6 +492,26 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(checks._google_price(cell, datetime(2027, 1, 2, tzinfo=timezone.utc)),
                          [(1.5, None)])
 
+    def test_perplexity_tabs_written_as_quote_blocks(self):
+        page = """> [tab] Anthropic
+>
+> | Model | Input (\\$/1M) | Output (\\$/1M) | Cache read (\\$/1M) | Service tiers | Docs |
+> | - | - | - | - | - | - |
+> | `anthropic/claude-opus-5-5` | 4.00 | 20.00 | 0.20 | — | — |
+
+> [tab] Perplexity
+>
+> | Model | Input (\\$/1M) | Output (\\$/1M) | Cache read (\\$/1M) | Service tiers | Docs |
+> | - | - | - | - | - | - |
+> | `perplexity/sonar` | 0.25 | 2.50 | 0.0625 | — | — |
+
+## Service tiers
+"""
+        self.assertEqual({(item.model, item.field): item.value
+                          for item in checks.parse_perplexity(page, TODAY)},
+                         {("sonar", "input"): 0.25, ("sonar", "output"): 2.5,
+                          ("sonar", "cache_read"): 0.0625})
+
     def test_official_pages_match_effective_prices(self):
         # Perplexity's fixture lists Sonar's Agent API price, which applies from 2026-10-19.
         results = checks.run([p for p in checks.SOURCES if p != "perplexity"],

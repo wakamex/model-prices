@@ -432,12 +432,14 @@ def parse_perplexity(text: str, today: datetime) -> list[Observed]:
     """Read Perplexity's own models from the Perplexity section of its Agent API model
     list, a tab or a bold heading, where `perplexity/sonar` is Sonar; the other sections
     resell other labs' models, some as `perplexity/` ids. Tool fees,
-    such as web search calls, are not modeled."""
+    such as web search calls, are not modeled. Since 2026-10-30 the page's Markdown writes
+    a tab as a "> [tab] Perplexity" quote block."""
     tab = (re.search(r'<Tab title="Perplexity">(.*?)</Tab>', text, re.S)
-           or re.search(r"^\*\*Perplexity\*\*\n(.*?)(?=^\*\*|^## )", text, re.M | re.S))
+           or re.search(r"^\*\*Perplexity\*\*\n(.*?)(?=^\*\*|^## )", text, re.M | re.S)
+           or re.search(r"^> \[tab\] Perplexity\n(.*?)(?=^> \[tab\]|^## )", text, re.M | re.S))
     found = []
     for model, *prices in re.findall(
-            r"^\s*\| `perplexity/([a-z0-9.-]+)` \| ([0-9.]+) \| ([0-9.]+) \| ([0-9.]+|—) \|",
+            r"^[\s>]*\| `perplexity/([a-z0-9.-]+)` \| ([0-9.]+) \| ([0-9.]+) \| ([0-9.]+|—) \|",
             tab.group(1) if tab else "", re.M):
         found += [Observed("perplexity", model, field, float(price))
                   for field, price in zip(("input", "output", "cache_read"), prices)
