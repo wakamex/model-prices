@@ -47,6 +47,25 @@ class Tier:
     cache_read_explicit: float | None = None
 
 
+# The modalities a model may price apart, as models.dev names them, and the token counts
+# modality_tokens takes for each. Gemini reports PDF pages as DOCUMENT tokens, which Google
+# bills at the image price.
+MODALITIES = ("text", "audio", "image", "video")
+MODALITY_ALIASES = {"document": "image"}
+MODALITY_COUNTS = ("input", "cache_read", "output")
+
+
+@dataclass(frozen=True)
+class ModalityRates:
+    """A modality's own USD per million tokens, as the provider states them; None where it
+    states no price."""
+
+    modality: str
+    input: float | None = None
+    output: float | None = None
+    cache_read: float | None = None
+
+
 @dataclass(frozen=True)
 class CostBreakdown:
     """USD cost of one request by token type, and the long-context tier applied, if any."""
@@ -98,26 +117,80 @@ class Rates:
     # apart from an implicit hit: Alibaba bills explicit hits at 10% of input and implicit
     # ones at 20%. None prices it as cache_read.
     cache_read_explicit: float | None = None
+    # On a model that prices any modality apart from text, every modality it prices, text
+    # included, sorted by name; empty when all tokens cost the prices above.
+    modalities: tuple[ModalityRates, ...] = ()
+
+    def modality(self, name: str) -> ModalityRates | None:
+        """The prices the provider states for a modality, or None if it lists none."""
+        name = MODALITY_ALIASES.get(name, name)
+        return next((item for item in self.modalities if item.modality == name), None)
 
     def price_key(self) -> tuple:
         """The prices alone, without provenance, for comparing rates from different sources."""
         return (self.input, self.output, self.cache_read, self.cache_write, self.tiers,
-                self.period, self.cache_write_1h_multiple, self.cache_read_explicit)
+                self.period, self.cache_write_1h_multiple, self.cache_read_explicit,
+                self.modalities)
 
     def breakdown(self, input_tokens: int = 0, output_tokens: int = 0,
                   cache_read_tokens: int = 0, cache_write_tokens: int = 0,
-                  cache_write_1h_tokens: int = 0,
-                  cache_read_explicit_tokens: int = 0) -> CostBreakdown:
+                  cache_write_1h_tokens: int = 0, cache_read_explicit_tokens: int = 0,
+                  modality_tokens: dict[str, dict[str, int]] | None = None) -> CostBreakdown:
         """Price one request by token type; input_tokens excludes cache reads and writes.
 
         cache_write_tokens are five-minute cache writes and cache_write_1h_tokens one-hour
-        ones. cache_read_explicit_tokens are cache hits on prefixes the request marked for
-        caching, and cache_read_tokens all other hits. Long-context tiers apply when the
-        request's whole prompt exceeds the tier size. A missing explicit hit price falls
-        back to the cache read price, and missing cache prices to the input price.
+        ones. cache_read_explicit_tokens are for providers that price a hit on a prefix the
+        request marked for caching apart from other hits, as Alibaba does; other providers'
+        hits, explicit caches included, are cache_read_tokens. Long-context tiers apply when
+        the request's whole prompt exceeds the tier size. A missing explicit hit price
+        falls back to the cache read price, and missing cache prices to the input price.
+
+        modality_tokens gives the input, cache_read, and output tokens of a request by
+        modality, text included, such as {"text": {"input": 800, "output": 200}, "audio":
+        {"input": 2500, "cache_read": 1000}}, in place of input_tokens, cache_read_tokens,
+        and output_tokens; each token is counted once, so input excludes cached tokens.
+        Cache writes and explicit hits may be passed beside it. A modality's missing price
+        is its own input price for cached tokens when it states one, and otherwise the
+        price of a token without a modality.
         """
+        plain = (input_tokens, output_tokens, cache_read_tokens, cache_write_tokens,
+                 cache_write_1h_tokens, cache_read_explicit_tokens)
+        split = self._split(modality_tokens)
+        if any(count < 0 for count in plain):
+            raise ValueError("token counts cannot be negative")
+        if split is not None and (input_tokens or output_tokens or cache_read_tokens):
+            raise ValueError("pass input, cache read, and output tokens either by modality "
+                             "or as plain counts, not both")
         prompt = (input_tokens + cache_read_tokens + cache_read_explicit_tokens
-                  + cache_write_tokens + cache_write_1h_tokens)
+                  + cache_write_tokens + cache_write_1h_tokens
+                  + sum(counts["input"] + counts["cache_read"] for counts in (split or {}).values()))
+        applied, rates = self._tiered(prompt)
+        input_rate = rates["input"]
+        cache_read = rates["cache_read"] if rates["cache_read"] is not None else input_rate
+        explicit = (rates["cache_read_explicit"] if rates["cache_read_explicit"] is not None
+                    else cache_read)
+        cache_write = rates["cache_write"] if rates["cache_write"] is not None else input_rate
+        cache_write_1h = (input_rate * self.cache_write_1h_multiple
+                          if self.cache_write_1h_multiple is not None else cache_write)
+        spent = {"input": input_tokens * input_rate, "output": output_tokens * rates["output"],
+                 "cache_read": cache_read_tokens * cache_read}
+        for name, counts in (split or {}).items():
+            prices = self._modality_prices(name, rates)
+            for key, count in counts.items():
+                spent[key] += count * prices[key]
+        return CostBreakdown(
+            tier_above=applied,
+            input=spent["input"] / 1e6,
+            output=spent["output"] / 1e6,
+            cache_read=spent["cache_read"] / 1e6,
+            cache_write=cache_write_tokens * cache_write / 1e6,
+            cache_write_1h=cache_write_1h_tokens * cache_write_1h / 1e6,
+            cache_read_explicit=cache_read_explicit_tokens * explicit / 1e6,
+        )
+
+    def _tiered(self, prompt: int) -> tuple[int | None, dict[str, float | None]]:
+        """The long-context tier a prompt of this size reaches, if any, and the prices of a
+        token without a modality in it."""
         rates: dict[str, float | None] = {
             "input": self.input, "output": self.output,
             "cache_read": self.cache_read, "cache_write": self.cache_write,
@@ -134,30 +207,51 @@ class Rates:
                     key: value for key, value in asdict(tier).items()
                     if key != "above" and value is not None
                 })
-        input_rate = rates["input"]
-        cache_read = rates["cache_read"] if rates["cache_read"] is not None else input_rate
-        explicit = (rates["cache_read_explicit"] if rates["cache_read_explicit"] is not None
-                    else cache_read)
-        cache_write = rates["cache_write"] if rates["cache_write"] is not None else input_rate
-        cache_write_1h = (input_rate * self.cache_write_1h_multiple
-                          if self.cache_write_1h_multiple is not None else cache_write)
-        return CostBreakdown(
-            tier_above=applied,
-            input=input_tokens * input_rate / 1e6,
-            output=output_tokens * rates["output"] / 1e6,
-            cache_read=cache_read_tokens * cache_read / 1e6,
-            cache_write=cache_write_tokens * cache_write / 1e6,
-            cache_write_1h=cache_write_1h_tokens * cache_write_1h / 1e6,
-            cache_read_explicit=cache_read_explicit_tokens * explicit / 1e6,
-        )
+        return applied, rates
+
+    def _modality_prices(self, name: str, rates: dict[str, float | None]) -> dict[str, float]:
+        """The input, cache read, and output prices of a modality's tokens, given the prices
+        of a token without a modality: a price the modality does not state is, for cached
+        tokens, its own input price when it states one, and otherwise the default."""
+        stated = self.modality(name) or ModalityRates(name)
+        default_cache = rates["cache_read"] if rates["cache_read"] is not None else rates["input"]
+        return {"input": stated.input if stated.input is not None else rates["input"],
+                "output": stated.output if stated.output is not None else rates["output"],
+                "cache_read": stated.cache_read if stated.cache_read is not None
+                else stated.input if stated.input is not None else default_cache}
+
+    @staticmethod
+    def _split(modality_tokens: dict[str, dict[str, int]] | None
+               ) -> dict[str, dict[str, int]] | None:
+        """Token counts by modality, with aliases merged; a name or count it does not know,
+        or a negative count, raises."""
+        if modality_tokens is None:
+            return None
+        split: dict[str, dict[str, int]] = {}
+        for name, counts in modality_tokens.items():
+            modality = MODALITY_ALIASES.get(name, name)
+            if modality not in MODALITIES:
+                raise ValueError(f"unknown modality {name!r}; expected one of "
+                                 f"{', '.join((*MODALITIES, *MODALITY_ALIASES))}")
+            unknown = set(counts) - set(MODALITY_COUNTS)
+            if unknown:
+                raise ValueError(f"unknown {name} token counts {sorted(unknown)}; expected "
+                                 f"{', '.join(MODALITY_COUNTS)}")
+            if any(count < 0 for count in counts.values()):
+                raise ValueError("token counts cannot be negative")
+            total = split.setdefault(modality, dict.fromkeys(MODALITY_COUNTS, 0))
+            for key, count in counts.items():
+                total[key] += count
+        return split
 
     def cost(self, input_tokens: int = 0, output_tokens: int = 0,
              cache_read_tokens: int = 0, cache_write_tokens: int = 0,
-             cache_write_1h_tokens: int = 0, cache_read_explicit_tokens: int = 0) -> float:
+             cache_write_1h_tokens: int = 0, cache_read_explicit_tokens: int = 0,
+             modality_tokens: dict[str, dict[str, int]] | None = None) -> float:
         """Price one request in USD; input_tokens excludes cache reads and writes."""
         return self.breakdown(input_tokens, output_tokens, cache_read_tokens,
                               cache_write_tokens, cache_write_1h_tokens,
-                              cache_read_explicit_tokens).total
+                              cache_read_explicit_tokens, modality_tokens).total
 
 
 # The snapshot format this version reads. Rate fields it does not know are ignored, so a
@@ -426,6 +520,12 @@ def _tiers(raw: list[dict[str, Any]] | None) -> tuple[Tier, ...]:
     return tuple(Tier(**_known(Tier, tier)) for tier in raw or ())
 
 
+def _modalities(raw: dict[str, dict[str, float]] | None) -> tuple[ModalityRates, ...]:
+    """A snapshot's prices by modality, {"audio": {"input": 32.0}}, as sorted ModalityRates."""
+    return tuple(ModalityRates(name, **_known(ModalityRates, prices))
+                 for name, prices in sorted((raw or {}).items()))
+
+
 # Thinking tokens are billed as output unless a model prices thinking mode separately, as
 # Alibaba's hybrid Qwen models do, so a model without a thinking price uses its standard rates.
 THINKING = "thinking"
@@ -457,6 +557,7 @@ def _lookup(provider: str, model: str, at: datetime, mode: str | None,
     values = _known(Rates, stored)
     values.setdefault("model", model)
     values["tiers"] = _tiers(values.get("tiers"))
+    values["modalities"] = _modalities(values.get("modalities"))
     return Rates(**{**values, "provider": provider})
 
 
@@ -520,6 +621,8 @@ def _scaled(found: Rates, period: str, factor: float) -> Rates:
         found, period=period, input=found.input * factor, output=found.output * factor,
         cache_read=scale(found.cache_read), cache_write=scale(found.cache_write),
         cache_read_explicit=scale(found.cache_read_explicit),
+        modalities=tuple(replace(item, input=scale(item.input), output=scale(item.output),
+                                 cache_read=scale(item.cache_read)) for item in found.modalities),
         tiers=tuple(
             replace(tier, input=scale(tier.input), output=scale(tier.output),
                     cache_read=scale(tier.cache_read), cache_write=scale(tier.cache_write),
@@ -616,13 +719,16 @@ def rates_between(model: str, start: datetime | str, end: datetime | str,
 def cost(model: str, *, input_tokens: int = 0, output_tokens: int = 0,
          cache_read_tokens: int = 0, cache_write_tokens: int = 0,
          cache_write_1h_tokens: int = 0, cache_read_explicit_tokens: int = 0,
+         modality_tokens: dict[str, dict[str, int]] | None = None,
          at: datetime | str | None = None, provider: str | None = None,
          mode: str | None = None, prices_at: datetime | str | None = None,
          estimate: bool = False) -> float | None:
     """Price one request made at `at`; input_tokens excludes cache reads and writes.
 
     cache_write_tokens are five-minute cache writes and cache_write_1h_tokens one-hour ones.
-    cache_read_explicit_tokens are cache hits on prefixes the request marked for caching.
+    cache_read_explicit_tokens are cache hits on prefixes the request marked for caching,
+    for providers that price them apart. modality_tokens gives input, cache_read, and output
+    tokens by modality in place of the plain counts, as Rates.breakdown describes.
     estimate=True prices a model with no per-token price at its stand-in's rates, as rates()
     does; check rates(...).estimated_from to tell an estimate from a price.
     """
@@ -631,7 +737,7 @@ def cost(model: str, *, input_tokens: int = 0, output_tokens: int = 0,
     if found is None:
         return None
     return found.cost(input_tokens, output_tokens, cache_read_tokens, cache_write_tokens,
-                      cache_write_1h_tokens, cache_read_explicit_tokens)
+                      cache_write_1h_tokens, cache_read_explicit_tokens, modality_tokens)
 
 
 @dataclass(frozen=True)
@@ -738,9 +844,6 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "check":
         from model_prices import genai_prices
         from model_prices.checks import SOURCES, as_json, report, run
-        unknown = sorted(set(args.providers) - set(SOURCES))
-        if unknown:
-            parser.error(f"no official pricing check for: {', '.join(unknown)}")
         genai = None
         if args.genai_prices:
             source = genai_prices.DATA_URL if args.genai_prices == "url" else args.genai_prices
@@ -750,7 +853,14 @@ def main(argv: list[str] | None = None) -> int:
         results = run(args.providers or None, genai=genai, rules=rules)
         print(json.dumps(as_json(results), indent=2) if args.json
               else report(results, genai=genai is not None))
-        return 1 if any(result.status in {"mismatch", "error"} for result in results) else 0
+        if any(result.status in {"mismatch", "error"} for result in results):
+            return 1
+        # Status 2: no official page checks these providers, though models.dev's rules may.
+        unpaged = sorted(set(args.providers) - set(SOURCES))
+        if unpaged:
+            print(f"no official pricing check for: {', '.join(unpaged)}", file=sys.stderr)
+            return 2
+        return 0
 
     if args.command == "refresh":
         status = refresh(timedelta(hours=args.max_age))
@@ -811,4 +921,9 @@ def main(argv: list[str] | None = None) -> int:
         print(f"above {tier.above:,} prompt tokens: input {usd(tier.input)}  "
               f"output {usd(tier.output)}  cache read {usd(tier.cache_read)}{explicit(tier)}  "
               f"cache write {usd(tier.cache_write)}")
+    for item in found.modalities:
+        stated = [f"{label} ${value:g}" for label, value in (
+            ("input", item.input), ("output", item.output), ("cache read", item.cache_read))
+            if value is not None]
+        print(f"{item.modality}: {'  '.join(stated)}")
     return 0

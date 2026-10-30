@@ -710,6 +710,16 @@
      {
       "rates": {
        "input": 0.07,
+       "modalities": {
+        "audio": {
+         "input": 4.44,
+         "output": 8.89
+        },
+        "text": {
+         "input": 0.07,
+         "output": 0.27
+        }
+       },
        "output": 0.27,
        "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
        "valid_from": "2025-10-14T17:34:46Z",
@@ -724,6 +734,16 @@
      {
       "rates": {
        "input": 0.27,
+       "modalities": {
+        "audio": {
+         "input": 4.44,
+         "output": 8.89
+        },
+        "text": {
+         "input": 0.27,
+         "output": 1.07
+        }
+       },
        "output": 1.07,
        "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
        "valid_from": "2025-10-14T17:34:46Z",
@@ -1490,6 +1510,15 @@
      {
       "rates": {
        "input": 0.1,
+       "modalities": {
+        "audio": {
+         "input": 6.76
+        },
+        "text": {
+         "input": 0.1,
+         "output": 0.4
+        }
+       },
        "output": 0.4,
        "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
        "valid_from": "2025-10-14T17:34:46Z",
@@ -2293,6 +2322,16 @@
      {
       "rates": {
        "input": 10.0,
+       "modalities": {
+        "audio": {
+         "input": 10.0,
+         "output": 38.0
+        },
+        "text": {
+         "input": 10.0,
+         "output": 10.0
+        }
+       },
        "output": 10.0,
        "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
        "valid_from": "2025-10-14T17:34:46Z",
@@ -2534,6 +2573,16 @@
      {
       "rates": {
        "input": 0.43,
+       "modalities": {
+        "audio": {
+         "input": 3.81,
+         "output": 15.11
+        },
+        "text": {
+         "input": 0.43,
+         "output": 1.66
+        }
+       },
        "output": 1.66,
        "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
        "valid_from": "2025-10-14T17:34:46Z",
@@ -2548,6 +2597,16 @@
      {
       "rates": {
        "input": 0.52,
+       "modalities": {
+        "audio": {
+         "input": 4.57,
+         "output": 18.13
+        },
+        "text": {
+         "input": 0.52,
+         "output": 1.99
+        }
+       },
        "output": 1.99,
        "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
        "valid_from": "2025-10-14T17:34:46Z",
@@ -10044,8 +10103,41 @@
      },
      {
       "rates": {
+       "cache_read": 0.075,
+       "input": 0.15,
+       "modalities": {
+        "audio": {
+         "cache_read": 0.1,
+         "input": 0.5
+        },
+        "text": {
+         "cache_read": 0.075,
+         "input": 0.15,
+         "output": 1.25
+        }
+       },
+       "output": 1.25,
+       "source": "https://github.com/sst/models.dev/commit/e1a3ea7fe997",
+       "valid_from": "2025-09-29T16:21:14Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2025-09-29T16:21:14Z"
+     },
+     {
+      "rates": {
        "cache_read": 0.03,
        "input": 0.15,
+       "modalities": {
+        "audio": {
+         "cache_read": 0.1,
+         "input": 0.5
+        },
+        "text": {
+         "cache_read": 0.03,
+         "input": 0.15,
+         "output": 1.25
+        }
+       },
        "output": 1.25,
        "source": "https://github.com/sst/models.dev/commit/3d09981eda8f",
        "valid_from": "2026-04-20T18:43:53Z",
@@ -10068,8 +10160,41 @@
      },
      {
       "rates": {
+       "cache_read": 0.075,
+       "input": 0.3,
+       "modalities": {
+        "audio": {
+         "cache_read": 0.1,
+         "input": 1.0
+        },
+        "text": {
+         "cache_read": 0.075,
+         "input": 0.3,
+         "output": 2.5
+        }
+       },
+       "output": 2.5,
+       "source": "https://github.com/sst/models.dev/commit/e1a3ea7fe997",
+       "valid_from": "2025-09-29T16:21:14Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2025-09-29T16:21:14Z"
+     },
+     {
+      "rates": {
        "cache_read": 0.03,
        "input": 0.3,
+       "modalities": {
+        "audio": {
+         "cache_read": 0.1,
+         "input": 1.0
+        },
+        "text": {
+         "cache_read": 0.03,
+         "input": 0.3,
+         "output": 2.5
+        }
+       },
        "output": 2.5,
        "source": "https://github.com/sst/models.dev/commit/3d09981eda8f",
        "valid_from": "2026-04-20T18:43:53Z",
@@ -10164,6 +10289,17 @@
       "rates": {
        "cache_read": 0.01,
        "input": 0.05,
+       "modalities": {
+        "audio": {
+         "cache_read": 0.03,
+         "input": 0.15
+        },
+        "text": {
+         "cache_read": 0.01,
+         "input": 0.05,
+         "output": 0.2
+        }
+       },
        "output": 0.2,
        "source": "https://github.com/sst/models.dev/commit/5e344ded49d8",
        "valid_from": "2026-05-12T22:40:48Z",
@@ -10188,6 +10324,17 @@
       "rates": {
        "cache_read": 0.01,
        "input": 0.1,
+       "modalities": {
+        "audio": {
+         "cache_read": 0.03,
+         "input": 0.3
+        },
+        "text": {
+         "cache_read": 0.01,
+         "input": 0.1,
+         "output": 0.4
+        }
+       },
        "output": 0.4,
        "source": "https://github.com/sst/models.dev/commit/5e344ded49d8",
        "valid_from": "2026-05-12T22:40:48Z",
@@ -10213,6 +10360,27 @@
        "valid_from_basis": "documented"
       },
       "start": "2025-07-07T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.025,
+       "input": 0.05,
+       "modalities": {
+        "audio": {
+         "input": 0.15
+        },
+        "text": {
+         "cache_read": 0.025,
+         "input": 0.05,
+         "output": 0.2
+        }
+       },
+       "output": 0.2,
+       "source": "https://github.com/sst/models.dev/commit/e1a3ea7fe997",
+       "valid_from": "2025-09-29T16:21:14Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2025-09-29T16:21:14Z"
      }
     ],
     "standard": [
@@ -10226,6 +10394,27 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.025,
+       "input": 0.1,
+       "modalities": {
+        "audio": {
+         "input": 0.3
+        },
+        "text": {
+         "cache_read": 0.025,
+         "input": 0.1,
+         "output": 0.4
+        }
+       },
+       "output": 0.4,
+       "source": "https://github.com/sst/models.dev/commit/e1a3ea7fe997",
+       "valid_from": "2025-09-29T16:21:14Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2025-09-29T16:21:14Z"
      }
     ]
    },
@@ -10266,6 +10455,19 @@
      {
       "rates": {
        "input": 0.5,
+       "modalities": {
+        "audio": {
+         "input": 3.0,
+         "output": 12.0
+        },
+        "text": {
+         "input": 0.5,
+         "output": 2.0
+        },
+        "video": {
+         "input": 3.0
+        }
+       },
        "output": 2.0,
        "source": "https://github.com/sst/models.dev/commit/5af55ed252ab",
        "valid_from": "2026-10-20T01:14:04Z",
@@ -10388,6 +10590,16 @@
       "rates": {
        "cache_read": 0.075,
        "input": 0.15,
+       "modalities": {
+        "audio": {
+         "input": 0.5
+        },
+        "text": {
+         "cache_read": 0.075,
+         "input": 0.15,
+         "output": 1.25
+        }
+       },
        "output": 1.25,
        "source": "https://github.com/sst/models.dev/commit/f314c1388f2d",
        "valid_from": "2025-10-15T16:05:35Z",
@@ -10412,6 +10624,16 @@
       "rates": {
        "cache_read": 0.075,
        "input": 0.3,
+       "modalities": {
+        "audio": {
+         "input": 1.0
+        },
+        "text": {
+         "cache_read": 0.075,
+         "input": 0.3,
+         "output": 2.5
+        }
+       },
        "output": 2.5,
        "source": "https://github.com/sst/models.dev/commit/f314c1388f2d",
        "valid_from": "2025-10-15T16:05:35Z",
@@ -10751,6 +10973,17 @@
       "rates": {
        "cache_read": 0.05,
        "input": 0.25,
+       "modalities": {
+        "audio": {
+         "cache_read": 0.1,
+         "input": 0.5
+        },
+        "text": {
+         "cache_read": 0.05,
+         "input": 0.25,
+         "output": 1.5
+        }
+       },
        "output": 1.5,
        "source": "https://github.com/sst/models.dev/commit/5e344ded49d8",
        "valid_from": "2026-05-12T22:40:48Z",
@@ -10810,6 +11043,17 @@
       "rates": {
        "cache_read": 0.05,
        "input": 0.5,
+       "modalities": {
+        "audio": {
+         "cache_read": 0.1,
+         "input": 1.0
+        },
+        "text": {
+         "cache_read": 0.05,
+         "input": 0.5,
+         "output": 3.0
+        }
+       },
        "output": 3.0,
        "source": "https://github.com/sst/models.dev/commit/5e344ded49d8",
        "valid_from": "2026-05-12T22:40:48Z",
@@ -10828,10 +11072,20 @@
      {
       "rates": {
        "input": 1.0,
+       "modalities": {
+        "image": {
+         "input": 1.0,
+         "output": 60.0
+        },
+        "text": {
+         "input": 1.0,
+         "output": 6.0
+        }
+       },
        "output": 60.0,
-       "source": "https://github.com/sst/models.dev/commit/4c2589610ba2",
+       "source": "https://ai.google.dev/gemini-api/docs/pricing",
        "valid_from": "2026-07-23T23:30:04Z",
-       "valid_from_basis": "models.dev commit"
+       "valid_from_basis": "documented"
       },
       "start": "2025-07-07T00:00:00Z"
      }
@@ -10839,6 +11093,23 @@
     "standard": [
      {
       "rates": {
+       "input": 2.0,
+       "modalities": {
+        "image": {
+         "input": 2.0,
+         "output": 120.0
+        },
+        "text": {
+         "input": 2.0,
+         "output": 12.0
+        }
+       },
+       "output": 120.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing",
+       "valid_from": "2026-07-23T23:30:04Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
        "input": 2.0,
        "output": 120.0,
        "source": "https://github.com/sst/models.dev/commit/4c2589610ba2",
@@ -10958,10 +11229,20 @@
      {
       "rates": {
        "input": 0.25,
+       "modalities": {
+        "image": {
+         "input": 0.25,
+         "output": 30.0
+        },
+        "text": {
+         "input": 0.25,
+         "output": 1.5
+        }
+       },
        "output": 30.0,
-       "source": "https://github.com/sst/models.dev/commit/cbecae3f83a9",
+       "source": "https://ai.google.dev/gemini-api/docs/pricing",
        "valid_from": "2026-07-23T23:29:57Z",
-       "valid_from_basis": "models.dev commit"
+       "valid_from_basis": "documented"
       },
       "start": "2025-07-07T00:00:00Z"
      }
@@ -10969,6 +11250,23 @@
     "standard": [
      {
       "rates": {
+       "input": 0.5,
+       "modalities": {
+        "image": {
+         "input": 0.5,
+         "output": 60.0
+        },
+        "text": {
+         "input": 0.5,
+         "output": 3.0
+        }
+       },
+       "output": 60.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing",
+       "valid_from": "2026-07-23T23:29:57Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
        "input": 0.5,
        "output": 60.0,
        "source": "https://github.com/sst/models.dev/commit/cbecae3f83a9",
@@ -11057,6 +11355,17 @@
       "rates": {
        "cache_read": 0.0125,
        "input": 0.125,
+       "modalities": {
+        "audio": {
+         "cache_read": 0.025,
+         "input": 0.25
+        },
+        "text": {
+         "cache_read": 0.0125,
+         "input": 0.125,
+         "output": 0.75
+        }
+       },
        "output": 0.75,
        "source": "https://github.com/sst/models.dev/commit/5e344ded49d8",
        "valid_from": "2026-05-12T22:40:48Z",
@@ -11090,6 +11399,17 @@
       "rates": {
        "cache_read": 0.025,
        "input": 0.25,
+       "modalities": {
+        "audio": {
+         "cache_read": 0.05,
+         "input": 0.5
+        },
+        "text": {
+         "cache_read": 0.025,
+         "input": 0.25,
+         "output": 1.5
+        }
+       },
        "output": 1.5,
        "source": "https://github.com/sst/models.dev/commit/5e344ded49d8",
        "valid_from": "2026-05-12T22:40:48Z",
@@ -11108,10 +11428,23 @@
      {
       "rates": {
        "input": 0.125,
+       "modalities": {
+        "image": {
+         "input": 0.125,
+         "output": 15.0
+        },
+        "text": {
+         "input": 0.125,
+         "output": 0.75
+        },
+        "video": {
+         "input": 0.125
+        }
+       },
        "output": 15.0,
-       "source": "https://github.com/sst/models.dev/commit/d84194b62d29",
+       "source": "https://ai.google.dev/gemini-api/docs/pricing",
        "valid_from": "2026-07-23T23:30:34Z",
-       "valid_from_basis": "models.dev commit"
+       "valid_from_basis": "documented"
       },
       "start": "2025-07-07T00:00:00Z"
      }
@@ -11119,6 +11452,26 @@
     "standard": [
      {
       "rates": {
+       "input": 0.25,
+       "modalities": {
+        "image": {
+         "input": 0.25,
+         "output": 30.0
+        },
+        "text": {
+         "input": 0.25,
+         "output": 1.5
+        },
+        "video": {
+         "input": 0.25
+        }
+       },
+       "output": 30.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing",
+       "valid_from": "2026-07-23T23:30:34Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
        "input": 0.25,
        "output": 30.0,
        "source": "https://github.com/sst/models.dev/commit/d84194b62d29",
@@ -11161,6 +11514,16 @@
       "rates": {
        "cache_read": 0.0125,
        "input": 0.125,
+       "modalities": {
+        "audio": {
+         "input": 0.25
+        },
+        "text": {
+         "cache_read": 0.0125,
+         "input": 0.125,
+         "output": 0.75
+        }
+       },
        "output": 0.75,
        "source": "https://github.com/sst/models.dev/commit/5e344ded49d8",
        "valid_from": "2026-05-12T22:40:48Z",
@@ -11222,6 +11585,16 @@
       "rates": {
        "cache_read": 0.025,
        "input": 0.25,
+       "modalities": {
+        "audio": {
+         "input": 0.5
+        },
+        "text": {
+         "cache_read": 0.025,
+         "input": 0.25,
+         "output": 1.5
+        }
+       },
        "output": 1.5,
        "source": "https://github.com/sst/models.dev/commit/5e344ded49d8",
        "valid_from": "2026-05-12T22:40:48Z",
@@ -11236,12 +11609,71 @@
      {
       "rates": {
        "input": 0.75,
+       "modalities": {
+        "audio": {
+         "input": 3.0,
+         "output": 12.0
+        },
+        "image": {
+         "input": 1.0
+        },
+        "text": {
+         "input": 0.75,
+         "output": 4.5
+        },
+        "video": {
+         "input": 1.0
+        }
+       },
+       "output": 4.5,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing",
+       "valid_from": "2026-07-23T23:30:41Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.75,
+       "modalities": {
+        "audio": {
+         "input": 3.0,
+         "output": 12.0
+        },
+        "text": {
+         "input": 0.75,
+         "output": 4.5
+        }
+       },
        "output": 4.5,
        "source": "https://github.com/sst/models.dev/commit/63f35780d345",
        "valid_from": "2026-07-23T23:30:41Z",
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "input": 0.75,
+       "modalities": {
+        "audio": {
+         "input": 3.0,
+         "output": 12.0
+        },
+        "image": {
+         "input": 1.0
+        },
+        "text": {
+         "input": 0.75,
+         "output": 4.5
+        },
+        "video": {
+         "input": 1.0
+        }
+       },
+       "output": 4.5,
+       "source": "https://github.com/sst/models.dev/commit/5af55ed252ab",
+       "valid_from": "2026-10-20T01:14:04Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-20T01:14:04Z"
      }
     ]
    },
@@ -11882,6 +12314,29 @@
      {
       "rates": {
        "input": 0.75,
+       "modalities": {
+        "audio": {
+         "input": 3.0,
+         "output": 12.0
+        },
+        "image": {
+         "input": 1.0
+        },
+        "text": {
+         "input": 0.75,
+         "output": 4.5
+        },
+        "video": {
+         "input": 1.0
+        }
+       },
+       "output": 4.5,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing",
+       "valid_from": "2026-10-10T20:14:52Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.75,
        "output": 4.5,
        "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
        "valid_from": "2026-10-10T20:14:52Z",
@@ -11892,6 +12347,22 @@
      {
       "rates": {
        "input": 0.75,
+       "modalities": {
+        "audio": {
+         "input": 3.0,
+         "output": 12.0
+        },
+        "image": {
+         "input": 1.0
+        },
+        "text": {
+         "input": 0.75,
+         "output": 4.5
+        },
+        "video": {
+         "input": 1.0
+        }
+       },
        "output": 4.5,
        "source": "https://github.com/sst/models.dev/commit/5af55ed252ab",
        "valid_from": "2026-10-20T01:14:04Z",
@@ -11906,6 +12377,29 @@
      {
       "rates": {
        "input": 0.75,
+       "modalities": {
+        "audio": {
+         "input": 3.0,
+         "output": 12.0
+        },
+        "image": {
+         "input": 1.0
+        },
+        "text": {
+         "input": 0.75,
+         "output": 4.5
+        },
+        "video": {
+         "input": 1.0
+        }
+       },
+       "output": 4.5,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing",
+       "valid_from": "2026-10-10T20:14:52Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 0.75,
        "output": 4.5,
        "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
        "valid_from": "2026-10-10T20:14:52Z",
@@ -11916,6 +12410,22 @@
      {
       "rates": {
        "input": 0.75,
+       "modalities": {
+        "audio": {
+         "input": 3.0,
+         "output": 12.0
+        },
+        "image": {
+         "input": 1.0
+        },
+        "text": {
+         "input": 0.75,
+         "output": 4.5
+        },
+        "video": {
+         "input": 1.0
+        }
+       },
        "output": 4.5,
        "source": "https://github.com/sst/models.dev/commit/5af55ed252ab",
        "valid_from": "2026-10-20T01:14:04Z",
@@ -12040,24 +12550,92 @@
      {
       "rates": {
        "input": 0.1,
+       "modalities": {
+        "audio": {
+         "input": 3.25
+        },
+        "text": {
+         "input": 0.1,
+         "output": 0.0
+        }
+       },
        "output": 0.0,
        "source": "https://github.com/sst/models.dev/commit/e4f84479304d",
        "valid_from": "2026-07-23T23:30:12Z",
        "valid_from_basis": "models.dev commit"
       },
       "start": "2025-07-07T00:00:00Z"
+     },
+     {
+      "rates": {
+       "input": 0.1,
+       "modalities": {
+        "audio": {
+         "input": 3.25
+        },
+        "image": {
+         "input": 0.225
+        },
+        "text": {
+         "input": 0.1,
+         "output": 0.0
+        },
+        "video": {
+         "input": 6.0
+        }
+       },
+       "output": 0.0,
+       "source": "https://github.com/sst/models.dev/commit/5af55ed252ab",
+       "valid_from": "2026-10-20T01:14:04Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-20T01:14:04Z"
      }
     ],
     "standard": [
      {
       "rates": {
        "input": 0.2,
+       "modalities": {
+        "audio": {
+         "input": 6.5
+        },
+        "text": {
+         "input": 0.2,
+         "output": 0.0
+        }
+       },
        "output": 0.0,
        "source": "https://github.com/sst/models.dev/commit/e4f84479304d",
        "valid_from": "2026-07-23T23:30:12Z",
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "input": 0.2,
+       "modalities": {
+        "audio": {
+         "input": 6.5
+        },
+        "image": {
+         "input": 0.45
+        },
+        "text": {
+         "input": 0.2,
+         "output": 0.0
+        },
+        "video": {
+         "input": 12.0
+        }
+       },
+       "output": 0.0,
+       "source": "https://github.com/sst/models.dev/commit/5af55ed252ab",
+       "valid_from": "2026-10-20T01:14:04Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-20T01:14:04Z"
      }
     ]
    },
@@ -12082,6 +12660,16 @@
       "rates": {
        "cache_read": 0.0375,
        "input": 0.15,
+       "modalities": {
+        "audio": {
+         "input": 0.5
+        },
+        "text": {
+         "cache_read": 0.0375,
+         "input": 0.15,
+         "output": 1.25
+        }
+       },
        "output": 1.25,
        "source": "https://github.com/sst/models.dev/commit/f314c1388f2d",
        "valid_from": "2025-10-15T16:05:35Z",
@@ -12128,6 +12716,16 @@
       "rates": {
        "cache_read": 0.075,
        "input": 0.3,
+       "modalities": {
+        "audio": {
+         "input": 1.0
+        },
+        "text": {
+         "cache_read": 0.075,
+         "input": 0.3,
+         "output": 2.5
+        }
+       },
        "output": 2.5,
        "source": "https://github.com/sst/models.dev/commit/f314c1388f2d",
        "valid_from": "2025-10-15T16:05:35Z",
@@ -12180,6 +12778,16 @@
       "rates": {
        "cache_read": 0.0125,
        "input": 0.125,
+       "modalities": {
+        "audio": {
+         "input": 0.25
+        },
+        "text": {
+         "cache_read": 0.0125,
+         "input": 0.125,
+         "output": 0.75
+        }
+       },
        "output": 0.75,
        "source": "https://github.com/sst/models.dev/commit/2953fed88b78",
        "valid_from": "2026-07-15T15:13:59Z",
@@ -12215,6 +12823,16 @@
       "rates": {
        "cache_read": 0.025,
        "input": 0.25,
+       "modalities": {
+        "audio": {
+         "input": 0.5
+        },
+        "text": {
+         "cache_read": 0.025,
+         "input": 0.25,
+         "output": 1.5
+        }
+       },
        "output": 1.5,
        "source": "https://github.com/sst/models.dev/commit/2953fed88b78",
        "valid_from": "2026-07-15T15:13:59Z",
@@ -12240,6 +12858,16 @@
      {
       "rates": {
        "input": 0.5,
+       "modalities": {
+        "audio": {
+         "input": 3.0,
+         "output": 12.0
+        },
+        "text": {
+         "input": 0.5,
+         "output": 2.0
+        }
+       },
        "output": 2.0,
        "source": "https://github.com/sst/models.dev/commit/d4ac99304bd3",
        "valid_from": "2025-10-15T02:38:17Z",
@@ -12254,6 +12882,16 @@
      {
       "rates": {
        "input": 0.5,
+       "modalities": {
+        "audio": {
+         "input": 3.0,
+         "output": 12.0
+        },
+        "text": {
+         "input": 0.5,
+         "output": 2.0
+        }
+       },
        "output": 2.0,
        "source": "https://github.com/sst/models.dev/commit/e1a3ea7fe997",
        "valid_from": "2025-09-29T16:21:14Z",
@@ -12272,27 +12910,50 @@
      {
       "rates": {
        "input": 0.75,
+       "modalities": {
+        "image": {
+         "input": 0.75,
+         "output": 15.0
+        },
+        "text": {
+         "input": 0.75,
+         "output": 3.75
+        },
+        "video": {
+         "input": 0.75
+        }
+       },
        "output": 15.0,
-       "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+       "source": "https://ai.google.dev/gemini-api/docs/pricing",
        "valid_from": "2026-10-10T20:14:52Z",
-       "valid_from_basis": "first observed"
+       "valid_from_basis": "documented"
       },
       "start": "2025-07-07T00:00:00Z"
-     },
-     {
-      "rates": {
-       "input": 0.75,
-       "output": 15.0,
-       "source": "https://github.com/sst/models.dev/commit/5af55ed252ab",
-       "valid_from": "2026-10-20T01:14:04Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": "2026-10-20T01:14:04Z"
      }
     ],
     "standard": [
      {
       "rates": {
+       "input": 1.5,
+       "modalities": {
+        "image": {
+         "input": 1.5,
+         "output": 30.0
+        },
+        "text": {
+         "input": 1.5,
+         "output": 7.5
+        },
+        "video": {
+         "input": 1.5
+        }
+       },
+       "output": 30.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing",
+       "valid_from": "2026-10-10T20:14:52Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
        "input": 1.5,
        "output": 30.0,
        "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
@@ -12303,6 +12964,26 @@
      },
      {
       "rates": {
+       "input": 1.5,
+       "modalities": {
+        "image": {
+         "input": 1.5,
+         "output": 30.0
+        },
+        "text": {
+         "input": 1.5,
+         "output": 7.5
+        },
+        "video": {
+         "input": 1.5
+        }
+       },
+       "output": 30.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing",
+       "valid_from": "2026-10-10T20:14:52Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
        "input": 1.5,
        "output": 30.0,
        "source": "https://github.com/sst/models.dev/commit/5af55ed252ab",
@@ -12318,6 +12999,29 @@
      {
       "rates": {
        "input": 1.5,
+       "modalities": {
+        "audio": {
+         "input": 1.5
+        },
+        "image": {
+         "input": 1.5
+        },
+        "text": {
+         "input": 1.5,
+         "output": 9.0
+        },
+        "video": {
+         "input": 1.5,
+         "output": 17.5
+        }
+       },
+       "output": 17.5,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing",
+       "valid_from": "2026-10-10T20:14:52Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "input": 1.5,
        "output": 17.5,
        "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
        "valid_from": "2026-10-10T20:14:52Z",
@@ -12327,6 +13031,29 @@
      },
      {
       "rates": {
+       "input": 1.5,
+       "modalities": {
+        "audio": {
+         "input": 1.5
+        },
+        "image": {
+         "input": 1.5
+        },
+        "text": {
+         "input": 1.5,
+         "output": 9.0
+        },
+        "video": {
+         "input": 1.5,
+         "output": 17.5
+        }
+       },
+       "output": 17.5,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing",
+       "valid_from": "2026-10-10T20:14:52Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
        "input": 1.5,
        "output": 17.5,
        "source": "https://github.com/sst/models.dev/commit/5af55ed252ab",
@@ -12341,6 +13068,29 @@
     "standard": [
      {
       "rates": {
+       "input": 1.5,
+       "modalities": {
+        "audio": {
+         "input": 1.5
+        },
+        "image": {
+         "input": 1.5
+        },
+        "text": {
+         "input": 1.5,
+         "output": 9.0
+        },
+        "video": {
+         "input": 1.5,
+         "output": 17.5
+        }
+       },
+       "output": 17.5,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing",
+       "valid_from": "2026-07-08T21:27:04Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
        "input": 1.5,
        "output": 17.5,
        "source": "https://github.com/sst/models.dev/commit/11d3d5bef1ef",
@@ -12408,6 +13158,15 @@
      {
       "rates": {
        "input": 0.5,
+       "modalities": {
+        "audio": {
+         "input": 1.0
+        },
+        "text": {
+         "input": 0.5,
+         "output": 2.5
+        }
+       },
        "output": 2.5,
        "source": "https://github.com/sst/models.dev/commit/22e4bf262011",
        "valid_from": "2026-07-23T23:30:08Z",
@@ -12420,6 +13179,15 @@
      {
       "rates": {
        "input": 1.0,
+       "modalities": {
+        "audio": {
+         "input": 2.0
+        },
+        "text": {
+         "input": 1.0,
+         "output": 5.0
+        }
+       },
        "output": 5.0,
        "source": "https://github.com/sst/models.dev/commit/22e4bf262011",
        "valid_from": "2026-07-23T23:30:08Z",
@@ -19344,6 +20112,16 @@
       "rates": {
        "cache_write_1h_multiple": 2.5,
        "input": 2.5,
+       "modalities": {
+        "audio": {
+         "input": 32.0,
+         "output": 64.0
+        },
+        "text": {
+         "input": 2.5,
+         "output": 10.0
+        }
+       },
        "output": 10.0,
        "source": "https://github.com/sst/models.dev/commit/efd88a768e7f",
        "valid_from": "2026-10-20T00:05:42Z",
@@ -19359,6 +20137,16 @@
       "rates": {
        "cache_write_1h_multiple": 2.5,
        "input": 2.5,
+       "modalities": {
+        "audio": {
+         "input": 32.0,
+         "output": 64.0
+        },
+        "text": {
+         "input": 2.5,
+         "output": 10.0
+        }
+       },
        "output": 10.0,
        "source": "https://github.com/sst/models.dev/commit/efd88a768e7f",
        "valid_from": "2026-10-20T00:05:42Z",
@@ -19374,6 +20162,16 @@
       "rates": {
        "cache_write_1h_multiple": 2.5,
        "input": 0.6,
+       "modalities": {
+        "audio": {
+         "input": 10.0,
+         "output": 20.0
+        },
+        "text": {
+         "input": 0.6,
+         "output": 2.4
+        }
+       },
        "output": 2.4,
        "source": "https://github.com/sst/models.dev/commit/efd88a768e7f",
        "valid_from": "2026-10-20T00:05:42Z",
@@ -19484,10 +20282,21 @@
        "cache_read": 0.625,
        "cache_write_1h_multiple": 2.5,
        "input": 2.5,
+       "modalities": {
+        "image": {
+         "cache_read": 1.0,
+         "input": 4.0,
+         "output": 15.0
+        },
+        "text": {
+         "cache_read": 0.625,
+         "input": 2.5
+        }
+       },
        "output": 15.0,
-       "source": "https://github.com/sst/models.dev/commit/abcb2424cae9",
+       "source": "https://developers.openai.com/api/docs/pricing",
        "valid_from": "2026-06-18T09:46:32Z",
-       "valid_from_basis": "models.dev commit"
+       "valid_from_basis": "documented"
       },
       "start": "2024-04-15T00:00:00Z"
      }
@@ -19495,6 +20304,26 @@
     "standard": [
      {
       "rates": {
+       "cache_read": 1.25,
+       "cache_write_1h_multiple": 2.5,
+       "input": 5.0,
+       "modalities": {
+        "image": {
+         "cache_read": 2.0,
+         "input": 8.0,
+         "output": 30.0
+        },
+        "text": {
+         "cache_read": 1.25,
+         "input": 5.0
+        }
+       },
+       "output": 30.0,
+       "source": "https://developers.openai.com/api/docs/pricing",
+       "valid_from": "2026-06-18T09:46:32Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
        "cache_read": 1.25,
        "cache_write_1h_multiple": 2.5,
        "input": 5.0,
@@ -19518,6 +20347,17 @@
        "cache_read": 0.625,
        "cache_write_1h_multiple": 2.5,
        "input": 2.5,
+       "modalities": {
+        "image": {
+         "cache_read": 1.0,
+         "input": 4.0
+        },
+        "text": {
+         "cache_read": 0.625,
+         "input": 2.5,
+         "output": 15.0
+        }
+       },
        "output": 15.0,
        "source": "https://github.com/sst/models.dev/commit/efd88a768e7f",
        "valid_from": "2026-10-20T00:05:42Z",
@@ -19532,6 +20372,17 @@
        "cache_read": 1.25,
        "cache_write_1h_multiple": 2.5,
        "input": 5.0,
+       "modalities": {
+        "image": {
+         "cache_read": 2.0,
+         "input": 8.0
+        },
+        "text": {
+         "cache_read": 1.25,
+         "input": 5.0,
+         "output": 30.0
+        }
+       },
        "output": 30.0,
        "source": "https://github.com/sst/models.dev/commit/efd88a768e7f",
        "valid_from": "2026-10-20T00:05:42Z",
@@ -19552,6 +20403,17 @@
        "cache_read": 0.625,
        "cache_write_1h_multiple": 2.5,
        "input": 2.5,
+       "modalities": {
+        "image": {
+         "cache_read": 1.0,
+         "input": 4.0
+        },
+        "text": {
+         "cache_read": 0.625,
+         "input": 2.5,
+         "output": 15.0
+        }
+       },
        "output": 15.0,
        "source": "https://github.com/sst/models.dev/commit/efd88a768e7f",
        "valid_from": "2026-10-20T00:05:42Z",
@@ -19566,6 +20428,17 @@
        "cache_read": 1.25,
        "cache_write_1h_multiple": 2.5,
        "input": 5.0,
+       "modalities": {
+        "image": {
+         "cache_read": 2.0,
+         "input": 8.0
+        },
+        "text": {
+         "cache_read": 1.25,
+         "input": 5.0,
+         "output": 30.0
+        }
+       },
        "output": 30.0,
        "source": "https://github.com/sst/models.dev/commit/efd88a768e7f",
        "valid_from": "2026-10-20T00:05:42Z",
@@ -19582,6 +20455,22 @@
        "cache_read": 0.4,
        "cache_write_1h_multiple": 2.5,
        "input": 4.0,
+       "modalities": {
+        "audio": {
+         "cache_read": 0.4,
+         "input": 32.0,
+         "output": 64.0
+        },
+        "image": {
+         "cache_read": 0.5,
+         "input": 5.0
+        },
+        "text": {
+         "cache_read": 0.4,
+         "input": 4.0,
+         "output": 16.0
+        }
+       },
        "output": 16.0,
        "source": "https://github.com/sst/models.dev/commit/efd88a768e7f",
        "valid_from": "2026-10-20T00:05:42Z",
@@ -19598,6 +20487,22 @@
        "cache_read": 0.4,
        "cache_write_1h_multiple": 2.5,
        "input": 4.0,
+       "modalities": {
+        "audio": {
+         "cache_read": 0.4,
+         "input": 32.0,
+         "output": 64.0
+        },
+        "image": {
+         "cache_read": 0.5,
+         "input": 5.0
+        },
+        "text": {
+         "cache_read": 0.4,
+         "input": 4.0,
+         "output": 16.0
+        }
+       },
        "output": 16.0,
        "source": "https://github.com/sst/models.dev/commit/efd88a768e7f",
        "valid_from": "2026-10-20T00:05:42Z",
@@ -19614,6 +20519,22 @@
        "cache_read": 0.4,
        "cache_write_1h_multiple": 2.5,
        "input": 4.0,
+       "modalities": {
+        "audio": {
+         "cache_read": 0.4,
+         "input": 32.0,
+         "output": 64.0
+        },
+        "image": {
+         "cache_read": 0.5,
+         "input": 5.0
+        },
+        "text": {
+         "cache_read": 0.4,
+         "input": 4.0,
+         "output": 24.0
+        }
+       },
        "output": 24.0,
        "source": "https://github.com/sst/models.dev/commit/efd88a768e7f",
        "valid_from": "2026-10-20T00:05:42Z",
@@ -19630,6 +20551,42 @@
        "cache_read": 0.4,
        "cache_write_1h_multiple": 2.5,
        "input": 4.0,
+       "modalities": {
+        "audio": {
+         "cache_read": 0.4,
+         "input": 32.0,
+         "output": 64.0
+        },
+        "image": {
+         "cache_read": 0.5,
+         "input": 5.0
+        },
+        "text": {
+         "cache_read": 0.4,
+         "input": 4.0,
+         "output": 24.0
+        }
+       },
+       "output": 24.0,
+       "source": "https://developers.openai.com/api/docs/pricing",
+       "valid_from": "2026-07-10T19:32:05Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.4,
+       "cache_write_1h_multiple": 2.5,
+       "input": 4.0,
+       "modalities": {
+        "audio": {
+         "input": 32.0,
+         "output": 64.0
+        },
+        "text": {
+         "cache_read": 0.4,
+         "input": 4.0,
+         "output": 24.0
+        }
+       },
        "output": 24.0,
        "source": "https://github.com/sst/models.dev/commit/5a21c5d14e1d",
        "valid_from": "2026-07-10T19:32:05Z",
@@ -19646,6 +20603,22 @@
        "cache_read": 0.06,
        "cache_write_1h_multiple": 2.5,
        "input": 0.6,
+       "modalities": {
+        "audio": {
+         "cache_read": 0.3,
+         "input": 10.0,
+         "output": 20.0
+        },
+        "image": {
+         "cache_read": 0.08,
+         "input": 0.8
+        },
+        "text": {
+         "cache_read": 0.06,
+         "input": 0.6,
+         "output": 2.4
+        }
+       },
        "output": 2.4,
        "source": "https://github.com/sst/models.dev/commit/efd88a768e7f",
        "valid_from": "2026-10-20T00:05:42Z",
@@ -19662,6 +20635,22 @@
        "cache_read": 0.06,
        "cache_write_1h_multiple": 2.5,
        "input": 0.6,
+       "modalities": {
+        "audio": {
+         "cache_read": 0.3,
+         "input": 10.0,
+         "output": 20.0
+        },
+        "image": {
+         "cache_read": 0.08,
+         "input": 0.8
+        },
+        "text": {
+         "cache_read": 0.06,
+         "input": 0.6,
+         "output": 2.4
+        }
+       },
        "output": 2.4,
        "source": "https://github.com/sst/models.dev/commit/efd88a768e7f",
        "valid_from": "2026-10-20T00:05:42Z",
@@ -25124,5 +26113,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-10-31T06:27:38Z"
+ "updated_at": "2026-10-31T06:27:54Z"
 }

@@ -56,11 +56,12 @@ PAGES = {
 }
 
 
-def _prices(provider, mode=None):
+def _prices(provider, mode=None, modality=None):
     parser = checks.SOURCES[provider][1]
     extra = (PAGES.__getitem__,) if provider in {"alibaba", "amazon-bedrock", "meta", "mistral"} else ()
     return {(item.model, item.field, item.above, item.at): item.value
-            for item in parser(PAGES[provider], TODAY, *extra) if item.mode == mode}
+            for item in parser(PAGES[provider], TODAY, *extra)
+            if item.mode == mode and item.modality == modality}
 
 
 def _terms(pages):
@@ -519,6 +520,49 @@ class CheckTests(unittest.TestCase):
         self.assertEqual({(item.value, item.at) for item in found},
                          {(0.75, None), (1.5, "2027-01-01T00:00:00Z")})
         results = checks.compare(found, TODAY)
+        self.assertEqual({r.status for r in results}, {"ok"})
+
+    def test_pages_priced_by_modality_are_compared_by_modality(self):
+        cell = "$0.75 (text) $3.00 or $0.005/min (audio) $1.00 or $0.002/min (image/video)"
+        self.assertEqual(checks._google_by_modality(cell, TODAY), [
+            ("text", 0.75, None), ("audio", 3.0, None), ("image", 1.0, None), ("video", 1.0, None)])
+        # Thinking is text, and a label with a footnote mark is a price per item.
+        self.assertEqual(checks._google_by_modality(
+            "$3 (text and thinking) $60.00 (images) Equivalent to $0.045 per 0.5K image", TODAY),
+            [("text", 3.0, None), ("image", 60.0, None)])
+        self.assertEqual(checks._google_by_modality("$1.00 (text), $0.0006 (image)^\\*^", TODAY),
+                         [("text", 1.0, None)])
+        page = """Realtime and audio generation models
+
+### Grouped Pricing Table data
+
+| Model | Modality | Input | Output / cost | Cached input |
+| --- | --- | --- | --- | --- |
+| gpt-realtime-1.5 | Audio | $32.00 | $64.00 | $0.40 |
+| gpt-realtime-1.5 | Image | $5.00 | - | $0.50 |
+| tts-1 | Text | $15.00 / 1M characters | - | - |
+
+Batch
+
+### Grouped Pricing Table data
+
+| Model | Modality | Input | Output | Cached input |
+| --- | --- | --- | --- | --- |
+| gpt-image-2 | Image | $4.00 | $15.00 | $1.00 |
+"""
+        found = {(item.model, item.modality, item.field, item.mode): item.value
+                 for item in checks._openai_by_modality(page)}
+        self.assertEqual(found, {
+            ("gpt-realtime-1.5", "audio", "input", None): 32.0,
+            ("gpt-realtime-1.5", "audio", "output", None): 64.0,
+            ("gpt-realtime-1.5", "audio", "cache_read", None): 0.4,
+            ("gpt-realtime-1.5", "image", "input", None): 5.0,
+            ("gpt-realtime-1.5", "image", "cache_read", None): 0.5,
+            ("gpt-image-2", "image", "input", "batch"): 4.0,
+            ("gpt-image-2", "image", "output", "batch"): 15.0,
+            ("gpt-image-2", "image", "cache_read", "batch"): 1.0})
+        results = checks.compare([item for item in checks._openai_by_modality(page)
+                                  if item.mode is None], datetime(2026, 10, 29, tzinfo=timezone.utc))
         self.assertEqual({r.status for r in results}, {"ok"})
 
     def test_official_pages_match_effective_prices(self):

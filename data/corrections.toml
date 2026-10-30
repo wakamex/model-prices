@@ -846,3 +846,131 @@ cache_read = 0.015
 replaces = { input = 0.15, output = 0.0 }
 source = "https://mistral.ai/pricing/api"
 note = "Codestral Embed, whose docs page lists codestral-embed and codestral-embed-2505 among its API names, at $0.15 input and $0.015 cached input per 1M tokens, observed 2026-10-27. models.dev lists no cache price, which would charge cached tokens at the input price. Applies from models.dev's first record."
+
+# Prices by modality that models.dev lacks. models.dev's schema 2 files give image and video
+# generation models a text output price equal to the generated image's or video's, so a
+# token passed without a modality is priced as these models mostly produce; the text and
+# thinking output price is Google's own.
+
+[[correction]]
+provider = "google"
+model = "gemini-3.1-flash-image"
+valid_from = "2026-07-23T23:29:57Z"
+input = 0.5
+output = 60.0
+modalities = { text = { input = 0.5, output = 3.0 }, image = { input = 0.5, output = 60.0 } }
+replaces = { input = 0.5, output = 60.0, modalities = {} }
+source = "https://ai.google.dev/gemini-api/docs/pricing"
+note = "Google's pricing page: input \"$0.50 (text/image)\", output \"$3 (text and thinking) $60.00 (images)\", on 2026-10-30 and in the Wayback Machine copy of 2026-07-25 (https://web.archive.org/web/20260725081315/https://ai.google.dev/gemini-api/docs/pricing), two days after models.dev's first record, so it applies from that record."
+
+[[correction]]
+provider = "google"
+model = "gemini-3.1-flash-lite-image"
+valid_from = "2026-07-23T23:30:34Z"
+input = 0.25
+output = 30.0
+modalities = { text = { input = 0.25, output = 1.5 }, image = { input = 0.25, output = 30.0 }, video = { input = 0.25 } }
+replaces = { input = 0.25, output = 30.0, modalities = {} }
+source = "https://ai.google.dev/gemini-api/docs/pricing"
+note = "Google's pricing page: input \"$0.25 (text/image/video)\", output \"$1.50 (text and thinking) $30.00 (images)\", on 2026-10-30 and in the Wayback Machine copy of 2026-07-25 (https://web.archive.org/web/20260725081315/https://ai.google.dev/gemini-api/docs/pricing), two days after models.dev's first record, so it applies from that record."
+
+[[correction]]
+provider = "google"
+model = "gemini-3-pro-image"
+valid_from = "2026-07-23T23:30:04Z"
+input = 2.0
+output = 120.0
+modalities = { text = { input = 2.0, output = 12.0 }, image = { input = 2.0, output = 120.0 } }
+replaces = { input = 2.0, output = 120.0, modalities = {} }
+source = "https://ai.google.dev/gemini-api/docs/pricing"
+note = "Google's pricing page: input \"$2.00 (text/image)\", output \"$12.00 (text and thinking) $120.00 (images)\", on 2026-10-30 and in the Wayback Machine copy of 2026-07-25 (https://web.archive.org/web/20260725081315/https://ai.google.dev/gemini-api/docs/pricing), two days after models.dev's first record, so it applies from that record."
+
+[[correction]]
+provider = "google"
+model = "gemini-nano-banana-2.1"
+valid_from = "2026-10-10T20:14:52Z"
+input = 1.5
+output = 30.0
+modalities = { text = { input = 1.5, output = 7.5 }, image = { input = 1.5, output = 30.0 }, video = { input = 1.5 } }
+replaces = { input = 1.5, output = 30.0, modalities = {} }
+source = "https://ai.google.dev/gemini-api/docs/pricing"
+note = "Google's pricing page: input \"$1.50 (text/image/video)\", output \"$7.50 (text and thinking) $30.00 (images)\", on 2026-10-30 and in the Wayback Machine copy of 2026-10-10T23:32Z (https://web.archive.org/web/20261010233216/https://ai.google.dev/gemini-api/docs/pricing), three hours after model-prices first read the model's price on that page, before models.dev listed it, so it applies from that first observation."
+
+[[correction]]
+provider = "google"
+model = "gemini-omni-1.1-flash"
+valid_from = "2026-10-10T20:14:52Z"
+input = 1.5
+output = 17.5
+modalities = { text = { input = 1.5, output = 9.0 }, image = { input = 1.5 }, audio = { input = 1.5 }, video = { input = 1.5, output = 17.5 } }
+replaces = { input = 1.5, output = 17.5, modalities = {} }
+source = "https://ai.google.dev/gemini-api/docs/pricing"
+note = "Google's pricing page: input \"$1.50 (text / image / video / audio)\", output \"$9.00 (text) $17.50 (video)\", on 2026-10-30 and in the Wayback Machine copy of 2026-10-10T23:32Z (https://web.archive.org/web/20261010233216/https://ai.google.dev/gemini-api/docs/pricing), three hours after model-prices first read the model's price on that page, before models.dev listed it, so it applies from that first observation."
+
+[[correction]]
+provider = "openai"
+model = "gpt-realtime-2.1"
+valid_from = "2026-07-10T19:32:05Z"
+input = 4.0
+output = 24.0
+cache_read = 0.4
+modalities = { text = { input = 4.0, output = 24.0, cache_read = 0.4 }, audio = { input = 32.0, output = 64.0, cache_read = 0.4 }, image = { input = 5.0, cache_read = 0.5 } }
+replaces = { input = 4.0, output = 24.0, modalities = { text = { input = 4.0, output = 24.0, cache_read = 0.4 }, audio = { input = 32.0, output = 64.0 } } }
+source = "https://developers.openai.com/api/docs/pricing"
+note = "OpenAI's pricing page lists gpt-realtime-2.1 at $32 audio input, $0.40 cached audio, $64 audio output, $5 image input, and $0.50 cached image, on 2026-10-30 and in the Wayback Machine copy of 2026-07-11 (https://web.archive.org/web/20260711091339/https://developers.openai.com/api/pricing), a day after models.dev's first record, which lists no cached audio or image price."
+
+[[correction]]
+provider = "openai"
+model = "gpt-image-2"
+valid_from = "2026-06-18T09:46:32Z"
+input = 5.0
+output = 30.0
+cache_read = 1.25
+modalities = { text = { input = 5.0, cache_read = 1.25 }, image = { input = 8.0, output = 30.0, cache_read = 2.0 } }
+replaces = { input = 5.0, output = 30.0, modalities = {} }
+source = "https://developers.openai.com/api/docs/pricing"
+note = "OpenAI's pricing page lists gpt-image-2 at $8 image input, $2 cached image, and $30 image output, beside $5 text input and $1.25 cached text with no text output, on 2026-10-30 and in the Wayback Machine copy of 2026-06-19 (https://web.archive.org/web/20260619115525/https://developers.openai.com/api/pricing), a day after models.dev's first record, which lists only the text prices and the image output."
+
+[[correction]]
+provider = "google"
+model = "gemini-3.8-live"
+valid_from = "2026-10-10T20:14:52Z"
+input = 0.75
+output = 4.5
+modalities = { text = { input = 0.75, output = 4.5 }, audio = { input = 3.0, output = 12.0 }, image = { input = 1.0 }, video = { input = 1.0 } }
+replaces = { input = 0.75, output = 4.5, modalities = {} }
+source = "https://ai.google.dev/gemini-api/docs/pricing"
+note = "Google's pricing page: input \"$0.75 (text) $3.00 or $0.005/min (audio) $1.00 or $0.002/min (image/video)\", output \"$4.50 (text) $12.00 or $0.018/min (audio)\", on 2026-10-30 and in the Wayback Machine copy of 2026-10-10T23:32Z (https://web.archive.org/web/20261010233216/https://ai.google.dev/gemini-api/docs/pricing), three hours after model-prices first read the model's price on that page, before models.dev listed it with these prices, so it applies from that first observation."
+
+[[correction]]
+provider = "google"
+model = "gemini-3.8-live-extended-thinking"
+valid_from = "2026-10-10T20:14:52Z"
+input = 0.75
+output = 4.5
+modalities = { text = { input = 0.75, output = 4.5 }, audio = { input = 3.0, output = 12.0 }, image = { input = 1.0 }, video = { input = 1.0 } }
+replaces = { input = 0.75, output = 4.5, modalities = {} }
+source = "https://ai.google.dev/gemini-api/docs/pricing"
+note = "Google's pricing page: input \"$0.75 (text) $3.00 or $0.005/min (audio) $1.00 or $0.002/min (image/video)\", output \"$4.50 (text) $12.00 or $0.018/min (audio)\", on 2026-10-30 and in the Wayback Machine copy of 2026-10-10T23:32Z (https://web.archive.org/web/20261010233216/https://ai.google.dev/gemini-api/docs/pricing), three hours after model-prices first read the model's price on that page, before models.dev listed it with these prices, so it applies from that first observation."
+
+[[correction]]
+provider = "google"
+model = "gemini-3.1-flash-live-preview"
+valid_from = "2026-07-23T23:30:41Z"
+input = 0.75
+output = 4.5
+modalities = { text = { input = 0.75, output = 4.5 }, audio = { input = 3.0, output = 12.0 }, image = { input = 1.0 }, video = { input = 1.0 } }
+replaces = { input = 0.75, output = 4.5, modalities = { text = { input = 0.75, output = 4.5 }, audio = { input = 3.0, output = 12.0 } } }
+source = "https://ai.google.dev/gemini-api/docs/pricing"
+note = "Google's pricing page: input \"$0.75 (text) $3.00 or $0.005/min (audio) $1.00 or $0.002/min (image/video)\", on 2026-10-30 and in the Wayback Machine copy of 2026-07-25 (https://web.archive.org/web/20260725081315/https://ai.google.dev/gemini-api/docs/pricing), two days after models.dev's first record, which lists audio but not image or video input until 2026-10-20."
+
+[[correction]]
+provider = "google"
+model = "gemini-omni-flash-preview"
+valid_from = "2026-07-08T21:27:04Z"
+input = 1.5
+output = 17.5
+modalities = { text = { input = 1.5, output = 9.0 }, image = { input = 1.5 }, audio = { input = 1.5 }, video = { input = 1.5, output = 17.5 } }
+replaces = { input = 1.5, output = 17.5, modalities = {} }
+source = "https://ai.google.dev/gemini-api/docs/pricing"
+note = "Google's pricing page: input \"$1.50 (text / image / video / audio)\", output \"$9.00 (text) $17.50 (video)\", in the Wayback Machine copy of 2026-07-10 (https://web.archive.org/web/20260710224307/https://ai.google.dev/gemini-api/docs/pricing), two days after models.dev's first record, and on 2026-10-10 (https://web.archive.org/web/20261010233216/https://ai.google.dev/gemini-api/docs/pricing); the page no longer lists the model on 2026-10-30."

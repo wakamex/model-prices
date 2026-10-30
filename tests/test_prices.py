@@ -431,6 +431,93 @@ class PriceTests(unittest.TestCase):
         self.assertEqual((argon.input, argon.valid_from_basis), (4.0, "scheduled"))
         self.assertEqual(rates("gemini-4-argon", at="2026-11-30T23:59:59Z").input, 2.0)
 
+    def test_prices_by_modality_come_from_schema_2_and_schema_1(self):
+        realtime = {"schema": 2, "cost": {
+            "text": {"input": {"price": 4, "cache": {"read": 0.4}}, "output": {"price": 16}},
+            "audio": {"input": {"price": 32, "cache": {"read": 0.4}}, "output": {"price": 64}},
+            "image": {"input": {"price": 5, "cache": {"read": 0.5}}},
+            "video": {"input": {"price": 0.005, "unit": "minute"}}}}
+        # Every modality the provider prices is listed with every price it states, text
+        # included; a price per minute is not a token price.
+        self.assertEqual(parse_rates(schema1(realtime))["modalities"], {
+            "text": {"input": 4.0, "output": 16.0, "cache_read": 0.4},
+            "audio": {"input": 32.0, "cache_read": 0.4, "output": 64.0},
+            "image": {"input": 5.0, "cache_read": 0.5}})
+        # A modality priced like text adds nothing, and schema 1 gives audio prices.
+        same = {"schema": 2, "cost": {"text": {"input": {"price": 1}, "output": {"price": 2}},
+                                      "image": {"input": {"price": 1}}}}
+        self.assertNotIn("modalities", parse_rates(schema1(same)))
+        self.assertEqual(parse_rates({"cost": {"input": 0.3, "output": 2.5, "input_audio": 1.0}}),
+                         {"input": 0.3, "output": 2.5, "modalities": {
+                             "audio": {"input": 1.0}, "text": {"input": 0.3, "output": 2.5}}})
+        # Long-context tiers and modality prices together are left out of the rates.
+        tiered = {"schema": 2, "cost": {
+            "text": {"input": {"price": 1, "overrides": [{"when": {"context": {"gt": 200_000}},
+                                                           "price": 2}]},
+                     "output": {"price": 2}},
+            "audio": {"input": {"price": 3}}}}
+        self.assertNotIn("modalities", parse_rates(schema1(tiered)))
+
+    def test_backfill_carries_cached_audio_back_over_schema_1(self):
+        schema_1 = '[cost]\ninput = 4\noutput = 16\ncache_read = 0.4\ninput_audio = 32\noutput_audio = 64\n'
+        schema_2 = ('schema = 2\n[cost.text.input]\nprice = 4\ncache = { read = 0.4 }\n'
+                    '[cost.text.output]\nprice = 16\n'
+                    '[cost.audio.input]\nprice = 32\ncache = { read = 0.4 }\n'
+                    '[cost.audio.output]\nprice = 64\n')
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory) / "models.dev"
+            models = repo / "providers" / "openai" / "models"
+            models.mkdir(parents=True)
+            _git(repo, "init", "-q", "-b", "main")
+            (models / "gpt-realtime-9.toml").write_text(schema_1)
+            _commit(repo, "add", "2026-07-01T10:00:00+00:00")
+            (models / "gpt-realtime-9.toml").write_text(schema_2)
+            _commit(repo, "schema 2", "2026-10-20T10:00:00+00:00")
+
+            data = build(repo, ("openai",))
+
+        # Schema 1 had no cached audio price; schema 2's applies from the first record, so
+        # the switch to schema 2 is no price change.
+        entries = data["providers"]["openai"]["gpt-realtime-9"]
+        self.assertEqual([entry["valid_from"] for entry in entries], ["2026-07-01T10:00:00Z"])
+        self.assertEqual(entries[0]["rates"]["modalities"]["audio"],
+                         {"input": 32.0, "output": 64.0, "cache_read": 0.4})
+
+    def test_tokens_by_modality_cost_their_own_prices(self):
+        split = {"text": {"input": 800, "cache_read": 100, "output": 200},
+                 "audio": {"input": 2500, "cache_read": 1000, "output": 2500},
+                 "image": {"input": 500}}
+        # OpenAI's prices: $4/$0.40/$16 text, $32/$0.40/$64 audio, $5 image input.
+        self.assertAlmostEqual(cost("gpt-realtime-1.5", at="2026-10-29", modality_tokens=split),
+                               (800 * 4 + 100 * 0.4 + 200 * 16 + 2500 * 32 + 1000 * 0.4
+                                + 2500 * 64 + 500 * 5) / 1e6)
+        parts = rates("gpt-realtime-1.5", at="2026-10-29").breakdown(modality_tokens=split)
+        self.assertAlmostEqual(parts.input, (800 * 4 + 2500 * 32 + 500 * 5) / 1e6)
+        # A modality without a cache price charges cached tokens its own input price; text on
+        # an image model costs its text price; PDF tokens cost the image price.
+        live = rates("gemini-3.8-live", at="2026-10-29")
+        self.assertEqual(live.breakdown(modality_tokens={"audio": {"cache_read": 1_000_000}}).cache_read, 3.0)
+        image = rates("gemini-3.1-flash-image", at="2026-10-29")
+        self.assertEqual(image.breakdown(modality_tokens={"text": {"output": 1_000_000}}).output, 3.0)
+        self.assertEqual(image.breakdown(output_tokens=1_000_000).output, 60.0)
+        self.assertEqual(image.breakdown(modality_tokens={"document": {"input": 1_000_000}}).input, 0.5)
+        # A model priced only by text prices any modality at its plain prices.
+        opus = rates("claude-opus-5-5", at="2026-10-29")
+        self.assertEqual(opus.cost(modality_tokens={"audio": {"input": 1000}}), opus.cost(input_tokens=1000))
+        # Modality tokens count toward long-context tiers.
+        astra = rates("gpt-6-astra", at="2026-09-20")
+        self.assertEqual(astra.breakdown(modality_tokens={"text": {"input": 300_000}}).tier_above, 272_000)
+        for wrong in ({"input_tokens": 1, "modality_tokens": {}},
+                      {"modality_tokens": {"smell": {"input": 1}}},
+                      {"modality_tokens": {"audio": {"write": 1}}},
+                      {"modality_tokens": {"audio": {"input": -1}}},
+                      {"output_tokens": -1}):
+            with self.subTest(wrong=wrong), self.assertRaises(ValueError):
+                opus.cost(**wrong)
+        # Cache writes may be passed beside a split.
+        self.assertAlmostEqual(opus.cost(cache_write_tokens=1000, modality_tokens={"text": {"input": 1000}}),
+                               opus.cost(input_tokens=1000, cache_write_tokens=1000))
+
     def test_backfill_records_the_rules_models_dev_now_gives(self):
         with tempfile.TemporaryDirectory() as directory:
             repo = Path(directory) / "models.dev"

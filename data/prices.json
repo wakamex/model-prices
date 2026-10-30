@@ -314,6 +314,16 @@
      "commit": "9511348dd73d",
      "rates": {
       "input": 0.07,
+      "modalities": {
+       "audio": {
+        "input": 4.44,
+        "output": 8.89
+       },
+       "text": {
+        "input": 0.07,
+        "output": 0.27
+       }
+      },
       "output": 0.27
      },
      "valid_from": "2025-10-14T17:34:46Z"
@@ -324,6 +334,16 @@
      "commit": "9511348dd73d",
      "rates": {
       "input": 0.27,
+      "modalities": {
+       "audio": {
+        "input": 4.44,
+        "output": 8.89
+       },
+       "text": {
+        "input": 0.27,
+        "output": 1.07
+       }
+      },
       "output": 1.07
      },
      "valid_from": "2025-10-14T17:34:46Z"
@@ -498,6 +518,15 @@
      "commit": "9511348dd73d",
      "rates": {
       "input": 0.1,
+      "modalities": {
+       "audio": {
+        "input": 6.76
+       },
+       "text": {
+        "input": 0.1,
+        "output": 0.4
+       }
+      },
       "output": 0.4
      },
      "valid_from": "2025-10-14T17:34:46Z"
@@ -740,6 +769,16 @@
      "commit": "9511348dd73d",
      "rates": {
       "input": 10.0,
+      "modalities": {
+       "audio": {
+        "input": 10.0,
+        "output": 38.0
+       },
+       "text": {
+        "input": 10.0,
+        "output": 10.0
+       }
+      },
       "output": 10.0
      },
      "valid_from": "2025-10-14T17:34:46Z"
@@ -780,6 +819,16 @@
      "commit": "9511348dd73d",
      "rates": {
       "input": 0.43,
+      "modalities": {
+       "audio": {
+        "input": 3.81,
+        "output": 15.11
+       },
+       "text": {
+        "input": 0.43,
+        "output": 1.66
+       }
+      },
       "output": 1.66
      },
      "valid_from": "2025-10-14T17:34:46Z"
@@ -790,6 +839,16 @@
      "commit": "9511348dd73d",
      "rates": {
       "input": 0.52,
+      "modalities": {
+       "audio": {
+        "input": 4.57,
+        "output": 18.13
+       },
+       "text": {
+        "input": 0.52,
+        "output": 1.99
+       }
+      },
       "output": 1.99
      },
      "valid_from": "2025-10-14T17:34:46Z"
@@ -3273,10 +3332,41 @@
      "valid_from": "2025-06-18T13:23:28Z"
     },
     {
+     "commit": "e1a3ea7fe997",
+     "rates": {
+      "cache_read": 0.075,
+      "input": 0.3,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.1,
+        "input": 1.0
+       },
+       "text": {
+        "cache_read": 0.075,
+        "input": 0.3,
+        "output": 2.5
+       }
+      },
+      "output": 2.5
+     },
+     "valid_from": "2025-09-29T16:21:14Z"
+    },
+    {
      "commit": "3d09981eda8f",
      "rates": {
       "cache_read": 0.03,
       "input": 0.3,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.1,
+        "input": 1.0
+       },
+       "text": {
+        "cache_read": 0.03,
+        "input": 0.3,
+        "output": 2.5
+       }
+      },
       "output": 2.5
      },
      "valid_from": "2026-04-20T18:43:53Z"
@@ -3319,6 +3409,17 @@
      "rates": {
       "cache_read": 0.01,
       "input": 0.1,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.03,
+        "input": 0.3
+       },
+       "text": {
+        "cache_read": 0.01,
+        "input": 0.1,
+        "output": 0.4
+       }
+      },
       "output": 0.4
      },
      "valid_from": "2026-05-12T22:40:48Z"
@@ -3333,6 +3434,25 @@
       "output": 0.4
      },
      "valid_from": "2025-06-18T13:23:28Z"
+    },
+    {
+     "commit": "e1a3ea7fe997",
+     "rates": {
+      "cache_read": 0.025,
+      "input": 0.1,
+      "modalities": {
+       "audio": {
+        "input": 0.3
+       },
+       "text": {
+        "cache_read": 0.025,
+        "input": 0.1,
+        "output": 0.4
+       }
+      },
+      "output": 0.4
+     },
+     "valid_from": "2025-09-29T16:21:14Z"
     }
    ],
    "gemini-2.5-flash-lite-preview-09-2025": [
@@ -3351,6 +3471,19 @@
      "commit": "5af55ed252ab",
      "rates": {
       "input": 0.5,
+      "modalities": {
+       "audio": {
+        "input": 3.0,
+        "output": 12.0
+       },
+       "text": {
+        "input": 0.5,
+        "output": 2.0
+       },
+       "video": {
+        "input": 3.0
+       }
+      },
       "output": 2.0
      },
      "valid_from": "2026-10-20T01:14:04Z"
@@ -3409,6 +3542,16 @@
      "rates": {
       "cache_read": 0.075,
       "input": 0.3,
+      "modalities": {
+       "audio": {
+        "input": 1.0
+       },
+       "text": {
+        "cache_read": 0.075,
+        "input": 0.3,
+        "output": 2.5
+       }
+      },
       "output": 2.5
      },
      "valid_from": "2025-10-15T16:05:35Z"
@@ -3560,6 +3703,17 @@
      "rates": {
       "cache_read": 0.05,
       "input": 0.5,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.1,
+        "input": 1.0
+       },
+       "text": {
+        "cache_read": 0.05,
+        "input": 0.5,
+        "output": 3.0
+       }
+      },
       "output": 3.0
      },
      "valid_from": "2026-05-12T22:40:48Z"
@@ -3657,6 +3811,17 @@
      "rates": {
       "cache_read": 0.025,
       "input": 0.25,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.05,
+        "input": 0.5
+       },
+       "text": {
+        "cache_read": 0.025,
+        "input": 0.25,
+        "output": 1.5
+       }
+      },
       "output": 1.5
      },
      "valid_from": "2026-05-12T22:40:48Z"
@@ -3706,6 +3871,16 @@
      "rates": {
       "cache_read": 0.025,
       "input": 0.25,
+      "modalities": {
+       "audio": {
+        "input": 0.5
+       },
+       "text": {
+        "cache_read": 0.025,
+        "input": 0.25,
+        "output": 1.5
+       }
+      },
       "output": 1.5
      },
      "valid_from": "2026-05-12T22:40:48Z"
@@ -3716,9 +3891,43 @@
      "commit": "63f35780d345",
      "rates": {
       "input": 0.75,
+      "modalities": {
+       "audio": {
+        "input": 3.0,
+        "output": 12.0
+       },
+       "text": {
+        "input": 0.75,
+        "output": 4.5
+       }
+      },
       "output": 4.5
      },
      "valid_from": "2026-07-23T23:30:41Z"
+    },
+    {
+     "commit": "5af55ed252ab",
+     "rates": {
+      "input": 0.75,
+      "modalities": {
+       "audio": {
+        "input": 3.0,
+        "output": 12.0
+       },
+       "image": {
+        "input": 1.0
+       },
+       "text": {
+        "input": 0.75,
+        "output": 4.5
+       },
+       "video": {
+        "input": 1.0
+       }
+      },
+      "output": 4.5
+     },
+     "valid_from": "2026-10-20T01:14:04Z"
     }
    ],
    "gemini-3.1-flash-tts-preview": [
@@ -3945,6 +4154,22 @@
      "commit": "5af55ed252ab",
      "rates": {
       "input": 0.75,
+      "modalities": {
+       "audio": {
+        "input": 3.0,
+        "output": 12.0
+       },
+       "image": {
+        "input": 1.0
+       },
+       "text": {
+        "input": 0.75,
+        "output": 4.5
+       },
+       "video": {
+        "input": 1.0
+       }
+      },
       "output": 4.5
      },
      "valid_from": "2026-10-20T01:14:04Z"
@@ -3955,6 +4180,22 @@
      "commit": "5af55ed252ab",
      "rates": {
       "input": 0.75,
+      "modalities": {
+       "audio": {
+        "input": 3.0,
+        "output": 12.0
+       },
+       "image": {
+        "input": 1.0
+       },
+       "text": {
+        "input": 0.75,
+        "output": 4.5
+       },
+       "video": {
+        "input": 1.0
+       }
+      },
       "output": 4.5
      },
      "valid_from": "2026-10-20T01:14:04Z"
@@ -3996,9 +4237,41 @@
      "commit": "e4f84479304d",
      "rates": {
       "input": 0.2,
+      "modalities": {
+       "audio": {
+        "input": 6.5
+       },
+       "text": {
+        "input": 0.2,
+        "output": 0.0
+       }
+      },
       "output": 0.0
      },
      "valid_from": "2026-07-23T23:30:12Z"
+    },
+    {
+     "commit": "5af55ed252ab",
+     "rates": {
+      "input": 0.2,
+      "modalities": {
+       "audio": {
+        "input": 6.5
+       },
+       "image": {
+        "input": 0.45
+       },
+       "text": {
+        "input": 0.2,
+        "output": 0.0
+       },
+       "video": {
+        "input": 12.0
+       }
+      },
+      "output": 0.0
+     },
+     "valid_from": "2026-10-20T01:14:04Z"
     }
    ],
    "gemini-flash-latest": [
@@ -4016,6 +4289,16 @@
      "rates": {
       "cache_read": 0.075,
       "input": 0.3,
+      "modalities": {
+       "audio": {
+        "input": 1.0
+       },
+       "text": {
+        "cache_read": 0.075,
+        "input": 0.3,
+        "output": 2.5
+       }
+      },
       "output": 2.5
      },
      "valid_from": "2025-10-15T16:05:35Z"
@@ -4054,6 +4337,16 @@
      "rates": {
       "cache_read": 0.025,
       "input": 0.25,
+      "modalities": {
+       "audio": {
+        "input": 0.5
+       },
+       "text": {
+        "cache_read": 0.025,
+        "input": 0.25,
+        "output": 1.5
+       }
+      },
       "output": 1.5
      },
      "valid_from": "2026-07-15T15:13:59Z"
@@ -4073,6 +4366,16 @@
      "commit": "d4ac99304bd3",
      "rates": {
       "input": 0.5,
+      "modalities": {
+       "audio": {
+        "input": 3.0,
+        "output": 12.0
+       },
+       "text": {
+        "input": 0.5,
+        "output": 2.0
+       }
+      },
       "output": 2.0
      },
      "valid_from": "2025-10-15T02:38:17Z"
@@ -4083,6 +4386,16 @@
      "commit": "e1a3ea7fe997",
      "rates": {
       "input": 0.5,
+      "modalities": {
+       "audio": {
+        "input": 3.0,
+        "output": 12.0
+       },
+       "text": {
+        "input": 0.5,
+        "output": 2.0
+       }
+      },
       "output": 2.0
      },
      "valid_from": "2025-09-29T16:21:14Z"
@@ -4142,6 +4455,15 @@
      "commit": "22e4bf262011",
      "rates": {
       "input": 1.0,
+      "modalities": {
+       "audio": {
+        "input": 2.0
+       },
+       "text": {
+        "input": 1.0,
+        "output": 5.0
+       }
+      },
       "output": 5.0
      },
      "valid_from": "2026-07-23T23:30:08Z"
@@ -6901,6 +7223,16 @@
      "commit": "efd88a768e7f",
      "rates": {
       "input": 2.5,
+      "modalities": {
+       "audio": {
+        "input": 32.0,
+        "output": 64.0
+       },
+       "text": {
+        "input": 2.5,
+        "output": 10.0
+       }
+      },
       "output": 10.0
      },
      "valid_from": "2026-10-20T00:05:42Z"
@@ -6911,6 +7243,16 @@
      "commit": "efd88a768e7f",
      "rates": {
       "input": 2.5,
+      "modalities": {
+       "audio": {
+        "input": 32.0,
+        "output": 64.0
+       },
+       "text": {
+        "input": 2.5,
+        "output": 10.0
+       }
+      },
       "output": 10.0
      },
      "valid_from": "2026-10-20T00:05:42Z"
@@ -6921,6 +7263,16 @@
      "commit": "efd88a768e7f",
      "rates": {
       "input": 0.6,
+      "modalities": {
+       "audio": {
+        "input": 10.0,
+        "output": 20.0
+       },
+       "text": {
+        "input": 0.6,
+        "output": 2.4
+       }
+      },
       "output": 2.4
      },
      "valid_from": "2026-10-20T00:05:42Z"
@@ -6976,6 +7328,17 @@
      "rates": {
       "cache_read": 1.25,
       "input": 5.0,
+      "modalities": {
+       "image": {
+        "cache_read": 2.0,
+        "input": 8.0
+       },
+       "text": {
+        "cache_read": 1.25,
+        "input": 5.0,
+        "output": 30.0
+       }
+      },
       "output": 30.0
      },
      "valid_from": "2026-10-20T00:05:42Z"
@@ -6987,6 +7350,17 @@
      "rates": {
       "cache_read": 1.25,
       "input": 5.0,
+      "modalities": {
+       "image": {
+        "cache_read": 2.0,
+        "input": 8.0
+       },
+       "text": {
+        "cache_read": 1.25,
+        "input": 5.0,
+        "output": 30.0
+       }
+      },
       "output": 30.0
      },
      "valid_from": "2026-10-20T00:05:42Z"
@@ -6998,6 +7372,22 @@
      "rates": {
       "cache_read": 0.4,
       "input": 4.0,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.4,
+        "input": 32.0,
+        "output": 64.0
+       },
+       "image": {
+        "cache_read": 0.5,
+        "input": 5.0
+       },
+       "text": {
+        "cache_read": 0.4,
+        "input": 4.0,
+        "output": 16.0
+       }
+      },
       "output": 16.0
      },
      "valid_from": "2026-10-20T00:05:42Z"
@@ -7009,6 +7399,22 @@
      "rates": {
       "cache_read": 0.4,
       "input": 4.0,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.4,
+        "input": 32.0,
+        "output": 64.0
+       },
+       "image": {
+        "cache_read": 0.5,
+        "input": 5.0
+       },
+       "text": {
+        "cache_read": 0.4,
+        "input": 4.0,
+        "output": 16.0
+       }
+      },
       "output": 16.0
      },
      "valid_from": "2026-10-20T00:05:42Z"
@@ -7020,6 +7426,22 @@
      "rates": {
       "cache_read": 0.4,
       "input": 4.0,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.4,
+        "input": 32.0,
+        "output": 64.0
+       },
+       "image": {
+        "cache_read": 0.5,
+        "input": 5.0
+       },
+       "text": {
+        "cache_read": 0.4,
+        "input": 4.0,
+        "output": 24.0
+       }
+      },
       "output": 24.0
      },
      "valid_from": "2026-10-20T00:05:42Z"
@@ -7031,6 +7453,17 @@
      "rates": {
       "cache_read": 0.4,
       "input": 4.0,
+      "modalities": {
+       "audio": {
+        "input": 32.0,
+        "output": 64.0
+       },
+       "text": {
+        "cache_read": 0.4,
+        "input": 4.0,
+        "output": 24.0
+       }
+      },
       "output": 24.0
      },
      "valid_from": "2026-07-10T19:32:05Z"
@@ -7042,6 +7475,22 @@
      "rates": {
       "cache_read": 0.06,
       "input": 0.6,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.3,
+        "input": 10.0,
+        "output": 20.0
+       },
+       "image": {
+        "cache_read": 0.08,
+        "input": 0.8
+       },
+       "text": {
+        "cache_read": 0.06,
+        "input": 0.6,
+        "output": 2.4
+       }
+      },
       "output": 2.4
      },
      "valid_from": "2026-10-20T00:05:42Z"
@@ -7053,6 +7502,22 @@
      "rates": {
       "cache_read": 0.06,
       "input": 0.6,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.3,
+        "input": 10.0,
+        "output": 20.0
+       },
+       "image": {
+        "cache_read": 0.08,
+        "input": 0.8
+       },
+       "text": {
+        "cache_read": 0.06,
+        "input": 0.6,
+        "output": 2.4
+       }
+      },
       "output": 2.4
      },
      "valid_from": "2026-10-20T00:05:42Z"

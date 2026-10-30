@@ -23,6 +23,12 @@ def _cases(count: int, seed: int = 0) -> list[dict]:
               for model, timelines in listed.items()
               if (model_prices.resolve_details(model, provider) or ())[:3] == (provider, model, "")]
     start = datetime(2025, 1, 1, tzinfo=timezone.utc)
+    modal = {provider: {model for model, timelines in listed.items()
+                        if any((interval["rates"] or {}).get("modalities")
+                               for intervals in timelines.values() for interval in intervals)}
+             for provider, listed in data["prices"].items()}
+    # Every model priced by modality is drawn often enough to be tested.
+    models += [entry for entry in models if entry[1] in modal.get(entry[0], ())] * 20
     # A third of the cases fall inside a time-of-day schedule, for the models it covers.
     scheduled = []
     for schedule in data["schedules"]["schedule"]:
@@ -45,6 +51,13 @@ def _cases(count: int, seed: int = 0) -> list[dict]:
         tokens = {"input": rng.randrange(prompt), "output": rng.randrange(200_000),
                   "cache_read": rng.randrange(prompt), "cache_write": rng.randrange(prompt // 4),
                   "cache_write_1h": rng.randrange(prompt // 8)}
+        # Models priced by modality also get requests split by modality, some naming a
+        # modality the model does not list.
+        if model in modal.get(provider, ()) and rng.random() < 0.5:
+            names = rng.sample(["text", "audio", "image", "video", "document"], rng.randint(1, 3))
+            tokens |= {"input": 0, "output": 0, "cache_read": 0, "modalities": {
+                name: {"input": rng.randrange(prompt), "cache_read": rng.randrange(prompt // 2),
+                       "output": rng.randrange(50_000)} for name in names}}
         cases.append({"provider": provider, "model": model, "mode": rng.choice(modes),
                       "at": at.isoformat().replace("+00:00", "Z"), "tokens": tokens})
     return cases
@@ -71,11 +84,13 @@ class CalculatorTests(unittest.TestCase):
             if found is None:
                 self.assertIsNone(result, case)
                 continue
-            parts = found.breakdown(*(case["tokens"][field] for field in FIELDS))
+            parts = found.breakdown(*(case["tokens"][field] for field in FIELDS),
+                                    modality_tokens=case["tokens"].get("modalities"))
             expected = {"period": found.period, "tier_above": parts.tier_above,
                         "total": parts.total, **{field: getattr(parts, field) for field in FIELDS}}
             self.assertEqual(result, expected, case)
             priced += 1
         self.assertGreater(priced, 4000)
+        self.assertGreater(sum("modalities" in case["tokens"] for case in cases), 500)
         self.assertGreater(sum(1 for case in cases if model_prices.rates(
             case["model"], at=case["at"], provider=case["provider"]).period), 1000)

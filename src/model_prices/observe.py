@@ -213,6 +213,11 @@ def read_checked(provider: str, data: Path, now: datetime,
         rates = found.setdefault(model, {})
         if item.mode:
             rates = rates.setdefault("modes", {}).setdefault(item.mode, {})
+        if item.modality:
+            # Prices by modality are kept only where one differs from the default, below.
+            if item.above:
+                continue
+            rates = rates.setdefault("modalities", {}).setdefault(item.modality, {})
         if item.above:
             tiers = rates.setdefault("tiers", [])
             tier = next((tier for tier in tiers if tier["above"] == item.above), None)
@@ -225,7 +230,19 @@ def read_checked(provider: str, data: Path, now: datetime,
         rates[item.field] = item.value
     found = {model: rates for model, rates in found.items()
              if "input" in rates and "output" in rates}
+    for rates in found.values():
+        for prices in (rates, *rates.get("modes", {}).values()):
+            _keep_differing_modalities(prices)
     return {model: (url, rates) for model, rates in found.items()}
+
+
+def _keep_differing_modalities(rates: dict[str, Any]) -> None:
+    """Drop a page's prices by modality when every one is the price of a token without a
+    modality, as the history keeps them."""
+    modalities = rates.get("modalities", {})
+    if all(rates.get(key) == value for prices in modalities.values()
+           for key, value in prices.items()):
+        rates.pop("modalities", None)
 
 
 def observe(output: Path, get: Callable[[str], str] = fetch, now: datetime | None = None,

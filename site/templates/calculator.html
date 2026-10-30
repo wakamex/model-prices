@@ -16,6 +16,10 @@
     <label>Cache writes <input id="cache_write" type="number" min="0" step="1" value="0"></label>
     <label>Longer-lived cache writes <input id="cache_write_1h" type="number" min="0" step="1" value="0"></label>
   </fieldset>
+  <fieldset id="by-modality" hidden>
+    <legend>Tokens by modality</legend>
+    <div id="modality-fields"></div>
+  </fieldset>
 </form>
 <div id="result" class="prose" aria-live="polite"></div>
 {% endblock page_after_content %}

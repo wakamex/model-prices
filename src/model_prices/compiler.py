@@ -22,7 +22,7 @@ import re
 import tomllib
 from typing import Any
 
-from model_prices import SCHEMA, THINKING, Rates, _parse_time, _tiers
+from model_prices import SCHEMA, THINKING, Rates, _modalities, _parse_time, _tiers
 
 RATE_FIELDS = ("input", "output", "cache_read", "cache_read_explicit", "cache_write")
 
@@ -111,10 +111,12 @@ class _Inputs:
                 if "replaces" in item:
                     # An open-ended correction stops once models.dev records anything else.
                     recorded = self.history(provider, model, at, None)
-                    if recorded is None or any(getattr(recorded, key) != value
-                                               for key, value in item["replaces"].items()):
+                    if recorded is None or any(
+                            getattr(recorded, key) != (_modalities(value) if key == "modalities"
+                                                       else value)
+                            for key, value in item["replaces"].items()):
                         continue
-                values = {key: item.get(key) for key in RATE_FIELDS}
+                values = {key: item.get(key) for key in (*RATE_FIELDS, "modalities")}
                 tiers = item.get("tiers")
                 if mode is not None:
                     if mode not in item.get("modes", {}):
@@ -122,7 +124,8 @@ class _Inputs:
                     values, tiers = _in_stated_mode(values, tiers, item["modes"][mode])
                 return Rates(
                     provider=provider, model=model, valid_from=item["valid_from"],
-                    source=item["source"], **values, tiers=_tiers(tiers),
+                    source=item["source"], **{**values, "modalities": _modalities(
+                        values["modalities"])}, tiers=_tiers(tiers),
                     valid_from_basis="documented",
                 )
         # An alias without its own history at this time takes the corrections of the model
@@ -154,6 +157,7 @@ class _Inputs:
             input=values["input"], output=values["output"],
             cache_read=values.get("cache_read"), cache_write=values.get("cache_write"),
             cache_read_explicit=values.get("cache_read_explicit"), tiers=_tiers(tiers),
+            modalities=_modalities(values.get("modalities")),
             valid_from_basis=("first observed" if "source" in entry else "scheduled"
                               if entry.get("scheduled") else "models.dev commit"),
         )
@@ -208,7 +212,15 @@ def _in_stated_mode(values: dict[str, Any], tiers: list[dict] | None,
     """Standard rates with a mode's stated prices. The mode's tiers replace the fields they
     give in the standard tier of the same size, and a mode without tiers has none."""
     mode_tiers = {tier["above"]: tier for tier in mode.get("tiers", [])}
-    values = {**values, **{key: value for key, value in mode.items() if key != "tiers"}}
+    stated = {key: value for key, value in mode.items() if key != "tiers"}
+    # A mode that states its prices without modalities, such as Alibaba's thinking output,
+    # prices text tokens at those prices too.
+    if values.get("modalities") and "modalities" not in stated:
+        text = {**values["modalities"]["text"],
+                **{key: value for key, value in stated.items()
+                   if key in {"input", "output", "cache_read"}}}
+        stated["modalities"] = {**values["modalities"], "text": text}
+    values = {**values, **stated}
     return values, [{**tier, **mode_tiers[tier["above"]]} for tier in tiers or []
                     if tier["above"] in mode_tiers] or None
 
@@ -220,7 +232,16 @@ def _in_mode(corrected: Rates, standard: Rates, moded: Rates) -> Rates:
         if value is None or not base or mode_value is None:
             return value
         return value * mode_value / base
-    return replace(corrected, **{field: scaled(field) for field in RATE_FIELDS}, tiers=())
+
+    def ratio(field: str) -> float:
+        base, mode_value = getattr(standard, field), getattr(moded, field)
+        return mode_value / base if base and mode_value is not None else 1.0
+    modalities = tuple(replace(item, **{field: getattr(item, field) * ratio(field)
+                                        for field in ("input", "output", "cache_read")
+                                        if getattr(item, field) is not None})
+                       for item in corrected.modalities)
+    return replace(corrected, **{field: scaled(field) for field in RATE_FIELDS}, tiers=(),
+                   modalities=modalities)
 
 
 def _batched(found: Rates, item: dict[str, Any]) -> Rates:
@@ -231,7 +252,11 @@ def _batched(found: Rates, item: dict[str, Any]) -> Rates:
         return {field: None if getattr(rates, field) is None else getattr(rates, field) * factor
                 for field, factor in factors.items()}
     return replace(found, **scaled(found),
-                   tiers=tuple(replace(tier, **scaled(tier)) for tier in found.tiers))
+                   tiers=tuple(replace(tier, **scaled(tier)) for tier in found.tiers),
+                   modalities=tuple(replace(item, **{
+                       field: getattr(item, field) * factors[field]
+                       for field in ("input", "output", "cache_read")
+                       if getattr(item, field) is not None}) for item in found.modalities))
 
 
 def _stored(found: Rates | None, model: str) -> dict[str, Any] | None:
@@ -247,6 +272,10 @@ def _stored(found: Rates | None, model: str) -> dict[str, Any] | None:
     if "tiers" in stored:
         stored["tiers"] = [{key: value for key, value in tier.items() if value is not None}
                            for tier in stored["tiers"]]
+    if "modalities" in stored:
+        stored["modalities"] = {item.pop("modality"): {key: value for key, value in item.items()
+                                                       if value is not None}
+                                for item in stored["modalities"]}
     return stored
 
 

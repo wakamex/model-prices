@@ -82,6 +82,10 @@ function scaled(found, label, factor) {
       cache_read: scale(tier.cache_read),
       cache_write: scale(tier.cache_write),
     })),
+    ...(found.modalities ? {
+      modalities: Object.fromEntries(Object.entries(found.modalities).map(([name, prices]) => [
+        name, Object.fromEntries(Object.entries(prices).map(([key, value]) => [key, scale(value)]))])),
+    } : {}),
   };
 }
 
@@ -96,14 +100,53 @@ export function rates(snapshot, provider, model, at, mode = null) {
 
 const present = (value) => value !== undefined && value !== null;
 
+export const MODALITIES = ["text", "audio", "image", "video"];
+const ALIASES = { document: "image" };
+const COUNTS = ["input", "cache_read", "output"];
+
+// Token counts by modality, with aliases merged, as Rates._split gives them.
+function split(byModality) {
+  const merged = {};
+  for (const [name, counts] of Object.entries(byModality)) {
+    const modality = ALIASES[name] || name;
+    if (!MODALITIES.includes(modality)) throw new Error(`unknown modality ${name}`);
+    merged[modality] ||= Object.fromEntries(COUNTS.map((key) => [key, 0]));
+    for (const [key, count] of Object.entries(counts)) {
+      if (!COUNTS.includes(key) || count < 0) throw new Error(`bad ${name} count ${key}`);
+      merged[modality][key] += count;
+    }
+  }
+  return merged;
+}
+
+// A modality's input, cache read, and output prices, given the prices of a token without a
+// modality, as Rates._modality_prices gives them.
+function modalityPrices(found, name, current) {
+  const stated = (found.modalities || {})[name] || {};
+  const defaultCache = present(current.cache_read) ? current.cache_read : current.input;
+  return {
+    input: present(stated.input) ? stated.input : current.input,
+    output: present(stated.output) ? stated.output : current.output,
+    cache_read: present(stated.cache_read) ? stated.cache_read
+      : present(stated.input) ? stated.input : defaultCache,
+  };
+}
+
 // The cost of one request by token type, in USD; input excludes cache reads and writes.
+// tokens.modalities, when given, holds input, cache_read, and output counts by modality in
+// place of tokens.input, tokens.cache_read, and tokens.output.
 export function breakdown(found, tokens) {
   const input = tokens.input || 0;
   const output = tokens.output || 0;
   const cacheRead = tokens.cache_read || 0;
   const cacheWrite = tokens.cache_write || 0;
   const cacheWrite1h = tokens.cache_write_1h || 0;
-  const prompt = input + cacheRead + cacheWrite + cacheWrite1h;
+  const byModality = tokens.modalities ? split(tokens.modalities) : null;
+  if (byModality && (input || output || cacheRead)) {
+    throw new Error("pass input, cache read, and output tokens either by modality or as plain counts");
+  }
+  let prompt = input + cacheRead + cacheWrite + cacheWrite1h;
+  for (const counts of Object.values(byModality || {})) prompt += counts.input + counts.cache_read;
   const current = {
     input: found.input, output: found.output,
     cache_read: found.cache_read, cache_write: found.cache_write,
@@ -122,11 +165,16 @@ export function breakdown(found, tokens) {
   const cacheWriteRate = present(current.cache_write) ? current.cache_write : inputRate;
   const cacheWrite1hRate = present(found.cache_write_1h_multiple)
     ? inputRate * found.cache_write_1h_multiple : cacheWriteRate;
+  const spent = { input: input * inputRate, output: output * current.output, cache_read: cacheRead * cacheReadRate };
+  for (const [name, counts] of Object.entries(byModality || {})) {
+    const prices = modalityPrices(found, name, current);
+    for (const key of COUNTS) spent[key] += counts[key] * prices[key];
+  }
   const parts = {
     tier_above: applied,
-    input: input * inputRate / 1e6,
-    output: output * current.output / 1e6,
-    cache_read: cacheRead * cacheReadRate / 1e6,
+    input: spent.input / 1e6,
+    output: spent.output / 1e6,
+    cache_read: spent.cache_read / 1e6,
     cache_write: cacheWrite * cacheWriteRate / 1e6,
     cache_write_1h: cacheWrite1h * cacheWrite1hRate / 1e6,
   };

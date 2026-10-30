@@ -37,6 +37,8 @@ class Observed:
     mode: str | None = None
     # The official price in yuan, when value is its conversion to dollars.
     yuan: float | None = None
+    # The modality a price is stated for, such as "audio", when a page prices it apart.
+    modality: str | None = None
 
 
 @dataclass(frozen=True)
@@ -142,6 +144,36 @@ def parse_openai(text: str, today: datetime) -> list[Observed]:
                          "12h write": "cache_write_1h", "output": "output"}[kind]
                 found.append(Observed("openai", model, field, value, mode=mode[0],
                                       above=272_000 if span == "Long" else None))
+    return found + _openai_by_modality(text)
+
+
+_OPENAI_MODALITY_FIELDS = {"Input": "input", "Output": "output", "Output / cost": "output",
+                           "Cached input": "cache_read"}
+
+
+def _openai_by_modality(text: str) -> list[Observed]:
+    """Prices from the tables that give a row per model and modality, such as "Realtime and
+    audio generation models" and "Image generation models". A table counts as Batch when a
+    "Batch" line stands just above its heading, as the image tables' are; a dash, or a price
+    per character, is no token price."""
+    lines = text.splitlines()
+    found = []
+    for index, line in enumerate(lines):
+        if not line.startswith("| Model | Modality |"):
+            continue
+        marker = next((above.strip() for above in reversed(lines[max(index - 8, 0):index])
+                       if above.strip() in {"Standard", "Batch"}), "Standard")
+        titles = [cell.strip() for cell in line.strip("|").split("|")]
+        for row in lines[index + 2:]:
+            if not row.startswith("|"):
+                break
+            cells = [cell.strip() for cell in row.strip("|").split("|")]
+            for title, cell in zip(titles[2:], cells[2:]):
+                field = _OPENAI_MODALITY_FIELDS.get(title)
+                if field and re.fullmatch(r"\\?\$[0-9]+(?:\.[0-9]+)?", cell):
+                    found.append(Observed("openai", cells[0], field, _price(cell),
+                                          mode="batch" if marker == "Batch" else None,
+                                          modality=cells[1].lower()))
     return found
 
 
@@ -773,6 +805,40 @@ def parse_mistral(text: str, today: datetime, get: Callable[[str], str]) -> list
 _GOOGLE_DATE = r"([A-Z][a-z]+ [0-9]{1,2}, [0-9]{4})"
 
 
+_GOOGLE_MODALITIES = {"text": "text", "thinking": "text", "image": "image", "images": "image",
+                      "audio": "audio", "video": "video"}
+
+
+def _google_modalities(qualifier: str) -> set[str]:
+    """The modalities an amount's qualifier names, such as "(text / image)", as written."""
+    listed = re.search(r"\(([a-z /]+)\)", qualifier)
+    return set(re.split(r"\s*/\s*|\s+and\s+", listed.group(1))) if listed else set()
+
+
+def _google_by_modality(cell: str, today: datetime) -> list[tuple[str, float, int | None]]:
+    """The price a Paid Tier cell states for each modality it names, in effect today, as
+    (modality, price, tier size): "$0.75 (text) $3.00 or $0.005/min (audio)" gives text and
+    audio prices. Amounts per item or per hour are left out."""
+    cell = re.sub(r"\s+or\s+\$[0-9]+(?:\.[0-9]+)?/min", "", cell.replace("\\<", "<").replace("\\>", ">"))
+    found = []
+    for amount, qualifier in re.findall(r"\$([0-9]+(?:\.[0-9]+)?)([^$]*)", cell):
+        # A label with a footnote mark prices an item, as in Gemini 3 Pro Image's batch
+        # "$0.0006 (image)^*^", whose footnote gives the price per image.
+        if ("per hour" in qualifier or re.match(r"\s*per\b", qualifier)
+                or re.match(r"\s*\([a-z /]+\)\^", qualifier)):
+            continue
+        until = re.search(r"through " + _GOOGLE_DATE, qualifier)
+        start = re.search(r"starting " + _GOOGLE_DATE, qualifier)
+        if until and today.date() > datetime.strptime(until.group(1), "%B %d, %Y").date():
+            continue
+        if start and today.date() < datetime.strptime(start.group(1), "%B %d, %Y").date():
+            continue
+        above = re.search(r"prompts\s*>\s*([0-9]+)k", qualifier)
+        found += [(_GOOGLE_MODALITIES[name], float(amount), int(above.group(1)) * 1000 if above else None)
+                  for name in sorted(_google_modalities(qualifier)) if name in _GOOGLE_MODALITIES]
+    return list(dict.fromkeys(found))
+
+
 def _google_price(cell: str, today: datetime,
                   field: str = "input") -> list[tuple[float, int | None]]:
     """Return (price, tier size) pairs in effect today from a Paid Tier cell.
@@ -801,9 +867,7 @@ def _google_price(cell: str, today: datetime,
             continue
         if start and today.date() < datetime.strptime(start.group(1), "%B %d, %Y").date():
             continue
-        listed = re.search(r"\(([a-z /]+)\)", qualifier)
-        modalities = (set(re.split(r"\s*/\s*|\s+and\s+", listed.group(1))) if listed
-                      else {"text"})
+        modalities = _google_modalities(qualifier) or {"text"}
         above = re.search(r"prompts\s*>\s*([0-9]+)k", qualifier)
         entries.append((float(amount), int(above.group(1)) * 1000 if above else None,
                         modalities))
@@ -852,6 +916,9 @@ def parse_google(text: str, today: datetime) -> list[Observed]:
             for value, above in _google_price(row[-1], today, field):
                 found.extend(Observed("google", model, field, value, above=above, mode=mode)
                              for model in ids[heading])
+            for modality, value, above in _google_by_modality(row[-1], today):
+                found.extend(Observed("google", model, field, value, above=above, mode=mode,
+                                      modality=modality) for model in ids[heading])
             # An announced price is checked at its start, against the scheduled entry the
             # history gives it: "$4.00 starting December 1, 2026".
             for start in re.findall(r"starting " + _GOOGLE_DATE, row[-1]):
@@ -861,6 +928,10 @@ def parse_google(text: str, today: datetime) -> list[Observed]:
                                           at=at.isoformat().replace("+00:00", "Z"), mode=mode)
                                  for value, above in _google_price(row[-1], at, field)
                                  for model in ids[heading])
+                found.extend(Observed("google", model, field, value, above=above, mode=mode,
+                                      at=at.isoformat().replace("+00:00", "Z"), modality=modality)
+                             for modality, value, above in _google_by_modality(row[-1], at)
+                             for model in ids[heading])
     return found
 
 
@@ -1058,6 +1129,12 @@ def compare_rules(rules: dict[str, dict], providers: set[str] | None,
             models = rules.get(provider, {})
             results += _time_of_day(provider, models, today)
             results += _cache_lifetimes(provider, models, today)
+            # A model with long-context tiers and modality prices, which the history records
+            # without its modality prices until they can be priced together.
+            results += [Result(provider, f"{provider}/{model}", "rule:modalities", None, None,
+                               f"{', '.join(rule['unpriced_modalities'])} prices with "
+                               "long-context tiers", None, None, "mismatch")
+                        for model, rule in sorted(models.items()) if "unpriced_modalities" in rule]
     return results
 
 
@@ -1241,9 +1318,12 @@ def fetch(url: str) -> str:
         return body.decode()
 
 
-def _value(found, field: str, above: int | None) -> float | None:
+def _value(found, field: str, above: int | None, modality: str | None = None) -> float | None:
     if found is None:
         return None
+    # A modality's price is the one cost() charges its tokens, stated or filled in.
+    if modality is not None:
+        return found._modality_prices(modality, found._tiered(above + 1 if above else 0)[1])[field]
     keys = ("input", "output", "cache_read", "cache_read_explicit", "cache_write")
     values = {key: getattr(found, key) for key in keys}
     if above is not None:
@@ -1299,8 +1379,8 @@ def compare(observed: Iterable[Observed], today: datetime,
                      if resolved else None)
         raw = (rates(name, at=at, provider=item.provider, mode=item.mode, corrected=False)
                if resolved else None)
-        effective_value = _value(effective, item.field, item.above)
-        raw_value = _value(raw, item.field, item.above)
+        effective_value = _value(effective, item.field, item.above, item.modality)
+        raw_value = _value(raw, item.field, item.above, item.modality)
         # A price converted from yuan matches within YUAN_TOLERANCE of the conversion.
         margin = item.value * YUAN_TOLERANCE if item.yuan is not None else 1e-9
         if effective is None:
@@ -1314,8 +1394,9 @@ def compare(observed: Iterable[Observed], today: datetime,
         # genai-prices lists no thinking-mode prices.
         listed = (genai_prices.price(genai, item.provider, api_name, item.field,
                                      _parse_time(at), item.above)
-                  if genai is not None and not item.mode and item.yuan is None else None)
-        field = f"{item.mode} {item.field}" if item.mode else item.field
+                  if genai is not None and not item.mode and item.yuan is None
+                  and item.modality is None else None)
+        field = " ".join(part for part in (item.mode, item.modality, item.field) if part)
         results.append(Result(item.provider, model, field, item.above, item.at,
                               item.value, effective_value, raw_value, status, listed, item.yuan))
     return results
@@ -1360,7 +1441,8 @@ def run(providers: Iterable[str] | None = None, today: datetime | None = None,
     moment = today or datetime.now(timezone.utc)
     providers = list(providers) if providers else None
     results = []
-    for provider in providers or SOURCES:
+    # A provider without an official page is checked only against models.dev's rules.
+    for provider in [provider for provider in providers or SOURCES if provider in SOURCES]:
         # A page that cannot be fetched or read fails its own provider's check, and the
         # other providers are still checked.
         try:
@@ -1396,8 +1478,8 @@ def report(results: list[Result], genai: bool = False) -> str:
                          f"{result.effective}; add the next year's holidays to schedules.toml")
             continue
         if result.field.startswith("rule:"):
-            source = ("schedules.toml" if result.field == "rule:time_of_day"
-                      else "cache_writes.toml")
+            source = {"rule:time_of_day": "schedules.toml",
+                      "rule:modalities": "model-prices"}.get(result.field, "cache_writes.toml")
             lines.append(f"{result.status:9} {result.model} {result.field[5:]}: models.dev "
                          f"{result.official}, {source} {result.effective}")
             continue

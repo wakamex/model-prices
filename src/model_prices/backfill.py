@@ -89,6 +89,22 @@ def _rate_values(cost: dict[str, Any]) -> dict[str, float]:
     }
 
 
+def _modalities(cost: dict[str, Any], rates: dict[str, Any]) -> dict[str, dict[str, float]] | None:
+    """Prices by modality from a schema 1 cost: the schema 2 translation's `modalities`, or
+    schema 1's input_audio and output_audio. They are kept, with every modality priced and
+    text among them, when any differs from the text prices in `rates`."""
+    found = cost.get("modalities")
+    if found is None:
+        audio = {side: float(cost[f"{side}_audio"]) for side in ("input", "output")
+                 if isinstance(cost.get(f"{side}_audio"), (int, float))}
+        found = {"audio": audio} if audio else {}
+    text = {key: rates[key] for key in ("input", "output", "cache_read") if key in rates}
+    if not any(value != text.get(key) for prices in found.values()
+               for key, value in prices.items()):
+        return None
+    return {**{name: dict(prices) for name, prices in found.items()}, "text": text}
+
+
 def parse_rates(document: dict[str, Any], provider: str = "") -> dict[str, Any] | None:
     """Return per-million rates, long-context tiers, and alternate modes from a model file."""
     cost = document.get("cost")
@@ -109,6 +125,11 @@ def parse_rates(document: dict[str, Any], provider: str = "") -> dict[str, Any] 
         tiers.append({"above": 200_000, **_rate_values(legacy)})
     if tiers:
         rates["tiers"] = sorted(tiers, key=lambda item: item["above"])
+    # Modality prices on a model with long-context tiers are not priced yet; the check
+    # reports such a model from the rules data/prices.json keeps.
+    modalities = None if tiers else _modalities(cost, rates)
+    if modalities:
+        rates["modalities"] = modalities
 
     experimental = document.get("experimental")
     configured = experimental.get("modes") if isinstance(experimental, dict) else None
@@ -116,7 +137,8 @@ def parse_rates(document: dict[str, Any], provider: str = "") -> dict[str, Any] 
     for name, mode in (configured if isinstance(configured, dict) else {}).items():
         values = _rate_values(mode.get("cost") or {}) if isinstance(mode, dict) else {}
         if values:
-            modes[name] = values
+            modalities = _modalities(mode["cost"], values) if "input" in values else None
+            modes[name] = {**values, **({"modalities": modalities} if modalities else {})}
     reasoning = cost.get("reasoning")
     if provider in THINKING_OUTPUT and isinstance(reasoning, (int, float)):
         modes["thinking"] = {"output": float(reasoning)}
@@ -188,8 +210,23 @@ def _schema1_cost(cost: dict[str, Any], where: str) -> dict[str, Any] | None:
         tier(override["when"]).update(_present({
             "output": override.get("price"), "reasoning": override.get("reasoning")}))
     cache = given.get("cache")
+    # Each modality's per-token prices, which schema 1 has no field for; prices per image
+    # or per minute are left out.
+    modalities = {}
+    for name in ("audio", "image", "video"):
+        section = cost.get(name) or {}
+        if any((section.get(side) or {}).get("overrides") for side in ("input", "output")):
+            raise ValueError(f"{where}: unsupported {name} override")
+        sides = {side: section[side] for side in ("input", "output")
+                 if side in section and per_token(section[side])}
+        prices = _present({"input": sides.get("input", {}).get("price"),
+                           "cache_read": (sides.get("input", {}).get("cache") or {}).get("read"),
+                           "output": sides.get("output", {}).get("price")})
+        if prices:
+            modalities[name] = {key: float(value) for key, value in prices.items()}
     return _present({
         "input": given["price"], "output": made["price"], "reasoning": made.get("reasoning"),
+        "modalities": modalities or None,
         "cache_read": (cache or {}).get("read"), "cache_read_explicit": _explicit_read(cache),
         "cache_write": _cache_write(cache), "tiers": list(tiers.values()) or None,
     })
@@ -230,6 +267,11 @@ def _schema1_modes(document: dict[str, Any], cost: dict[str, Any] | None,
         elif factor is not None and cost is not None:
             priced = {key: round(value * _factor(factor, _FACTOR_PATHS[key]), 10)
                       for key, value in cost.items() if key in _FACTOR_PATHS}
+            if "modalities" in cost:
+                priced["modalities"] = {
+                    name: {key: round(value * _factor(factor, (name, *_FACTOR_PATHS[key][1:])), 10)
+                           for key, value in prices.items()}
+                    for name, prices in cost["modalities"].items()}
         else:
             priced = None
         if priced:
@@ -336,6 +378,7 @@ def _entries(versions: list[tuple[str, str, dict[str, Any] | None]], provider: s
               for start, _ in _date_rules(document, where)}
     commits = {committed_at for committed_at, _, _ in versions}
     entries: list[dict[str, Any]] = []
+    schemas: list[int] = []
     index = -1
     for at in sorted(commits | starts, key=lambda value: datetime.fromisoformat(
             value.replace("Z", "+00:00"))):
@@ -355,7 +398,32 @@ def _entries(versions: list[tuple[str, str, dict[str, Any] | None]], provider: s
         if at not in commits:
             entry["scheduled"] = True
         entries.append(entry)
-    return entries
+        schemas.append(document.get("schema", 1))
+    return _with_cached_audio(entries, schemas)
+
+
+def _with_cached_audio(entries: list[dict[str, Any]], schemas: list[int]) -> list[dict[str, Any]]:
+    """Entries with schema 2's first cached audio price carried back over the schema 1
+    entries before it, which could not record one, while their audio input price is the
+    same and they have a cache price, which shows the model had caching then. OpenAI's
+    Realtime models bill cached audio at $0.40 against $32 audio input."""
+    audio = lambda entry: (entry["rates"].get("modalities") or {}).get("audio") or {}
+    first = next((index for index, entry in enumerate(entries)
+                  if schemas[index] == 2 and "cache_read" in audio(entry)), None)
+    if first is None:
+        return entries
+    price = audio(entries[first])
+    for index in range(first - 1, -1, -1):
+        earlier = audio(entries[index])
+        if (schemas[index] != 1 or earlier.get("input") != price.get("input")
+                or "cache_read" in earlier or entries[index]["rates"].get("cache_read") is None):
+            break
+        modalities = dict(entries[index]["rates"]["modalities"])
+        modalities["audio"] = {**earlier, "cache_read": price["cache_read"]}
+        entries[index] = {**entries[index], "rates": {**entries[index]["rates"],
+                                                      "modalities": modalities}}
+    return [entry for index, entry in enumerate(entries)
+            if index == 0 or entry["rates"] != entries[index - 1]["rates"]]
 
 
 def _link_target(blob: bytes) -> str | None:
@@ -484,8 +552,9 @@ _CLOCK = re.compile(r"'(utc_hours|utc_days|holiday)'")
 
 def _rules(current: dict[tuple[str, str], dict[str, Any]]) -> dict[str, dict[str, Any]]:
     """The rules models.dev now gives that model-prices keeps in its own files, for the
-    check to compare: time-of-day multipliers, which schedules.toml records, and cache
-    write prices by lifetime, whose longer lifetimes cache_writes.toml records."""
+    check to compare: time-of-day multipliers, which schedules.toml records, cache write
+    prices by lifetime, whose longer lifetimes cache_writes.toml records, and modality
+    prices model-prices does not price yet."""
     rules: dict[str, dict[str, Any]] = {}
     for (provider, model), document in sorted(current.items()):
         cost = document.get("cost") or {}
@@ -498,6 +567,13 @@ def _rules(current: dict[tuple[str, str], dict[str, Any]]) -> dict[str, dict[str
             rule["multipliers"] = clock
         if isinstance(write, dict) and len(write) > 1:
             rule |= {"input": given.get("price"), "cache_write": write}
+        # Modality prices on a model with long-context tiers are left out of its rates.
+        tiered = any(override.get("when", {}).get("context") for section in
+                     ((cost.get("text") or {}).get(side) or {} for side in ("input", "output"))
+                     for override in section.get("overrides") or [])
+        if tiered and any(name in cost for name in ("audio", "image", "video")):
+            rule["unpriced_modalities"] = sorted(name for name in ("audio", "image", "video")
+                                                 if name in cost)
         if rule:
             rules.setdefault(provider, {})[model] = rule
     return rules
