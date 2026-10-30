@@ -10707,22 +10707,6 @@
     ]
    },
    "gemini-2.5-flash-native-audio-preview-12-2025": {
-    "batch": [
-     {
-      "rates": null,
-      "start": null
-     },
-     {
-      "rates": {
-       "input": 0.25,
-       "output": 1.0,
-       "source": "https://github.com/sst/models.dev/commit/5af55ed252ab",
-       "valid_from": "2026-10-20T01:14:04Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": "2025-07-07T00:00:00Z"
-     }
-    ],
     "standard": [
      {
       "rates": {
@@ -25903,5 +25887,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-10-30T02:25:43Z"
+ "updated_at": "2026-10-30T18:39:42Z"
 }

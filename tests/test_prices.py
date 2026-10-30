@@ -158,6 +158,8 @@ class PriceTests(unittest.TestCase):
         self.assertEqual(rates("gemini-2.5-flash", at="2025-07-08", mode="batch").valid_from,
                          "2025-07-07T00:00:00Z")
         self.assertIsNone(rates("grok-4", provider="xai", mode="batch"))
+        # Live and native-audio models have no batch API, under either Google rule.
+        self.assertIsNone(rates("gemini-2.5-flash-native-audio-preview-12-2025", mode="batch"))
         self.assertIsNone(rates("deepseek-v4-flash", provider="deepseek", mode="batch"))
 
     def test_rate_fields_this_release_does_not_know_are_ignored(self):

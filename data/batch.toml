@@ -34,8 +34,9 @@ note = "Batch Mode in the Gemini API launched on 2025-07-07 at half the price of
 
 [[batch]]
 provider = "google"
-# Older models charge batch cache reads at the standard price.
-models = '^gemini-(2\.5-(pro|flash|flash-lite)|3-flash-preview|3\.1-pro-preview)'
+# Older models charge batch cache reads at the standard price. Models without a batch API,
+# which the rule above leaves out, stay out here too.
+models = '^gemini-(?!.*(live|native-audio|transcribe|streaming|omni))(2\.5-(pro|flash|flash-lite)|3-flash-preview|3\.1-pro-preview)'
 valid_from = "2025-07-07T00:00:00Z"
 multiple = 0.5
 cache_read_multiple = 1.0
