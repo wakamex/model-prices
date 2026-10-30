@@ -42,7 +42,8 @@
    "codestral-embed-2505": "codestral-embed",
    "ministral-3-14b-instruct-2512": "ministral-14b-2512",
    "ministral-3-3b-instruct-2512": "ministral-3b-2512",
-   "ministral-3-8b-instruct-2512": "ministral-8b-2512"
+   "ministral-3-8b-instruct-2512": "ministral-8b-2512",
+   "mistral-large-4": "mistral-large-4-0-8"
   },
   "moonshotai": {
    "kimi-k2.7-code": "kimi-k2.7-code-highspeed",
@@ -100,8 +101,8 @@
   }
  ],
  "models_dev": {
-  "commit": "ba5289b8d6c593e54a5271457df79e3966ee934b",
-  "committed_at": "2026-10-29T19:21:38Z",
+  "commit": "1ab25cf511cbef29841bab91a794ef2dd62f7795",
+  "committed_at": "2026-10-30T02:24:56Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -14234,6 +14235,17 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-29T20:36:59Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.07,
+       "input": 0.7,
+       "output": 2.1,
+       "source": "https://github.com/sst/models.dev/commit/1ab25cf511cb",
+       "valid_from": "2026-10-30T02:24:56Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-30T02:24:56Z"
      }
     ]
    },
@@ -14271,6 +14283,21 @@
        "valid_from_basis": "first observed"
       },
       "start": "2026-10-29T20:36:59Z"
+     }
+    ]
+   },
+   "mistral-large-4-0-8": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.07,
+       "input": 0.7,
+       "output": 2.1,
+       "source": "https://github.com/sst/models.dev/commit/1ab25cf511cb",
+       "valid_from": "2026-10-30T02:24:56Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
      }
     ]
    },
@@ -25876,5 +25903,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-10-29T20:39:05Z"
+ "updated_at": "2026-10-30T02:25:43Z"
 }

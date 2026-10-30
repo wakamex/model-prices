@@ -18,7 +18,8 @@
    "codestral-embed-2505": "codestral-embed",
    "ministral-3-14b-instruct-2512": "ministral-14b-2512",
    "ministral-3-3b-instruct-2512": "ministral-3b-2512",
-   "ministral-3-8b-instruct-2512": "ministral-8b-2512"
+   "ministral-3-8b-instruct-2512": "ministral-8b-2512",
+   "mistral-large-4": "mistral-large-4-0-8"
   },
   "moonshotai": {
    "kimi-k2.7-code": "kimi-k2.7-code-highspeed",
@@ -4825,6 +4826,26 @@
       "output": 4.18
      },
      "valid_from": "2026-10-22T16:09:12Z"
+    },
+    {
+     "commit": "1ab25cf511cb",
+     "rates": {
+      "cache_read": 0.07,
+      "input": 0.7,
+      "output": 2.1
+     },
+     "valid_from": "2026-10-30T02:24:56Z"
+    }
+   ],
+   "mistral-large-4-0-8": [
+    {
+     "commit": "1ab25cf511cb",
+     "rates": {
+      "cache_read": 0.07,
+      "input": 0.7,
+      "output": 2.1
+     },
+     "valid_from": "2026-10-30T02:24:56Z"
     }
    ],
    "mistral-large-latest": [
@@ -10427,8 +10448,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "ba5289b8d6c593e54a5271457df79e3966ee934b",
- "source_committed_at": "2026-10-29T19:21:38Z",
+ "source_commit": "1ab25cf511cbef29841bab91a794ef2dd62f7795",
+ "source_committed_at": "2026-10-30T02:24:56Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
