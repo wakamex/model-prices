@@ -1425,6 +1425,29 @@ def parse(provider: str, page: str, moment: datetime,
     return observed
 
 
+def compare_openai_regions(get: Callable[[str], str], today: datetime) -> list[Result]:
+    """Compare OpenAI's regional factors, as its pages give them today, with the factors
+    model-prices charges, and report models whose release evidence disagrees."""
+    from model_prices import openai_regions
+    regional = openai_regions.read(get)
+    results = [Result("openai", f"openai/{model}", "release", None, None, "; ".join(evidence),
+                      None, None, "mismatch") for model, evidence in sorted(regional.conflicts.items())]
+    for model in sorted(set(_ids("openai")[0].values())):
+        found = rates(f"openai/{model}", at=today, provider="openai")
+        ours = dict(found.regions) if found else {}
+        stated = regional.factors.get(model, {})
+        if stated or ours:
+            results.append(Result("openai", f"openai/{model}", "regions", None, None,
+                                  _rule_regions(sorted(stated.items())),
+                                  _rule_regions(sorted(ours.items())), None,
+                                  "ok" if stated == ours else "mismatch"))
+    return results
+
+
+def _rule_regions(factors) -> str:
+    return ", ".join(f"{name} {factor:g}x" for name, factor in factors) or "none"
+
+
 def _check(provider: str, moment: datetime, pages: dict[str, str] | None,
            genai: list | None) -> list[Result]:
     url = SOURCES[provider][0]
@@ -1439,6 +1462,12 @@ def _check(provider: str, moment: datetime, pages: dict[str, str] | None,
         else:
             terms_page = pages[key] if pages and key in pages else fetch(terms_url)
         results.append(compare_terms(provider, language, terms_page, moment))
+    # OpenAI's regional uplift is read from its other pages, which a test supplies or leaves out.
+    if provider == "openai":
+        from model_prices import openai_regions
+        if pages is None or openai_regions.YOUR_DATA in pages:
+            results += compare_openai_regions(
+                lambda other: pages[other] if pages and other in pages else fetch(other), moment)
     return results
 
 
@@ -1485,6 +1514,11 @@ def report(results: list[Result], genai: bool = False) -> str:
         if result.field == "holiday_calendar":
             lines.append(f"{result.status:9} {result.model} holiday calendar {result.official}, "
                          f"{result.effective}; add the next year's holidays to schedules.toml")
+            continue
+        if result.field in {"regions", "release"}:
+            what = "regional factors" if result.field == "regions" else "release evidence conflicts:"
+            lines.append(f"{result.status:9} {result.model} {what} OpenAI's pages {result.official}"
+                         + (f", model-prices {result.effective}" if result.field == "regions" else ""))
             continue
         if result.field.startswith("rule:"):
             source = {"rule:time_of_day": "schedules.toml", "rule:modalities": "model-prices",

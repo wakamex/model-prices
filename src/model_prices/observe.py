@@ -18,7 +18,7 @@ import re
 from typing import Any, Callable, Iterable
 import tomllib
 
-from model_prices import checks
+from model_prices import checks, openai_regions
 from model_prices.checks import _mdx_grid, _price, fetch
 
 CURSOR_INDEX = "https://cursor.com/llms.txt"
@@ -276,6 +276,35 @@ def observe(output: Path, get: Callable[[str], str] = fetch, now: datetime | Non
                 changed.append(provider)
     if changed:
         output.write_text(json.dumps(data, indent=1, sort_keys=True) + "\n")
+    if providers is None or "openai" in providers:
+        try:
+            if (observe_regions(output.with_name("observed_regions.json"), get, stamp)
+                    and "openai" not in changed):
+                changed.append("openai")
+        except (OSError, ValueError) as error:
+            failures.append(f"openai regions: {error}")
     if failures:
         raise ValueError("; ".join(failures))
+    return changed
+
+
+def observe_regions(output: Path, get: Callable[[str], str], now: datetime) -> bool:
+    """Record OpenAI's regional factors by model, each change dated by the first run that
+    read it; return whether any changed. A model whose evidence disagrees keeps its entries."""
+    data = json.loads(output.read_text()) if output.exists() else {"providers": {}}
+    regional = openai_regions.read(get)
+    listed = data["providers"].setdefault("openai", {})
+    changed = False
+    for model in sorted(set(regional.factors) | set(listed)):
+        if model in regional.conflicts:
+            continue
+        regions = regional.factors.get(model, {})
+        entries = listed.setdefault(model, [])
+        if (entries[-1]["regions"] if entries else {}) == regions:
+            continue
+        entries.append({"valid_from": now.isoformat().replace("+00:00", "Z"),
+                        "source": openai_regions.YOUR_DATA, "regions": regions})
+        changed = True
+    if changed:
+        output.write_text(json.dumps(data, indent=1, sort_keys=True) + "\n")
     return changed

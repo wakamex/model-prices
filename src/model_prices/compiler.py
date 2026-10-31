@@ -51,6 +51,11 @@ class _Inputs:
                 start = _parse_time(listed[model][0]["valid_from"]) if model in listed else None
                 listed[model] = [entry for entry in entries if start is None
                                  or _parse_time(entry["valid_from"]) < start] + listed.get(model, [])
+        # Regional factors read from a provider's pages, such as OpenAI's uplift, each dated
+        # by the first run that read it.
+        regions = data / "observed_regions.json"
+        self.observed_regions = (json.loads(regions.read_text())["providers"]
+                                 if regions.exists() else {})
         self.config = {name: tomllib.loads((data / name).read_text()) for name in (
             "aliases.toml", "batch.toml", "cache_writes.toml", "corrections.toml", "estimates.toml",
             "plans.toml",
@@ -92,6 +97,15 @@ class _Inputs:
             if item["provider"] == provider and item["model"] == model
         )
 
+    def regions(self, provider: str, model: str, at: datetime,
+                recorded: dict[str, float] | None) -> tuple[tuple[str, float], ...]:
+        """A model's regional factors at `at`: models.dev's, with those read from the
+        provider's pages in effect then."""
+        entries = self.observed_regions.get(provider, {}).get(model, [])
+        observed = next((entry["regions"] for entry in reversed(entries)
+                         if _parse_time(entry["valid_from"]) <= at), {})
+        return _regions({**(recorded or {}), **observed})
+
     def _entry_times(self, provider: str, model: str) -> tuple[datetime, ...]:
         entries = self.prices["providers"].get(provider, {}).get(model, [])
         return tuple(_parse_time(entry["valid_from"]) for entry in entries)
@@ -125,7 +139,8 @@ class _Inputs:
                 return Rates(
                     provider=provider, model=model, valid_from=item["valid_from"],
                     source=item["source"], **{**values, "modalities": _modalities(
-                        values["modalities"]), "regions": _regions(values["regions"])},
+                        values["modalities"]), "regions": self.regions(
+                            provider, model, at, values["regions"])},
                     tiers=_tiers(tiers),
                     valid_from_basis="documented",
                 )
@@ -159,7 +174,7 @@ class _Inputs:
             cache_read=values.get("cache_read"), cache_write=values.get("cache_write"),
             cache_read_explicit=values.get("cache_read_explicit"), tiers=_tiers(tiers),
             modalities=_modalities(values.get("modalities")),
-            regions=_regions(values.get("regions")),
+            regions=self.regions(provider, model, at, values.get("regions")),
             valid_from_basis=("first observed" if "source" in entry else "scheduled"
                               if entry.get("scheduled") else "models.dev commit"),
         )
@@ -197,6 +212,8 @@ class _Inputs:
                 for start, end, _ in self.corrections(provider, name):
                     times |= {start} | ({end} if end else set())
         times |= {start for start, _ in self.batches(provider, model)}
+        times |= {_parse_time(entry["valid_from"])
+                  for entry in self.observed_regions.get(provider, {}).get(model, [])}
         return sorted(times)
 
     def modes(self, provider: str, model: str) -> list[str]:

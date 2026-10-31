@@ -520,6 +520,14 @@ class PriceTests(unittest.TestCase):
         self.assertEqual(rates("claude-fable-5-1", at="2026-10-30", region="eu"), standard)
         older = rates("claude-opus-4-5", at="2026-10-30")
         self.assertEqual(rates("claude-opus-4-5", at="2026-10-30", region="us"), older)
+        # OpenAI's uplift, read from its pages, applies from the run that first read it.
+        first = json.loads((DATA / "observed_regions.json").read_text())[
+            "providers"]["openai"]["gpt-6.1-sol"][0]["valid_from"]
+        moment = model_prices._parse_time(first)
+        after = rates("gpt-6.1-sol", provider="openai", at=moment, region="eu")
+        before = rates("gpt-6.1-sol", provider="openai", at=moment - timedelta(days=1), region="eu")
+        self.assertEqual((after.region, before.region), ("eu", None))
+        self.assertAlmostEqual(after.input, before.input * 1.1)
 
     def test_tokens_by_modality_cost_their_own_prices(self):
         split = {"text": {"input": 800, "cache_read": 100, "output": 200},
