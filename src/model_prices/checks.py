@@ -124,9 +124,12 @@ def parse_openai(text: str, today: datetime) -> list[Observed]:
     for headings, header, rows in _markdown_tables(text):
         if section not in (None, headings.get(2)):
             break
-        mode = {"Standard pricing data": (None,), "Batch pricing data": ("batch",)}.get(
-            headings.get(3, ""))
-        if mode is None or (mode == ("batch",) and headings.get(4) != "Batch"):
+        # The Batch section holds a Batch and a Flex table; Fast is the priority tier.
+        mode = {"Standard pricing data": (None,), "Fast pricing data": ("priority",),
+                "Ultrafast pricing data": ("ultrafast",)}.get(headings.get(3, ""))
+        if headings.get(3) == "Batch pricing data":
+            mode = {"Batch": ("batch",), "Flex": ("flex",)}.get(headings.get(4, ""))
+        if mode is None:
             continue
         section = headings.get(2)
         for row in rows:
@@ -901,7 +904,7 @@ def parse_google(text: str, today: datetime) -> list[Observed]:
     found = []
     for headings, header, table in _markdown_tables(text):
         heading = headings.get(2, "")
-        modes = {"Standard": None, "Batch": "batch"}
+        modes = {"Standard": None, "Batch": "batch", "Flex": "flex", "Priority": "priority"}
         if (not heading.startswith("Gemini") or headings.get(3) not in modes
                 or header[-1] != "Paid Tier, per 1M tokens in USD"):
             continue
@@ -1350,11 +1353,13 @@ def _value(found, field: str, above: int | None, modality: str | None = None) ->
 
 def _matches(value: float | None, official: float, margin: float) -> bool:
     """Whether a price matches the official one, which a page may show rounded half up to
-    the cent: Google lists half of $0.03 as $0.02, and OpenAI half of $0.25 as $0.13."""
+    the cent or to the digits it shows: Google lists half of $0.03 as $0.02, and OpenAI
+    half of $0.25 as $0.13 and $0.1375 as $0.138."""
     if value is None:
         return False
-    cents = math.floor(value * 100 + 0.5 + 1e-9) / 100
-    return abs(value - official) <= margin or (value != cents and abs(cents - official) < 1e-9)
+    digits = max(2, len(repr(official).partition(".")[2]))
+    shown = math.floor(value * 10 ** digits + 0.5 + 1e-9) / 10 ** digits
+    return abs(value - official) <= margin or (value != shown and abs(shown - official) < 1e-9)
 
 
 def compare(observed: Iterable[Observed], today: datetime,

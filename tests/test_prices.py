@@ -359,9 +359,21 @@ class PriceTests(unittest.TestCase):
         self.assertEqual(parse_rates(schema1(document), "alibaba"), {
             "input": 1.0, "output": 5.0, "cache_read": 0.1, "cache_write": 1.25,
             "tiers": [{"above": 272_000, "input": 2.0, "output": 7.5, "cache_read": 0.2}],
-            "modes": {"fast": {"input": 2.0, "output": 10.0, "cache_read": 0.2, "cache_write": 2.5},
-                      "thinking": {"output": 6.0}},
+            # The priority tier's factor scales long prompts too, and the tier is a mode of
+            # its own name beside the declared fast mode that serves it.
+            "modes": {name: {"input": 2.0, "output": 10.0, "cache_read": 0.2, "cache_write": 2.5,
+                             "tiers": [{"above": 272_000, "input": 4.0, "output": 15.0,
+                                        "cache_read": 0.4}]} for name in ("fast", "priority")}
+            | {"thinking": {"output": 6.0}},
         })
+        # A service tier no mode declares, as on Google's models, is a mode of its own name,
+        # and a factor that names some prices leaves the others as they are.
+        flex = {**document, "experimental": {}, "cost": {**document["cost"], "multipliers": [
+            {"when": {"service_tier": {"equals": "flex"}},
+             "factor": {"text": {"input": {"price": 0.5}, "output": {"price": 0.5}}}}]}}
+        self.assertEqual(parse_rates(schema1(flex))["modes"]["flex"], {
+            "input": 0.5, "output": 2.5, "cache_read": 0.1, "cache_write": 1.25,
+            "tiers": [{"above": 272_000, "input": 1.0, "output": 3.75, "cache_read": 0.2}]})
         # A model priced per second has no per-token price, and an unknown schema stops the build.
         media = {"schema": 2, "cost": {"text": {"input": {"price": 1},
                                                 "output": {"price": 2, "unit": "second"}}}}

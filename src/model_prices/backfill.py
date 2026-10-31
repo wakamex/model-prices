@@ -105,6 +105,17 @@ def _modalities(cost: dict[str, Any], rates: dict[str, Any]) -> dict[str, dict[s
     return {**{name: dict(prices) for name, prices in found.items()}, "text": text}
 
 
+def _context_tiers(cost: dict[str, Any]) -> list[dict[str, Any]]:
+    """A schema 1 cost's long-context tiers, each with the size it starts above."""
+    tiers = []
+    for tier in cost.get("tiers") or []:
+        size = (tier.get("tier") or {}).get("size")
+        values = _rate_values(tier)
+        if isinstance(size, int) and values:
+            tiers.append({"above": size, **values})
+    return sorted(tiers, key=lambda item: item["above"])
+
+
 def parse_rates(document: dict[str, Any], provider: str = "") -> dict[str, Any] | None:
     """Return per-million rates, long-context tiers, and alternate modes from a model file."""
     cost = document.get("cost")
@@ -114,12 +125,7 @@ def parse_rates(document: dict[str, Any], provider: str = "") -> dict[str, Any] 
     if "input" not in rates or "output" not in rates:
         return None
 
-    tiers = []
-    for tier in cost.get("tiers") or []:
-        size = (tier.get("tier") or {}).get("size")
-        values = _rate_values(tier)
-        if isinstance(size, int) and values:
-            tiers.append({"above": size, **values})
+    tiers = _context_tiers(cost)
     legacy = cost.get("context_over_200k")
     if not tiers and isinstance(legacy, dict) and _rate_values(legacy):
         tiers.append({"above": 200_000, **_rate_values(legacy)})
@@ -138,7 +144,9 @@ def parse_rates(document: dict[str, Any], provider: str = "") -> dict[str, Any] 
         values = _rate_values(mode.get("cost") or {}) if isinstance(mode, dict) else {}
         if values:
             modalities = _modalities(mode["cost"], values) if "input" in values else None
-            modes[name] = {**values, **({"modalities": modalities} if modalities else {})}
+            mode_tiers = _context_tiers(mode["cost"])
+            modes[name] = {**values, **({"modalities": modalities} if modalities else {}),
+                           **({"tiers": mode_tiers} if mode_tiers else {})}
     reasoning = cost.get("reasoning")
     if provider in THINKING_OUTPUT and isinstance(reasoning, (int, float)):
         modes["thinking"] = {"output": float(reasoning)}
@@ -252,30 +260,50 @@ def _factor(factor: Any, path: tuple[str, ...]) -> float:
     return factor if isinstance(factor, (int, float)) else 1
 
 
+def _tier_priced(cost: dict[str, Any], factor: Any) -> dict[str, Any]:
+    """Schema 1 prices scaled by a service tier's factor, price by price, long-context tiers
+    and modality prices included; a price the factor does not name keeps its value."""
+    def scaled(prices: dict[str, Any]) -> dict[str, Any]:
+        return {key: round(value * _factor(factor, _FACTOR_PATHS[key]), 10)
+                for key, value in prices.items() if key in _FACTOR_PATHS}
+    priced = scaled(cost)
+    if cost.get("tiers"):
+        priced["tiers"] = [{"tier": tier["tier"], **scaled(tier)} for tier in cost["tiers"]]
+    if "modalities" in cost:
+        priced["modalities"] = {
+            name: {key: round(value * _factor(factor, (name, *_FACTOR_PATHS[key][1:])), 10)
+                   for key, value in prices.items()}
+            for name, prices in cost["modalities"].items()}
+    return priced
+
+
 def _schema1_modes(document: dict[str, Any], cost: dict[str, Any] | None,
                    where: str) -> dict[str, Any]:
     """Schema 1 modes, each with its own prices: a mode's stated cost, or the base prices
-    scaled by the multiplier for its service tier, which defaults to the mode's name."""
+    scaled by the multiplier for its service tier, which defaults to the mode's name. Every
+    service tier models.dev prices is also a mode named after the tier, such as `priority`
+    and `flex`, the names the providers' APIs use; where a declared mode serves that tier
+    under another name, such as OpenAI's `fast` for `priority`, both names give its prices."""
     modes = {}
     multipliers = (document.get("cost") or {}).get("multipliers") or []
+    tiers = {item["when"]["service_tier"]["equals"]: item["factor"] for item in multipliers
+             if list(item.get("when") or {}) == ["service_tier"]
+             and list(item["when"]["service_tier"]) == ["equals"]}
+    served = {}
     for name, mode in ((document.get("experimental") or {}).get("modes") or {}).items():
         tier = mode.get("service_tier", name)
-        factor = next((item["factor"] for item in multipliers
-                       if item.get("when") == {"service_tier": {"equals": tier}}), None)
         if "cost" in mode:
             priced = _schema1_cost(mode["cost"], where)
-        elif factor is not None and cost is not None:
-            priced = {key: round(value * _factor(factor, _FACTOR_PATHS[key]), 10)
-                      for key, value in cost.items() if key in _FACTOR_PATHS}
-            if "modalities" in cost:
-                priced["modalities"] = {
-                    name: {key: round(value * _factor(factor, (name, *_FACTOR_PATHS[key][1:])), 10)
-                           for key, value in prices.items()}
-                    for name, prices in cost["modalities"].items()}
+        elif tier in tiers and cost is not None:
+            priced = _tier_priced(cost, tiers[tier])
         else:
             priced = None
         if priced:
-            modes[name] = {"cost": {key: value for key, value in priced.items() if key != "tiers"}}
+            modes[name] = {"cost": priced}
+            served.setdefault(tier, modes[name])
+    for tier, factor in tiers.items():
+        if tier not in modes and (tier in served or cost is not None):
+            modes[tier] = served.get(tier) or {"cost": _tier_priced(cost, factor)}
     return modes
 
 

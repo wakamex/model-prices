@@ -48,7 +48,8 @@ PROVIDER_NAMES = {
     "xiaomi": "Xiaomi", "zai": "Z.ai",
 }
 MODE_NAMES = {"standard": "Standard", "fast": "Fast mode", "ultrafast": "Ultrafast mode",
-              "flex": "Flex", "thinking": "Thinking mode", "batch": "Batch API"}
+              "flex": "Flex tier", "priority": "Priority tier", "thinking": "Thinking mode",
+              "batch": "Batch API"}
 STATUS_TEXT = {
     "ok": "Matches {page}, checked {ran}.",
     "corrected": ("Matches {page}, checked {ran}. models.dev lists a different price, which "

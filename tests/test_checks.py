@@ -565,6 +565,23 @@ Batch
                                   if item.mode is None], datetime(2026, 10, 29, tzinfo=timezone.utc))
         self.assertEqual({r.status for r in results}, {"ok"})
 
+    def test_service_tier_tables_are_compared_with_their_modes(self):
+        header = ("| Model | Short context input | Short context output | Short context cached input "
+                  "| Short context 30m write | Short context 12h write | Long context input "
+                  "| Long context output | Long context cached input | Long context 30m write "
+                  "| Long context 12h write |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n")
+        page = ("# Pricing\n\n### Batch pricing data\n\n#### Flex\n\n" + header
+                + "| gpt-6.1-sol | $1.00 | $5.00 | $0.05 | $1.25 | $2.50 | $2.00 | $7.50 | $0.10 | $2.50 | $5.00 |\n"
+                "\n### Fast pricing data\n\n" + header
+                + "| gpt-6.1-sol | $4.00 | $20.00 | $0.20 | $5.00 | $10.00 | $8.00 | $30.00 | $0.40 | $10.00 | $20.00 |\n")
+        found = checks.parse_openai(page, TODAY)
+
+        # OpenAI's Flex table is the flex tier and its Fast table the priority tier.
+        self.assertEqual({item.mode for item in found}, {"flex", "priority"})
+        results = checks.compare(found, datetime(2026, 10, 30, tzinfo=timezone.utc))
+        self.assertEqual({r.status for r in results}, {"ok"})
+        self.assertIn(("flex input", 272_000), {(r.field, r.above) for r in results})
+
     def test_official_pages_match_effective_prices(self):
         # Perplexity's fixture lists Sonar's Agent API price, which applies from 2026-10-19.
         results = checks.run([p for p in checks.SOURCES if p != "perplexity"],
