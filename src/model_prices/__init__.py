@@ -120,6 +120,12 @@ class Rates:
     # On a model that prices any modality apart from text, every modality it prices, text
     # included, sorted by name; empty when all tokens cost the prices above.
     modalities: tuple[ModalityRates, ...] = ()
+    # The factor on every token price for requests served in a region, as (region, factor)
+    # pairs, such as ("us", 1.1) for Anthropic's US-only inference.
+    regions: tuple[tuple[str, float], ...] = ()
+    # The region whose factor the prices above include, when rates() was asked for a region
+    # the model prices; None otherwise.
+    region: str | None = None
 
     def modality(self, name: str) -> ModalityRates | None:
         """The prices the provider states for a modality, or None if it lists none."""
@@ -130,7 +136,7 @@ class Rates:
         """The prices alone, without provenance, for comparing rates from different sources."""
         return (self.input, self.output, self.cache_read, self.cache_write, self.tiers,
                 self.period, self.cache_write_1h_multiple, self.cache_read_explicit,
-                self.modalities)
+                self.modalities, self.regions, self.region)
 
     def breakdown(self, input_tokens: int = 0, output_tokens: int = 0,
                   cache_read_tokens: int = 0, cache_write_tokens: int = 0,
@@ -558,6 +564,7 @@ def _lookup(provider: str, model: str, at: datetime, mode: str | None,
     values.setdefault("model", model)
     values["tiers"] = _tiers(values.get("tiers"))
     values["modalities"] = _modalities(values.get("modalities"))
+    values["regions"] = tuple(sorted((values.get("regions") or {}).items()))
     return Rates(**{**values, "provider": provider})
 
 
@@ -615,10 +622,15 @@ def _period(provider: str, moment: datetime,
 
 
 def _scaled(found: Rates, period: str, factor: float) -> Rates:
+    return replace(_multiplied(found, factor), period=period)
+
+
+def _multiplied(found: Rates, factor: float) -> Rates:
+    """Rates with every token price multiplied by a factor."""
     def scale(value: float | None) -> float | None:
         return None if value is None else value * factor
     return replace(
-        found, period=period, input=found.input * factor, output=found.output * factor,
+        found, input=found.input * factor, output=found.output * factor,
         cache_read=scale(found.cache_read), cache_write=scale(found.cache_write),
         cache_read_explicit=scale(found.cache_read_explicit),
         modalities=tuple(replace(item, input=scale(item.input), output=scale(item.output),
@@ -634,7 +646,8 @@ def _scaled(found: Rates, period: str, factor: float) -> Rates:
 
 def rates(model: str, at: datetime | str | None = None, provider: str | None = None,
           mode: str | None = None, corrected: bool = True,
-          prices_at: datetime | str | None = None, estimate: bool = False) -> Rates | None:
+          prices_at: datetime | str | None = None, estimate: bool = False,
+          region: str | None = None) -> Rates | None:
     """Return the rates for a request made at `at` (default now), or None for an unknown model.
 
     Time-of-day pricing applies the provider's peak or off-peak rates for `at`.
@@ -644,6 +657,10 @@ def rates(model: str, at: datetime | str | None = None, provider: str | None = N
     estimate=True prices a model sold with no per-token price, such as one included only in
     a subscription, at the rates of the model data/estimates.toml names for it, with
     Rates.estimated_from set to that model.
+    region prices a request served in a region, such as "us" for Anthropic's US-only
+    inference or xAI's US endpoint: a region the model lists in Rates.regions multiplies
+    every token price by its factor and sets Rates.region, and any other region leaves the
+    prices as they are.
     """
     details = resolve_details(model, provider)
     found = None
@@ -653,22 +670,33 @@ def rates(model: str, at: datetime | str | None = None, provider: str | None = N
         listed = _parse_time(prices_at) if prices_at is not None else moment
         found = _lookup(*resolved, listed, mode, corrected)
     if found is None:
-        return _estimated(model, at, provider, mode, corrected, prices_at) if estimate else None
+        return (_estimated(model, at, provider, mode, corrected, prices_at, region)
+                if estimate else None)
     found = replace(found, removed_suffix=removed) if removed else found
     # The time-of-day rule in force when the request ran applies to the chosen price list.
     period = _period(resolved[0], moment, resolved[1])
-    return _scaled(found, *period) if period else found
+    found = _scaled(found, *period) if period else found
+    return _in_region(found, region)
+
+
+def _in_region(found: Rates, region: str | None) -> Rates:
+    """Rates for a request served in a region: a region the model prices multiplies every
+    token price by its factor, and any other leaves the prices as they are."""
+    factor = dict(found.regions).get(region) if region else None
+    return replace(_multiplied(found, factor), region=region) if factor else found
 
 
 def _estimated(model: str, at: datetime | str | None, provider: str | None, mode: str | None,
-               corrected: bool, prices_at: datetime | str | None) -> Rates | None:
+               corrected: bool, prices_at: datetime | str | None,
+               region: str | None = None) -> Rates | None:
     """The stand-in rates data/estimates.toml gives a model with no per-token price."""
     name, hint = _normalized(model, provider)
     candidates = dict(_candidates(name, False))
     # Snapshots published before estimates existed have none.
     for item in _data().get("estimates", []):
         if item["model"].lower() in candidates and hint in ("", item["provider"]):
-            found = rates(item["like"], at=at, mode=mode, corrected=corrected, prices_at=prices_at)
+            found = rates(item["like"], at=at, mode=mode, corrected=corrected, prices_at=prices_at,
+                          region=region)
             return found and replace(found, provider=item["provider"], model=item["model"],
                                      removed_suffix=candidates[item["model"].lower()],
                                      estimated_from=item["like"])
@@ -722,18 +750,19 @@ def cost(model: str, *, input_tokens: int = 0, output_tokens: int = 0,
          modality_tokens: dict[str, dict[str, int]] | None = None,
          at: datetime | str | None = None, provider: str | None = None,
          mode: str | None = None, prices_at: datetime | str | None = None,
-         estimate: bool = False) -> float | None:
+         estimate: bool = False, region: str | None = None) -> float | None:
     """Price one request made at `at`; input_tokens excludes cache reads and writes.
 
     cache_write_tokens are five-minute cache writes and cache_write_1h_tokens one-hour ones.
     cache_read_explicit_tokens are cache hits on prefixes the request marked for caching,
     for providers that price them apart. modality_tokens gives input, cache_read, and output
-    tokens by modality in place of the plain counts, as Rates.breakdown describes.
+    tokens by modality in place of the plain counts, as Rates.breakdown describes. region
+    prices a request served in a region, as rates() describes.
     estimate=True prices a model with no per-token price at its stand-in's rates, as rates()
     does; check rates(...).estimated_from to tell an estimate from a price.
     """
     found = rates(model, at=at, provider=provider, mode=mode, prices_at=prices_at,
-                  estimate=estimate)
+                  estimate=estimate, region=region)
     if found is None:
         return None
     return found.cost(input_tokens, output_tokens, cache_read_tokens, cache_write_tokens,
@@ -797,6 +826,7 @@ def main(argv: list[str] | None = None) -> int:
     show.add_argument("--provider")
     show.add_argument("--at", type=_cli_time, help="ISO 8601 time (default: now)")
     show.add_argument("--mode", help="Alternate pricing mode, such as fast")
+    show.add_argument("--region", help="Region the request is served in, such as us")
     show.add_argument("--estimate", action="store_true",
                       help="Estimate a model with no per-token price from its stand-in")
     show.add_argument("--json", action="store_true")
@@ -896,7 +926,7 @@ def main(argv: list[str] | None = None) -> int:
     # The newest data already downloaded, without going online.
     refresh(max_age=None)
     found = rates(args.model, at=args.at, provider=args.provider, mode=args.mode,
-                  estimate=args.estimate)
+                  estimate=args.estimate, region=args.region)
     if found is None:
         print(f"No price found for {args.model}", file=sys.stderr)
         return 1
@@ -907,6 +937,11 @@ def main(argv: list[str] | None = None) -> int:
     print(f"{found.provider}/{found.model} from {found.valid_from}{period} ({found.source})")
     if found.estimated_from:
         print(f"estimate: no per-token price; priced as {found.estimated_from}")
+    if found.region:
+        print(f"served in region {found.region}: {dict(found.regions)[found.region]:g} times the "
+              "standard prices")
+    elif found.regions:
+        print("regions: " + ", ".join(f"{name} {factor:g}x" for name, factor in found.regions))
     def usd(value: float | None) -> str:
         return f"${value:g}" if value is not None else "- (input price)"
 

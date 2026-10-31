@@ -27,8 +27,13 @@ def _cases(count: int, seed: int = 0) -> list[dict]:
                         if any((interval["rates"] or {}).get("modalities")
                                for intervals in timelines.values() for interval in intervals)}
              for provider, listed in data["prices"].items()}
-    # Every model priced by modality is drawn often enough to be tested.
-    models += [entry for entry in models if entry[1] in modal.get(entry[0], ())] * 20
+    regional = {provider: {model for model, timelines in listed.items()
+                           if any((interval["rates"] or {}).get("regions")
+                                  for intervals in timelines.values() for interval in intervals)}
+                for provider, listed in data["prices"].items()}
+    # Every model priced by modality or by region is drawn often enough to be tested.
+    models += [entry for entry in models if entry[1] in modal.get(entry[0], ())
+               or entry[1] in regional.get(entry[0], ())] * 20
     # A third of the cases fall inside a time-of-day schedule, for the models it covers.
     scheduled = []
     for schedule in data["schedules"]["schedule"]:
@@ -58,8 +63,11 @@ def _cases(count: int, seed: int = 0) -> list[dict]:
             tokens |= {"input": 0, "output": 0, "cache_read": 0, "modalities": {
                 name: {"input": rng.randrange(prompt), "cache_read": rng.randrange(prompt // 2),
                        "output": rng.randrange(50_000)} for name in names}}
+        # Models priced by region also get requests served in one, or in one they do not list.
+        region = rng.choice([None, "us", "eu"]) if model in regional.get(provider, ()) else None
         cases.append({"provider": provider, "model": model, "mode": rng.choice(modes),
-                      "at": at.isoformat().replace("+00:00", "Z"), "tokens": tokens})
+                      "at": at.isoformat().replace("+00:00", "Z"), "region": region,
+                      "tokens": tokens})
     return cases
 
 
@@ -80,17 +88,18 @@ class CalculatorTests(unittest.TestCase):
         priced = 0
         for case, result in zip(cases, json.loads(output), strict=True):
             found = model_prices.rates(case["model"], at=case["at"], provider=case["provider"],
-                                       mode=case["mode"])
+                                       mode=case["mode"], region=case["region"])
             if found is None:
                 self.assertIsNone(result, case)
                 continue
             parts = found.breakdown(*(case["tokens"][field] for field in FIELDS),
                                     modality_tokens=case["tokens"].get("modalities"))
-            expected = {"period": found.period, "tier_above": parts.tier_above,
+            expected = {"period": found.period, "region": found.region, "tier_above": parts.tier_above,
                         "total": parts.total, **{field: getattr(parts, field) for field in FIELDS}}
             self.assertEqual(result, expected, case)
             priced += 1
         self.assertGreater(priced, 4000)
         self.assertGreater(sum("modalities" in case["tokens"] for case in cases), 500)
+        self.assertGreater(sum(case["region"] == "us" for case in cases), 100)
         self.assertGreater(sum(1 for case in cases if model_prices.rates(
             case["model"], at=case["at"], provider=case["provider"]).period), 1000)

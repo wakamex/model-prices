@@ -66,11 +66,11 @@ export function period(snapshot, provider, at, model) {
   return peak ? ["peak", schedule.peak_multiplier] : ["off_peak", 1.0];
 }
 
-function scaled(found, label, factor) {
+// Rates with every token price multiplied by a factor, as the package's _multiplied gives them.
+function multiplied(found, factor) {
   const scale = (value) => (value === undefined || value === null ? value : value * factor);
   return {
     ...found,
-    period: label,
     input: found.input * factor,
     output: found.output * factor,
     cache_read: scale(found.cache_read),
@@ -89,13 +89,16 @@ function scaled(found, label, factor) {
   };
 }
 
-// The rates for a request made at `at` (an ISO time or milliseconds), or null.
-export function rates(snapshot, provider, model, at, mode = null) {
+// The rates for a request made at `at` (an ISO time or milliseconds) and served in
+// `region`, or null. A region the model lists multiplies every token price by its factor.
+export function rates(snapshot, provider, model, at, mode = null, region = null) {
   const moment = typeof at === "number" ? at : parseTime(at);
   const found = lookup(snapshot, provider, model, moment, mode);
   if (found === null) return null;
   const current = period(snapshot, provider, moment, model);
-  return current ? scaled(found, ...current) : { ...found, period: null };
+  const timed = current ? { ...multiplied(found, current[1]), period: current[0] } : { ...found, period: null };
+  const factor = region ? (timed.regions || {})[region] : undefined;
+  return factor ? { ...multiplied(timed, factor), region } : { ...timed, region: null };
 }
 
 const present = (value) => value !== undefined && value !== null;

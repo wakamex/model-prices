@@ -1138,6 +1138,10 @@ def compare_rules(rules: dict[str, dict], providers: set[str] | None,
                                f"{', '.join(rule['unpriced_modalities'])} prices with "
                                "long-context tiers", None, None, "mismatch")
                         for model, rule in sorted(models.items()) if "unpriced_modalities" in rule]
+            results += [Result(provider, f"{provider}/{model}", "rule:regions", None, None,
+                               f"{', '.join(rule['unpriced_regions'])} factors that differ by "
+                               "modality", None, None, "mismatch")
+                        for model, rule in sorted(models.items()) if "unpriced_regions" in rule]
     return results
 
 
@@ -1483,8 +1487,8 @@ def report(results: list[Result], genai: bool = False) -> str:
                          f"{result.effective}; add the next year's holidays to schedules.toml")
             continue
         if result.field.startswith("rule:"):
-            source = {"rule:time_of_day": "schedules.toml",
-                      "rule:modalities": "model-prices"}.get(result.field, "cache_writes.toml")
+            source = {"rule:time_of_day": "schedules.toml", "rule:modalities": "model-prices",
+                      "rule:regions": "model-prices"}.get(result.field, "cache_writes.toml")
             lines.append(f"{result.status:9} {result.model} {result.field[5:]}: models.dev "
                          f"{result.official}, {source} {result.effective}")
             continue

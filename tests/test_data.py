@@ -57,7 +57,8 @@ class CorrectionDataTests(unittest.TestCase):
 
     def test_corrections_state_the_modality_prices_they_override(self):
         # A correction replaces a model's rates whole, so one that covers a period in which
-        # models.dev records prices by modality must state them, or they would be dropped.
+        # models.dev records prices by modality or by region must state them, or they would
+        # be dropped.
         history = json.loads((DATA / "prices.json").read_text())["providers"]
         for item in self.each():
             entries = history.get(item["provider"], {}).get(item["model"], [])
@@ -66,8 +67,9 @@ class CorrectionDataTests(unittest.TestCase):
             covered = [entry for index, entry in enumerate(entries)
                        if (end is None or _time(entry["valid_from"]) < end)
                        and (index + 1 == len(entries) or _time(entries[index + 1]["valid_from"]) > start)]
-            if any("modalities" in entry["rates"] for entry in covered):
-                self.assertIn("modalities", item)
+            for field in ("modalities", "regions"):
+                if any(field in entry["rates"] for entry in covered):
+                    self.assertIn(field, item)
 
     def test_corrections_in_one_file_do_not_overlap(self):
         for name in FILES:

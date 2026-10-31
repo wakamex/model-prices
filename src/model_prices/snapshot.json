@@ -101,8 +101,8 @@
   }
  ],
  "models_dev": {
-  "commit": "1ab25cf511cbef29841bab91a794ef2dd62f7795",
-  "committed_at": "2026-10-30T02:24:56Z",
+  "commit": "7f5ad8a00cf42667b1f1c7fd46a558ad8b7595a2",
+  "committed_at": "2026-10-31T14:20:23Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -6797,6 +6797,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2024-10-08T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.5,
+       "cache_write": 6.25,
+       "cache_write_1h_multiple": 2.0,
+       "input": 5.0,
+       "output": 25.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ],
     "standard": [
@@ -6812,6 +6828,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 1.0,
+       "cache_write": 12.5,
+       "cache_write_1h_multiple": 2.0,
+       "input": 10.0,
+       "output": 50.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ]
    },
@@ -6833,6 +6865,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2024-10-08T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.125,
+       "cache_write": 6.25,
+       "cache_write_1h_multiple": 2.0,
+       "input": 5.0,
+       "output": 25.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ],
     "standard": [
@@ -6848,6 +6896,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.25,
+       "cache_write": 12.5,
+       "cache_write_1h_multiple": 2.0,
+       "input": 10.0,
+       "output": 50.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ]
    },
@@ -7128,6 +7192,31 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2024-10-08T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.005,
+       "cache_write": 0.0625,
+       "cache_write_1h_multiple": 2.0,
+       "input": 0.05,
+       "output": 0.25,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "tiers": [
+        {
+         "above": 100000,
+         "cache_read": 0.025,
+         "cache_write": 0.3125,
+         "input": 0.25,
+         "output": 1.25
+        }
+       ],
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ],
     "standard": [
@@ -7152,6 +7241,31 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.01,
+       "cache_write": 0.125,
+       "cache_write_1h_multiple": 2.0,
+       "input": 0.1,
+       "output": 0.5,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "tiers": [
+        {
+         "above": 100000,
+         "cache_read": 0.05,
+         "cache_write": 0.625,
+         "input": 0.5,
+         "output": 2.5
+        }
+       ],
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ]
    },
@@ -7256,6 +7370,9 @@
        "cache_write_1h_multiple": 2.0,
        "input": 5.0,
        "output": 25.0,
+       "regions": {
+        "us": 1.1
+       },
        "source": "https://github.com/sst/models.dev/commit/16e8e2175d3d",
        "valid_from": "2026-10-24T03:46:07Z",
        "valid_from_basis": "models.dev commit"
@@ -7297,6 +7414,9 @@
        "cache_write_1h_multiple": 2.0,
        "input": 10.0,
        "output": 50.0,
+       "regions": {
+        "us": 1.1
+       },
        "source": "https://github.com/sst/models.dev/commit/16e8e2175d3d",
        "valid_from": "2026-10-24T03:46:07Z",
        "valid_from_basis": "models.dev commit"
@@ -7825,6 +7945,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-08-06T15:30:21Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.25,
+       "cache_write": 3.125,
+       "cache_write_1h_multiple": 2.0,
+       "input": 2.5,
+       "output": 12.5,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ],
     "fast": [
@@ -7911,6 +8047,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-08-06T15:30:21Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.5,
+       "cache_write": 6.25,
+       "cache_write_1h_multiple": 2.0,
+       "input": 5.0,
+       "output": 25.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ]
    },
@@ -8057,6 +8209,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-08-06T15:30:21Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.25,
+       "cache_write": 3.125,
+       "cache_write_1h_multiple": 2.0,
+       "input": 2.5,
+       "output": 12.5,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ],
     "fast": [
@@ -8121,6 +8289,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-08-06T15:30:21Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.5,
+       "cache_write": 6.25,
+       "cache_write_1h_multiple": 2.0,
+       "input": 5.0,
+       "output": 25.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ]
    },
@@ -8142,6 +8326,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2024-10-08T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.25,
+       "cache_write": 3.125,
+       "cache_write_1h_multiple": 2.0,
+       "input": 2.5,
+       "output": 12.5,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ],
     "fast": [
@@ -8157,6 +8357,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 1.0,
+       "cache_write": 12.5,
+       "cache_write_1h_multiple": 2.0,
+       "input": 10.0,
+       "output": 50.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ],
     "standard": [
@@ -8172,6 +8388,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.5,
+       "cache_write": 6.25,
+       "cache_write_1h_multiple": 2.0,
+       "input": 5.0,
+       "output": 25.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ]
    },
@@ -8193,6 +8425,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2024-10-08T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.25,
+       "cache_write": 3.125,
+       "cache_write_1h_multiple": 2.0,
+       "input": 2.5,
+       "output": 12.5,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ],
     "fast": [
@@ -8208,6 +8456,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 1.0,
+       "cache_write": 12.5,
+       "cache_write_1h_multiple": 2.0,
+       "input": 10.0,
+       "output": 50.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ],
     "standard": [
@@ -8223,6 +8487,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.5,
+       "cache_write": 6.25,
+       "cache_write_1h_multiple": 2.0,
+       "input": 5.0,
+       "output": 25.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ]
    },
@@ -8244,6 +8524,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2024-10-08T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "cache_write": 2.5,
+       "cache_write_1h_multiple": 2.0,
+       "input": 2.0,
+       "output": 10.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ],
     "fast": [
@@ -8259,6 +8555,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.4,
+       "cache_write": 10.0,
+       "cache_write_1h_multiple": 2.0,
+       "input": 8.0,
+       "output": 40.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ],
     "standard": [
@@ -8274,6 +8586,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 5.0,
+       "cache_write_1h_multiple": 2.0,
+       "input": 4.0,
+       "output": 20.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ]
    },
@@ -8663,6 +8991,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-03-13T19:13:40Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.15,
+       "cache_write": 1.875,
+       "cache_write_1h_multiple": 2.0,
+       "input": 1.5,
+       "output": 7.5,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ],
     "standard": [
@@ -8700,6 +9044,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-03-13T19:13:40Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.3,
+       "cache_write": 3.75,
+       "cache_write_1h_multiple": 2.0,
+       "input": 3.0,
+       "output": 15.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ]
    },
@@ -8721,6 +9081,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2024-10-08T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "cache_write": 1.25,
+       "cache_write_1h_multiple": 2.0,
+       "input": 1.0,
+       "output": 5.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ],
     "standard": [
@@ -8736,6 +9112,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 2.5,
+       "cache_write_1h_multiple": 2.0,
+       "input": 2.0,
+       "output": 10.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ]
    },
@@ -8783,6 +9175,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-07T22:27:10Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.05,
+       "cache_write": 1.25,
+       "cache_write_1h_multiple": 2.0,
+       "input": 1.0,
+       "output": 5.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ],
     "standard": [
@@ -8880,6 +9288,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-07T22:27:10Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "cache_write": 2.5,
+       "cache_write_1h_multiple": 2.0,
+       "input": 2.0,
+       "output": 10.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/3011461e8a2e",
+       "valid_from": "2026-10-19T07:27:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-10-19T07:27:46Z"
      }
     ]
    }
@@ -28693,6 +29117,9 @@
        "cache_read": 0.4,
        "input": 1.6,
        "output": 4.800000000000001,
+       "regions": {
+        "us": 1.1
+       },
        "source": "https://docs.x.ai/developers/pricing#batch-api-pricing",
        "tiers": [
         {
@@ -28735,6 +29162,9 @@
        "cache_read": 1.0,
        "input": 4.0,
        "output": 12.0,
+       "regions": {
+        "us": 1.1
+       },
        "source": "https://github.com/sst/models.dev/commit/4b705e3481d4",
        "tiers": [
         {
@@ -28794,6 +29224,9 @@
        "cache_read": 0.5,
        "input": 2.0,
        "output": 6.0,
+       "regions": {
+        "us": 1.1
+       },
        "source": "https://github.com/sst/models.dev/commit/4b705e3481d4",
        "tiers": [
         {
@@ -28821,6 +29254,9 @@
        "cache_read": 0.4,
        "input": 1.6,
        "output": 4.800000000000001,
+       "regions": {
+        "us": 1.1
+       },
        "source": "https://docs.x.ai/developers/pricing#batch-api-pricing",
        "tiers": [
         {
@@ -28846,6 +29282,9 @@
        "cache_read": 1.0,
        "input": 4.0,
        "output": 12.0,
+       "regions": {
+        "us": 1.1
+       },
        "source": "https://github.com/sst/models.dev/commit/4b705e3481d4",
        "tiers": [
         {
@@ -28886,6 +29325,9 @@
        "cache_read": 0.5,
        "input": 2.0,
        "output": 6.0,
+       "regions": {
+        "us": 1.1
+       },
        "source": "https://github.com/sst/models.dev/commit/4b705e3481d4",
        "tiers": [
         {
@@ -30242,5 +30684,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-10-31T14:22:58Z"
+ "updated_at": "2026-10-31T14:33:46Z"
 }

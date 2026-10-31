@@ -495,6 +495,32 @@ class PriceTests(unittest.TestCase):
         self.assertEqual(entries[0]["rates"]["modalities"]["audio"],
                          {"input": 32.0, "output": 64.0, "cache_read": 0.4})
 
+    def test_requests_served_in_a_region_cost_its_factor(self):
+        document = {"schema": 2, "cost": {
+            "text": {"input": {"price": 5, "cache": {"read": 0.5}}, "output": {"price": 25}},
+            "multipliers": [{"when": {"region": {"equals": "us"}}, "factor": {"text": 1.1}},
+                            {"when": {"service_tier": {"equals": "priority"}}, "factor": 2}]}}
+        self.assertEqual(parse_rates(schema1(document))["regions"], {"us": 1.1})
+        # A factor that scales text but not audio cannot be one number, so it is left out.
+        audio = {**document, "cost": {**document["cost"], "audio": {"input": {"price": 9}}}}
+        self.assertNotIn("regions", parse_rates(schema1(audio)))
+
+        standard = rates("claude-fable-5-1", at="2026-10-30")
+        us = rates("claude-fable-5-1", at="2026-10-30", region="us")
+        self.assertEqual(dict(standard.regions), {"us": 1.1})
+        self.assertEqual((us.region, standard.region), ("us", None))
+        self.assertAlmostEqual(us.input, standard.input * 1.1)
+        self.assertAlmostEqual(us.cache_read, standard.cache_read * 1.1)
+        self.assertAlmostEqual(cost("claude-fable-5-1", at="2026-10-30", region="us", output_tokens=1_000_000),
+                               standard.output * 1.1)
+        # Modes and the batch discount multiply with the region's factor.
+        batch = rates("claude-fable-5-1", at="2026-10-30", mode="batch", region="us")
+        self.assertAlmostEqual(batch.input, standard.input * 0.5 * 1.1)
+        # A region the model does not price, or a model without regional prices, is unchanged.
+        self.assertEqual(rates("claude-fable-5-1", at="2026-10-30", region="eu"), standard)
+        older = rates("claude-opus-4-5", at="2026-10-30")
+        self.assertEqual(rates("claude-opus-4-5", at="2026-10-30", region="us"), older)
+
     def test_tokens_by_modality_cost_their_own_prices(self):
         split = {"text": {"input": 800, "cache_read": 100, "output": 200},
                  "audio": {"input": 2500, "cache_read": 1000, "output": 2500},

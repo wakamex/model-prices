@@ -53,7 +53,14 @@ function showModalities(listed) {
 
 function render() {
   const at = `${field("at").value}${field("at").value.length === 16 ? ":00" : ""}Z`;
-  const found = rates(snapshot, field("provider").value, field("model").value, at, field("mode").value || null);
+  const standard = rates(snapshot, field("provider").value, field("model").value, at, field("mode").value || null);
+  // A model priced by region offers its regions, such as US-only inference.
+  const regions = Object.keys(standard?.regions || {});
+  const chosen = regions.includes(field("region").value) ? field("region").value : "";
+  fill(field("region"), [["", "any"], ...regions.map((name) => [name, name])], chosen);
+  field("region").closest("label").hidden = !regions.length;
+  const found = chosen ? rates(snapshot, field("provider").value, field("model").value, at,
+    field("mode").value || null, chosen) : standard;
   const result = field("result");
   if (found === null) {
     result.textContent = "No price is recorded for this model and mode at that time.";
@@ -98,6 +105,7 @@ function render() {
     const name = found.period.replace("_", "-");
     when = factor === 1 ? `, at ${name} rates` : `, at ${name} rates: ${factor} times the listed prices`;
   }
+  if (found.region) when += `, served in ${found.region}: ${found.regions[found.region]} times the listed prices`;
   result.innerHTML = `<p class="total">${money(parts.total)}${when}</p>
     <table><thead><tr><th>Tokens</th><th>Count</th><th>Cost</th></tr></thead><tbody>${rows}</tbody></table>
     <p>${notes.join(" ")}</p>`;

@@ -203,7 +203,7 @@ def schedule_line(provider: str, model: str, now: datetime) -> str | None:
 
 
 PRICE_KEYS = ("input", "output", "cache_read", "cache_read_explicit", "cache_write", "tiers",
-              "cache_write_1h_multiple", "modalities")
+              "cache_write_1h_multiple", "modalities", "regions")
 
 
 def changes(timeline: list[dict]) -> list[dict]:
@@ -268,8 +268,9 @@ def history(timeline: list[dict]) -> list[str]:
     timeline = changes(timeline)
     # Models priced by modality show those prices in their own column.
     modal = any((interval["rates"] or {}).get("modalities") for interval in timeline)
+    regional = any((interval["rates"] or {}).get("regions") for interval in timeline)
     titles = ["From", "Input", "Cached input", "Cache write", "Output", "Longer prompts",
-              *(["By modality"] if modal else []), "Dated by"]
+              *(["By modality"] if modal else []), *(["By region"] if regional else []), "Dated by"]
     lines = ["| " + " | ".join(titles) + " |", "|" + " --- |" * len(titles)]
     for interval in reversed(timeline):
         rates = interval["rates"]
@@ -280,7 +281,9 @@ def history(timeline: list[dict]) -> list[str]:
         lines.append(" | ".join((
             f"| {start}", price(rates["input"]), cached(rates),
             price(rates.get("cache_write")), price(rates["output"]), tiers(rates),
-            *([by_modality(rates)] if modal else []), dated_by(interval))) + " |")
+            *([by_modality(rates)] if modal else []),
+            *([", ".join(f"{name} {factor:g}x" for name, factor in sorted(rates.get("regions", {}).items()))]
+              if regional else []), dated_by(interval))) + " |")
     return lines
 
 
@@ -315,6 +318,10 @@ def model_page(provider: str, model: str, timelines: dict, found: dict, ran: str
                if rates.get("cache_read_explicit") is not None else "")
             + (f", cache write {price(rates['cache_write'])}" if rates.get("cache_write") is not None else "")
             + ".")
+    if rates and rates.get("regions"):
+        intro.append("Requests served in a region cost more: " + ", ".join(
+            f"`{name}` {factor:g} times these prices" for name, factor in sorted(rates["regions"].items()))
+            + ". Pass `region` to price them.")
     if rates and rates.get("modalities"):
         intro.append(f"Prices by modality: {by_modality(rates)}. Tokens without a modality cost "
                      "the prices above.")

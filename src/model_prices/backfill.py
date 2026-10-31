@@ -131,6 +131,8 @@ def parse_rates(document: dict[str, Any], provider: str = "") -> dict[str, Any] 
         tiers.append({"above": 200_000, **_rate_values(legacy)})
     if tiers:
         rates["tiers"] = sorted(tiers, key=lambda item: item["above"])
+    if isinstance(cost.get("regions"), dict):
+        rates["regions"] = cost["regions"]
     # Modality prices on a model with long-context tiers are not priced yet; the check
     # reports such a model from the rules data/prices.json keeps.
     modalities = None if tiers else _modalities(cost, rates)
@@ -307,6 +309,31 @@ def _schema1_modes(document: dict[str, Any], cost: dict[str, Any] | None,
     return modes
 
 
+def _region_factor(cost: dict[str, Any], factor: Any) -> float | None:
+    """A regional multiplier's factor as one number for every token price, or None when it
+    scales some priced modalities and not others, which the rates leave out."""
+    if isinstance(factor, (int, float)):
+        return float(factor)
+    priced = [name for name in _MODALITIES if name in cost]
+    values = {factor.get(name) for name in priced} if isinstance(factor, dict) else {None}
+    if len(values) == 1 and isinstance(next(iter(values)), (int, float)):
+        return float(next(iter(values)))
+    return None
+
+
+def _regions(cost: dict[str, Any]) -> dict[str, float] | None:
+    """The factor on token prices for requests served in each region, such as Anthropic's
+    US-only inference at 1.1 times, from multipliers whose only condition is a region."""
+    found = {}
+    for item in cost.get("multipliers") or []:
+        when = item.get("when") or {}
+        if list(when) == ["region"] and list(when["region"]) == ["equals"]:
+            factor = _region_factor(cost, item["factor"])
+            if factor is not None:
+                found[when["region"]["equals"]] = factor
+    return dict(sorted(found.items())) or None
+
+
 def schema1(document: dict[str, Any], where: str = "") -> dict[str, Any]:
     """A models.dev model file in schema 1's shape, translating a schema 2 file's prices;
     an unknown schema raises, so a format change stops the history build."""
@@ -323,6 +350,9 @@ def schema1(document: dict[str, Any], where: str = "") -> dict[str, Any]:
         for tier in cost.get("tiers", []):
             tier.pop("reasoning", None)
     modes = _schema1_modes(document, cost, where)
+    regions = _regions(document["cost"]) if cost else None
+    if regions:
+        cost["regions"] = regions
     return _present({"base_model": document.get("base_model"), "status": document.get("status"),
                      "cost": cost, "experimental": {"modes": modes} if modes else None})
 
@@ -602,6 +632,12 @@ def _rules(current: dict[tuple[str, str], dict[str, Any]]) -> dict[str, dict[str
         if tiered and any(name in cost for name in ("audio", "image", "video")):
             rule["unpriced_modalities"] = sorted(name for name in ("audio", "image", "video")
                                                  if name in cost)
+        # A regional factor that scales some priced modalities and not others is left out.
+        unpriced = sorted(item["when"]["region"].get("equals", "") for item in cost.get("multipliers") or []
+                          if list(item.get("when") or {}) == ["region"]
+                          and _region_factor(cost, item["factor"]) is None)
+        if unpriced:
+            rule["unpriced_regions"] = unpriced
         if rule:
             rules.setdefault(provider, {})[model] = rule
     return rules

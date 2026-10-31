@@ -116,7 +116,7 @@ class _Inputs:
                                                        else value)
                             for key, value in item["replaces"].items()):
                         continue
-                values = {key: item.get(key) for key in (*RATE_FIELDS, "modalities")}
+                values = {key: item.get(key) for key in (*RATE_FIELDS, "modalities", "regions")}
                 tiers = item.get("tiers")
                 if mode is not None:
                     if mode not in item.get("modes", {}):
@@ -125,7 +125,8 @@ class _Inputs:
                 return Rates(
                     provider=provider, model=model, valid_from=item["valid_from"],
                     source=item["source"], **{**values, "modalities": _modalities(
-                        values["modalities"])}, tiers=_tiers(tiers),
+                        values["modalities"]), "regions": _regions(values["regions"])},
+                    tiers=_tiers(tiers),
                     valid_from_basis="documented",
                 )
         # An alias without its own history at this time takes the corrections of the model
@@ -158,6 +159,7 @@ class _Inputs:
             cache_read=values.get("cache_read"), cache_write=values.get("cache_write"),
             cache_read_explicit=values.get("cache_read_explicit"), tiers=_tiers(tiers),
             modalities=_modalities(values.get("modalities")),
+            regions=_regions(values.get("regions")),
             valid_from_basis=("first observed" if "source" in entry else "scheduled"
                               if entry.get("scheduled") else "models.dev commit"),
         )
@@ -244,6 +246,10 @@ def _in_mode(corrected: Rates, standard: Rates, moded: Rates) -> Rates:
                    modalities=modalities)
 
 
+def _regions(raw: dict[str, float] | None) -> tuple[tuple[str, float], ...]:
+    return tuple(sorted((raw or {}).items()))
+
+
 def _batched(found: Rates, item: dict[str, Any]) -> Rates:
     """Rates scaled by a batch discount: `multiple`, or a field's own `FIELD_multiple`."""
     factors = {field: item.get(f"{field}_multiple", item["multiple"]) for field in RATE_FIELDS}
@@ -266,12 +272,14 @@ def _stored(found: Rates | None, model: str) -> dict[str, Any] | None:
         return None
     stored = {key: value for key, value in asdict(found).items()
               if key not in {"provider", "period", "removed_suffix"}
-              and value is not None and value != ()}
+              and value is not None and value != () and key != "region"}
     if found.model == model:
         del stored["model"]
     if "tiers" in stored:
         stored["tiers"] = [{key: value for key, value in tier.items() if value is not None}
                            for tier in stored["tiers"]]
+    if "regions" in stored:
+        stored["regions"] = dict(stored["regions"])
     if "modalities" in stored:
         stored["modalities"] = {item.pop("modality"): {key: value for key, value in item.items()
                                                        if value is not None}

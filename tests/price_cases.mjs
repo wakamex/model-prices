@@ -7,8 +7,8 @@ const [, , snapshotPath, casesPath, modulePath] = process.argv;
 const { rates, breakdown } = await import(pathToFileURL(modulePath).href);
 const snapshot = JSON.parse(readFileSync(snapshotPath, "utf8"));
 const cases = JSON.parse(readFileSync(casesPath, "utf8"));
-const results = cases.map(({ provider, model, at, mode, tokens }) => {
-  const found = rates(snapshot, provider, model, at, mode);
-  return found === null ? null : { period: found.period, ...breakdown(found, tokens) };
+const results = cases.map(({ provider, model, at, mode, region, tokens }) => {
+  const found = rates(snapshot, provider, model, at, mode, region);
+  return found === null ? null : { period: found.period, region: found.region, ...breakdown(found, tokens) };
 });
 process.stdout.write(JSON.stringify(results));

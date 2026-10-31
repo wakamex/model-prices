@@ -2370,6 +2370,19 @@
       "output": 50.0
      },
      "valid_from": "2026-06-09T17:30:18Z"
+    },
+    {
+     "commit": "3011461e8a2e",
+     "rates": {
+      "cache_read": 1.0,
+      "cache_write": 12.5,
+      "input": 10.0,
+      "output": 50.0,
+      "regions": {
+       "us": 1.1
+      }
+     },
+     "valid_from": "2026-10-19T07:27:46Z"
     }
    ],
    "claude-fable-5-1": [
@@ -2382,6 +2395,19 @@
       "output": 50.0
      },
      "valid_from": "2026-09-02T18:53:25Z"
+    },
+    {
+     "commit": "3011461e8a2e",
+     "rates": {
+      "cache_read": 0.25,
+      "cache_write": 12.5,
+      "input": 10.0,
+      "output": 50.0,
+      "regions": {
+       "us": 1.1
+      }
+     },
+     "valid_from": "2026-10-19T07:27:46Z"
     }
    ],
    "claude-haiku-4-5": [
@@ -2447,6 +2473,28 @@
       ]
      },
      "valid_from": "2026-10-07T19:43:35Z"
+    },
+    {
+     "commit": "3011461e8a2e",
+     "rates": {
+      "cache_read": 0.01,
+      "cache_write": 0.125,
+      "input": 0.1,
+      "output": 0.5,
+      "regions": {
+       "us": 1.1
+      },
+      "tiers": [
+       {
+        "above": 100000,
+        "cache_read": 0.05,
+        "cache_write": 0.625,
+        "input": 0.5,
+        "output": 2.5
+       }
+      ]
+     },
+     "valid_from": "2026-10-19T07:27:46Z"
     }
    ],
    "claude-mythos-5-1": [
@@ -2456,7 +2504,10 @@
       "cache_read": 0.25,
       "cache_write": 12.5,
       "input": 10.0,
-      "output": 50.0
+      "output": 50.0,
+      "regions": {
+       "us": 1.1
+      }
      },
      "valid_from": "2026-10-24T03:46:07Z"
     }
@@ -2618,6 +2669,19 @@
       "output": 25.0
      },
      "valid_from": "2026-08-06T15:30:21Z"
+    },
+    {
+     "commit": "3011461e8a2e",
+     "rates": {
+      "cache_read": 0.5,
+      "cache_write": 6.25,
+      "input": 5.0,
+      "output": 25.0,
+      "regions": {
+       "us": 1.1
+      }
+     },
+     "valid_from": "2026-10-19T07:27:46Z"
     }
    ],
    "claude-opus-4-6-20260205": [
@@ -2679,6 +2743,19 @@
       "output": 25.0
      },
      "valid_from": "2026-08-06T15:30:21Z"
+    },
+    {
+     "commit": "3011461e8a2e",
+     "rates": {
+      "cache_read": 0.5,
+      "cache_write": 6.25,
+      "input": 5.0,
+      "output": 25.0,
+      "regions": {
+       "us": 1.1
+      }
+     },
+     "valid_from": "2026-10-19T07:27:46Z"
     }
    ],
    "claude-opus-4-8": [
@@ -2699,6 +2776,27 @@
       "output": 25.0
      },
      "valid_from": "2026-05-28T17:04:51Z"
+    },
+    {
+     "commit": "3011461e8a2e",
+     "rates": {
+      "cache_read": 0.5,
+      "cache_write": 6.25,
+      "input": 5.0,
+      "modes": {
+       "fast": {
+        "cache_read": 1.0,
+        "cache_write": 12.5,
+        "input": 10.0,
+        "output": 50.0
+       }
+      },
+      "output": 25.0,
+      "regions": {
+       "us": 1.1
+      }
+     },
+     "valid_from": "2026-10-19T07:27:46Z"
     }
    ],
    "claude-opus-5": [
@@ -2719,6 +2817,27 @@
       "output": 25.0
      },
      "valid_from": "2026-07-24T17:20:57Z"
+    },
+    {
+     "commit": "3011461e8a2e",
+     "rates": {
+      "cache_read": 0.5,
+      "cache_write": 6.25,
+      "input": 5.0,
+      "modes": {
+       "fast": {
+        "cache_read": 1.0,
+        "cache_write": 12.5,
+        "input": 10.0,
+        "output": 50.0
+       }
+      },
+      "output": 25.0,
+      "regions": {
+       "us": 1.1
+      }
+     },
+     "valid_from": "2026-10-19T07:27:46Z"
     }
    ],
    "claude-opus-5-5": [
@@ -2739,6 +2858,27 @@
       "output": 20.0
      },
      "valid_from": "2026-09-22T16:47:14Z"
+    },
+    {
+     "commit": "3011461e8a2e",
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 5.0,
+      "input": 4.0,
+      "modes": {
+       "fast": {
+        "cache_read": 0.4,
+        "cache_write": 10.0,
+        "input": 8.0,
+        "output": 40.0
+       }
+      },
+      "output": 20.0,
+      "regions": {
+       "us": 1.1
+      }
+     },
+     "valid_from": "2026-10-19T07:27:46Z"
     }
    ],
    "claude-sonnet-4-0": [
@@ -2836,6 +2976,19 @@
       "output": 15.0
      },
      "valid_from": "2026-03-13T19:13:40Z"
+    },
+    {
+     "commit": "3011461e8a2e",
+     "rates": {
+      "cache_read": 0.3,
+      "cache_write": 3.75,
+      "input": 3.0,
+      "output": 15.0,
+      "regions": {
+       "us": 1.1
+      }
+     },
+     "valid_from": "2026-10-19T07:27:46Z"
     }
    ],
    "claude-sonnet-5": [
@@ -2848,6 +3001,19 @@
       "output": 10.0
      },
      "valid_from": "2026-06-30T18:44:24Z"
+    },
+    {
+     "commit": "3011461e8a2e",
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 2.5,
+      "input": 2.0,
+      "output": 10.0,
+      "regions": {
+       "us": 1.1
+      }
+     },
+     "valid_from": "2026-10-19T07:27:46Z"
     }
    ],
    "claude-sonnet-5-5": [
@@ -2890,6 +3056,19 @@
       "output": 10.0
      },
      "valid_from": "2026-10-07T22:27:10Z"
+    },
+    {
+     "commit": "3011461e8a2e",
+     "rates": {
+      "cache_read": 0.1,
+      "cache_write": 2.5,
+      "input": 2.0,
+      "output": 10.0,
+      "regions": {
+       "us": 1.1
+      }
+     },
+     "valid_from": "2026-10-19T07:27:46Z"
     }
    ]
   },
@@ -11893,6 +12072,9 @@
        }
       },
       "output": 6.0,
+      "regions": {
+       "us": 1.1
+      },
       "tiers": [
        {
         "above": 200000,
@@ -11944,6 +12126,9 @@
        }
       },
       "output": 6.0,
+      "regions": {
+       "us": 1.1
+      },
       "tiers": [
        {
         "above": 200000,
@@ -13091,8 +13276,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "1ab25cf511cbef29841bab91a794ef2dd62f7795",
- "source_committed_at": "2026-10-30T02:24:56Z",
+ "source_commit": "7f5ad8a00cf42667b1f1c7fd46a558ad8b7595a2",
+ "source_committed_at": "2026-10-31T14:20:23Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
