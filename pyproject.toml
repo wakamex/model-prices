@@ -1,6 +1,6 @@
 [project]
 name = "model-prices"
-version = "0.0.7"
+version = "0.0.8"
 description = "Per-token LLM prices, current and historical, from models.dev with sourced corrections"
 readme = "README.md"
 license = "MIT"
