@@ -2064,6 +2064,27 @@
      "valid_from": "2026-10-20T23:55:24Z"
     }
    ],
+   "gpt-6-rosalind": [
+    {
+     "rates": {
+      "cache_read": 1.5,
+      "cache_write": 18.75,
+      "input": 15.0,
+      "output": 75.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 3.0,
+        "cache_write": 37.5,
+        "input": 30.0,
+        "output": 112.5
+       }
+      ]
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-10-31T06:24:52Z"
+    }
+   ],
    "gpt-6.1-terra": [
     {
      "rates": {
@@ -2100,6 +2121,28 @@
      },
      "source": "https://developers.openai.com/api/docs/pricing.md",
      "valid_from": "2026-10-26T18:33:15Z"
+    }
+   ],
+   "gpt-rosalind-discovery": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "input": 5.0,
+      "output": 25.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-10-31T06:24:52Z"
+    }
+   ],
+   "gpt-rosalind-research": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "input": 5.0,
+      "output": 25.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-10-31T06:24:52Z"
     }
    ]
   },

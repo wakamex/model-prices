@@ -19749,6 +19749,60 @@
      }
     ]
    },
+   "gpt-6-rosalind": {
+    "batch": [
+     {
+      "rates": null,
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.75,
+       "cache_write": 9.375,
+       "cache_write_1h_multiple": 2.5,
+       "input": 7.5,
+       "output": 37.5,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 1.5,
+         "cache_write": 18.75,
+         "input": 15.0,
+         "output": 56.25
+        }
+       ],
+       "valid_from": "2026-10-31T06:24:52Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2024-04-15T00:00:00Z"
+     }
+    ],
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 1.5,
+       "cache_write": 18.75,
+       "cache_write_1h_multiple": 2.5,
+       "input": 15.0,
+       "output": 75.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 3.0,
+         "cache_write": 37.5,
+         "input": 30.0,
+         "output": 112.5
+        }
+       ],
+       "valid_from": "2026-10-31T06:24:52Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "gpt-6-sol": {
     "batch": [
      {
@@ -20360,6 +20414,56 @@
        "source": "https://github.com/sst/models.dev/commit/efd88a768e7f",
        "valid_from": "2026-10-20T00:05:42Z",
        "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "gpt-rosalind-discovery": {
+    "batch": [
+     {
+      "rates": null,
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.25,
+       "cache_write_1h_multiple": 2.5,
+       "input": 2.5,
+       "output": 12.5,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-10-31T06:24:52Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2024-04-15T00:00:00Z"
+     }
+    ],
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.5,
+       "cache_write_1h_multiple": 2.5,
+       "input": 5.0,
+       "output": 25.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-10-31T06:24:52Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "gpt-rosalind-research": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.5,
+       "cache_write_1h_multiple": 2.5,
+       "input": 5.0,
+       "output": 25.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-10-31T06:24:52Z",
+       "valid_from_basis": "first observed"
       },
       "start": null
      }
@@ -25887,5 +25991,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-10-30T18:39:42Z"
+ "updated_at": "2026-10-31T06:25:26Z"
 }
