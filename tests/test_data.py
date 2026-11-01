@@ -71,6 +71,17 @@ class CorrectionDataTests(unittest.TestCase):
                 if any(field in entry["rates"] for entry in covered):
                     self.assertIn(field, item)
 
+    def test_rule_entries_give_a_source_and_a_start(self):
+        # Rule files give each entry's source and the date it began; cache_writes.toml prices
+        # only longer-lived writes, which did not exist before, and so needs no start date.
+        for name, key in (("batch.toml", "batch"), ("schedules.toml", "schedule"),
+                          ("cache_writes.toml", "cache_write_1h")):
+            for item in tomllib.loads((DATA / name).read_text())[key]:
+                with self.subTest(file=name, provider=item["provider"]):
+                    self.assertTrue(item["source"])
+                    if name != "cache_writes.toml":
+                        self.assertIn("valid_from", item)
+
     def test_corrections_in_one_file_do_not_overlap(self):
         for name in FILES:
             periods = {}

@@ -1494,6 +1494,23 @@ def run(providers: Iterable[str] | None = None, today: datetime | None = None,
     return results
 
 
+def unchecked(results: list[Result], corrections: list[dict], providers: set[str] | None,
+              today: datetime) -> list[Result]:
+    """Corrections in effect today for a model no official page compared, which only a
+    check that reads the model's price would show to have gone stale."""
+    compared = {result.model for result in results}
+    found = []
+    for item in corrections:
+        current = (_parse_time(item["valid_from"]) <= today
+                   and ("valid_until" not in item or today < _parse_time(item["valid_until"])))
+        model = f"{item['provider']}/{item['model']}"
+        if (current and (providers is None or item["provider"] in providers)
+                and model not in compared):
+            found.append(Result(item["provider"], model, "correction", None, None,
+                                item["source"], None, None, "unchecked"))
+    return sorted(set(found), key=lambda result: result.model)
+
+
 def _score(results: list[Result], field: str) -> str:
     """How many official prices a source lists correctly, lists wrongly, or omits."""
     values = [(result.official, getattr(result, field)) for result in results
@@ -1507,6 +1524,10 @@ def report(results: list[Result], genai: bool = False) -> str:
     lines = []
     for result in results:
         if result.status in {"ok", "untracked"}:
+            continue
+        if result.status == "unchecked":
+            lines.append(f"unchecked {result.model} correction from {result.official}: "
+                         "no official page compared it today")
             continue
         if result.status == "error":
             lines.append(f"error     {result.provider} page {result.official}: {result.effective}")
@@ -1549,7 +1570,7 @@ def report(results: list[Result], genai: bool = False) -> str:
                 lines.append(f"genai     {result.model} {result.field}{tier}{when}: "
                              f"official ${result.official:g}, genai-prices {result.genai_prices:g}")
     counts = {status: sum(r.status == status for r in results)
-              for status in ("ok", "corrected", "mismatch", "untracked", "error")}
+              for status in ("ok", "corrected", "mismatch", "untracked", "unchecked", "error")}
     lines.append(", ".join(f"{count} {status}" for status, count in counts.items()))
     if genai:
         lines.append(f"official prices in models.dev: {_score(results, 'models_dev')}; "

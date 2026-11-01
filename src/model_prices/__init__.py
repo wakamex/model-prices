@@ -881,6 +881,14 @@ def main(argv: list[str] | None = None) -> int:
         recorded = args.data / "prices.json"
         rules = json.loads(recorded.read_text()).get("rules") if recorded.exists() else None
         results = run(args.providers or None, genai=genai, rules=rules)
+        # Corrections no page compared today are listed, without failing the check.
+        import tomllib
+        from model_prices.checks import unchecked
+        corrections = [item for name in ("corrections.toml", "research_corrections.toml")
+                       if (args.data / name).exists()
+                       for item in tomllib.loads((args.data / name).read_text()).get("correction", [])]
+        results += unchecked(results, corrections, set(args.providers) if args.providers else None,
+                             datetime.now(timezone.utc))
         print(json.dumps(as_json(results), indent=2) if args.json
               else report(results, genai=genai is not None))
         if any(result.status in {"mismatch", "error"} for result in results):

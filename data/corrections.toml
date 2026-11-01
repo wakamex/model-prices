@@ -1,9 +1,12 @@
 # Rates that override models.dev history for a period, because models.dev recorded a
-# price change late or recorded a wrong price. valid_until is exclusive; each entry
-# needs an authoritative source. When sources only bracket a change, the earlier
-# documented price applies until the first observation of the new one. An open-ended correction names the models.dev values it
-# replaces in `replaces`, and stops applying once models.dev records anything else, so
-# a later fix or price change in models.dev ends it without an edit here.
+# price change late, recorded a wrong price, kept a price the provider retired, or lacks a
+# price or a model that no page lists as a row. Each entry states the model's whole rates for
+# its period, cites an authoritative source, and is dated by it; valid_until is exclusive.
+# When sources only bracket a change, the earlier documented price applies until the first
+# observation of the new one. An open-ended correction names in `replaces` the models.dev
+# values it was written against, including every price it restates, and stops as soon as
+# models.dev records a different value for any of them, so a later fix or price change in
+# models.dev ends it without an edit here. AGENTS.md says when a price belongs here.
 
 [[correction]]
 provider = "openai"
