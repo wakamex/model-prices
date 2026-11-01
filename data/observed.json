@@ -1820,6 +1820,17 @@
    ]
   },
   "mistral": {
+   "codestral-embed-2505": [
+    {
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.15,
+      "output": 0.0
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-01T22:19:08Z"
+    }
+   ],
    "deepseek-v4-1-flash-1017": [
     {
      "rates": {
@@ -1840,6 +1851,17 @@
      },
      "source": "https://mistral.ai/pricing/api",
      "valid_from": "2026-10-08T17:55:23Z"
+    }
+   ],
+   "mistral-embed-2312": [
+    {
+     "rates": {
+      "cache_read": 0.01,
+      "input": 0.1,
+      "output": 0.0
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-01T22:19:08Z"
     }
    ],
    "mistral-large-4-0": [

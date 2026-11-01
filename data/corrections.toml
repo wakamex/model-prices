@@ -1053,3 +1053,80 @@ tools = { web_search_prompt = 35.0 }
 replaces = { input = 1.25, output = 10.0, cache_read = 0.125, tools = { web_search = 35.0 } }
 source = "https://ai.google.dev/gemini-api/docs/pricing#gemini-2.5-pro"
 note = "Google's pricing page: Grounding with Google Search costs $35 per 1,000 grounded prompts after 1,500 free requests a day; a grounded prompt is billed once however many queries it runs."
+
+# Tencent's and Volcengine's own models that models.dev lacks. Their pricing pages name
+# models for display and price them in yuan, so each is written here with its API id from
+# the provider's model list, converted to dollars at the rate models.dev uses for that
+# provider; model-prices check compares them with the pages in yuan. Each applies from its
+# first reading, and stops once models.dev lists the model.
+
+[[correction]]
+provider = "tencent-tokenhub"
+model = "hy-mt2-pro"
+valid_from = "2026-11-01T22:18:37Z"
+input = 0.0695
+output = 0.278
+replaces = {}
+source = "https://cloud.tencent.com/document/product/1823/130055"
+note = "TokenHub's Guangzhou price list: Hy-MT2-Pro at ¥0.5 input and ¥2 output per 1M tokens, converted at models.dev's $0.834 per ¥6. Its API id is hy-mt2-pro on TokenHub's model list (https://cloud.tencent.com/document/product/1823/130051)."
+
+[[correction]]
+provider = "tencent-tokenhub"
+model = "hy-mt2-plus"
+valid_from = "2026-11-01T22:18:37Z"
+input = 0.0695
+output = 0.278
+replaces = {}
+source = "https://cloud.tencent.com/document/product/1823/130055"
+note = "TokenHub's Guangzhou price list: Hy-MT2-Plus at ¥0.5 input and ¥2 output per 1M tokens, converted at models.dev's $0.834 per ¥6. Its API id is hy-mt2-plus on TokenHub's model list (https://cloud.tencent.com/document/product/1823/130051)."
+
+[[correction]]
+provider = "tencent-tokenhub"
+model = "hy-mt2-lite"
+valid_from = "2026-11-01T22:18:37Z"
+input = 0.0417
+output = 0.1668
+replaces = {}
+source = "https://cloud.tencent.com/document/product/1823/130055"
+note = "TokenHub's Guangzhou price list: Hy-MT2-Lite at ¥0.3 input and ¥1.2 output per 1M tokens, converted at models.dev's $0.834 per ¥6. Its API id is hy-mt2-lite on TokenHub's model list (https://cloud.tencent.com/document/product/1823/130051)."
+
+[[correction]]
+provider = "tencent-tokenhub"
+model = "hy-role"
+valid_from = "2026-11-01T22:18:37Z"
+input = 0.3336
+output = 1.3344
+replaces = {}
+source = "https://cloud.tencent.com/document/product/1823/130055"
+note = "TokenHub's Guangzhou price list: Hy-Role at ¥2.4 input and ¥9.6 output per 1M tokens, converted at models.dev's $0.834 per ¥6. Its API id is hy-role on TokenHub's model list (https://cloud.tencent.com/document/product/1823/130051)."
+
+[[correction]]
+provider = "tencent-tokenhub"
+model = "hunyuan-role-latest"
+valid_from = "2026-11-01T22:18:37Z"
+input = 0.3336
+output = 1.3344
+replaces = {}
+source = "https://cloud.tencent.com/document/product/1823/130055"
+note = "TokenHub's Guangzhou price list: Hy-Role-Latest at ¥2.4 input and ¥9.6 output per 1M tokens, converted at models.dev's $0.834 per ¥6. TokenHub's model list gives its API id as hunyuan-role-latest (https://cloud.tencent.com/document/product/1823/130051)."
+
+[[correction]]
+provider = "volcengine"
+model = "doubao-seed-2-1-lite-260915"
+valid_from = "2026-11-01T22:18:37Z"
+input = 0.118747
+output = 0.400771
+cache_read = 0.023749
+replaces = {}
+source = "https://www.volcengine.com/docs/82379/1544106"
+note = "Volcengine Ark's online inference prices: doubao-seed-2.1-lite at ¥0.8 input, ¥0.16 cached input, and ¥2.7 output per 1M tokens, converted at models.dev's ¥6.737012 per dollar. Its API id is doubao-seed-2-1-lite-260915 on Ark's model list (https://www.volcengine.com/docs/82379/1330310)."
+
+[[correction]]
+provider = "volcengine"
+model = "doubao-seed-translation-250915"
+valid_from = "2026-11-01T22:18:37Z"
+input = 0.178121
+output = 0.534362
+replaces = {}
+source = "https://www.volcengine.com/docs/82379/1544106"
+note = "Volcengine Ark's online inference prices: doubao-seed-translation at ¥1.2 input and ¥3.6 output per 1M tokens, converted at models.dev's ¥6.737012 per dollar. Its API id is doubao-seed-translation-250915 on Ark's model list (https://www.volcengine.com/docs/82379/1330310)."

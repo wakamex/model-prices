@@ -320,6 +320,21 @@ class CheckTests(unittest.TestCase):
 
         self.assertTrue(checks.parse_mistral(page, TODAY, get))
 
+    def test_mistral_skips_tables_priced_per_page(self):
+        # A table labelled with another unit, such as OCR's per 1,000 pages, holds no token
+        # prices, while an unlabelled one keeps its rows.
+        ocr = ('<table><thead><tr><th>Model</th><th>Input</th><th>Cached input</th><th>Output</th></tr></thead>'
+               '<tbody><tr><td><a href="/models/mistral-ocr-4-1">OCR 4.1</a></td><td>$4</td><td>$0.4</td><td>-</td></tr>'
+               '</tbody></table><p>Prices /1000 Pages</p>')
+        page = PAGES["mistral"].replace("<table", ocr + "<table", 1)
+
+        def get(url):
+            if url.endswith("/models/mistral-ocr-4-1"):
+                raise AssertionError("an OCR model's docs page was read")
+            return PAGES[url]
+
+        self.assertTrue(checks.parse_mistral(page, TODAY, get))
+
     def test_parsers_read_batch_tables(self):
         self.assertEqual(_prices("openai", "batch")[("gpt-6-astra", "input", None, None)], 5.0)
         self.assertEqual(_prices("openai", "batch")[("gpt-6-astra", "output", 272_000, None)], 37.5)

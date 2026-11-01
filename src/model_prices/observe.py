@@ -178,8 +178,8 @@ SOURCES: dict[str, Callable[[Callable[[str], str]], dict[str, tuple[str, dict[st
 # labs' models, such as Alibaba's DeepSeek and Kimi models, at its own prices.
 OWN_MODELS = {"alibaba": r"qwen.*", "arcee": r"trinity-.*", "mistral": r"(?!zai-).*",
               "thinkingmachines": r"thinkingmachines/.*"}
-# Pages priced in yuan are left to models.dev, since their names are not API ids and their
-# dollar prices are conversions.
+# Pages priced in yuan are not read here, since they name models for display rather than by
+# API id; their own models that models.dev lacks are corrections, as AGENTS.md says.
 CHECKED = [provider for provider in checks.SOURCES if provider not in checks.YUAN_TO_USD]
 
 
@@ -228,6 +228,11 @@ def read_checked(provider: str, data: Path, now: datetime,
         if rates.get(item.field, item.value) != item.value:
             raise ValueError(f"{provider}: {model} lists two {item.field} prices")
         rates[item.field] = item.value
+    # A model a page prices for input alone, such as an embedding model, has no output
+    # tokens, so its output price is $0.
+    for rates in found.values():
+        if "input" in rates and "output" not in rates:
+            rates["output"] = 0.0
     found = {model: rates for model, rates in found.items()
              if "input" in rates and "output" in rates}
     for rates in found.values():

@@ -779,7 +779,14 @@ def parse_mistral(text: str, today: datetime, get: Callable[[str], str]) -> list
     name and link to a docs page that gives the API id. A sale price is the price charged."""
     columns = {"Input": "input", "Cached input": "cache_read", "Output": "output"}
     found = []
-    for table in re.findall(r"<table.*?</table>", text, re.S):
+    for match in re.finditer(r"<table.*?</table>", text, re.S):
+        table = match.group(0)
+        # A table whose label prices another unit, such as OCR's "Prices /1000 Pages",
+        # holds no token prices.
+        unit = re.search(r"Prices\s*/\s*([A-Za-z0-9 ]+?)\s*<",
+                         re.sub(r"<(?!/?table)[^>]+>", "<", text[match.end():match.end() + 600]))
+        if unit and unit.group(1) != "M Tokens":
+            continue
         header, rows = _mdx_grid(table)
         titles = header[0] if header else []
         if titles[:1] != ["Model"] or not set(columns) <= set(titles):

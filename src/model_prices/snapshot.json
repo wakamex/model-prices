@@ -6,7 +6,9 @@
    "claude-sonnet-4": "anthropic/claude-sonnet-4-0",
    "composer-2.5": "cursor/composer-2.5",
    "deepseek-v4.1-flash": "deepseek/deepseek-flash",
+   "doubao-seed-2-0-code": "volcengine/doubao-seed-2-0-code-preview-260215",
    "grok-4-6": "xai/grok-4.6",
+   "hy-role-latest": "tencent-tokenhub/hunyuan-role-latest",
    "inkling": "thinkingmachines/thinkingmachines/Inkling",
    "mistral-medium-3-5": "mistral/mistral-medium-2604"
   },
@@ -17423,6 +17425,21 @@
      }
     ]
    },
+   "codestral-embed-2505": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.015,
+       "input": 0.15,
+       "output": 0.0,
+       "source": "https://mistral.ai/pricing/api",
+       "valid_from": "2026-11-01T22:19:08Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "codestral-latest": {
     "standard": [
      {
@@ -17824,6 +17841,21 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-22T16:10:04Z"
+     }
+    ]
+   },
+   "mistral-embed-2312": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.01,
+       "input": 0.1,
+       "output": 0.0,
+       "source": "https://mistral.ai/pricing/api",
+       "valid_from": "2026-11-01T22:19:08Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
      }
     ]
    },
@@ -33676,6 +33708,81 @@
    }
   },
   "tencent-tokenhub": {
+   "hunyuan-role-latest": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.3336,
+       "output": 1.3344,
+       "source": "https://cloud.tencent.com/document/product/1823/130055",
+       "valid_from": "2026-11-01T22:18:37Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": null,
+      "start": null
+     }
+    ]
+   },
+   "hy-mt2-lite": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.0417,
+       "output": 0.1668,
+       "source": "https://cloud.tencent.com/document/product/1823/130055",
+       "valid_from": "2026-11-01T22:18:37Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": null,
+      "start": null
+     }
+    ]
+   },
+   "hy-mt2-plus": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.0695,
+       "output": 0.278,
+       "source": "https://cloud.tencent.com/document/product/1823/130055",
+       "valid_from": "2026-11-01T22:18:37Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": null,
+      "start": null
+     }
+    ]
+   },
+   "hy-mt2-pro": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.0695,
+       "output": 0.278,
+       "source": "https://cloud.tencent.com/document/product/1823/130055",
+       "valid_from": "2026-11-01T22:18:37Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": null,
+      "start": null
+     }
+    ]
+   },
+   "hy-role": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.3336,
+       "output": 1.3344,
+       "source": "https://cloud.tencent.com/document/product/1823/130055",
+       "valid_from": "2026-11-01T22:18:37Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": null,
+      "start": null
+     }
+    ]
+   },
    "hy3": {
     "standard": [
      {
@@ -34861,6 +34968,22 @@
      }
     ]
    },
+   "doubao-seed-2-1-lite-260915": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.023749,
+       "input": 0.118747,
+       "output": 0.400771,
+       "source": "https://www.volcengine.com/docs/82379/1544106",
+       "valid_from": "2026-11-01T22:18:37Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": null,
+      "start": null
+     }
+    ]
+   },
    "doubao-seed-2-1-pro-260628": {
     "standard": [
      {
@@ -34925,6 +35048,21 @@
        "valid_from": "2026-09-02T18:53:25Z",
        "valid_from_basis": "models.dev commit"
       },
+      "start": null
+     }
+    ]
+   },
+   "doubao-seed-translation-250915": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.178121,
+       "output": 0.534362,
+       "source": "https://www.volcengine.com/docs/82379/1544106",
+       "valid_from": "2026-11-01T22:18:37Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": null,
       "start": null
      }
     ]
@@ -38126,5 +38264,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-01T21:16:37Z"
+ "updated_at": "2026-11-01T22:19:13Z"
 }

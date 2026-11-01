@@ -529,6 +529,26 @@ class PriceTests(unittest.TestCase):
         self.assertEqual((after.region, before.region), ("eu", None))
         self.assertAlmostEqual(after.input, before.input * 1.1)
 
+    def test_a_model_models_dev_lacks_can_come_from_a_correction(self):
+        # Tencent's translation model is priced only by a correction, from its first reading,
+        # which also prices earlier usage, as a model's first price does.
+        found = rates("hy-mt2-pro", provider="tencent-tokenhub", at="2026-11-02")
+        self.assertEqual((found.input, found.output, found.valid_from_basis), (0.0695, 0.278, "documented"))
+        self.assertEqual(rates("hy-mt2-pro", provider="tencent-tokenhub", at="2026-01-01").input, 0.0695)
+        # Once models.dev lists the model, the correction with an empty `replaces` stops.
+        with tempfile.TemporaryDirectory() as directory:
+            inputs = Path(directory)
+            for name in DATA.iterdir():
+                if name.is_file():
+                    shutil.copy(name, inputs / name.name)
+            data = json.loads((inputs / "prices.json").read_text())
+            data["providers"]["tencent-tokenhub"]["hy-mt2-pro"] = [{
+                "valid_from": "2026-11-05T00:00:00Z", "commit": "listed",
+                "rates": {"input": 0.07, "output": 0.28}}]
+            (inputs / "prices.json").write_text(json.dumps(data))
+            _use(compiler.build(inputs))
+        self.assertEqual(rates("hy-mt2-pro", provider="tencent-tokenhub", at="2026-11-06").input, 0.07)
+
     def test_tool_calls_cost_their_fee_per_thousand(self):
         # models.dev's web search fee, a correction's renamed one, and a rule's added one.
         opus = rates("claude-opus-5-5", at="2026-10-30")

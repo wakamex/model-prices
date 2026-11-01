@@ -135,9 +135,14 @@ class _Inputs:
         for start, end, item in self.corrections(provider, model):
             if start <= at and (end is None or at < end):
                 if "replaces" in item:
-                    # An open-ended correction stops once models.dev records anything else.
+                    # An open-ended correction stops once models.dev records anything else;
+                    # one for a model models.dev lacks, with an empty `replaces`, stops once
+                    # models.dev lists the model.
                     recorded = self.history(provider, model, at, None, rules=False)
-                    if recorded is None or any(
+                    if not item["replaces"]:
+                        if recorded is not None:
+                            continue
+                    elif recorded is None or any(
                             getattr(recorded, key) != (_modalities(value) if key == "modalities"
                                                        else _regions(value) if key == "tools"
                                                        else value)
@@ -205,6 +210,9 @@ class _Inputs:
         # Usage before the first recorded price takes that first price, corrected as it is.
         firsts = [times[0] for name in (model, self.prices["links"].get(provider, {}).get(model))
                   if name and (times := self.entry_times(provider, name))]
+        # A model only corrections price starts at its first correction.
+        starts = [start for start, _, _ in self.corrections(provider, model)]
+        firsts = firsts or ([min(starts)] if starts else [])
         listed = max(at, min(firsts)) if firsts else at
         found = self.correction(provider, model, listed) if corrected else None
         stated = self.correction(provider, model, listed, mode) if found and mode else None
@@ -355,9 +363,15 @@ def build(data: Path) -> dict[str, Any]:
     """The snapshot content of the inputs in `data`, without its updated_at time."""
     inputs = _Inputs(data)
     prices: dict[str, dict[str, dict[str, list]]] = {}
+    # Models that only corrections price, because models.dev lacks them and no page lists
+    # them as rows, such as Tencent's translation models.
+    corrected = {(item["provider"], item["model"]) for name in ("corrections.toml",
+                                                                 "research_corrections.toml")
+                 for item in inputs.config[name].get("correction", [])}
     for provider in sorted({*inputs.prices["providers"], *inputs.prices["links"]}):
         models = {*inputs.prices["providers"].get(provider, {}),
-                  *inputs.prices["links"].get(provider, {})}
+                  *inputs.prices["links"].get(provider, {}),
+                  *(model for listed, model in corrected if listed == provider)}
         prices[provider] = {
             model: {mode or "standard": _timeline(inputs, provider, model, mode)
                     for mode in (None, *inputs.modes(provider, model))}

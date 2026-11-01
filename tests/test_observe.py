@@ -109,6 +109,23 @@ class ObserveTests(unittest.TestCase):
             "tiers": [{"above": 32000, "input": 2.7, "output": 13.5},
                       {"above": 128000, "input": 4.5, "output": 22.5}]})})
 
+    def test_a_model_priced_for_input_alone_has_no_output_cost(self):
+        # An embedding model's row gives input and cached input prices and no output price.
+        row = ('<tr><td><a href="/models/codestral-embed-99">Codestral Embed</a></td>'
+               "<td>$0.15</td><td>$0.015</td><td>-</td></tr>")
+        url = checks.SOURCES["mistral"][0]
+        pages = {url: (FIXTURES / "mistral.html").read_text().replace("<tbody>", "<tbody>" + row, 1),
+                 checks.MISTRAL_DOCS + "/models/codestral-embed-99": '"names":["codestral-embed-9999"]',
+                 checks.MISTRAL_DOCS + "/models/mistral-large-3-25-12":
+                     (FIXTURES / "mistral-docs-large-3.html").read_text(),
+                 checks.MISTRAL_DOCS + "/models/mistral-large-4-0":
+                     (FIXTURES / "mistral-docs-large-4.html").read_text()}
+
+        found = observe.read_checked("mistral", DATA, TODAY, pages.__getitem__)
+
+        self.assertEqual(found["codestral-embed-9999"][1],
+                         {"input": 0.15, "cache_read": 0.015, "output": 0.0})
+
     def test_alibaba_cache_rules_give_implicit_reads_and_explicit_writes(self):
         implicit, explicit = checks.parse_alibaba_cache(
             (FIXTURES / "alibaba-cache.md").read_text())

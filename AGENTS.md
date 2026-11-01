@@ -1,6 +1,6 @@
 # Audience
 
-- model-prices is for general users, so coverage should match what people use, not what the maintainer's own logs contain. Track every lab that sells its own models through an API, and do not defer a provider because local usage data shows no calls to it. Local usage is evidence of a gap, never evidence that a provider is unneeded.
+- model-prices is for general users, so coverage should match what people use, not what the maintainer's own logs contain. Track every lab that sells its own models through an API or a subscription, and do not defer a provider because local usage data shows no calls to it. A subscription is covered by its plan prices in `data/plans.toml`, for every plan the lab sells to individuals and teams, and by an estimate in `data/estimates.toml` for a model sold only in a subscription. Local usage is evidence of a gap, never evidence that a provider is unneeded.
 
 # Price sources
 
@@ -23,6 +23,7 @@ These cases show the routing:
 - Perplexity's Agent API search fee replaced the Sonar fee models.dev still lists, so `sonar`'s correction gives it. Its fast search fee, which models.dev never listed, is a rule in `data/tools.toml`.
 - OpenAI's preview search fee is $25 on non-reasoning models and $10 on reasoning models. models.dev lacks it and OpenAI's tools table states it per model family, so it is two rules in `data/tools.toml` naming the models by pattern, dated by OpenAI's changelog, and the check compares their prices with the table.
 - Gemini 2.5's search fee is billed per grounded prompt, which models.dev lists under a name meaning per search query, so a correction gives the fee under the per-prompt name, and the check reads the unit from each model's grounding row.
+- Tencent's and Volcengine's own models that models.dev lacks are listed on pages that name models for display and price them in yuan, so each is a correction under the API id the provider's model list gives, converted at models.dev's rate for that provider, with an empty `replaces` so it stops once models.dev lists the model.
 - OpenAI's 10% regional uplift applies to the models a join of its pricing page, data residency table, model pages, and changelog selects, so it is a rule listing those models and their regions, dated by OpenAI's sources, and the check performs the join and fails when it disagrees with the rule. It is currently read into `data/observed_regions.json` by the daily job instead; an agent converts it to a rule when that reader next fails or changes, and adds no rule beside it before then.
 
 # Release policy exceptions
