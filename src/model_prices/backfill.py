@@ -131,8 +131,9 @@ def parse_rates(document: dict[str, Any], provider: str = "") -> dict[str, Any] 
         tiers.append({"above": 200_000, **_rate_values(legacy)})
     if tiers:
         rates["tiers"] = sorted(tiers, key=lambda item: item["above"])
-    if isinstance(cost.get("regions"), dict):
-        rates["regions"] = cost["regions"]
+    for key in ("regions", "tools"):
+        if isinstance(cost.get(key), dict):
+            rates[key] = cost[key]
     # Modality prices on a model with long-context tiers are not priced yet; the check
     # reports such a model from the rules data/prices.json keeps.
     modalities = None if tiers else _modalities(cost, rates)
@@ -353,6 +354,11 @@ def schema1(document: dict[str, Any], where: str = "") -> dict[str, Any]:
     regions = _regions(document["cost"]) if cost else None
     if regions:
         cost["regions"] = regions
+    # Tool fees per 1,000 calls; a fee that depends on a request option, such as
+    # Perplexity's search context size, keeps its base price.
+    search = (document["cost"].get("web_search") or {}) if cost else {}
+    if isinstance(search.get("price"), (int, float)):
+        cost["tools"] = {"web_search": float(search["price"])}
     return _present({"base_model": document.get("base_model"), "status": document.get("status"),
                      "cost": cost, "experimental": {"modes": modes} if modes else None})
 
@@ -457,7 +463,22 @@ def _entries(versions: list[tuple[str, str, dict[str, Any] | None]], provider: s
             entry["scheduled"] = True
         entries.append(entry)
         schemas.append(document.get("schema", 1))
-    return _with_cached_audio(entries, schemas)
+    entries = _with_first_tools(_with_cached_audio(entries, schemas), schemas)
+    return [entry for index, entry in enumerate(entries)
+            if index == 0 or entry["rates"] != entries[index - 1]["rates"]]
+
+
+def _with_first_tools(entries: list[dict[str, Any]], schemas: list[int]) -> list[dict[str, Any]]:
+    """Entries with a model's first recorded tool fees carried back over its earlier entries,
+    as a model's first price covers earlier usage: schema 1 had no field for tool fees, and
+    models.dev added them to its schema 2 files only on 2026-10-22."""
+    first = next((index for index, entry in enumerate(entries) if "tools" in entry["rates"]), None)
+    if first is None:
+        return entries
+    tools = entries[first]["rates"]["tools"]
+    for index in range(first):
+        entries[index] = {**entries[index], "rates": {**entries[index]["rates"], "tools": tools}}
+    return entries
 
 
 def _with_cached_audio(entries: list[dict[str, Any]], schemas: list[int]) -> list[dict[str, Any]]:
@@ -480,8 +501,7 @@ def _with_cached_audio(entries: list[dict[str, Any]], schemas: list[int]) -> lis
         modalities["audio"] = {**earlier, "cache_read": price["cache_read"]}
         entries[index] = {**entries[index], "rates": {**entries[index]["rates"],
                                                       "modalities": modalities}}
-    return [entry for index, entry in enumerate(entries)
-            if index == 0 or entry["rates"] != entries[index - 1]["rates"]]
+    return entries
 
 
 def _link_target(blob: bytes) -> str | None:

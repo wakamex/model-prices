@@ -18,6 +18,7 @@ output = 20.0
 cache_read = 0.4
 cache_write = 5.0
 tiers = [{ above = 272000, input = 8.0, output = 30.0, cache_read = 0.8, cache_write = 10.0 }]
+tools = { web_search = 10 }
 source = "https://openai.com/index/gpt-5-6/"
 note = "\"Update on August 21, 2026: OpenAI dropped the API and credit pricing of GPT-5.6 Sol by over 20% for the next 3 months.\" No time of day is given; models.dev updated on 2026-08-25. See research/price-dates/findings."
 
@@ -31,6 +32,7 @@ output = 20.0
 cache_read = 0.4
 cache_write = 5.0
 tiers = [{ above = 272000, input = 8.0, output = 30.0, cache_read = 0.8, cache_write = 10.0 }]
+tools = { web_search = 10 }
 source = "https://openai.com/index/gpt-5-6/"
 note = "Alias of gpt-5.6-sol, corrected in the same models.dev change."
 
@@ -117,6 +119,7 @@ valid_until = "2026-08-21T06:42:28Z"
 input = 0.75
 output = 3.75
 cache_read = 0.075
+tools = { web_search = 14 }
 source = "https://web.archive.org/web/20260813181124/https://ai.google.dev/gemini-api/docs/pricing"
 note = """
 Google's pricing page listed Gemini 3.6 Flash at $1.50/$7.50 with $0.15 caching in every
@@ -135,6 +138,7 @@ input = 2.0
 output = 10.0
 cache_read = 0.1
 cache_write = 2.5
+tools = { web_search = 10 }
 source = "https://platform.claude.com/docs/en/release-notes/overview"
 note = "October 7, 2026: \"We've lowered the price of prompt cache reads on Claude Sonnet 5.5 from $0.20 USD to $0.10 USD per million tokens.\" No time of day is given. models.dev recorded $0.10 at 2026-10-07T19:46:44Z, its catalog sync restored $0.20 at 20:31:33Z, and $0.10 returned at 22:27:10Z."
 
@@ -187,6 +191,7 @@ input = 1.0
 output = 5.0
 cache_read = 0.1
 cache_write = 1.25
+tools = { web_search = 10 }
 source = "https://www.anthropic.com/news/claude-haiku-4-5"
 note = "Launched at \"$1/$5 per million input and output tokens\"; models.dev listed $1.25 output until 22:14Z. Cache prices follow Anthropic's 1.25x and 0.1x of input."
 
@@ -260,6 +265,7 @@ output = 1.28
 cache_read = 0.032
 cache_write = 0.4
 tiers = [{ above = 256000, input = 0.96, output = 3.84, cache_read = 0.096, cache_write = 1.2 }]
+tools = { web_search = 10 }
 source = "https://www.alibabacloud.com/en/campaign/qwen-plus-discount"
 note = "Alibaba's pricing page (Singapore tab) lists qwen3.7-plus at \"List price $0.4 (Limited-time 20% off)\" for input and \"List price $1.6 (Limited-time 20% off)\" for output, and $1.2/$4.8 above 256K, on 2026-09-09 (https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing) and 2026-10-08. Alibaba's campaign page (https://www.alibabacloud.com/en/campaign/qwen-plus-discount) gives \"from $0.32\" input and \"from $1.28\" output, and applies the discount to input, output, implicit cache input, and explicit cache creation and reads; it named only the qwen3.7-plus alias, and the dated qwen3.7-plus-2026-05-26 is listed without it. The discount has applied since release, which Alibaba's model list dates 2026-06-01 for the international deployment. Cache prices are models.dev's list prices less 20%."
 
@@ -273,6 +279,7 @@ output = 1.28
 cache_read = 0.032
 cache_write = 0.4
 tiers = [{ above = 256000, input = 0.96, output = 3.84, cache_read = 0.096, cache_write = 1.2 }]
+tools = { web_search = 10 }
 replaces = { input = 0.4, output = 1.6 }
 source = "https://www.alibabacloud.com/en/campaign/qwen-plus-discount"
 note = "Alibaba's pricing page (Singapore tab) lists qwen3.7-plus at \"List price $0.4 (Limited-time 20% off)\" for input and \"List price $1.6 (Limited-time 20% off)\" for output, and $1.2/$4.8 above 256K, on 2026-09-09 (https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing) and 2026-10-08. Alibaba's campaign page (https://www.alibabacloud.com/en/campaign/qwen-plus-discount) gives \"from $0.32\" input and \"from $1.28\" output, and applies the discount to input, output, implicit cache input, and explicit cache creation and reads; it named only the qwen3.7-plus alias, and the dated qwen3.7-plus-2026-05-26 is listed without it. The discount has applied since release, which Alibaba's model list dates 2026-06-01 for the international deployment. Cache prices are models.dev's list prices less 20%."
@@ -287,6 +294,7 @@ cache_read = 0.064
 cache_read_explicit = 0.032
 cache_write = 0.4
 tiers = [{ above = 256000, input = 0.96, output = 3.84, cache_read = 0.192, cache_read_explicit = 0.096, cache_write = 1.2 }]
+tools = { web_search = 10 }
 replaces = { input = 0.4, output = 1.6 }
 source = "https://www.alibabacloud.com/en/campaign/qwen-plus-discount"
 note = "Alibaba's pricing page (Singapore tab) lists qwen3.7-plus at \"List price $0.4 (Limited-time 20% off)\" for input and \"List price $1.6 (Limited-time 20% off)\" for output, and $1.2/$4.8 above 256K, on 2026-09-09 (https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing) and 2026-10-08. Alibaba's campaign page (https://www.alibabacloud.com/en/campaign/qwen-plus-discount) gives \"from $0.32\" input and \"from $1.28\" output, and applies the discount to input, output, implicit cache input, and explicit cache creation and reads; it named only the qwen3.7-plus alias, and the dated qwen3.7-plus-2026-05-26 is listed without it. The discount has applied since release, which Alibaba's model list dates 2026-06-01 for the international deployment. Cache prices are models.dev's list prices less 20%. From 2026-10-09, A cache read costs 20% of input on the models its Singapore tab lists for implicit caching, which needs no setup, and 10% on those it lists only for explicit caching, and an explicit cache write costs 125% of input. A model with both modes prices an explicit hit at 10% of input, as cache_read_explicit. (https://www.alibabacloud.com/help/en/model-studio/context-cache); the discount applies to them too."
@@ -298,6 +306,7 @@ valid_from = "2026-08-16T16:00:00Z"
 input = 0.44
 output = 1.32
 cache_read = 0.088
+tools = { web_search = 10 }
 replaces = { input = 0.2, output = 0.4 }
 source = "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
 note = "Singapore tab, on 2026-10-08: \"DeepSeek-V4-Flash-0731 has been adjusted to peak/off-peak pricing since 2026-08-17 00:00\", busy hours $0.44 input and $1.32 output, idle hours $0.22 and $0.66. The time is Beijing time, as the page's peak hours are, which is 2026-08-16T16:00Z. These are the busy-hour prices; schedules.toml halves them in idle hours. Implicit cache hits cost 20% of input (https://www.alibabacloud.com/help/en/model-studio/context-cache). models.dev lists $0.2/$0.4."
@@ -367,6 +376,7 @@ cache_read = 0.006
 cache_read_explicit = 0.003
 cache_write = 0.0375
 tiers = [{ above = 32000, input = 0.1, output = 0.4, cache_read = 0.02, cache_read_explicit = 0.01, cache_write = 0.125 }, { above = 256000, input = 0.2, output = 0.8, cache_read = 0.04, cache_read_explicit = 0.02, cache_write = 0.25 }]
+tools = { web_search = 10 }
 replaces = { input = 0.03, output = 0.13 }
 source = "https://www.alibabacloud.com/help/en/model-studio/context-cache"
 note = "models.dev lists cache reads at 10% of input, the explicit cache hit price, on a model Alibaba lists for implicit caching. Cache prices from Alibaba's context cache page, first read on 2026-10-09: a cache read costs 20% of input on the models its Singapore tab lists for implicit caching, which needs no setup, and 10% on those it lists only for explicit caching, and an explicit cache write costs 125% of input. A model with both modes prices an explicit hit at 10% of input, as cache_read_explicit."
@@ -422,7 +432,8 @@ valid_from = "2026-10-19T18:07:43Z"
 input = 0.25
 output = 2.5
 cache_read = 0.0625
-replaces = { input = 1.0, output = 1.0 }
+tools = { web_search = 2.5 }
+replaces = { input = 1.0, output = 1.0, tools = { web_search = 5 } }
 source = "https://docs.perplexity.ai/docs/agent-api/models"
 note = "Perplexity ended Sonar Chat Completions support on 2026-09-27 and reformulates those requests as Agent API requests, \"rolling out gradually by model\" (https://docs.perplexity.ai/docs/agent-api/migrate-from-sonar/overview). Its Agent API model list prices perplexity/sonar at $0.25 input, $2.50 output, and $0.0625 cached input. models.dev lists Sonar Chat Completions' $1/$1, which Perplexity's pricing page listed until 2026-10-19 between 09:10Z and 18:07Z, when it removed Sonar's prices; the Agent API price applies from that first observation."
 
@@ -623,6 +634,7 @@ input = 0.4
 output = 2.4
 tiers = [{ above = 256000, input = 0.5, output = 3.0 }]
 modes = { thinking = { output = 2.4, tiers = [{ above = 256000, output = 3.0 }] } }
+tools = { web_search = 10 }
 replaces = { input = 0.4, output = 2.4 }
 source = "https://web.archive.org/web/20260402181911/https://www.alibabacloud.com/help/en/model-studio/model-pricing"
 note = "Singapore tab, on 2026-10-04: $0.4 input, $2.4 output per 1M tokens; above 256K $0.5/$3.0. models.dev lists no tiers. Archived on 2026-04-02 with the 256K-1M tier at the same prices, thinking output included, the earliest copy that renders its prices; Alibaba released qwen3.5-plus on 2026-02-15. Thinking-mode output costs the same as non-thinking output in both tiers."
@@ -637,6 +649,7 @@ cache_read = 0.04
 cache_write = 0.5
 tiers = [{ above = 256000, input = 0.5, output = 3.0, cache_read = 0.05, cache_write = 0.625 }]
 modes = { thinking = { output = 2.4, tiers = [{ above = 256000, output = 3.0 }] } }
+tools = { web_search = 10 }
 replaces = { input = 0.4, output = 2.4 }
 source = "https://web.archive.org/web/20260402181911/https://www.alibabacloud.com/help/en/model-studio/model-pricing"
 note = "Singapore tab, on 2026-10-04: $0.4 input, $2.4 output per 1M tokens; above 256K $0.5/$3.0. models.dev lists no tiers. Archived on 2026-04-02 with the 256K-1M tier at the same prices, thinking output included, the earliest copy that renders its prices; Alibaba released qwen3.5-plus on 2026-02-15. Thinking-mode output costs the same as non-thinking output in both tiers. Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: a cache read costs 20% of input on the models its Singapore tab lists for implicit caching, which needs no setup, and 10% on those it lists only for explicit caching, and an explicit cache write costs 125% of input. A request uses one mode, so an explicit hit on a model with implicit caching is priced as an implicit one."
@@ -647,6 +660,7 @@ model = "qwen3.6-35b-a3b"
 valid_from = "2026-04-27T19:36:51Z"
 input = 0.375
 output = 2.25
+tools = { web_search = 10 }
 replaces = { input = 0.248, output = 1.485 }
 source = "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
 note = "Singapore tab, on 2026-10-04: $0.375 input, $2.25 output per 1M tokens. models.dev lists $0.248/$1.485. models.dev's $0.248/$1.485 is Alibaba's Global deployment price; the Singapore (International) price is $0.375/$2.25. Applies from models.dev's first record, since research found the official price applied throughout (finding research/price-dates/findings/alibaba_qwen3.6_35b_a3b_gap)."
@@ -660,6 +674,7 @@ input = 0.25
 output = 1.5
 cache_write = 0.3125
 tiers = [{ above = 256000, input = 1.0, output = 4.0, cache_write = 1.25 }]
+tools = { web_search = 10 }
 replaces = { input = 0.1875, output = 1.125 }
 source = "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
 note = "Singapore tab, on 2026-10-04: $0.25 input, $1.5 output per 1M tokens; above 256K $1.0/$4.0. models.dev lists $0.1875/$1.125. models.dev lists no tiers. Cache prices keep models.dev's ratio to the input price. Alibaba's model page gives $0.25/$1.5 as the original price, excluding promotions; models.dev's prices are 25% lower, a promotional rate. Applies from models.dev's first record, since research found the official price applied throughout (finding research/price-dates/findings/alibaba_qwen3.6_flash_gap)."
@@ -673,6 +688,7 @@ output = 1.5
 cache_read = 0.025
 cache_write = 0.3125
 tiers = [{ above = 256000, input = 1.0, output = 4.0, cache_read = 0.1, cache_write = 1.25 }]
+tools = { web_search = 10 }
 replaces = { input = 0.1875, output = 1.125 }
 source = "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
 note = "Singapore tab, on 2026-10-04: $0.25 input, $1.5 output per 1M tokens; above 256K $1.0/$4.0. models.dev lists $0.1875/$1.125. models.dev lists no tiers. Cache prices keep models.dev's ratio to the input price. Alibaba's model page gives $0.25/$1.5 as the original price, excluding promotions; models.dev's prices are 25% lower, a promotional rate. Applies from models.dev's first record, since research found the official price applied throughout (finding research/price-dates/findings/alibaba_qwen3.6_flash_gap). Cache prices from Alibaba's context cache page (https://www.alibabacloud.com/help/en/model-studio/context-cache), first read on 2026-10-09: a cache read costs 20% of input on the models its Singapore tab lists for implicit caching, which needs no setup, and 10% on those it lists only for explicit caching, and an explicit cache write costs 125% of input. A request uses one mode, so an explicit hit on a model with implicit caching is priced as an implicit one."
@@ -862,6 +878,7 @@ valid_from = "2026-07-23T23:29:57Z"
 input = 0.5
 output = 60.0
 modalities = { text = { input = 0.5, output = 3.0 }, image = { input = 0.5, output = 60.0 } }
+tools = { web_search = 14 }
 replaces = { input = 0.5, output = 60.0, modalities = {} }
 source = "https://ai.google.dev/gemini-api/docs/pricing"
 note = "Google's pricing page: input \"$0.50 (text/image)\", output \"$3 (text and thinking) $60.00 (images)\", on 2026-10-30 and in the Wayback Machine copy of 2026-07-25 (https://web.archive.org/web/20260725081315/https://ai.google.dev/gemini-api/docs/pricing), two days after models.dev's first record, so it applies from that record."
@@ -884,6 +901,7 @@ valid_from = "2026-07-23T23:30:04Z"
 input = 2.0
 output = 120.0
 modalities = { text = { input = 2.0, output = 12.0 }, image = { input = 2.0, output = 120.0 } }
+tools = { web_search = 14 }
 replaces = { input = 2.0, output = 120.0, modalities = {} }
 source = "https://ai.google.dev/gemini-api/docs/pricing"
 note = "Google's pricing page: input \"$2.00 (text/image)\", output \"$12.00 (text and thinking) $120.00 (images)\", on 2026-10-30 and in the Wayback Machine copy of 2026-07-25 (https://web.archive.org/web/20260725081315/https://ai.google.dev/gemini-api/docs/pricing), two days after models.dev's first record, so it applies from that record."
@@ -895,6 +913,7 @@ valid_from = "2026-10-10T20:14:52Z"
 input = 1.5
 output = 30.0
 modalities = { text = { input = 1.5, output = 7.5 }, image = { input = 1.5, output = 30.0 }, video = { input = 1.5 } }
+tools = { web_search = 14 }
 replaces = { input = 1.5, output = 30.0, modalities = {} }
 source = "https://ai.google.dev/gemini-api/docs/pricing"
 note = "Google's pricing page: input \"$1.50 (text/image/video)\", output \"$7.50 (text and thinking) $30.00 (images)\", on 2026-10-30 and in the Wayback Machine copy of 2026-10-10T23:32Z (https://web.archive.org/web/20261010233216/https://ai.google.dev/gemini-api/docs/pricing), three hours after model-prices first read the model's price on that page, before models.dev listed it, so it applies from that first observation."
@@ -941,6 +960,7 @@ valid_from = "2026-10-10T20:14:52Z"
 input = 0.75
 output = 4.5
 modalities = { text = { input = 0.75, output = 4.5 }, audio = { input = 3.0, output = 12.0 }, image = { input = 1.0 }, video = { input = 1.0 } }
+tools = { web_search = 14 }
 replaces = { input = 0.75, output = 4.5, modalities = {} }
 source = "https://ai.google.dev/gemini-api/docs/pricing"
 note = "Google's pricing page: input \"$0.75 (text) $3.00 or $0.005/min (audio) $1.00 or $0.002/min (image/video)\", output \"$4.50 (text) $12.00 or $0.018/min (audio)\", on 2026-10-30 and in the Wayback Machine copy of 2026-10-10T23:32Z (https://web.archive.org/web/20261010233216/https://ai.google.dev/gemini-api/docs/pricing), three hours after model-prices first read the model's price on that page, before models.dev listed it with these prices, so it applies from that first observation."
@@ -952,6 +972,7 @@ valid_from = "2026-10-10T20:14:52Z"
 input = 0.75
 output = 4.5
 modalities = { text = { input = 0.75, output = 4.5 }, audio = { input = 3.0, output = 12.0 }, image = { input = 1.0 }, video = { input = 1.0 } }
+tools = { web_search = 14 }
 replaces = { input = 0.75, output = 4.5, modalities = {} }
 source = "https://ai.google.dev/gemini-api/docs/pricing"
 note = "Google's pricing page: input \"$0.75 (text) $3.00 or $0.005/min (audio) $1.00 or $0.002/min (image/video)\", output \"$4.50 (text) $12.00 or $0.018/min (audio)\", on 2026-10-30 and in the Wayback Machine copy of 2026-10-10T23:32Z (https://web.archive.org/web/20261010233216/https://ai.google.dev/gemini-api/docs/pricing), three hours after model-prices first read the model's price on that page, before models.dev listed it with these prices, so it applies from that first observation."
@@ -963,6 +984,7 @@ valid_from = "2026-07-23T23:30:41Z"
 input = 0.75
 output = 4.5
 modalities = { text = { input = 0.75, output = 4.5 }, audio = { input = 3.0, output = 12.0 }, image = { input = 1.0 }, video = { input = 1.0 } }
+tools = { web_search = 14 }
 replaces = { input = 0.75, output = 4.5, modalities = { text = { input = 0.75, output = 4.5 }, audio = { input = 3.0, output = 12.0 } } }
 source = "https://ai.google.dev/gemini-api/docs/pricing"
 note = "Google's pricing page: input \"$0.75 (text) $3.00 or $0.005/min (audio) $1.00 or $0.002/min (image/video)\", on 2026-10-30 and in the Wayback Machine copy of 2026-07-25 (https://web.archive.org/web/20260725081315/https://ai.google.dev/gemini-api/docs/pricing), two days after models.dev's first record, which lists audio but not image or video input until 2026-10-20."
@@ -988,3 +1010,46 @@ cache_read = 0.007
 replaces = { input = 0.22, output = 0.66, cache_read = 0.007 }
 source = "https://docs.arcee.ai/get-started/pricing"
 note = "Arcee's pricing page lists deepseek/deepseek-v4.1-flash at $0.22 input, $1.20 output, and $0.007 cached input on 2026-11-01, with no dated note; models.dev lists $0.66 output. The day's 06:28Z check passed with $0.66, so the new price applies from its first observation."
+
+# Gemini 2.5 bills Grounding with Google Search per grounded prompt, $35 per 1,000, however
+# many search queries a prompt runs; models.dev lists the price as web_search, the unit
+# Gemini 3 bills per search query. These give it as web_search_prompt for the current rates.
+
+[[correction]]
+provider = "google"
+model = "gemini-2.5-flash"
+valid_from = "2026-10-22T20:20:18Z"
+input = 0.3
+output = 2.5
+cache_read = 0.03
+modalities = { text = { input = 0.3, output = 2.5, cache_read = 0.03 }, audio = { input = 1.0, cache_read = 0.1 } }
+tools = { web_search_prompt = 35.0 }
+replaces = { input = 0.3, output = 2.5, cache_read = 0.03, tools = { web_search = 35.0 } }
+source = "https://ai.google.dev/gemini-api/docs/pricing#gemini-2.5-flash"
+note = "Google's pricing page: Grounding with Google Search costs $35 per 1,000 grounded prompts after 1,500 free requests a day; a grounded prompt is billed once however many queries it runs."
+
+[[correction]]
+provider = "google"
+model = "gemini-2.5-flash-lite"
+valid_from = "2026-10-22T20:20:18Z"
+input = 0.1
+output = 0.4
+cache_read = 0.01
+modalities = { text = { input = 0.1, output = 0.4, cache_read = 0.01 }, audio = { input = 0.3, cache_read = 0.03 } }
+tools = { web_search_prompt = 35.0 }
+replaces = { input = 0.1, output = 0.4, cache_read = 0.01, tools = { web_search = 35.0 } }
+source = "https://ai.google.dev/gemini-api/docs/pricing#gemini-2.5-flash-lite"
+note = "Google's pricing page: Grounding with Google Search costs $35 per 1,000 grounded prompts after 1,500 free requests a day; a grounded prompt is billed once however many queries it runs."
+
+[[correction]]
+provider = "google"
+model = "gemini-2.5-pro"
+valid_from = "2026-10-22T20:20:18Z"
+input = 1.25
+output = 10.0
+cache_read = 0.125
+tiers = [{ above = 200000, input = 2.5, output = 15.0, cache_read = 0.25 }]
+tools = { web_search_prompt = 35.0 }
+replaces = { input = 1.25, output = 10.0, cache_read = 0.125, tools = { web_search = 35.0 } }
+source = "https://ai.google.dev/gemini-api/docs/pricing#gemini-2.5-pro"
+note = "Google's pricing page: Grounding with Google Search costs $35 per 1,000 grounded prompts after 1,500 free requests a day; a grounded prompt is billed once however many queries it runs."

@@ -58,7 +58,7 @@ class _Inputs:
                                  if regions.exists() else {})
         self.config = {name: tomllib.loads((data / name).read_text()) for name in (
             "aliases.toml", "batch.toml", "cache_writes.toml", "corrections.toml", "estimates.toml",
-            "plans.toml",
+            "plans.toml", "tools.toml",
             "research_corrections.toml", "schedules.toml")}
         self.cache_write_1h = {item["provider"]: item["multiple"]
                                for item in self.config["cache_writes.toml"]["cache_write_1h"]}
@@ -106,6 +106,18 @@ class _Inputs:
                          if _parse_time(entry["valid_from"]) <= at), {})
         return _regions({**(recorded or {}), **observed})
 
+    def tools(self, provider: str, model: str, at: datetime,
+              recorded: dict[str, float] | None) -> tuple[tuple[str, float], ...]:
+        """A model's tool fees at `at`: models.dev's or a correction's, with the tools.toml
+        rules in effect adding fees for tools those lack, never replacing one."""
+        fees = dict(recorded or {})
+        for item in self.config["tools.toml"].get("tool", []):
+            if (item["provider"] == provider and _parse_time(item["valid_from"]) <= at
+                    and re.search(item.get("models", ""), model)):
+                for name, price in item["tools"].items():
+                    fees.setdefault(name, float(price))
+        return _regions(fees)
+
     def _entry_times(self, provider: str, model: str) -> tuple[datetime, ...]:
         entries = self.prices["providers"].get(provider, {}).get(model, [])
         return tuple(_parse_time(entry["valid_from"]) for entry in entries)
@@ -124,13 +136,14 @@ class _Inputs:
             if start <= at and (end is None or at < end):
                 if "replaces" in item:
                     # An open-ended correction stops once models.dev records anything else.
-                    recorded = self.history(provider, model, at, None)
+                    recorded = self.history(provider, model, at, None, rules=False)
                     if recorded is None or any(
                             getattr(recorded, key) != (_modalities(value) if key == "modalities"
+                                                       else _regions(value) if key == "tools"
                                                        else value)
                             for key, value in item["replaces"].items()):
                         continue
-                values = {key: item.get(key) for key in (*RATE_FIELDS, "modalities", "regions")}
+                values = {key: item.get(key) for key in (*RATE_FIELDS, "modalities", "regions", "tools")}
                 tiers = item.get("tiers")
                 if mode is not None:
                     if mode not in item.get("modes", {}):
@@ -140,7 +153,8 @@ class _Inputs:
                     provider=provider, model=model, valid_from=item["valid_from"],
                     source=item["source"], **{**values, "modalities": _modalities(
                         values["modalities"]), "regions": self.regions(
-                            provider, model, at, values["regions"])},
+                            provider, model, at, values["regions"]),
+                       "tools": self.tools(provider, model, at, values["tools"])},
                     tiers=_tiers(tiers),
                     valid_from_basis="documented",
                 )
@@ -149,10 +163,13 @@ class _Inputs:
         link = self.link(provider, model, at)
         return self.correction(provider, link, at, mode) if link else None
 
-    def history(self, provider: str, model: str, at: datetime, mode: str | None) -> Rates | None:
+    def history(self, provider: str, model: str, at: datetime, mode: str | None,
+                rules: bool = True) -> Rates | None:
+        """models.dev's rates at `at`, with the tool fees tools.toml adds unless `rules` is
+        False, as a correction's `replaces` compares them."""
         link = self.link(provider, model, at)
         if link:
-            return self.history(provider, link, at, mode)
+            return self.history(provider, link, at, mode, rules)
         entries = self.prices["providers"].get(provider, {}).get(model, [])
         if not entries:
             return None
@@ -175,6 +192,8 @@ class _Inputs:
             cache_read_explicit=values.get("cache_read_explicit"), tiers=_tiers(tiers),
             modalities=_modalities(values.get("modalities")),
             regions=self.regions(provider, model, at, values.get("regions")),
+            tools=(self.tools(provider, model, at, values.get("tools")) if rules
+                   else _regions(values.get("tools"))),
             valid_from_basis=("first observed" if "source" in entry else "scheduled"
                               if entry.get("scheduled") else "models.dev commit"),
         )
@@ -214,6 +233,8 @@ class _Inputs:
         times |= {start for start, _ in self.batches(provider, model)}
         times |= {_parse_time(entry["valid_from"])
                   for entry in self.observed_regions.get(provider, {}).get(model, [])}
+        times |= {_parse_time(item["valid_from"]) for item in self.config["tools.toml"].get("tool", [])
+                  if item["provider"] == provider and re.search(item.get("models", ""), model)}
         return sorted(times)
 
     def modes(self, provider: str, model: str) -> list[str]:
@@ -259,7 +280,12 @@ def _in_mode(corrected: Rates, standard: Rates, moded: Rates) -> Rates:
                                         for field in ("input", "output", "cache_read")
                                         if getattr(item, field) is not None})
                        for item in corrected.modalities)
-    return replace(corrected, **{field: scaled(field) for field in RATE_FIELDS}, tiers=(),
+    # Long-prompt tiers keep each price's ratio, as the mode's own tiers do.
+    tiers = tuple(replace(tier, **{field: getattr(tier, field) * ratio(field)
+                                   for field in ("input", "output", "cache_read", "cache_write")
+                                   if getattr(tier, field) is not None})
+                  for tier in corrected.tiers)
+    return replace(corrected, **{field: scaled(field) for field in RATE_FIELDS}, tiers=tiers,
                    modalities=modalities)
 
 
@@ -295,8 +321,9 @@ def _stored(found: Rates | None, model: str) -> dict[str, Any] | None:
     if "tiers" in stored:
         stored["tiers"] = [{key: value for key, value in tier.items() if value is not None}
                            for tier in stored["tiers"]]
-    if "regions" in stored:
-        stored["regions"] = dict(stored["regions"])
+    for key in ("regions", "tools"):
+        if key in stored:
+            stored[key] = dict(stored[key])
     if "modalities" in stored:
         stored["modalities"] = {item.pop("modality"): {key: value for key, value in item.items()
                                                        if value is not None}

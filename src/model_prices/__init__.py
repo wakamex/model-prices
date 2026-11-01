@@ -77,11 +77,13 @@ class CostBreakdown:
     cache_write: float
     cache_write_1h: float = 0.0
     cache_read_explicit: float = 0.0
+    # Tool fees, such as web searches, beside the tokens.
+    tools: float = 0.0
 
     @property
     def total(self) -> float:
         return (self.input + self.output + self.cache_read + self.cache_write
-                + self.cache_write_1h + self.cache_read_explicit)
+                + self.cache_write_1h + self.cache_read_explicit + self.tools)
 
 
 @dataclass(frozen=True)
@@ -126,6 +128,11 @@ class Rates:
     # The region whose factor the prices above include, when rates() was asked for a region
     # the model prices; None otherwise.
     region: str | None = None
+    # USD per 1,000 billable calls of each tool unit, as (tool, price) pairs, such as
+    # ("web_search", 10.0). A tool name names one billing unit: web_search a search or
+    # search tool call, web_search_prompt a Google grounded prompt, web_search_preview an
+    # OpenAI preview search call, and web_search_fast a Perplexity fast search.
+    tools: tuple[tuple[str, float], ...] = ()
 
     def modality(self, name: str) -> ModalityRates | None:
         """The prices the provider states for a modality, or None if it lists none."""
@@ -136,12 +143,13 @@ class Rates:
         """The prices alone, without provenance, for comparing rates from different sources."""
         return (self.input, self.output, self.cache_read, self.cache_write, self.tiers,
                 self.period, self.cache_write_1h_multiple, self.cache_read_explicit,
-                self.modalities, self.regions, self.region)
+                self.modalities, self.regions, self.region, self.tools)
 
     def breakdown(self, input_tokens: int = 0, output_tokens: int = 0,
                   cache_read_tokens: int = 0, cache_write_tokens: int = 0,
                   cache_write_1h_tokens: int = 0, cache_read_explicit_tokens: int = 0,
-                  modality_tokens: dict[str, dict[str, int]] | None = None) -> CostBreakdown:
+                  modality_tokens: dict[str, dict[str, int]] | None = None,
+                  tool_calls: dict[str, int] | None = None) -> CostBreakdown:
         """Price one request by token type; input_tokens excludes cache reads and writes.
 
         cache_write_tokens are five-minute cache writes and cache_write_1h_tokens one-hour
@@ -158,6 +166,10 @@ class Rates:
         Cache writes and explicit hits may be passed beside it. A modality's missing price
         is its own input price for cached tokens when it states one, and otherwise the
         price of a token without a modality.
+
+        tool_calls gives billable tool calls by tool name, such as {"web_search": 3}, priced
+        per 1,000 at Rates.tools; a count for a tool the model does not price raises, and a
+        zero count is ignored. Tool fees are not scaled by modes, regions, or schedules.
         """
         plain = (input_tokens, output_tokens, cache_read_tokens, cache_write_tokens,
                  cache_write_1h_tokens, cache_read_explicit_tokens)
@@ -186,6 +198,7 @@ class Rates:
                 spent[key] += count * prices[key]
         return CostBreakdown(
             tier_above=applied,
+            tools=self._tool_cost(tool_calls),
             input=spent["input"] / 1e6,
             output=spent["output"] / 1e6,
             cache_read=spent["cache_read"] / 1e6,
@@ -193,6 +206,21 @@ class Rates:
             cache_write_1h=cache_write_1h_tokens * cache_write_1h / 1e6,
             cache_read_explicit=cache_read_explicit_tokens * explicit / 1e6,
         )
+
+    def _tool_cost(self, tool_calls: dict[str, int] | None) -> float:
+        """The fees for tool calls, each tool's count times its price per 1,000."""
+        prices = dict(self.tools)
+        total = 0.0
+        for tool, count in (tool_calls or {}).items():
+            if isinstance(count, bool) or not isinstance(count, int) or count < 0:
+                raise ValueError(f"{tool} calls must be a whole number of calls, not {count!r}")
+            if count == 0:
+                continue
+            if tool not in prices:
+                raise ValueError(f"{self.provider}/{self.model} has no price for {tool} calls; "
+                                 f"it prices {', '.join(prices) or 'no tools'}")
+            total += count * prices[tool] / 1e3
+        return total
 
     def _tiered(self, prompt: int) -> tuple[int | None, dict[str, float | None]]:
         """The long-context tier a prompt of this size reaches, if any, and the prices of a
@@ -253,11 +281,12 @@ class Rates:
     def cost(self, input_tokens: int = 0, output_tokens: int = 0,
              cache_read_tokens: int = 0, cache_write_tokens: int = 0,
              cache_write_1h_tokens: int = 0, cache_read_explicit_tokens: int = 0,
-             modality_tokens: dict[str, dict[str, int]] | None = None) -> float:
+             modality_tokens: dict[str, dict[str, int]] | None = None,
+             tool_calls: dict[str, int] | None = None) -> float:
         """Price one request in USD; input_tokens excludes cache reads and writes."""
         return self.breakdown(input_tokens, output_tokens, cache_read_tokens,
                               cache_write_tokens, cache_write_1h_tokens,
-                              cache_read_explicit_tokens, modality_tokens).total
+                              cache_read_explicit_tokens, modality_tokens, tool_calls).total
 
 
 # The snapshot format this version reads. Rate fields it does not know are ignored, so a
@@ -565,6 +594,7 @@ def _lookup(provider: str, model: str, at: datetime, mode: str | None,
     values["tiers"] = _tiers(values.get("tiers"))
     values["modalities"] = _modalities(values.get("modalities"))
     values["regions"] = tuple(sorted((values.get("regions") or {}).items()))
+    values["tools"] = tuple(sorted((values.get("tools") or {}).items()))
     return Rates(**{**values, "provider": provider})
 
 
@@ -748,6 +778,7 @@ def cost(model: str, *, input_tokens: int = 0, output_tokens: int = 0,
          cache_read_tokens: int = 0, cache_write_tokens: int = 0,
          cache_write_1h_tokens: int = 0, cache_read_explicit_tokens: int = 0,
          modality_tokens: dict[str, dict[str, int]] | None = None,
+         tool_calls: dict[str, int] | None = None,
          at: datetime | str | None = None, provider: str | None = None,
          mode: str | None = None, prices_at: datetime | str | None = None,
          estimate: bool = False, region: str | None = None) -> float | None:
@@ -756,7 +787,8 @@ def cost(model: str, *, input_tokens: int = 0, output_tokens: int = 0,
     cache_write_tokens are five-minute cache writes and cache_write_1h_tokens one-hour ones.
     cache_read_explicit_tokens are cache hits on prefixes the request marked for caching,
     for providers that price them apart. modality_tokens gives input, cache_read, and output
-    tokens by modality in place of the plain counts, as Rates.breakdown describes. region
+    tokens by modality in place of the plain counts, and tool_calls billable tool calls by
+    tool name, as Rates.breakdown describes. region
     prices a request served in a region, as rates() describes.
     estimate=True prices a model with no per-token price at its stand-in's rates, as rates()
     does; check rates(...).estimated_from to tell an estimate from a price.
@@ -766,7 +798,8 @@ def cost(model: str, *, input_tokens: int = 0, output_tokens: int = 0,
     if found is None:
         return None
     return found.cost(input_tokens, output_tokens, cache_read_tokens, cache_write_tokens,
-                      cache_write_1h_tokens, cache_read_explicit_tokens, modality_tokens)
+                      cache_write_1h_tokens, cache_read_explicit_tokens, modality_tokens,
+                      tool_calls)
 
 
 @dataclass(frozen=True)
@@ -964,6 +997,8 @@ def main(argv: list[str] | None = None) -> int:
         print(f"above {tier.above:,} prompt tokens: input {usd(tier.input)}  "
               f"output {usd(tier.output)}  cache read {usd(tier.cache_read)}{explicit(tier)}  "
               f"cache write {usd(tier.cache_write)}")
+    if found.tools:
+        print("tools: " + ", ".join(f"{name} ${price:g} per 1,000 calls" for name, price in found.tools))
     for item in found.modalities:
         stated = [f"{label} ${value:g}" for label, value in (
             ("input", item.input), ("output", item.output), ("cache read", item.cache_read))

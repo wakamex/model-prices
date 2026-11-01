@@ -529,6 +529,31 @@ class PriceTests(unittest.TestCase):
         self.assertEqual((after.region, before.region), ("eu", None))
         self.assertAlmostEqual(after.input, before.input * 1.1)
 
+    def test_tool_calls_cost_their_fee_per_thousand(self):
+        # models.dev's web search fee, a correction's renamed one, and a rule's added one.
+        opus = rates("claude-opus-5-5", at="2026-10-30")
+        self.assertEqual(dict(opus.tools), {"web_search": 10.0})
+        parts = opus.breakdown(input_tokens=1000, tool_calls={"web_search": 3})
+        self.assertAlmostEqual(parts.tools, 0.03)
+        self.assertAlmostEqual(parts.total, parts.input + 0.03)
+        self.assertEqual(dict(rates("gemini-2.5-flash", provider="google", at="2026-10-30").tools),
+                         {"web_search_prompt": 35.0})
+        sonar = dict(rates("sonar", provider="perplexity", at="2026-11-02").tools)
+        self.assertEqual(sonar, {"web_search": 2.5, "web_search_fast": 1.0})
+        preview = dict(rates("gpt-4.1", provider="openai", at="2026-10-30").tools)
+        self.assertEqual(preview["web_search_preview"], 25.0)
+        # Tool fees are not scaled by modes or regions.
+        us = rates("claude-fable-5-1", at="2026-10-30", mode="batch", region="us")
+        self.assertEqual(dict(us.tools), {"web_search": 10.0})
+        # An unpriced tool, a negative or fractional count, or a bool raises; zero is ignored.
+        self.assertEqual(opus.cost(tool_calls={"web_search_prompt": 0}), 0)
+        for calls in ({"web_search_prompt": 1}, {"web_search": -1}, {"web_search": 1.5},
+                      {"web_search": True}):
+            with self.subTest(calls=calls), self.assertRaises(ValueError):
+                opus.cost(tool_calls=calls)
+        # A model's first recorded tool fee covers its earlier usage.
+        self.assertEqual(dict(rates("claude-opus-5-5", at="2026-01-01").tools), {"web_search": 10.0})
+
     def test_tokens_by_modality_cost_their_own_prices(self):
         split = {"text": {"input": 800, "cache_read": 100, "output": 200},
                  "audio": {"input": 2500, "cache_read": 1000, "output": 2500},
@@ -923,8 +948,11 @@ class RefreshTests(unittest.TestCase):
         """The bundled data with a later Opus 5.5 price cut."""
         snapshot = json.loads(Path(model_prices.__file__).with_name("snapshot.json").read_text())
         timeline = snapshot["prices"]["anthropic"]["claude-opus-5-5"]["standard"]
+        before = [interval for interval in timeline
+                  if (interval["start"] or "") < "2026-10-02T00:00:00Z"][-1]
         timeline.append({"start": "2026-10-02T00:00:00Z", "rates": {
-            **timeline[-1]["rates"], "input": 3.0, "valid_from": "2026-10-02T00:00:00Z"}})
+            **before["rates"], "input": 3.0, "valid_from": "2026-10-02T00:00:00Z"}})
+        timeline.sort(key=lambda interval: interval["start"] or "")
         return compiler.serialize({**snapshot, "updated_at": updated_at})
 
     def test_refresh_uses_the_published_snapshot_and_records_its_basis(self):

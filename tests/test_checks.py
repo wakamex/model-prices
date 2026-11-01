@@ -582,6 +582,30 @@ Batch
         self.assertEqual({r.status for r in results}, {"ok"})
         self.assertIn(("flex input", 272_000), {(r.field, r.above) for r in results})
 
+    def test_tool_fees_are_read_from_each_provider_page(self):
+        pages = {
+            "openai": "| Web search | Web search (all models) | $10.00 / 1k calls + Search content tokens billed at model rates. |\n"
+                      "| Web search | Web search preview (reasoning models, including `gpt-5`, `o-series`) | $10.00 / 1k calls + tokens. |\n"
+                      "| Web search | Web search preview (non-reasoning models) | $25.00 / 1k calls + Search content tokens are free. |",
+            "anthropic": "Web search is available on the Claude API for **$10 USD per 1,000 searches**, plus standard token costs.",
+            "xai": "| Web Search | `web_search` | Search the internet and browse web pages | $5 |",
+            "perplexity": "`web_search` is billed at **$2.50 per 1,000 invocations**, or **$1.00 per 1,000 invocations** with `search_type: \"fast\"`.",
+            "alibaba": "<p>Fee per 1,000 calls for the web search tool:</p><ul><li>For the China (Beijing) regions: $0.573411.</li><li>For the Singapore region: $10.00.</li></ul>",
+        }
+        self.assertEqual({provider: checks.tool_prices(provider, page) for provider, page in pages.items()}, {
+            "openai": {"web_search": {10.0}, "web_search_preview": {10.0, 25.0}},
+            "anthropic": {"web_search": {10.0}}, "xai": {"web_search": {5.0}},
+            "perplexity": {"web_search": {2.5}, "web_search_fast": {1.0}},
+            "alibaba": {"web_search": {10.0}}})
+        with self.assertRaisesRegex(ValueError, "page format changed"):
+            checks.tool_prices("anthropic", "Web search costs money.")
+        # Google's grounding row names its unit: grounded prompts on Gemini 2.5.
+        row = "| Grounding with Google Search | Not available | 1,500 RPD (free), then $35 / 1,000 grounded prompts |"
+        page = PAGES["google"].replace("| Output price", row + "\n| Output price", 1)
+        found = {(item.model, item.field): item.value for item in checks.parse_google(page, TODAY)
+                 if item.field.startswith("tool:")}
+        self.assertIn("tool:web_search_prompt", {field for _, field in found})
+
     def test_official_pages_match_effective_prices(self):
         # Perplexity's fixture lists Sonar's Agent API price, which applies from 2026-10-19.
         results = checks.run([p for p in checks.SOURCES if p != "perplexity"],

@@ -913,6 +913,14 @@ def parse_google(text: str, today: datetime) -> list[Observed]:
         if heading not in ids:
             raise ValueError(f"google: no API ids under {heading!r}; the page format changed")
         for row in table:
+            # Grounding with Google Search is a tool fee: per grounded prompt on Gemini 2.5,
+            # per search query on Gemini 3 and later, which the row calls requests.
+            grounding = re.search(r"\$([0-9]+(?:\.[0-9]+)?) (?:per|/) 1,000 (requests|grounded prompts)",
+                                  row[-1]) if row[0].startswith("Grounding with Google Search") else None
+            if grounding and mode is None:
+                tool = "web_search_prompt" if grounding.group(2) == "grounded prompts" else "web_search"
+                found.extend(Observed("google", model, f"tool:{tool}", float(grounding.group(1)))
+                             for model in ids[heading])
             field = next((value for key, value in rows.items() if row[0].startswith(key)), None)
             if field is None:
                 continue
@@ -1328,6 +1336,8 @@ def fetch(url: str) -> str:
 def _value(found, field: str, above: int | None, modality: str | None = None) -> float | None:
     if found is None:
         return None
+    if field.startswith("tool:"):
+        return dict(found.tools).get(field[5:])
     # A modality's price is the one cost() charges its tokens, stated or filled in.
     if modality is not None:
         return found._modality_prices(modality, found._tiered(above + 1 if above else 0)[1])[field]
@@ -1448,6 +1458,55 @@ def _rule_regions(factors) -> str:
     return ", ".join(f"{name} {factor:g}x" for name, factor in factors) or "none"
 
 
+# Pages that state a provider's tool fees for all its models, and the prices each states
+# per 1,000 calls by tool name, read from one fixed sentence or table row.
+TOOL_PAGES = {
+    "openai": "https://developers.openai.com/api/docs/pricing.md",
+    "anthropic": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+    "xai": "https://docs.x.ai/developers/pricing.md",
+    "perplexity": "https://docs.perplexity.ai/docs/agent-api/tools/web-search.md",
+    "alibaba": "https://www.alibabacloud.com/help/en/model-studio/web-search.md",
+}
+
+
+def tool_prices(provider: str, page: str) -> dict[str, set[float]]:
+    """The tool fees a provider's page states, by tool name; a name can have several prices,
+    as OpenAI's preview search costs $10 on reasoning models and $25 on others."""
+    text = html.unescape(re.sub(r"<[^>]+>", " ", page)).replace("\\$", "$")
+    patterns = {
+        "openai": [("web_search", r"\| Web search \| Web search \(all models\) \| \$([0-9.]+) / 1k calls"),
+                   ("web_search_preview", r"\| Web search \| Web search preview \([^)]*\) \| \$([0-9.]+) / 1k calls")],
+        "anthropic": [("web_search", r"Web search is available on the Claude API for \*\*\$([0-9.]+) USD per 1,000 searches")],
+        "xai": [("web_search", r"\| Web Search \| `web_search` \|[^|]*\| \$([0-9.]+) \|")],
+        "perplexity": [("web_search", r"`web_search` is billed at \*\*\$([0-9.]+) per 1,000 invocations\*\*"),
+                       ("web_search_fast", r"or \*\*\$([0-9.]+) per 1,000 invocations\*\* with `search_type: \"fast\"`")],
+        "alibaba": [("web_search", r"Fee per 1,000 calls for the web search tool:\s*For the China[^$]*\$[0-9.]+\.\s*For the Singapore region: \$([0-9]+(?:\.[0-9]+)?)")],
+    }[provider]
+    found = {}
+    for tool, pattern in patterns:
+        prices = {float(price) for price in re.findall(pattern, text)}
+        if not prices:
+            raise ValueError(f"{provider}: no {tool} price in {TOOL_PAGES[provider]}; the page format changed")
+        found[tool] = prices
+    return found
+
+
+def compare_tools(provider: str, page: str, today: datetime, listed: set[str]) -> list[Result]:
+    """Compare a provider page's tool fees with the fee model-prices charges each model the
+    provider's price page lists, since a fee for all models applies to those it sells."""
+    stated = tool_prices(provider, page)
+    results = []
+    for model in sorted(model.split("/", 1)[1] for model in listed if model.startswith(f"{provider}/")):
+        found = rates(f"{provider}/{model}", at=today, provider=provider)
+        for tool, price in (found.tools if found else ()):
+            if tool in stated:
+                official = min(stated[tool], key=lambda value: abs(value - price))
+                results.append(Result(provider, f"{provider}/{model}", f"tool:{tool}", None, None,
+                                      official, price, None,
+                                      "ok" if abs(official - price) < 1e-9 else "mismatch"))
+    return results
+
+
 def _check(provider: str, moment: datetime, pages: dict[str, str] | None,
            genai: list | None) -> list[Result]:
     url = SOURCES[provider][0]
@@ -1462,6 +1521,14 @@ def _check(provider: str, moment: datetime, pages: dict[str, str] | None,
         else:
             terms_page = pages[key] if pages and key in pages else fetch(terms_url)
         results.append(compare_terms(provider, language, terms_page, moment))
+    # Tool fees, from the main page or a tool page, which a test supplies or leaves out.
+    if provider in TOOL_PAGES:
+        key = f"{provider}:tools"
+        if pages is None or key in pages:
+            tool_url = TOOL_PAGES[provider]
+            tool_page = pages[key] if pages else (page if tool_url == url else fetch(tool_url))
+            results += compare_tools(provider, tool_page, moment,
+                                     {result.model for result in results if result.status != "untracked"})
     # OpenAI's regional uplift is read from its other pages, which a test supplies or leaves out.
     if provider == "openai":
         from model_prices import openai_regions
@@ -1489,6 +1556,14 @@ def run(providers: Iterable[str] | None = None, today: datetime | None = None,
             results.append(Result(provider, provider, "page", None, None, SOURCES[provider][0],
                                   str(error), None, "error"))
     results.extend(check_calendars(set(providers or SOURCES), moment))
+    # Tool fees on a provider whose pages no check reads for them are listed as unchecked.
+    for provider in sorted(set(providers or _data()["prices"]) - set(TOOL_PAGES) - {"google"}):
+        priced = sorted(model for model in _data()["prices"].get(provider, {})
+                        if (found := rates(f"{provider}/{model}", at=moment, provider=provider))
+                        and found.tools)
+        if priced:
+            results.append(Result(provider, provider, "tool fees", None, None,
+                                  f"{len(priced)} models", None, None, "unchecked"))
     if rules is not None:
         results.extend(compare_rules(rules, set(providers) if providers else None, moment))
     return results
@@ -1526,7 +1601,9 @@ def report(results: list[Result], genai: bool = False) -> str:
         if result.status in {"ok", "untracked"}:
             continue
         if result.status == "unchecked":
-            lines.append(f"unchecked {result.model} correction from {result.official}: "
+            lines.append(f"unchecked {result.model} tool fees on {result.official}: no official page "
+                         "states them" if result.field == "tool fees" else
+                         f"unchecked {result.model} correction from {result.official}: "
                          "no official page compared it today")
             continue
         if result.status == "error":

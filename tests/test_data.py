@@ -67,7 +67,7 @@ class CorrectionDataTests(unittest.TestCase):
             covered = [entry for index, entry in enumerate(entries)
                        if (end is None or _time(entry["valid_from"]) < end)
                        and (index + 1 == len(entries) or _time(entries[index + 1]["valid_from"]) > start)]
-            for field in ("modalities", "regions"):
+            for field in ("modalities", "regions", "tools"):
                 if any(field in entry["rates"] for entry in covered):
                     self.assertIn(field, item)
 
