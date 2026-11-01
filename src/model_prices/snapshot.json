@@ -9366,6 +9366,25 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.007,
+       "input": 0.22,
+       "output": 1.2,
+       "source": "https://docs.arcee.ai/get-started/pricing",
+       "valid_from": "2026-11-01T19:51:43Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.007,
+       "input": 0.22,
+       "output": 0.66,
+       "source": "https://github.com/sst/models.dev/commit/0aed167a234a",
+       "valid_from": "2026-10-21T05:57:06Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-01T19:51:43Z"
      }
     ]
    },
@@ -32584,5 +32603,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-10-31T17:02:53Z"
+ "updated_at": "2026-11-01T19:51:44Z"
 }
