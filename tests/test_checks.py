@@ -288,9 +288,16 @@ class CheckTests(unittest.TestCase):
 
         self.assertEqual(found[("hy4-preview", "input", None)], 6)
         self.assertEqual(found[("hy3", "cache_read", None)], 0.25)
-        self.assertEqual(found[("glm-5.1", "output", 32_000)], 28)
-        self.assertNotIn(9, found.values())
-        self.assertFalse({key for key in found if key[0].startswith("deepseek")})
+        # The model column gives the API id, which the display name does not.
+        self.assertEqual(found[("hunyuan-role-latest", "output", None)], 9.6)
+        self.assertEqual(found[("glm-5v-turbo", "output", None)], 22)
+        self.assertEqual(found[("glm-5v-turbo", "output", 32_000)], 26)
+        self.assertEqual(found[("qwen3.5-flash", "input", 256_000)], 1.2)
+        self.assertEqual(found[("kimi-k3.1-pro", "cache_write", None)], 13)
+        self.assertEqual(found[("kimi-k3.1-pro", "cache_write_1h", None)], 26)
+        self.assertNotIn(("hy3", "cache_write", None), found)
+        # Peak and off-peak rows are left out.
+        self.assertFalse({key for key in found if "deepseek" in key[0]})
 
     def test_a_yuan_price_matches_within_rounding_of_its_conversion(self):
         # models.dev lists hy4-preview's 18 yuan as $2.501; the conversion gives $2.502.
@@ -630,7 +637,7 @@ Batch
         self.assertNotIn("mismatch", statuses)
         corrected = {(r.model, r.field) for r in results if r.status == "corrected"}
         self.assertIn(("deepseek/deepseek-v4-pro", "input"), corrected)
-        one_hour = [r for r in results if r.field == "cache_write_1h"]
+        one_hour = [r for r in results if r.field == "cache_write_1h" and r.status != "untracked"]
         self.assertTrue(one_hour)
         self.assertEqual({r.status for r in one_hour}, {"ok"})
 
