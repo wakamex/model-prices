@@ -825,8 +825,12 @@ class PriceTests(unittest.TestCase):
         self.assertEqual(model_prices.plan("google", "ultra_200").usd_per_month, 199.99)
         self.assertIsNone(model_prices.plan("google", "ultra_200", at="2026-05-01"))
         self.assertEqual(model_prices.plan("openai", "pro_500").usd_per_month, 500)
-        self.assertEqual(model_prices.plan_ids("google"), ["pro", "ultra_100", "ultra_200"])
+        self.assertEqual(model_prices.plan_ids("google"), ["plus", "pro", "ultra_100", "ultra_200"])
         self.assertIn("ultra", model_prices.plan_ids("google", at="2026-05-01"))
+        # Z.ai's Pro price is the last documented one until the first reading of the new one.
+        self.assertEqual(model_prices.plan("zai", "pro", at="2026-10-01").usd_per_month, 72)
+        self.assertEqual(model_prices.plan("zai", "pro", at="2026-11-03").usd_per_month, 80)
+        self.assertEqual(model_prices.plan("anthropic", "max_20x").name, "Claude Ultra")
 
     def test_rates_report_the_suffix_removed_to_find_the_model(self):
         self.assertEqual(rates("kimi-k3-max").removed_suffix, "-max")

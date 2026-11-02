@@ -1,8 +1,10 @@
-# Subscription plan prices in USD per month, as billed monthly. provider is the lab;
-# id is the plan name its usage tools report, or for a plan sold in several price tiers,
-# that name with the tier's price, such as ultra_200. An entry without valid_from applies
-# from before tracking began; valid_until is exclusive. A reported name that covers
-# several tiers has no entry for that period, so it stays unpriced.
+# Subscription plan prices in USD per month, as billed monthly, per seat for team plans.
+# provider is the lab; id is the plan name its usage tools report, or for a plan sold in
+# several price tiers, that name with the tier's price, such as ultra_200. A plan no usage
+# tool reports takes the lab's name for it in snake case, prefixed with the product's name
+# where a lab sells several subscriptions, such as Alibaba's coding_pro. An entry without
+# valid_from applies from before tracking began; valid_until is exclusive. A reported name
+# that covers several tiers has no entry for that period, so it stays unpriced.
 
 [[plan]]
 provider = "anthropic"
@@ -15,18 +17,36 @@ checked = "2026-09-30"
 [[plan]]
 provider = "anthropic"
 id = "max_5x"
-name = "Claude Max 5x"
+name = "Claude Max"
 usd_per_month = 100
-source = "https://support.claude.com/en/articles/11049741-what-is-the-max-plan"
-checked = "2026-09-30"
+source = "https://claude.com/pricing"
+checked = "2026-11-02"
+note = "Named Max 5x until 2026-10-30, when Anthropic renamed it Max at the same price. Claude Code reports it as max_5x."
 
 [[plan]]
 provider = "anthropic"
 id = "max_20x"
-name = "Claude Max 20x"
+name = "Claude Ultra"
 usd_per_month = 200
-source = "https://support.claude.com/en/articles/11049741-what-is-the-max-plan"
-checked = "2026-09-30"
+source = "https://claude.com/pricing"
+checked = "2026-11-02"
+note = "Named Max 20x until 2026-10-30, when Anthropic renamed it Ultra at the same price. Claude Code reports it as max_20x."
+
+[[plan]]
+provider = "anthropic"
+id = "team_standard"
+name = "Claude Team standard seat"
+usd_per_month = 25
+source = "https://claude.com/pricing"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "anthropic"
+id = "team_premium"
+name = "Claude Team premium seat"
+usd_per_month = 125
+source = "https://claude.com/pricing"
+checked = "2026-11-02"
 
 [[plan]]
 provider = "openai"
@@ -78,6 +98,22 @@ source = "https://developers.openai.com/codex/pricing"
 checked = "2026-09-30"
 
 [[plan]]
+provider = "openai"
+id = "business"
+name = "ChatGPT Business"
+usd_per_month = 25
+source = "https://learn.chatgpt.com/docs/pricing"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "google"
+id = "plus"
+name = "Google AI Plus"
+usd_per_month = 4.99
+source = "https://gemini.google/us/subscriptions/?hl=en"
+checked = "2026-11-02"
+
+[[plan]]
 provider = "google"
 id = "pro"
 name = "Google AI Pro"
@@ -118,5 +154,369 @@ provider = "zai"
 id = "lite"
 name = "GLM Coding Plan Lite"
 usd_per_month = 18
-source = "https://docs.z.ai/devpack/overview"
-checked = "2026-09-30"
+source = "https://z.ai/subscribe"
+checked = "2026-11-02"
+
+
+[[plan]]
+provider = "zai"
+id = "pro"
+name = "GLM Coding Plan Pro"
+usd_per_month = 72
+valid_until = "2026-11-02T00:00:00Z"
+source = "https://docs.z.ai/devpack/transition"
+checked = "2026-11-02"
+note = "Z.ai listed $72 on 2026-04-21 and $80 when first read on 2026-11-02; with no record of the change in between, $72 applies until that first reading."
+
+[[plan]]
+provider = "zai"
+id = "pro"
+name = "GLM Coding Plan Pro"
+usd_per_month = 80
+valid_from = "2026-11-02T00:00:00Z"
+source = "https://z.ai/subscribe"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "zai"
+id = "max"
+name = "GLM Coding Plan Max"
+usd_per_month = 160
+valid_until = "2026-11-02T00:00:00Z"
+source = "https://docs.z.ai/devpack/transition"
+checked = "2026-11-02"
+note = "Z.ai listed $160 on 2026-04-21 and $168 when first read on 2026-11-02; with no record of the change in between, $160 applies until that first reading."
+
+[[plan]]
+provider = "zai"
+id = "max"
+name = "GLM Coding Plan Max"
+usd_per_month = 168
+valid_from = "2026-11-02T00:00:00Z"
+source = "https://z.ai/subscribe"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "zai"
+id = "team_standard"
+name = "GLM Coding Plan Team standard seat"
+usd_per_month = 88
+source = "https://z.ai/subscribe"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "zai"
+id = "team_premium"
+name = "GLM Coding Plan Team premium seat"
+usd_per_month = 188
+source = "https://z.ai/subscribe"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "xai"
+id = "plus"
+name = "Plus"
+usd_per_month = 8
+source = "https://cursor.com/pricing"
+checked = "2026-11-02"
+note = "One subscription covers Grok and Cursor; grok.com/plans shows the same plans, in local currency only."
+
+[[plan]]
+provider = "xai"
+id = "premium"
+name = "Premium"
+usd_per_month = 30
+source = "https://cursor.com/pricing"
+checked = "2026-11-02"
+note = "One subscription covers Grok and Cursor; grok.com/plans shows the same plans, in local currency only."
+
+[[plan]]
+provider = "xai"
+id = "super"
+name = "Super"
+usd_per_month = 100
+source = "https://cursor.com/pricing"
+checked = "2026-11-02"
+note = "One subscription covers Grok and Cursor; grok.com/plans shows the same plans, in local currency only."
+
+[[plan]]
+provider = "xai"
+id = "ultra"
+name = "Ultra"
+usd_per_month = 200
+source = "https://cursor.com/pricing"
+checked = "2026-11-02"
+note = "One subscription covers Grok and Cursor; grok.com/plans shows the same plans, in local currency only."
+
+[[plan]]
+provider = "cursor"
+id = "plus"
+name = "Cursor Plus"
+usd_per_month = 8
+source = "https://cursor.com/pricing"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "cursor"
+id = "premium"
+name = "Cursor Premium"
+usd_per_month = 30
+source = "https://cursor.com/pricing"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "cursor"
+id = "super"
+name = "Cursor Super"
+usd_per_month = 100
+source = "https://cursor.com/pricing"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "cursor"
+id = "ultra"
+name = "Cursor Ultra"
+usd_per_month = 200
+source = "https://cursor.com/pricing"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "cognition"
+id = "pro"
+name = "Devin Pro"
+usd_per_month = 20
+source = "https://devin.ai/pricing"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "cognition"
+id = "max"
+name = "Devin Max"
+usd_per_month = 200
+source = "https://devin.ai/pricing"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "mistral"
+id = "pro"
+name = "Le Chat Pro"
+usd_per_month = 14.99
+source = "https://mistral.ai/pricing"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "mistral"
+id = "student"
+name = "Le Chat Student"
+usd_per_month = 5.99
+source = "https://mistral.ai/pricing"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "mistral"
+id = "team"
+name = "Le Chat Team"
+usd_per_month = 24.99
+source = "https://mistral.ai/pricing"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "perplexity"
+id = "max"
+name = "Perplexity Max"
+usd_per_month = 200
+source = "https://www.perplexity.ai/help-center/en/articles/11680686-perplexity-max"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "meta"
+id = "everyday"
+name = "Muse Code Everyday Usage"
+usd_per_month = 5
+source = "https://dev.meta.ai/products/muse-code"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "meta"
+id = "high"
+name = "Muse Code High Usage"
+usd_per_month = 15
+source = "https://dev.meta.ai/products/muse-code"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "meta"
+id = "power"
+name = "Muse Code Power Usage"
+usd_per_month = 50
+source = "https://dev.meta.ai/products/muse-code"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "meta"
+id = "maximum"
+name = "Muse Code Maximum Usage"
+usd_per_month = 200
+source = "https://dev.meta.ai/products/muse-code"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "moonshotai"
+id = "plus"
+name = "Kimi Plus"
+usd_per_month = 19
+source = "https://www.kimi.com/membership/pricing"
+checked = "2026-11-02"
+note = "Plus, Pro, Max, and Ultra were named Moderato, Allegretto, Allegro, and Vivace at the same prices."
+
+[[plan]]
+provider = "moonshotai"
+id = "pro"
+name = "Kimi Pro"
+usd_per_month = 39
+source = "https://www.kimi.com/membership/pricing"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "moonshotai"
+id = "max"
+name = "Kimi Max"
+usd_per_month = 99
+source = "https://www.kimi.com/membership/pricing"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "moonshotai"
+id = "ultra"
+name = "Kimi Ultra"
+usd_per_month = 199
+source = "https://www.kimi.com/membership/pricing"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "minimax"
+id = "go"
+name = "M Plan Go"
+usd_per_month = 22
+source = "https://platform.minimax.io/docs/m-plan/monthly-offer"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "minimax"
+id = "explore"
+name = "M Plan Explore"
+usd_per_month = 55
+source = "https://platform.minimax.io/docs/m-plan/monthly-offer"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "minimax"
+id = "build"
+name = "M Plan Build"
+usd_per_month = 132
+source = "https://platform.minimax.io/docs/m-plan/monthly-offer"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "alibaba"
+id = "coding_pro"
+name = "Coding Plan Pro"
+usd_per_month = 50
+source = "https://www.alibabacloud.com/help/en/model-studio/coding-plan"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "alibaba"
+id = "token_lite"
+name = "Token Plan Lite"
+usd_per_month = 8
+source = "https://docs.modelstudio.console.alibabacloud.com/en/model-studio/token-plan-personal-overview"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "alibaba"
+id = "token_essential"
+name = "Token Plan Essential"
+usd_per_month = 16
+source = "https://docs.modelstudio.console.alibabacloud.com/en/model-studio/token-plan-personal-overview"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "alibaba"
+id = "token_standard"
+name = "Token Plan Standard"
+usd_per_month = 25
+source = "https://docs.modelstudio.console.alibabacloud.com/en/model-studio/token-plan-personal-overview"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "alibaba"
+id = "token_pro"
+name = "Token Plan Pro"
+usd_per_month = 80
+source = "https://docs.modelstudio.console.alibabacloud.com/en/model-studio/token-plan-personal-overview"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "xiaomi"
+id = "lite"
+name = "MiMo Token Plan Lite"
+usd_per_month = 6
+source = "https://platform.xiaomimimo.com/token-plan"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "xiaomi"
+id = "standard"
+name = "MiMo Token Plan Standard"
+usd_per_month = 16
+source = "https://platform.xiaomimimo.com/token-plan"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "xiaomi"
+id = "pro"
+name = "MiMo Token Plan Pro"
+usd_per_month = 50
+source = "https://platform.xiaomimimo.com/token-plan"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "xiaomi"
+id = "max"
+name = "MiMo Token Plan Max"
+usd_per_month = 100
+source = "https://platform.xiaomimimo.com/token-plan"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "stepfun-ai"
+id = "mini"
+name = "Step Plan Mini"
+usd_per_month = 6.99
+source = "https://platform.stepfun.ai/step-plan"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "stepfun-ai"
+id = "plus"
+name = "Step Plan Plus"
+usd_per_month = 9.99
+source = "https://platform.stepfun.ai/step-plan"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "stepfun-ai"
+id = "pro"
+name = "Step Plan Pro"
+usd_per_month = 29
+source = "https://platform.stepfun.ai/step-plan"
+checked = "2026-11-02"
+
+[[plan]]
+provider = "stepfun-ai"
+id = "max"
+name = "Step Plan Max"
+usd_per_month = 99
+source = "https://platform.stepfun.ai/step-plan"
+checked = "2026-11-02"
