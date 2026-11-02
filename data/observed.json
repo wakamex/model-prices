@@ -1793,6 +1793,17 @@
    ]
   },
   "longcat": {
+   "LongCat-2.5": [
+    {
+     "rates": {
+      "cache_read": 0.006,
+      "input": 0.3,
+      "output": 1.2
+     },
+     "source": "https://longcat.chat/platform/docs/",
+     "valid_from": "2026-11-02T15:50:55Z"
+    }
+   ],
    "LongCat-2.5-Preview": [
     {
      "rates": {

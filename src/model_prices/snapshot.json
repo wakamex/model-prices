@@ -17000,6 +17000,21 @@
      }
     ]
    },
+   "LongCat-2.5": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.006,
+       "input": 0.3,
+       "output": 1.2,
+       "source": "https://longcat.chat/platform/docs/",
+       "valid_from": "2026-11-02T15:50:55Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "LongCat-2.5-Preview": {
     "standard": [
      {
@@ -38264,5 +38279,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-01T22:19:13Z"
+ "updated_at": "2026-11-02T15:51:38Z"
 }
