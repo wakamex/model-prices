@@ -90,6 +90,41 @@ def _markdown_tables(text: str) -> Iterable[tuple[dict[int, str], list[str], lis
         index += 1
 
 
+def _markdoc_tables(text: str) -> Iterable[tuple[dict[int, str], list[str], list[list[str]]]]:
+    """Yield (enclosing heading and tab, header cells, rows) for each Markdoc table, which
+    lists each row's cells as "* cell" items, a cell continuing on the lines below it, and
+    separates rows with "---". The tab title, such as Standard, is given as level 3."""
+    headings: dict[int, str] = {}
+    lines = iter(text.splitlines())
+    for line in lines:
+        line = line.strip()
+        heading = re.match(r"(#+)\s+(.*?)\s*(?:\{%.*%\})?$", line)
+        tab = re.fullmatch(r'\{% tab title="([^"]+)" %\}', line)
+        if heading:
+            level = len(heading.group(1))
+            headings = {key: value for key, value in headings.items() if key < level}
+            headings[level] = heading.group(2)
+        elif tab:
+            headings[3] = tab.group(1)
+        elif line == "{% /tab %}":
+            headings.pop(3, None)
+        elif line == "{% table %}":
+            rows: list[list[str]] = [[]]
+            for line in lines:
+                line = line.strip()
+                if line == "{% /table %}":
+                    break
+                if line == "---":
+                    rows.append([])
+                elif line.startswith("* "):
+                    rows[-1].append(line[2:])
+                elif line and rows[-1]:
+                    rows[-1][-1] += " " + line
+            rows = [[" ".join(cell.split()) for cell in row] for row in rows if row]
+            if rows:
+                yield dict(headings), rows[0], rows[1:]
+
+
 def parse_anthropic(text: str, today: datetime) -> list[Observed]:
     """Read the model pricing table and the Batch API's table, the first of each."""
     tables = {"Base input tokens": (None, {
@@ -896,12 +931,13 @@ def _google_price(cell: str, today: datetime,
 
 def _google_ids(text: str) -> dict[str, list[str]]:
     """The API ids each pricing section names under its heading, such as
-    "*[`gemini-3.8-flash-tts`](...)*", by heading."""
+    "*[`gemini-3.8-flash-tts`](...)*", which can continue over several lines, by heading."""
     ids = {}
-    for heading, body in re.findall(r"^## ([^\n]+)\n(.*?)(?=^## |\Z)", text, re.M | re.S):
-        names = re.search(r"^\*\[`.*$", body, re.M)
+    for heading, body in re.findall(r"^## (.+?)\s*(?:\{%[^\n]*%\})?\n(.*?)(?=^## |\Z)", text,
+                                    re.M | re.S):
+        names = re.search(r"^\s*\*\[`.*?\)\*", body, re.M | re.S)
         if names:
-            ids[heading.strip()] = re.findall(r"\[`([a-z0-9.-]+)`\]", names.group(0))
+            ids[heading] = re.findall(r"\[`([a-z0-9.-]+)`\]", names.group(0))
     return ids
 
 
@@ -909,13 +945,14 @@ def parse_google(text: str, today: datetime) -> list[Observed]:
     rows = {"Input price": "input", "Output price": "output", "Context caching price": "cache_read"}
     ids = _google_ids(text)
     found = []
-    for headings, header, table in _markdown_tables(text):
-        heading = headings.get(2, "")
+    for headings, header, table in _markdoc_tables(text):
+        # A section with one table, such as a Live model's, gives it outside any tab.
+        heading, tab = headings.get(2, ""), headings.get(3, "Standard")
         modes = {"Standard": None, "Batch": "batch", "Flex": "flex", "Priority": "priority"}
-        if (not heading.startswith("Gemini") or headings.get(3) not in modes
+        if (not heading.startswith("Gemini") or tab not in modes
                 or header[-1] != "Paid Tier, per 1M tokens in USD"):
             continue
-        mode = modes[headings[3]]
+        mode = modes[tab]
         # A section names the API ids it prices, one or several, under its heading.
         if heading not in ids:
             raise ValueError(f"google: no API ids under {heading!r}; the page format changed")

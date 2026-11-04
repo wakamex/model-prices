@@ -506,7 +506,7 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(google[("gemini-3.1-flash-image", "input", None, None)], 0.5)
         # A speech model's only output price is audio, and the dated price is today's.
         self.assertEqual(google[("gemini-3.8-flash-tts", "output", None, None)], 9)
-        self.assertEqual(google[("gemini-omni-flash-preview", "output", None, None)], 17.5)
+        self.assertEqual(google[("gemini-omni-1.1-flash", "output", None, None)], 17.5)
 
     def test_google_dated_prices_follow_the_check_date(self):
         cell = "$0.75 through December 31, 2026. $1.50 starting January 1, 2027."
@@ -621,17 +621,21 @@ Batch
             "alibaba": {"web_search": {10.0}}})
         with self.assertRaisesRegex(ValueError, "page format changed"):
             checks.tool_prices("anthropic", "Web search costs money.")
-        # Google's grounding row names its unit: grounded prompts on Gemini 2.5.
-        row = "| Grounding with Google Search | Not available | 1,500 RPD (free), then $35 / 1,000 grounded prompts |"
-        page = PAGES["google"].replace("| Output price", row + "\n| Output price", 1)
-        found = {(item.model, item.field): item.value for item in checks.parse_google(page, TODAY)
-                 if item.field.startswith("tool:")}
-        self.assertIn("tool:web_search_prompt", {field for _, field in found})
+        # Google's grounding row names its unit: grounded prompts on Gemini 2.5, search
+        # requests on Gemini 3 and later.
+        found = {(item.model, item.field): item.value for item in
+                 checks.parse_google(PAGES["google"], TODAY) if item.field.startswith("tool:")}
+        self.assertEqual(found[("gemini-2.5-pro", "tool:web_search_prompt")], 35)
+        self.assertEqual(found[("gemini-3.8-flash", "tool:web_search")], 14)
+        self.assertNotIn(("gemini-2.5-pro", "tool:web_search"), found)
 
     def test_official_pages_match_effective_prices(self):
-        # Perplexity's fixture lists Sonar's Agent API price, which applies from 2026-10-19.
-        results = checks.run([p for p in checks.SOURCES if p != "perplexity"],
+        # Perplexity's fixture lists Sonar's Agent API price, which applies from 2026-10-19,
+        # and Google's is the page of 2026-11-04, so each is compared on its own date.
+        results = checks.run([p for p in checks.SOURCES if p not in {"perplexity", "google"}],
                              pages=PAGES, today=TODAY)
+        google = checks.run(["google"], pages=PAGES, today=datetime(2026, 11, 4, tzinfo=timezone.utc))
+        self.assertNotIn("mismatch", {result.status for result in google})
         statuses = {result.status for result in results}
 
         self.assertNotIn("mismatch", statuses)
