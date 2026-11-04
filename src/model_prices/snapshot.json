@@ -103,8 +103,8 @@
   }
  ],
  "models_dev": {
-  "commit": "7f5ad8a00cf42667b1f1c7fd46a558ad8b7595a2",
-  "committed_at": "2026-10-31T14:20:23Z",
+  "commit": "f608935f2014a03c06ac4b309ee196e31846fe35",
+  "committed_at": "2026-11-04T19:22:43Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -33850,6 +33850,21 @@
      }
     ]
    },
+   "hy4": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.042,
+       "input": 0.834,
+       "output": 2.501,
+       "source": "https://github.com/sst/models.dev/commit/f608935f2014",
+       "valid_from": "2026-11-04T19:22:43Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
    "hy4-preview": {
     "standard": [
      {
@@ -38279,5 +38294,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-02T15:51:38Z"
+ "updated_at": "2026-11-04T19:23:58Z"
 }

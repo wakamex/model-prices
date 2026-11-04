@@ -10923,6 +10923,17 @@
      "valid_from": "2026-04-18T09:30:53Z"
     }
    ],
+   "hy4": [
+    {
+     "commit": "f608935f2014",
+     "rates": {
+      "cache_read": 0.042,
+      "input": 0.834,
+      "output": 2.501
+     },
+     "valid_from": "2026-11-04T19:22:43Z"
+    }
+   ],
    "hy4-preview": [
     {
      "commit": "241a9864813e",
@@ -14080,8 +14091,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "7f5ad8a00cf42667b1f1c7fd46a558ad8b7595a2",
- "source_committed_at": "2026-10-31T14:20:23Z",
+ "source_commit": "f608935f2014a03c06ac4b309ee196e31846fe35",
+ "source_committed_at": "2026-11-04T19:22:43Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
