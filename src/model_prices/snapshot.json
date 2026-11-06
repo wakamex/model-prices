@@ -16424,6 +16424,33 @@
      }
     ]
    },
+   "gemini-omni-1.2-flash": {
+    "standard": [
+     {
+      "rates": {
+       "input": 1.5,
+       "modalities": {
+        "image": {
+         "input": 1.5
+        },
+        "text": {
+         "input": 1.5,
+         "output": 9.0
+        },
+        "video": {
+         "input": 1.5,
+         "output": 12.0
+        }
+       },
+       "output": 12.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+       "valid_from": "2026-11-06T14:15:52Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "gemini-omni-flash-preview": {
     "standard": [
      {
@@ -28742,6 +28769,74 @@
      }
     ]
    },
+   "gpt-6-cyber": {
+    "batch": [
+     {
+      "rates": null,
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 1.0,
+       "cache_write": 12.5,
+       "cache_write_1h_multiple": 2.5,
+       "input": 10.0,
+       "output": 50.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-11-06T14:15:52Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2024-04-15T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 1.0,
+       "cache_write": 12.5,
+       "cache_write_1h_multiple": 2.5,
+       "input": 10.0,
+       "output": 50.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "tools": {
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-06T14:15:52Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2025-06-24T00:00:00Z"
+     }
+    ],
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 2.0,
+       "cache_write": 25.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 20.0,
+       "output": 100.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-11-06T14:15:52Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 2.0,
+       "cache_write": 25.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 20.0,
+       "output": 100.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "tools": {
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-06T14:15:52Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2025-06-24T00:00:00Z"
+     }
+    ]
+   },
    "gpt-6-luna": {
     "batch": [
      {
@@ -34362,6 +34457,36 @@
      }
     ]
    },
+   "thinkingmachines/Inkling-2-Small": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.03,
+       "input": 0.3,
+       "output": 1.0,
+       "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+       "valid_from": "2026-11-06T14:15:52Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "thinkingmachines/Inkling-2-Small:peft:262144": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.03,
+       "input": 0.3,
+       "output": 1.0,
+       "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+       "valid_from": "2026-11-06T14:15:52Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "thinkingmachines/Inkling-Small": {
     "standard": [
      {
@@ -38294,5 +38419,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-04T19:23:58Z"
+ "updated_at": "2026-11-06T14:16:34Z"
 }

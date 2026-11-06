@@ -1710,6 +1710,29 @@
      "valid_from": "2026-10-10T20:14:52Z"
     }
    ],
+   "gemini-omni-1.2-flash": [
+    {
+     "rates": {
+      "input": 1.5,
+      "modalities": {
+       "image": {
+        "input": 1.5
+       },
+       "text": {
+        "input": 1.5,
+        "output": 9.0
+       },
+       "video": {
+        "input": 1.5,
+        "output": 12.0
+       }
+      },
+      "output": 12.0
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-06T14:15:52Z"
+    }
+   ],
    "gemini-robotics-er-2-preview": [
     {
      "rates": {
@@ -2097,6 +2120,18 @@
      "valid_from": "2026-10-20T23:55:24Z"
     }
    ],
+   "gpt-6-cyber": [
+    {
+     "rates": {
+      "cache_read": 2.0,
+      "cache_write": 25.0,
+      "input": 20.0,
+      "output": 100.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-06T14:15:52Z"
+    }
+   ],
    "gpt-6-rosalind": [
     {
      "rates": {
@@ -2261,6 +2296,28 @@
    ]
   },
   "thinkingmachines": {
+   "thinkingmachines/Inkling-2-Small": [
+    {
+     "rates": {
+      "cache_read": 0.03,
+      "input": 0.3,
+      "output": 1.0
+     },
+     "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+     "valid_from": "2026-11-06T14:15:52Z"
+    }
+   ],
+   "thinkingmachines/Inkling-2-Small:peft:262144": [
+    {
+     "rates": {
+      "cache_read": 0.03,
+      "input": 0.3,
+      "output": 1.0
+     },
+     "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+     "valid_from": "2026-11-06T14:15:52Z"
+    }
+   ],
    "thinkingmachines/Inkling-Small": [
     {
      "rates": {
