@@ -1507,6 +1507,42 @@
      "valid_from": "2026-09-12T03:18:10Z"
     }
    ],
+   "swe-2-flash-high": [
+    {
+     "rates": {
+      "cache_read": 0.0075,
+      "cache_write": 0.09375,
+      "input": 0.075,
+      "output": 0.375
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-06T14:20:08Z"
+    }
+   ],
+   "swe-2-flash-max": [
+    {
+     "rates": {
+      "cache_read": 0.0075,
+      "cache_write": 0.09375,
+      "input": 0.075,
+      "output": 0.375
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-06T14:20:08Z"
+    }
+   ],
+   "swe-2-flash-medium": [
+    {
+     "rates": {
+      "cache_read": 0.0075,
+      "cache_write": 0.09375,
+      "input": 0.075,
+      "output": 0.375
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-06T14:20:08Z"
+    }
+   ],
    "swe-2-high": [
     {
      "rates": {
@@ -1517,6 +1553,16 @@
      },
      "source": "https://web.archive.org/web/20260912031810/https://docs.devin.ai/desktop/models",
      "valid_from": "2026-09-12T03:18:10Z"
+    },
+    {
+     "rates": {
+      "cache_read": 0.05,
+      "cache_write": 0.0,
+      "input": 0.5,
+      "output": 2.5
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-06T14:20:08Z"
     }
    ],
    "swe-2-max": [
@@ -1529,6 +1575,16 @@
      },
      "source": "https://web.archive.org/web/20260912031810/https://docs.devin.ai/desktop/models",
      "valid_from": "2026-09-12T03:18:10Z"
+    },
+    {
+     "rates": {
+      "cache_read": 0.05,
+      "cache_write": 0.0,
+      "input": 0.5,
+      "output": 2.5
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-06T14:20:08Z"
     }
    ],
    "swe-2-medium": [
@@ -1541,6 +1597,16 @@
      },
      "source": "https://web.archive.org/web/20260912031810/https://docs.devin.ai/desktop/models",
      "valid_from": "2026-09-12T03:18:10Z"
+    },
+    {
+     "rates": {
+      "cache_read": 0.05,
+      "cache_write": 0.0,
+      "input": 0.5,
+      "output": 2.5
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-06T14:20:08Z"
     }
    ],
    "swe-check": [
@@ -2215,6 +2281,25 @@
    ]
   },
   "sakana": {
+   "fugu": [
+    {
+     "rates": {
+      "cache_read": 0.25,
+      "input": 5.0,
+      "output": 25.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 0.35,
+        "input": 7.0,
+        "output": 35.0
+       }
+      ]
+     },
+     "source": "https://console.sakana.ai/pricing",
+     "valid_from": "2026-11-06T14:20:08Z"
+    }
+   ],
    "fugu-max": [
     {
      "rates": {
