@@ -1671,6 +1671,17 @@ def report(results: list[Result], genai: bool = False) -> str:
     for result in results:
         if result.status in {"ok", "untracked"}:
             continue
+        if result.field == "plan":
+            if result.status == "error":
+                lines.append(f"error     {result.model} plan page {result.official}: {result.effective}")
+            elif result.status == "unchecked":
+                lines.append(f"unchecked {result.model} plan from {result.official}: no page can be "
+                             "read for it")
+            else:
+                recorded = "not listed" if result.effective is None else f"${result.effective:g}"
+                lines.append(f"{result.status:9} {result.model} plan: official ${result.official:g}, "
+                             f"plans.toml {recorded}")
+            continue
         if result.status == "unchecked":
             lines.append(f"unchecked {result.model} tool fees on {result.official}: no official page "
                          "states them" if result.field == "tool fees" else

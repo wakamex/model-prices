@@ -922,6 +922,10 @@ def main(argv: list[str] | None = None) -> int:
                        for item in tomllib.loads((args.data / name).read_text()).get("correction", [])]
         results += unchecked(results, corrections, set(args.providers) if args.providers else None,
                              datetime.now(timezone.utc))
+        # Plan prices are checked in a full run, which a plan's own price disagreement fails.
+        if not args.providers:
+            from model_prices.plan_checks import check_plans
+            results += check_plans(datetime.now(timezone.utc))
         print(json.dumps(as_json(results), indent=2) if args.json
               else report(results, genai=genai is not None))
         if any(result.status in {"mismatch", "error"} for result in results):

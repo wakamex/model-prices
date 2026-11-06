@@ -109,7 +109,6 @@
  },
  "plans": [
   {
-   "checked": "2026-09-30",
    "id": "pro",
    "name": "Claude Pro",
    "provider": "anthropic",
@@ -117,7 +116,6 @@
    "usd_per_month": 20
   },
   {
-   "checked": "2026-11-02",
    "id": "max_5x",
    "name": "Claude Max",
    "note": "Named Max 5x until 2026-10-30, when Anthropic renamed it Max at the same price. Claude Code reports it as max_5x.",
@@ -126,7 +124,6 @@
    "usd_per_month": 100
   },
   {
-   "checked": "2026-11-02",
    "id": "max_20x",
    "name": "Claude Ultra",
    "note": "Named Max 20x until 2026-10-30, when Anthropic renamed it Ultra at the same price. Claude Code reports it as max_20x.",
@@ -135,7 +132,6 @@
    "usd_per_month": 200
   },
   {
-   "checked": "2026-11-02",
    "id": "team_standard",
    "name": "Claude Team standard seat",
    "provider": "anthropic",
@@ -143,7 +139,6 @@
    "usd_per_month": 25
   },
   {
-   "checked": "2026-11-02",
    "id": "team_premium",
    "name": "Claude Team premium seat",
    "provider": "anthropic",
@@ -151,56 +146,53 @@
    "usd_per_month": 125
   },
   {
-   "checked": "2026-09-30",
    "id": "go",
    "name": "ChatGPT Go",
    "provider": "openai",
-   "source": "https://developers.openai.com/codex/pricing",
+   "source": "https://learn.chatgpt.com/docs/pricing",
    "usd_per_month": 8
   },
   {
-   "checked": "2026-09-30",
    "id": "plus",
    "name": "ChatGPT Plus",
    "provider": "openai",
-   "source": "https://developers.openai.com/codex/pricing",
+   "source": "https://learn.chatgpt.com/docs/pricing",
    "usd_per_month": 20
   },
   {
-   "checked": "2026-09-30",
    "id": "pro",
    "name": "ChatGPT Pro",
-   "note": "Pro now comes at $100, $200, or $500 per month, and Codex reports all three as pro. $200 was the only Pro price before the tiers, whose launch date is not recorded here; use the pro_100 or pro_500 price for those tiers.",
+   "note": "The single Pro plan until OpenAI announced the $100 tier at 2026-04-09T17:36:50Z (https://x.com/OpenAI/status/2042295688323875316); from then Codex reports every Pro tier as pro, which stays unpriced.",
    "provider": "openai",
-   "source": "https://developers.openai.com/codex/pricing",
-   "usd_per_month": 200
+   "source": "https://learn.chatgpt.com/docs/pricing",
+   "usd_per_month": 200,
+   "valid_until": "2026-04-09T17:36:50Z"
   },
   {
-   "checked": "2026-09-30",
    "id": "pro_100",
    "name": "ChatGPT Pro $100",
    "provider": "openai",
-   "source": "https://developers.openai.com/codex/pricing",
-   "usd_per_month": 100
+   "source": "https://learn.chatgpt.com/docs/pricing",
+   "usd_per_month": 100,
+   "valid_from": "2026-04-09T17:36:50Z"
   },
   {
-   "checked": "2026-09-30",
    "id": "pro_200",
    "name": "ChatGPT Pro $200",
    "provider": "openai",
-   "source": "https://developers.openai.com/codex/pricing",
+   "source": "https://learn.chatgpt.com/docs/pricing",
    "usd_per_month": 200
   },
   {
-   "checked": "2026-09-30",
    "id": "pro_500",
    "name": "ChatGPT Pro $500",
+   "note": "OpenAI's Pro plans article listed only the $100 and $200 tiers at 2026-09-29T14:01:22Z (https://web.archive.org/web/20260929140122/https://help.openai.com/en/articles/9793128-about-chatgpt-pro-plans), and the pricing page listed $500 when first read on 2026-11-02, so the tier starts then; third-party reports date its launch to 2026-09-29.",
    "provider": "openai",
-   "source": "https://developers.openai.com/codex/pricing",
-   "usd_per_month": 500
+   "source": "https://learn.chatgpt.com/docs/pricing",
+   "usd_per_month": 500,
+   "valid_from": "2026-11-02T00:00:00Z"
   },
   {
-   "checked": "2026-11-02",
    "id": "business",
    "name": "ChatGPT Business",
    "provider": "openai",
@@ -208,7 +200,6 @@
    "usd_per_month": 25
   },
   {
-   "checked": "2026-11-02",
    "id": "plus",
    "name": "Google AI Plus",
    "provider": "google",
@@ -216,15 +207,13 @@
    "usd_per_month": 4.99
   },
   {
-   "checked": "2026-09-30",
    "id": "pro",
    "name": "Google AI Pro",
    "provider": "google",
-   "source": "https://gemini.google/subscriptions/",
+   "source": "https://gemini.google/us/subscriptions/?hl=en",
    "usd_per_month": 19.99
   },
   {
-   "checked": "2026-09-30",
    "id": "ultra",
    "name": "Google AI Ultra",
    "note": "The single Ultra plan until 2026-05-19, when Google split it into the $100 and $200 tiers below.",
@@ -234,25 +223,23 @@
    "valid_until": "2026-05-19T00:00:00Z"
   },
   {
-   "checked": "2026-09-30",
    "id": "ultra_100",
    "name": "Google AI Ultra $100",
    "provider": "google",
-   "source": "https://gemini.google/subscriptions/",
+   "source": "https://gemini.google/us/subscriptions/?hl=en",
    "usd_per_month": 99.99,
    "valid_from": "2026-05-19T00:00:00Z"
   },
   {
-   "checked": "2026-09-30",
    "id": "ultra_200",
    "name": "Google AI Ultra $200",
    "provider": "google",
-   "source": "https://gemini.google/subscriptions/",
+   "source": "https://gemini.google/us/subscriptions/?hl=en",
    "usd_per_month": 199.99,
    "valid_from": "2026-05-19T00:00:00Z"
   },
   {
-   "checked": "2026-11-02",
+   "checked": "2026-11-06",
    "id": "lite",
    "name": "GLM Coding Plan Lite",
    "provider": "zai",
@@ -260,7 +247,6 @@
    "usd_per_month": 18
   },
   {
-   "checked": "2026-11-02",
    "id": "pro",
    "name": "GLM Coding Plan Pro",
    "note": "Z.ai listed $72 on 2026-04-21 and $80 when first read on 2026-11-02; with no record of the change in between, $72 applies until that first reading.",
@@ -270,7 +256,7 @@
    "valid_until": "2026-11-02T00:00:00Z"
   },
   {
-   "checked": "2026-11-02",
+   "checked": "2026-11-06",
    "id": "pro",
    "name": "GLM Coding Plan Pro",
    "provider": "zai",
@@ -279,7 +265,6 @@
    "valid_from": "2026-11-02T00:00:00Z"
   },
   {
-   "checked": "2026-11-02",
    "id": "max",
    "name": "GLM Coding Plan Max",
    "note": "Z.ai listed $160 on 2026-04-21 and $168 when first read on 2026-11-02; with no record of the change in between, $160 applies until that first reading.",
@@ -289,7 +274,7 @@
    "valid_until": "2026-11-02T00:00:00Z"
   },
   {
-   "checked": "2026-11-02",
+   "checked": "2026-11-06",
    "id": "max",
    "name": "GLM Coding Plan Max",
    "provider": "zai",
@@ -298,7 +283,6 @@
    "valid_from": "2026-11-02T00:00:00Z"
   },
   {
-   "checked": "2026-11-02",
    "id": "team_standard",
    "name": "GLM Coding Plan Team standard seat",
    "provider": "zai",
@@ -306,7 +290,6 @@
    "usd_per_month": 88
   },
   {
-   "checked": "2026-11-02",
    "id": "team_premium",
    "name": "GLM Coding Plan Team premium seat",
    "provider": "zai",
@@ -314,43 +297,42 @@
    "usd_per_month": 188
   },
   {
-   "checked": "2026-11-02",
+   "checked": "2026-11-06",
    "id": "plus",
    "name": "Plus",
-   "note": "One subscription covers Grok and Cursor; grok.com/plans shows the same plans, in local currency only.",
+   "note": "One subscription covers Grok and Cursor. grok.com/plans shows these plans in local currency only, so the price is the one cursor.com/pricing lists, read on the checked date.",
    "provider": "xai",
-   "source": "https://cursor.com/pricing",
+   "source": "https://grok.com/plans",
    "usd_per_month": 8
   },
   {
-   "checked": "2026-11-02",
+   "checked": "2026-11-06",
    "id": "premium",
    "name": "Premium",
-   "note": "One subscription covers Grok and Cursor; grok.com/plans shows the same plans, in local currency only.",
+   "note": "One subscription covers Grok and Cursor. grok.com/plans shows these plans in local currency only, so the price is the one cursor.com/pricing lists, read on the checked date.",
    "provider": "xai",
-   "source": "https://cursor.com/pricing",
+   "source": "https://grok.com/plans",
    "usd_per_month": 30
   },
   {
-   "checked": "2026-11-02",
+   "checked": "2026-11-06",
    "id": "super",
    "name": "Super",
-   "note": "One subscription covers Grok and Cursor; grok.com/plans shows the same plans, in local currency only.",
+   "note": "One subscription covers Grok and Cursor. grok.com/plans shows these plans in local currency only, so the price is the one cursor.com/pricing lists, read on the checked date.",
    "provider": "xai",
-   "source": "https://cursor.com/pricing",
+   "source": "https://grok.com/plans",
    "usd_per_month": 100
   },
   {
-   "checked": "2026-11-02",
+   "checked": "2026-11-06",
    "id": "ultra",
    "name": "Ultra",
-   "note": "One subscription covers Grok and Cursor; grok.com/plans shows the same plans, in local currency only.",
+   "note": "One subscription covers Grok and Cursor. grok.com/plans shows these plans in local currency only, so the price is the one cursor.com/pricing lists, read on the checked date.",
    "provider": "xai",
-   "source": "https://cursor.com/pricing",
+   "source": "https://grok.com/plans",
    "usd_per_month": 200
   },
   {
-   "checked": "2026-11-02",
    "id": "plus",
    "name": "Cursor Plus",
    "provider": "cursor",
@@ -358,7 +340,6 @@
    "usd_per_month": 8
   },
   {
-   "checked": "2026-11-02",
    "id": "premium",
    "name": "Cursor Premium",
    "provider": "cursor",
@@ -366,7 +347,6 @@
    "usd_per_month": 30
   },
   {
-   "checked": "2026-11-02",
    "id": "super",
    "name": "Cursor Super",
    "provider": "cursor",
@@ -374,7 +354,6 @@
    "usd_per_month": 100
   },
   {
-   "checked": "2026-11-02",
    "id": "ultra",
    "name": "Cursor Ultra",
    "provider": "cursor",
@@ -382,7 +361,6 @@
    "usd_per_month": 200
   },
   {
-   "checked": "2026-11-02",
    "id": "pro",
    "name": "Devin Pro",
    "provider": "cognition",
@@ -390,7 +368,6 @@
    "usd_per_month": 20
   },
   {
-   "checked": "2026-11-02",
    "id": "max",
    "name": "Devin Max",
    "provider": "cognition",
@@ -398,7 +375,6 @@
    "usd_per_month": 200
   },
   {
-   "checked": "2026-11-02",
    "id": "pro",
    "name": "Le Chat Pro",
    "provider": "mistral",
@@ -406,7 +382,6 @@
    "usd_per_month": 14.99
   },
   {
-   "checked": "2026-11-02",
    "id": "student",
    "name": "Le Chat Student",
    "provider": "mistral",
@@ -414,7 +389,6 @@
    "usd_per_month": 5.99
   },
   {
-   "checked": "2026-11-02",
    "id": "team",
    "name": "Le Chat Team",
    "provider": "mistral",
@@ -422,7 +396,7 @@
    "usd_per_month": 24.99
   },
   {
-   "checked": "2026-11-02",
+   "checked": "2026-11-06",
    "id": "max",
    "name": "Perplexity Max",
    "provider": "perplexity",
@@ -430,7 +404,6 @@
    "usd_per_month": 200
   },
   {
-   "checked": "2026-11-02",
    "id": "everyday",
    "name": "Muse Code Everyday Usage",
    "provider": "meta",
@@ -438,7 +411,6 @@
    "usd_per_month": 5
   },
   {
-   "checked": "2026-11-02",
    "id": "high",
    "name": "Muse Code High Usage",
    "provider": "meta",
@@ -446,7 +418,6 @@
    "usd_per_month": 15
   },
   {
-   "checked": "2026-11-02",
    "id": "power",
    "name": "Muse Code Power Usage",
    "provider": "meta",
@@ -454,7 +425,6 @@
    "usd_per_month": 50
   },
   {
-   "checked": "2026-11-02",
    "id": "maximum",
    "name": "Muse Code Maximum Usage",
    "provider": "meta",
@@ -462,7 +432,6 @@
    "usd_per_month": 200
   },
   {
-   "checked": "2026-11-02",
    "id": "plus",
    "name": "Kimi Plus",
    "note": "Plus, Pro, Max, and Ultra were named Moderato, Allegretto, Allegro, and Vivace at the same prices.",
@@ -471,7 +440,6 @@
    "usd_per_month": 19
   },
   {
-   "checked": "2026-11-02",
    "id": "pro",
    "name": "Kimi Pro",
    "provider": "moonshotai",
@@ -479,7 +447,6 @@
    "usd_per_month": 39
   },
   {
-   "checked": "2026-11-02",
    "id": "max",
    "name": "Kimi Max",
    "provider": "moonshotai",
@@ -487,7 +454,6 @@
    "usd_per_month": 99
   },
   {
-   "checked": "2026-11-02",
    "id": "ultra",
    "name": "Kimi Ultra",
    "provider": "moonshotai",
@@ -495,7 +461,6 @@
    "usd_per_month": 199
   },
   {
-   "checked": "2026-11-02",
    "id": "go",
    "name": "M Plan Go",
    "provider": "minimax",
@@ -503,7 +468,6 @@
    "usd_per_month": 22
   },
   {
-   "checked": "2026-11-02",
    "id": "explore",
    "name": "M Plan Explore",
    "provider": "minimax",
@@ -511,7 +475,6 @@
    "usd_per_month": 55
   },
   {
-   "checked": "2026-11-02",
    "id": "build",
    "name": "M Plan Build",
    "provider": "minimax",
@@ -519,7 +482,6 @@
    "usd_per_month": 132
   },
   {
-   "checked": "2026-11-02",
    "id": "coding_pro",
    "name": "Coding Plan Pro",
    "provider": "alibaba",
@@ -527,39 +489,74 @@
    "usd_per_month": 50
   },
   {
-   "checked": "2026-11-02",
+   "id": "token_lite",
+   "name": "Token Plan Lite",
+   "note": "The page listed \"Original price $8/month\" beside \"Limited-time $6/month\" on 2026-10-24 and on 2026-11-02, and $6/month as the plain price, with only a labelled new-user price beside it, when first read on 2026-11-06, which ends this price.",
+   "provider": "alibaba",
+   "source": "https://web.archive.org/web/20261024121934/https://www.alibabacloud.com/help/en/model-studio/token-plan-overview",
+   "usd_per_month": 8,
+   "valid_until": "2026-11-06T00:00:00Z"
+  },
+  {
    "id": "token_lite",
    "name": "Token Plan Lite",
    "provider": "alibaba",
    "source": "https://docs.modelstudio.console.alibabacloud.com/en/model-studio/token-plan-personal-overview",
-   "usd_per_month": 8
+   "usd_per_month": 6,
+   "valid_from": "2026-11-06T00:00:00Z"
   },
   {
-   "checked": "2026-11-02",
+   "id": "token_essential",
+   "name": "Token Plan Essential",
+   "note": "The page listed \"Original price $16/month\" beside \"Limited-time $10/month\" on 2026-10-24 and on 2026-11-02, and $10/month as the plain price, with only a labelled new-user price beside it, when first read on 2026-11-06, which ends this price.",
+   "provider": "alibaba",
+   "source": "https://web.archive.org/web/20261024121934/https://www.alibabacloud.com/help/en/model-studio/token-plan-overview",
+   "usd_per_month": 16,
+   "valid_until": "2026-11-06T00:00:00Z"
+  },
+  {
    "id": "token_essential",
    "name": "Token Plan Essential",
    "provider": "alibaba",
    "source": "https://docs.modelstudio.console.alibabacloud.com/en/model-studio/token-plan-personal-overview",
-   "usd_per_month": 16
+   "usd_per_month": 10,
+   "valid_from": "2026-11-06T00:00:00Z"
   },
   {
-   "checked": "2026-11-02",
+   "id": "token_standard",
+   "name": "Token Plan Standard",
+   "note": "The page listed \"Original price $25/month\" beside \"Limited-time $18/month\" on 2026-10-24 and on 2026-11-02, and $18/month as the plain price, with only a labelled new-user price beside it, when first read on 2026-11-06, which ends this price.",
+   "provider": "alibaba",
+   "source": "https://web.archive.org/web/20261024121934/https://www.alibabacloud.com/help/en/model-studio/token-plan-overview",
+   "usd_per_month": 25,
+   "valid_until": "2026-11-06T00:00:00Z"
+  },
+  {
    "id": "token_standard",
    "name": "Token Plan Standard",
    "provider": "alibaba",
    "source": "https://docs.modelstudio.console.alibabacloud.com/en/model-studio/token-plan-personal-overview",
-   "usd_per_month": 25
+   "usd_per_month": 18,
+   "valid_from": "2026-11-06T00:00:00Z"
   },
   {
-   "checked": "2026-11-02",
+   "id": "token_pro",
+   "name": "Token Plan Pro",
+   "note": "The page listed \"Original price $80/month\" beside \"Limited-time $68/month\" on 2026-10-24 and on 2026-11-02, and $68/month as the plain price, with only a labelled new-user price beside it, when first read on 2026-11-06, which ends this price.",
+   "provider": "alibaba",
+   "source": "https://web.archive.org/web/20261024121934/https://www.alibabacloud.com/help/en/model-studio/token-plan-overview",
+   "usd_per_month": 80,
+   "valid_until": "2026-11-06T00:00:00Z"
+  },
+  {
    "id": "token_pro",
    "name": "Token Plan Pro",
    "provider": "alibaba",
    "source": "https://docs.modelstudio.console.alibabacloud.com/en/model-studio/token-plan-personal-overview",
-   "usd_per_month": 80
+   "usd_per_month": 68,
+   "valid_from": "2026-11-06T00:00:00Z"
   },
   {
-   "checked": "2026-11-02",
    "id": "lite",
    "name": "MiMo Token Plan Lite",
    "provider": "xiaomi",
@@ -567,7 +564,6 @@
    "usd_per_month": 6
   },
   {
-   "checked": "2026-11-02",
    "id": "standard",
    "name": "MiMo Token Plan Standard",
    "provider": "xiaomi",
@@ -575,7 +571,6 @@
    "usd_per_month": 16
   },
   {
-   "checked": "2026-11-02",
    "id": "pro",
    "name": "MiMo Token Plan Pro",
    "provider": "xiaomi",
@@ -583,7 +578,6 @@
    "usd_per_month": 50
   },
   {
-   "checked": "2026-11-02",
    "id": "max",
    "name": "MiMo Token Plan Max",
    "provider": "xiaomi",
@@ -591,7 +585,6 @@
    "usd_per_month": 100
   },
   {
-   "checked": "2026-11-02",
    "id": "mini",
    "name": "Step Plan Mini",
    "provider": "stepfun-ai",
@@ -599,7 +592,6 @@
    "usd_per_month": 6.99
   },
   {
-   "checked": "2026-11-02",
    "id": "plus",
    "name": "Step Plan Plus",
    "provider": "stepfun-ai",
@@ -607,7 +599,6 @@
    "usd_per_month": 9.99
   },
   {
-   "checked": "2026-11-02",
    "id": "pro",
    "name": "Step Plan Pro",
    "provider": "stepfun-ai",
@@ -615,7 +606,6 @@
    "usd_per_month": 29
   },
   {
-   "checked": "2026-11-02",
    "id": "max",
    "name": "Step Plan Max",
    "provider": "stepfun-ai",
@@ -38942,5 +38932,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-06T14:22:01Z"
+ "updated_at": "2026-11-07T01:12:47Z"
 }
