@@ -421,6 +421,20 @@ class CheckTests(unittest.TestCase):
         sakana = _prices("sakana")
         self.assertEqual(sakana[("fugu-ultra", "output", 272_000, None)], 45)
         self.assertEqual(sakana[("fugu-ultra", "cache_read", None, None)], 0.5)
+        # Fugu's tier column reads "Input context 272K or above".
+        self.assertEqual(sakana[("fugu", "output", 272_000, None)], 35)
+
+    def test_sakana_announced_prices_are_checked_at_their_start(self):
+        found = {(item.field, item.at): item.value for item in
+                 checks.parse_sakana(PAGES["sakana"], TODAY) if item.model == "sakana-namazu"}
+        self.assertEqual(found[("input", None)], 0.95)
+        self.assertEqual(found[("input", "2026-12-01T01:00:00Z")], 1.9)
+        # From its start, the announced price is the current one.
+        later = {(item.field, item.at): item.value for item in checks.parse_sakana(
+            PAGES["sakana"], datetime(2026, 12, 2, tzinfo=timezone.utc)) if item.model == "sakana-namazu"}
+        self.assertEqual(later, {("input", None): 1.9, ("output", None): 6.0, ("cache_read", None): 0.3})
+        with self.assertRaisesRegex(ValueError, "unknown price column"):
+            checks.parse_sakana(PAGES["sakana"].replace("Standard price", "Launch price"), TODAY)
         self.assertEqual(_prices("ai21")[("jamba-large", "output", None, None)], 8)
 
     def test_inception_sale_prices_and_upstage_dated_promotions(self):

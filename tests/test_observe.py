@@ -60,9 +60,10 @@ class ObserveTests(unittest.TestCase):
         self.assertEqual(entries[0]["source"], "https://cursor.com/docs/models/cursor-composer-2-5")
 
     def test_devin_price_list_gives_cognition_models_at_enterprise_prices(self):
-        # Self-serve plans list SWE-2 at no charge; Enterprise plans pay per token.
+        # Self-serve plans list SWE-2 at no charge; Enterprise plans pay per token. Other
+        # labs' models, such as GPT-OSS, are left out.
         self.assertEqual(observe.parse_devin(DEVIN), {
-            "swe-2-medium": {"input": 0.75, "output": 3.75, "cache_read": 0.075, "cache_write": 0.0},
+            "swe-2-medium": {"input": 0.5, "output": 2.5, "cache_read": 0.05, "cache_write": 0.0},
             "swe-1-7": {"input": 0.5, "output": 2.5, "cache_read": 0.2, "cache_write": 0.0}})
 
     def test_one_unreadable_page_does_not_stop_the_others(self):

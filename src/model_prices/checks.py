@@ -613,7 +613,10 @@ def parse_cohere(text: str, today: datetime) -> list[Observed]:
 
 
 def parse_sakana(text: str, today: datetime) -> list[Observed]:
-    """Read Sakana AI's pay-as-you-go tables, each under a heading naming its model."""
+    """Read Sakana AI's pay-as-you-go tables, each under a heading naming its model. A
+    column is the standard price, a long-context tier such as "Input context 272K or
+    above", or an announced price, such as "From Dec 1, 2026, 10:00 JST", which replaces
+    the "Current" column from that time and is checked at its start until then."""
     fields = {"Input": "input", "Output": "output", "Cached input": "cache_read"}
     found = []
     for table in re.finditer(r"<table.*?</table>", text, re.S):
@@ -624,14 +627,32 @@ def parse_sakana(text: str, today: datetime) -> list[Observed]:
             continue
         name = _mdx_cell(headings[-1])
         model = _display_id("sakana", re.sub(r"-v\d+(\.\d+)?$", "", name))
+        columns = []
+        for title in titles[1:]:
+            tier = re.fullmatch(r"(?:Context > ?|Input context )([0-9]+)K(?: or above)?", title)
+            start = re.fullmatch(r"From ([A-Z][a-z]{2} [0-9]{1,2}, [0-9]{4}, [0-9]{2}:[0-9]{2}) JST",
+                                 title)
+            if start:
+                at = (datetime.strptime(start.group(1), "%b %d, %Y, %H:%M")
+                      - timedelta(hours=9)).replace(tzinfo=timezone.utc)
+                columns.append((title, None, None if at <= today else
+                                at.isoformat().replace("+00:00", "Z")))
+            elif tier:
+                columns.append((title, int(tier.group(1)) * 1000, None))
+            elif title in {"Price", "Standard price", "Current"} or re.fullmatch(
+                    r"Input context below [0-9]+K", title):
+                columns.append((title, None, None))
+            else:
+                raise ValueError(f"sakana: unknown price column {title!r} for {name}")
+        # Once an announced price starts, the "Current" column it replaces is stale.
+        if any(title.startswith("From ") and at is None for title, _, at in columns):
+            columns = [column for column in columns if column[0] != "Current"]
         for row in rows:
             field = fields.get(row[0])
-            for title in titles[1:]:
-                tier = re.search(r"> ?([0-9]+)K", title)
+            for title, above, at in columns:
                 value = _price(row[titles.index(title)])
                 if field and value is not None:
-                    found.append(Observed("sakana", model, field, value,
-                                          above=int(tier.group(1)) * 1000 if tier else None))
+                    found.append(Observed("sakana", model, field, value, above=above, at=at))
     return found
 
 

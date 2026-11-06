@@ -75,7 +75,7 @@ def read_cursor(get: Callable[[str], str]) -> dict[str, tuple[str, dict[str, Any
 DEVIN_MODELS = "https://docs.devin.ai/desktop/models"
 # Enterprise plans are billed these per-token prices directly; self-serve plans include some
 # of Cognition's models at no charge for a period, which is no per-token price.
-_DEVIN_TIER = "TEAMS_TIER_ENTERPRISE_SAAS"
+_DEVIN_TIER = "TEAMS_TIER_DEVIN_ENTERPRISE"
 _DEVIN_FIELDS = {"input_cost_per_million_usd": "input", "output_cost_per_million_usd": "output",
                  "cache_read_cost_per_million_usd": "cache_read",
                  "cache_write_cost_per_million_usd": "cache_write"}

@@ -33421,6 +33421,25 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.3,
+       "input": 1.9,
+       "output": 6.0,
+       "source": "https://console.sakana.ai/pricing",
+       "valid_from": "2026-12-01T01:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.15,
+       "input": 0.95,
+       "output": 4.0,
+       "source": "https://github.com/sst/models.dev/commit/ab6c64dc8917",
+       "valid_from": "2026-08-19T04:26:28Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-12-01T01:00:00Z"
      }
     ]
    }
@@ -38419,5 +38438,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-06T14:16:34Z"
+ "updated_at": "2026-11-06T14:19:27Z"
 }

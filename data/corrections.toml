@@ -1054,6 +1054,17 @@ replaces = { input = 1.25, output = 10.0, cache_read = 0.125, tools = { web_sear
 source = "https://ai.google.dev/gemini-api/docs/pricing#gemini-2.5-pro"
 note = "Google's pricing page: Grounding with Google Search costs $35 per 1,000 grounded prompts after 1,500 free requests a day; a grounded prompt is billed once however many queries it runs."
 
+[[correction]]
+provider = "sakana"
+model = "sakana-namazu"
+valid_from = "2026-12-01T01:00:00Z"
+input = 1.9
+output = 6.0
+cache_read = 0.3
+replaces = { input = 0.95, output = 4.0, cache_read = 0.15 }
+source = "https://console.sakana.ai/pricing"
+note = "Sakana's pricing page lists sakana-namazu-v1.0 at $0.95 input, $4.00 output, and $0.15 cached input now, and at $1.90, $6.00, and $0.30 from Dec 1, 2026, 10:00 JST."
+
 # Tencent's and Volcengine's own models that models.dev lacks. Their pricing pages name
 # models for display and price them in yuan, so each is written here with its API id from
 # the provider's model list, converted to dollars at the rate models.dev uses for that
