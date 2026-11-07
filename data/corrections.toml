@@ -993,6 +993,7 @@ note = "Google's pricing page: input \"$0.75 (text) $3.00 or $0.005/min (audio) 
 provider = "google"
 model = "gemini-omni-flash-preview"
 valid_from = "2026-07-08T21:27:04Z"
+valid_until = "2026-10-30T00:00:00Z"
 input = 1.5
 output = 17.5
 modalities = { text = { input = 1.5, output = 9.0 }, image = { input = 1.5 }, audio = { input = 1.5 }, video = { input = 1.5, output = 17.5 } }
