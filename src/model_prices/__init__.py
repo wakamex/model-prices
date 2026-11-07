@@ -922,6 +922,14 @@ def main(argv: list[str] | None = None) -> int:
                        for item in tomllib.loads((args.data / name).read_text()).get("correction", [])]
         results += unchecked(results, corrections, set(args.providers) if args.providers else None,
                              datetime.now(timezone.utc))
+        # So are rule-file entries, such as a batch discount, that no comparison covered.
+        from model_prices.checks import unchecked_rules
+        rule_files = {"batch": "batch.toml", "cache_write_1h": "cache_writes.toml",
+                      "schedule": "schedules.toml", "tool": "tools.toml"}
+        rules_in_files = {table: tomllib.loads((args.data / name).read_text()).get(table, [])
+                          for table, name in rule_files.items() if (args.data / name).exists()}
+        results += unchecked_rules(results, rules_in_files,
+                                   set(args.providers) if args.providers else None, datetime.now(timezone.utc))
         # Plan prices are checked in a full run, which a plan's own price disagreement fails.
         if not args.providers:
             from model_prices.plan_checks import check_plans

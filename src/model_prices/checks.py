@@ -247,6 +247,44 @@ def parse_xai(text: str, today: datetime) -> list[Observed]:
     return found
 
 
+def xai_batch(text: str) -> dict[str, float]:
+    """The batch multiple of each model xAI's pricing page lists under "Batch API Pricing",
+    from its "**20% off standard rates**" headings and the model ids listed below each."""
+    section = re.search(r"^## Batch API Pricing$(.*?)^Models not listed above have no batch discount\.$",
+                        text, re.M | re.S)
+    if section is None:
+        raise ValueError("xai: no batch discount list; the page format changed")
+    found, multiple = {}, None
+    for line in section.group(1).splitlines():
+        heading = re.fullmatch(r"\*\*([0-9]+)% off standard rates\*\*", line.strip())
+        model = re.fullmatch(r"- ([a-z0-9.-]+)", line.strip())
+        if heading:
+            multiple = 1 - int(heading.group(1)) / 100
+        elif model and multiple is not None:
+            found[model.group(1)] = multiple
+    if not found:
+        raise ValueError("xai: the batch discount list is empty; the page format changed")
+    return found
+
+
+def compare_xai_batch(text: str, today: datetime) -> list[Result]:
+    """Compare each model's batch discount on xAI's page with the batch prices model-prices
+    gives it, which batch.toml sets; a model either one discounts and the other does not is a
+    mismatch."""
+    listed = xai_batch(text)
+    results = []
+    for model in sorted(set(listed) | set(_data()["prices"].get("xai", {}))):
+        standard = rates(f"xai/{model}", at=today, provider="xai")
+        batch = rates(f"xai/{model}", at=today, provider="xai", mode="batch")
+        effective = round(batch.input / standard.input, 9) if standard and batch and standard.input else None
+        if model not in listed and effective is None:
+            continue
+        official = listed.get(model)
+        status = "ok" if official is not None and effective is not None and abs(official - effective) < 1e-9 else "mismatch"
+        results.append(Result("xai", f"xai/{model}", "rule:batch", None, None, official, effective, None, status))
+    return results
+
+
 def parse_moonshot(text: str, today: datetime) -> list[Observed]:
     """Read Kimi's price tables from its pricing page's HTML. The page builds each table
     with a compiled DocTable component, `_jsx(DocTable,{className:..., columns:[{title:`Model`},
@@ -517,19 +555,29 @@ def parse_perplexity(text: str, today: datetime) -> list[Observed]:
     return found
 
 
+# The realtime voice table states its unit, USD per 1M tokens, above it rather than per row.
+_STEPFUN_VOICE = ["Model ID", "Input Price (Cache Miss)", "Input Price (Cache Hit)", "Output Price", "Status"]
+
+
 def parse_stepfun(text: str, today: datetime) -> list[Observed]:
-    """Read token prices from StepFun's global pricing tables."""
-    columns = {"Input (cache miss)": "input", "Input (cache hit)": "cache_read", "Output": "output"}
+    """Read token prices from StepFun's global pricing tables, and from its realtime voice
+    table, whose header names its columns differently."""
+    columns = {"Input (cache miss)": "input", "Input (cache hit)": "cache_read", "Output": "output",
+               "Input Price (Cache Miss)": "input", "Input Price (Cache Hit)": "cache_read",
+               "Output Price": "output"}
     found = []
-    for _, header, rows in _markdown_tables(text):
-        if header[:2] != ["Model", "Billing unit"] or not set(columns) <= set(header):
+    for headings, header, rows in _markdown_tables(text):
+        voice = (header == _STEPFUN_VOICE
+                 and headings.get(3) == "Realtime Voice & Voice Chat (Billed by Token)")
+        if not voice and (header[:2] != ["Model", "Billing unit"]
+                          or not {"Input (cache miss)", "Input (cache hit)", "Output"} <= set(header)):
             continue
         for row in rows:
-            if row[header.index("Billing unit")] != "1M tokens":
+            if not voice and row[header.index("Billing unit")] != "1M tokens":
                 continue
             model = row[0].strip("`")
             for title, field in columns.items():
-                value = _price(row[header.index(title)])
+                value = _price(row[header.index(title)]) if title in header else None
                 if value is not None:
                     found.append(Observed("stepfun-ai", model, field, value))
     return found
@@ -1600,6 +1648,8 @@ def _check(provider: str, moment: datetime, pages: dict[str, str] | None,
             tool_page = pages[key] if pages else (page if tool_url == url else fetch(tool_url))
             results += compare_tools(provider, tool_page, moment,
                                      {result.model for result in results if result.status != "untracked"})
+    if provider == "xai":
+        results += compare_xai_batch(page, moment)
     # OpenAI's regional uplift is read from its other pages, which a test supplies or leaves out.
     if provider == "openai":
         from model_prices import openai_regions
@@ -1657,6 +1707,41 @@ def unchecked(results: list[Result], corrections: list[dict], providers: set[str
     return sorted(set(found), key=lambda result: result.model)
 
 
+# For each rule file's table, whether a compared result covers one of its entries.
+_RULE_COVERS: dict[str, Callable[[dict, Result], bool]] = {
+    "batch": lambda entry, result: result.field.startswith("batch ") or result.field == "rule:batch",
+    "cache_write_1h": lambda entry, result: result.field.endswith("cache_write_1h"),
+    "schedule": lambda entry, result: result.field == "rule:time_of_day" or result.field.startswith("peak_terms:"),
+    "tool": lambda entry, result: result.field in {f"tool:{name}" for name in entry["tools"]},
+}
+
+
+def unchecked_rules(results: list[Result], rules: dict[str, list[dict]], providers: set[str] | None,
+                    today: datetime) -> list[Result]:
+    """Rule-file entries in effect today, keyed by table such as "batch", that no comparison
+    covered: none of today's results for the entry's provider prices what it sets for a model
+    its pattern matches."""
+    compared = [result for result in results if result.status in {"ok", "corrected", "mismatch"}]
+    found = []
+    for table, entries in rules.items():
+        for entry in entries:
+            def started(item: dict) -> bool:
+                return "valid_from" not in item or _parse_time(item["valid_from"]) <= today
+            later = any(other is not entry and started(other) and other["provider"] == entry["provider"]
+                        and other.get("models") == entry.get("models")
+                        and other.get("valid_from", "") > entry.get("valid_from", "") for other in entries)
+            current = (started(entry) and not later
+                       and ("valid_until" not in entry or today < _parse_time(entry["valid_until"])))
+            if not current or (providers is not None and entry["provider"] not in providers):
+                continue
+            pattern = re.compile(entry.get("models", ""))
+            if not any(result.provider == entry["provider"] and _RULE_COVERS[table](entry, result)
+                       and pattern.search(result.model.partition("/")[2]) for result in compared):
+                found.append(Result(entry["provider"], f"{entry['provider']} {table}", "rule entry", None,
+                                    None, entry["source"], None, None, "unchecked"))
+    return found
+
+
 def _score(results: list[Result], field: str) -> str:
     """How many official prices a source lists correctly, lists wrongly, or omits."""
     values = [(result.official, getattr(result, field)) for result in results
@@ -1682,6 +1767,10 @@ def report(results: list[Result], genai: bool = False) -> str:
                 lines.append(f"{result.status:9} {result.model} plan: official ${result.official:g}, "
                              f"plans.toml {recorded}")
             continue
+        if result.status == "unchecked" and result.field == "rule entry":
+            lines.append(f"unchecked {result.model} rule from {result.official}: no official page "
+                         "compared it today")
+            continue
         if result.status == "unchecked":
             lines.append(f"unchecked {result.model} tool fees on {result.official}: no official page "
                          "states them" if result.field == "tool fees" else
@@ -1699,6 +1788,10 @@ def report(results: list[Result], genai: bool = False) -> str:
             what = "regional factors" if result.field == "regions" else "release evidence conflicts:"
             lines.append(f"{result.status:9} {result.model} {what} OpenAI's pages {result.official}"
                          + (f", model-prices {result.effective}" if result.field == "regions" else ""))
+            continue
+        if result.field == "rule:batch":
+            lines.append(f"{result.status:9} {result.model} batch multiple: xAI's page {result.official}, "
+                         f"batch.toml {result.effective}")
             continue
         if result.field.startswith("rule:"):
             source = {"rule:time_of_day": "schedules.toml", "rule:modalities": "model-prices",

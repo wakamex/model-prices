@@ -707,6 +707,45 @@ Batch
         self.assertIn("error     xai page https://docs.x.ai/developers/pricing.md: timed out",
                       stdout.getvalue())
 
+    def test_xai_batch_list_is_compared_with_batch_toml(self):
+        page = (FIXTURES / "xai-batch.md").read_text()
+        today = datetime(2026, 11, 7, tzinfo=timezone.utc)
+        results = {r.model: r for r in checks.compare_xai_batch(page, today)}
+
+        self.assertEqual(results["xai/grok-4.7"].official, 0.8)
+        self.assertEqual({r.status for r in results.values()}, {"ok"})
+        # A model the rule discounts that the page no longer lists, and a changed discount.
+        dropped = {r.model: r.status for r in checks.compare_xai_batch(page.replace("- grok-4.3\n", ""), today)}
+        self.assertEqual(dropped["xai/grok-4.3"], "mismatch")
+        changed = checks.compare_xai_batch(page.replace("20% off", "25% off"), today)
+        self.assertEqual({r.status for r in changed}, {"mismatch"})
+        with self.assertRaisesRegex(ValueError, "page format changed"):
+            checks.xai_batch("## Batch API Pricing\n\nNo list.\n")
+
+    def test_stepfun_realtime_voice_table_is_read(self):
+        found = {(o.model, o.field): o.value for o in
+                 checks.parse_stepfun((FIXTURES / "stepfun-voice.md").read_text(), TODAY)}
+        self.assertEqual(found[("step-audio-2", "output")], 10)
+        self.assertEqual(found[("stepaudio-2.5-chat", "cache_read")], 0.3)
+        self.assertEqual(len({model for model, _ in found}), 5)
+
+    def test_rule_entries_no_comparison_covered_are_listed(self):
+        rules = {"batch": [{"provider": "xai", "models": "^grok-4\\.7$", "valid_from": "2026-10-22T00:00:00Z",
+                            "source": "https://docs.x.ai/developers/pricing"}],
+                 "tool": [{"provider": "perplexity", "models": "^sonar$", "tools": {"web_search_fast": 1.0},
+                           "valid_from": "2026-11-01T00:00:00Z", "source": "https://docs.perplexity.ai"}]}
+        today = datetime(2026, 11, 7, tzinfo=timezone.utc)
+        covered = [checks.Result("xai", "xai/grok-4.7", "rule:batch", None, None, 0.8, 0.8, None, "ok")]
+
+        found = checks.unchecked_rules(covered, rules, None, today)
+        self.assertEqual([r.model for r in found], ["perplexity tool"])
+        self.assertIn("unchecked perplexity tool rule from https://docs.perplexity.ai", checks.report(found))
+        # A result for another model the pattern does not match covers nothing.
+        other = [checks.Result("xai", "xai/grok-4.6", "rule:batch", None, None, 0.8, 0.8, None, "ok")]
+        self.assertIn("xai batch", [r.model for r in checks.unchecked_rules(other, rules, None, today)])
+        # An entry not yet started is not in effect.
+        self.assertEqual(checks.unchecked_rules([], rules, None, datetime(2026, 10, 1, tzinfo=timezone.utc)), [])
+
     def test_check_command_exit_status(self):
         with (mock.patch.object(checks, "fetch", lambda url: PAGES["zai"]),
               mock.patch("sys.stdout", new_callable=io.StringIO) as stdout):

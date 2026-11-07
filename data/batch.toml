@@ -4,7 +4,8 @@
 # latest entry in effect whose `models` pattern matches its id, or that has no pattern; of
 # entries starting together, the later one in this file. valid_from is when the provider
 # began selling batch requests at that discount. model-prices check compares the results
-# with the batch tables of official pages. Mistral also discounts batch requests by 50%,
+# with the batch tables of official pages, and xAI's entry with the list of discounted models
+# its pricing page gives. Mistral also discounts batch requests by 50%,
 # but its pricing page shows which models qualify only in the browser, so it is not listed.
 
 [[batch]]
