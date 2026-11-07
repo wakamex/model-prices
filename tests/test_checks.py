@@ -724,10 +724,34 @@ Batch
 
     def test_stepfun_realtime_voice_table_is_read(self):
         found = {(o.model, o.field): o.value for o in
-                 checks.parse_stepfun((FIXTURES / "stepfun-voice.md").read_text(), TODAY)}
+                 checks.parse_stepfun(PAGES["stepfun-ai"], TODAY)}
         self.assertEqual(found[("step-audio-2", "output")], 10)
         self.assertEqual(found[("stepaudio-2.5-chat", "cache_read")], 0.3)
-        self.assertEqual(len({model for model, _ in found}), 5)
+        self.assertTrue({"stepaudio-2.5-realtime", "step-1o-audio", "step-audio-r1.5"} <= {model for model, _ in found})
+        # A page without one of its two table layouts fails rather than dropping its models.
+        with self.assertRaisesRegex(ValueError, "realtime voice table is missing"):
+            checks.parse_stepfun(PAGES["stepfun-ai"].replace("| Model ID | Input Price (Cache Miss)",
+                                                            "| Model | Input Price (Cache Miss)"), TODAY)
+
+    def test_a_page_missing_a_tier_or_table_fails(self):
+        no_batch = PAGES["anthropic"].replace("| Batch input", "| Batched input")
+        with self.assertRaisesRegex(ValueError, "no table headed Batch input"):
+            checks.parse_anthropic(no_batch, TODAY)
+        no_fast = PAGES["openai"].replace("### Fast pricing data", "### Quick pricing data")
+        with self.assertRaisesRegex(ValueError, "no priority prices parsed"):
+            checks.parse("openai", no_fast, TODAY, PAGES.__getitem__)
+
+    def test_parsed_prices_no_page_lists_are_named_per_provider(self):
+        observed = {"openai": {"gpt-4-0613": [], "davinci-002": [], "gpt-3.5-turbo": []},
+                    "cursor": {"composer-2.5": []}}
+        history = {"openai": {"gpt-3.5-turbo": []}}
+        compared = [checks.Result("openai", "openai/davinci-002", "input", None, None, 2.0, 2.0, None, "ok")]
+
+        found = checks.unlisted_parsed(compared, observed, history, read={"cursor/composer-2.5"})
+        # davinci-002 was compared, gpt-3.5-turbo is priced by models.dev, and the observe step
+        # read composer-2.5, so only gpt-4-0613 is unlisted.
+        self.assertEqual([(r.provider, r.official) for r in found], [("openai", "gpt-4-0613")])
+        self.assertIn("unchecked openai: 1 parsed prices no page lists today: gpt-4-0613", checks.report(found))
 
     def test_rule_entries_no_comparison_covered_are_listed(self):
         rules = {"batch": [{"provider": "xai", "models": "^grok-4\\.7$", "valid_from": "2026-10-22T00:00:00Z",

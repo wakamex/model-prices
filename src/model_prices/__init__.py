@@ -930,8 +930,21 @@ def main(argv: list[str] | None = None) -> int:
                           for table, name in rule_files.items() if (args.data / name).exists()}
         results += unchecked_rules(results, rules_in_files,
                                    set(args.providers) if args.providers else None, datetime.now(timezone.utc))
-        # Plan prices are checked in a full run, which a plan's own price disagreement fails.
+        # A full run also names parsed prices no page states any more, and checks plans, which
+        # a plan's own price disagreement fails.
         if not args.providers:
+            from model_prices import observe
+            from model_prices.checks import fetch, unlisted_parsed
+            read = set()
+            for provider, reader in observe.SOURCES.items():
+                # A page the observe step reads that cannot be read fails that step instead.
+                try:
+                    read |= {f"{provider}/{model}" for model in reader(fetch)}
+                except (OSError, ValueError):
+                    pass
+            results += unlisted_parsed(results, json.loads((args.data / "observed.json").read_text())["providers"],
+                                       json.loads(recorded.read_text())["providers"] if recorded.exists() else {},
+                                       read)
             from model_prices.plan_checks import check_plans
             results += check_plans(datetime.now(timezone.utc))
         print(json.dumps(as_json(results), indent=2) if args.json

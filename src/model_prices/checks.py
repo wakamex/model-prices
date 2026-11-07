@@ -147,6 +147,8 @@ def parse_anthropic(text: str, today: datetime) -> list[Observed]:
                 if value is not None:
                     found.append(Observed("anthropic", model, field, value, mode=mode,
                                           above=int(tier.group(1).replace(",", "")) if tier else None))
+    if tables:
+        raise ValueError(f"anthropic: no table headed {', '.join(tables)}; the page format changed")
     return found
 
 
@@ -565,13 +567,14 @@ def parse_stepfun(text: str, today: datetime) -> list[Observed]:
     columns = {"Input (cache miss)": "input", "Input (cache hit)": "cache_read", "Output": "output",
                "Input Price (Cache Miss)": "input", "Input Price (Cache Hit)": "cache_read",
                "Output Price": "output"}
-    found = []
+    found, layouts = [], set()
     for headings, header, rows in _markdown_tables(text):
         voice = (header == _STEPFUN_VOICE
                  and headings.get(3) == "Realtime Voice & Voice Chat (Billed by Token)")
         if not voice and (header[:2] != ["Model", "Billing unit"]
                           or not {"Input (cache miss)", "Input (cache hit)", "Output"} <= set(header)):
             continue
+        layouts.add(voice)
         for row in rows:
             if not voice and row[header.index("Billing unit")] != "1M tokens":
                 continue
@@ -580,6 +583,9 @@ def parse_stepfun(text: str, today: datetime) -> list[Observed]:
                 value = _price(row[header.index(title)]) if title in header else None
                 if value is not None:
                     found.append(Observed("stepfun-ai", model, field, value))
+    if layouts != {True, False}:
+        raise ValueError("stepfun-ai: the token price tables or the realtime voice table is missing; "
+                         "the page format changed")
     return found
 
 
@@ -1540,6 +1546,12 @@ def compare(observed: Iterable[Observed], today: datetime,
     return results
 
 
+# Service tiers a provider's page prices in their own tables: a table the parser stops
+# reading, such as after its heading changes, fails instead of leaving the tier unchecked.
+REQUIRED_MODES = {"anthropic": {"batch"}, "google": {"batch", "flex", "priority"},
+                  "openai": {"batch", "flex", "priority", "ultrafast"}}
+
+
 def parse(provider: str, page: str, moment: datetime,
           get: Callable[[str], str]) -> list[Observed]:
     """The prices a provider's pricing page states; `get` fetches any further pages."""
@@ -1551,6 +1563,10 @@ def parse(provider: str, page: str, moment: datetime,
         observed = parser(page, moment)
     if not observed:
         raise ValueError(f"{provider}: no prices parsed from {url}; the page format changed")
+    missing = REQUIRED_MODES.get(provider, set()) - {item.mode for item in observed}
+    if missing:
+        raise ValueError(f"{provider}: no {', '.join(sorted(missing))} prices parsed from {url}; "
+                         "the page format changed")
     return observed
 
 
@@ -1742,6 +1758,22 @@ def unchecked_rules(results: list[Result], rules: dict[str, list[dict]], provide
     return found
 
 
+def unlisted_parsed(results: list[Result], observed: dict[str, dict], history: dict[str, dict],
+                    read: set[str]) -> list[Result]:
+    """Parsed prices still in effect, for models models.dev has never listed, that no page
+    stated today: neither a comparison nor the observe step's readers, whose models `read`
+    names, saw the model. One result per provider names its models."""
+    compared = {result.model for result in results if result.status in {"ok", "corrected", "mismatch"}}
+    found = []
+    for provider, models in sorted(observed.items()):
+        unlisted = sorted(model for model in models if model not in history.get(provider, {})
+                          and f"{provider}/{model}" not in compared | read)
+        if unlisted:
+            found.append(Result(provider, provider, "parsed prices", None, None, ", ".join(unlisted),
+                                len(unlisted), None, "unchecked"))
+    return found
+
+
 def _score(results: list[Result], field: str) -> str:
     """How many official prices a source lists correctly, lists wrongly, or omits."""
     values = [(result.official, getattr(result, field)) for result in results
@@ -1766,6 +1798,10 @@ def report(results: list[Result], genai: bool = False) -> str:
                 recorded = "not listed" if result.effective is None else f"${result.effective:g}"
                 lines.append(f"{result.status:9} {result.model} plan: official ${result.official:g}, "
                              f"plans.toml {recorded}")
+            continue
+        if result.status == "unchecked" and result.field == "parsed prices":
+            lines.append(f"unchecked {result.provider}: {result.effective} parsed prices no page lists "
+                         f"today: {result.official}")
             continue
         if result.status == "unchecked" and result.field == "rule entry":
             lines.append(f"unchecked {result.model} rule from {result.official}: no official page "
