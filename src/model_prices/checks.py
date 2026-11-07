@@ -218,16 +218,22 @@ def _openai_by_modality(text: str) -> list[Observed]:
 
 
 def parse_zai(text: str, today: datetime) -> list[Observed]:
+    """Read the Latest Models and Text Models tables, including those of the "Other Pricing"
+    section, which the page's Markdown copy writes as a quoted block, every line opening "> "."""
     columns = {"Input": "input", "Cached Input": "cache_read", "Output": "output"}
-    found = []
+    text = re.sub(r"^> ?", "", text, flags=re.M)
+    found, sections = [], set()
     for headings, header, rows in _markdown_tables(text):
         if headings.get(3) not in {"Latest Models", "Text Models"} or header[0] != "Model":
             continue
+        sections.add(headings[3])
         for row in rows:
             for title, field in columns.items():
                 value = _price(row[header.index(title)])
                 if value is not None:
                     found.append(Observed("zai", row[0], field, value))
+    if sections != {"Latest Models", "Text Models"}:
+        raise ValueError("zai: the Latest Models or Text Models table is missing; the page format changed")
     return found
 
 

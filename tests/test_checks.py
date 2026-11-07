@@ -733,6 +733,12 @@ Batch
             checks.parse_stepfun(PAGES["stepfun-ai"].replace("| Model ID | Input Price (Cache Miss)",
                                                             "| Model | Input Price (Cache Miss)"), TODAY)
 
+    def test_zai_reads_its_quoted_other_pricing_section(self):
+        found = {(o.model, o.field): o.value for o in checks.parse_zai(PAGES["zai"], TODAY)}
+        self.assertEqual(found[("GLM-4-32B-0414-128K", "input")], 0.1)
+        with self.assertRaisesRegex(ValueError, "Text Models table is missing"):
+            checks.parse_zai(PAGES["zai"].replace("### Text Models", "### Chat Models"), TODAY)
+
     def test_a_page_missing_a_tier_or_table_fails(self):
         no_batch = PAGES["anthropic"].replace("| Batch input", "| Batched input")
         with self.assertRaisesRegex(ValueError, "no table headed Batch input"):
