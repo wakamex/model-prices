@@ -1,3 +1,4 @@
+import importlib.util
 from datetime import datetime, timedelta, timezone
 import json
 from pathlib import Path
@@ -10,6 +11,10 @@ import unittest
 import model_prices
 
 ROOT = Path(__file__).resolve().parent.parent
+# The site builder is a script in tools/, loaded by path.
+_spec = importlib.util.spec_from_file_location("build_site", ROOT / "tools" / "build_site.py")
+build_site = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(build_site)
 FIELDS = ("input", "output", "cache_read", "cache_write", "cache_write_1h")
 
 
@@ -74,6 +79,17 @@ def _cases(count: int, seed: int = 0) -> list[dict]:
 @unittest.skipUnless(shutil.which("node") and (ROOT / "site").is_dir(),
                      "Node.js runs the site's calculator, which a source distribution leaves out")
 class CalculatorTests(unittest.TestCase):
+    def test_models_their_source_no_longer_lists_are_read_from_the_check(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "check.json"
+            path.write_text(json.dumps([
+                {"provider": "openai", "model": "openai", "field": "parsed prices", "status": "unchecked",
+                 "official": "gpt-4-0613, davinci-002", "effective": 2},
+                {"provider": "openai", "model": "openai/gpt-4o", "field": "input", "status": "ok",
+                 "official": 2.5, "effective": 2.5}]))
+            self.assertEqual(build_site.unlisted(path), {("openai", "gpt-4-0613"), ("openai", "davinci-002")})
+        self.assertEqual(build_site.unlisted(None), set())
+
     def test_calculator_matches_the_package_exactly(self):
         cases = _cases(5000)
         with tempfile.TemporaryDirectory() as directory:

@@ -134,6 +134,15 @@ def statuses(path: Path | None) -> tuple[dict, str | None]:
     return found, ran
 
 
+def unlisted(path: Path | None) -> set[tuple[str, str]]:
+    """Models priced from their provider's page that the page no longer lists, which the check
+    names, one result per provider, as unchecked parsed prices."""
+    if path is None:
+        return set()
+    return {(result["provider"], model) for result in json.loads(path.read_text())
+            if result["field"] == "parsed prices" for model in result["official"].split(", ")}
+
+
 def official_page(provider: str) -> str | None:
     """The provider's pricing page for readers: the check reads Markdown copies, and
     Volcengine's document through the API its page loads."""
@@ -158,11 +167,14 @@ def yuan_note(provider: str) -> str:
             f"dollars {rate}, so a bill in yuan can differ slightly." if rate else "")
 
 
-STATUS_LABELS = {"deprecated": "deprecated", "removed": "delisted"}
+# "unlisted" is a model priced from its provider's page that the page no longer lists.
+STATUS_LABELS = {"deprecated": "deprecated", "removed": "delisted", "unlisted": "delisted"}
 STATUS_TEXT_MODEL = {
     "deprecated": "models.dev marks this model deprecated: the provider plans to retire it or has.",
     "removed": "models.dev no longer lists this model, usually because the provider retired it; "
                "its history ends with the last price models.dev recorded.",
+    "unlisted": "Its provider's pricing page no longer lists this model, usually because the "
+                "provider retired it; its history ends with the last price that page stated.",
 }
 
 
@@ -288,7 +300,7 @@ def history(timeline: list[dict]) -> list[str]:
 
 
 def model_page(provider: str, model: str, timelines: dict, found: dict, ran: str | None,
-               now: datetime) -> str:
+               now: datetime, state: str | None = None) -> str:
     standard = timelines.get("standard", [])
     latest = current(standard, now) if standard else None
     rates = latest["rates"] if latest else None
@@ -333,7 +345,6 @@ def model_page(provider: str, model: str, timelines: dict, found: dict, ran: str
                      f"output {price(interval['rates']['output'])}"
                      + (f", cached input {price(interval['rates']['cache_read'])}"
                         if interval["rates"].get("cache_read") is not None else "") + ".")
-    state = model_prices._data()["status"].get(provider, {}).get(model)
     if state:
         intro.append(STATUS_TEXT_MODEL[state])
     intro.append(check_line(provider, model, found, ran))
@@ -403,6 +414,7 @@ def build(check_results: Path | None) -> None:
     data = model_prices._data()
     now = datetime.now(timezone.utc)
     found, ran = statuses(check_results)
+    delisted = unlisted(check_results)
     for path in GENERATED:
         if path.is_dir():
             shutil.rmtree(path)
@@ -422,7 +434,9 @@ def build(check_results: Path | None) -> None:
             while page in used:
                 page += "-"
             used.add(page)
-            (section / f"{page}.md").write_text(model_page(provider, model, timelines, found, ran, now))
+            state = data["status"].get(provider, {}).get(model) or (
+                "unlisted" if (provider, model) in delisted else None)
+            (section / f"{page}.md").write_text(model_page(provider, model, timelines, found, ran, now, state))
             pages[(provider, model)] = f"../providers/{slug(provider)}/{page}/"
             resolved = model_prices.resolve_details(model, provider)
             if resolved and resolved[:3] == (provider, model, ""):
@@ -434,13 +448,14 @@ def build(check_results: Path | None) -> None:
                 rule = schedule_line(provider, model, now)
                 note = (" (off-peak)" if rule and "peak hours" in rule else
                         " (time of day)" if rule else "")
-                state = data["status"].get(provider, {}).get(model)
                 note += f" ({STATUS_LABELS[state]})" if state else ""
                 # Deprecated and delisted models follow the current ones.
                 order = (state is not None, model.lower())
                 rows.append((order, price_row(None, model, latest["rates"], start, f"{page}/", note)))
-                overview.append((order, price_row(provider, model, latest["rates"], start,
-                                                  f"providers/{slug(provider)}/{page}/", note)))
+                # The front page leaves out delisted models, which their provider pages keep.
+                if state not in {"removed", "unlisted"}:
+                    overview.append((order, price_row(provider, model, latest["rates"], start,
+                                                      f"providers/{slug(provider)}/{page}/", note)))
         page_url = official_page(provider)
         observed = provider in observe.SOURCES
         intro = (f"model-prices checks these prices daily against [{name(provider)}'s pricing page]({page_url})."
@@ -488,7 +503,9 @@ def build(check_results: Path | None) -> None:
         "prompts gives the prompt size above which a model costs more. A Since date ending in "
         "\"or earlier\" is when tracking began. Models marked off-peak cost more at peak hours, and "
         "those marked time of day cost less off-peak; their pages give the hours. Deprecated "
-        "models, and delisted ones that models.dev no longer lists, follow the current ones. "
+        "models follow the current ones. Delisted models, which models.dev or their provider's "
+        "pricing page no longer lists, usually because they were retired, appear only on their "
+        "provider's page. "
         "[Corrections](corrections/) lists every price that differs from models.dev, and why.\n\n"
         + price_filter("Model or provider") + "\n\n" + "\n".join(table_head(True) + [row for _, row in sorted(overview)]) + "\n")
     (SITE / "data").mkdir(exist_ok=True)
