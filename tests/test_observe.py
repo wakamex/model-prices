@@ -59,6 +59,23 @@ class ObserveTests(unittest.TestCase):
                          [("2026-10-04T00:00:00Z", 2.5), ("2026-10-06T00:00:00Z", 2.0)])
         self.assertEqual(entries[0]["source"], "https://cursor.com/docs/models/cursor-composer-2-5")
 
+    def test_a_model_priced_only_by_modality_takes_its_plain_prices_from_them(self):
+        image = {"modalities": {"image": {"input": 8.0, "output": 32.0, "cache_read": 2.0},
+                                "text": {"input": 5.0, "output": 10.0, "cache_read": 1.25}}}
+        observe._plain_from_modalities(image)
+        # Text input and cached input, and the output of the images it generates.
+        self.assertEqual((image["input"], image["cache_read"], image["output"]), (5.0, 1.25, 32.0))
+        speech = {"modalities": {"text": {"input": 0.6}, "audio": {"output": 12.0}}}
+        observe._plain_from_modalities(speech)
+        self.assertEqual((speech["input"], speech["output"]), (0.6, 12.0))
+        # Plain prices a page states are kept, and two generated outputs name no one price.
+        stated = {"input": 1.0, "output": 2.0, "modalities": {"audio": {"input": 3.0}}}
+        observe._plain_from_modalities(stated)
+        self.assertEqual((stated["input"], stated["output"]), (1.0, 2.0))
+        both = {"modalities": {"text": {"input": 1.0}, "image": {"output": 2.0}, "video": {"output": 3.0}}}
+        observe._plain_from_modalities(both)
+        self.assertNotIn("output", both)
+
     def test_devin_price_list_gives_cognition_models_at_enterprise_prices(self):
         # Self-serve plans list SWE-2 at no charge; Enterprise plans pay per token. Other
         # labs' models, such as GPT-OSS, are left out.

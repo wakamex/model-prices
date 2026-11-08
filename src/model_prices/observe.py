@@ -228,6 +228,11 @@ def read_checked(provider: str, data: Path, now: datetime,
         if rates.get(item.field, item.value) != item.value:
             raise ValueError(f"{provider}: {model} lists two {item.field} prices")
         rates[item.field] = item.value
+    # A model a page prices only by modality, such as an image model, takes its plain prices
+    # from them.
+    for rates in found.values():
+        for prices in (rates, *rates.get("modes", {}).values()):
+            _plain_from_modalities(prices)
     # A model a page prices for input alone, such as an embedding model, has no output
     # tokens, so its output price is $0.
     for rates in found.values():
@@ -239,6 +244,28 @@ def read_checked(provider: str, data: Path, now: datetime,
         for prices in (rates, *rates.get("modes", {}).values()):
             _keep_differing_modalities(prices)
     return {model: (url, rates) for model, rates in found.items()}
+
+
+def _plain_from_modalities(rates: dict[str, Any]) -> None:
+    """Give rates priced only by modality the plain prices models.dev records for such a
+    model: its text input and cached input, or the one input modality's, and the output of
+    the images or video it generates, or else its text output, or the one output modality's,
+    as a speech model's audio."""
+    modalities = rates.get("modalities", {})
+    if not modalities or "input" in rates or "output" in rates:
+        return
+    inputs = [name for name, prices in modalities.items() if "input" in prices]
+    source = "text" if "text" in inputs else inputs[0] if len(inputs) == 1 else None
+    if source is not None:
+        rates["input"] = modalities[source]["input"]
+        if "cache_read" in modalities[source]:
+            rates["cache_read"] = modalities[source]["cache_read"]
+    outputs = [name for name, prices in modalities.items() if "output" in prices]
+    generated = [name for name in ("image", "video") if name in outputs]
+    output = (generated[0] if len(generated) == 1 else None if generated else
+              "text" if "text" in outputs else outputs[0] if len(outputs) == 1 else None)
+    if output is not None:
+        rates["output"] = modalities[output]["output"]
 
 
 def _keep_differing_modalities(rates: dict[str, Any]) -> None:

@@ -19387,6 +19387,64 @@
      }
     ]
    },
+   "chatgpt-image-latest": {
+    "batch": [
+     {
+      "rates": null,
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.625,
+       "cache_write_1h_multiple": 2.5,
+       "input": 2.5,
+       "modalities": {
+        "image": {
+         "cache_read": 1.0,
+         "input": 4.0,
+         "output": 16.0
+        },
+        "text": {
+         "cache_read": 0.625,
+         "input": 2.5,
+         "output": 5.0
+        }
+       },
+       "output": 16.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-11-08T20:44:47Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2024-04-15T00:00:00Z"
+     }
+    ],
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 1.25,
+       "cache_write_1h_multiple": 2.5,
+       "input": 5.0,
+       "modalities": {
+        "image": {
+         "cache_read": 2.0,
+         "input": 8.0,
+         "output": 32.0
+        },
+        "text": {
+         "cache_read": 1.25,
+         "input": 5.0,
+         "output": 10.0
+        }
+       },
+       "output": 32.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-11-08T20:44:47Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "codex-mini-latest": {
     "batch": [
      {
@@ -21505,6 +21563,21 @@
        "source": "https://github.com/sst/models.dev/commit/efd88a768e7f",
        "valid_from": "2026-10-20T00:05:42Z",
        "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "gpt-4o-mini-tts": {
+    "standard": [
+     {
+      "rates": {
+       "cache_write_1h_multiple": 2.5,
+       "input": 0.6,
+       "output": 12.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-11-08T20:44:47Z",
+       "valid_from_basis": "first observed"
       },
       "start": null
      }
@@ -31597,6 +31670,120 @@
      }
     ]
    },
+   "gpt-image-1-mini": {
+    "batch": [
+     {
+      "rates": null,
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "cache_write_1h_multiple": 2.5,
+       "input": 1.0,
+       "modalities": {
+        "image": {
+         "cache_read": 0.125,
+         "input": 1.25,
+         "output": 4.0
+        },
+        "text": {
+         "cache_read": 0.1,
+         "input": 1.0
+        }
+       },
+       "output": 4.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-11-08T20:44:47Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2024-04-15T00:00:00Z"
+     }
+    ],
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write_1h_multiple": 2.5,
+       "input": 2.0,
+       "modalities": {
+        "image": {
+         "cache_read": 0.25,
+         "input": 2.5,
+         "output": 8.0
+        },
+        "text": {
+         "cache_read": 0.2,
+         "input": 2.0
+        }
+       },
+       "output": 8.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-11-08T20:44:47Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "gpt-image-1.5": {
+    "batch": [
+     {
+      "rates": null,
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.625,
+       "cache_write_1h_multiple": 2.5,
+       "input": 2.5,
+       "modalities": {
+        "image": {
+         "cache_read": 1.0,
+         "input": 4.0,
+         "output": 16.0
+        },
+        "text": {
+         "cache_read": 0.625,
+         "input": 2.5,
+         "output": 5.0
+        }
+       },
+       "output": 16.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-11-08T20:44:47Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2024-04-15T00:00:00Z"
+     }
+    ],
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 1.25,
+       "cache_write_1h_multiple": 2.5,
+       "input": 5.0,
+       "modalities": {
+        "image": {
+         "cache_read": 2.0,
+         "input": 8.0,
+         "output": 32.0
+        },
+        "text": {
+         "cache_read": 1.25,
+         "input": 5.0,
+         "output": 10.0
+        }
+       },
+       "output": 32.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-11-08T20:44:47Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "gpt-image-2": {
     "batch": [
      {
@@ -31946,6 +32133,118 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-31T17:02:48Z"
+     }
+    ]
+   },
+   "gpt-image-2.6-flare": {
+    "batch": [
+     {
+      "rates": null,
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.625,
+       "cache_write_1h_multiple": 2.5,
+       "input": 2.5,
+       "modalities": {
+        "image": {
+         "cache_read": 1.0,
+         "input": 4.0,
+         "output": 15.0
+        },
+        "text": {
+         "cache_read": 0.625,
+         "input": 2.5
+        }
+       },
+       "output": 15.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-11-08T20:44:47Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2024-04-15T00:00:00Z"
+     }
+    ],
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 1.25,
+       "cache_write_1h_multiple": 2.5,
+       "input": 5.0,
+       "modalities": {
+        "image": {
+         "cache_read": 2.0,
+         "input": 8.0,
+         "output": 30.0
+        },
+        "text": {
+         "cache_read": 1.25,
+         "input": 5.0
+        }
+       },
+       "output": 30.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-11-08T20:44:47Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "gpt-image-2.6-sunburst": {
+    "batch": [
+     {
+      "rates": null,
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.625,
+       "cache_write_1h_multiple": 2.5,
+       "input": 2.5,
+       "modalities": {
+        "image": {
+         "cache_read": 1.0,
+         "input": 4.0,
+         "output": 15.0
+        },
+        "text": {
+         "cache_read": 0.625,
+         "input": 2.5
+        }
+       },
+       "output": 15.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-11-08T20:44:47Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2024-04-15T00:00:00Z"
+     }
+    ],
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 1.25,
+       "cache_write_1h_multiple": 2.5,
+       "input": 5.0,
+       "modalities": {
+        "image": {
+         "cache_read": 2.0,
+         "input": 8.0,
+         "output": 30.0
+        },
+        "text": {
+         "cache_read": 1.25,
+         "input": 5.0
+        }
+       },
+       "output": 30.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-11-08T20:44:47Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
      }
     ]
    },
@@ -38942,5 +39241,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-07T02:25:52Z"
+ "updated_at": "2026-11-08T20:45:24Z"
 }
