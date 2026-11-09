@@ -2572,6 +2572,32 @@
      "valid_from": "2026-10-19T07:27:46Z"
     }
    ],
+   "claude-fable-5-2": [
+    {
+     "commit": "20cc6a0bfced",
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 10.0,
+      "input": 8.0,
+      "modes": {
+       "fast": {
+        "cache_read": 0.4,
+        "cache_write": 20.0,
+        "input": 16.0,
+        "output": 80.0
+       }
+      },
+      "output": 40.0,
+      "regions": {
+       "us": 1.1
+      },
+      "tools": {
+       "web_search": 10.0
+      }
+     },
+     "valid_from": "2026-11-09T19:40:43Z"
+    }
+   ],
    "claude-haiku-4-5": [
     {
      "commit": "1548a725f07c",
@@ -13795,6 +13821,13 @@
     },
     "input": 10
    },
+   "claude-fable-5-2": {
+    "cache_write": {
+     "1h": 16,
+     "5m": 10
+    },
+    "input": 8
+   },
    "claude-haiku-4-5": {
     "cache_write": {
      "1h": 2,
@@ -14141,8 +14174,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "1162d4c6fa1cf6054dfcaa81bf42aa09659b5add",
- "source_committed_at": "2026-11-09T03:54:05Z",
+ "source_commit": "20cc6a0bfceda65d7532dbe46986dee119573a8f",
+ "source_committed_at": "2026-11-09T19:40:43Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",

@@ -1115,6 +1115,24 @@
    ]
   },
   "anthropic": {
+   "claude-fable-5-2": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 10.0,
+      "input": 8.0,
+      "modes": {
+       "batch": {
+        "input": 4.0,
+        "output": 20.0
+       }
+      },
+      "output": 40.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-09T19:41:14Z"
+    }
+   ],
    "claude-mythos-5": [
     {
      "rates": {
@@ -1169,6 +1187,24 @@
      },
      "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
      "valid_from": "2026-10-23T01:31:14Z"
+    }
+   ],
+   "claude-mythos-5-2": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 10.0,
+      "input": 8.0,
+      "modes": {
+       "batch": {
+        "input": 4.0,
+        "output": 20.0
+       }
+      },
+      "output": 40.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-09T19:41:14Z"
     }
    ]
   },

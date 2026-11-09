@@ -103,8 +103,8 @@
   }
  ],
  "models_dev": {
-  "commit": "1162d4c6fa1cf6054dfcaa81bf42aa09659b5add",
-  "committed_at": "2026-11-09T03:54:05Z",
+  "commit": "20cc6a0bfceda65d7532dbe46986dee119573a8f",
+  "committed_at": "2026-11-09T19:40:43Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -7653,6 +7653,75 @@
      }
     ]
    },
+   "claude-fable-5-2": {
+    "batch": [
+     {
+      "rates": null,
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "cache_write": 5.0,
+       "cache_write_1h_multiple": 2.0,
+       "input": 4.0,
+       "output": 20.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/20cc6a0bfced",
+       "tools": {
+        "web_search": 10.0
+       },
+       "valid_from": "2026-11-09T19:40:43Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2024-10-08T00:00:00Z"
+     }
+    ],
+    "fast": [
+     {
+      "rates": {
+       "cache_read": 0.4,
+       "cache_write": 20.0,
+       "cache_write_1h_multiple": 2.0,
+       "input": 16.0,
+       "output": 80.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/20cc6a0bfced",
+       "tools": {
+        "web_search": 10.0
+       },
+       "valid_from": "2026-11-09T19:40:43Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ],
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 10.0,
+       "cache_write_1h_multiple": 2.0,
+       "input": 8.0,
+       "output": 40.0,
+       "regions": {
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/20cc6a0bfced",
+       "tools": {
+        "web_search": 10.0
+       },
+       "valid_from": "2026-11-09T19:40:43Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
    "claude-haiku-4-5": {
     "batch": [
      {
@@ -8232,6 +8301,42 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-24T03:46:07Z"
+     }
+    ]
+   },
+   "claude-mythos-5-2": {
+    "batch": [
+     {
+      "rates": null,
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "cache_write": 5.0,
+       "cache_write_1h_multiple": 2.0,
+       "input": 4.0,
+       "output": 20.0,
+       "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+       "valid_from": "2026-11-09T19:41:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2024-10-08T00:00:00Z"
+     }
+    ],
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 10.0,
+       "cache_write_1h_multiple": 2.0,
+       "input": 8.0,
+       "output": 40.0,
+       "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+       "valid_from": "2026-11-09T19:41:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
      }
     ]
    },
@@ -39321,5 +39426,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-09T16:20:54Z"
+ "updated_at": "2026-11-09T19:41:48Z"
 }
