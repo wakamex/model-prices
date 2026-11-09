@@ -103,8 +103,8 @@
   }
  ],
  "models_dev": {
-  "commit": "f608935f2014a03c06ac4b309ee196e31846fe35",
-  "committed_at": "2026-11-04T19:22:43Z",
+  "commit": "1162d4c6fa1cf6054dfcaa81bf42aa09659b5add",
+  "committed_at": "2026-11-09T03:54:05Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -5253,6 +5253,20 @@
      }
     ]
    },
+   "qwen3.7-text-embedding": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.07,
+       "output": 0.0,
+       "source": "https://github.com/sst/models.dev/commit/1162d4c6fa1c",
+       "valid_from": "2026-11-09T03:54:05Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
    "qwen3.8-2.4t-a95b": {
     "standard": [
      {
@@ -5477,6 +5491,34 @@
        "output": 2.4,
        "source": "https://github.com/sst/models.dev/commit/9511348dd73d",
        "valid_from": "2025-10-14T17:34:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "text-embedding-v3": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.07,
+       "output": 0.0,
+       "source": "https://github.com/sst/models.dev/commit/1162d4c6fa1c",
+       "valid_from": "2026-11-09T03:54:05Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "text-embedding-v4": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.07,
+       "output": 0.0,
+       "source": "https://github.com/sst/models.dev/commit/1162d4c6fa1c",
+       "valid_from": "2026-11-09T03:54:05Z",
        "valid_from_basis": "models.dev commit"
       },
       "start": null
@@ -34796,6 +34838,34 @@
       "start": null
      }
     ]
+   },
+   "kinfra-text-embedding-0.6b": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.074729,
+       "output": 0.0,
+       "source": "https://github.com/sst/models.dev/commit/1162d4c6fa1c",
+       "valid_from": "2026-11-09T03:54:05Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "kinfra-text-embedding-4b": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.089675,
+       "output": 0.0,
+       "source": "https://github.com/sst/models.dev/commit/1162d4c6fa1c",
+       "valid_from": "2026-11-09T03:54:05Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
    }
   },
   "thinkingmachines": {
@@ -39241,5 +39311,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-08T20:45:24Z"
+ "updated_at": "2026-11-09T03:55:48Z"
 }

@@ -1399,6 +1399,16 @@
      "valid_from": "2026-10-23T05:56:10Z"
     }
    ],
+   "qwen3.7-text-embedding": [
+    {
+     "commit": "1162d4c6fa1c",
+     "rates": {
+      "input": 0.07,
+      "output": 0.0
+     },
+     "valid_from": "2026-11-09T03:54:05Z"
+    }
+   ],
    "qwen3.8-2.4t-a95b": [
     {
      "commit": "d955efbd1b99",
@@ -1549,6 +1559,26 @@
       "output": 2.4
      },
      "valid_from": "2025-10-14T17:34:46Z"
+    }
+   ],
+   "text-embedding-v3": [
+    {
+     "commit": "1162d4c6fa1c",
+     "rates": {
+      "input": 0.07,
+      "output": 0.0
+     },
+     "valid_from": "2026-11-09T03:54:05Z"
+    }
+   ],
+   "text-embedding-v4": [
+    {
+     "commit": "1162d4c6fa1c",
+     "rates": {
+      "input": 0.07,
+      "output": 0.0
+     },
+     "valid_from": "2026-11-09T03:54:05Z"
     }
    ]
   },
@@ -10944,6 +10974,26 @@
      },
      "valid_from": "2026-09-02T18:53:25Z"
     }
+   ],
+   "kinfra-text-embedding-0.6b": [
+    {
+     "commit": "1162d4c6fa1c",
+     "rates": {
+      "input": 0.074729,
+      "output": 0.0
+     },
+     "valid_from": "2026-11-09T03:54:05Z"
+    }
+   ],
+   "kinfra-text-embedding-4b": [
+    {
+     "commit": "1162d4c6fa1c",
+     "rates": {
+      "input": 0.089675,
+      "output": 0.0
+     },
+     "valid_from": "2026-11-09T03:54:05Z"
+    }
    ]
   },
   "thinkingmachines": {
@@ -14091,8 +14141,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "f608935f2014a03c06ac4b309ee196e31846fe35",
- "source_committed_at": "2026-11-04T19:22:43Z",
+ "source_commit": "1162d4c6fa1cf6054dfcaa81bf42aa09659b5add",
+ "source_committed_at": "2026-11-09T03:54:05Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
