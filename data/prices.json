@@ -5280,6 +5280,19 @@
       }
      },
      "valid_from": "2026-08-13T17:26:42Z"
+    },
+    {
+     "commit": "d21a0b4da8fb",
+     "rates": {
+      "cache_read": 0.15,
+      "input": 1.5,
+      "output": 7.5,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "scheduled": true,
+     "valid_from": "2027-01-01T00:00:00Z"
     }
    ],
    "gemini-3.8-flash": [
@@ -14174,8 +14187,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "20cc6a0bfceda65d7532dbe46986dee119573a8f",
- "source_committed_at": "2026-11-09T19:40:43Z",
+ "source_commit": "d21a0b4da8fb26d1324baf383c2c0dbfc1489211",
+ "source_committed_at": "2026-11-09T22:05:02Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
