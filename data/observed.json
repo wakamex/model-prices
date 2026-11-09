@@ -1941,6 +1941,27 @@
     }
    ]
   },
+  "meta": {
+   "muse-ember-1.0": [
+    {
+     "rates": {
+      "cache_read": 0.004,
+      "input": 0.1,
+      "output": 0.5,
+      "tiers": [
+       {
+        "above": 200000,
+        "cache_read": 0.012,
+        "input": 0.3,
+        "output": 1.5
+       }
+      ]
+     },
+     "source": "https://dev.meta.ai/models/muse-spark/",
+     "valid_from": "2026-11-09T19:45:42Z"
+    }
+   ]
+  },
   "minimax": {
    "MiniMax-M2.1-highspeed": [
     {

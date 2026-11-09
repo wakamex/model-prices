@@ -30,6 +30,7 @@ PAGES = {
     "https://dev.meta.ai/models/muse-spark/": (FIXTURES / "meta-muse-spark.html").read_text(),
     "https://dev.meta.ai/models/muse-image/": (FIXTURES / "meta-muse-image.html").read_text(),
     "https://dev.meta.ai/models/muse-wonder/": (FIXTURES / "meta-muse-wonder.html").read_text(),
+    "https://dev.meta.ai/models/muse-ember/": (FIXTURES / "meta-muse-ember.html").read_text(),
     "minimax": (FIXTURES / "minimax.md").read_text(),
     "mistral": (FIXTURES / "mistral.html").read_text(),
     "https://docs.mistral.ai/models/mistral-large-3-25-12":
@@ -468,6 +469,14 @@ class CheckTests(unittest.TestCase):
         # Muse Code subscription, has no per-token price.
         self.assertEqual(meta[("muse-wonder-1.0", "output", None, None)], 20.0)
         self.assertNotIn("muse-wonder-full-1.0", {model for model, *_ in meta})
+        # The Ember page lists cached input first, and a row per prompt-size tier.
+        self.assertEqual(meta[("muse-ember-1.0", "input", None, None)], 0.1)
+        self.assertEqual(meta[("muse-ember-1.0", "cache_read", None, None)], 0.004)
+        self.assertEqual(meta[("muse-ember-1.0", "output", 200_000, None)], 1.5)
+        changed = {**PAGES, "https://dev.meta.ai/models/muse-ember/": PAGES[
+            "https://dev.meta.ai/models/muse-ember/"].replace("Mtok input", "Mtok prompt")}
+        with self.assertRaisesRegex(ValueError, "pricing grid on /models/muse-ember/"):
+            checks.parse_meta(PAGES["meta"], TODAY, changed.__getitem__)
 
     def test_bedrock_prices_nova_by_inference_route(self):
         bedrock = _prices("amazon-bedrock")

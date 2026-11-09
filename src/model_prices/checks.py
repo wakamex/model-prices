@@ -798,23 +798,37 @@ def parse_xiaomi(text: str, today: datetime) -> list[Observed]:
 META_SITE = "https://dev.meta.ai"
 
 
+# The Muse pages title each price column one of two ways, in an order that varies by page.
+_META_COLUMNS = {"Input (Mtok)": "input", "Mtok input": "input",
+                 "Cached input (Mtok)": "cache_read", "Mtok cached input (Mtok)": "cache_read",
+                 "Output (Mtok)": "output", "Mtok output": "output"}
+
+
 def parse_meta(text: str, today: datetime, get: Callable[[str], str]) -> list[Observed]:
     """Read the "Models and pricing" grid on each Muse model page the Meta developer site
-    links: model id, description, context window, then input, cached input, and output.
-    Pages title those columns "Input (Mtok)" or "Mtok input". A model sold only through a
-    Muse Code subscription, such as muse-wonder-full-1.0, lists "-" and gives no price."""
+    links: model id, a description, context window, then input, cached input, and output in
+    the order the header names them. A description such as ">200k context" is the tier above
+    200K tokens. A model sold only through a Muse Code subscription, such as
+    muse-wonder-full-1.0, lists "-" and gives no price."""
+    titles = "|".join(re.escape(title) for title in _META_COLUMNS)
     found = []
     for path in sorted(set(re.findall(r'href="(/models/muse-[a-z0-9-]+/)"', text))):
         page = _html_text(get(META_SITE + path))
-        if not re.search(r"\| (Input \(Mtok\)|Mtok input) \| (Cached input \(Mtok\)"
-                         r"|Mtok cached input \(Mtok\)) \| (Output \(Mtok\)|Mtok output) \|", page):
+        if "| Models and pricing |" not in page:
             continue
-        for model, prompt, cached, completion in re.findall(
-                r"\| (muse-[a-z0-9.-]+) \| [^|]+ \| [^|]+ \| \$([0-9.]+) \| \$([0-9.]+) \| \$([0-9.]+)",
+        header = re.search(rf"\| Models and pricing \| Model \| Context window(?: \(Mtok\))? \| "
+                           rf"({titles}) \| ({titles}) \| ({titles}) \|", page)
+        fields = [_META_COLUMNS[title] for title in header.groups()] if header else []
+        if sorted(fields) != ["cache_read", "input", "output"]:
+            raise ValueError(f"meta: the pricing grid on {path} has columns it does not read; "
+                             "the page format changed")
+        for model, description, *prices in re.findall(
+                r"\| (muse-[a-z0-9.-]+) \| ([^|]+) \| [^|]+ \| \$([0-9.]+) \| \$([0-9.]+) \| \$([0-9.]+)",
                 page):
-            found += [Observed("meta", model, "input", float(prompt)),
-                      Observed("meta", model, "cache_read", float(cached)),
-                      Observed("meta", model, "output", float(completion))]
+            tier = re.fullmatch(r"([<>])([0-9]+)k context", description.strip())
+            above = int(tier.group(2)) * 1000 if tier and tier.group(1) == ">" else None
+            found += [Observed("meta", model, field, float(price), above=above)
+                      for field, price in zip(fields, prices)]
     return found
 
 
