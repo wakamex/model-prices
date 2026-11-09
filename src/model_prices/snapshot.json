@@ -554,7 +554,17 @@
    "provider": "alibaba",
    "source": "https://docs.modelstudio.console.alibabacloud.com/en/model-studio/token-plan-personal-overview",
    "usd_per_month": 68,
-   "valid_from": "2026-11-06T00:00:00Z"
+   "valid_from": "2026-11-06T00:00:00Z",
+   "valid_until": "2026-11-09T12:00:00Z"
+  },
+  {
+   "id": "token_pro",
+   "name": "Token Plan Pro",
+   "note": "The page: \"Starting November 9, 2026 at 20:00:00 (UTC+8), the quotas for all four Token Plan Personal Edition plans increase, and the Pro plan list price and official discount price are reduced. ... The Pro plan price stays the same for the current subscription cycle; the new price takes effect in the next subscription cycle.\" (https://www.alibabacloud.com/zh/notice/detail?_p_lc=1&id=2273)",
+   "provider": "alibaba",
+   "source": "https://docs.modelstudio.console.alibabacloud.com/en/model-studio/token-plan-personal-overview",
+   "usd_per_month": 43,
+   "valid_from": "2026-11-09T12:00:00Z"
   },
   {
    "id": "lite",
@@ -39311,5 +39321,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-09T03:55:48Z"
+ "updated_at": "2026-11-09T16:20:54Z"
 }
