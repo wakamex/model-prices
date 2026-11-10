@@ -14263,12 +14263,98 @@
     },
     "input": 4
    }
+  },
+  "openai": {
+   "gpt-5.6": {
+    "cache_write": {
+     "12h": 10,
+     "30m": 5
+    },
+    "input": 4
+   },
+   "gpt-5.6-cyber": {
+    "cache_write": {
+     "12h": 31.25,
+     "30m": 15.625
+    },
+    "input": 12.5
+   },
+   "gpt-5.6-luna": {
+    "cache_write": {
+     "12h": 0.5,
+     "30m": 0.25
+    },
+    "input": 0.2
+   },
+   "gpt-5.6-sol": {
+    "cache_write": {
+     "12h": 10,
+     "30m": 5
+    },
+    "input": 4
+   },
+   "gpt-5.6-terra": {
+    "cache_write": {
+     "12h": 5,
+     "30m": 2.5
+    },
+    "input": 2
+   },
+   "gpt-6-astra": {
+    "cache_write": {
+     "12h": 25,
+     "30m": 12.5
+    },
+    "input": 10
+   },
+   "gpt-6-luna": {
+    "cache_write": {
+     "12h": 0.25,
+     "30m": 0.125
+    },
+    "input": 0.1
+   },
+   "gpt-6-sol": {
+    "cache_write": {
+     "12h": 5,
+     "30m": 2.5
+    },
+    "input": 2
+   },
+   "gpt-6.1-sol": {
+    "cache_write": {
+     "12h": 5,
+     "30m": 2.5
+    },
+    "input": 2
+   },
+   "gpt-6.1-terra": {
+    "cache_write": {
+     "12h": 2.5,
+     "30m": 1.25
+    },
+    "input": 1
+   },
+   "gpt-daybreak-blue-latest": {
+    "cache_write": {
+     "12h": 10,
+     "30m": 5
+    },
+    "input": 4
+   },
+   "gpt-daybreak-red-latest": {
+    "cache_write": {
+     "12h": 31.25,
+     "30m": 15.625
+    },
+    "input": 12.5
+   }
   }
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "acca613da3becfedbefba4f08651296c4c7c1927",
- "source_committed_at": "2026-11-10T17:21:54Z",
+ "source_commit": "4a964fb25b010279eace7dc89940718dd8625371",
+ "source_committed_at": "2026-11-10T18:10:44Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",

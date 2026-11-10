@@ -103,8 +103,8 @@
   }
  ],
  "models_dev": {
-  "commit": "acca613da3becfedbefba4f08651296c4c7c1927",
-  "committed_at": "2026-11-10T17:21:54Z",
+  "commit": "4a964fb25b010279eace7dc89940718dd8625371",
+  "committed_at": "2026-11-10T18:10:44Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -39746,5 +39746,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-10T17:23:03Z"
+ "updated_at": "2026-11-10T18:11:57Z"
 }
