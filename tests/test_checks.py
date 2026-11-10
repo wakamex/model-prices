@@ -629,7 +629,7 @@ Batch
 
     def test_tool_fees_are_read_from_each_provider_page(self):
         pages = {
-            "openai": "| Web search | Web search (all models) | $10.00 / 1k calls + Search content tokens billed at model rates. |\n"
+            "openai": "| Web search | Web search (incl. images) | $10.00 / 1k calls + Search content tokens billed at model rates. |\n"
                       "| Web search | Web search preview (reasoning models, including `gpt-5`, `o-series`) | $10.00 / 1k calls + tokens. |\n"
                       "| Web search | Web search preview (non-reasoning models) | $25.00 / 1k calls + Search content tokens are free. |",
             "anthropic": "Web search is available on the Claude API for **$10 USD per 1,000 searches**, plus standard token costs.",
