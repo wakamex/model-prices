@@ -920,6 +920,17 @@ note = "Google's pricing page: input \"$1.50 (text/image/video)\", output \"$7.5
 
 [[correction]]
 provider = "google"
+model = "gemini-omni-1.2-flash"
+valid_from = "2026-11-10T17:17:46Z"
+input = 1.5
+output = 12.0
+modalities = { text = { input = 1.5, output = 9.0 }, image = { input = 1.5 }, video = { input = 1.5, output = 12.0 } }
+replaces = { input = 1.5, output = 12.0, modalities = {} }
+source = "https://ai.google.dev/gemini-api/docs/pricing#gemini-omni-1.2-flash"
+note = "Google's pricing page prices text output at $9 and video output at $12, and input at $1.50 for text, image, and video. models.dev's file (https://github.com/sst/models.dev/commit/ca0dc2a7341b) notes \"Output: $9.00 text, $12.00 video\" but records text output at $12 and no image or video input, so from its commit this restates the page's prices by modality, which model-prices read from the page before then."
+
+[[correction]]
+provider = "google"
 model = "gemini-omni-1.1-flash"
 valid_from = "2026-10-10T20:14:52Z"
 input = 1.5
