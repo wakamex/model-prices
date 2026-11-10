@@ -103,8 +103,8 @@
   }
  ],
  "models_dev": {
-  "commit": "ca0dc2a7341b733fc30aa21831333632e615ea65",
-  "committed_at": "2026-11-10T17:17:46Z",
+  "commit": "acca613da3becfedbefba4f08651296c4c7c1927",
+  "committed_at": "2026-11-10T17:21:54Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -16554,7 +16554,7 @@
        "cache_read": 0.1,
        "input": 2.0,
        "output": 10.0,
-       "source": "https://github.com/sst/models.dev/commit/ca0dc2a7341b",
+       "source": "https://github.com/sst/models.dev/commit/954e891e926e",
        "tools": {
         "web_search": 14.0
        },
@@ -16606,7 +16606,7 @@
        "cache_read": 0.1,
        "input": 2.0,
        "output": 10.0,
-       "source": "https://github.com/sst/models.dev/commit/ca0dc2a7341b",
+       "source": "https://github.com/sst/models.dev/commit/954e891e926e",
        "tools": {
         "web_search": 14.0
        },
@@ -16658,7 +16658,7 @@
        "cache_read": 0.36,
        "input": 7.2,
        "output": 36.0,
-       "source": "https://github.com/sst/models.dev/commit/ca0dc2a7341b",
+       "source": "https://github.com/sst/models.dev/commit/954e891e926e",
        "tools": {
         "web_search": 14.0
        },
@@ -16710,7 +16710,7 @@
        "cache_read": 0.2,
        "input": 4.0,
        "output": 20.0,
-       "source": "https://github.com/sst/models.dev/commit/ca0dc2a7341b",
+       "source": "https://github.com/sst/models.dev/commit/954e891e926e",
        "tools": {
         "web_search": 14.0
        },
@@ -39746,5 +39746,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-10T17:21:17Z"
+ "updated_at": "2026-11-10T17:23:03Z"
 }
