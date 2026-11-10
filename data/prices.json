@@ -6044,6 +6044,25 @@
    ]
   },
   "meta": {
+   "muse-ember-1.0": [
+    {
+     "commit": "deaf9dd38b18",
+     "rates": {
+      "cache_read": 0.004,
+      "input": 0.1,
+      "output": 0.5,
+      "tiers": [
+       {
+        "above": 200000,
+        "cache_read": 0.012,
+        "input": 0.3,
+        "output": 1.5
+       }
+      ]
+     },
+     "valid_from": "2026-11-10T01:01:45Z"
+    }
+   ],
    "muse-spark-1.1": [
     {
      "commit": "c761662a50e1",
@@ -14187,8 +14206,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "d21a0b4da8fb26d1324baf383c2c0dbfc1489211",
- "source_committed_at": "2026-11-09T22:05:02Z",
+ "source_commit": "deaf9dd38b182469fcad44878a5b2b35171af3eb",
+ "source_committed_at": "2026-11-10T01:01:45Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
