@@ -1778,6 +1778,34 @@
      "valid_from": "2026-10-13T16:04:20Z"
     }
    ],
+   "gemini-4-carbon": [
+    {
+     "rates": {
+      "cache_read": 0.1,
+      "input": 2.0,
+      "modes": {
+       "batch": {
+        "cache_read": 0.05,
+        "input": 1.0,
+        "output": 5.0
+       },
+       "flex": {
+        "cache_read": 0.05,
+        "input": 1.0,
+        "output": 5.0
+       },
+       "priority": {
+        "cache_read": 0.18,
+        "input": 3.6,
+        "output": 18.0
+       }
+      },
+      "output": 10.0
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-10T17:10:14Z"
+    }
+   ],
    "gemini-nano-banana-2.1": [
     {
      "rates": {
@@ -1963,6 +1991,16 @@
    ]
   },
   "minimax": {
+   "MiniMax-H3-Image": [
+    {
+     "rates": {
+      "input": 2.3,
+      "output": 0.0
+     },
+     "source": "https://platform.minimax.io/docs/guides/pricing-paygo.md",
+     "valid_from": "2026-11-10T17:10:14Z"
+    }
+   ],
    "MiniMax-M2.1-highspeed": [
     {
      "rates": {
