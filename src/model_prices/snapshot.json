@@ -16526,11 +16526,28 @@
        "cache_read": 0.05,
        "input": 1.0,
        "output": 5.0,
-       "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+       "source": "https://ai.google.dev/gemini-api/docs/pricing#gemini-4-carbon",
+       "tools": {
+        "web_search": 14.0
+       },
        "valid_from": "2026-11-10T17:10:14Z",
-       "valid_from_basis": "first observed"
+       "valid_from_basis": "documented"
       },
       "start": "2025-07-07T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "input": 2.0,
+       "output": 10.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing#gemini-4-carbon",
+       "tools": {
+        "web_search": 14.0
+       },
+       "valid_from": "2026-12-01T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "start": "2026-12-01T00:00:00Z"
      }
     ],
     "flex": [
@@ -16539,11 +16556,44 @@
        "cache_read": 0.05,
        "input": 1.0,
        "output": 5.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing#gemini-4-carbon",
+       "tools": {
+        "web_search": 14.0
+       },
+       "valid_from": "2026-11-10T17:10:14Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.05,
+       "input": 1.0,
+       "output": 5.0,
        "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
        "valid_from": "2026-11-10T17:10:14Z",
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "input": 2.0,
+       "output": 10.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing#gemini-4-carbon",
+       "tools": {
+        "web_search": 14.0
+       },
+       "valid_from": "2026-12-01T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.05,
+       "input": 1.0,
+       "output": 5.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+       "valid_from": "2026-11-10T17:10:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-12-01T00:00:00Z"
      }
     ],
     "priority": [
@@ -16552,11 +16602,44 @@
        "cache_read": 0.18,
        "input": 3.6,
        "output": 18.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing#gemini-4-carbon",
+       "tools": {
+        "web_search": 14.0
+       },
+       "valid_from": "2026-11-10T17:10:14Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.18,
+       "input": 3.6,
+       "output": 18.0,
        "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
        "valid_from": "2026-11-10T17:10:14Z",
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.36,
+       "input": 7.2,
+       "output": 36.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing#gemini-4-carbon",
+       "tools": {
+        "web_search": 14.0
+       },
+       "valid_from": "2026-12-01T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.18,
+       "input": 3.6,
+       "output": 18.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+       "valid_from": "2026-11-10T17:10:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-12-01T00:00:00Z"
      }
     ],
     "standard": [
@@ -16565,11 +16648,44 @@
        "cache_read": 0.1,
        "input": 2.0,
        "output": 10.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing#gemini-4-carbon",
+       "tools": {
+        "web_search": 14.0
+       },
+       "valid_from": "2026-11-10T17:10:14Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.1,
+       "input": 2.0,
+       "output": 10.0,
        "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
        "valid_from": "2026-11-10T17:10:14Z",
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "input": 4.0,
+       "output": 20.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing#gemini-4-carbon",
+       "tools": {
+        "web_search": 14.0
+       },
+       "valid_from": "2026-12-01T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.1,
+       "input": 2.0,
+       "output": 10.0,
+       "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+       "valid_from": "2026-11-10T17:10:14Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-12-01T00:00:00Z"
      }
     ]
    },
@@ -39568,5 +39684,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-10T17:10:47Z"
+ "updated_at": "2026-11-10T17:14:17Z"
 }

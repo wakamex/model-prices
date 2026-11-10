@@ -137,10 +137,11 @@ class _Inputs:
                 if "replaces" in item:
                     # An open-ended correction stops once models.dev records anything else;
                     # one for a model models.dev lacks, with an empty `replaces`, stops once
-                    # models.dev lists the model.
+                    # models.dev lists the model, which a price read from the model's page,
+                    # such as an announced change the page states, does not.
                     recorded = self.history(provider, model, at, None, rules=False)
                     if not item["replaces"]:
-                        if recorded is not None:
+                        if recorded is not None and recorded.valid_from_basis != "first observed":
                             continue
                     elif recorded is None or any(
                             getattr(recorded, key) != (_modalities(value) if key == "modalities"

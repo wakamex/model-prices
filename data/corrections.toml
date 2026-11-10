@@ -1066,6 +1066,33 @@ replaces = { input = 0.95, output = 4.0, cache_read = 0.15 }
 source = "https://console.sakana.ai/pricing"
 note = "Sakana's pricing page lists sakana-namazu-v1.0 at $0.95 input, $4.00 output, and $0.15 cached input now, and at $1.90, $6.00, and $0.30 from Dec 1, 2026, 10:00 JST."
 
+[[correction]]
+provider = "google"
+model = "gemini-4-carbon"
+valid_from = "2026-11-10T17:10:14Z"
+valid_until = "2026-12-01T00:00:00Z"
+input = 2.0
+output = 10.0
+cache_read = 0.1
+modes = { flex = { input = 1.0, output = 5.0, cache_read = 0.05 }, priority = { input = 3.6, output = 18.0, cache_read = 0.18 } }
+tools = { web_search = 14.0 }
+replaces = {}
+source = "https://ai.google.dev/gemini-api/docs/pricing#gemini-4-carbon"
+note = "Google's pricing page: input \"$2.00 through November 30, 2026. $4.00 starting December 1, 2026.\", output \"$10.00 through November 30, 2026. $20.00 starting December 1, 2026.\", context caching \"$0.10 ... $0.20\", Flex half and Priority 1.8 times those, and Grounding with Google Search at \"$14 per 1,000 requests\" after 5,000 free a month. models.dev does not list the model, so its prices come from the page from its first reading; the batch tier is batch.toml's half price."
+
+[[correction]]
+provider = "google"
+model = "gemini-4-carbon"
+valid_from = "2026-12-01T00:00:00Z"
+input = 4.0
+output = 20.0
+cache_read = 0.2
+modes = { flex = { input = 2.0, output = 10.0, cache_read = 0.1 }, priority = { input = 7.2, output = 36.0, cache_read = 0.36 } }
+tools = { web_search = 14.0 }
+replaces = {}
+source = "https://ai.google.dev/gemini-api/docs/pricing#gemini-4-carbon"
+note = "Google's pricing page: input \"$2.00 through November 30, 2026. $4.00 starting December 1, 2026.\", output \"$10.00 through November 30, 2026. $20.00 starting December 1, 2026.\", context caching \"$0.10 ... $0.20\", Flex half and Priority 1.8 times those, and Grounding with Google Search at \"$14 per 1,000 requests\" after 5,000 free a month. models.dev does not list the model, so its prices come from the page from its first reading; the batch tier is batch.toml's half price."
+
 # Tencent's and Volcengine's own models that models.dev lacks. Their pricing pages name
 # models for display and price them in yuan, so each is written here with its API id from
 # the provider's model list, converted to dollars at the rate models.dev uses for that

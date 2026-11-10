@@ -815,6 +815,16 @@ class PriceTests(unittest.TestCase):
         self.assertEqual(now.period, "peak")
         self.assertEqual((off_peak_now.input, off_peak_now.period), (0.15, "off_peak"))
 
+    def test_a_correction_prices_a_change_a_page_announces_for_a_model_models_dev_lacks(self):
+        # Gemini 4 Carbon is priced from Google's page; corrections with an empty `replaces`
+        # add its search fee and the doubling Google announced for 2026-12-01.
+        before = model_prices.rates("gemini-4-carbon", provider="google", at="2026-11-20")
+        after = model_prices.rates("gemini-4-carbon", provider="google", at="2026-12-02")
+        self.assertEqual((before.input, after.input), (2.0, 4.0))
+        self.assertEqual(dict(after.tools), {"web_search": 14.0})
+        self.assertEqual(model_prices.rates("gemini-4-carbon", provider="google", mode="priority",
+                                            at="2026-12-02").output, 36.0)
+
     def test_plan_prices(self):
         self.assertEqual(model_prices.plan("anthropic", "max_20x").usd_per_month, 200)
         self.assertEqual(model_prices.plan("zai", "lite").usd_per_month, 18)
