@@ -9,6 +9,17 @@
      },
      "source": "https://developers.openai.com/api/docs/guides/your-data.md",
      "valid_from": "2026-10-31T17:02:48Z"
+    },
+    {
+     "regions": {
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/your-data.md",
+     "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
    "gpt-5.4-2026-03-05": [
@@ -19,6 +30,17 @@
      },
      "source": "https://developers.openai.com/api/docs/guides/your-data.md",
      "valid_from": "2026-10-31T17:02:48Z"
+    },
+    {
+     "regions": {
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/your-data.md",
+     "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
    "gpt-5.4-mini": [
@@ -29,6 +51,17 @@
      },
      "source": "https://developers.openai.com/api/docs/guides/your-data.md",
      "valid_from": "2026-10-31T17:02:48Z"
+    },
+    {
+     "regions": {
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/your-data.md",
+     "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
    "gpt-5.4-mini-2026-03-17": [
@@ -39,6 +72,17 @@
      },
      "source": "https://developers.openai.com/api/docs/guides/your-data.md",
      "valid_from": "2026-10-31T17:02:48Z"
+    },
+    {
+     "regions": {
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/your-data.md",
+     "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
    "gpt-5.4-nano": [
@@ -49,6 +93,17 @@
      },
      "source": "https://developers.openai.com/api/docs/guides/your-data.md",
      "valid_from": "2026-10-31T17:02:48Z"
+    },
+    {
+     "regions": {
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/your-data.md",
+     "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
    "gpt-5.4-nano-2026-03-17": [
@@ -59,6 +114,17 @@
      },
      "source": "https://developers.openai.com/api/docs/guides/your-data.md",
      "valid_from": "2026-10-31T17:02:48Z"
+    },
+    {
+     "regions": {
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/your-data.md",
+     "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
    "gpt-5.4-pro": [
@@ -69,6 +135,17 @@
      },
      "source": "https://developers.openai.com/api/docs/guides/your-data.md",
      "valid_from": "2026-10-31T17:02:48Z"
+    },
+    {
+     "regions": {
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/your-data.md",
+     "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
    "gpt-5.4-pro-2026-03-05": [
@@ -79,6 +156,17 @@
      },
      "source": "https://developers.openai.com/api/docs/guides/your-data.md",
      "valid_from": "2026-10-31T17:02:48Z"
+    },
+    {
+     "regions": {
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/your-data.md",
+     "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
    "gpt-5.5": [
@@ -90,6 +178,18 @@
      },
      "source": "https://developers.openai.com/api/docs/guides/your-data.md",
      "valid_from": "2026-10-31T17:02:48Z"
+    },
+    {
+     "regions": {
+      "ae": 1.1,
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/your-data.md",
+     "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
    "gpt-5.5-2026-04-23": [
@@ -101,6 +201,18 @@
      },
      "source": "https://developers.openai.com/api/docs/guides/your-data.md",
      "valid_from": "2026-10-31T17:02:48Z"
+    },
+    {
+     "regions": {
+      "ae": 1.1,
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/your-data.md",
+     "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
    "gpt-5.5-pro": [
@@ -112,6 +224,18 @@
      },
      "source": "https://developers.openai.com/api/docs/guides/your-data.md",
      "valid_from": "2026-10-31T17:02:48Z"
+    },
+    {
+     "regions": {
+      "ae": 1.1,
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/your-data.md",
+     "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
    "gpt-5.5-pro-2026-04-23": [
@@ -123,6 +247,18 @@
      },
      "source": "https://developers.openai.com/api/docs/guides/your-data.md",
      "valid_from": "2026-10-31T17:02:48Z"
+    },
+    {
+     "regions": {
+      "ae": 1.1,
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/your-data.md",
+     "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
    "gpt-5.6-luna": [
@@ -134,6 +270,18 @@
      },
      "source": "https://developers.openai.com/api/docs/guides/your-data.md",
      "valid_from": "2026-10-31T17:02:48Z"
+    },
+    {
+     "regions": {
+      "ae": 1.1,
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/your-data.md",
+     "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
    "gpt-5.6-sol": [
@@ -144,6 +292,17 @@
      },
      "source": "https://developers.openai.com/api/docs/guides/your-data.md",
      "valid_from": "2026-10-31T17:02:48Z"
+    },
+    {
+     "regions": {
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/your-data.md",
+     "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
    "gpt-5.6-terra": [
@@ -154,6 +313,17 @@
      },
      "source": "https://developers.openai.com/api/docs/guides/your-data.md",
      "valid_from": "2026-10-31T17:02:48Z"
+    },
+    {
+     "regions": {
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/your-data.md",
+     "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
    "gpt-6-astra": [
@@ -164,6 +334,17 @@
      },
      "source": "https://developers.openai.com/api/docs/guides/your-data.md",
      "valid_from": "2026-10-31T17:02:48Z"
+    },
+    {
+     "regions": {
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/your-data.md",
+     "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
    "gpt-6-luna": [
@@ -174,6 +355,17 @@
      },
      "source": "https://developers.openai.com/api/docs/guides/your-data.md",
      "valid_from": "2026-10-31T17:02:48Z"
+    },
+    {
+     "regions": {
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/your-data.md",
+     "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
    "gpt-6-sol": [
@@ -184,6 +376,17 @@
      },
      "source": "https://developers.openai.com/api/docs/guides/your-data.md",
      "valid_from": "2026-10-31T17:02:48Z"
+    },
+    {
+     "regions": {
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/your-data.md",
+     "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
    "gpt-6.1-sol": [
@@ -194,6 +397,17 @@
      },
      "source": "https://developers.openai.com/api/docs/guides/your-data.md",
      "valid_from": "2026-10-31T17:02:48Z"
+    },
+    {
+     "regions": {
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/your-data.md",
+     "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
    "gpt-6.1-terra": [
@@ -204,6 +418,17 @@
      },
      "source": "https://developers.openai.com/api/docs/guides/your-data.md",
      "valid_from": "2026-10-31T17:02:48Z"
+    },
+    {
+     "regions": {
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/your-data.md",
+     "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
    "gpt-image-2": [

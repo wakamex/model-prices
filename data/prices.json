@@ -14353,8 +14353,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "4a964fb25b010279eace7dc89940718dd8625371",
- "source_committed_at": "2026-11-10T18:10:44Z",
+ "source_commit": "3eebfe532a0c9539f18ae3197d7cd2f8130f20a7",
+ "source_committed_at": "2026-11-11T04:45:51Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
@@ -14408,7 +14408,9 @@
    "claude-opus-4-20250514": "removed",
    "claude-opus-4-6-20260205": "removed",
    "claude-sonnet-4-0": "removed",
-   "claude-sonnet-4-20250514": "removed"
+   "claude-sonnet-4-20250514": "removed",
+   "claude-sonnet-4-5": "deprecated",
+   "claude-sonnet-4-5-20250929": "deprecated"
   },
   "arcee": {
    "deepseek/deepseek-v4-pro": "deprecated",
