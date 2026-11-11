@@ -5608,6 +5608,16 @@
      "valid_from": "2026-12-01T00:00:00Z"
     }
    ],
+   "gemini-decision-1": [
+    {
+     "commit": "9ca20fdfe23f",
+     "rates": {
+      "input": 0.1,
+      "output": 0.0
+     },
+     "valid_from": "2026-11-11T19:10:32Z"
+    }
+   ],
    "gemini-embedding-001": [
     {
      "commit": "bebe28eb3d3f",
@@ -14353,8 +14363,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "3eebfe532a0c9539f18ae3197d7cd2f8130f20a7",
- "source_committed_at": "2026-11-11T04:45:51Z",
+ "source_commit": "9ca20fdfe23fc4a03e6f1125c98bea45ceca7b8b",
+ "source_committed_at": "2026-11-11T19:10:32Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",

@@ -1806,6 +1806,16 @@
      "valid_from": "2026-11-10T17:10:14Z"
     }
    ],
+   "gemini-decision-1": [
+    {
+     "rates": {
+      "input": 0.1,
+      "output": 0.0
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-11T19:11:19Z"
+    }
+   ],
    "gemini-nano-banana-2.1": [
     {
      "rates": {
