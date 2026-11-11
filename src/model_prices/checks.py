@@ -1294,9 +1294,10 @@ def compare_rules(rules: dict[str, dict], providers: set[str] | None,
 
 def _ark_cell(cell: str) -> str:
     """A ModelArk docs table cell without Markdown emphasis, escapes, line breaks, or
-    units, which BytePlus writes in English and Volcengine in Chinese."""
+    units, which BytePlus writes in English and Volcengine in Chinese, such as "元/M token"
+    or, before November 2026, "元/百万token"."""
     text = re.sub(r"\*\*|<br>", " ", cell.replace("\\", ""))
-    text = re.sub(r"\((?:USD|K tokens)[^)]*\)|元/百万token\S*|输入长度：千 token", "", text)
+    text = re.sub(r"\((?:USD|K tokens)[^)]*\)|元/(?:百万token|M token)\S*|输入长度：(?:千|K) token", "", text)
     return " ".join(text.split())
 
 

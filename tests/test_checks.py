@@ -269,6 +269,14 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(found[("LongCat-2.5-Preview", "output")], 1.2)
         self.assertEqual(len(found), 6)
 
+    def test_ark_titles_drop_units_in_either_form(self):
+        # Volcengine wrote "元/百万token" until November 2026, and "元/M token" since.
+        for old, new in (("输出<br><br>元/百万token", "输出<br><br>元/M token"),
+                         ("条件<br><br>输入长度：千 token", "条件<br><br>输入长度：K token"),
+                         ("缓存存储<br><br>元/百万token/小时", "缓存存储<br><br>元/M token/小时")):
+            self.assertEqual(checks._ark_cell(new), checks._ark_cell(old))
+        self.assertEqual(checks._ark_cell("输入(非音频)<br><br>元/M token"), "输入(非音频)")
+
     def test_volcengine_yuan_prices_reach_dated_ids_in_dollars(self):
         found = {(item.model, item.field, item.above): item for item in
                  checks.parse_volcengine(PAGES["volcengine"], TODAY)}
