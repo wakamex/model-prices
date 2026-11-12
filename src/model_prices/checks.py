@@ -1471,15 +1471,22 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
 }
 
 
+# Every request asks for English, so a page cannot switch language with the reader's region.
+HEADERS = {"User-Agent": "model-prices", "Accept-Language": "en-US,en;q=0.9"}
+
+
 def fetch(url: str) -> str:
-    request = urllib.request.Request(url, headers={"User-Agent": "model-prices"})
+    if (body := archive.fetched(url)) is not None:
+        return body.decode()
+    request = urllib.request.Request(url, headers=HEADERS)
     try:
         with urllib.request.urlopen(request, timeout=30) as response:
             body = response.read()
             # Some hosts, such as AWS's price data, send gzip whatever the request accepts.
             if response.headers.get("Content-Encoding") == "gzip":
                 body = gzip.decompress(body)
-            archive.record(url, body, response.status, content_type=response.headers.get("Content-Type"))
+            archive.record(url, body, response.status, content_type=response.headers.get("Content-Type"),
+                           final_url=response.geturl())
             return body.decode()
     except urllib.error.HTTPError as error:
         archive.record(url, None, error.code, error=str(error))

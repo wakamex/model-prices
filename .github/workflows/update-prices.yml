@@ -173,6 +173,27 @@ jobs:
           sudo apt-get install -y -qq age > /dev/null
           tar -C "$RUNNER_TEMP/pages" -czf - . \
             | age -R .github/archive-recipient.txt > "$RUNNER_TEMP/pages.tar.age"
+      # Each page is also stored in the archive's R2 bucket under its hash, encrypted and
+      # gzipped, once: the bucket is the archive's copy that CI can read back.
+      - name: Store new pages in the archive bucket
+        if: always()
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_WRITE_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_WRITE_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+        run: |
+          [ -d "$RUNNER_TEMP/pages/blobs" ] || exit 0
+          for blob in "$RUNNER_TEMP"/pages/blobs/*; do
+            key="blobs/$(basename "$blob").gz.age"
+            if aws s3api head-object --endpoint-url "$R2_ENDPOINT" --bucket model-prices-pages \
+                --key "$key" > /dev/null 2>&1; then
+              continue
+            fi
+            gzip -n -c "$blob" | age -R .github/archive-recipient.txt > "$RUNNER_TEMP/sealed"
+            aws s3api put-object --endpoint-url "$R2_ENDPOINT" --bucket model-prices-pages \
+              --key "$key" --body "$RUNNER_TEMP/sealed" > /dev/null
+          done
       - name: Upload the encrypted pages for the archive
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

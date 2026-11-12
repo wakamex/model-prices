@@ -33,6 +33,17 @@ class ArchiveTests(unittest.TestCase):
         self.assertEqual([blob.name for blob in blobs], [digest])
         self.assertEqual((log[2]["status"], log[2]["payload"], log[2]["error"]), (403, "{}", "Forbidden"))
 
+    def test_a_page_fetched_in_the_run_is_read_back(self):
+        with tempfile.TemporaryDirectory() as directory, \
+                mock.patch.dict(os.environ, {"MODEL_PRICES_ARCHIVE": directory}):
+            self.assertIsNone(archive.fetched("https://example.com/feed", b"{}"))
+            archive.record("https://example.com/feed", b"[1]", 200, payload=b"{}")
+            archive.record("https://example.com/page", None, 503, error="Service Unavailable")
+            self.assertEqual(archive.fetched("https://example.com/feed", b"{}"), b"[1]")
+            # A different payload, or a fetch that failed, is fetched again.
+            self.assertIsNone(archive.fetched("https://example.com/feed", b"[]"))
+            self.assertIsNone(archive.fetched("https://example.com/page"))
+
     def test_nothing_is_recorded_without_an_archive_directory(self):
         with mock.patch.dict(os.environ, {}, clear=True), mock.patch.object(Path, "mkdir") as mkdir:
             archive.record("https://example.com", b"x", 200)

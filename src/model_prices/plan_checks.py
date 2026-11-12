@@ -21,7 +21,7 @@ import urllib.error
 import urllib.request
 
 from model_prices import _data, archive, plan
-from model_prices.checks import Result, _html_text
+from model_prices.checks import HEADERS, Result, _html_text
 
 Prices = dict[tuple[str, str], float]
 
@@ -256,14 +256,17 @@ PLAN_PAGES: dict[str, tuple[str, bytes | None, Callable[[str], Prices], tuple[tu
 def _fetch(url: str, body: bytes | None, attempts: int = 3) -> str:
     """The source, retried after a failed or cut-off response, but not after a refusal,
     such as a 403, which a retry would not change."""
+    if (cached := archive.fetched(url, body)) is not None:
+        return cached.decode()
     request = urllib.request.Request(url, data=body, headers={
-        "User-Agent": "model-prices", **({"Content-Type": "application/json"} if body else {})})
+        **HEADERS, **({"Content-Type": "application/json"} if body else {})})
     for attempt in range(1, attempts + 1):
         try:
             with urllib.request.urlopen(request, timeout=30) as response:
                 received = response.read()
                 archive.record(url, received, response.status, payload=body,
-                               content_type=response.headers.get("Content-Type"))
+                               content_type=response.headers.get("Content-Type"),
+                               final_url=response.geturl())
                 return received.decode()
         except urllib.error.HTTPError as error:
             archive.record(url, None, error.code, payload=body, error=str(error))
