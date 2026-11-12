@@ -812,7 +812,8 @@ def parse_meta(text: str, today: datetime, get: Callable[[str], str]) -> list[Ob
     muse-wonder-full-1.0, lists "-" and gives no price."""
     titles = "|".join(re.escape(title) for title in _META_COLUMNS)
     found = []
-    for path in sorted(set(re.findall(r'href="(/models/muse-[a-z0-9-]+/)"', text))):
+    # The site writes model links with or without a trailing slash.
+    for path in sorted({f"{path}/" for path in re.findall(r'href="(/models/muse-[a-z0-9-]+)/?"', text)}):
         page = _html_text(get(META_SITE + path))
         if "| Models and pricing |" not in page:
             continue

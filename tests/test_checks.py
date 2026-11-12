@@ -485,6 +485,10 @@ class CheckTests(unittest.TestCase):
             "https://dev.meta.ai/models/muse-ember/"].replace("Mtok input", "Mtok prompt")}
         with self.assertRaisesRegex(ValueError, "pricing grid on /models/muse-ember/"):
             checks.parse_meta(PAGES["meta"], TODAY, changed.__getitem__)
+        # The site also writes its model links without a trailing slash.
+        bare = PAGES["meta"].replace('/">', '">')
+        self.assertEqual(checks.parse_meta(bare, TODAY, PAGES.__getitem__),
+                         checks.parse_meta(PAGES["meta"], TODAY, PAGES.__getitem__))
 
     def test_bedrock_prices_nova_by_inference_route(self):
         bedrock = _prices("amazon-bedrock")
