@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 import hashlib
 import json
 from pathlib import Path
@@ -53,6 +54,10 @@ class ReadingTests(unittest.TestCase):
         self.assertEqual(len(list((self.store / readings.CONTENT).iterdir())), 2)
         self.assertEqual(log[0]["inputs"], {URL: hashlib.sha256(self.page.encode()).hexdigest()})
 
+        # A run whose reading differs from the one before it is what starts a full update.
+        self.assertEqual([readings.changed(self.store, run) for run in "1234"],
+                         [[], [], ["anthropic"], ["anthropic"]])
+
         changes = [change for change in readings.history(readings.readings(self.store))
                    if change.key[1:5] == ("claude-opus-5-5", None, None, "input") and change.key[5] is None]
         self.assertEqual([(change.value, change.first_seen, change.last_before) for change in changes],
@@ -66,6 +71,15 @@ class ReadingTests(unittest.TestCase):
                          [("anthropic/claude-opus-5-5", "input", 5, 4,
                            "2026-11-11T06:00:00Z", "2026-11-11T06:00:00Z")])
 
+
+    def test_a_reading_does_not_depend_on_the_hour_it_was_made(self):
+        # DeepSeek's peak and off-peak prices are compared at the next such hour after a reading.
+        page = (FIXTURES / "deepseek.html").read_text()
+        morning, evening = (checks.parse("deepseek", page, datetime(2026, 11, 12, hour, tzinfo=timezone.utc),
+                                         None) for hour in (5, 21))
+        self.assertNotEqual({item.at for item in morning}, {item.at for item in evening})
+        self.assertEqual(sorted(map(readings._sort_key, map(readings._price, morning))),
+                         sorted(map(readings._sort_key, map(readings._price, evening))))
 
 if __name__ == "__main__":
     unittest.main()

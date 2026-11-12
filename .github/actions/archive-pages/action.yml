@@ -1,0 +1,82 @@
+name: Archive the fetched pages
+description: >
+  Store the pages a run fetched into $RUNNER_TEMP/pages in the page archive, and record the
+  run's fetches and readings on the data branch, which it leaves checked out in
+  $RUNNER_TEMP/fetch-log. A run that fetched nothing, such as one started by a push, has
+  nothing to archive.
+inputs:
+  r2-endpoint:
+    required: true
+  r2-access-key-id:
+    required: true
+  r2-secret-access-key:
+    required: true
+runs:
+  using: composite
+  steps:
+    # The fetched pages are the providers' content, so the bundle is encrypted to the
+    # archive's public key in .github/archive-recipient.txt before it becomes an artifact,
+    # which anyone can download from a public repository. The archive collects it within
+    # the artifact's 90 days.
+    - name: Encrypt the fetched pages
+      shell: bash
+      run: |
+        [ -f "$RUNNER_TEMP/pages/fetches.jsonl" ] || exit 0
+        sudo apt-get install -y -qq age > /dev/null
+        tar -C "$RUNNER_TEMP/pages" -czf - . \
+          | age -R .github/archive-recipient.txt > "$RUNNER_TEMP/pages.tar.age"
+    # Each page is also stored in the archive's R2 bucket under its hash, encrypted and
+    # gzipped, once: the bucket is the archive's copy that CI can read back.
+    - name: Store new pages in the archive bucket
+      if: always()
+      shell: bash
+      env:
+        AWS_ACCESS_KEY_ID: ${{ inputs.r2-access-key-id }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.r2-secret-access-key }}
+        AWS_DEFAULT_REGION: auto
+        R2_ENDPOINT: ${{ inputs.r2-endpoint }}
+      run: |
+        [ -d "$RUNNER_TEMP/pages/blobs" ] || exit 0
+        for blob in "$RUNNER_TEMP"/pages/blobs/*; do
+          key="blobs/$(basename "$blob").gz.age"
+          if aws s3api head-object --endpoint-url "$R2_ENDPOINT" --bucket model-prices-pages \
+              --key "$key" > /dev/null 2>&1; then
+            continue
+          fi
+          gzip -n -c "$blob" | age -R .github/archive-recipient.txt > "$RUNNER_TEMP/sealed"
+          aws s3api put-object --endpoint-url "$R2_ENDPOINT" --bucket model-prices-pages \
+            --key "$key" --body "$RUNNER_TEMP/sealed" > /dev/null
+        done
+    # The fetch log names pages only by URL and hash, so it is published in plain text, one
+    # file per month of fetches, where a rebuild of the price history can read it. So are the
+    # readings: the prices each provider's parser read from the pages the run stored. The
+    # hourly page watch and the daily update both append here, so a push that loses the race
+    # is redone on the new head.
+    - name: Record the run's fetches and readings on the data branch
+      if: always()
+      shell: bash
+      run: |
+        [ -f "$RUNNER_TEMP/pages/fetches.jsonl" ] || exit 0
+        log="$RUNNER_TEMP/fetch-log"
+        for attempt in 1 2 3 4 5; do
+          git fetch --quiet origin data
+          git worktree remove --force "$log" 2> /dev/null || true
+          git worktree add --quiet --detach "$log" FETCH_HEAD
+          mkdir -p "$log/fetches"
+          awk -v dir="$log/fetches" -F '"fetched_at": "' \
+            '{ print >> (dir "/" substr($2, 1, 7) ".jsonl") }' "$RUNNER_TEMP/pages/fetches.jsonl"
+          uv --no-config run --locked model-prices readings record "$log" --archive "$RUNNER_TEMP/pages"
+          git -C "$log" add fetches readings
+          git -C "$log" commit -qm "Record the fetches and readings of run $GITHUB_RUN_ID"
+          git -C "$log" push --quiet origin HEAD:data && exit 0
+          sleep $((attempt * 5))
+        done
+        exit 1
+    - name: Upload the encrypted pages for the archive
+      if: always()
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      with:
+        name: pages-${{ github.run_id }}-${{ github.run_attempt }}
+        path: ${{ runner.temp }}/pages.tar.age
+        retention-days: 90
+        if-no-files-found: ignore

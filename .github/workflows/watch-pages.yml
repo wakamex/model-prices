@@ -1,0 +1,55 @@
+name: Watch pricing pages
+
+# Hourly: read every page the providers' official checks parse, record the readings with the
+# page archive, and start Update prices when a provider's reading differs from its last one,
+# so a price change on a page is seen, and dated, within the hour rather than at the next
+# daily run. The pages are read, not compared byte for byte, since most send no ETag and
+# several change their bytes on every request.
+
+on:
+  schedule:
+    - cron: "41 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+# Not the prices group: a queued run there would cancel a pending daily update.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-24.04
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          enable-cache: false
+      - run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Read every pricing page
+        run: |
+          # The readings are recorded with the archive below, on the data branch.
+          uv --no-config run --locked model-prices readings fetch "$RUNNER_TEMP/pages"
+      - name: Archive the fetched pages
+        if: always()
+        uses: ./.github/actions/archive-pages
+        with:
+          r2-endpoint: ${{ secrets.R2_ENDPOINT }}
+          r2-access-key-id: ${{ secrets.R2_WRITE_ACCESS_KEY_ID }}
+          r2-secret-access-key: ${{ secrets.R2_WRITE_SECRET_ACCESS_KEY }}
+      - name: Start Update prices when a reading changed
+        run: |
+          changed="$(uv --no-config run --locked model-prices readings changed "$RUNNER_TEMP/fetch-log" \
+            --run "$GITHUB_RUN_ID")"
+          [ -n "$changed" ] || exit 0
+          echo "Readings changed for:" $changed
+          gh workflow run update-prices.yml --ref main

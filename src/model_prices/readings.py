@@ -17,15 +17,17 @@ the pages alone would differ from the published one.
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, fields
+from dataclasses import asdict, dataclass, fields, replace
+from datetime import datetime, timezone
 import gzip
 import hashlib
 import json
+import os
 from pathlib import Path
 from typing import Iterable, Iterator
 
 from model_prices import _parse_time
-from model_prices.checks import MINIMUM_MODELS, SOURCES, Observed, compare, parse
+from model_prices.checks import MINIMUM_MODELS, SOURCES, Observed, _moments, compare, fetch, parse
 
 LOG = "readings"
 CONTENT = "readings/by-hash"
@@ -89,7 +91,9 @@ def read_run(archive: Path, run: str, log: list[dict]) -> Iterator[tuple[dict, d
 
 def _price(item: Observed) -> dict:
     # Only the fields a page stated, so a reading's hash does not change when Observed gains one.
-    return {key: value for key, value in asdict(item).items() if key != "provider" and value is not None}
+    # A period's next hour depends on when the page was read, not on the page.
+    return {key: value for key, value in asdict(item).items()
+            if key != "provider" and value is not None and not (key == "at" and item.period)}
 
 
 def _sort_key(price: dict) -> str:
@@ -120,6 +124,34 @@ def record(archive: Path, out: Path) -> int:
     return added
 
 
+def fetch_pages() -> None:
+    """Fetch every page each provider's parser reads into the page archive that the
+    MODEL_PRICES_ARCHIVE environment variable names, for `record` to read. A page that cannot
+    be fetched or read is left to `record`, which names the error in that provider's line."""
+    if not os.environ.get("MODEL_PRICES_ARCHIVE"):
+        raise ValueError("MODEL_PRICES_ARCHIVE must name the directory to fetch the pages into")
+    now = datetime.now(timezone.utc)
+    for provider, (url, _) in SOURCES.items():
+        try:
+            parse(provider, fetch(url), now, fetch)
+        except Exception:
+            pass
+
+
+def changed(out: Path, run: str) -> list[str]:
+    """The providers whose reading in the run differs from their reading before it."""
+    last: dict[str, str] = {}
+    found = set()
+    for line in load_log(out):
+        if "reading" not in line:
+            continue
+        provider = line["provider"]
+        if line["run"] == run and provider in last and last[provider] != line["reading"]:
+            found.add(provider)
+        last[provider] = line["reading"]
+    return sorted(found)
+
+
 def load_log(out: Path) -> list[dict]:
     lines = [json.loads(line) for path in sorted((out / LOG).glob("*.jsonl"))
              for line in path.read_text().splitlines()]
@@ -133,9 +165,14 @@ def readings(out: Path) -> Iterator[tuple[dict, list[Observed]]]:
         if "reading" not in line:
             continue
         reading = json.loads((out / CONTENT / f"{line['reading']}.json").read_text())
-        yield line, [Observed(provider=reading["provider"],
-                              **{key: value for key, value in price.items() if key in names})
-                     for price in reading["prices"]]
+        observed = [Observed(provider=reading["provider"],
+                             **{key: value for key, value in price.items() if key in names})
+                    for price in reading["prices"]]
+        if any(item.period for item in observed):
+            moments = _moments(reading["provider"], _parse_time(line["read_at"]))
+            observed = [replace(item, at=moments[item.period]) if item.period else item
+                        for item in observed]
+        yield line, observed
 
 
 @dataclass(frozen=True)
@@ -157,7 +194,8 @@ def history(lines: Iterable[tuple[dict, list[Observed]]]) -> list[Change]:
     changes = []
     for line, observed in lines:
         for item in observed:
-            key = (item.provider, item.model, item.mode, item.modality, item.field, item.above, item.at)
+            key = (item.provider, item.model, item.mode, item.modality, item.field, item.above,
+                   item.period or item.at)
             last = current.get(key)
             if last is None or last[0] != item.value:
                 changes.append(Change(key, item.value, line["read_at"],

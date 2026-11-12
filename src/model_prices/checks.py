@@ -40,6 +40,9 @@ class Observed:
     yuan: float | None = None
     # The modality a price is stated for, such as "audio", when a page prices it apart.
     modality: str | None = None
+    # The time-of-day period a price is stated for, such as "PEAK"; `at` is then its next
+    # hour after the page was read.
+    period: str | None = None
 
 
 @dataclass(frozen=True)
@@ -1126,7 +1129,8 @@ def parse_deepseek(page: str, today: datetime) -> list[Observed]:
         for period, values in ((match.group(3), match.group(4)), (match.group(5), match.group(6))):
             prices = [float(value) for value in re.findall(r"\$([0-9.]+)", values)]
             for model, value in zip(models, prices):
-                found.append(Observed("deepseek", model, field, value, at=moments[period]))
+                found.append(Observed("deepseek", model, field, value, at=moments[period],
+                                      period=period))
     return found
 
 

@@ -905,21 +905,36 @@ def main(argv: list[str] | None = None) -> int:
     reading = commands.add_parser(
         "readings", help="Record what each parser read from archived pages, or compare it with "
                          "the published prices")
-    reading.add_argument("action", choices=["record", "diff"])
-    reading.add_argument("store", type=Path, help="Directory holding the readings")
+    reading.add_argument("action", choices=["fetch", "record", "diff", "changed"],
+                         help="fetch: fetch every page the parsers read into the archive "
+                              "DIRECTORY; record: add readings to DIRECTORY for the runs in "
+                              "--archive; diff: list where DIRECTORY's readings differ from the "
+                              "published prices; changed: list the providers whose reading in "
+                              "--run differs from the one before")
+    reading.add_argument("directory", type=Path, help="The page archive (fetch) or the readings")
     reading.add_argument("--archive", type=Path,
                          help="Page archive to read, with fetches.jsonl and blobs/ (record only)")
+    reading.add_argument("--run", help="Workflow run to compare (changed only)")
     args = parser.parse_args(argv)
 
     if args.command == "readings":
         from model_prices import readings
+        if args.action == "fetch":
+            os.environ["MODEL_PRICES_ARCHIVE"] = str(args.directory)
+            readings.fetch_pages()
+            return 0
         if args.action == "record":
             if args.archive is None:
                 parser.error("readings record needs --archive")
-            print(f"recorded {readings.record(args.archive, args.store)} readings")
+            print(f"recorded {readings.record(args.archive, args.directory)} readings")
             return 0
-        errors = [line for line in readings.load_log(args.store) if "error" in line]
-        differences = readings.diff(readings.readings(args.store))
+        if args.action == "changed":
+            if args.run is None:
+                parser.error("readings changed needs --run")
+            print("\n".join(readings.changed(args.directory, args.run)))
+            return 0
+        errors = [line for line in readings.load_log(args.directory) if "error" in line]
+        differences = readings.diff(readings.readings(args.directory))
         print(readings.report(differences, errors) or "every reading matches the published prices")
         return 0
 
