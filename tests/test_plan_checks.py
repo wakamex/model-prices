@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 import io
 import json
+import os
 from pathlib import Path
 import re
 import unittest
@@ -99,6 +100,9 @@ class PlanCheckTests(unittest.TestCase):
         self.assertEqual(model_prices.plan("alibaba", "token_lite", at="2026-11-06").usd_per_month, 6)
 
     def test_a_failed_fetch_is_retried_but_a_refusal_is_not(self):
+        # The page archive records real fetches only, never a mocked response.
+        self.enterContext(mock.patch.dict("os.environ", {}, clear=False))
+        os.environ.pop("MODEL_PRICES_ARCHIVE", None)
         response = mock.MagicMock()
         response.__enter__.return_value.read.return_value = b"{}"
         with (mock.patch("urllib.request.urlopen", side_effect=[TimeoutError("timed out"), response]),

@@ -5,7 +5,8 @@ Each run of update-prices.yml uploads the pages it fetched as an artifact named
 pages-<run id>-<attempt>, encrypted to the archive's public key, and kept for 90 days. This
 collects every such artifact not yet collected: it decrypts it with the private key, checks it
 holds only blobs/<sha256> files and fetches.jsonl, adds each blob to the archive under its hash,
-and appends the run's fetch log lines, tagged with the run, to the archive's fetches.jsonl.
+gzipped as blobs/<sha256>.gz, and appends the run's fetch log lines, tagged with the run, to the
+archive's fetches.jsonl.
 
     python3 tools/collect_pages.py [--archive DIR] [--key FILE]
 """
@@ -13,6 +14,7 @@ and appends the run's fetch log lines, tagged with the run, to the archive's fet
 from __future__ import annotations
 
 import argparse
+import gzip
 import hashlib
 import io
 import json
@@ -45,7 +47,7 @@ def unpack(bundle: bytes, key: Path) -> dict[str, bytes]:
     plain = subprocess.run(["/usr/bin/age", "-d", "-i", str(key)], input=bundle, check=True,
                            capture_output=True).stdout
     members = {}
-    with tarfile.open(fileobj=io.BytesIO(plain)) as tar:
+    with tarfile.open(fileobj=io.BytesIO(plain), mode="r:*") as tar:
         for member in tar.getmembers():
             if member.isdir() and member.name in {".", "./blobs"}:
                 continue
@@ -74,10 +76,11 @@ def collect(archive: Path, key: Path) -> int:
             members = unpack(package.read("pages.tar.age"), key)
         for name, data in members.items():
             if name != "./fetches.jsonl":
-                blob = archive / "blobs" / name[-64:]
+                # Pages are stored compressed; most are near-identical from one run to the next.
+                blob = archive / "blobs" / f"{name[-64:]}.gz"
                 if not blob.exists():
                     with tempfile.NamedTemporaryFile(dir=archive / "blobs", delete=False) as part:
-                        part.write(data)
+                        part.write(gzip.compress(data, mtime=0))
                     Path(part.name).rename(blob)
         run = item["workflow_run"]["id"] if item.get("workflow_run") else None
         lines = [json.dumps({**json.loads(line), "run": run}, sort_keys=True)
