@@ -1664,12 +1664,25 @@ def compare_tools(provider: str, page: str, today: datetime, listed: set[str]) -
     return results
 
 
+# At least half the models each page listed on 2026-11-11, so a page that silently loses most
+# of its rows fails instead of leaving them unchecked. Only the live page is held to it; tests
+# read excerpts.
+MINIMUM_MODELS = {"alibaba": 28, "amazon-bedrock": 5, "anthropic": 10, "arcee": 3, "google": 17,
+                  "inception": 3, "meta": 3, "mistral": 12, "moonshotai": 3, "openai": 22,
+                  "sakana": 2, "stepfun-ai": 5, "tencent-tokenhub": 14, "thinkingmachines": 19,
+                  "upstage": 2, "volcengine": 8, "xai": 4, "zai": 8}
+
+
 def _check(provider: str, moment: datetime, pages: dict[str, str] | None,
            genai: list | None) -> list[Result]:
     url = SOURCES[provider][0]
     page = pages[provider] if pages and provider in pages else fetch(url)
     observed = parse(provider, page, moment,
                      lambda other: pages[other] if pages and other in pages else fetch(other))
+    listed = len({item.model for item in observed})
+    if pages is None and listed < MINIMUM_MODELS.get(provider, 0):
+        raise ValueError(f"{provider}: only {listed} models parsed from {url}, fewer than "
+                         f"{MINIMUM_MODELS[provider]}; the page format changed")
     results = compare(observed, moment, genai)
     for language, (terms_url, _) in TERMS.get(provider, {}).items():
         key = f"{provider}:{language}"
@@ -1697,6 +1710,105 @@ def _check(provider: str, moment: datetime, pages: dict[str, str] | None,
     return results
 
 
+# Service tiers that cost no more than standard, and those that cost no less.
+_CHEAPER_MODES = {"batch", "flex"}
+_DEARER_MODES = {"priority", "fast", "ultrafast"}
+
+
+def _invalid(rates: "Rates") -> list[str]:
+    """What is impossible about one rate card: a negative price, cached input above input,
+    a nonzero cache write below cached input, or a longer-context tier below the one before."""
+    found = []
+    cards = [("", rates.input, rates.output, rates.cache_read, rates.cache_write)]
+    cards += [(f" {modality.modality}", modality.input, modality.output, modality.cache_read, None)
+              for modality in rates.modalities]
+    for label, prompt, completion, cached, written in cards:
+        if any(price is not None and (price < 0 or price != price) for price in (prompt, completion, cached, written)):
+            found.append(f"a negative price{label}")
+        if cached is not None and prompt is not None and cached > prompt + 1e-9:
+            found.append(f"cached input{label} ${cached:g} above input ${prompt:g}")
+        if written and cached is not None and written < cached - 1e-9:
+            found.append(f"cache write{label} ${written:g} below cached input ${cached:g}")
+    previous = (rates.input, rates.output)
+    for tier in rates.tiers:
+        for name, price, below in (("input", tier.input, previous[0]), ("output", tier.output, previous[1])):
+            if price is not None and below is not None and price < below - 1e-9:
+                found.append(f"{name} above {tier.above:,} tokens ${price:g} below ${below:g}")
+        previous = (tier.input if tier.input is not None else previous[0],
+                    tier.output if tier.output is not None else previous[1])
+    return found
+
+
+def check_invariants(providers: set[str] | None, today: datetime) -> list[Result]:
+    """Each published rate card that is impossible, in any mode, tier, or modality, and each
+    service tier priced on the wrong side of standard; a mismatch holds the provider."""
+    results = []
+    for provider, models in sorted(_data()["prices"].items()):
+        if providers is not None and provider not in providers:
+            continue
+        for model, timelines in sorted(models.items()):
+            standard = rates(f"{provider}/{model}", at=today, provider=provider)
+            if standard is None:
+                continue
+            problems = _invalid(standard)
+            for mode in sorted(set(timelines) - {"standard"}):
+                moded = rates(f"{provider}/{model}", at=today, provider=provider, mode=mode)
+                if moded is None:
+                    continue
+                problems += [f"{problem} in {mode}" for problem in _invalid(moded)]
+                for name in ("input", "output"):
+                    price, base = getattr(moded, name), getattr(standard, name)
+                    if price is None or base is None:
+                        continue
+                    if mode in _CHEAPER_MODES and price > base + 1e-9:
+                        problems.append(f"{mode} {name} ${price:g} above standard ${base:g}")
+                    if mode in _DEARER_MODES and price < base - 1e-9:
+                        problems.append(f"{mode} {name} ${price:g} below standard ${base:g}")
+            if problems:
+                results.append(Result(provider, f"{provider}/{model}", "rule:invariant", None, None,
+                                      "; ".join(problems), None, None, "mismatch"))
+    return results
+
+
+_PROVENANCE = {"source", "valid_from", "valid_from_basis"}
+
+
+def _rates_at(timeline: list[dict], at: str) -> dict | None:
+    found = None
+    for interval in timeline:
+        if interval["start"] is None or interval["start"] <= at:
+            found = interval["rates"]
+    return found
+
+
+def rewritten_history(candidate: dict, published: dict, providers: set[str] | None) -> list[Result]:
+    """Earlier prices the candidate snapshot changes from the published one on models.dev's
+    word alone. Published history only gains a latest price; a past interval may change only
+    where a correction or a provider page gives the new price, so a models.dev value that was
+    held back, such as a wrong price it later fixed, never enters the dated history."""
+    until = published["updated_at"]
+    results = []
+    for provider, models in sorted(candidate["prices"].items()):
+        if providers is not None and provider not in providers:
+            continue
+        for model, timelines in sorted(models.items()):
+            for mode, timeline in sorted(timelines.items()):
+                before = published["prices"].get(provider, {}).get(model, {}).get(mode)
+                if not before:
+                    continue
+                times = sorted({interval["start"] or "" for interval in timeline + before} - {""})
+                for at in [time for time in times if time < until] or []:
+                    new, old = _rates_at(timeline, at), _rates_at(before, at)
+                    if new is None or old is None or "models.dev/commit/" not in new.get("source", ""):
+                        continue
+                    if {k: v for k, v in new.items() if k not in _PROVENANCE} != {
+                            k: v for k, v in old.items() if k not in _PROVENANCE}:
+                        results.append(Result(provider, f"{provider}/{model}", "rule:history", None, at,
+                                              mode, new.get("source"), None, "mismatch"))
+                        break
+    return results
+
+
 def run(providers: Iterable[str] | None = None, today: datetime | None = None,
         pages: dict[str, str] | None = None, genai: list | None = None,
         rules: dict[str, dict] | None = None) -> list[Result]:
@@ -1715,6 +1827,19 @@ def run(providers: Iterable[str] | None = None, today: datetime | None = None,
             results.append(Result(provider, provider, "page", None, None, SOURCES[provider][0],
                                   str(error), None, "error"))
     results.extend(check_calendars(set(providers or SOURCES), moment))
+    results.extend(check_invariants(set(providers) if providers else None, moment))
+    # The live check compares the snapshot it would publish with the one last published.
+    if pages is None:
+        from model_prices import SNAPSHOT_URL
+        try:
+            latest = json.loads(fetch(SNAPSHOT_URL + "latest.json"))["sha256"]
+            published = json.loads(fetch(f"{SNAPSHOT_URL}{latest}.json"))
+        except (OSError, ValueError, KeyError) as error:
+            # Without the published snapshot, the guard reports itself unchecked for this run.
+            results.append(Result("model-prices", "published history", "rule:history", None, None,
+                                  SNAPSHOT_URL, str(error), None, "unchecked"))
+        else:
+            results.extend(rewritten_history(_data(), published, set(providers) if providers else None))
     # Tool fees on a provider whose pages no check reads for them are listed as unchecked.
     for provider in sorted(set(providers or _data()["prices"]) - set(TOOL_PAGES) - {"google"}):
         priced = sorted(model for model in _data()["prices"].get(provider, {})
@@ -1846,6 +1971,18 @@ def report(results: list[Result], genai: bool = False) -> str:
             what = "regional factors" if result.field == "regions" else "release evidence conflicts:"
             lines.append(f"{result.status:9} {result.model} {what} OpenAI's pages {result.official}"
                          + (f", model-prices {result.effective}" if result.field == "regions" else ""))
+            continue
+        if result.field == "rule:history" and result.status == "unchecked":
+            lines.append(f"unchecked published history: the snapshot at {result.official} could not "
+                         f"be read ({result.effective})")
+            continue
+        if result.field == "rule:history":
+            lines.append(f"{result.status:9} {result.model} {result.official} history changes its price "
+                         f"at {result.at} on models.dev's word alone ({result.effective}); a past "
+                         "price changes only with a correction or a page reading")
+            continue
+        if result.field == "rule:invariant":
+            lines.append(f"{result.status:9} {result.model} impossible rate card: {result.official}")
             continue
         if result.field == "rule:batch":
             lines.append(f"{result.status:9} {result.model} batch multiple: xAI's page {result.official}, "

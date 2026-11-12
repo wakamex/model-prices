@@ -797,6 +797,50 @@ Batch
         # An entry not yet started is not in effect.
         self.assertEqual(checks.unchecked_rules([], rules, None, datetime(2026, 10, 1, tzinfo=timezone.utc)), [])
 
+    def test_impossible_rate_cards_are_found(self):
+        from model_prices import ModalityRates, Rates, Tier
+        def card(**values):
+            return Rates(provider="p", model="m", valid_from="2026-01-01T00:00:00Z", source="s",
+                         **{"input": 1.0, "output": 4.0, **values})
+        self.assertEqual(checks._invalid(card(cache_read=0.1, cache_write=1.25)), [])
+        # A $0 cache write is no charge, not an inverted price.
+        self.assertEqual(checks._invalid(card(cache_read=0.1, cache_write=0.0)), [])
+        self.assertIn("cached input $2 above input $1", checks._invalid(card(cache_read=2.0)))
+        self.assertTrue(checks._invalid(card(tiers=(Tier(above=200_000, input=0.5, output=4.0),))))
+        self.assertTrue(checks._invalid(card(output=-1.0)))
+        self.assertTrue(checks._invalid(card(modalities=(ModalityRates("audio", input=3.0, cache_read=5.0),))))
+        # Published data has no impossible rate card.
+        self.assertEqual(checks.check_invariants(None, datetime(2026, 11, 11, tzinfo=timezone.utc)), [])
+
+    def test_a_past_price_changes_only_with_a_correction_or_a_page(self):
+        def interval(start, price, source):
+            return {"start": start, "rates": {"input": price, "output": 1.0, "source": source,
+                                              "valid_from": start or "2026-01-01T00:00:00Z"}}
+        md = "https://github.com/sst/models.dev/commit/abc"
+        published = {"updated_at": "2026-11-10T00:00:00Z", "prices": {"google": {"m": {"standard": [
+            interval(None, 9.0, md)]}}}}
+        # models.dev's wrong $12 from 2026-11-05, held back and later fixed, would enter the past.
+        replayed = {"prices": {"google": {"m": {"standard": [
+            interval(None, 9.0, md), interval("2026-11-05T00:00:00Z", 12.0, md),
+            interval("2026-11-09T00:00:00Z", 9.0, md)]}}}}
+        found = checks.rewritten_history(replayed, published, None)
+        self.assertEqual([(r.model, r.at) for r in found], [("google/m", "2026-11-05T00:00:00Z")])
+        self.assertIn("on models.dev's word alone", checks.report(found))
+        # A correction may change the past, and a new latest price is no rewrite.
+        corrected = {"prices": {"google": {"m": {"standard": [
+            interval(None, 9.0, md), interval("2026-11-05T00:00:00Z", 12.0, "https://ai.google.dev/pricing")]}}}}
+        appended = {"prices": {"google": {"m": {"standard": [
+            interval(None, 9.0, md), interval("2026-11-10T06:00:00Z", 12.0, md)]}}}}
+        self.assertEqual(checks.rewritten_history(corrected, published, None), [])
+        self.assertEqual(checks.rewritten_history(appended, published, None), [])
+
+    def test_a_live_page_that_loses_most_of_its_models_fails(self):
+        with (mock.patch.object(checks, "fetch", lambda url: PAGES["zai"]),
+              mock.patch.dict(checks.MINIMUM_MODELS, {"zai": 999}),
+              mock.patch.object(checks, "rewritten_history", lambda *args: [])):
+            results = checks.run(["zai"], today=TODAY)
+        self.assertIn("fewer than 999", next(r.effective for r in results if r.status == "error"))
+
     def test_check_command_exit_status(self):
         with (mock.patch.object(checks, "fetch", lambda url: PAGES["zai"]),
               mock.patch("sys.stdout", new_callable=io.StringIO) as stdout):
