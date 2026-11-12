@@ -1,0 +1,1 @@
+{"prices": [{"field": "cache_read", "model": "MiniMax-M3.1-Flash", "value": 0.015}, {"field": "input", "model": "MiniMax-M3.1-Flash", "value": 0.15}, {"field": "output", "model": "MiniMax-M3.1-Flash", "value": 0.6}], "provider": "minimax"}

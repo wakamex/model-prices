@@ -1,0 +1,1 @@
+{"prices": [{"field": "input", "model": "command-r-08-2024", "value": 0.15}, {"field": "input", "model": "command-r7b-12-2024", "value": 0.0375}, {"field": "output", "model": "command-r-08-2024", "value": 0.6}, {"field": "output", "model": "command-r7b-12-2024", "value": 0.15}], "provider": "cohere"}

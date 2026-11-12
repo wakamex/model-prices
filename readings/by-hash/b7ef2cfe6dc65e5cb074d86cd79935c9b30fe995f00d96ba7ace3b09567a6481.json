@@ -1,0 +1,1 @@
+{"prices": [{"field": "input", "model": "jamba-large", "value": 2.0}, {"field": "input", "model": "jamba-mini", "value": 0.2}, {"field": "output", "model": "jamba-large", "value": 8.0}, {"field": "output", "model": "jamba-mini", "value": 0.4}], "provider": "ai21"}

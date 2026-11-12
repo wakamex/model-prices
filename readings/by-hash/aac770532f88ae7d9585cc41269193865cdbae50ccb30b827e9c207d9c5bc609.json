@@ -1,0 +1,1 @@
+{"prices": [{"field": "cache_read", "model": "sonar", "value": 0.0625}, {"field": "input", "model": "sonar", "value": 0.25}, {"field": "output", "model": "sonar", "value": 2.5}], "provider": "perplexity"}
