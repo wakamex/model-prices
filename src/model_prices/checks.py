@@ -15,10 +15,11 @@ import json
 import math
 import re
 from typing import Callable, Iterable
+import urllib.error
 import urllib.parse
 import urllib.request
 
-from model_prices import (_data, _ids, _parse_time, _period, _schedule, genai_prices, rates,
+from model_prices import (_data, _ids, _parse_time, _period, _schedule, archive, genai_prices, rates,
                           resolve)
 
 FIELDS = ("input", "cache_write", "cache_read", "cache_read_explicit", "output")
@@ -1472,12 +1473,20 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
 
 def fetch(url: str) -> str:
     request = urllib.request.Request(url, headers={"User-Agent": "model-prices"})
-    with urllib.request.urlopen(request, timeout=30) as response:
-        body = response.read()
-        # Some hosts, such as AWS's price data, send gzip whatever the request accepts.
-        if response.headers.get("Content-Encoding") == "gzip":
-            body = gzip.decompress(body)
-        return body.decode()
+    try:
+        with urllib.request.urlopen(request, timeout=30) as response:
+            body = response.read()
+            # Some hosts, such as AWS's price data, send gzip whatever the request accepts.
+            if response.headers.get("Content-Encoding") == "gzip":
+                body = gzip.decompress(body)
+            archive.record(url, body, response.status, content_type=response.headers.get("Content-Type"))
+            return body.decode()
+    except urllib.error.HTTPError as error:
+        archive.record(url, None, error.code, error=str(error))
+        raise
+    except (OSError, ValueError) as error:
+        archive.record(url, None, error=f"{type(error).__name__}: {error}")
+        raise
 
 
 def _value(found, field: str, above: int | None, modality: str | None = None) -> float | None:

@@ -179,6 +179,8 @@ A daily workflow records observed prices with `model-prices observe`, which goes
 
 Prices that go straight to `main` are dated by their models.dev commit. A correction for a late date arrives in a later snapshot; costs already computed keep the basis that priced them.
 
+Every run of the daily workflow also records each page it fetches: the exact bytes, stored once under their SHA-256 hash, and one line per fetch in a log, unchanged pages included, so a price change is bounded by the last fetch that showed the old price. The pages are the providers' content, so the workflow encrypts them to the archive's public key in `.github/archive-recipient.txt` before uploading them as a run artifact, which GitHub keeps for 90 days; `tools/collect_pages.py`, run every six hours on the maintainer's machine, decrypts each new artifact into a private local archive. The archive is the input for rebuilding price history when a parser is fixed.
+
 To rebuild locally, from the repository root:
 
 ```sh

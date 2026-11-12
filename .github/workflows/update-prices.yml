@@ -42,6 +42,8 @@ jobs:
       - run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Every page the run fetches is recorded here for the page archive.
+          echo "MODEL_PRICES_ARCHIVE=$RUNNER_TEMP/pages" >> "$GITHUB_ENV"
 
       - name: Apply price changes that match the official pages
         if: github.event_name != 'push'
@@ -157,3 +159,24 @@ jobs:
           fi
           # Any other disagreement, such as a page that changed before models.dev did.
           uv --no-config run --locked model-prices check
+
+      # The fetched pages are the providers' content, so the bundle is encrypted to the
+      # archive's public key in .github/archive-recipient.txt before it becomes an artifact,
+      # which anyone can download from a public repository. The archive collects it within
+      # the artifact's 90 days.
+      - name: Encrypt the fetched pages
+        if: always()
+        run: |
+          # A run that fetched nothing, such as one started by a push, has nothing to archive.
+          [ -f "$RUNNER_TEMP/pages/fetches.jsonl" ] || exit 0
+          sudo apt-get install -y -qq age > /dev/null
+          tar -C "$RUNNER_TEMP/pages" -cf - . \
+            | age -R .github/archive-recipient.txt > "$RUNNER_TEMP/pages.tar.age"
+      - name: Upload the encrypted pages for the archive
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: pages-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/pages.tar.age
+          retention-days: 90
+          if-no-files-found: ignore

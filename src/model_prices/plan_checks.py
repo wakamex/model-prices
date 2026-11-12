@@ -20,7 +20,7 @@ from typing import Callable, Iterable
 import urllib.error
 import urllib.request
 
-from model_prices import _data, plan
+from model_prices import _data, archive, plan
 from model_prices.checks import Result, _html_text
 
 Prices = dict[tuple[str, str], float]
@@ -261,12 +261,17 @@ def _fetch(url: str, body: bytes | None, attempts: int = 3) -> str:
     for attempt in range(1, attempts + 1):
         try:
             with urllib.request.urlopen(request, timeout=30) as response:
-                return response.read().decode()
+                received = response.read()
+                archive.record(url, received, response.status, payload=body,
+                               content_type=response.headers.get("Content-Type"))
+                return received.decode()
         except urllib.error.HTTPError as error:
+            archive.record(url, None, error.code, payload=body, error=str(error))
             if error.code < 500 or attempt == attempts:
                 raise
             time.sleep(5 * attempt)
-        except (OSError, http.client.HTTPException):
+        except (OSError, http.client.HTTPException) as error:
+            archive.record(url, None, payload=body, error=f"{type(error).__name__}: {error}")
             if attempt == attempts:
                 raise
             time.sleep(5 * attempt)
