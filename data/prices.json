@@ -5608,6 +5608,32 @@
      "valid_from": "2026-12-01T00:00:00Z"
     }
    ],
+   "gemini-4-hydrogen": [
+    {
+     "commit": "736acb896c60",
+     "rates": {
+      "cache_read": 0.075,
+      "input": 1.5,
+      "modes": {
+       "flex": {
+        "cache_read": 0.0375,
+        "input": 0.75,
+        "output": 3.75
+       },
+       "priority": {
+        "cache_read": 0.135,
+        "input": 2.7,
+        "output": 13.5
+       }
+      },
+      "output": 7.5,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "valid_from": "2026-11-12T18:23:38Z"
+    }
+   ],
    "gemini-decision-1": [
     {
      "commit": "9ca20fdfe23f",
@@ -14363,8 +14389,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "9ca20fdfe23fc4a03e6f1125c98bea45ceca7b8b",
- "source_committed_at": "2026-11-11T19:10:32Z",
+ "source_commit": "6ee3dc81c0bb30fa354a73e0a0b5b385392fa4c7",
+ "source_committed_at": "2026-11-12T18:29:35Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",

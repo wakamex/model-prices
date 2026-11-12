@@ -1806,6 +1806,34 @@
      "valid_from": "2026-11-10T17:10:14Z"
     }
    ],
+   "gemini-4-hydrogen": [
+    {
+     "rates": {
+      "cache_read": 0.075,
+      "input": 1.5,
+      "modes": {
+       "batch": {
+        "cache_read": 0.0375,
+        "input": 0.75,
+        "output": 3.75
+       },
+       "flex": {
+        "cache_read": 0.0375,
+        "input": 0.75,
+        "output": 3.75
+       },
+       "priority": {
+        "cache_read": 0.135,
+        "input": 2.7,
+        "output": 13.5
+       }
+      },
+      "output": 7.5
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T18:45:58Z"
+    }
+   ],
    "gemini-decision-1": [
     {
      "rates": {
