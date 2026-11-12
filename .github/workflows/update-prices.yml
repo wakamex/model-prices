@@ -194,6 +194,21 @@ jobs:
             aws s3api put-object --endpoint-url "$R2_ENDPOINT" --bucket model-prices-pages \
               --key "$key" --body "$RUNNER_TEMP/sealed" > /dev/null
           done
+      # The fetch log names pages only by URL and hash, so it is published in plain text, one
+      # file per month of fetches, where a rebuild of the price history can read it.
+      - name: Record the run's fetches on the data branch
+        if: always()
+        run: |
+          [ -f "$RUNNER_TEMP/pages/fetches.jsonl" ] || exit 0
+          log="$RUNNER_TEMP/fetch-log"
+          git fetch --quiet origin data
+          git worktree add --quiet --detach "$log" FETCH_HEAD
+          mkdir -p "$log/fetches"
+          awk -v dir="$log/fetches" -F '"fetched_at": "' \
+            '{ print >> (dir "/" substr($2, 1, 7) ".jsonl") }' "$RUNNER_TEMP/pages/fetches.jsonl"
+          git -C "$log" add fetches
+          git -C "$log" commit -qm "Record the fetches of run $GITHUB_RUN_ID"
+          git -C "$log" push --quiet origin HEAD:data
       - name: Upload the encrypted pages for the archive
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
