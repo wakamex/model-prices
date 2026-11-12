@@ -734,13 +734,13 @@ note = "Ministral 3 3B, whose docs page lists ministral-3b-latest among its API 
 [[correction]]
 provider = "mistral"
 model = "mistral-large-latest"
-valid_from = "2026-11-12T16:51:20Z"
+valid_from = "2026-11-12T16:51:17Z"
 input = 0.7
 output = 2.1
 cache_read = 0.07
 replaces = { input = 0.5, output = 1.5, cache_read = 0.05 }
 source = "https://docs.mistral.ai/models/mistral-large-4-0"
-note = "Mistral Large 4's docs page lists mistral-large-latest among its API names from the 2026-11-12T16:51:20Z fetch; the 15:15Z fetch did not, and Mistral's changelog does not mention the move. Its pricing page lists Mistral Large 4 at $0.7 input, $0.07 cached input, and $2.1 output per 1M tokens. models.dev lists the earlier $0.5/$0.05/$1.5."
+note = "Mistral Large 4's docs page lists mistral-large-latest among its API names from the run that fetched Mistral's pricing page at 2026-11-12T16:51:17Z; the 15:15Z run did not, and Mistral's changelog does not mention the move. Its pricing page lists Mistral Large 4 at $0.7 input, $0.07 cached input, and $2.1 output per 1M tokens. models.dev lists the earlier $0.5/$0.05/$1.5."
 
 [[correction]]
 provider = "minimax"

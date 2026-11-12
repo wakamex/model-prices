@@ -902,7 +902,26 @@ def main(argv: list[str] | None = None) -> int:
         "--genai-prices", nargs="?", const="url", metavar="SOURCE",
         help="Also score Pydantic's genai-prices against the official pages, from its data.json "
              "URL (the default), the file, or a checkout")
+    reading = commands.add_parser(
+        "readings", help="Record what each parser read from archived pages, or compare it with "
+                         "the published prices")
+    reading.add_argument("action", choices=["record", "diff"])
+    reading.add_argument("store", type=Path, help="Directory holding the readings")
+    reading.add_argument("--archive", type=Path,
+                         help="Page archive to read, with fetches.jsonl and blobs/ (record only)")
     args = parser.parse_args(argv)
+
+    if args.command == "readings":
+        from model_prices import readings
+        if args.action == "record":
+            if args.archive is None:
+                parser.error("readings record needs --archive")
+            print(f"recorded {readings.record(args.archive, args.store)} readings")
+            return 0
+        errors = [line for line in readings.load_log(args.store) if "error" in line]
+        differences = readings.diff(readings.readings(args.store))
+        print(readings.report(differences, errors) or "every reading matches the published prices")
+        return 0
 
     if args.command == "check":
         from model_prices import genai_prices

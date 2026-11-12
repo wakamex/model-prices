@@ -195,8 +195,9 @@ jobs:
               --key "$key" --body "$RUNNER_TEMP/sealed" > /dev/null
           done
       # The fetch log names pages only by URL and hash, so it is published in plain text, one
-      # file per month of fetches, where a rebuild of the price history can read it.
-      - name: Record the run's fetches on the data branch
+      # file per month of fetches, where a rebuild of the price history can read it. So are the
+      # readings: the prices each provider's parser read from the pages the run stored.
+      - name: Record the run's fetches and readings on the data branch
         if: always()
         run: |
           [ -f "$RUNNER_TEMP/pages/fetches.jsonl" ] || exit 0
@@ -206,8 +207,11 @@ jobs:
           mkdir -p "$log/fetches"
           awk -v dir="$log/fetches" -F '"fetched_at": "' \
             '{ print >> (dir "/" substr($2, 1, 7) ".jsonl") }' "$RUNNER_TEMP/pages/fetches.jsonl"
-          git -C "$log" add fetches
-          git -C "$log" commit -qm "Record the fetches of run $GITHUB_RUN_ID"
+          uv --no-config run --locked model-prices readings record "$log" --archive "$RUNNER_TEMP/pages"
+          # Where the prices read from the pages differ from those published, for information.
+          uv --no-config run --locked model-prices readings diff "$log"
+          git -C "$log" add fetches readings
+          git -C "$log" commit -qm "Record the fetches and readings of run $GITHUB_RUN_ID"
           git -C "$log" push --quiet origin HEAD:data
       - name: Upload the encrypted pages for the archive
         if: always()
