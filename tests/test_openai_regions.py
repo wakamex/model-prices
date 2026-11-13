@@ -10,7 +10,7 @@ from model_prices.observe import observe_regions
 # Excerpts in the formats of OpenAI's pages on 2026-10-31.
 PRICING = ("Regional processing (data residency) endpoints are charged a 10% uplift for models "
            "released on or after March 5, 2026. FedRAMP endpoints are also charged a 10% uplift.")
-YOUR_DATA = """### Support by region
+DATA_RESIDENCY = """### Support by region
 
 | Region                     | Domain prefix       | Regional storage | Regional processing | MAM or ZDR required |
 | -------------------------- | ------------------- | :--------------: | :-----------------: | :-----------------: |
@@ -19,7 +19,7 @@ YOUR_DATA = """### Support by region
 | Japan\\*                    | `jp.api.openai.com` |       Yes        |         No          |         Yes         |
 | United Arab Emirates\\*     | `ae.api.openai.com` |       Yes        |         Yes         |         Yes         |
 
-#### API Endpoint, tool and model support
+### API Endpoint, tool and model support
 
 | Endpoint or feature | Service | Storage regions | Processing regions | Supported models and snapshots | Regional processing snapshot exceptions | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -60,7 +60,7 @@ PAGES = {
 
 
 def _get(overrides=None):
-    pages = {regions.PRICING: PRICING, regions.YOUR_DATA: YOUR_DATA, regions.CHANGELOG: CHANGELOG,
+    pages = {regions.PRICING: PRICING, regions.DATA_RESIDENCY: DATA_RESIDENCY, regions.CHANGELOG: CHANGELOG,
              **{regions.model_page(name): page for name, page in PAGES.items()}, **(overrides or {})}
     return pages.__getitem__
 
@@ -86,7 +86,7 @@ class OpenAIRegionTests(unittest.TestCase):
         self.assertNotIn("gpt-realtime-1.5", found.factors)
 
     def test_changed_pages_fail_loudly(self):
-        for url, page in ((regions.PRICING, "Prices"), (regions.YOUR_DATA, "# Your data"),
+        for url, page in ((regions.PRICING, "Prices"), (regions.DATA_RESIDENCY, "# Your data"),
                           (regions.CHANGELOG, "# Changelog")):
             with self.subTest(url=url), self.assertRaisesRegex(ValueError, "openai"):
                 regions.read(_get({url: page}))
@@ -106,7 +106,7 @@ class OpenAIRegionTests(unittest.TestCase):
             self.assertTrue(observe_regions(output, _get(), first))
             self.assertFalse(observe_regions(output, _get(), datetime(2026, 11, 1, tzinfo=timezone.utc)))
             entries = json.loads(output.read_text())["providers"]["openai"]["gpt-6.1-sol"]
-        self.assertEqual(entries, [{"valid_from": "2026-10-31T17:00:00Z", "source": regions.YOUR_DATA,
+        self.assertEqual(entries, [{"valid_from": "2026-10-31T17:00:00Z", "source": regions.DATA_RESIDENCY,
                                     "regions": {"eu": 1.1, "us": 1.1}}])
 
 

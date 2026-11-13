@@ -335,7 +335,7 @@ def observe_regions(output: Path, get: Callable[[str], str], now: datetime) -> b
         if (entries[-1]["regions"] if entries else {}) == regions:
             continue
         entries.append({"valid_from": now.isoformat().replace("+00:00", "Z"),
-                        "source": openai_regions.YOUR_DATA, "regions": regions})
+                        "source": openai_regions.DATA_RESIDENCY, "regions": regions})
         changed = True
     if changed:
         output.write_text(json.dumps(data, indent=1, sort_keys=True) + "\n")

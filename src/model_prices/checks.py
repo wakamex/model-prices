@@ -1725,7 +1725,7 @@ def _check(provider: str, moment: datetime, pages: dict[str, str] | None,
     # OpenAI's regional uplift is read from its other pages, which a test supplies or leaves out.
     if provider == "openai":
         from model_prices import openai_regions
-        if pages is None or openai_regions.YOUR_DATA in pages:
+        if pages is None or openai_regions.DATA_RESIDENCY in pages:
             results += compare_openai_regions(
                 lambda other: pages[other] if pages and other in pages else fetch(other), moment)
     return results

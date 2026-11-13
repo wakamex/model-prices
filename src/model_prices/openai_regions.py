@@ -19,7 +19,7 @@ from typing import Callable
 
 DOCS = "https://developers.openai.com/api/docs"
 PRICING = f"{DOCS}/pricing.md"
-YOUR_DATA = f"{DOCS}/guides/your-data.md"
+DATA_RESIDENCY = f"{DOCS}/guides/data-residency.md"
 CHANGELOG = f"{DOCS}/changelog.md"
 
 _DATED = re.compile(r"-(\d{4}-\d{2}-\d{2})$")
@@ -45,7 +45,7 @@ def _rows(page: str, heading: str) -> list[list[str]]:
     lines = page.splitlines()
     start = next((index for index, line in enumerate(lines) if line.startswith(heading)), None)
     if start is None:
-        raise ValueError(f"openai: no {heading!r} table in {YOUR_DATA}; the page format changed")
+        raise ValueError(f"openai: no {heading!r} table in {DATA_RESIDENCY}; the page format changed")
     # A heading that is itself the table's header row starts the table.
     table = lines[start if heading.startswith("|") else start + 1:][:300]
     rows = []
@@ -68,9 +68,9 @@ def parse_residency(page: str) -> dict[str, set[str]]:
         if prefix and row[3] == "Yes":
             regions[re.sub(r"\\?\*", "", row[0]).strip()] = prefix.group(1)
     if not regions:
-        raise ValueError(f"openai: no regional processing regions in {YOUR_DATA}")
+        raise ValueError(f"openai: no regional processing regions in {DATA_RESIDENCY}")
     processed: dict[str, set[str]] = {}
-    for row in _rows(page, "#### API Endpoint, tool and model support"):
+    for row in _rows(page, "### API Endpoint, tool and model support"):
         models = re.findall(r"`([a-z0-9][a-z0-9.-]*)`", row[4])
         names = [name.strip() for name in row[3].split(",")]
         # "United Arab Emirates: `gpt-5.6-luna`, ..." limits that region to those snapshots.
@@ -82,7 +82,7 @@ def parse_residency(page: str) -> dict[str, set[str]]:
             for model in subsets.get(name, models):
                 processed.setdefault(model, set()).add(regions[name])
     if not processed:
-        raise ValueError(f"openai: no models in the data residency table of {YOUR_DATA}")
+        raise ValueError(f"openai: no models in the data residency table of {DATA_RESIDENCY}")
     return processed
 
 
@@ -179,7 +179,7 @@ def read(get: Callable[[str], str]) -> Regional:
     after the uplift's cutoff, keyed by the ids the data residency table lists and by the
     model each dated snapshot belongs to."""
     factor, cutoff = parse_uplift(get(PRICING))
-    processed = parse_residency(get(YOUR_DATA))
+    processed = parse_residency(get(DATA_RESIDENCY))
     released = parse_changelog(get(CHANGELOG))
     pages: dict[str, ModelPage | None] = {}
     factors: dict[str, dict[str, float]] = {}
@@ -198,4 +198,4 @@ def read(get: Callable[[str], str]) -> Regional:
             for listed in {model, name}:
                 factors.setdefault(listed, {}).update(dict.fromkeys(sorted(prefixes), factor))
     return Regional({model: dict(sorted(regions.items())) for model, regions in factors.items()},
-                    conflicts, (PRICING, YOUR_DATA, CHANGELOG))
+                    conflicts, (PRICING, DATA_RESIDENCY, CHANGELOG))
