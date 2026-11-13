@@ -5,6 +5,9 @@ name: Watch pricing pages
 # so a price change on a page is seen, and dated, within the hour rather than at the next
 # daily run. The pages are read, not compared byte for byte, since most send no ETag and
 # several change their bytes on every request.
+#
+# GitHub starts this repository's scheduled runs hours late, so the maintainer's
+# tools/watch_models_dev.py dispatches this workflow each hour; the schedule is the fallback.
 
 on:
   schedule:

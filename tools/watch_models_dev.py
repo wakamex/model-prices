@@ -19,8 +19,12 @@ A run that cannot reach GitHub, such as during a brief network outage, logs it a
 cleanly; only UNREACHABLE_LIMIT such runs in a row fail the unit, so a lasting outage or
 a broken GitHub login still shows as a failed service.
 
-State is kept in $XDG_STATE_HOME/model-prices/models-dev.json. The workflow's own daily
-schedule still runs, so a missed change is picked up within a day.
+It also starts `watch-pages.yml` once an hour. GitHub runs this repository's scheduled
+workflows hours late, and an hourly schedule there ran twice in thirteen hours, while a
+dispatched run starts at once; the pages are still fetched from GitHub's runners.
+
+State is kept in $XDG_STATE_HOME/model-prices/models-dev.json, and is replaced whole on
+each save. The workflows' own schedules still run, so a missed change is picked up later.
 """
 
 from __future__ import annotations
@@ -31,6 +35,7 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+import time
 import uuid
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
@@ -40,6 +45,8 @@ from model_prices.backfill import LAB_PROVIDERS, TRACKED_PROVIDERS  # noqa: E402
 MODELS_DEV = "anomalyco/models.dev"
 REPOSITORY = "wakamex/model-prices"
 WORKFLOW = "update-prices.yml"
+PAGE_WATCH = "watch-pages.yml"
+PAGE_WATCH_INTERVAL = 3600
 SESSION = "model-prices"
 GH = os.environ.get("GH", "gh")
 PANETONE = os.environ.get("PANETONE", "panetone")
@@ -111,7 +118,7 @@ def report_failure(state: dict) -> None:
 
 
 def main() -> int:
-    state = json.loads(STATE.read_text()) if STATE.exists() else {}
+    state = load()
     try:
         check(state)
     except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as error:
@@ -128,9 +135,35 @@ def main() -> int:
     return 0
 
 
+def load() -> dict:
+    """The saved state. An unreadable one starts over as the first run does, recording
+    models.dev's current state, since a failure there would stop every later run."""
+    try:
+        return json.loads(STATE.read_text())
+    except FileNotFoundError:
+        return {}
+    except ValueError as error:
+        print(f"state in {STATE} unreadable, starting over: {error}", file=sys.stderr)
+        return {}
+
+
 def save(state: dict) -> None:
+    # Written beside the state and renamed over it, so a run killed mid-write leaves the
+    # previous state whole.
     STATE.parent.mkdir(parents=True, exist_ok=True)
-    STATE.write_text(json.dumps(state, indent=1, sort_keys=True) + "\n")
+    partial = STATE.with_suffix(".partial")
+    partial.write_text(json.dumps(state, indent=1, sort_keys=True) + "\n")
+    partial.replace(STATE)
+
+
+def start_page_watch(state: dict, now: float | None = None) -> None:
+    """Start the hourly page watch when an hour has passed since this last started it."""
+    now = time.time() if now is None else now
+    if now - state.get("page_watch_started", 0) < PAGE_WATCH_INTERVAL:
+        return
+    _run(GH, "workflow", "run", PAGE_WATCH, "--repo", REPOSITORY)
+    state["page_watch_started"] = now
+    print(f"started {PAGE_WATCH}")
 
 
 def check(state: dict) -> None:
@@ -142,6 +175,10 @@ def check(state: dict) -> None:
         report_failure(state)
     except subprocess.CalledProcessError as error:
         print(f"failure report not sent: {error.stderr.strip() or error}", file=sys.stderr)
+    try:
+        start_page_watch(state)
+    except subprocess.CalledProcessError as error:
+        print(f"page watch not started: {error.stderr.strip() or error}", file=sys.stderr)
     commit = head()
     if commit == state.get("head"):
         return
