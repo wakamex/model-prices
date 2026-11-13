@@ -26,6 +26,12 @@
   }
  },
  "bases": {
+  "alibaba": {
+   "happyhorse-1.0": "happyhorse-1.0-i2v",
+   "happyhorse-1.1": "happyhorse-1.1-i2v",
+   "wan2.6": "wan2.6-i2v",
+   "wan2.7": "wan2.7-i2v"
+  },
   "cohere": {
    "north-small-translate-1-0": "north-small-translate-09-2026"
   },
@@ -80,7 +86,11 @@
    "seed-2.1-pro": "doubao-seed-2-1-pro-260628",
    "seed-2.1-turbo": "doubao-seed-2-1-turbo-260628",
    "seed-character": "doubao-seed-character-260628",
-   "seed-evolving": "doubao-seed-evolving"
+   "seed-evolving": "doubao-seed-evolving",
+   "seedance-2.0": "doubao-seedance-2-0-260128",
+   "seedance-2.0-fast": "doubao-seedance-2-0-fast-260128",
+   "seedance-2.0-mini": "doubao-seedance-2-0-mini-260615",
+   "seedance-2.5": "doubao-seedance-2-5-260628"
   },
   "zai": {
    "glm-4.5": "glm-4.5-x",
@@ -103,8 +113,8 @@
   }
  ],
  "models_dev": {
-  "commit": "6ee3dc81c0bb30fa354a73e0a0b5b385392fa4c7",
-  "committed_at": "2026-11-12T18:29:35Z",
+  "commit": "9a517985f4b60125ae89311c53d888cb39b3f40d",
+  "committed_at": "2026-11-13T07:07:32Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -12110,6 +12120,16 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2025-07-07T00:00:00Z"
+     },
+     {
+      "rates": {
+       "input": 0.625,
+       "output": 5.0,
+       "source": "https://github.com/sst/models.dev/commit/876ef301ab76",
+       "valid_from": "2026-11-12T21:39:24Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-12T21:39:24Z"
      }
     ],
     "standard": [
@@ -12129,6 +12149,16 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "input": 1.25,
+       "output": 10.0,
+       "source": "https://github.com/sst/models.dev/commit/876ef301ab76",
+       "valid_from": "2026-11-12T21:39:24Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-12T21:39:24Z"
      }
     ]
    },
@@ -17783,6 +17813,34 @@
       "start": null
      }
     ]
+   },
+   "gemma-4-26b-a4b-it": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.0,
+       "output": 0.0,
+       "source": "https://github.com/sst/models.dev/commit/876ef301ab76",
+       "valid_from": "2026-11-12T21:39:24Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "gemma-4-31b-it": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.0,
+       "output": 0.0,
+       "source": "https://github.com/sst/models.dev/commit/876ef301ab76",
+       "valid_from": "2026-11-12T21:39:24Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
    }
   },
   "inception": {
@@ -19176,6 +19234,17 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-11-12T16:51:17Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.07,
+       "input": 0.7,
+       "output": 2.1,
+       "source": "https://github.com/sst/models.dev/commit/07b5ba4b8a9d",
+       "valid_from": "2026-11-13T06:05:52Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-13T06:05:52Z"
      }
     ]
    },
@@ -20012,6 +20081,30 @@
        "valid_from_basis": "first observed"
       },
       "start": "2024-04-15T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.625,
+       "cache_write_1h_multiple": 2.5,
+       "input": 2.5,
+       "modalities": {
+        "image": {
+         "cache_read": 1.0,
+         "input": 4.0,
+         "output": 16.0
+        },
+        "text": {
+         "cache_read": 0.625,
+         "input": 2.5,
+         "output": 5.0
+        }
+       },
+       "output": 5.0,
+       "source": "https://github.com/sst/models.dev/commit/876ef301ab76",
+       "valid_from": "2026-11-12T21:39:24Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-12T21:39:24Z"
      }
     ],
     "standard": [
@@ -20038,6 +20131,30 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 1.25,
+       "cache_write_1h_multiple": 2.5,
+       "input": 5.0,
+       "modalities": {
+        "image": {
+         "cache_read": 2.0,
+         "input": 8.0,
+         "output": 32.0
+        },
+        "text": {
+         "cache_read": 1.25,
+         "input": 5.0,
+         "output": 10.0
+        }
+       },
+       "output": 10.0,
+       "source": "https://github.com/sst/models.dev/commit/876ef301ab76",
+       "valid_from": "2026-11-12T21:39:24Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-12T21:39:24Z"
      }
     ]
    },
@@ -34418,6 +34535,30 @@
        "valid_from_basis": "first observed"
       },
       "start": "2024-04-15T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.625,
+       "cache_write_1h_multiple": 2.5,
+       "input": 2.5,
+       "modalities": {
+        "image": {
+         "cache_read": 1.0,
+         "input": 4.0,
+         "output": 16.0
+        },
+        "text": {
+         "cache_read": 0.625,
+         "input": 2.5,
+         "output": 5.0
+        }
+       },
+       "output": 5.0,
+       "source": "https://github.com/sst/models.dev/commit/876ef301ab76",
+       "valid_from": "2026-11-12T21:39:24Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-12T21:39:24Z"
      }
     ],
     "standard": [
@@ -34444,6 +34585,30 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 1.25,
+       "cache_write_1h_multiple": 2.5,
+       "input": 5.0,
+       "modalities": {
+        "image": {
+         "cache_read": 2.0,
+         "input": 8.0,
+         "output": 32.0
+        },
+        "text": {
+         "cache_read": 1.25,
+         "input": 5.0,
+         "output": 10.0
+        }
+       },
+       "output": 10.0,
+       "source": "https://github.com/sst/models.dev/commit/876ef301ab76",
+       "valid_from": "2026-11-12T21:39:24Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-12T21:39:24Z"
      }
     ]
    },
@@ -34502,6 +34667,34 @@
        "valid_from_basis": "documented"
       },
       "start": "2026-10-31T17:02:48Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.625,
+       "cache_write_1h_multiple": 2.5,
+       "input": 2.5,
+       "modalities": {
+        "image": {
+         "cache_read": 1.0,
+         "input": 4.0,
+         "output": 15.0
+        },
+        "text": {
+         "cache_read": 0.625,
+         "input": 2.5,
+         "output": 15.0
+        }
+       },
+       "output": 15.0,
+       "regions": {
+        "eu": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/17c59c51539b",
+       "valid_from": "2026-11-12T21:07:41Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-12T21:07:41Z"
      }
     ],
     "standard": [
@@ -34576,6 +34769,34 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-31T17:02:48Z"
+     },
+     {
+      "rates": {
+       "cache_read": 1.25,
+       "cache_write_1h_multiple": 2.5,
+       "input": 5.0,
+       "modalities": {
+        "image": {
+         "cache_read": 2.0,
+         "input": 8.0,
+         "output": 30.0
+        },
+        "text": {
+         "cache_read": 1.25,
+         "input": 5.0,
+         "output": 30.0
+        }
+       },
+       "output": 30.0,
+       "regions": {
+        "eu": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/17c59c51539b",
+       "valid_from": "2026-11-12T21:07:41Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-12T21:07:41Z"
      }
     ]
    },
@@ -41781,6 +42002,8 @@
    "gemini-3.1-pro": "removed",
    "gemini-live-2.5-flash": "removed",
    "gemini-live-2.5-flash-preview-native-audio": "removed",
+   "gemini-omni-1.1-flash": "deprecated",
+   "gemini-omni-flash-preview": "removed",
    "gemini-robotics-er-1.6-preview": "removed",
    "gemma-3-12b-it": "removed",
    "gemma-3-27b-it": "removed",
@@ -41835,6 +42058,7 @@
    "kimi-k2.5": "removed"
   },
   "openai": {
+   "chatgpt-image-latest": "deprecated",
    "codex-mini-latest": "removed",
    "gpt-3.5-turbo": "deprecated",
    "gpt-4": "deprecated",
@@ -41857,6 +42081,7 @@
    "gpt-5.3-codex-spark-preview": "removed",
    "gpt-audio": "deprecated",
    "gpt-audio-mini": "deprecated",
+   "gpt-image-1.5": "deprecated",
    "gpt-realtime": "deprecated",
    "gpt-realtime-mini": "deprecated",
    "o1": "deprecated",
@@ -41934,5 +42159,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-12T18:46:46Z"
+ "updated_at": "2026-11-13T10:08:37Z"
 }

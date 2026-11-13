@@ -1,5 +1,11 @@
 {
  "bases": {
+  "alibaba": {
+   "happyhorse-1.0": "happyhorse-1.0-i2v",
+   "happyhorse-1.1": "happyhorse-1.1-i2v",
+   "wan2.6": "wan2.6-i2v",
+   "wan2.7": "wan2.7-i2v"
+  },
   "cohere": {
    "north-small-translate-1-0": "north-small-translate-09-2026"
   },
@@ -54,7 +60,11 @@
    "seed-2.1-pro": "doubao-seed-2-1-pro-260628",
    "seed-2.1-turbo": "doubao-seed-2-1-turbo-260628",
    "seed-character": "doubao-seed-character-260628",
-   "seed-evolving": "doubao-seed-evolving"
+   "seed-evolving": "doubao-seed-evolving",
+   "seedance-2.0": "doubao-seedance-2-0-260128",
+   "seedance-2.0-fast": "doubao-seedance-2-0-fast-260128",
+   "seedance-2.0-mini": "doubao-seedance-2-0-mini-260615",
+   "seedance-2.5": "doubao-seedance-2-5-260628"
   },
   "zai": {
    "glm-4.5": "glm-4.5-x",
@@ -3989,6 +3999,14 @@
       ]
      },
      "valid_from": "2026-07-23T23:30:38Z"
+    },
+    {
+     "commit": "876ef301ab76",
+     "rates": {
+      "input": 1.25,
+      "output": 10.0
+     },
+     "valid_from": "2026-11-12T21:39:24Z"
     }
    ],
    "gemini-2.5-flash": [
@@ -6005,6 +6023,26 @@
      },
      "valid_from": "2026-04-02T16:12:23Z"
     }
+   ],
+   "gemma-4-26b-a4b-it": [
+    {
+     "commit": "876ef301ab76",
+     "rates": {
+      "input": 0.0,
+      "output": 0.0
+     },
+     "valid_from": "2026-11-12T21:39:24Z"
+    }
+   ],
+   "gemma-4-31b-it": [
+    {
+     "commit": "876ef301ab76",
+     "rates": {
+      "input": 0.0,
+      "output": 0.0
+     },
+     "valid_from": "2026-11-12T21:39:24Z"
+    }
    ]
   },
   "inception": {
@@ -6760,6 +6798,15 @@
       "output": 1.5
      },
      "valid_from": "2026-09-29T00:37:26Z"
+    },
+    {
+     "commit": "07b5ba4b8a9d",
+     "rates": {
+      "cache_read": 0.07,
+      "input": 0.7,
+      "output": 2.1
+     },
+     "valid_from": "2026-11-13T06:05:52Z"
     }
    ],
    "mistral-medium-2505": [
@@ -7233,6 +7280,29 @@
       }
      },
      "valid_from": "2026-10-20T00:05:42Z"
+    }
+   ],
+   "chatgpt-image-latest": [
+    {
+     "commit": "876ef301ab76",
+     "rates": {
+      "cache_read": 1.25,
+      "input": 5.0,
+      "modalities": {
+       "image": {
+        "cache_read": 2.0,
+        "input": 8.0,
+        "output": 32.0
+       },
+       "text": {
+        "cache_read": 1.25,
+        "input": 5.0,
+        "output": 10.0
+       }
+      },
+      "output": 10.0
+     },
+     "valid_from": "2026-11-12T21:39:24Z"
     }
    ],
    "codex-mini-latest": [
@@ -10179,6 +10249,29 @@
      "valid_from": "2026-09-28T02:48:33Z"
     }
    ],
+   "gpt-image-1.5": [
+    {
+     "commit": "876ef301ab76",
+     "rates": {
+      "cache_read": 1.25,
+      "input": 5.0,
+      "modalities": {
+       "image": {
+        "cache_read": 2.0,
+        "input": 8.0,
+        "output": 32.0
+       },
+       "text": {
+        "cache_read": 1.25,
+        "input": 5.0,
+        "output": 10.0
+       }
+      },
+      "output": 10.0
+     },
+     "valid_from": "2026-11-12T21:39:24Z"
+    }
+   ],
    "gpt-image-2": [
     {
      "commit": "abcb2424cae9",
@@ -10188,6 +10281,27 @@
       "output": 30.0
      },
      "valid_from": "2026-06-18T09:46:32Z"
+    },
+    {
+     "commit": "17c59c51539b",
+     "rates": {
+      "cache_read": 1.25,
+      "input": 5.0,
+      "modalities": {
+       "image": {
+        "cache_read": 2.0,
+        "input": 8.0,
+        "output": 30.0
+       },
+       "text": {
+        "cache_read": 1.25,
+        "input": 5.0,
+        "output": 30.0
+       }
+      },
+      "output": 30.0
+     },
+     "valid_from": "2026-11-12T21:07:41Z"
     }
    ],
    "gpt-image-2.5-flare": [
@@ -14389,8 +14503,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "6ee3dc81c0bb30fa354a73e0a0b5b385392fa4c7",
- "source_committed_at": "2026-11-12T18:29:35Z",
+ "source_commit": "9a517985f4b60125ae89311c53d888cb39b3f40d",
+ "source_committed_at": "2026-11-13T07:07:32Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
@@ -14483,6 +14597,8 @@
    "gemini-3.1-pro": "removed",
    "gemini-live-2.5-flash": "removed",
    "gemini-live-2.5-flash-preview-native-audio": "removed",
+   "gemini-omni-1.1-flash": "deprecated",
+   "gemini-omni-flash-preview": "removed",
    "gemini-robotics-er-1.6-preview": "removed",
    "gemma-3-12b-it": "removed",
    "gemma-3-27b-it": "removed",
@@ -14537,6 +14653,7 @@
    "kimi-k2.5": "removed"
   },
   "openai": {
+   "chatgpt-image-latest": "deprecated",
    "codex-mini-latest": "removed",
    "gpt-3.5-turbo": "deprecated",
    "gpt-4": "deprecated",
@@ -14559,6 +14676,7 @@
    "gpt-5.3-codex-spark-preview": "removed",
    "gpt-audio": "deprecated",
    "gpt-audio-mini": "deprecated",
+   "gpt-image-1.5": "deprecated",
    "gpt-realtime": "deprecated",
    "gpt-realtime-mini": "deprecated",
    "o1": "deprecated",
