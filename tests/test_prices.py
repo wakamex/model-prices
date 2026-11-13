@@ -36,6 +36,10 @@ MODEL_NAMES = [
     ("sensenova/deepseek-v4.1-flash", None, ("sensenova", "deepseek-v4.1-flash")),
     # An alias within the named provider still wins: "inkling" is Inkling's renamed id.
     ("inkling", "thinkingmachines", ("thinkingmachines", "thinkingmachines/Inkling")),
+    # SWE-2 Flash's family name is an alias, and its effort variants keep their own ids.
+    ("swe-2-flash", None, ("cognition", "swe-2-flash-medium")),
+    ("swe-2-flash-max", None, ("cognition", "swe-2-flash-max")),
+    ("swe-2-flash-high", "devin", ("cognition", "swe-2-flash-high")),
     ("gpt-5.5-2026-04-23", None, ("openai", "gpt-5.5")),
     ("claude-opus-5[1m]", None, ("anthropic", "claude-opus-5")),
     ("claude-sonnet-4.5", None, ("anthropic", "claude-sonnet-4-5")),

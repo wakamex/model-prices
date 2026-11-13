@@ -1191,3 +1191,78 @@ output = 0.534362
 replaces = {}
 source = "https://www.volcengine.com/docs/82379/1544106"
 note = "Volcengine Ark's online inference prices: doubao-seed-translation at ¥1.2 input and ¥3.6 output per 1M tokens, converted at models.dev's ¥6.737012 per dollar. Its API id is doubao-seed-translation-250915 on Ark's model list (https://www.volcengine.com/docs/82379/1330310)."
+
+# Devin's announced prices after its SWE-2 and SWE-2 Flash promotions, which its price table
+# does not give until they apply.
+
+[[correction]]
+provider = "cognition"
+model = "swe-2-flash-medium"
+valid_from = "2026-11-18T18:00:00Z"
+input = 0.1
+output = 0.5
+cache_read = 0.01
+cache_write = 0.125
+replaces = {}
+source = "https://docs.devin.ai/desktop/models"
+note = "Devin's models page, Enterprise (ACUs) tab, on 2026-11-12: \"SWE-2 Flash is 25% off until November 18, 2026 at 18:00 UTC. Afterward, all three variants cost $0.10 per million input tokens, $0.01 per million cache reads, $0.125 per million cache writes, and $0.50 per million output tokens.\" Its price table gives the discounted $0.075/$0.0075/$0.09375/$0.375."
+
+[[correction]]
+provider = "cognition"
+model = "swe-2-flash-high"
+valid_from = "2026-11-18T18:00:00Z"
+input = 0.1
+output = 0.5
+cache_read = 0.01
+cache_write = 0.125
+replaces = {}
+source = "https://docs.devin.ai/desktop/models"
+note = "Devin's models page, Enterprise (ACUs) tab, on 2026-11-12: \"SWE-2 Flash is 25% off until November 18, 2026 at 18:00 UTC. Afterward, all three variants cost $0.10 per million input tokens, $0.01 per million cache reads, $0.125 per million cache writes, and $0.50 per million output tokens.\" Its price table gives the discounted $0.075/$0.0075/$0.09375/$0.375."
+
+[[correction]]
+provider = "cognition"
+model = "swe-2-flash-max"
+valid_from = "2026-11-18T18:00:00Z"
+input = 0.1
+output = 0.5
+cache_read = 0.01
+cache_write = 0.125
+replaces = {}
+source = "https://docs.devin.ai/desktop/models"
+note = "Devin's models page, Enterprise (ACUs) tab, on 2026-11-12: \"SWE-2 Flash is 25% off until November 18, 2026 at 18:00 UTC. Afterward, all three variants cost $0.10 per million input tokens, $0.01 per million cache reads, $0.125 per million cache writes, and $0.50 per million output tokens.\" Its price table gives the discounted $0.075/$0.0075/$0.09375/$0.375."
+
+[[correction]]
+provider = "cognition"
+model = "swe-2-medium"
+valid_from = "2027-01-01T08:00:00Z"
+input = 3.0
+output = 15.0
+cache_read = 0.3
+cache_write = 0.0
+replaces = {}
+source = "https://docs.devin.ai/desktop/models"
+note = "Devin's models page, Enterprise (ACUs) tab, on 2026-11-12: \"SWE-2 costs $0.50/1M input, $2.50/1M output, and $0.05/1M cache reads through December 31, 2026 (Pacific time). List pricing ($3.00 input, $15.00 output, and $0.30 cache reads per million tokens) applies afterward.\" Pacific time is UTC-8 on that date."
+
+[[correction]]
+provider = "cognition"
+model = "swe-2-high"
+valid_from = "2027-01-01T08:00:00Z"
+input = 3.0
+output = 15.0
+cache_read = 0.3
+cache_write = 0.0
+replaces = {}
+source = "https://docs.devin.ai/desktop/models"
+note = "Devin's models page, Enterprise (ACUs) tab, on 2026-11-12: \"SWE-2 costs $0.50/1M input, $2.50/1M output, and $0.05/1M cache reads through December 31, 2026 (Pacific time). List pricing ($3.00 input, $15.00 output, and $0.30 cache reads per million tokens) applies afterward.\" Pacific time is UTC-8 on that date."
+
+[[correction]]
+provider = "cognition"
+model = "swe-2-max"
+valid_from = "2027-01-01T08:00:00Z"
+input = 3.0
+output = 15.0
+cache_read = 0.3
+cache_write = 0.0
+replaces = {}
+source = "https://docs.devin.ai/desktop/models"
+note = "Devin's models page, Enterprise (ACUs) tab, on 2026-11-12: \"SWE-2 costs $0.50/1M input, $2.50/1M output, and $0.05/1M cache reads through December 31, 2026 (Pacific time). List pricing ($3.00 input, $15.00 output, and $0.30 cache reads per million tokens) applies afterward.\" Pacific time is UTC-8 on that date."

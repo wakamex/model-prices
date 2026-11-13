@@ -518,6 +518,10 @@ def resolve_details(model: str, provider: str | None = None,
             # sends the name to another provider, such as SenseNova's deepseek-v4.1-flash.
             if target_provider != hint and name in _ids(hint)[0]:
                 return hint, _ids(hint)[0][name], ""
+            # An alias reached by removing a suffix yields to the full name where the target
+            # provider prices it, as swe-2-flash-max does beside the swe-2-flash alias.
+            if removed and name in _ids(target_provider)[0]:
+                return target_provider, _ids(target_provider)[0][name], ""
             return target_provider, target_model, removed
     order = ([hint] if hint in _data()["prices"] else []) + [
         lab for lab in LAB_PROVIDERS if lab != hint
