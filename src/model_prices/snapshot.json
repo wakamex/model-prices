@@ -35175,6 +35175,29 @@
        "valid_from_basis": "first observed"
       },
       "start": "2024-04-15T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.625,
+       "cache_write_1h_multiple": 2.5,
+       "input": 2.5,
+       "modalities": {
+        "image": {
+         "cache_read": 1.0,
+         "input": 4.0,
+         "output": 15.0
+        },
+        "text": {
+         "cache_read": 0.625,
+         "input": 2.5
+        }
+       },
+       "output": 15.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-11-13T18:12:15Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-11-13T18:12:15Z"
      }
     ],
     "standard": [
@@ -35200,6 +35223,29 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 1.25,
+       "cache_write_1h_multiple": 2.5,
+       "input": 5.0,
+       "modalities": {
+        "image": {
+         "cache_read": 2.0,
+         "input": 8.0,
+         "output": 30.0
+        },
+        "text": {
+         "cache_read": 1.25,
+         "input": 5.0
+        }
+       },
+       "output": 30.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-11-13T18:12:15Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-11-13T18:12:15Z"
      }
     ]
    },
@@ -35231,6 +35277,29 @@
        "valid_from_basis": "first observed"
       },
       "start": "2024-04-15T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.625,
+       "cache_write_1h_multiple": 2.5,
+       "input": 2.5,
+       "modalities": {
+        "image": {
+         "cache_read": 1.0,
+         "input": 4.0,
+         "output": 15.0
+        },
+        "text": {
+         "cache_read": 0.625,
+         "input": 2.5
+        }
+       },
+       "output": 15.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-11-13T18:12:15Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-11-13T18:12:15Z"
      }
     ],
     "standard": [
@@ -35256,6 +35325,29 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 1.25,
+       "cache_write_1h_multiple": 2.5,
+       "input": 5.0,
+       "modalities": {
+        "image": {
+         "cache_read": 2.0,
+         "input": 8.0,
+         "output": 30.0
+        },
+        "text": {
+         "cache_read": 1.25,
+         "input": 5.0
+        }
+       },
+       "output": 30.0,
+       "source": "https://developers.openai.com/api/docs/pricing.md",
+       "valid_from": "2026-11-13T18:12:15Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-11-13T18:12:15Z"
      }
     ]
    },
@@ -42286,5 +42378,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-13T17:32:31Z"
+ "updated_at": "2026-11-13T18:12:50Z"
 }
