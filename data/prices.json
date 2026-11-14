@@ -9671,6 +9671,21 @@
      "valid_from": "2026-10-19T18:06:59Z"
     }
    ],
+   "gpt-6-cyber": [
+    {
+     "commit": "384ac16d082d",
+     "rates": {
+      "cache_read": 2.0,
+      "cache_write": 25.0,
+      "input": 20.0,
+      "output": 100.0,
+      "tools": {
+       "web_search": 10.0
+      }
+     },
+     "valid_from": "2026-11-14T20:59:40Z"
+    }
+   ],
    "gpt-6-luna": [
     {
      "commit": "67cb71f2b5ea",
@@ -14457,6 +14472,13 @@
     },
     "input": 10
    },
+   "gpt-6-cyber": {
+    "cache_write": {
+     "12h": 50,
+     "30m": 25
+    },
+    "input": 20
+   },
    "gpt-6-luna": {
     "cache_write": {
      "12h": 0.25,
@@ -14503,8 +14525,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "9a517985f4b60125ae89311c53d888cb39b3f40d",
- "source_committed_at": "2026-11-13T07:07:32Z",
+ "source_commit": "384ac16d082dcf03f2902a7c6261ed6fc59c9a79",
+ "source_committed_at": "2026-11-14T20:59:40Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
