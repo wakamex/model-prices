@@ -114,8 +114,8 @@
   }
  ],
  "models_dev": {
-  "commit": "b80c46f462a1e61ef7c4b17c883b17b6555e59d3",
-  "committed_at": "2026-11-14T21:08:42Z",
+  "commit": "b851a6c4c46b866c58b780e1d6fca89f0f4f7c2b",
+  "committed_at": "2026-11-14T21:14:57Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -37447,6 +37447,21 @@
    }
   },
   "sensenova": {
+   "deepseek-flash": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.0,
+       "input": 0.0,
+       "output": 0.0,
+       "source": "https://github.com/sst/models.dev/commit/4ebfbe0830ec",
+       "valid_from": "2026-11-14T21:14:25Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
    "deepseek-v4-flash": {
     "standard": [
      {
@@ -42404,6 +42419,9 @@
   "poolside": {
    "poolside/laguna-xs.2": "removed"
   },
+  "sensenova": {
+   "deepseek-v4.1-flash": "removed"
+  },
   "stepfun-ai": {
    "step-1-32k": "removed",
    "step-2-16k": "removed"
@@ -42460,5 +42478,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-14T21:10:13Z"
+ "updated_at": "2026-11-14T21:15:45Z"
 }
