@@ -114,8 +114,8 @@
   }
  ],
  "models_dev": {
-  "commit": "384ac16d082dcf03f2902a7c6261ed6fc59c9a79",
-  "committed_at": "2026-11-14T20:59:40Z",
+  "commit": "b80c46f462a1e61ef7c4b17c883b17b6555e59d3",
+  "committed_at": "2026-11-14T21:08:42Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -10651,6 +10651,51 @@
        "output": 2.29,
        "source": "https://github.com/sst/models.dev/commit/aa43b2a47bf1",
        "valid_from": "2025-11-26T16:48:21Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "Ling-3.0-flash": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.015,
+       "input": 0.075,
+       "output": 0.224,
+       "source": "https://github.com/sst/models.dev/commit/74a85d2eaebf",
+       "valid_from": "2026-11-14T21:06:40Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "Ling-3.0-flash-VL": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.015,
+       "input": 0.075,
+       "output": 0.224,
+       "source": "https://github.com/sst/models.dev/commit/74a85d2eaebf",
+       "valid_from": "2026-11-14T21:06:40Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "Ling-3.1-flash": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.06,
+       "input": 0.3,
+       "output": 0.9,
+       "source": "https://github.com/sst/models.dev/commit/74a85d2eaebf",
+       "valid_from": "2026-11-14T21:06:40Z",
        "valid_from_basis": "models.dev commit"
       },
       "start": null
@@ -42224,6 +42269,10 @@
    "deepseek/deepseek-v4-pro": "deprecated",
    "thinkingmachines/inkling-small": "deprecated"
   },
+  "bailing": {
+   "Ling-1T": "removed",
+   "Ring-1T": "removed"
+  },
   "deepseek": {
    "deepseek-chat": "removed",
    "deepseek-reasoner": "removed",
@@ -42256,7 +42305,6 @@
    "gemini-live-2.5-flash": "removed",
    "gemini-live-2.5-flash-preview-native-audio": "removed",
    "gemini-omni-1.1-flash": "deprecated",
-   "gemini-omni-flash-preview": "removed",
    "gemini-robotics-er-1.6-preview": "removed",
    "gemma-3-12b-it": "removed",
    "gemma-3-27b-it": "removed",
@@ -42412,5 +42460,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-14T21:00:54Z"
+ "updated_at": "2026-11-14T21:10:13Z"
 }
