@@ -1,0 +1,1 @@
+{"entries": [{"plan": "max", "provider": "stepfun-ai", "value": 99.0}, {"plan": "mini", "provider": "stepfun-ai", "value": 6.99}, {"plan": "plus", "provider": "stepfun-ai", "value": 9.99}, {"plan": "pro", "provider": "stepfun-ai", "value": 29.0}], "reader": "plan:stepfun-ai"}

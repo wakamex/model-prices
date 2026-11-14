@@ -1,0 +1,1 @@
+{"entries": [{"plan": "token_essential", "provider": "alibaba", "value": 10.0}, {"plan": "token_lite", "provider": "alibaba", "value": 6.0}, {"plan": "token_pro", "provider": "alibaba", "value": 43.0}, {"plan": "token_standard", "provider": "alibaba", "value": 18.0}], "reader": "plan:alibaba-token"}

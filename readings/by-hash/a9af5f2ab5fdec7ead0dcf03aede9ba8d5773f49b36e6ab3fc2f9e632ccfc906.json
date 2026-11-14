@@ -1,0 +1,1 @@
+{"entries": [{"plan": "max_20x", "provider": "anthropic", "value": 200.0}, {"plan": "max_5x", "provider": "anthropic", "value": 100.0}, {"plan": "pro", "provider": "anthropic", "value": 20.0}, {"plan": "team_premium", "provider": "anthropic", "value": 125.0}, {"plan": "team_standard", "provider": "anthropic", "value": 25.0}], "reader": "plan:anthropic"}

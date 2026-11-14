@@ -1,0 +1,1 @@
+{"entries": [{"plan": "plus", "provider": "google", "value": 4.99}, {"plan": "pro", "provider": "google", "value": 19.99}, {"plan": "ultra_100", "provider": "google", "value": 99.99}, {"plan": "ultra_200", "provider": "google", "value": 199.99}], "reader": "plan:google"}

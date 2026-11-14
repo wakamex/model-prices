@@ -1,0 +1,1 @@
+{"entries": [{"plan": "business", "provider": "openai", "value": 25.0}, {"plan": "go", "provider": "openai", "value": 8.0}, {"plan": "plus", "provider": "openai", "value": 20.0}, {"plan": "pro_100", "provider": "openai", "value": 100.0}, {"plan": "pro_200", "provider": "openai", "value": 200.0}, {"plan": "pro_500", "provider": "openai", "value": 500.0}], "reader": "plan:openai"}

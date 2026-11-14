@@ -1,0 +1,1 @@
+{"entries": [{"plan": "lite", "provider": "xiaomi", "value": 6.0}, {"plan": "max", "provider": "xiaomi", "value": 100.0}, {"plan": "pro", "provider": "xiaomi", "value": 50.0}, {"plan": "standard", "provider": "xiaomi", "value": 16.0}], "reader": "plan:xiaomi"}

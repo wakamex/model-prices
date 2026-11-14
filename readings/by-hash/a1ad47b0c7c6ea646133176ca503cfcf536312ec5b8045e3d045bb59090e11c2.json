@@ -1,0 +1,1 @@
+{"entries": [{"plan": "build", "provider": "minimax", "value": 132.0}, {"plan": "explore", "provider": "minimax", "value": 55.0}, {"plan": "go", "provider": "minimax", "value": 22.0}], "reader": "plan:minimax"}

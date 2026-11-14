@@ -1,0 +1,1 @@
+{"entries": [{"plan": "plus", "provider": "cursor", "value": 8.0}, {"plan": "premium", "provider": "cursor", "value": 30.0}, {"plan": "super", "provider": "cursor", "value": 100.0}, {"plan": "ultra", "provider": "cursor", "value": 200.0}], "reader": "plan:cursor"}

@@ -1,0 +1,1 @@
+{"entries": [{"plan": "everyday", "provider": "meta", "value": 5.0}, {"plan": "high", "provider": "meta", "value": 15.0}, {"plan": "maximum", "provider": "meta", "value": 200.0}, {"plan": "power", "provider": "meta", "value": 50.0}], "reader": "plan:meta"}

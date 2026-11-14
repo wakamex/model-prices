@@ -1,0 +1,1 @@
+{"entries": [{"model": "composer-2.5", "value": {"cache_read": 0.2, "input": 0.5, "modes": {"fast": {"cache_read": 0.5, "input": 3.0, "output": 15.0}}, "output": 2.5}}], "reader": "cursor"}
