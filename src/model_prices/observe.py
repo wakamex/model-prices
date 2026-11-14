@@ -173,6 +173,8 @@ SOURCES: dict[str, Callable[[Callable[[str], str]], dict[str, tuple[str, dict[st
     "cognition": read_cognition,
     "cursor": read_cursor,
 }
+# The page each source starts from.
+SOURCE_PAGES = {"byteplus": BYTEPLUS_PRICING, "cognition": DEVIN_MODELS, "cursor": CURSOR_INDEX}
 
 # The provider's own models on its checked pricing page, where the page also resells other
 # labs' models, such as Alibaba's DeepSeek and Kimi models, at its own prices.
@@ -205,8 +207,7 @@ def read_checked(provider: str, data: Path, now: datetime,
     known = listed(data).get(provider, set())
     found: dict[str, dict[str, Any]] = {}
     for item in checks.parse(provider, get(url), now, get):
-        # Z.ai's page writes ids in capitals, such as GLM-4.5-X; its API ids are lowercase.
-        model = item.model.lower() if provider == "zai" else item.model
+        model = item.model
         if (item.at or item.field not in checks.FIELDS or model.lower() in known
                 or not own.fullmatch(model)):
             continue

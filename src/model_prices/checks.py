@@ -235,7 +235,8 @@ def parse_zai(text: str, today: datetime) -> list[Observed]:
             for title, field in columns.items():
                 value = _price(row[header.index(title)])
                 if value is not None:
-                    found.append(Observed("zai", row[0], field, value))
+                    # The page writes ids in capitals, such as GLM-4.5-X; its API ids are lowercase.
+                    found.append(Observed("zai", row[0].lower(), field, value))
     if sections != {"Latest Models", "Text Models"}:
         raise ValueError("zai: the Latest Models or Text Models table is missing; the page format changed")
     return found
@@ -1146,16 +1147,22 @@ TERMS: dict[str, dict[str, tuple[str, str]]] = {
 }
 
 
-def compare_terms(provider: str, language: str, page: str, today: datetime) -> Result:
-    """Check that a page states the same peak-hour terms that schedules.toml records."""
+def peak_terms(provider: str, language: str, page: str) -> str:
+    """The peak-hour terms a page states, verbatim."""
     url, pattern = TERMS[provider][language]
     match = re.search(pattern, _html_text(page))
     if match is None:
         raise ValueError(f"{provider}: no peak-hour terms found in {url}; the page format changed")
+    return match.group(0)
+
+
+def compare_terms(provider: str, language: str, page: str, today: datetime) -> Result:
+    """Check that a page states the same peak-hour terms that schedules.toml records."""
+    stated = peak_terms(provider, language, page)
     schedule = _schedule(provider, today)
     expected = (schedule or {}).get("terms", {}).get(language)
-    return Result(provider, provider, f"peak_terms:{language}", None, None, match.group(0),
-                  expected, None, "ok" if match.group(0) == expected else "mismatch")
+    return Result(provider, provider, f"peak_terms:{language}", None, None, stated,
+                  expected, None, "ok" if stated == expected else "mismatch")
 
 
 CALENDAR_WARNING_DAYS = 45
@@ -1372,12 +1379,30 @@ def _yuan(provider: str, model: str, field: str, price: float, above: int | None
 VOLCENGINE_COLUMNS = {"输入(非音频)": "input", "缓存命中(非音频)": "cache_read", "输出": "output"}
 
 
-def parse_volcengine(page: str, today: datetime) -> list[Observed]:
+VOLCENGINE_MODELS = ("https://www.volcengine.com/api/doc/getDocDetail?LibraryID=82379"
+                     "&DocumentID=1330310&type=online")
+
+
+def volcengine_ids(page: str) -> list[str]:
+    """The dated API ids, such as doubao-seed-2-0-pro-260215, that Ark's model list document
+    names."""
+    try:
+        markdown = json.loads(page)["Result"]["MDContent"]
+    except (ValueError, KeyError, TypeError):
+        raise ValueError("volcengine: no model list document; the page format changed") from None
+    ids = sorted(set(re.findall(r"\b[a-z][a-z0-9.-]*-\d{6}\b", markdown)))
+    if not ids:
+        raise ValueError("volcengine: no dated model ids in the model list; the page format changed")
+    return ids
+
+
+def parse_volcengine(page: str, today: datetime, get: Callable[[str], str]) -> list[Observed]:
     """Volcengine Ark's standard online inference prices in yuan, from the document API
     that its pricing page loads.
 
     The page names model families, such as doubao-seed-2.0-pro, whose API ids add a date,
-    such as doubao-seed-2-0-pro-260215; "正式版" (generally available) is the -ga id. An
+    such as doubao-seed-2-0-pro-260215, which Ark's model list gives; "正式版" (generally
+    available) is the -ga id. An
     "输入长度 (32, 128]" row is the tier above 32K input tokens. Peak and off-peak rows,
     and superseded "调整前价格" rows, are left out.
     """
@@ -1385,7 +1410,7 @@ def parse_volcengine(page: str, today: datetime) -> list[Observed]:
         markdown = json.loads(page)["Result"]["MDContent"]
     except (ValueError, KeyError, TypeError):
         raise ValueError("volcengine: no pricing document; the page format changed") from None
-    ids = list(_ids("volcengine")[0].values())
+    ids = volcengine_ids(get(VOLCENGINE_MODELS))
     found = []
     for name, condition, prices in ark_rows(markdown, "在线推理（常规）", "volcengine",
                                             VOLCENGINE_COLUMNS):

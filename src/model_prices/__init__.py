@@ -907,13 +907,13 @@ def main(argv: list[str] | None = None) -> int:
         help="Also score Pydantic's genai-prices against the official pages, from its data.json "
              "URL (the default), the file, or a checkout")
     reading = commands.add_parser(
-        "readings", help="Record what each parser read from archived pages, or compare it with "
+        "readings", help="Record what each reader read from archived pages, or compare it with "
                          "the published prices")
     reading.add_argument("action", choices=["fetch", "record", "diff", "changed"],
-                         help="fetch: fetch every page the parsers read into the archive "
+                         help="fetch: fetch every page the hourly readers read into the archive "
                               "DIRECTORY; record: add readings to DIRECTORY for the runs in "
                               "--archive; diff: list where DIRECTORY's readings differ from the "
-                              "published prices; changed: list the providers whose reading in "
+                              "published prices; changed: list the readers whose reading in "
                               "--run differs from the one before")
     reading.add_argument("directory", type=Path, help="The page archive (fetch) or the readings")
     reading.add_argument("--archive", type=Path,

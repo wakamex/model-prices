@@ -54,12 +54,14 @@ PAGES = {
     "https://longcat.chat/platform/docs/pricing/longcat-2.5":
         (FIXTURES / "longcat-2.0.html").read_text().replace("LongCat-2.0.", "LongCat-2.5-Preview."),
     "volcengine": (FIXTURES / "volcengine.json").read_text(),
+    # Ark's model list document as served on 2026-11-14, reduced to the field the parser reads.
+    checks.VOLCENGINE_MODELS: (FIXTURES / "volcengine-models.json").read_text(),
 }
 
 
 def _prices(provider, mode=None, modality=None):
     parser = checks.SOURCES[provider][1]
-    extra = (PAGES.__getitem__,) if provider in {"alibaba", "amazon-bedrock", "meta", "mistral"} else ()
+    extra = (PAGES.__getitem__,) if provider in {"alibaba", "amazon-bedrock", "meta", "mistral", "volcengine"} else ()
     return {(item.model, item.field, item.above, item.at): item.value
             for item in parser(PAGES[provider], TODAY, *extra)
             if item.mode == mode and item.modality == modality}
@@ -82,7 +84,7 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(openai[("gpt-6-astra", "output", 272_000, None)], 75)
         self.assertNotIn(("gpt-5.4-mini", "input", 272_000, None), openai)
 
-        self.assertEqual(_prices("zai")[("GLM-5.3", "cache_read", None, None)], 0.26)
+        self.assertEqual(_prices("zai")[("glm-5.3", "cache_read", None, None)], 0.26)
 
         xai = _prices("xai")
         self.assertEqual(xai[("grok-4.6", "input", None, None)], 2)
@@ -279,7 +281,7 @@ class CheckTests(unittest.TestCase):
 
     def test_volcengine_yuan_prices_reach_dated_ids_in_dollars(self):
         found = {(item.model, item.field, item.above): item for item in
-                 checks.parse_volcengine(PAGES["volcengine"], TODAY)}
+                 checks.parse_volcengine(PAGES["volcengine"], TODAY, PAGES.__getitem__)}
 
         # A family name reaches its dated id, and the tier starts above 32K tokens.
         pro = found[("doubao-seed-2-0-pro-260215", "input", 32_000)]
@@ -761,7 +763,7 @@ Batch
 
     def test_zai_reads_its_quoted_other_pricing_section(self):
         found = {(o.model, o.field): o.value for o in checks.parse_zai(PAGES["zai"], TODAY)}
-        self.assertEqual(found[("GLM-4-32B-0414-128K", "input")], 0.1)
+        self.assertEqual(found[("glm-4-32b-0414-128k", "input")], 0.1)
         with self.assertRaisesRegex(ValueError, "Text Models table is missing"):
             checks.parse_zai(PAGES["zai"].replace("### Text Models", "### Chat Models"), TODAY)
 
