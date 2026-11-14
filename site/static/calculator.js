@@ -51,6 +51,25 @@ function showModalities(listed) {
     })));
 }
 
+// Shows a call count field for each tool the model charges per call, keeping counts entered.
+const TOOL_NAMES = { web_search: "Web search", web_search_fast: "Fast web search",
+  web_search_preview: "Web search preview", web_search_prompt: "Grounded search prompt" };
+const toolName = (tool) => TOOL_NAMES[tool] || tool.replaceAll("_", " ");
+let toolsShown = "";
+function showTools(listed) {
+  field("tool-calls").hidden = !listed.length;
+  const key = listed.join(",");
+  if (key === toolsShown) return;
+  toolsShown = key;
+  field("tool-fields").replaceChildren(...listed.map((tool) => {
+    const wrapper = document.createElement("label");
+    const input = Object.assign(document.createElement("input"),
+      { id: `tool-${tool}`, type: "number", min: "0", step: "1", value: "0" });
+    wrapper.append(`${toolName(tool)} `, input);
+    return wrapper;
+  }));
+}
+
 function render() {
   const at = `${field("at").value}${field("at").value.length === 16 ? ":00" : ""}Z`;
   const standard = rates(snapshot, field("provider").value, field("model").value, at, field("mode").value || null);
@@ -83,11 +102,15 @@ function render() {
       tokens[key] = Object.values(tokens.modalities).reduce((sum, counts) => sum + counts[key], 0);
     }
   }
+  // A model with tool fees, such as web search, takes its billable calls by tool.
+  const tools = Object.keys(found.tools || {}).sort();
+  showTools(tools);
+  tokens.tool_calls = Object.fromEntries(tools.map((tool) => [tool, count(field(`tool-${tool}`))]));
   const parts = breakdown(found, listed.length ? { ...tokens, input: 0, output: 0, cache_read: 0 } : tokens);
   const rows = [["Input", "input"], ["Output", "output"], ["Cache reads", "cache_read"],
     ["Cache writes", "cache_write"], ...(longerLived ? [["Longer-lived cache writes", "cache_write_1h"]] : [])]
     .map(([label, key]) => `<tr><td>${label}</td><td class="number">${tokens[key].toLocaleString("en-US")}</td><td class="number">${money(parts[key])}</td></tr>`)
-    .join("");
+    .join("") + tools.map((tool) => `<tr><td>${toolName(tool)} calls</td><td class="number">${tokens.tool_calls[tool].toLocaleString("en-US")}</td><td class="number">${money(tokens.tool_calls[tool] * found.tools[tool] / 1e3)}</td></tr>`).join("");
   const notes = [
     `Rates from ${found.valid_from.slice(0, 10)} (${found.valid_from_basis}), <a href="${found.source}">source</a>.`,
     `Per million tokens: input ${money(found.input)}, output ${money(found.output)}, cached input ${rate(found.cache_read)}, cache write ${rate(found.cache_write)}.`,
@@ -98,6 +121,9 @@ function render() {
       .filter(([key]) => prices[key] !== undefined).map(([key, label]) => `${label} ${money(prices[key])}`);
     notes.push(`${name[0].toUpperCase()}${name.slice(1)}: ${stated.join(", ")}.`);
   }
+  if (tools.length) {
+    notes.push(`Per 1,000 calls: ${tools.map((tool) => `${toolName(tool).toLowerCase()} ${money(found.tools[tool])}`).join(", ")}; tool fees are not scaled by peak hours or regions.`);
+  }
   if (parts.tier_above !== null) notes.push(`The prompt exceeds ${parts.tier_above.toLocaleString("en-US")} tokens, so that tier's prices apply.`);
   let when = "";
   if (found.period) {
@@ -107,7 +133,7 @@ function render() {
   }
   if (found.region) when += `, served in ${found.region}: ${found.regions[found.region]} times the listed prices`;
   result.innerHTML = `<p class="total">${money(parts.total)}${when}</p>
-    <table><thead><tr><th>Tokens</th><th>Count</th><th>Cost</th></tr></thead><tbody>${rows}</tbody></table>
+    <table><thead><tr><th>Charged for</th><th>Count</th><th>Cost</th></tr></thead><tbody>${rows}</tbody></table>
     <p>${notes.join(" ")}</p>`;
 }
 

@@ -136,8 +136,23 @@ function modalityPrices(found, name, current) {
 }
 
 // The cost of one request by token type, in USD; input excludes cache reads and writes.
+// The fees for tool calls, each tool's count times its price per 1,000, as Rates._tool_cost
+// gives them. Tool fees are not scaled by modes, regions, or schedules.
+function toolCost(found, toolCalls) {
+  const prices = found.tools || {};
+  let total = 0.0;
+  for (const [tool, count] of Object.entries(toolCalls || {})) {
+    if (!Number.isInteger(count) || count < 0) throw new Error(`${tool} calls must be a whole number of calls`);
+    if (count === 0) continue;
+    if (!(tool in prices)) throw new Error(`${found.model} has no price for ${tool} calls`);
+    total += count * prices[tool] / 1e3;
+  }
+  return total;
+}
+
 // tokens.modalities, when given, holds input, cache_read, and output counts by modality in
-// place of tokens.input, tokens.cache_read, and tokens.output.
+// place of tokens.input, tokens.cache_read, and tokens.output. tokens.tool_calls gives billable
+// tool calls by tool name, such as { web_search: 3 }.
 export function breakdown(found, tokens) {
   const input = tokens.input || 0;
   const output = tokens.output || 0;
@@ -180,7 +195,9 @@ export function breakdown(found, tokens) {
     cache_read: spent.cache_read / 1e6,
     cache_write: cacheWrite * cacheWriteRate / 1e6,
     cache_write_1h: cacheWrite1h * cacheWrite1hRate / 1e6,
+    tools: toolCost(found, tokens.tool_calls),
   };
-  parts.total = parts.input + parts.output + parts.cache_read + parts.cache_write + parts.cache_write_1h;
+  parts.total = parts.input + parts.output + parts.cache_read + parts.cache_write + parts.cache_write_1h
+    + parts.tools;
   return parts;
 }

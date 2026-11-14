@@ -3,8 +3,8 @@
     uv run --locked python tools/build_site.py [--check-results CHECK_JSON]
     zola --root site build
 
-Writes the overview table, one section per provider, one page per model, the navigation,
-and the calculator's data under site/. These paths are generated and not committed; the
+Writes the overview table, one section per provider, one page per model, the subscription
+plans page, the navigation, and the calculator's data under site/. These paths are generated and not committed; the
 calculator, the about page, and the templates are. CHECK_JSON is the output of
 `model-prices check --json`, which adds each model's official-page status.
 """
@@ -30,7 +30,7 @@ from model_prices import checks, observe  # noqa: E402
 SITE = ROOT / "site"
 CONTENT = SITE / "content"
 REPOSITORY = "https://github.com/wakamex/model-prices"
-GENERATED = (CONTENT / "_index.md", CONTENT / "providers", CONTENT / "corrections.md",
+GENERATED = (CONTENT / "_index.md", CONTENT / "providers", CONTENT / "corrections.md", CONTENT / "plans.md",
              SITE / "data" / "navigation.json",
              SITE / "static" / "snapshot.json", SITE / "static" / "calculator-models.json")
 
@@ -513,12 +513,14 @@ def build(check_results: Path | None) -> None:
         {"id": "prices", "title": "Prices", "items": [
             {"title": "All models", "path": ""},
             {"title": "Calculator", "path": "calculator/"},
+            {"title": "Plans", "path": "plans/"},
             {"title": "Corrections", "path": "corrections/"},
             {"title": "About the data", "path": "about/"}]},
         # The group heading links to the list of providers, so the count covers providers only.
         {"id": "providers", "title": "Providers", "path": "providers/", "items": navigation},
     ]}, indent=1) + "\n")
     (CONTENT / "corrections.md").write_text(corrections_page(pages))
+    (CONTENT / "plans.md").write_text(plans_page(check_results, ran, now))
     shutil.copyfile(ROOT / "src" / "model_prices" / "snapshot.json", SITE / "static" / "snapshot.json")
     (SITE / "static" / "calculator-models.json").write_text(json.dumps(calculator))
 
@@ -560,6 +562,74 @@ def corrections_page(pages: dict[tuple[str, str], str]) -> str:
             f"[data/corrections.toml]({REPOSITORY}/blob/main/data/corrections.toml) and, for those "
             f"found by dating research, [data/research_corrections.toml]({REPOSITORY}/blob/main/data/research_corrections.toml).\n\n"
             + '<div class="wrapping">\n\n' + "\n".join(rows) + "\n\n</div>\n")
+
+
+def plan_checks(path: Path | None) -> dict[str, str]:
+    """Each plan's status in `model-prices check --json`, by "provider/id"."""
+    if path is None:
+        return {}
+    return {result["model"]: result["status"] for result in json.loads(path.read_text())
+            if result["field"] == "plan"}
+
+
+def plans_page(check_results: Path | None, ran: str | None, now: datetime) -> str:
+    """Every subscription plan's monthly price, by lab, with its check status, and the prices
+    plans had before."""
+    plans = tomllib.loads((ROOT / "data" / "plans.toml").read_text())["plan"]
+    checked = plan_checks(check_results)
+
+    def ended(plan: dict) -> bool:
+        return "valid_until" in plan and model_prices._parse_time(plan["valid_until"]) <= now
+
+    def started(plan: dict) -> bool:
+        return "valid_from" not in plan or model_prices._parse_time(plan["valid_from"]) <= now
+
+    def status(plan: dict) -> str:
+        found = checked.get(f"{plan['provider']}/{plan['id']}")
+        if found == "ok":
+            return f"matches, {ran}"
+        if found in {"mismatch", "error"}:
+            return f"differs or unreadable, {ran}"
+        if found == "unchecked" or "checked" in plan:
+            return f"read by hand{', ' + day(plan['checked']) if 'checked' in plan else ''}"
+        return ""
+
+    lines = []
+    for provider in sorted({plan["provider"] for plan in plans}, key=name):
+        current = sorted((plan for plan in plans if plan["provider"] == provider
+                          and started(plan) and not ended(plan)),
+                         key=lambda plan: (plan["usd_per_month"], plan["name"]))
+        if not current:
+            continue
+        lines += [f"## {name(provider)}", "", "| Plan | Per month | Since | Checked against the page | Plan id |",
+                  "| --- | --- | --- | --- | --- |"]
+        for plan in current:
+            since = day(plan.get("valid_from")) or "tracking began"
+            lines.append(f"| [{escape(plan['name'])}]({plan['source']}) | {price(plan['usd_per_month'])} | "
+                         f"{since} | {status(plan)} | `{plan['id']}` |")
+        lines.append("")
+    earlier = sorted((plan for plan in plans if ended(plan)),
+                     key=lambda plan: (name(plan["provider"]).lower(), plan["name"], plan["valid_until"]))
+    if earlier:
+        lines += ["## Earlier prices", "", "| Plan | Per month | Period | Plan id |", "| --- | --- | --- | --- |"]
+        for plan in earlier:
+            period = f"{day(plan.get('valid_from')) or 'tracking began'} to {day(plan['valid_until'])}"
+            lines.append(f"| {name(plan['provider'])} [{escape(plan['name'])}]({plan['source']}) | "
+                         f"{price(plan['usd_per_month'])} | {period} | `{plan['id']}` |")
+        lines.append("")
+    front = toml({"title": "Subscription plans",
+                  "description": "Monthly prices of the subscriptions each lab sells to individuals and teams.",
+                  "extra": {"navigation_group": "prices", "toc": False}})
+    return ("+++\n" + front + "+++\n\n"
+            "The monthly price of every subscription plan each lab sells to individuals and teams, billed "
+            "monthly, in US dollars, per seat for team plans. Each price is checked daily against the "
+            "lab's pricing page, or the price feed the page loads; a plan whose page an automated "
+            "check cannot read, such as one shown only after signing in or only in the reader's local "
+            "currency, is checked by hand, on the date given. A change is dated by the lab's "
+            "announcement, or by the first check that read the new price. Plans sold only in yuan, priced "
+            "only by quote, or billed only annually are not listed. The plan id is the name the lab's "
+            "usage tools report, which `model_prices.plan(provider, plan_id)` takes. The prices live in "
+            f"[data/plans.toml]({REPOSITORY}/blob/main/data/plans.toml).\n\n" + "\n".join(lines))
 
 
 def main() -> int:

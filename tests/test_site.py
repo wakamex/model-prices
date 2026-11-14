@@ -70,9 +70,14 @@ def _cases(count: int, seed: int = 0) -> list[dict]:
                        "output": rng.randrange(50_000)} for name in names}}
         # Models priced by region also get requests served in one, or in one they do not list.
         region = rng.choice([None, "us", "eu"]) if model in regional.get(provider, ()) else None
-        cases.append({"provider": provider, "model": model, "mode": rng.choice(modes),
-                      "at": at.isoformat().replace("+00:00", "Z"), "region": region,
-                      "tokens": tokens})
+        mode = rng.choice(modes)
+        when = at.isoformat().replace("+00:00", "Z")
+        # Half the requests to a model with tool fees make some of its tool calls.
+        found = model_prices.rates(model, at=when, provider=provider, mode=mode, region=region)
+        if found is not None and found.tools and rng.random() < 0.5:
+            tokens["tool_calls"] = {tool: rng.randrange(0, 40) for tool, _ in found.tools}
+        cases.append({"provider": provider, "model": model, "mode": mode, "at": when,
+                      "region": region, "tokens": tokens})
     return cases
 
 
@@ -109,13 +114,16 @@ class CalculatorTests(unittest.TestCase):
                 self.assertIsNone(result, case)
                 continue
             parts = found.breakdown(*(case["tokens"][field] for field in FIELDS),
-                                    modality_tokens=case["tokens"].get("modalities"))
+                                    modality_tokens=case["tokens"].get("modalities"),
+                                    tool_calls=case["tokens"].get("tool_calls"))
             expected = {"period": found.period, "region": found.region, "tier_above": parts.tier_above,
-                        "total": parts.total, **{field: getattr(parts, field) for field in FIELDS}}
+                        "total": parts.total, "tools": parts.tools,
+                        **{field: getattr(parts, field) for field in FIELDS}}
             self.assertEqual(result, expected, case)
             priced += 1
         self.assertGreater(priced, 4000)
         self.assertGreater(sum("modalities" in case["tokens"] for case in cases), 500)
         self.assertGreater(sum(case["region"] == "us" for case in cases), 100)
+        self.assertGreater(sum(any(case["tokens"].get("tool_calls", {}).values()) for case in cases), 500)
         self.assertGreater(sum(1 for case in cases if model_prices.rates(
             case["model"], at=case["at"], provider=case["provider"]).period), 1000)
