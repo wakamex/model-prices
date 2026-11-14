@@ -203,13 +203,24 @@ def read_checked(provider: str, data: Path, now: datetime,
     out, as are models without an input and output price, such as embedding models.
     """
     url = checks.SOURCES[provider][0]
-    own = re.compile(OWN_MODELS.get(provider, ".*"))
     known = listed(data).get(provider, set())
+    items = [item for item in checks.parse(provider, get(url), now, get)
+             if item.model.lower() not in known]
+    return {model: (url, rates) for model, rates in stated_rates(provider, items).items()}
+
+
+def stated_rates(provider: str, items: Iterable[checks.Observed],
+                 complete: bool = True) -> dict[str, dict[str, Any]]:
+    """The rates a pricing page states for each of the provider's own models, as a models.dev
+    entry gives them: base prices, long-context tiers, modes, and modalities. Prices for a
+    stated time and tool fees are left out. With `complete`, a model priced for input alone,
+    such as an embedding model, costs $0 for output, and one without an input and output price
+    is left out; without it, only the prices the page states are given, to merge over others."""
+    own = re.compile(OWN_MODELS.get(provider, ".*"))
     found: dict[str, dict[str, Any]] = {}
-    for item in checks.parse(provider, get(url), now, get):
+    for item in items:
         model = item.model
-        if (item.at or item.field not in checks.FIELDS or model.lower() in known
-                or not own.fullmatch(model)):
+        if item.at or item.field not in checks.FIELDS or not own.fullmatch(model):
             continue
         rates = found.setdefault(model, {})
         if item.mode:
@@ -234,17 +245,18 @@ def read_checked(provider: str, data: Path, now: datetime,
     for rates in found.values():
         for prices in (rates, *rates.get("modes", {}).values()):
             _plain_from_modalities(prices)
-    # A model a page prices for input alone, such as an embedding model, has no output
-    # tokens, so its output price is $0.
-    for rates in found.values():
-        if "input" in rates and "output" not in rates:
-            rates["output"] = 0.0
-    found = {model: rates for model, rates in found.items()
-             if "input" in rates and "output" in rates}
+    if complete:
+        # A model a page prices for input alone, such as an embedding model, has no output
+        # tokens, so its output price is $0.
+        for rates in found.values():
+            if "input" in rates and "output" not in rates:
+                rates["output"] = 0.0
+        found = {model: rates for model, rates in found.items()
+                 if "input" in rates and "output" in rates}
     for rates in found.values():
         for prices in (rates, *rates.get("modes", {}).values()):
             _keep_differing_modalities(prices)
-    return {model: (url, rates) for model, rates in found.items()}
+    return found
 
 
 def _plain_from_modalities(rates: dict[str, Any]) -> None:

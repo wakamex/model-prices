@@ -29,11 +29,12 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import tomllib
 from typing import Callable, Iterable, Iterator
 
-from model_prices import _parse_time, observe, openai_regions, plan_checks
-from model_prices.checks import (MINIMUM_MODELS, SOURCES, TERMS, TOOL_PAGES, Observed, _moments,
-                                 compare, fetch, parse, peak_terms, tool_prices, xai_batch)
+from model_prices import _parse_time, compiler, observe, openai_regions, plan_checks
+from model_prices.checks import (MINIMUM_MODELS, SOURCES, TERMS, TOOL_PAGES, YUAN_TO_USD, Observed,
+                                 _moments, compare, fetch, parse, peak_terms, tool_prices, xai_batch)
 
 LOG = "readings"
 CONTENT = "readings/by-hash"
@@ -277,6 +278,90 @@ def observed(line: dict, entries: list[dict]) -> list[Observed]:
         moments = _moments(line["reader"], _parse_time(line["read_at"]))
         found = [replace(item, at=moments[item.period]) if item.period else item for item in found]
     return found
+
+
+# Pages that price in yuan give prices models.dev converts at its own rounding, so their
+# conversions would differ from models.dev's by rounding alone; they stay models.dev's.
+PRICED_IN_DOLLARS = [provider for provider in SOURCES if provider not in YUAN_TO_USD]
+
+
+def page_entries(out: Path, data: Path) -> dict[tuple[str, str], list[dict]]:
+    """For each provider and model a pricing page states token prices for, those prices over
+    time: an entry whenever they change, with the time of the first reading that stated them,
+    the page as its source, and the rates as a models.dev entry gives them. A model a page
+    stops stating keeps the prices it last stated. A name aliases.toml maps to one of the
+    provider's own ids takes that id."""
+    aliases = tomllib.loads((data / "aliases.toml").read_text())["models"]
+    found: dict[tuple[str, str], list[dict]] = {}
+    for line, entries in readings(out):
+        reader = line["reader"]
+        if reader in PRICED_IN_DOLLARS:
+            stated = observe.stated_rates(reader, observed(line, entries), complete=False)
+            source = SOURCES[reader][0]
+        elif reader in observe.SOURCES:
+            stated = {entry["model"]: entry["value"] for entry in entries}
+            source = observe.SOURCE_PAGES[reader]
+        else:
+            continue
+        for name, rates in stated.items():
+            target = aliases.get(name, "").split("/", 1)
+            model = target[1] if len(target) == 2 and target[0] == reader else name
+            history = found.setdefault((reader, model), [])
+            if not history or history[-1]["rates"] != rates:
+                history.append({"valid_from": line["read_at"], "source": source, "rates": rates})
+    return found
+
+
+def shadow(out: Path, data: Path, published: dict) -> list[str]:
+    """Where the snapshot built with the pages' prices differs from `published`, from the
+    first reading on: for each model and mode, each time their rates differ, with the fields
+    that differ."""
+    pages = page_entries(out, data)
+    built = compiler.build(data, pages)
+    start = min(entry["valid_from"] for entries in pages.values() for entry in entries)
+    lines = []
+    for provider, models in sorted(built["prices"].items()):
+        for model, modes in sorted(models.items()):
+            for mode, timeline in sorted(modes.items()):
+                before = published["prices"].get(provider, {}).get(model, {}).get(mode, [])
+                times = sorted({start} | {interval["start"] for interval in (*timeline, *before)
+                                          if interval["start"] and interval["start"] > start})
+                for at in times:
+                    old, new = (_canonical(_at(intervals, at)) for intervals in (before, timeline))
+                    fields = sorted(key for key in {*(old or {}), *(new or {})}
+                                    if key not in {"valid_from", "source", "valid_from_basis"}
+                                    and (old or {}).get(key) != (new or {}).get(key))
+                    if fields:
+                        lines.append(f"{provider}/{model} {mode} from {at}: " + "; ".join(
+                            f"{key} {_shown((old or {}).get(key))} -> {_shown((new or {}).get(key))}"
+                            for key in fields))
+    return lines
+
+
+def _at(intervals: list[dict], at: str) -> dict | None:
+    """The rates a timeline gives at an ISO time; the first interval also covers every earlier
+    time."""
+    found = None
+    for index, interval in enumerate(intervals):
+        if index == 0 or interval["start"] <= at:
+            found = interval["rates"]
+    return found
+
+
+def _canonical(rates: dict | None) -> dict | None:
+    """Rates without the modality prices that equal the price of a token without a modality,
+    which cost the same whether listed or not."""
+    if not rates or "modalities" not in rates:
+        return rates
+    plain = {key: rates.get(key) for key in ("input", "cache_read", "output")}
+    modalities = {name: kept for name, prices in rates["modalities"].items()
+                  if (kept := {key: value for key, value in prices.items() if value != plain.get(key)})}
+    return {**rates, "modalities": modalities} if modalities else {
+        key: value for key, value in rates.items() if key != "modalities"}
+
+
+def _shown(value: object) -> str:
+    return "none" if value is None else json.dumps(value, sort_keys=True)
 
 
 @dataclass(frozen=True)

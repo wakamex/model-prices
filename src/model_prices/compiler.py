@@ -35,7 +35,7 @@ BATCH = "batch"
 class _Inputs:
     """The merge rules over one set of input files."""
 
-    def __init__(self, data: Path):
+    def __init__(self, data: Path, pages: dict[tuple[str, str], list[dict]] | None = None):
         self.prices = json.loads((data / "prices.json").read_text())
         observed = data / "observed.json"
         for provider, models in (json.loads(observed.read_text())["providers"].items()
@@ -51,6 +51,14 @@ class _Inputs:
                 start = _parse_time(listed[model][0]["valid_from"]) if model in listed else None
                 listed[model] = [entry for entry in entries if start is None
                                  or _parse_time(entry["valid_from"]) < start] + listed.get(model, [])
+        # A correction's `replaces` names models.dev's values, so it is compared with models.dev's
+        # entries alone, before any page's prices are merged over them.
+        self.recorded = json.loads(json.dumps(self.prices["providers"]))
+        for (provider, model), entries in (pages or {}).items():
+            listed = self.prices["providers"].setdefault(provider, {})
+            listed[model] = _with_pages(listed.get(model, []), entries)
+            if self.prices["status"].get(provider, {}).get(model) == "removed":
+                del self.prices["status"][provider][model]
         # Regional factors read from a provider's pages, such as OpenAI's uplift, each dated
         # by the first run that read it.
         regions = data / "observed_regions.json"
@@ -139,7 +147,7 @@ class _Inputs:
                     # one for a model models.dev lacks, with an empty `replaces`, stops once
                     # models.dev lists the model, which a price read from the model's page,
                     # such as an announced change the page states, does not.
-                    recorded = self.history(provider, model, at, None, rules=False)
+                    recorded = self.history(provider, model, at, None, rules=False, recorded=True)
                     if not item["replaces"]:
                         if recorded is not None and recorded.valid_from_basis != "first observed":
                             continue
@@ -170,17 +178,19 @@ class _Inputs:
         return self.correction(provider, link, at, mode) if link else None
 
     def history(self, provider: str, model: str, at: datetime, mode: str | None,
-                rules: bool = True) -> Rates | None:
-        """models.dev's rates at `at`, with the tool fees tools.toml adds unless `rules` is
-        False, as a correction's `replaces` compares them."""
+                rules: bool = True, recorded: bool = False) -> Rates | None:
+        """The price history's rates at `at`, with the tool fees tools.toml adds unless `rules`
+        is False, as a correction's `replaces` compares them; `recorded` takes models.dev's
+        entries without the prices pricing pages stated over them."""
         link = self.link(provider, model, at)
         if link:
-            return self.history(provider, link, at, mode, rules)
-        entries = self.prices["providers"].get(provider, {}).get(model, [])
+            return self.history(provider, link, at, mode, rules, recorded)
+        entries = (self.recorded if recorded else self.prices["providers"]).get(provider, {}).get(model, [])
         if not entries:
             return None
         # Usage before a model's first recorded price uses that first price.
-        entry = entries[max(bisect_right(self.entry_times(provider, model), at) - 1, 0)]
+        times = [_parse_time(entry["valid_from"]) for entry in entries]
+        entry = entries[max(bisect_right(times, at) - 1, 0)]
         values = dict(entry["rates"])
         tiers = values.pop("tiers", None)
         modes = values.pop("modes", {})
@@ -254,6 +264,55 @@ class _Inputs:
         if self.batches(provider, model):
             found.add(BATCH)
         return sorted(found)
+
+
+def _merged(base: dict[str, Any], stated: dict[str, Any]) -> dict[str, Any]:
+    """Rates with the fields a page states over those of a models.dev entry: a tier, mode, or
+    modality the page states replaces those fields of the entry's, and keeps the rest. A price
+    the page shows rounded from the entry's keeps the entry's exact price."""
+    merged = dict(base)
+    for key, value in stated.items():
+        if key == "tiers":
+            tiers = {tier["above"]: tier for tier in base.get("tiers", [])}
+            for tier in value:
+                tiers[tier["above"]] = {**tiers.get(tier["above"], {}), **tier}
+            merged["tiers"] = [tiers[above] for above in sorted(tiers)]
+        elif key in {"modes", "modalities"}:
+            merged[key] = {**base.get(key, {}), **{name: _merged(base.get(key, {}).get(name, {}), rates)
+                                                   for name, rates in value.items()}}
+        else:
+            # A page may show a price rounded, as OpenAI shows $0.125 as $0.13, so a page price
+            # that the entry's rounds to keeps the entry's.
+            from model_prices.checks import _matches
+            kept = (isinstance(value, float) and isinstance(base.get(key), float)
+                    and _matches(base[key], value, 1e-9))
+            merged[key] = base[key] if kept else value
+    return merged
+
+
+def _with_pages(entries: list[dict], pages: list[dict]) -> list[dict]:
+    """A model's models.dev entries with the prices its pricing page stated from its first
+    reading: before it, the entries as they are; from it, an entry wherever either changes,
+    giving the page's prices over the entry's for the fields the page states, and dated and
+    sourced by whichever changed."""
+    first = _parse_time(pages[0]["valid_from"])
+    times = sorted({_parse_time(entry["valid_from"]) for entry in (*entries, *pages)
+                    if _parse_time(entry["valid_from"]) >= first})
+    merged = [entry for entry in entries if _parse_time(entry["valid_from"]) < first]
+    last = _parse_time(pages[-1]["valid_from"])
+    for at in times:
+        base = next((entry for entry in reversed(entries) if _parse_time(entry["valid_from"]) <= at), None)
+        page = next(entry for entry in reversed(pages) if _parse_time(entry["valid_from"]) <= at)
+        # A change announced for after the page was last read, such as the end of a
+        # launch price, is the page's own next price, which no reading has yet stated.
+        if base is not None and base.get("scheduled") and at > last:
+            merged.append(base)
+            continue
+        dated = page if _parse_time(page["valid_from"]) == at else base
+        entry = {key: value for key, value in dated.items() if key != "rates"}
+        merged.append({**entry, "valid_from": at.isoformat().replace("+00:00", "Z"),
+                       "rates": _merged(base["rates"] if base else {}, page["rates"])})
+    return merged
 
 
 def _in_stated_mode(values: dict[str, Any], tiers: list[dict] | None,
@@ -360,9 +419,11 @@ def _timeline(inputs: _Inputs, provider: str, model: str, mode: str | None) -> l
     return intervals
 
 
-def build(data: Path) -> dict[str, Any]:
-    """The snapshot content of the inputs in `data`, without its updated_at time."""
-    inputs = _Inputs(data)
+def build(data: Path, pages: dict[tuple[str, str], list[dict]] | None = None) -> dict[str, Any]:
+    """The snapshot content of the inputs in `data`, without its updated_at time. `pages`
+    gives, for a provider and model, the prices its pricing page stated over time, as entries
+    with the time each was first read, its page as `source`, and its stated `rates`."""
+    inputs = _Inputs(data, pages)
     prices: dict[str, dict[str, dict[str, list]]] = {}
     # Models that only corrections price, because models.dev lacks them and no page lists
     # them as rows, such as Tencent's translation models.

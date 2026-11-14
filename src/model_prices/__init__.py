@@ -909,12 +909,14 @@ def main(argv: list[str] | None = None) -> int:
     reading = commands.add_parser(
         "readings", help="Record what each reader read from archived pages, or compare it with "
                          "the published prices")
-    reading.add_argument("action", choices=["fetch", "record", "diff", "changed"],
+    reading.add_argument("action", choices=["fetch", "record", "diff", "changed", "shadow"],
                          help="fetch: fetch every page the hourly readers read into the archive "
                               "DIRECTORY; record: add readings to DIRECTORY for the runs in "
                               "--archive; diff: list where DIRECTORY's readings differ from the "
                               "published prices; changed: list the readers whose reading in "
-                              "--run differs from the one before")
+                              "--run differs from the one before; shadow: build the snapshot "
+                              "with the pricing pages' token prices from their first reading, "
+                              "and list where it differs from the bundled snapshot")
     reading.add_argument("directory", type=Path, help="The page archive (fetch) or the readings")
     reading.add_argument("--archive", type=Path,
                          help="Page archive to read, with fetches.jsonl and blobs/ (record only)")
@@ -931,6 +933,11 @@ def main(argv: list[str] | None = None) -> int:
             if args.archive is None:
                 parser.error("readings record needs --archive")
             print(f"recorded {readings.record(args.archive, args.directory)} readings")
+            return 0
+        if args.action == "shadow":
+            published = json.loads(Path(SNAPSHOT_PATH).read_text())
+            found = readings.shadow(args.directory, Path("data"), published)
+            print("\n".join(found) or "the pages' prices match the published snapshot")
             return 0
         if args.action == "changed":
             if args.run is None:

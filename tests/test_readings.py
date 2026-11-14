@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from unittest import mock
 
-from model_prices import checks, readings
+from model_prices import checks, compiler, readings
 
 FIXTURES = Path(__file__).parent / "fixtures"
 URL = "https://platform.claude.com/docs/en/about-claude/pricing.md"
@@ -94,6 +94,51 @@ class ReadingTests(unittest.TestCase):
         self.assertNotEqual({item.at for item in morning}, {item.at for item in evening})
         self.assertEqual(sorted(map(readings._sort_key, map(readings._price, morning))),
                          sorted(map(readings._sort_key, map(readings._price, evening))))
+
+class PageBuildTests(unittest.TestCase):
+    URL = "https://example.com/pricing"
+
+    def page(self, at, rates):
+        return {"valid_from": at, "source": self.URL, "rates": rates}
+
+    def test_a_page_states_its_prices_over_models_dev_from_its_first_reading(self):
+        entries = [{"valid_from": "2026-10-01T00:00:00Z", "commit": "a",
+                    "rates": {"input": 1.25, "output": 7.5, "cache_read": 0.125,
+                              "tiers": [{"above": 272000, "input": 2.5}]}},
+                   {"valid_from": "2026-11-20T00:00:00Z", "commit": "b",
+                    "rates": {"input": 1.25, "output": 7.5, "cache_read": 0.125, "cache_write": 1.5}},
+                   # A change models.dev records ahead of its date, after the last reading.
+                   {"valid_from": "2027-01-01T00:00:00Z", "commit": "c", "scheduled": True,
+                    "rates": {"input": 2.5, "output": 15.0}}]
+        pages = [self.page("2026-11-12T06:00:00Z", {"input": 1.25, "output": 7.5, "cache_read": 0.13}),
+                 self.page("2026-11-13T06:00:00Z", {"input": 1.0, "output": 7.5, "cache_read": 0.13})]
+        merged = compiler._with_pages(entries, pages)
+        self.assertEqual([entry["valid_from"] for entry in merged],
+                         ["2026-10-01T00:00:00Z", "2026-11-12T06:00:00Z", "2026-11-13T06:00:00Z",
+                          "2026-11-20T00:00:00Z", "2027-01-01T00:00:00Z"])
+        # The page's $0.13 is models.dev's $0.125 shown rounded, so the exact price is kept;
+        # fields the page does not state, such as tiers, stay models.dev's.
+        self.assertEqual(merged[1]["rates"]["cache_read"], 0.125)
+        self.assertEqual(merged[1]["rates"]["tiers"], [{"above": 272000, "input": 2.5}])
+        self.assertEqual((merged[1]["source"], merged[2]["rates"]["input"]), (self.URL, 1.0))
+        # A later models.dev change to a field the page does not state keeps the page's prices.
+        self.assertEqual((merged[3]["commit"], merged[3]["rates"]["input"], merged[3]["rates"]["cache_write"]),
+                         ("b", 1.0, 1.5))
+        # A scheduled change after the last reading applies as models.dev records it.
+        self.assertEqual(merged[4], entries[2])
+
+    def test_the_build_prices_a_model_from_its_page(self):
+        pages = {("anthropic", "claude-opus-5-5"): [
+            self.page("2026-11-12T06:00:00Z", {"input": 4.0, "output": 20.0}),
+            self.page("2026-11-13T06:00:00Z", {"input": 5.0, "output": 20.0})]}
+        built = compiler.build(Path(__file__).parent.parent / "data", pages)
+        timeline = built["prices"]["anthropic"]["claude-opus-5-5"]["standard"]
+        rates = readings._at(timeline, "2026-11-13T07:00:00Z")
+        self.assertEqual((rates["input"], rates["valid_from"], rates["valid_from_basis"]),
+                         (5.0, "2026-11-13T06:00:00Z", "first observed"))
+        # The cache prices the page excerpt does not state stay models.dev's.
+        self.assertEqual(rates["cache_read"], readings._at(timeline, "2026-11-01T00:00:00Z")["cache_read"])
+
 
 if __name__ == "__main__":
     unittest.main()
