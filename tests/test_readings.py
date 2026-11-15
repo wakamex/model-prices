@@ -76,6 +76,23 @@ class ReadingTests(unittest.TestCase):
                          [("anthropic/claude-opus-5-5", "input", 5, 4,
                            "2026-11-11T06:00:00Z", "2026-11-11T06:00:00Z")])
 
+    def test_a_failed_reading_is_read_again_after_a_parser_fix(self):
+        self.fetch("1", "2026-11-10T06:00:00Z", self.page)
+        self.fetch("2", "2026-11-10T12:00:00Z", None)
+        # A parser that fails on the page, as before a fix.
+        with mock.patch.dict(checks.MINIMUM_MODELS, {"anthropic": 1000}):
+            readings.record(self.archive, self.store)
+        retryable = {(line["run"], line["reader"]) for line in readings.retryable(self.store)}
+        # A page the run did not store cannot be read again; the excerpt's missing web search
+        # fee fails again on the same page.
+        self.assertEqual(retryable, {("1", "anthropic"), ("1", "anthropic:tools")})
+        self.assertEqual(readings.retry_pages(self.store, self.archive),
+                         {hashlib.sha256(self.page.encode()).hexdigest()})
+        self.assertEqual(readings.retry(self.archive, self.store), 1)
+        fixed = next(line for line in readings.load_log(self.store) if line["reader"] == "anthropic")
+        self.assertEqual((fixed["run"], "reading" in fixed), ("1", True))
+        self.assertEqual(readings.retry(self.archive, self.store), 0)
+
     def test_every_reader_names_a_page_a_run_fetches(self):
         # Each kind of source is read: pricing pages, pages for models models.dev lacks, tool
         # fees, peak-hour terms, batch discounts, regional factors, and subscription plans.

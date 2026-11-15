@@ -222,6 +222,44 @@ def record(archive: Path, out: Path) -> int:
     return added
 
 
+def retryable(out: Path) -> list[dict]:
+    """The log lines of readings that failed for a reason a parser fix can change: any but a
+    page the run did not store."""
+    return [line for line in load_log(out) if "error" in line and not line["error"].startswith("NotStored")]
+
+
+def retry_pages(out: Path, archive: Path) -> set[str]:
+    """The hashes of the pages the runs with retryable readings stored, from the archive's
+    fetch log, which a retry needs in the archive's blobs."""
+    runs = {line["run"] for line in retryable(out)}
+    return {entry["sha256"] for run, log in _fetches(archive).items() if run in runs
+            for entry in log if entry["status"] == 200 and entry["sha256"]}
+
+
+def retry(archive: Path, out: Path) -> int:
+    """Read again every retryable reading whose run the archive holds, as after a parser fix,
+    replacing its log line when the result differs; return how many were replaced."""
+    failed = {(line["run"], line["reader"]): line for line in retryable(out)}
+    runs = _fetches(archive)
+    replaced: dict[tuple[str, str], dict] = {}
+    for run in sorted({run for run, _ in failed} & runs.keys()):
+        for line, reading in read_run(archive, run, runs[run]):
+            key = (run, line["reader"])
+            if key not in failed or line == failed[key]:
+                continue
+            if reading is not None:
+                path = out / CONTENT / f"{line['reading']}.json"
+                if not path.exists():
+                    path.write_text(json.dumps(reading, sort_keys=True) + "\n")
+            replaced[key] = line
+    for path in sorted((out / LOG).glob("*.jsonl")):
+        lines = [json.loads(text) for text in path.read_text().splitlines()]
+        updated = [replaced.get((line["run"], line["reader"]), line) for line in lines]
+        if updated != lines:
+            path.write_text("".join(json.dumps(line, sort_keys=True) + "\n" for line in updated))
+    return len(replaced)
+
+
 def fetch_pages(hourly: bool = True) -> None:
     """Fetch every page the readers read, or only the hourly readers', into the page archive
     that the MODEL_PRICES_ARCHIVE environment variable names, for `record` to read. A page that

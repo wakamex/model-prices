@@ -172,6 +172,42 @@ jobs:
           r2-endpoint: ${{ secrets.R2_ENDPOINT }}
           r2-access-key-id: ${{ secrets.R2_WRITE_ACCESS_KEY_ID }}
           r2-secret-access-key: ${{ secrets.R2_WRITE_SECRET_ACCESS_KEY }}
+      # After a parser fix, the readings it failed in earlier runs are read again from those
+      # runs' pages, which the archive's bucket holds encrypted. Only this workflow, which runs
+      # on main, gets the bucket's read token and the archive's key.
+      - name: Read again the readings a parser failed in earlier runs
+        if: always() && github.ref == 'refs/heads/main'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_READ_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_READ_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          ARCHIVE_AGE_KEY: ${{ secrets.ARCHIVE_AGE_KEY }}
+        run: |
+          log="$RUNNER_TEMP/fetch-log"
+          [ -d "$log/readings" ] || exit 0
+          retry="$RUNNER_TEMP/retry"
+          key="$RUNNER_TEMP/archive-key.txt"
+          (umask 077 && printf '%s\n' "$ARCHIVE_AGE_KEY" > "$key")
+          for attempt in 1 2 3 4 5; do
+            mkdir -p "$retry/blobs"
+            cat "$log"/fetches/*.jsonl > "$retry/fetches.jsonl"
+            for sha in $(uv --no-config run --locked model-prices readings retry-pages "$log" --archive "$retry"); do
+              [ -f "$retry/blobs/$sha" ] && continue
+              aws s3 cp --quiet --endpoint-url "$R2_ENDPOINT" "s3://model-prices-pages/blobs/$sha.gz.age" - \
+                | age -d -i "$key" | gunzip > "$retry/page" && mv "$retry/page" "$retry/blobs/$sha"
+            done
+            uv --no-config run --locked model-prices readings retry "$log" --archive "$retry"
+            git -C "$log" add readings
+            git -C "$log" diff --cached --quiet && break
+            git -C "$log" commit -qm "Read again the readings a parser failed in earlier runs"
+            git -C "$log" push --quiet origin HEAD:data && break
+            # Another run pushed first: read again on its head.
+            git -C "$log" fetch --quiet origin data
+            git -C "$log" reset --quiet --hard FETCH_HEAD
+            sleep $((attempt * 5))
+          done
+          rm -f "$key"
       # Where the prices read from the pages differ from those published, for information.
       - name: Compare the readings with the published prices
         if: always()

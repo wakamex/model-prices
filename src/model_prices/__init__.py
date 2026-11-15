@@ -914,10 +914,13 @@ def main(argv: list[str] | None = None) -> int:
     reading = commands.add_parser(
         "readings", help="Record what each reader read from archived pages, or compare it with "
                          "the published prices")
-    reading.add_argument("action", choices=["fetch", "record", "diff", "changed", "shadow"],
+    reading.add_argument("action", choices=["fetch", "record", "retry", "retry-pages", "diff",
+                                            "changed", "shadow"],
                          help="fetch: fetch every page the hourly readers read into the archive "
                               "DIRECTORY; record: add readings to DIRECTORY for the runs in "
-                              "--archive; diff: list where DIRECTORY's readings differ from the "
+                              "--archive; retry: read again the failed readings whose runs "
+                              "--archive holds, as after a parser fix; retry-pages: list the "
+                              "page hashes a retry needs; diff: list where DIRECTORY's readings differ from the "
                               "published prices; changed: list the readers whose reading in "
                               "--run differs from the one before; shadow: build the snapshot "
                               "with the pricing pages' token prices from their first reading, "
@@ -938,6 +941,14 @@ def main(argv: list[str] | None = None) -> int:
             if args.archive is None:
                 parser.error("readings record needs --archive")
             print(f"recorded {readings.record(args.archive, args.directory)} readings")
+            return 0
+        if args.action in {"retry", "retry-pages"}:
+            if args.archive is None:
+                parser.error(f"readings {args.action} needs --archive")
+            if args.action == "retry-pages":
+                print("\n".join(sorted(readings.retry_pages(args.directory, args.archive))))
+            else:
+                print(f"read {readings.retry(args.archive, args.directory)} failed readings again")
             return 0
         if args.action == "shadow":
             published = json.loads(Path(SNAPSHOT_PATH).read_text())
