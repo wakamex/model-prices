@@ -4168,6 +4168,25 @@
       "output": 30.0
      },
      "valid_from": "2025-10-15T02:38:27Z"
+    },
+    {
+     "commit": "fe0cfe614c46",
+     "rates": {
+      "cache_read": 0.075,
+      "input": 0.3,
+      "modalities": {
+       "image": {
+        "output": 30.0
+       },
+       "text": {
+        "cache_read": 0.075,
+        "input": 0.3,
+        "output": 2.5
+       }
+      },
+      "output": 2.5
+     },
+     "valid_from": "2026-11-15T22:57:01Z"
     }
    ],
    "gemini-2.5-flash-image-preview": [
@@ -4700,6 +4719,26 @@
       }
      },
      "valid_from": "2026-07-23T23:30:04Z"
+    },
+    {
+     "commit": "fe0cfe614c46",
+     "rates": {
+      "input": 2.0,
+      "modalities": {
+       "image": {
+        "output": 120.0
+       },
+       "text": {
+        "input": 2.0,
+        "output": 12.0
+       }
+      },
+      "output": 12.0,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "valid_from": "2026-11-15T22:57:01Z"
     }
    ],
    "gemini-3-pro-image-preview": [
@@ -4754,6 +4793,26 @@
       }
      },
      "valid_from": "2026-07-23T23:29:57Z"
+    },
+    {
+     "commit": "fe0cfe614c46",
+     "rates": {
+      "input": 0.5,
+      "modalities": {
+       "image": {
+        "output": 60.0
+       },
+       "text": {
+        "input": 0.5,
+        "output": 3.0
+       }
+      },
+      "output": 3.0,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "valid_from": "2026-11-15T22:57:01Z"
     }
    ],
    "gemini-3.1-flash-image-preview": [
@@ -4883,6 +4942,23 @@
       "output": 30.0
      },
      "valid_from": "2026-07-23T23:30:34Z"
+    },
+    {
+     "commit": "fe0cfe614c46",
+     "rates": {
+      "input": 0.25,
+      "modalities": {
+       "image": {
+        "output": 30.0
+       },
+       "text": {
+        "input": 0.25,
+        "output": 1.5
+       }
+      },
+      "output": 1.5
+     },
+     "valid_from": "2026-11-15T22:57:01Z"
     }
    ],
    "gemini-3.1-flash-lite-preview": [
@@ -5885,6 +5961,26 @@
       }
      },
      "valid_from": "2026-10-20T01:14:04Z"
+    },
+    {
+     "commit": "fe0cfe614c46",
+     "rates": {
+      "input": 1.5,
+      "modalities": {
+       "image": {
+        "output": 30.0
+       },
+       "text": {
+        "input": 1.5,
+        "output": 7.5
+       }
+      },
+      "output": 7.5,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "valid_from": "2026-11-15T22:57:01Z"
     }
    ],
    "gemini-omni-1.1-flash": [
@@ -14569,8 +14665,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "b851a6c4c46b866c58b780e1d6fca89f0f4f7c2b",
- "source_committed_at": "2026-11-14T21:14:57Z",
+ "source_commit": "fe0cfe614c46d6dea946de1406ebe606396f94a6",
+ "source_committed_at": "2026-11-15T22:57:01Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
