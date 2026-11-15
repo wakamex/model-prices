@@ -139,6 +139,12 @@ def parse_rates(document: dict[str, Any], provider: str = "") -> dict[str, Any] 
     modalities = None if tiers else _modalities(cost, rates)
     if modalities:
         rates["modalities"] = modalities
+        # An image or video generation model's output price is that of the media it
+        # generates, as models.dev gave it before pricing text output apart; text output
+        # keeps its own price as the text modality's.
+        generated = [name for name in ("image", "video") if "output" in modalities.get(name, {})]
+        if len(generated) == 1:
+            rates["output"] = modalities[generated[0]]["output"]
 
     experimental = document.get("experimental")
     configured = experimental.get("modes") if isinstance(experimental, dict) else None

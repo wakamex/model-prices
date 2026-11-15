@@ -385,6 +385,16 @@ class PriceTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "schema 3"):
             schema1({"schema": 3})
 
+    def test_an_image_model_is_priced_by_the_images_it_generates(self):
+        # models.dev's file for Gemini 3.1 Flash Image as of 2026-11-15, which prices text
+        # output apart from the images.
+        document = {"schema": 2, "cost": {"text": {"input": {"price": 0.5}, "output": {"price": 3}},
+                                          "image": {"output": {"price": 60}}}}
+        rates = parse_rates(schema1(document))
+        self.assertEqual((rates["input"], rates["output"]), (0.5, 60.0))
+        self.assertEqual(rates["modalities"]["text"]["output"], 3)
+        self.assertEqual(rates["modalities"]["image"], {"output": 60.0})
+
     def test_explicit_cache_hits_keep_their_own_price_from_schema_2(self):
         def document(cache, tier_cache):
             return {"schema": 2, "cost": {"text": {
