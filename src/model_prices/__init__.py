@@ -591,6 +591,11 @@ def _lookup(provider: str, model: str, at: datetime, mode: str | None,
     # The first interval also covers every earlier time.
     interval = intervals[bisect_right(starts, at)]
     stored = interval["rates"] if corrected else interval.get("recorded", interval["rates"])
+    return _stored_rates(provider, model, stored)
+
+
+def _stored_rates(provider: str, model: str, stored: dict[str, Any] | None) -> Rates | None:
+    """Rates from a snapshot interval's stored rates."""
     if stored is None:
         return None
     values = _known(Rates, stored)
@@ -937,8 +942,13 @@ def main(argv: list[str] | None = None) -> int:
         if args.action == "shadow":
             published = json.loads(Path(SNAPSHOT_PATH).read_text())
             found = readings.shadow(args.directory, Path("data"), published)
-            print("\n".join(found) or "the pages' prices match the published snapshot")
-            return 0
+            print("\n".join(found.differences) or "the pages' prices match the published snapshot")
+            for line in found.unlikely:
+                print(f"unlikely    {line}")
+            for line in found.impossible:
+                print(f"impossible  {line}")
+            # An impossible rate card fails the build; an unlikely price is for a look only.
+            return 1 if found.impossible else 0
         if args.action == "changed":
             if args.run is None:
                 parser.error("readings changed needs --run")

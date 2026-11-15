@@ -32,8 +32,8 @@ from pathlib import Path
 import tomllib
 from typing import Callable, Iterable, Iterator
 
-from model_prices import _parse_time, compiler, observe, openai_regions, plan_checks
-from model_prices.checks import (MINIMUM_MODELS, SOURCES, TERMS, TOOL_PAGES, YUAN_TO_USD, Observed,
+from model_prices import _parse_time, _stored_rates, compiler, observe, openai_regions, plan_checks
+from model_prices.checks import (MINIMUM_MODELS, SOURCES, card_problems, TERMS, TOOL_PAGES, YUAN_TO_USD, Observed,
                                  _moments, compare, fetch, parse, peak_terms, tool_prices, xai_batch)
 
 LOG = "readings"
@@ -312,13 +312,99 @@ def page_entries(out: Path, data: Path) -> dict[tuple[str, str], list[dict]]:
     return found
 
 
-def shadow(out: Path, data: Path, published: dict) -> list[str]:
-    """Where the snapshot built with the pages' prices differs from `published`, from the
-    first reading on: for each model and mode, each time their rates differ, with the fields
-    that differ."""
+@dataclass(frozen=True)
+class Shadow:
+    """The snapshot built with the pages' prices, compared with the published one: where they
+    differ, rate cards in the build that are impossible, which fail it, and page prices that
+    are possible but unlikely, which are reported for a look at the page."""
+
+    differences: list[str]
+    impossible: list[str]
+    unlikely: list[str]
+
+
+def shadow(out: Path, data: Path, published: dict) -> Shadow:
+    """Build the snapshot with the pages' prices, and compare it with `published` from the
+    first reading on."""
     pages = page_entries(out, data)
     built = compiler.build(data, pages)
     start = min(entry["valid_from"] for entries in pages.values() for entry in entries)
+    return Shadow(_differences(built, published, start), impossible(built, start), unlikely(pages))
+
+
+def impossible(built: dict, start: str) -> list[str]:
+    """Each model's rate cards in the build that are impossible, at each time from `start`
+    that they change: the problems the published check fails."""
+    found = []
+    for provider, models in sorted(built["prices"].items()):
+        for model, modes in sorted(models.items()):
+            times = sorted({start} | {interval["start"] for intervals in modes.values()
+                                      for interval in intervals if interval["start"] and interval["start"] > start})
+            last = None
+            for at in times:
+                cards = {mode: _stored_rates(provider, model, _at(intervals, at)) for mode, intervals in modes.items()}
+                standard = cards.pop("standard", None)
+                problems = card_problems(standard, cards) if standard else []
+                if problems and problems != last:
+                    found.append(f"{provider}/{model} from {at}: {'; '.join(problems)}")
+                last = problems
+    return found
+
+
+# A page price outside these bounds, in dollars per million tokens, is unlikely: text input and
+# output prices, then every other price.
+TEXT_BOUNDS = (0.01, 200.0)
+OTHER_BOUNDS = (0.001, 1000.0)
+# A change by more than this factor, up or down, is unlikely.
+JUMP = 3.0
+
+
+def _prices(rates: dict, path: str = "") -> dict[str, float]:
+    """A rates entry's prices by where they sit, such as "modes.flex.tiers.272000.input"."""
+    found = {}
+    for key, value in rates.items():
+        if key == "tiers":
+            for tier in value:
+                found |= _prices({k: v for k, v in tier.items() if k != "above"}, f"{path}tiers.{tier['above']}.")
+        elif isinstance(value, dict):
+            found |= _prices(value, f"{path}{key}.")
+        elif isinstance(value, (int, float)):
+            found[path + key] = float(value)
+    return found
+
+
+def unlikely(pages: dict[tuple[str, str], list[dict]]) -> list[str]:
+    """Page prices that are possible but unlikely, each where a page first stated it: one
+    outside the bounds, or one that changed by more than JUMP times, or to or from $0."""
+    found = []
+    for (provider, model), entries in sorted(pages.items()):
+        before: dict[str, float] = {}
+        for entry in entries:
+            prices = _prices(entry["rates"])
+            for path, price in sorted(prices.items()):
+                if before.get(path) == price:
+                    continue
+                name = path.rsplit(".", 1)[-1]
+                text = name in {"input", "output"} and ".modalities." not in f".{path}"
+                low, high = TEXT_BOUNDS if text else OTHER_BOUNDS
+                reasons = []
+                if price and not low <= price <= high:
+                    reasons.append(f"outside ${low:g} to ${high:g}")
+                old = before.get(path)
+                if old is not None and (old == 0) != (price == 0):
+                    reasons.append(f"from ${old:g}")
+                elif old and (price > old * JUMP or price < old / JUMP):
+                    reasons.append(f"{price / old:.3g} times ${old:g}")
+                if reasons:
+                    found.append(f"{provider}/{model} {path} ${price:g} from {entry['valid_from']}: "
+                                 + ", ".join(reasons))
+            before |= prices
+    return found
+
+
+def _differences(built: dict, published: dict, start: str) -> list[str]:
+    """For each model and mode, each time from `start` that the built and published rates
+    differ, with the fields that differ."""
     lines = []
     for provider, models in sorted(built["prices"].items()):
         for model, modes in sorted(models.items()):

@@ -140,5 +140,23 @@ class PageBuildTests(unittest.TestCase):
         self.assertEqual(rates["cache_read"], readings._at(timeline, "2026-11-01T00:00:00Z")["cache_read"])
 
 
+    def test_an_impossible_price_fails_the_build_and_an_unlikely_one_is_reported(self):
+        pages = {("anthropic", "claude-opus-5-5"): [
+            self.page("2026-11-12T06:00:00Z", {"input": 4.0, "output": 20.0}),
+            # A per-thousand row read as per million, and cached input above input.
+            self.page("2026-11-13T06:00:00Z", {"input": 0.004, "output": 20.0, "cache_read": 0.2}),
+            self.page("2026-11-14T06:00:00Z", {"input": 4.0, "output": 0.0})]}
+        built = compiler.build(Path(__file__).parent.parent / "data", pages)
+        self.assertEqual(readings.impossible(built, "2026-11-12T06:00:00Z"),
+                         ["anthropic/claude-opus-5-5 from 2026-11-13T06:00:00Z: "
+                          "cached input $0.2 above input $0.004; "
+                          "cached input $0.1 above input $0.002 in batch"])
+        self.assertEqual(readings.unlikely(pages), [
+            "anthropic/claude-opus-5-5 input $0.004 from 2026-11-13T06:00:00Z: "
+            "outside $0.01 to $200, 0.001 times $4",
+            "anthropic/claude-opus-5-5 input $4 from 2026-11-14T06:00:00Z: 1e+03 times $0.004",
+            "anthropic/claude-opus-5-5 output $0 from 2026-11-14T06:00:00Z: from $20"])
+
+
 if __name__ == "__main__":
     unittest.main()

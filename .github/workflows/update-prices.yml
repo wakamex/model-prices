@@ -178,5 +178,6 @@ jobs:
         run: |
           [ -d "$RUNNER_TEMP/fetch-log/readings" ] || exit 0
           uv --no-config run --locked model-prices readings diff "$RUNNER_TEMP/fetch-log"
-          # The snapshot a page-first build would publish, and where it differs from today's.
+          # The snapshot a page-first build would publish, and where it differs from today's;
+          # an impossible rate card in it fails the run.
           uv --no-config run --locked model-prices readings shadow "$RUNNER_TEMP/fetch-log"

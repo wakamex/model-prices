@@ -1785,6 +1785,25 @@ def _invalid(rates: "Rates") -> list[str]:
     return found
 
 
+def card_problems(standard: "Rates", modes: dict[str, "Rates | None"]) -> list[str]:
+    """What is impossible about a model's rate cards at one time: each card's own problems,
+    and each service tier priced on the wrong side of standard."""
+    problems = _invalid(standard)
+    for mode, moded in sorted(modes.items()):
+        if moded is None:
+            continue
+        problems += [f"{problem} in {mode}" for problem in _invalid(moded)]
+        for name in ("input", "output"):
+            price, base = getattr(moded, name), getattr(standard, name)
+            if price is None or base is None:
+                continue
+            if mode in _CHEAPER_MODES and price > base + 1e-9:
+                problems.append(f"{mode} {name} ${price:g} above standard ${base:g}")
+            if mode in _DEARER_MODES and price < base - 1e-9:
+                problems.append(f"{mode} {name} ${price:g} below standard ${base:g}")
+    return problems
+
+
 def check_invariants(providers: set[str] | None, today: datetime) -> list[Result]:
     """Each published rate card that is impossible, in any mode, tier, or modality, and each
     service tier priced on the wrong side of standard; a mismatch holds the provider."""
@@ -1796,20 +1815,9 @@ def check_invariants(providers: set[str] | None, today: datetime) -> list[Result
             standard = rates(f"{provider}/{model}", at=today, provider=provider)
             if standard is None:
                 continue
-            problems = _invalid(standard)
-            for mode in sorted(set(timelines) - {"standard"}):
-                moded = rates(f"{provider}/{model}", at=today, provider=provider, mode=mode)
-                if moded is None:
-                    continue
-                problems += [f"{problem} in {mode}" for problem in _invalid(moded)]
-                for name in ("input", "output"):
-                    price, base = getattr(moded, name), getattr(standard, name)
-                    if price is None or base is None:
-                        continue
-                    if mode in _CHEAPER_MODES and price > base + 1e-9:
-                        problems.append(f"{mode} {name} ${price:g} above standard ${base:g}")
-                    if mode in _DEARER_MODES and price < base - 1e-9:
-                        problems.append(f"{mode} {name} ${price:g} below standard ${base:g}")
+            problems = card_problems(standard, {
+                mode: rates(f"{provider}/{model}", at=today, provider=provider, mode=mode)
+                for mode in sorted(set(timelines) - {"standard"})})
             if problems:
                 results.append(Result(provider, f"{provider}/{model}", "rule:invariant", None, None,
                                       "; ".join(problems), None, None, "mismatch"))
