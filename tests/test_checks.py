@@ -662,6 +662,11 @@ Batch
             "    - Fee per 1,000 calls for the web search tool:\n\n"
             "      - For the China (Beijing), US (Virginia) regions: \\$0.573411.\n"
             "      - For the Singapore region: \\$10.00.\n")), {"web_search": {10.0}})
+        # Without the limited-time agent_max policy, as on 2026-11-16, the agent policy's fee.
+        self.assertEqual(checks.tool_prices("alibaba", (
+            "  - <strong>agent policy</strong>:\n\n    - The fee per 1,000 calls is as follows:\n\n"
+            "      - For the China (Beijing), US (Virginia) regions: \\$0.573411.\n"
+            "      - For the Singapore region: \\$10.00.\n")), {"web_search": {10.0}})
         with self.assertRaisesRegex(ValueError, "page format changed"):
             checks.tool_prices("anthropic", "Web search costs money.")
         # Google's grounding row names its unit: grounded prompts on Gemini 2.5, search

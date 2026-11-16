@@ -1682,8 +1682,10 @@ def tool_prices(provider: str, page: str) -> dict[str, set[float]]:
         "xai": [("web_search", r"\| Web Search \| `web_search` \|[^|]*\| \$([0-9.]+) \|")],
         "perplexity": [("web_search", r"`web_search` is billed at \*\*\$([0-9.]+) per 1,000 invocations\*\*"),
                        ("web_search_fast", r"or \*\*\$([0-9.]+) per 1,000 invocations\*\* with `search_type: \"fast\"`")],
-        # Served as HTML or as Markdown, which lists each region as a bullet.
-        "alibaba": [("web_search", r"Fee per 1,000 calls for the web search tool:\s*(?:- )?For the China[^$]*\$[0-9.]+\.\s*(?:- )?For the Singapore region: \$([0-9]+(?:\.[0-9]+)?)")],
+        # Served as HTML or as Markdown, which lists each region as a bullet. The agent policy
+        # states its fee per call; a limited-time agent_max policy, while offered, states its
+        # web search tool's fee.
+        "alibaba": [("web_search", r"(?:Fee per 1,000 calls for the web search tool|The fee per 1,000 calls is as follows):\s*(?:- )?For the China[^$]*\$[0-9.]+\.\s*(?:- )?For the Singapore region: \$([0-9]+(?:\.[0-9]+)?)")],
     }[provider]
     found = {}
     for tool, pattern in patterns:
