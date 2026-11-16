@@ -5504,6 +5504,20 @@
      }
     ]
    },
+   "qwen4-max": {
+    "standard": [
+     {
+      "rates": {
+       "input": 1.5,
+       "output": 4.5,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+       "valid_from": "2026-11-16T02:41:19Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "qwq-plus": {
     "standard": [
      {
@@ -42690,5 +42704,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-15T23:00:55Z"
+ "updated_at": "2026-11-16T02:41:54Z"
 }

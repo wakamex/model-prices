@@ -1112,6 +1112,16 @@
      "source": "https://web.archive.org/web/20260909192820/https://www.alibabacloud.com/help/en/model-studio/model-pricing",
      "valid_from": "2026-09-09T19:28:20Z"
     }
+   ],
+   "qwen4-max": [
+    {
+     "rates": {
+      "input": 1.5,
+      "output": 4.5
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-16T02:41:19Z"
+    }
    ]
   },
   "anthropic": {
