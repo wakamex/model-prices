@@ -51,8 +51,11 @@ zh = "空闲时段价格为高峰时段价格的一半。北京时间周一至�
 utc_offset_hours = 8
 # The last date the list is known to cover. model-prices check fails 45 days before it,
 # so the next year's schedule is added before weekday holidays would price as peak.
-covers_through = "2026-12-31"
-source = "https://www.gov.cn/zhengce/content/202511/content_7047090.htm"
+covers_through = "2027-12-31"
+# The State Council's notice for each year: 2026's at
+# https://www.gov.cn/zhengce/content/202511/content_7047090.htm, and 2027's (国办发明电〔2026〕10号,
+# 2026-11-05), as Xinhua released it, below.
+source = "https://www1.xinhuanet.com/politics/20261105/f90cd6ad4df94ab4833b141e52ccfc13/c.html"
 dates = [
   "2026-01-01", "2026-01-02", "2026-01-03",
   "2026-02-15", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19",
@@ -63,6 +66,15 @@ dates = [
   "2026-09-25", "2026-09-26", "2026-09-27",
   "2026-10-01", "2026-10-02", "2026-10-03", "2026-10-04", "2026-10-05",
   "2026-10-06", "2026-10-07",
+  "2027-01-01", "2027-01-02", "2027-01-03",
+  "2027-02-05", "2027-02-06", "2027-02-07", "2027-02-08", "2027-02-09",
+  "2027-02-10", "2027-02-11", "2027-02-12", "2027-02-13",
+  "2027-04-03", "2027-04-04", "2027-04-05",
+  "2027-05-01", "2027-05-02", "2027-05-03", "2027-05-04", "2027-05-05",
+  "2027-06-09",
+  "2027-09-15",
+  "2027-10-01", "2027-10-02", "2027-10-03", "2027-10-04", "2027-10-05",
+  "2027-10-06", "2027-10-07",
 ]
 
 [[schedule]]

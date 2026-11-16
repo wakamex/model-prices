@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import io
 import re
 import json
@@ -7,6 +7,7 @@ import unittest
 from unittest import mock
 
 from html_fixtures import as_html
+import model_prices
 from model_prices import checks, main
 from model_prices.checks import Observed
 
@@ -874,7 +875,9 @@ Batch
 
     def test_holiday_calendar_must_cover_the_coming_weeks(self):
         ok, = checks.check_calendars({"deepseek"}, TODAY)
-        late, = checks.check_calendars({"deepseek"}, datetime(2026, 11, 30, tzinfo=timezone.utc))
+        # Thirty days before the calendar ends is inside the 45-day warning.
+        ends = datetime.fromisoformat(model_prices._data()["schedules"]["holidays"]["cn"]["covers_through"])
+        late, = checks.check_calendars({"deepseek"}, ends.replace(tzinfo=timezone.utc) - timedelta(days=30))
 
         self.assertEqual((ok.status, late.status), ("ok", "mismatch"))
         self.assertIn("add the next year's holidays", checks.report([late]))
