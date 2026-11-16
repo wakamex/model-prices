@@ -24,6 +24,7 @@ import subprocess
 import sys
 import tarfile
 import tempfile
+import time
 import zipfile
 
 REPOSITORY = "wakamex/model-prices"
@@ -62,6 +63,20 @@ def unpack(bundle: bytes, key: Path) -> dict[str, bytes]:
     return members
 
 
+def download(artifact: int, attempts: int = 3) -> bytes:
+    """An artifact's zip, retried after a failed request, which GitHub's API sometimes gives
+    for an artifact it serves on the next try."""
+    for attempt in range(1, attempts + 1):
+        try:
+            return subprocess.run([GH, "api", f"repos/{REPOSITORY}/actions/artifacts/{artifact}/zip"],
+                                  check=True, capture_output=True).stdout
+        except subprocess.CalledProcessError:
+            if attempt == attempts:
+                raise
+            time.sleep(30 * attempt)
+    raise AssertionError("unreachable")
+
+
 def collect(archive: Path, key: Path) -> int:
     (archive / "blobs").mkdir(parents=True, exist_ok=True)
     done_path = archive / "collected.txt"
@@ -70,8 +85,7 @@ def collect(archive: Path, key: Path) -> int:
     for item in artifacts():
         if item["name"] in done:
             continue
-        zipped = subprocess.run([GH, "api", f"repos/{REPOSITORY}/actions/artifacts/{item['id']}/zip"],
-                                check=True, capture_output=True).stdout
+        zipped = download(item["id"])
         with zipfile.ZipFile(io.BytesIO(zipped)) as package:
             members = unpack(package.read("pages.tar.age"), key)
         for name, data in members.items():

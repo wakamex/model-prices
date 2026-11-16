@@ -50,6 +50,19 @@ class ArchiveTests(unittest.TestCase):
         mkdir.assert_not_called()
 
 
+class DownloadTests(unittest.TestCase):
+    def test_a_failed_download_is_retried(self):
+        failed = subprocess.CalledProcessError(1, ["gh"])
+        done = subprocess.CompletedProcess(["gh"], 0, stdout=b"zip")
+        with mock.patch("subprocess.run", side_effect=[failed, done]), mock.patch("time.sleep") as sleep:
+            self.assertEqual(collect_pages.download(1), b"zip")
+        sleep.assert_called_once()
+        with mock.patch("subprocess.run", side_effect=failed) as run, mock.patch("time.sleep"), \
+                self.assertRaises(subprocess.CalledProcessError):
+            collect_pages.download(1)
+        self.assertEqual(run.call_count, 3)
+
+
 @unittest.skipUnless(shutil.which("age") and shutil.which("age-keygen"), "needs age")
 class CollectorTests(unittest.TestCase):
     def setUp(self):
