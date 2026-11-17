@@ -431,6 +431,32 @@
      "valid_from": "2026-11-11T04:46:14Z"
     }
    ],
+   "gpt-6.2-astra": [
+    {
+     "regions": {
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/data-residency.md",
+     "valid_from": "2026-11-17T18:08:21Z"
+    }
+   ],
+   "gpt-6.2-sol": [
+    {
+     "regions": {
+      "au": 1.1,
+      "eu": 1.1,
+      "in": 1.1,
+      "jp": 1.1,
+      "us": 1.1
+     },
+     "source": "https://developers.openai.com/api/docs/guides/data-residency.md",
+     "valid_from": "2026-11-17T18:08:21Z"
+    }
+   ],
    "gpt-image-2": [
     {
      "regions": {
