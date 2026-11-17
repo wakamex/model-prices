@@ -369,21 +369,30 @@ def schema1(document: dict[str, Any], where: str = "") -> dict[str, Any]:
                      "cost": cost, "experimental": {"modes": modes} if modes else None})
 
 
-def _date_rules(document: dict[str, Any], where: str) -> list[tuple[str, Any]]:
-    """A schema 2 file's dated price changes, as (UTC start, factor): multipliers whose only
-    condition is a start date, which take effect at 00:00 UTC on that date. Any other date
-    condition stops the build until it is handled."""
+def _day(value: str | None) -> str | None:
+    """A multiplier's date bound as a UTC time: a date takes effect at 00:00 UTC."""
+    if value is None:
+        return None
+    moment = datetime.fromisoformat(value)
+    return _utc((moment if moment.tzinfo else moment.replace(tzinfo=timezone.utc)).isoformat())
+
+
+def _date_rules(document: dict[str, Any], where: str) -> list[tuple[str | None, str | None, dict, Any]]:
+    """A schema 2 file's dated multipliers, as (UTC start, UTC end, other condition, factor):
+    one applies from its `gte` date, if any, until its `lt` date, if any, either to every
+    price or, with a service tier condition, such as OpenAI's ultrafast launch price, to that
+    tier's. Any other date condition stops the build until it is handled."""
     rules = []
     for item in (document.get("cost") or {}).get("multipliers") or []:
         when = item.get("when") or {}
         if "date" not in repr(when):
             continue
-        bounds = when.get("date") if list(when) == ["date"] else None
-        if not isinstance(bounds, dict) or list(bounds) != ["gte"]:
+        bounds = when.get("date")
+        rest = {key: value for key, value in when.items() if key != "date"}
+        if (not isinstance(bounds, dict) or not bounds or set(bounds) - {"gte", "lt"}
+                or set(rest) - {"service_tier"}):
             raise ValueError(f"{where}: unsupported date condition {when}")
-        start = datetime.fromisoformat(bounds["gte"])
-        start = start if start.tzinfo else start.replace(tzinfo=timezone.utc)
-        rules.append((_utc(start.isoformat()), item["factor"]))
+        rules.append((_day(bounds.get("gte")), _day(bounds.get("lt")), rest, item["factor"]))
     return rules
 
 
@@ -418,14 +427,19 @@ def _priced(cost: dict[str, Any], factor: Any) -> dict[str, Any]:
 
 
 def _on(document: dict[str, Any], at: str, where: str) -> dict[str, Any]:
-    """A schema 2 file as it prices requests at `at`: every dated change in effect by then
-    multiplies the prices it covers, including those a mode states."""
-    factors = [factor for start, factor in _date_rules(document, where) if start <= at]
-    if not factors:
+    """A schema 2 file as it prices requests at `at`: every dated multiplier in effect then
+    multiplies the prices it covers, including those a mode states, or its service tier's."""
+    rules = _date_rules(document, where)
+    if not rules:
         return document
+    active = [(rest, factor) for start, end, rest, factor in rules
+              if (start is None or start <= at) and (end is None or at < end)]
+    factors = [factor for rest, factor in active if not rest]
+    # A dated multiplier on a service tier applies as that tier's multiplier while in effect.
     cost = {**document["cost"], "multipliers": [
         item for item in document["cost"].get("multipliers") or []
-        if "date" not in repr(item.get("when"))]}
+        if "date" not in repr(item.get("when"))] + [
+        {"when": rest, "factor": factor} for rest, factor in active if rest]}
     modes = (document.get("experimental") or {}).get("modes") or {}
     for factor in factors:
         cost = _priced(cost, factor)
@@ -444,8 +458,8 @@ def _entries(versions: list[tuple[str, str, dict[str, Any] | None]], provider: s
     models.dev drops or moves first never enters the history. A dated entry is marked
     scheduled, since its date comes from the announcement models.dev recorded."""
     where = f"providers/{provider}/models/{model}.toml"
-    starts = {start for _, _, document in versions if document and document.get("schema") == 2
-              for start, _ in _date_rules(document, where)}
+    starts = {bound for _, _, document in versions if document and document.get("schema") == 2
+              for start, end, _, _ in _date_rules(document, where) for bound in (start, end) if bound}
     commits = {committed_at for committed_at, _, _ in versions}
     entries: list[dict[str, Any]] = []
     schemas: list[int] = []

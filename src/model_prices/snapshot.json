@@ -114,8 +114,8 @@
   }
  ],
  "models_dev": {
-  "commit": "fe0cfe614c46d6dea946de1406ebe606396f94a6",
-  "committed_at": "2026-11-15T22:57:01Z",
+  "commit": "2dbda9a2febeb5f62e116729ea0288ca75230129",
+  "committed_at": "2026-11-17T18:07:07Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -34593,6 +34593,1778 @@
      }
     ]
    },
+   "gpt-6.2-astra": {
+    "batch": [
+     {
+      "rates": null,
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 5.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 4.0,
+       "output": 20.0,
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.4,
+         "cache_write": 10.0,
+         "input": 8.0,
+         "output": 30.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2024-04-15T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 5.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 4.0,
+       "output": 20.0,
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.4,
+         "cache_write": 10.0,
+         "input": 8.0,
+         "output": 30.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2025-06-24T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 5.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 4.0,
+       "output": 20.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.4,
+         "cache_write": 10.0,
+         "input": 8.0,
+         "output": 30.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-17T18:08:21Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 5.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 4.0,
+       "output": 20.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://developers.openai.com/api/docs/pricing",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.4,
+         "cache_write": 10.0,
+         "input": 8.0,
+         "output": 30.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "start": "2027-03-01T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 5.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 4.0,
+       "output": 20.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.4,
+         "cache_write": 10.0,
+         "input": 8.0,
+         "output": 30.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-03-01T08:00:00Z"
+     }
+    ],
+    "fast": [
+     {
+      "rates": {
+       "cache_read": 0.8,
+       "cache_write": 20.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 16.0,
+       "output": 80.0,
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 1.6,
+         "cache_write": 40.0,
+         "input": 32.0,
+         "output": 120.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.8,
+       "cache_write": 20.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 16.0,
+       "output": 80.0,
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 1.6,
+         "cache_write": 40.0,
+         "input": 32.0,
+         "output": 120.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2025-06-24T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.8,
+       "cache_write": 20.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 16.0,
+       "output": 80.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 1.6,
+         "cache_write": 40.0,
+         "input": 32.0,
+         "output": 120.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-17T18:08:21Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.8000000000000002,
+       "cache_write": 20.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 16.0,
+       "output": 80.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://developers.openai.com/api/docs/pricing",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 1.6,
+         "cache_write": 40.0,
+         "input": 32.0,
+         "output": 120.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.8,
+       "cache_write": 20.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 16.0,
+       "output": 80.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 1.6,
+         "cache_write": 40.0,
+         "input": 32.0,
+         "output": 120.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-03-01T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.8,
+       "cache_write": 20.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 16.0,
+       "output": 80.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 1.6,
+         "cache_write": 40.0,
+         "input": 32.0,
+         "output": 120.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-03-01T08:00:00Z"
+     }
+    ],
+    "priority": [
+     {
+      "rates": {
+       "cache_read": 0.8,
+       "cache_write": 20.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 16.0,
+       "output": 80.0,
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 1.6,
+         "cache_write": 40.0,
+         "input": 32.0,
+         "output": 120.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.8,
+       "cache_write": 20.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 16.0,
+       "output": 80.0,
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 1.6,
+         "cache_write": 40.0,
+         "input": 32.0,
+         "output": 120.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2025-06-24T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.8,
+       "cache_write": 20.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 16.0,
+       "output": 80.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 1.6,
+         "cache_write": 40.0,
+         "input": 32.0,
+         "output": 120.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-17T18:08:21Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.8000000000000002,
+       "cache_write": 20.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 16.0,
+       "output": 80.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://developers.openai.com/api/docs/pricing",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 1.6,
+         "cache_write": 40.0,
+         "input": 32.0,
+         "output": 120.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.8,
+       "cache_write": 20.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 16.0,
+       "output": 80.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 1.6,
+         "cache_write": 40.0,
+         "input": 32.0,
+         "output": 120.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-03-01T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.8,
+       "cache_write": 20.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 16.0,
+       "output": 80.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 1.6,
+         "cache_write": 40.0,
+         "input": 32.0,
+         "output": 120.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-03-01T08:00:00Z"
+     }
+    ],
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.4,
+       "cache_write": 10.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 8.0,
+       "output": 40.0,
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.8,
+         "cache_write": 20.0,
+         "input": 16.0,
+         "output": 60.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.4,
+       "cache_write": 10.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 8.0,
+       "output": 40.0,
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.8,
+         "cache_write": 20.0,
+         "input": 16.0,
+         "output": 60.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2025-06-24T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.4,
+       "cache_write": 10.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 8.0,
+       "output": 40.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.8,
+         "cache_write": 20.0,
+         "input": 16.0,
+         "output": 60.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-17T18:08:21Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.4,
+       "cache_write": 10.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 8.0,
+       "output": 40.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://developers.openai.com/api/docs/pricing",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.8,
+         "cache_write": 20.0,
+         "input": 16.0,
+         "output": 60.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.4,
+       "cache_write": 10.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 8.0,
+       "output": 40.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.8,
+         "cache_write": 20.0,
+         "input": 16.0,
+         "output": 60.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-03-01T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.4,
+       "cache_write": 10.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 8.0,
+       "output": 40.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.8,
+         "cache_write": 20.0,
+         "input": 16.0,
+         "output": 60.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-03-01T08:00:00Z"
+     }
+    ],
+    "ultrafast": [
+     {
+      "rates": {
+       "cache_read": 1.2,
+       "cache_write": 30.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 24.0,
+       "output": 120.0,
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 2.4,
+         "cache_write": 60.0,
+         "input": 48.0,
+         "output": 180.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 1.2,
+       "cache_write": 30.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 24.0,
+       "output": 120.0,
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 2.4,
+         "cache_write": 60.0,
+         "input": 48.0,
+         "output": 180.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2025-06-24T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 1.2,
+       "cache_write": 30.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 24.0,
+       "output": 120.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 2.4,
+         "cache_write": 60.0,
+         "input": 48.0,
+         "output": 180.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-17T18:08:21Z"
+     },
+     {
+      "rates": {
+       "cache_read": 1.2,
+       "cache_write": 30.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 24.0,
+       "output": 120.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://developers.openai.com/api/docs/pricing",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 2.4,
+         "cache_write": 60.0,
+         "input": 48.0,
+         "output": 180.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 2.4,
+       "cache_write": 60.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 48.0,
+       "output": 240.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 4.8,
+         "cache_write": 120.0,
+         "input": 96.0,
+         "output": 360.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-03-01T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 2.4,
+       "cache_write": 60.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 48.0,
+       "output": 240.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 4.8,
+         "cache_write": 120.0,
+         "input": 96.0,
+         "output": 360.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-03-01T08:00:00Z"
+     }
+    ]
+   },
+   "gpt-6.2-sol": {
+    "batch": [
+     {
+      "rates": null,
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.05,
+       "cache_write": 1.25,
+       "cache_write_1h_multiple": 2.5,
+       "input": 1.0,
+       "output": 5.0,
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.1,
+         "cache_write": 2.5,
+         "input": 2.0,
+         "output": 7.5
+        }
+       ],
+       "tools": {
+        "web_search": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2024-04-15T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.05,
+       "cache_write": 1.25,
+       "cache_write_1h_multiple": 2.5,
+       "input": 1.0,
+       "output": 5.0,
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.1,
+         "cache_write": 2.5,
+         "input": 2.0,
+         "output": 7.5
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2025-06-24T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.05,
+       "cache_write": 1.25,
+       "cache_write_1h_multiple": 2.5,
+       "input": 1.0,
+       "output": 5.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.1,
+         "cache_write": 2.5,
+         "input": 2.0,
+         "output": 7.5
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-17T18:08:21Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.05,
+       "cache_write": 1.25,
+       "cache_write_1h_multiple": 2.5,
+       "input": 1.0,
+       "output": 5.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://developers.openai.com/api/docs/pricing",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.1,
+         "cache_write": 2.5,
+         "input": 2.0,
+         "output": 7.5
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "start": "2027-03-01T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.05,
+       "cache_write": 1.25,
+       "cache_write_1h_multiple": 2.5,
+       "input": 1.0,
+       "output": 5.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.1,
+         "cache_write": 2.5,
+         "input": 2.0,
+         "output": 7.5
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-03-01T08:00:00Z"
+     }
+    ],
+    "fast": [
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 5.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 4.0,
+       "output": 20.0,
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.4,
+         "cache_write": 10.0,
+         "input": 8.0,
+         "output": 30.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 5.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 4.0,
+       "output": 20.0,
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.4,
+         "cache_write": 10.0,
+         "input": 8.0,
+         "output": 30.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2025-06-24T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 5.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 4.0,
+       "output": 20.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.4,
+         "cache_write": 10.0,
+         "input": 8.0,
+         "output": 30.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-17T18:08:21Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.20000000000000004,
+       "cache_write": 5.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 4.0,
+       "output": 20.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://developers.openai.com/api/docs/pricing",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.4,
+         "cache_write": 10.0,
+         "input": 8.0,
+         "output": 30.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.2,
+       "cache_write": 5.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 4.0,
+       "output": 20.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.4,
+         "cache_write": 10.0,
+         "input": 8.0,
+         "output": 30.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-03-01T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 5.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 4.0,
+       "output": 20.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.4,
+         "cache_write": 10.0,
+         "input": 8.0,
+         "output": 30.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-03-01T08:00:00Z"
+     }
+    ],
+    "priority": [
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 5.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 4.0,
+       "output": 20.0,
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.4,
+         "cache_write": 10.0,
+         "input": 8.0,
+         "output": 30.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 5.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 4.0,
+       "output": 20.0,
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.4,
+         "cache_write": 10.0,
+         "input": 8.0,
+         "output": 30.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2025-06-24T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 5.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 4.0,
+       "output": 20.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.4,
+         "cache_write": 10.0,
+         "input": 8.0,
+         "output": 30.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-17T18:08:21Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.20000000000000004,
+       "cache_write": 5.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 4.0,
+       "output": 20.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://developers.openai.com/api/docs/pricing",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.4,
+         "cache_write": 10.0,
+         "input": 8.0,
+         "output": 30.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.2,
+       "cache_write": 5.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 4.0,
+       "output": 20.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.4,
+         "cache_write": 10.0,
+         "input": 8.0,
+         "output": 30.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-03-01T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 5.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 4.0,
+       "output": 20.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.4,
+         "cache_write": 10.0,
+         "input": 8.0,
+         "output": 30.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-03-01T08:00:00Z"
+     }
+    ],
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "cache_write": 2.5,
+       "cache_write_1h_multiple": 2.5,
+       "input": 2.0,
+       "output": 10.0,
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.2,
+         "cache_write": 5.0,
+         "input": 4.0,
+         "output": 15.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "cache_write": 2.5,
+       "cache_write_1h_multiple": 2.5,
+       "input": 2.0,
+       "output": 10.0,
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.2,
+         "cache_write": 5.0,
+         "input": 4.0,
+         "output": 15.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2025-06-24T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "cache_write": 2.5,
+       "cache_write_1h_multiple": 2.5,
+       "input": 2.0,
+       "output": 10.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.2,
+         "cache_write": 5.0,
+         "input": 4.0,
+         "output": 15.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-17T18:08:21Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "cache_write": 2.5,
+       "cache_write_1h_multiple": 2.5,
+       "input": 2.0,
+       "output": 10.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://developers.openai.com/api/docs/pricing",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.2,
+         "cache_write": 5.0,
+         "input": 4.0,
+         "output": 15.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.1,
+       "cache_write": 2.5,
+       "cache_write_1h_multiple": 2.5,
+       "input": 2.0,
+       "output": 10.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.2,
+         "cache_write": 5.0,
+         "input": 4.0,
+         "output": 15.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-03-01T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "cache_write": 2.5,
+       "cache_write_1h_multiple": 2.5,
+       "input": 2.0,
+       "output": 10.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.2,
+         "cache_write": 5.0,
+         "input": 4.0,
+         "output": 15.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-03-01T08:00:00Z"
+     }
+    ],
+    "ultrafast": [
+     {
+      "rates": {
+       "cache_read": 0.3,
+       "cache_write": 7.5,
+       "cache_write_1h_multiple": 2.5,
+       "input": 6.0,
+       "output": 30.0,
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.6,
+         "cache_write": 15.0,
+         "input": 12.0,
+         "output": 45.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.3,
+       "cache_write": 7.5,
+       "cache_write_1h_multiple": 2.5,
+       "input": 6.0,
+       "output": 30.0,
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.6,
+         "cache_write": 15.0,
+         "input": 12.0,
+         "output": 45.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2025-06-24T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.3,
+       "cache_write": 7.5,
+       "cache_write_1h_multiple": 2.5,
+       "input": 6.0,
+       "output": 30.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.6,
+         "cache_write": 15.0,
+         "input": 12.0,
+         "output": 45.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2026-11-17T18:07:07Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-17T18:08:21Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.3,
+       "cache_write": 7.5,
+       "cache_write_1h_multiple": 2.5,
+       "input": 6.0,
+       "output": 30.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://developers.openai.com/api/docs/pricing",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 0.6,
+         "cache_write": 15.0,
+         "input": 12.0,
+         "output": 45.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.6,
+       "cache_write": 15.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 12.0,
+       "output": 60.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 1.2,
+         "cache_write": 30.0,
+         "input": 24.0,
+         "output": 90.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-03-01T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.6,
+       "cache_write": 15.0,
+       "cache_write_1h_multiple": 2.5,
+       "input": 12.0,
+       "output": 60.0,
+       "regions": {
+        "au": 1.1,
+        "eu": 1.1,
+        "in": 1.1,
+        "jp": 1.1,
+        "us": 1.1
+       },
+       "source": "https://github.com/sst/models.dev/commit/2dbda9a2febe",
+       "tiers": [
+        {
+         "above": 272000,
+         "cache_read": 1.2,
+         "cache_write": 30.0,
+         "input": 24.0,
+         "output": 90.0
+        }
+       ],
+       "tools": {
+        "web_search": 10.0,
+        "web_search_preview": 10.0
+       },
+       "valid_from": "2027-03-01T00:00:00Z",
+       "valid_from_basis": "scheduled"
+      },
+      "start": "2027-03-01T08:00:00Z"
+     }
+    ]
+   },
    "gpt-audio": {
     "standard": [
      {
@@ -42733,5 +44505,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-16T02:45:40Z"
+ "updated_at": "2026-11-17T18:17:19Z"
 }

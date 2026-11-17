@@ -10240,6 +10240,288 @@
      "valid_from": "2026-10-26T18:32:23Z"
     }
    ],
+   "gpt-6.2-astra": [
+    {
+     "commit": "2dbda9a2febe",
+     "rates": {
+      "cache_read": 0.4,
+      "cache_write": 10.0,
+      "input": 8.0,
+      "modes": {
+       "fast": {
+        "cache_read": 0.8,
+        "cache_write": 20.0,
+        "input": 16.0,
+        "output": 80.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 1.6,
+          "cache_write": 40.0,
+          "input": 32.0,
+          "output": 120.0
+         }
+        ]
+       },
+       "priority": {
+        "cache_read": 0.8,
+        "cache_write": 20.0,
+        "input": 16.0,
+        "output": 80.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 1.6,
+          "cache_write": 40.0,
+          "input": 32.0,
+          "output": 120.0
+         }
+        ]
+       },
+       "ultrafast": {
+        "cache_read": 1.2,
+        "cache_write": 30.0,
+        "input": 24.0,
+        "output": 120.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 2.4,
+          "cache_write": 60.0,
+          "input": 48.0,
+          "output": 180.0
+         }
+        ]
+       }
+      },
+      "output": 40.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 0.8,
+        "cache_write": 20.0,
+        "input": 16.0,
+        "output": 60.0
+       }
+      ],
+      "tools": {
+       "web_search": 10.0
+      }
+     },
+     "valid_from": "2026-11-17T18:07:07Z"
+    },
+    {
+     "commit": "2dbda9a2febe",
+     "rates": {
+      "cache_read": 0.4,
+      "cache_write": 10.0,
+      "input": 8.0,
+      "modes": {
+       "fast": {
+        "cache_read": 0.8,
+        "cache_write": 20.0,
+        "input": 16.0,
+        "output": 80.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 1.6,
+          "cache_write": 40.0,
+          "input": 32.0,
+          "output": 120.0
+         }
+        ]
+       },
+       "priority": {
+        "cache_read": 0.8,
+        "cache_write": 20.0,
+        "input": 16.0,
+        "output": 80.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 1.6,
+          "cache_write": 40.0,
+          "input": 32.0,
+          "output": 120.0
+         }
+        ]
+       },
+       "ultrafast": {
+        "cache_read": 2.4,
+        "cache_write": 60.0,
+        "input": 48.0,
+        "output": 240.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 4.8,
+          "cache_write": 120.0,
+          "input": 96.0,
+          "output": 360.0
+         }
+        ]
+       }
+      },
+      "output": 40.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 0.8,
+        "cache_write": 20.0,
+        "input": 16.0,
+        "output": 60.0
+       }
+      ],
+      "tools": {
+       "web_search": 10.0
+      }
+     },
+     "scheduled": true,
+     "valid_from": "2027-03-01T00:00:00Z"
+    }
+   ],
+   "gpt-6.2-sol": [
+    {
+     "commit": "2dbda9a2febe",
+     "rates": {
+      "cache_read": 0.1,
+      "cache_write": 2.5,
+      "input": 2.0,
+      "modes": {
+       "fast": {
+        "cache_read": 0.2,
+        "cache_write": 5.0,
+        "input": 4.0,
+        "output": 20.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.4,
+          "cache_write": 10.0,
+          "input": 8.0,
+          "output": 30.0
+         }
+        ]
+       },
+       "priority": {
+        "cache_read": 0.2,
+        "cache_write": 5.0,
+        "input": 4.0,
+        "output": 20.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.4,
+          "cache_write": 10.0,
+          "input": 8.0,
+          "output": 30.0
+         }
+        ]
+       },
+       "ultrafast": {
+        "cache_read": 0.3,
+        "cache_write": 7.5,
+        "input": 6.0,
+        "output": 30.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.6,
+          "cache_write": 15.0,
+          "input": 12.0,
+          "output": 45.0
+         }
+        ]
+       }
+      },
+      "output": 10.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 0.2,
+        "cache_write": 5.0,
+        "input": 4.0,
+        "output": 15.0
+       }
+      ],
+      "tools": {
+       "web_search": 10.0
+      }
+     },
+     "valid_from": "2026-11-17T18:07:07Z"
+    },
+    {
+     "commit": "2dbda9a2febe",
+     "rates": {
+      "cache_read": 0.1,
+      "cache_write": 2.5,
+      "input": 2.0,
+      "modes": {
+       "fast": {
+        "cache_read": 0.2,
+        "cache_write": 5.0,
+        "input": 4.0,
+        "output": 20.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.4,
+          "cache_write": 10.0,
+          "input": 8.0,
+          "output": 30.0
+         }
+        ]
+       },
+       "priority": {
+        "cache_read": 0.2,
+        "cache_write": 5.0,
+        "input": 4.0,
+        "output": 20.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.4,
+          "cache_write": 10.0,
+          "input": 8.0,
+          "output": 30.0
+         }
+        ]
+       },
+       "ultrafast": {
+        "cache_read": 0.6,
+        "cache_write": 15.0,
+        "input": 12.0,
+        "output": 60.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 1.2,
+          "cache_write": 30.0,
+          "input": 24.0,
+          "output": 90.0
+         }
+        ]
+       }
+      },
+      "output": 10.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 0.2,
+        "cache_write": 5.0,
+        "input": 4.0,
+        "output": 15.0
+       }
+      ],
+      "tools": {
+       "web_search": 10.0
+      }
+     },
+     "scheduled": true,
+     "valid_from": "2027-03-01T00:00:00Z"
+    }
+   ],
    "gpt-audio": [
     {
      "commit": "efd88a768e7f",
@@ -14647,6 +14929,20 @@
     },
     "input": 1
    },
+   "gpt-6.2-astra": {
+    "cache_write": {
+     "12h": 20,
+     "30m": 10
+    },
+    "input": 8
+   },
+   "gpt-6.2-sol": {
+    "cache_write": {
+     "12h": 5,
+     "30m": 2.5
+    },
+    "input": 2
+   },
    "gpt-daybreak-blue-latest": {
     "cache_write": {
      "12h": 10,
@@ -14665,8 +14961,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "fe0cfe614c46d6dea946de1406ebe606396f94a6",
- "source_committed_at": "2026-11-15T22:57:01Z",
+ "source_commit": "2dbda9a2febeb5f62e116729ea0288ca75230129",
+ "source_committed_at": "2026-11-17T18:07:07Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",

@@ -1266,3 +1266,38 @@ cache_write = 0.0
 replaces = {}
 source = "https://docs.devin.ai/desktop/models"
 note = "Devin's models page, Enterprise (ACUs) tab, on 2026-11-12: \"SWE-2 costs $0.50/1M input, $2.50/1M output, and $0.05/1M cache reads through December 31, 2026 (Pacific time). List pricing ($3.00 input, $15.00 output, and $0.30 cache reads per million tokens) applies afterward.\" Pacific time is UTC-8 on that date."
+
+# GPT-6.2's Ultrafast launch price ends at midnight Pacific time, 8 hours after the UTC date
+# models.dev gives.
+
+[[correction]]
+provider = "openai"
+model = "gpt-6.2-astra"
+valid_from = "2027-03-01T00:00:00Z"
+valid_until = "2027-03-01T08:00:00Z"
+input = 8.0
+output = 40.0
+cache_read = 0.4
+cache_write = 10.0
+tiers = [{ above = 272000, input = 16.0, output = 60.0, cache_read = 0.8, cache_write = 20.0 }]
+modes = { ultrafast = { input = 24.0, output = 120.0, cache_read = 1.2, cache_write = 30.0, tiers = [{ above = 272000, input = 48.0, output = 180.0, cache_read = 2.4, cache_write = 60.0 }] } }
+regions = { au = 1.1, eu = 1.1, in = 1.1, jp = 1.1, us = 1.1 }
+tools = { web_search = 10.0 }
+source = "https://developers.openai.com/api/docs/pricing"
+note = "OpenAI's pricing page, on 2026-11-17: \"For GPT-6.2 Astra and GPT-6.2 Sol, Ultrafast costs 3 times the Standard rate through February 28, 2027, and 6 times the Standard rate starting March 1, 2027 (Pacific time).\" models.dev's multipliers change on 2027-03-01, which model-prices applies at 00:00 UTC; Pacific midnight is 08:00 UTC, so until then Ultrafast keeps its launch price. The standard rates are models.dev's."
+
+[[correction]]
+provider = "openai"
+model = "gpt-6.2-sol"
+valid_from = "2027-03-01T00:00:00Z"
+valid_until = "2027-03-01T08:00:00Z"
+input = 2.0
+output = 10.0
+cache_read = 0.1
+cache_write = 2.5
+tiers = [{ above = 272000, input = 4.0, output = 15.0, cache_read = 0.2, cache_write = 5.0 }]
+modes = { ultrafast = { input = 6.0, output = 30.0, cache_read = 0.3, cache_write = 7.5, tiers = [{ above = 272000, input = 12.0, output = 45.0, cache_read = 0.6, cache_write = 15.0 }] } }
+regions = { au = 1.1, eu = 1.1, in = 1.1, jp = 1.1, us = 1.1 }
+tools = { web_search = 10.0 }
+source = "https://developers.openai.com/api/docs/pricing"
+note = "OpenAI's pricing page, on 2026-11-17: \"For GPT-6.2 Astra and GPT-6.2 Sol, Ultrafast costs 3 times the Standard rate through February 28, 2027, and 6 times the Standard rate starting March 1, 2027 (Pacific time).\" models.dev's multipliers change on 2027-03-01, which model-prices applies at 00:00 UTC; Pacific midnight is 08:00 UTC, so until then Ultrafast keeps its launch price. The standard rates are models.dev's."

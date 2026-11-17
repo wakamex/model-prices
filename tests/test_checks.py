@@ -144,14 +144,38 @@ class CheckTests(unittest.TestCase):
 | --- | --- | --- | --- |
 | gpt-4.1 | $1.00 | $4.00 | $0.25 |
 """
-        found = {(item.model, item.field, item.above): item.value
-                 for item in checks.parse_openai(page, TODAY)}
+        parsed = checks.parse_openai(page, TODAY)
+        found = {(item.model, item.field, item.above): item.value for item in parsed if item.mode is None}
 
         self.assertEqual(found[("gpt-6.1-sol", "cache_write", None)], 2.5)
         self.assertEqual(found[("gpt-6.1-sol", "cache_write_1h", 272_000)], 10)
         self.assertNotIn(("gpt-5.5", "cache_write", None), found)
-        # The section's plain table is read too, and the Batch section is not.
+        # The section's plain table is read too, and the Batch section's table is batch.
         self.assertEqual(found[("gpt-4.1", "input", None)], 2)
+        self.assertIn(("gpt-4.1", "input", 1.0), {(item.model, item.field, item.value)
+                                                  for item in parsed if item.mode == "batch"})
+
+    def test_openai_parser_reads_flex_and_ultrafast_launch_sections(self):
+        # The layout of 2026-11-17: Flex is its own section, and GPT-6.2's Ultrafast launch
+        # price is followed by its list price from a date in Pacific time.
+        row = "| gpt-6.2-astra | $24.00 | $120.00 | $1.20 |"
+        page = "\n".join([
+            "### Standard pricing data", "", "| Model | Input | Output | Cached input |", "| --- | --- | --- | --- |",
+            "| gpt-6.2-astra | $8.00 | $40.00 | $0.40 |", "",
+            "### Flex pricing data", "", "| Model | Input | Output | Cached input |", "| --- | --- | --- | --- |",
+            "| gpt-6-astra | $5.00 | $25.00 | $0.50 |", "",
+            "For GPT-6.2 Astra, Ultrafast costs 3 times the Standard rate through February 28, 2027, "
+            "and 6 times the Standard rate starting March 1, 2027 (Pacific time).", "",
+            "### Ultrafast promotion pricing data", "", "| Model | Input | Output | Cached input |",
+            "| --- | --- | --- | --- |", row, "",
+            "### Ultrafast list pricing data", "", "| Model | Input | Output | Cached input |",
+            "| --- | --- | --- | --- |", "| gpt-6.2-astra | $48.00 | $240.00 | $2.40 |", ""])
+        found = {(item.mode, item.at): item.value for item in checks.parse_openai(page, TODAY)
+                 if item.field == "input"}
+        self.assertEqual(found, {(None, None): 8.0, ("flex", None): 5.0, ("ultrafast", None): 24.0,
+                                 ("ultrafast", "2027-03-01T08:00:00Z"): 48.0})
+        with self.assertRaisesRegex(ValueError, "no start date"):
+            checks.parse_openai(page.replace("(Pacific time)", ""), TODAY)
 
     def test_moonshot_parser_reads_tooltip_titles_and_linked_models(self):
         # The 2026-10-23 layout: options before columns, titles in tooltips, model names in

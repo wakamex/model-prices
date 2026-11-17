@@ -18,6 +18,7 @@ from typing import Callable, Iterable
 import urllib.error
 import urllib.parse
 import urllib.request
+from zoneinfo import ZoneInfo
 
 from model_prices import (_data, _ids, _parse_time, _period, _schedule, archive, genai_prices, rates,
                           resolve)
@@ -157,19 +158,31 @@ def parse_anthropic(text: str, today: datetime) -> list[Observed]:
 
 
 def parse_openai(text: str, today: datetime) -> list[Observed]:
-    """Read every table in the page's first "Standard pricing data" section, and the Batch
-    tables of the "Batch pricing data" section after it: one with short and long context
-    columns, and one with plain Input, Output, and Cached input columns."""
+    """Read every table of the page's first pricing section by service tier: Standard, Batch,
+    Flex, Fast (the priority tier), and Ultrafast. Flex is its own section, or a Flex table
+    within the Batch section as the page gave it until November 2026. A model whose
+    Ultrafast price is a launch price gives it in the "Ultrafast promotion" section, and the
+    price that follows in the "Ultrafast list" section, which applies from the date the page
+    states in Pacific time."""
     found = []
     section = None
+    listed = re.search(r"times the Standard rate starting ([A-Z][a-z]+ \d{1,2}, \d{4}) \(Pacific time\)", text)
     for headings, header, rows in _markdown_tables(text):
         if section not in (None, headings.get(2)):
             break
-        # The Batch section holds a Batch and a Flex table; Fast is the priority tier.
-        mode = {"Standard pricing data": (None,), "Fast pricing data": ("priority",),
-                "Ultrafast pricing data": ("ultrafast",)}.get(headings.get(3, ""))
-        if headings.get(3) == "Batch pricing data":
+        mode = {"Standard pricing data": (None,), "Batch pricing data": ("batch",),
+                "Flex pricing data": ("flex",), "Fast pricing data": ("priority",),
+                "Ultrafast pricing data": ("ultrafast",),
+                "Ultrafast promotion pricing data": ("ultrafast",)}.get(headings.get(3, ""))
+        if headings.get(3) == "Batch pricing data" and headings.get(4):
             mode = {"Batch": ("batch",), "Flex": ("flex",)}.get(headings.get(4, ""))
+        at = None
+        if headings.get(3) == "Ultrafast list pricing data":
+            if listed is None:
+                raise ValueError("openai: no start date for the Ultrafast list prices; the page format changed")
+            start = datetime.strptime(listed.group(1), "%B %d, %Y").replace(tzinfo=ZoneInfo("America/Los_Angeles"))
+            at = start.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
+            mode = ("ultrafast",)
         if mode is None:
             continue
         section = headings.get(2)
@@ -186,7 +199,7 @@ def parse_openai(text: str, today: datetime) -> list[Observed]:
                 field = {"input": "input", "cached input": "cache_read",
                          "cache writes": "cache_write", "30m write": "cache_write",
                          "12h write": "cache_write_1h", "output": "output"}[kind]
-                found.append(Observed("openai", model, field, value, mode=mode[0],
+                found.append(Observed("openai", model, field, value, mode=mode[0], at=at,
                                       above=272_000 if span == "Long" else None))
     return found + _openai_by_modality(text)
 

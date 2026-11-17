@@ -15,7 +15,7 @@ import warnings
 
 import model_prices
 from model_prices import Rates, Tier, compiler, cost, main, rates, rates_between, resolve
-from model_prices.backfill import _date_rules, _tracked, build, changed_providers, hold, parse_rates, schema1, write
+from model_prices.backfill import _date_rules, _on, _tracked, build, changed_providers, hold, parse_rates, schema1, write
 
 DATA = Path(__file__).resolve().parent.parent / "data"
 
@@ -449,9 +449,29 @@ class PriceTests(unittest.TestCase):
                          ["2026-10-20T10:00:00Z", "2027-02-01T00:00:00Z"])
         # Any other date condition stops the build until it is handled.
         window = {"schema": 2, "cost": {"multipliers": [
-            {"when": {"date": {"lt": "2027-01-01"}}, "factor": 2}]}}
+            {"when": {"date": {"gt": "2027-01-01"}}, "factor": 2}]}}
         with self.assertRaisesRegex(ValueError, "unsupported date condition"):
             _date_rules(window, "x")
+        regional = {"schema": 2, "cost": {"multipliers": [
+            {"when": {"region": {"equals": "us"}, "date": {"lt": "2027-01-01"}}, "factor": 2}]}}
+        with self.assertRaisesRegex(ValueError, "unsupported date condition"):
+            _date_rules(regional, "x")
+        # A service tier's price can change on a date: OpenAI's ultrafast launch price for
+        # gpt-6.2-astra, as models.dev's file gives it on 2026-11-17, is 3 times standard
+        # before 2027-03-01 and 6 times from then.
+        astra = {"schema": 2, "cost": {
+            "text": {"input": {"price": 8}, "output": {"price": 40}},
+            "multipliers": [
+                {"when": {"service_tier": {"equals": "ultrafast"}, "date": {"lt": "2027-03-01"}},
+                 "factor": {"text": 3}},
+                {"when": {"service_tier": {"equals": "ultrafast"}, "date": {"gte": "2027-03-01"}},
+                 "factor": {"text": 6}}]}}
+        self.assertEqual([start_end[:2] for start_end in _date_rules(astra, "x")],
+                         [(None, "2027-03-01T00:00:00Z"), ("2027-03-01T00:00:00Z", None)])
+        ultrafast = {at: parse_rates(schema1(_on(astra, at, "x")))["modes"]["ultrafast"]
+                     for at in ("2027-02-28T23:59:59Z", "2027-03-01T00:00:00Z")}
+        self.assertEqual([(prices["input"], prices["output"]) for prices in ultrafast.values()],
+                         [(24.0, 120.0), (48.0, 240.0)])
         # The snapshot labels a scheduled change, and prices requests by it from its date.
         argon = rates("gemini-4-argon", at="2026-12-02")
         self.assertEqual((argon.input, argon.valid_from_basis), (4.0, "scheduled"))
