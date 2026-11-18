@@ -277,6 +277,8 @@ def _merged(base: dict[str, Any], stated: dict[str, Any]) -> dict[str, Any]:
             for tier in value:
                 tiers[tier["above"]] = {**tiers.get(tier["above"], {}), **tier}
             merged["tiers"] = [tiers[above] for above in sorted(tiers)]
+        elif key == "tools":
+            merged[key] = {**base.get(key, {}), **value}
         elif key in {"modes", "modalities"}:
             merged[key] = {**base.get(key, {}), **{name: _merged(base.get(key, {}).get(name, {}), rates)
                                                    for name, rates in value.items()}}

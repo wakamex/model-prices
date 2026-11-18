@@ -17187,6 +17187,9 @@
        "input": 1.5,
        "output": 7.5,
        "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+       "tools": {
+        "web_search": 14.0
+       },
        "valid_from": "2026-11-18T21:09:18Z",
        "valid_from_basis": "first observed"
       },
@@ -17200,6 +17203,9 @@
        "input": 1.5,
        "output": 7.5,
        "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+       "tools": {
+        "web_search": 14.0
+       },
        "valid_from": "2026-11-18T21:09:18Z",
        "valid_from_basis": "first observed"
       },
@@ -17213,6 +17219,9 @@
        "input": 5.4,
        "output": 27.0,
        "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+       "tools": {
+        "web_search": 14.0
+       },
        "valid_from": "2026-11-18T21:09:18Z",
        "valid_from_basis": "first observed"
       },
@@ -17226,6 +17235,9 @@
        "input": 3.0,
        "output": 15.0,
        "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+       "tools": {
+        "web_search": 14.0
+       },
        "valid_from": "2026-11-18T21:09:18Z",
        "valid_from_basis": "first observed"
       },
@@ -44563,5 +44575,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-18T21:09:51Z"
+ "updated_at": "2026-11-18T21:17:53Z"
 }

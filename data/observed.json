@@ -1866,7 +1866,10 @@
         "output": 27.0
        }
       },
-      "output": 15.0
+      "output": 15.0,
+      "tools": {
+       "web_search": 14.0
+      }
      },
      "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
      "valid_from": "2026-11-18T21:09:18Z"

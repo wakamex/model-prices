@@ -702,7 +702,7 @@ Batch
             "openai": "| Web search | Web search (incl. images) | $10.00 / 1k calls + Search content tokens billed at model rates. |\n"
                       "| Web search | Web search preview (reasoning models, including `gpt-5`, `o-series`) | $10.00 / 1k calls + tokens. |\n"
                       "| Web search | Web search preview (non-reasoning models) | $25.00 / 1k calls + Search content tokens are free. |",
-            "anthropic": "Web search is available on the Claude API for **$10 USD per 1,000 searches**, plus standard token costs.",
+            "anthropic": "On the Claude API, web search costs **$10 USD per 1,000 searches**, plus standard token costs.",
             "xai": "| Web Search | `web_search` | Search the internet and browse web pages | $5 |",
             "perplexity": "`web_search` is billed at **$2.50 per 1,000 invocations**, or **$1.00 per 1,000 invocations** with `search_type: \"fast\"`.",
             "alibaba": "<p>Fee per 1,000 calls for the web search tool:</p><ul><li>For the China (Beijing) regions: $0.573411.</li><li>For the Singapore region: $10.00.</li></ul>",

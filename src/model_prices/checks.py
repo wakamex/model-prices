@@ -1703,7 +1703,7 @@ def tool_prices(provider: str, page: str) -> dict[str, set[float]]:
     patterns = {
         "openai": [("web_search", r"\| Web search \| Web search \(incl\. images\) \| \$([0-9.]+) / 1k calls"),
                    ("web_search_preview", r"\| Web search \| Web search preview \([^)]*\) \| \$([0-9.]+) / 1k calls")],
-        "anthropic": [("web_search", r"Web search is available on the Claude API for \*\*\$([0-9.]+) USD per 1,000 searches")],
+        "anthropic": [("web_search", r"(?:Web search is available on the Claude API for|On the Claude API, web search costs) \*\*\$([0-9.]+) USD per 1,000 searches")],
         "xai": [("web_search", r"\| Web Search \| `web_search` \|[^|]*\| \$([0-9.]+) \|")],
         "perplexity": [("web_search", r"`web_search` is billed at \*\*\$([0-9.]+) per 1,000 invocations\*\*"),
                        ("web_search_fast", r"or \*\*\$([0-9.]+) per 1,000 invocations\*\* with `search_type: \"fast\"`")],

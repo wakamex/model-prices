@@ -208,5 +208,15 @@ class ObserveTests(unittest.TestCase):
         self.assertEqual(resolve("inkling-xhigh"), ("thinkingmachines", "thinkingmachines/Inkling"))
 
 
+class StatedRatesTests(unittest.TestCase):
+    def test_a_tool_fee_a_page_states_for_a_model_is_kept(self):
+        # Gemini 4 Neon's page row, as Google listed it before models.dev did on 2026-11-18.
+        items = [checks.Observed("google", "gemini-4-neon", "input", 3.0),
+                 checks.Observed("google", "gemini-4-neon", "output", 15.0),
+                 checks.Observed("google", "gemini-4-neon", "tool:web_search", 14.0)]
+        self.assertEqual(observe.stated_rates("google", items)["gemini-4-neon"],
+                         {"input": 3.0, "output": 15.0, "tools": {"web_search": 14.0}})
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -212,14 +212,18 @@ def read_checked(provider: str, data: Path, now: datetime,
 def stated_rates(provider: str, items: Iterable[checks.Observed],
                  complete: bool = True) -> dict[str, dict[str, Any]]:
     """The rates a pricing page states for each of the provider's own models, as a models.dev
-    entry gives them: base prices, long-context tiers, modes, and modalities. Prices for a
-    stated time and tool fees are left out. With `complete`, a model priced for input alone,
+    entry gives them: base prices, long-context tiers, modes, modalities, and tool fees. Prices
+    for a stated time are left out. With `complete`, a model priced for input alone,
     such as an embedding model, costs $0 for output, and one without an input and output price
     is left out; without it, only the prices the page states are given, to merge over others."""
     own = re.compile(OWN_MODELS.get(provider, ".*"))
     found: dict[str, dict[str, Any]] = {}
     for item in items:
         model = item.model
+        # A tool fee a page states per model, as Google's grounding row, applies in every mode.
+        if item.field.startswith("tool:") and not item.at and not item.mode and own.fullmatch(model):
+            found.setdefault(model, {}).setdefault("tools", {})[item.field[5:]] = item.value
+            continue
         if item.at or item.field not in checks.FIELDS or not own.fullmatch(model):
             continue
         rates = found.setdefault(model, {})
