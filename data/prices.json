@@ -5761,6 +5761,32 @@
      "valid_from": "2026-11-12T18:23:38Z"
     }
    ],
+   "gemini-4-neon": [
+    {
+     "commit": "af07617a53ad",
+     "rates": {
+      "cache_read": 0.15,
+      "input": 3.0,
+      "modes": {
+       "flex": {
+        "cache_read": 0.075,
+        "input": 1.5,
+        "output": 7.5
+       },
+       "priority": {
+        "cache_read": 0.27,
+        "input": 5.4,
+        "output": 27.0
+       }
+      },
+      "output": 15.0,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "valid_from": "2026-11-18T22:06:46Z"
+    }
+   ],
    "gemini-decision-1": [
     {
      "commit": "9ca20fdfe23f",
@@ -14961,8 +14987,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "4e85ae8852cca42103ddb3f5447263d2048cc6d4",
- "source_committed_at": "2026-11-18T18:14:08Z",
+ "source_commit": "af07617a53ad7356cb355ce5a4fcc7e30efffb92",
+ "source_committed_at": "2026-11-18T22:06:46Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",

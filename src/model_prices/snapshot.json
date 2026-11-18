@@ -114,8 +114,8 @@
   }
  ],
  "models_dev": {
-  "commit": "4e85ae8852cca42103ddb3f5447263d2048cc6d4",
-  "committed_at": "2026-11-18T18:14:08Z",
+  "commit": "af07617a53ad7356cb355ce5a4fcc7e30efffb92",
+  "committed_at": "2026-11-18T22:06:46Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -17194,6 +17194,20 @@
        "valid_from_basis": "first observed"
       },
       "start": "2025-07-07T00:00:00Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.075,
+       "input": 1.5,
+       "output": 7.5,
+       "source": "https://github.com/sst/models.dev/commit/af07617a53ad",
+       "tools": {
+        "web_search": 14.0
+       },
+       "valid_from": "2026-11-18T22:06:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-18T22:06:46Z"
      }
     ],
     "flex": [
@@ -17210,6 +17224,20 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.075,
+       "input": 1.5,
+       "output": 7.5,
+       "source": "https://github.com/sst/models.dev/commit/af07617a53ad",
+       "tools": {
+        "web_search": 14.0
+       },
+       "valid_from": "2026-11-18T22:06:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-18T22:06:46Z"
      }
     ],
     "priority": [
@@ -17226,6 +17254,20 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.27,
+       "input": 5.4,
+       "output": 27.0,
+       "source": "https://github.com/sst/models.dev/commit/af07617a53ad",
+       "tools": {
+        "web_search": 14.0
+       },
+       "valid_from": "2026-11-18T22:06:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-18T22:06:46Z"
      }
     ],
     "standard": [
@@ -17242,6 +17284,20 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.15,
+       "input": 3.0,
+       "output": 15.0,
+       "source": "https://github.com/sst/models.dev/commit/af07617a53ad",
+       "tools": {
+        "web_search": 14.0
+       },
+       "valid_from": "2026-11-18T22:06:46Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-18T22:06:46Z"
      }
     ]
    },
@@ -44575,5 +44631,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-18T21:17:53Z"
+ "updated_at": "2026-11-18T22:07:54Z"
 }
