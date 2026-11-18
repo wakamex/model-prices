@@ -155,6 +155,37 @@ class CheckTests(unittest.TestCase):
         self.assertIn(("gpt-4.1", "input", 1.0), {(item.model, item.field, item.value)
                                                   for item in parsed if item.mode == "batch"})
 
+    def test_alibaba_parser_reads_its_markdown_page(self):
+        # The layout of 2026-11-18: reworded columns, a table whose header row opens its body,
+        # and older models that leave out the Pattern cell.
+        def table(*rows):
+            cells = lambda row: "<tr>" + "".join(f"<td>{cell}</td>" for cell in row) + "</tr>"
+            return "<table><tbody>" + "".join(map(cells, rows)) + "</tbody></table>"
+
+        titles = ["Model ID", "Service Deployment Scope", "Pattern", "Input token range per request",
+                  "Input unit price (per million tokens)", "Output unit price (per million tokens)"]
+        page = "\n".join([
+            "## Text Generation - Qwen", '<Tab title="Singapore">',
+            table(titles,
+                  ["qwen3.8-flash", "International", "Non-thinking and thinking modes", "0<Token≤1M", "\\$0.15", "\\$0.47"],
+                  ["qwen-flash", "International", "0<Token≤256K", "\\$0.05", "\\$0.4"],
+                  ["qwen-flash", "International", "256K<Token≤1M", "\\$0.25", "\\$2"],
+                  ["qwen3.7-plus", "International", "-", "0<Token≤256K", "Original\\$0.4 (20% off for a limited time)", "\\$1.6"],
+                  ["[kimi-k3.1-pro](/help/zh/model-studio/kimi-k3-1-pro)", "International", "-", "0", "\\$2", "\\$10"],
+                  ["deepseek-flash", "International", "-", "0", "Peak \\$0.3 Off-peak \\$0.15", "\\$1"]),
+            "</Tab>"])
+        found = {(item.model, item.field, item.above): item.value
+                 for item in checks.parse_alibaba(page, TODAY, PAGES.__getitem__)}
+        self.assertEqual(found[("qwen3.8-flash", "output", None)], 0.47)
+        self.assertEqual(found[("qwen-flash", "input", None)], 0.05)
+        self.assertEqual(found[("qwen-flash", "output", 256_000)], 2)
+        self.assertEqual(found[("qwen3.7-plus", "input", None)], 0.32)
+        self.assertEqual(found[("kimi-k3.1-pro", "input", None)], 2)
+        self.assertNotIn(("deepseek-flash", "input", None), found)
+        short = page.replace("<td>\\$0.47</td>", "").replace("<td>0<Token≤1M</td>", "")
+        with self.assertRaisesRegex(ValueError, "4 cells|5 cells"):
+            checks.parse_alibaba(short, TODAY, PAGES.__getitem__)
+
     def test_openai_parser_reads_flex_and_ultrafast_launch_sections(self):
         # The layout of 2026-11-17: Flex is its own section, and GPT-6.2's Ultrafast launch
         # price is followed by its list price from a date in Pacific time.

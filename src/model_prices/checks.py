@@ -464,8 +464,8 @@ def parse_alibaba(text: str, today: datetime, get: Callable[[str], str]) -> list
     """Read text-generation prices for the Singapore (international) deployment, which
     models.dev's Alibaba provider uses, with cache prices from the cache page's rules.
 
-    A table that splits input prices by modality is skipped, as is a cell that prices busy
-    and idle hours separately. Output is the non-thinking price, or for a thinking-only
+    A table that splits input prices by modality is skipped, as is a cell that prices peak
+    and off-peak hours separately. Output is the non-thinking price, or for a thinking-only
     model its thinking price; a hybrid model's thinking price is its `thinking` mode output.
     A limited-time discount gives the price charged while it lasts.
     """
@@ -481,22 +481,34 @@ def parse_alibaba(text: str, today: datetime, get: Callable[[str], str]) -> list
         if match.group(3) is not None or match.group(4) is not None:
             tab = (match.group(3) or match.group(4)).strip()
             continue
-        if not heading.startswith("Text generation") or tab != "Singapore":
+        if not heading.lower().startswith("text generation") or tab != "Singapore":
             continue
         header, rows = _mdx_grid(match.group(0))
+        # A table without a <thead>, as Qwen Flash's, opens its body with the header row.
+        if not header and rows:
+            header, rows = rows[:1], rows[1:]
         if not header or header[0][0] != "Model ID":
             continue
         titles = header[0]
         detail = header[1] if len(header) > 1 else titles
-        inputs = [index for index, title in enumerate(titles) if title.startswith("Input price")]
-        outputs = [index for index, title in enumerate(titles) if title.startswith("Output price")]
+        inputs = [index for index, title in enumerate(titles)
+                  if title.startswith(("Input price", "Input unit price"))]
+        outputs = [index for index, title in enumerate(titles)
+                   if title.startswith(("Output price", "Output unit price"))]
         if len(inputs) != 1 or not outputs or (len(outputs) > 1 and not all(
-                "Thinking mode" in detail[index] for index in outputs)):
+                "thinking mode" in detail[index].lower() for index in outputs)):
             continue
-        tiers = titles.index("Input tokens per request") if (
-            "Input tokens per request" in titles) else None
+        tiers = next((titles.index(title) for title in ("Input tokens per request", "Input token range per request")
+                      if title in titles), None)
         for row in rows:
-            model = row[0].split()[0]
+            # Qwen Flash's older models leave out the thinking "Pattern" cell.
+            if "Pattern" in titles and len(row) == len(titles) - 1:
+                row = [*row[:titles.index("Pattern")], "", *row[titles.index("Pattern"):]]
+            if len(row) != len(titles):
+                raise ValueError(f"alibaba: a row of {row[0]} has {len(row)} cells under "
+                                 f"{len(titles)} columns; the page format changed")
+            # A model's id can link to its page, as "[kimi-k3.1-pro](/help/...)".
+            model = re.sub(r"^\[([^]]+)\]\(.*", r"\1", row[0].split()[0])
             above = _alibaba_tier(row[tiers]) if tiers is not None else None
             prices = {("input", None): row[inputs[0]],
                       ("output", None): next((row[index] for index in outputs
@@ -505,14 +517,14 @@ def parse_alibaba(text: str, today: datetime, get: Callable[[str], str]) -> list
             if len(outputs) == 2 and len(thinking) == 1:
                 prices["output", "thinking"] = row[thinking[0]]
             for (field, mode), cell in prices.items():
-                value = None if "Busy hours" in cell else _price(cell)
-                # A list price "(Limited-time 20% off)" is charged at the discount; a
+                value = None if "Busy hours" in cell or "Off-peak" in cell else _price(cell)
+                # A list price "(20% off for a limited time)" is charged at the discount; a
                 # night and daytime discount depends on the hour and is not modeled.
-                discount = re.search(r"Limited-time (\d+)% off", cell)
+                discount = re.search(r"Limited-time (\d+)% off|(\d+)% off for a limited time", cell)
                 if "night" in cell.lower():
                     value = None
                 elif value is not None and discount:
-                    value = round(value * (100 - int(discount.group(1))) / 100, 6)
+                    value = round(value * (100 - int(discount.group(1) or discount.group(2))) / 100, 6)
                 if value is not None:
                     found.append(Observed("alibaba", model, field, value, above=above,
                                           mode=mode))
