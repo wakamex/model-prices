@@ -108,7 +108,7 @@ def read_cognition(get: Callable[[str], str]) -> dict[str, tuple[str, dict[str, 
     return {model: (DEVIN_MODELS, rates) for model, rates in parse_devin(get(DEVIN_MODELS)).items()}
 
 
-BYTEPLUS_PRICING = "https://docs.byteplus.com/en/docs/ModelArk/1544106"
+BYTEPLUS_PRICING = checks.BYTEPLUS_PRICING
 _BYTEPLUS_COLUMNS = {"Input": "input", "Cached input": "cache_read", "Output": "output"}
 
 
@@ -158,14 +158,7 @@ def parse_byteplus(page: str) -> dict[str, dict[str, Any]]:
 
 
 def read_byteplus(get: Callable[[str], str]) -> dict[str, tuple[str, dict[str, Any]]]:
-    # BytePlus serves about one request in 15 an unrendered page shell without its pricing
-    # document, so the page is fetched up to three times before its format counts as changed.
-    page = get(BYTEPLUS_PRICING)
-    for _ in range(2):
-        if "_ROUTER_DATA" in page and "MDContent" in page:
-            break
-        page = get(BYTEPLUS_PRICING)
-    return {model: (BYTEPLUS_PRICING, rates) for model, rates in parse_byteplus(page).items()}
+    return {model: (BYTEPLUS_PRICING, rates) for model, rates in parse_byteplus(get(BYTEPLUS_PRICING)).items()}
 
 
 SOURCES: dict[str, Callable[[Callable[[str], str]], dict[str, tuple[str, dict[str, Any]]]]] = {

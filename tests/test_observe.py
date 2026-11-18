@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest import mock
 
 from html_fixtures import as_html
 from model_prices import checks, compiler, observe, rates, resolve
@@ -102,12 +103,24 @@ class ObserveTests(unittest.TestCase):
             observe.parse_byteplus("<p>Pricing moved.</p>")
 
     def test_byteplus_page_shell_is_fetched_again(self):
-        pages = iter(["<!doctype html><html><head></head><body></body></html>",
-                      (FIXTURES / "byteplus.html").read_text()])
-
-        found = observe.read_byteplus(lambda url: next(pages))
-
-        self.assertIn("seed-2-0-lite-260428", found)
+        # A run fetches a page once, so a bare shell must not stand in for the whole page.
+        whole = (FIXTURES / "byteplus.html").read_text()
+        replies = []
+        for body in ("<html>shell</html>", whole):
+            reply = mock.MagicMock()
+            reply.__enter__.return_value.read.return_value = body.encode()
+            reply.__enter__.return_value.status = 200
+            reply.__enter__.return_value.headers = {}
+            reply.__enter__.return_value.geturl.return_value = checks.BYTEPLUS_PRICING
+            replies.append(reply)
+        with tempfile.TemporaryDirectory() as directory, \
+                mock.patch.dict("os.environ", {"MODEL_PRICES_ARCHIVE": directory}), \
+                mock.patch("urllib.request.urlopen", side_effect=replies) as urlopen:
+            self.assertEqual(checks.fetch(checks.BYTEPLUS_PRICING), whole)
+            # The whole copy is the one the rest of the run reads.
+            self.assertEqual(checks.fetch(checks.BYTEPLUS_PRICING), whole)
+        self.assertEqual(urlopen.call_count, 2)
+        self.assertIn("seed-2-0-lite-260428", observe.read_byteplus(lambda url: whole))
         with self.assertRaisesRegex(ValueError, "page format changed"):
             observe.read_byteplus(lambda url: "<p>Pricing moved.</p>")
 

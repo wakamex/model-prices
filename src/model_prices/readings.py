@@ -34,7 +34,7 @@ from typing import Callable, Iterable, Iterator
 
 from model_prices import _parse_time, _stored_rates, compiler, observe, openai_regions, plan_checks
 from model_prices.checks import (MINIMUM_MODELS, SOURCES, card_problems, TERMS, TOOL_PAGES, YUAN_TO_USD, Observed,
-                                 _moments, compare, fetch, parse, peak_terms, tool_prices, xai_batch)
+                                 _moments, compare, fetch, is_whole, parse, peak_terms, tool_prices, xai_batch)
 
 LOG = "readings"
 CONTENT = "readings/by-hash"
@@ -163,9 +163,10 @@ def read_run(archive: Path, run: str, log: list[dict]) -> Iterator[tuple[dict, d
     naming the error and no reading."""
     stored: dict[tuple[str, str | None], dict] = {}
     for entry in log:
-        # The first stored copy is the one the run's checks read.
+        # The last stored copy is the one the run's checks read: a page is fetched again only
+        # after a bare shell.
         if entry["status"] == 200 and entry["sha256"]:
-            stored.setdefault(_key(entry["url"], entry.get("payload")), entry)
+            stored[_key(entry["url"], entry.get("payload"))] = entry
     tried = {_key(entry["url"], entry.get("payload")): entry for entry in log}
     for name, reader in READERS.items():
         main = _key(reader.url, reader.payload)
@@ -180,7 +181,10 @@ def read_run(archive: Path, run: str, log: list[dict]) -> Iterator[tuple[dict, d
                 raise NotStored(f"{url} was not stored in run {run}"
                                 + (f": {failed.get('error') or failed['status']}" if failed else ""))
             inputs[url] = entry["sha256"]
-            return _blob(archive, entry["sha256"]).decode()
+            page = _blob(archive, entry["sha256"]).decode()
+            if not is_whole(url, page):
+                raise NotStored(f"{url} was stored only as a bare shell in run {run}")
+            return page
 
         read_at = (stored.get(main) or tried[main])["fetched_at"]
         line = {"run": run, "reader": name, "read_at": read_at}

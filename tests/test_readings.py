@@ -93,6 +93,18 @@ class ReadingTests(unittest.TestCase):
         self.assertEqual((fixed["run"], "reading" in fixed), ("1", True))
         self.assertEqual(readings.retry(self.archive, self.store), 0)
 
+    def test_a_run_that_stored_only_a_bare_shell_is_not_read_again(self):
+        body = "<html>shell</html>"
+        digest = hashlib.sha256(body.encode()).hexdigest()
+        (self.archive / "blobs" / digest).write_text(body)
+        entry = {"run": "1", "fetched_at": "2026-11-18T21:25:38Z", "url": checks.BYTEPLUS_PRICING,
+                 "status": 200, "sha256": digest}
+        (self.archive / "fetches.jsonl").write_text(json.dumps(entry) + "\n")
+        readings.record(self.archive, self.store)
+        line = next(line for line in readings.load_log(self.store) if line["reader"] == "byteplus")
+        self.assertIn("bare shell", line["error"])
+        self.assertEqual(readings.retryable(self.store), [])
+
     def test_every_reader_names_a_page_a_run_fetches(self):
         # Each kind of source is read: pricing pages, pages for models models.dev lacks, tool
         # fees, peak-hour terms, batch discounts, regional factors, and subscription plans.

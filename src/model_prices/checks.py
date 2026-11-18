@@ -1529,9 +1529,18 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
 HEADERS = {"User-Agent": "model-prices", "Accept-Language": "en-US,en;q=0.9"}
 
 
-def fetch(url: str) -> str:
-    if (body := archive.fetched(url)) is not None:
-        return body.decode()
+BYTEPLUS_PRICING = "https://docs.byteplus.com/en/docs/ModelArk/1544106"
+# Pages a server sometimes answers with a bare shell, by the text every whole copy contains:
+# BytePlus serves about one request in 15 without its pricing document.
+WHOLE_PAGES = {BYTEPLUS_PRICING: ("_ROUTER_DATA", "MDContent")}
+
+
+def is_whole(url: str, page: str) -> bool:
+    """Whether a page holds the text every whole copy of it contains."""
+    return all(text in page for text in WHOLE_PAGES.get(url, ()))
+
+
+def _request(url: str) -> str:
     request = urllib.request.Request(url, headers=HEADERS)
     try:
         with urllib.request.urlopen(request, timeout=30) as response:
@@ -1548,6 +1557,19 @@ def fetch(url: str) -> str:
     except (OSError, ValueError) as error:
         archive.record(url, None, error=f"{type(error).__name__}: {error}")
         raise
+
+
+def fetch(url: str) -> str:
+    """A page, from this run's archive when the run already holds a whole copy, and fetched up
+    to three times while the server answers with a bare shell."""
+    if (body := archive.fetched(url)) is not None and is_whole(url, body.decode()):
+        return body.decode()
+    page = _request(url)
+    for _ in range(2):
+        if is_whole(url, page):
+            break
+        page = _request(url)
+    return page
 
 
 def _value(found, field: str, above: int | None, modality: str | None = None) -> float | None:
