@@ -5370,7 +5370,7 @@
      "valid_from": "2026-10-20T01:14:04Z"
     },
     {
-     "commit": "157d58343785",
+     "commit": "4e85ae8852cc",
      "rates": {
       "cache_read": 0.15,
       "input": 1.5,
@@ -5409,7 +5409,7 @@
      "valid_from": "2026-08-13T17:26:42Z"
     },
     {
-     "commit": "d21a0b4da8fb",
+     "commit": "4e85ae8852cc",
      "rates": {
       "cache_read": 0.15,
       "input": 1.5,
@@ -5460,7 +5460,7 @@
      "valid_from": "2026-10-20T01:14:04Z"
     },
     {
-     "commit": "157d58343785",
+     "commit": "4e85ae8852cc",
      "rates": {
       "cache_read": 0.15,
       "input": 1.5,
@@ -5659,7 +5659,7 @@
      "valid_from": "2026-10-20T01:14:04Z"
     },
     {
-     "commit": "157d58343785",
+     "commit": "4e85ae8852cc",
      "rates": {
       "cache_read": 0.2,
       "input": 4.0,
@@ -5710,7 +5710,7 @@
      "valid_from": "2026-11-10T17:17:46Z"
     },
     {
-     "commit": "954e891e926e",
+     "commit": "4e85ae8852cc",
      "rates": {
       "cache_read": 0.2,
       "input": 4.0,
@@ -6065,7 +6065,7 @@
      "valid_from": "2026-10-20T01:14:04Z"
     },
     {
-     "commit": "157d58343785",
+     "commit": "4e85ae8852cc",
      "rates": {
       "cache_read": 0.2,
       "input": 2.0,
@@ -14961,8 +14961,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "2dbda9a2febeb5f62e116729ea0288ca75230129",
- "source_committed_at": "2026-11-17T18:07:07Z",
+ "source_commit": "4e85ae8852cca42103ddb3f5447263d2048cc6d4",
+ "source_committed_at": "2026-11-18T18:14:08Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",

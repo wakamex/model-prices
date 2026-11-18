@@ -114,8 +114,8 @@
   }
  ],
  "models_dev": {
-  "commit": "2dbda9a2febeb5f62e116729ea0288ca75230129",
-  "committed_at": "2026-11-17T18:07:07Z",
+  "commit": "4e85ae8852cca42103ddb3f5447263d2048cc6d4",
+  "committed_at": "2026-11-18T18:14:08Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -15943,7 +15943,7 @@
        "cache_read": 0.075,
        "input": 0.75,
        "output": 3.75,
-       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "source": "https://github.com/sst/models.dev/commit/4e85ae8852cc",
        "tools": {
         "web_search": 14.0
        },
@@ -15977,7 +15977,7 @@
        "cache_read": 0.075,
        "input": 0.75,
        "output": 3.75,
-       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "source": "https://github.com/sst/models.dev/commit/4e85ae8852cc",
        "tools": {
         "web_search": 14.0
        },
@@ -16011,7 +16011,7 @@
        "cache_read": 0.27,
        "input": 2.7,
        "output": 13.5,
-       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "source": "https://github.com/sst/models.dev/commit/4e85ae8852cc",
        "tools": {
         "web_search": 14.0
        },
@@ -16094,7 +16094,7 @@
        "cache_read": 0.15,
        "input": 1.5,
        "output": 7.5,
-       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "source": "https://github.com/sst/models.dev/commit/4e85ae8852cc",
        "tools": {
         "web_search": 14.0
        },
@@ -16130,7 +16130,7 @@
        "cache_read": 0.075,
        "input": 0.75,
        "output": 3.75,
-       "source": "https://github.com/sst/models.dev/commit/d21a0b4da8fb",
+       "source": "https://github.com/sst/models.dev/commit/4e85ae8852cc",
        "tools": {
         "web_search": 14.0
        },
@@ -16160,7 +16160,7 @@
        "cache_read": 0.15,
        "input": 1.5,
        "output": 7.5,
-       "source": "https://github.com/sst/models.dev/commit/d21a0b4da8fb",
+       "source": "https://github.com/sst/models.dev/commit/4e85ae8852cc",
        "tools": {
         "web_search": 14.0
        },
@@ -16210,7 +16210,7 @@
        "cache_read": 0.075,
        "input": 0.75,
        "output": 3.75,
-       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "source": "https://github.com/sst/models.dev/commit/4e85ae8852cc",
        "tools": {
         "web_search": 14.0
        },
@@ -16244,7 +16244,7 @@
        "cache_read": 0.075,
        "input": 0.75,
        "output": 3.75,
-       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "source": "https://github.com/sst/models.dev/commit/4e85ae8852cc",
        "tools": {
         "web_search": 14.0
        },
@@ -16278,7 +16278,7 @@
        "cache_read": 0.27,
        "input": 2.7,
        "output": 13.5,
-       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "source": "https://github.com/sst/models.dev/commit/4e85ae8852cc",
        "tools": {
         "web_search": 14.0
        },
@@ -16322,7 +16322,7 @@
        "cache_read": 0.15,
        "input": 1.5,
        "output": 7.5,
-       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "source": "https://github.com/sst/models.dev/commit/4e85ae8852cc",
        "tools": {
         "web_search": 14.0
        },
@@ -16765,7 +16765,7 @@
        "cache_read": 0.1,
        "input": 2.0,
        "output": 10.0,
-       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "source": "https://github.com/sst/models.dev/commit/4e85ae8852cc",
        "tools": {
         "web_search": 14.0
        },
@@ -16799,7 +16799,7 @@
        "cache_read": 0.1,
        "input": 2.0,
        "output": 10.0,
-       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "source": "https://github.com/sst/models.dev/commit/4e85ae8852cc",
        "tools": {
         "web_search": 14.0
        },
@@ -16833,7 +16833,7 @@
        "cache_read": 0.36,
        "input": 7.2,
        "output": 36.0,
-       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "source": "https://github.com/sst/models.dev/commit/4e85ae8852cc",
        "tools": {
         "web_search": 14.0
        },
@@ -16888,7 +16888,7 @@
        "cache_read": 0.2,
        "input": 4.0,
        "output": 20.0,
-       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "source": "https://github.com/sst/models.dev/commit/4e85ae8852cc",
        "tools": {
         "web_search": 14.0
        },
@@ -16938,7 +16938,7 @@
        "cache_read": 0.1,
        "input": 2.0,
        "output": 10.0,
-       "source": "https://github.com/sst/models.dev/commit/954e891e926e",
+       "source": "https://github.com/sst/models.dev/commit/4e85ae8852cc",
        "tools": {
         "web_search": 14.0
        },
@@ -16990,7 +16990,7 @@
        "cache_read": 0.1,
        "input": 2.0,
        "output": 10.0,
-       "source": "https://github.com/sst/models.dev/commit/954e891e926e",
+       "source": "https://github.com/sst/models.dev/commit/4e85ae8852cc",
        "tools": {
         "web_search": 14.0
        },
@@ -17042,7 +17042,7 @@
        "cache_read": 0.36,
        "input": 7.2,
        "output": 36.0,
-       "source": "https://github.com/sst/models.dev/commit/954e891e926e",
+       "source": "https://github.com/sst/models.dev/commit/4e85ae8852cc",
        "tools": {
         "web_search": 14.0
        },
@@ -17094,7 +17094,7 @@
        "cache_read": 0.2,
        "input": 4.0,
        "output": 20.0,
-       "source": "https://github.com/sst/models.dev/commit/954e891e926e",
+       "source": "https://github.com/sst/models.dev/commit/4e85ae8852cc",
        "tools": {
         "web_search": 14.0
        },
@@ -18050,7 +18050,7 @@
        "cache_read": 0.1,
        "input": 1.0,
        "output": 5.0,
-       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "source": "https://github.com/sst/models.dev/commit/4e85ae8852cc",
        "tools": {
         "web_search": 14.0
        },
@@ -18091,7 +18091,7 @@
        "cache_read": 0.2,
        "input": 2.0,
        "output": 10.0,
-       "source": "https://github.com/sst/models.dev/commit/157d58343785",
+       "source": "https://github.com/sst/models.dev/commit/4e85ae8852cc",
        "tools": {
         "web_search": 14.0
        },
@@ -44505,5 +44505,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-17T18:17:19Z"
+ "updated_at": "2026-11-18T18:15:53Z"
 }
