@@ -1844,6 +1844,34 @@
      "valid_from": "2026-11-12T18:45:58Z"
     }
    ],
+   "gemini-4-neon": [
+    {
+     "rates": {
+      "cache_read": 0.15,
+      "input": 3.0,
+      "modes": {
+       "batch": {
+        "cache_read": 0.075,
+        "input": 1.5,
+        "output": 7.5
+       },
+       "flex": {
+        "cache_read": 0.075,
+        "input": 1.5,
+        "output": 7.5
+       },
+       "priority": {
+        "cache_read": 0.27,
+        "input": 5.4,
+        "output": 27.0
+       }
+      },
+      "output": 15.0
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-18T21:09:18Z"
+    }
+   ],
    "gemini-decision-1": [
     {
      "rates": {
