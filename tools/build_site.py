@@ -763,7 +763,7 @@ def benchmarks_page(plans: list[dict], now: datetime) -> str:
             continue
         sections += [f'## {escape(source["name"])}', "",
                      f'[{escape(source["name"])}]({source["url"]}), read {source["retrieved"]}: {escape(source["note"])}', "",
-                     '<div class="bench-pair">' + scatter(api, "At API prices", "Cost per task, US dollars")
+                     '<div class="bench-pair">' + scatter(api, "At API prices", "Cost per task in API dollars")
                      + scatter(plan, "In plan dollars", "Cost per task in plan dollars") + "</div>", "",
                      "| Model and effort | Score | API $ per task | Plan and pool | Plan $ per task | Tasks a week |",
                      "| --- | --- | --- | --- | --- | --- |", *rows, ""]
