@@ -57,7 +57,7 @@ match = '^Gemini 4 Neon$'
 usd_per_point = 6.0
 measured = "2026-11-19"
 method = "runs"
-note = "Runs of one fixed 3,000-word task on gemini-4-neon-high, each after the pool had been idle 15 minutes: $0.1946 for 0.03242 points, $0.2015 for 0.03358, and $0.2072 for 0.03455, $6.00 a point each. A weekly point is four 5-hour points."
+note = "Four runs of one fixed 3,000-word task on gemini-4-neon-high, each after the pool had been idle 15 minutes: $0.1946 for 0.03242 points, $0.2015 for 0.03358, $0.2072 for 0.03455, and $0.1929 for 0.03215, $6.00 a point each. A weekly point is four 5-hour points."
 
 [[rate]]
 provider = "google"
