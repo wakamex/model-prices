@@ -46,7 +46,7 @@ match = '^Gemini 4 (Argon|Carbon)$'
 usd_per_point = 1.9
 measured = "2026-11-19"
 method = "fitted"
-note = "Fitted over 2026-11-01 to 2026-11-19 on $350 of Argon and Carbon usage, each call at its own time: Argon $1.92 per point (90% bootstrap interval $1.79 to $2.02) and Carbon $1.84 ($1.81 to $1.93). The fit explains 99.3% of the pool's 6-hour steps."
+note = "Fitted over 2026-11-01 to 2026-11-19 on $350 of Argon and Carbon usage, each call at its own time: Argon $1.92 per point (90% bootstrap interval $1.79 to $2.02) and Carbon $1.84 ($1.81 to $1.93). The fit explains 99.3% of the pool's 6-hour steps. Two runs of one fixed task on gemini-4-carbon-high on 2026-11-19, on a pool no other project used, gave $2.00 each ($0.4904 for 0.2452 points, $0.5204 for 0.2602), so Carbon's rate held after Gemini 4 Neon's launch."
 
 [[rate]]
 provider = "google"
