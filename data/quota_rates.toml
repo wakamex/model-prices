@@ -68,7 +68,7 @@ match = '^Gemini 3\.8 Flash$'
 usd_per_point = 7.17
 measured = "2026-11-19"
 method = "fitted"
-note = "Fitted over 2026-11-01 to 2026-11-19 on $78 of Flash usage, each call at its own time: 90% bootstrap interval $5.94 to $17.30, wide since Flash's usage is small and sparse. A fit that timed each aop run's usage at its start gave $14.50. Two-hour blocks in which Flash was at least 97% of Antigravity's Gemini spend, with no other model in the hour before, agree: from 2026-10-21 four of six give $5.75 to $11.45 a point and together $6.95, while one on 2026-11-03 gives $1.87 and one is too small to read. Before 2026-10-12, 27 such blocks gave about $1.20 a point, so Google cut what a point buys of Flash between 2026-10-12 and 2026-10-21."
+note = "Fitted over 2026-11-01 to 2026-11-19 on $78 of Flash usage, each call at its own time: 90% bootstrap interval $5.94 to $17.30, wide since Flash's usage is small and sparse. A fit that timed each aop run's usage at its start gave $14.50. Two-hour blocks in which Flash was at least 97% of Antigravity's Gemini spend, with no other model in the hour before, agree: from 2026-10-21 four of six give $5.75 to $11.45 a point and together $6.95, while one on 2026-11-03 gives $1.87 and one is too small to read. Before 2026-10-12, 26 such blocks of Gemini 3.8 Flash gave about $1.20 a point at the same API prices, so between 2026-10-12 and 2026-10-21 a point came to buy about six times as much Flash."
 
 [[rate]]
 provider = "google"
