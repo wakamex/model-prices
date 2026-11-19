@@ -46,7 +46,7 @@ match = '^Gemini 4 (Argon|Carbon)$'
 usd_per_point = 1.9
 measured = "2026-11-19"
 method = "fitted"
-note = "Fitted over 2026-11-01 to 2026-11-19 on $350 of Argon and Carbon usage: Argon $1.96 and Carbon $1.83 per point, within the fit's noise. The fit explains 98.6% of the pool's 6-hour steps."
+note = "Fitted over 2026-11-01 to 2026-11-19 on $350 of Argon and Carbon usage, each call at its own time: Argon $1.92 per point (90% bootstrap interval $1.79 to $2.02) and Carbon $1.84 ($1.81 to $1.93). The fit explains 99.3% of the pool's 6-hour steps."
 
 [[rate]]
 provider = "google"
@@ -65,20 +65,20 @@ plan = "ultra_100"
 pool = "Antigravity, Gemini"
 models = "Gemini 3.8 Flash"
 match = '^Gemini 3\.8 Flash$'
-usd_per_point = 14.5
+usd_per_point = 7.17
 measured = "2026-11-19"
 method = "fitted"
-note = "Fitted over 2026-11-01 to 2026-11-19 on $78 of Flash usage: Flash draws about a seventh of the Gemini pool per API dollar that Argon and Carbon draw."
+note = "Fitted over 2026-11-01 to 2026-11-19 on $78 of Flash usage, each call at its own time: 90% bootstrap interval $5.94 to $17.30, wide since Flash's usage is small and sparse. A fit that timed each aop run's usage at its start gave $14.50."
 
 [[rate]]
 provider = "google"
 plan = "ultra_100"
 pool = "Antigravity, Claude and GPT"
-models = "Claude Sonnet 5.5 in Antigravity"
+models = "Claude Sonnet 5.5 and Opus 5.5 in Antigravity"
 usd_per_point = 0.241
 measured = "2026-11-19"
 method = "runs"
-note = "Two runs of one fixed 3,000-word task on claude-sonnet-5-5-medium, on a pool no other project used: $0.0760 for 0.3152 points and $0.0787 for 0.3259. A weekly point is two 5-hour points. The fit over 2026-11-01 to 2026-11-19 gave $0.23."
+note = "Two runs of one fixed 3,000-word task on claude-sonnet-5-5-medium, on a pool no other project used: $0.0760 for 0.3152 points and $0.0787 for 0.3259. A weekly point is two 5-hour points. Claude Opus 5.5 alone on the pool, $1.72 of another project's calls, gave $0.230. Two runs of gpt-oss-120b, which has no API price, moved the pool by nothing measurable beside that project's Opus calls."
 
 [[rate]]
 provider = "openai"
