@@ -1,0 +1,848 @@
+# Benchmark results with an API cost per task, for the models a measured plan rate in
+# quota_rates.toml covers, so the Benchmarks page can set each result's cost at API prices beside
+# its cost in plan dollars. Scores are percentages; costs are US dollars per task at the
+# benchmark's own API pricing. Each source names its page and the date it was read.
+
+[[source]]
+id = "artificial-analysis"
+name = "Artificial Analysis Coding Agent Index"
+url = "https://x.com/ArtificialAnlys/status/2123170645777526962"
+retrieved = "2026-11-18"
+note = "Figures stated in the text of Artificial Analysis's post of 2026-11-18, quoted with attribution: Coding Agent Index and average cost per task, each model in its lab's coding agent."
+
+[[source]]
+id = "cursorbench"
+name = "CursorBench 4.1"
+url = "https://cursor.com/en/cursorbench"
+retrieved = "2026-11-18"
+note = "Score and average cost per task in Cursor, each model's tokens at its published prices."
+
+[[source]]
+id = "frontiercode"
+name = "FrontierCode 2.0"
+url = "https://cognition.com/frontiercode"
+retrieved = "2026-11-18"
+note = "Share of tasks solved and average cost per task, each model in the harness the leaderboard names."
+
+[[source]]
+id = "frontierswe"
+name = "FrontierSWE"
+url = "https://www.frontierswe.com"
+retrieved = "2026-11-10"
+note = "Mean overall score over five trials and average cost per task, every model in the proximus harness."
+
+[[result]]
+source = "artificial-analysis"
+model = "Gemini 4 Neon"
+effort = "xhigh"
+harness = "Antigravity CLI"
+score = 59
+cost = 6.86
+
+[[result]]
+source = "artificial-analysis"
+model = "Claude Opus 5.5"
+effort = "max"
+harness = "Claude Code"
+score = 58
+cost = 12.61
+
+[[result]]
+source = "artificial-analysis"
+model = "Claude Fable 5.2"
+effort = "xhigh"
+harness = "Claude Code"
+score = 58
+cost = 15.47
+
+[[result]]
+source = "cursorbench"
+model = "Gemini 4 Neon"
+effort = "xhigh"
+harness = "Cursor"
+score = 65.4
+cost = 10.67
+
+[[result]]
+source = "cursorbench"
+model = "Gemini 4 Neon"
+effort = "high"
+harness = "Cursor"
+score = 63.7
+cost = 6.54
+
+[[result]]
+source = "cursorbench"
+model = "Gemini 4 Carbon"
+effort = "high"
+harness = "Cursor"
+score = 61.5
+cost = 8.52
+
+[[result]]
+source = "cursorbench"
+model = "Fable 5.2"
+effort = "max"
+harness = "Cursor"
+score = 61.3
+cost = 48.11
+
+[[result]]
+source = "cursorbench"
+model = "Gemini 4 Carbon"
+effort = "medium"
+harness = "Cursor"
+score = 60.4
+cost = 7.22
+
+[[result]]
+source = "cursorbench"
+model = "Fable 5.2"
+effort = "xhigh"
+harness = "Cursor"
+score = 58.8
+cost = 17.84
+
+[[result]]
+source = "cursorbench"
+model = "Opus 5.5"
+effort = "max"
+harness = "Cursor"
+score = 58.1
+cost = 11.88
+
+[[result]]
+source = "cursorbench"
+model = "Gemini 4 Neon"
+effort = "medium"
+harness = "Cursor"
+score = 57.7
+cost = 3.07
+
+[[result]]
+source = "cursorbench"
+model = "Opus 5.5"
+effort = "xhigh"
+harness = "Cursor"
+score = 56.7
+cost = 6.54
+
+[[result]]
+source = "cursorbench"
+model = "Fable 5.2"
+effort = "high"
+harness = "Cursor"
+score = 56.5
+cost = 10.51
+
+[[result]]
+source = "cursorbench"
+model = "Gemini 4 Carbon"
+effort = "low"
+harness = "Cursor"
+score = 55.0
+cost = 8.64
+
+[[result]]
+source = "cursorbench"
+model = "Opus 5.5"
+effort = "high"
+harness = "Cursor"
+score = 54.5
+cost = 3.87
+
+[[result]]
+source = "cursorbench"
+model = "Sonnet 5.5"
+effort = "max"
+harness = "Cursor"
+score = 54.4
+cost = 8.63
+
+[[result]]
+source = "cursorbench"
+model = "Fable 5.2"
+effort = "medium"
+harness = "Cursor"
+score = 54.2
+cost = 5.01
+
+[[result]]
+source = "cursorbench"
+model = "Fable 5.2"
+effort = "low"
+harness = "Cursor"
+score = 53.4
+cost = 4.26
+
+[[result]]
+source = "cursorbench"
+model = "Opus 5.5"
+effort = "medium"
+harness = "Cursor"
+score = 50.0
+cost = 2.85
+
+[[result]]
+source = "cursorbench"
+model = "Sonnet 5.5"
+effort = "xhigh"
+harness = "Cursor"
+score = 49.9
+cost = 3.13
+
+[[result]]
+source = "cursorbench"
+model = "Haiku 5.5"
+effort = "max"
+harness = "Cursor"
+score = 48.4
+cost = 1.14
+
+[[result]]
+source = "cursorbench"
+model = "Gemini 4 Neon"
+effort = "low"
+harness = "Cursor"
+score = 45.5
+cost = 1.26
+
+[[result]]
+source = "cursorbench"
+model = "Haiku 5.5"
+effort = "xhigh"
+harness = "Cursor"
+score = 45.2
+cost = 0.56
+
+[[result]]
+source = "cursorbench"
+model = "Sonnet 5.5"
+effort = "high"
+harness = "Cursor"
+score = 43.8
+cost = 1.41
+
+[[result]]
+source = "cursorbench"
+model = "Opus 5.5"
+effort = "low"
+harness = "Cursor"
+score = 42.7
+cost = 1.43
+
+[[result]]
+source = "cursorbench"
+model = "Haiku 5.5"
+effort = "high"
+harness = "Cursor"
+score = 37.5
+cost = 0.31
+
+[[result]]
+source = "cursorbench"
+model = "Sonnet 5.5"
+effort = "medium"
+harness = "Cursor"
+score = 34.3
+cost = 0.63
+
+[[result]]
+source = "cursorbench"
+model = "Haiku 5.5"
+effort = "medium"
+harness = "Cursor"
+score = 34.2
+cost = 0.17
+
+[[result]]
+source = "cursorbench"
+model = "Sonnet 5.5"
+effort = "low"
+harness = "Cursor"
+score = 31.8
+cost = 0.44
+
+[[result]]
+source = "cursorbench"
+model = "Haiku 5.5"
+effort = "low"
+harness = "Cursor"
+score = 27.8
+cost = 0.08
+
+[[result]]
+source = "frontiercode"
+model = "Claude Fable 5.2"
+effort = "low"
+harness = "claude-code"
+score = 38.64
+cost = 2.623
+
+[[result]]
+source = "frontiercode"
+model = "Claude Fable 5.2"
+effort = "medium"
+harness = "claude-code"
+score = 42.42
+cost = 3.103
+
+[[result]]
+source = "frontiercode"
+model = "Claude Fable 5.2"
+effort = "high"
+harness = "claude-code"
+score = 50.45
+cost = 8.402
+
+[[result]]
+source = "frontiercode"
+model = "Claude Fable 5.2"
+effort = "xhigh"
+harness = "claude-code"
+score = 54.7
+cost = 17.734
+
+[[result]]
+source = "frontiercode"
+model = "Claude Fable 5.2"
+effort = "max"
+harness = "claude-code"
+score = 52.73
+cost = 55.868
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6 Astra"
+effort = "low"
+harness = "codex"
+score = 34.24
+cost = 2.437
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6 Astra"
+effort = "medium"
+harness = "codex"
+score = 40.76
+cost = 3.493
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6 Astra"
+effort = "high"
+harness = "codex"
+score = 41.97
+cost = 4.277
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6 Astra"
+effort = "xhigh"
+harness = "codex"
+score = 45.15
+cost = 4.539
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6 Astra"
+effort = "max"
+harness = "codex"
+score = 47.58
+cost = 6.676
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6 Luna"
+effort = "low"
+harness = "codex"
+score = 4.55
+cost = 0.023
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6 Luna"
+effort = "medium"
+harness = "codex"
+score = 17.88
+cost = 0.092
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6 Luna"
+effort = "high"
+harness = "codex"
+score = 18.48
+cost = 0.115
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6 Luna"
+effort = "xhigh"
+harness = "codex"
+score = 20.45
+cost = 0.132
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6 Luna"
+effort = "max"
+harness = "codex"
+score = 25.15
+cost = 0.174
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6 Sol"
+effort = "low"
+harness = "codex"
+score = 11.67
+cost = 0.4164
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6 Sol"
+effort = "medium"
+harness = "codex"
+score = 24.55
+cost = 0.8225
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6 Sol"
+effort = "high"
+harness = "codex"
+score = 25.91
+cost = 1.0714
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6 Sol"
+effort = "xhigh"
+harness = "codex"
+score = 33.64
+cost = 1.4432
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6 Sol"
+effort = "max"
+harness = "codex"
+score = 38.33
+cost = 2.3547
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6.1 Sol"
+effort = "low"
+harness = "codex"
+score = 28.48
+cost = 0.341
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6.1 Sol"
+effort = "medium"
+harness = "codex"
+score = 33.03
+cost = 0.492
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6.1 Sol"
+effort = "high"
+harness = "codex"
+score = 38.33
+cost = 0.647
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6.1 Sol"
+effort = "xhigh"
+harness = "codex"
+score = 36.06
+cost = 0.695
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6.1 Sol"
+effort = "max"
+harness = "codex"
+score = 43.03
+cost = 1.029
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6.2 Astra"
+effort = "low"
+harness = "codex"
+score = 42.17
+cost = 1.415
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6.2 Astra"
+effort = "medium"
+harness = "codex"
+score = 46.47
+cost = 2.469
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6.2 Astra"
+effort = "high"
+harness = "codex"
+score = 47.73
+cost = 3.952
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6.2 Astra"
+effort = "xhigh"
+harness = "codex"
+score = 48.49
+cost = 4.289
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6.2 Astra"
+effort = "max"
+harness = "codex"
+score = 48.23
+cost = 5.966
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6.2 Sol"
+effort = "low"
+harness = "codex"
+score = 36.62
+cost = 0.402
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6.2 Sol"
+effort = "medium"
+harness = "codex"
+score = 42.17
+cost = 0.685
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6.2 Sol"
+effort = "high"
+harness = "codex"
+score = 43.94
+cost = 0.876
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6.2 Sol"
+effort = "xhigh"
+harness = "codex"
+score = 43.94
+cost = 0.98
+
+[[result]]
+source = "frontiercode"
+model = "GPT-6.2 Sol"
+effort = "max"
+harness = "codex"
+score = 48.23
+cost = 1.287
+
+[[result]]
+source = "frontiercode"
+model = "Gemini 4 Argon"
+effort = "low"
+harness = "devin-cli"
+score = 24.85
+cost = 3.977
+
+[[result]]
+source = "frontiercode"
+model = "Gemini 4 Argon"
+effort = "medium"
+harness = "devin-cli"
+score = 27.12
+cost = 5.688
+
+[[result]]
+source = "frontiercode"
+model = "Gemini 4 Argon"
+effort = "high"
+harness = "devin-cli"
+score = 30.61
+cost = 6.514
+
+[[result]]
+source = "frontiercode"
+model = "Gemini 4 Carbon"
+effort = "low"
+harness = "antigravity-cli"
+score = 34.6
+cost = 7.723
+
+[[result]]
+source = "frontiercode"
+model = "Gemini 4 Carbon"
+effort = "medium"
+harness = "antigravity-cli"
+score = 45.2
+cost = 4.486
+
+[[result]]
+source = "frontiercode"
+model = "Gemini 4 Carbon"
+effort = "high"
+harness = "antigravity-cli"
+score = 46.92
+cost = 5.057
+
+[[result]]
+source = "frontiercode"
+model = "Gemini 4 Neon"
+effort = "low"
+harness = "antigravity-cli"
+score = 30.56
+cost = 0.959
+
+[[result]]
+source = "frontiercode"
+model = "Gemini 4 Neon"
+effort = "medium"
+harness = "antigravity-cli"
+score = 42.17
+cost = 2.174
+
+[[result]]
+source = "frontiercode"
+model = "Gemini 4 Neon"
+effort = "high"
+harness = "antigravity-cli"
+score = 50.76
+cost = 4.382
+
+[[result]]
+source = "frontiercode"
+model = "Gemini 4 Neon"
+effort = "xhigh"
+harness = "antigravity-cli"
+score = 49.24
+cost = 7.666
+
+[[result]]
+source = "frontiercode"
+model = "Claude Haiku 5.5"
+effort = "low"
+harness = "claude-code"
+score = 11.82
+cost = 0.065
+
+[[result]]
+source = "frontiercode"
+model = "Claude Haiku 5.5"
+effort = "medium"
+harness = "claude-code"
+score = 15.76
+cost = 0.097
+
+[[result]]
+source = "frontiercode"
+model = "Claude Haiku 5.5"
+effort = "high"
+harness = "claude-code"
+score = 21.52
+cost = 0.139
+
+[[result]]
+source = "frontiercode"
+model = "Claude Haiku 5.5"
+effort = "xhigh"
+harness = "claude-code"
+score = 25.45
+cost = 0.226
+
+[[result]]
+source = "frontiercode"
+model = "Claude Haiku 5.5"
+effort = "max"
+harness = "claude-code"
+score = 31.86
+cost = 0.366
+
+[[result]]
+source = "frontiercode"
+model = "Muse Wonder 1.0"
+effort = "low"
+harness = "muse"
+score = 24.55
+cost = 1.843
+
+[[result]]
+source = "frontiercode"
+model = "Muse Wonder 1.0"
+effort = "medium"
+harness = "muse"
+score = 26.97
+cost = 2.534
+
+[[result]]
+source = "frontiercode"
+model = "Muse Wonder 1.0"
+effort = "high"
+harness = "muse"
+score = 28.18
+cost = 3.143
+
+[[result]]
+source = "frontiercode"
+model = "Muse Wonder 1.0"
+effort = "xhigh"
+harness = "muse"
+score = 28.79
+cost = 3.793
+
+[[result]]
+source = "frontiercode"
+model = "Claude Opus 5.5"
+effort = "low"
+harness = "claude-code"
+score = 16.52
+cost = 0.746
+
+[[result]]
+source = "frontiercode"
+model = "Claude Opus 5.5"
+effort = "medium"
+harness = "claude-code"
+score = 34.55
+cost = 1.699
+
+[[result]]
+source = "frontiercode"
+model = "Claude Opus 5.5"
+effort = "high"
+harness = "claude-code"
+score = 39.85
+cost = 2.423
+
+[[result]]
+source = "frontiercode"
+model = "Claude Opus 5.5"
+effort = "xhigh"
+harness = "claude-code"
+score = 48.79
+cost = 5.184
+
+[[result]]
+source = "frontiercode"
+model = "Claude Opus 5.5"
+effort = "max"
+harness = "claude-code"
+score = 51.82
+cost = 12.821
+
+[[result]]
+source = "frontiercode"
+model = "Claude Sonnet 5.5"
+effort = "low"
+harness = "claude-code"
+score = 10.91
+cost = 0.369
+
+[[result]]
+source = "frontiercode"
+model = "Claude Sonnet 5.5"
+effort = "medium"
+harness = "claude-code"
+score = 16.67
+cost = 0.482
+
+[[result]]
+source = "frontiercode"
+model = "Claude Sonnet 5.5"
+effort = "high"
+harness = "claude-code"
+score = 25.45
+cost = 1.066
+
+[[result]]
+source = "frontiercode"
+model = "Claude Sonnet 5.5"
+effort = "xhigh"
+harness = "claude-code"
+score = 40.0
+cost = 3.315
+
+[[result]]
+source = "frontiercode"
+model = "Claude Sonnet 5.5"
+effort = "max"
+harness = "claude-code"
+score = 46.36
+cost = 19.941
+
+[[result]]
+source = "frontierswe"
+model = "Claude Fable 5.2"
+effort = ""
+harness = "proximus"
+score = 69.94
+cost = 168.78
+
+[[result]]
+source = "frontierswe"
+model = "GPT-6 Astra"
+effort = ""
+harness = "proximus"
+score = 65.51
+cost = 1029.65
+
+[[result]]
+source = "frontierswe"
+model = "Claude Opus 5.5"
+effort = ""
+harness = "proximus"
+score = 62.33
+cost = 98.87
+
+[[result]]
+source = "frontierswe"
+model = "Claude Sonnet 5.5"
+effort = ""
+harness = "proximus"
+score = 61.89
+cost = 110.45
+
+[[result]]
+source = "frontierswe"
+model = "Gemini 4 Carbon"
+effort = ""
+harness = "proximus"
+score = 61.2
+cost = 61.93
+
+[[result]]
+source = "frontierswe"
+model = "Gemini 4 Argon"
+effort = ""
+harness = "proximus"
+score = 54.96
+cost = 129.36
+
+[[result]]
+source = "frontierswe"
+model = "Claude Haiku 5.5"
+effort = ""
+harness = "proximus"
+score = 43.77
+cost = 20.55
+
+[[result]]
+source = "frontierswe"
+model = "Gemini 3.8 Flash"
+effort = ""
+harness = "proximus"
+score = 19.63
+cost = 38.75

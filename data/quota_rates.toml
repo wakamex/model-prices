@@ -7,7 +7,9 @@
 # usage it prices with model-prices. `weekly` entries come from its quota history, which divides
 # a fixed week's API-priced usage by the points it used; `fitted` entries split one pool between
 # models by a non-negative least-squares fit of each 6-hour step in the pool's weekly quota on
-# the API-priced usage of each model family in that step.
+# the API-priced usage of each model family in that step; `runs` entries run one fixed task on
+# one model, on a pool no other project is using, and read the pool before and after each run.
+# `match` names the benchmark models a rate prices.
 #
 # A plan dollar buys usd_per_month / 4.348 / 100 dollars' worth of weekly points, so a task
 # that costs C at API prices costs C / usd_per_point * (usd_per_month / 434.8) of the plan, and
@@ -18,6 +20,7 @@ provider = "anthropic"
 plan = "max_20x"
 pool = "Weekly limit, all models"
 models = "Claude models in Claude Code"
+match = '^(Claude )?(Opus|Sonnet|Haiku) 5\.5$'
 usd_per_point = 39.05
 measured = "2026-11-16"
 method = "weekly"
@@ -28,6 +31,7 @@ provider = "anthropic"
 plan = "max_20x"
 pool = "Weekly Fable limit"
 models = "Claude Fable 5.2"
+match = '^(Claude )?Fable 5\.2$'
 usd_per_point = 8.01
 measured = "2026-11-16"
 method = "weekly"
@@ -38,6 +42,7 @@ provider = "google"
 plan = "ultra_100"
 pool = "Antigravity, Gemini"
 models = "Gemini 4 Argon and Gemini 4 Carbon"
+match = '^Gemini 4 (Argon|Carbon)$'
 usd_per_point = 1.9
 measured = "2026-11-19"
 method = "fitted"
@@ -47,7 +52,19 @@ note = "Fitted over 2026-11-01 to 2026-11-19 on $350 of Argon and Carbon usage: 
 provider = "google"
 plan = "ultra_100"
 pool = "Antigravity, Gemini"
+models = "Gemini 4 Neon"
+match = '^Gemini 4 Neon$'
+usd_per_point = 6.0
+measured = "2026-11-19"
+method = "runs"
+note = "Runs of one fixed 3,000-word task on gemini-4-neon-high, each after the pool had been idle 15 minutes: $0.1946 for 0.03242 points, $0.2015 for 0.03358, and $0.2072 for 0.03455, $6.00 a point each. A weekly point is four 5-hour points."
+
+[[rate]]
+provider = "google"
+plan = "ultra_100"
+pool = "Antigravity, Gemini"
 models = "Gemini 3.8 Flash"
+match = '^Gemini 3\.8 Flash$'
 usd_per_point = 14.5
 measured = "2026-11-19"
 method = "fitted"
@@ -57,17 +74,18 @@ note = "Fitted over 2026-11-01 to 2026-11-19 on $78 of Flash usage: Flash draws 
 provider = "google"
 plan = "ultra_100"
 pool = "Antigravity, Claude and GPT"
-models = "Claude and GPT models in Antigravity"
-usd_per_point = 0.23
+models = "Claude Sonnet 5.5 in Antigravity"
+usd_per_point = 0.241
 measured = "2026-11-19"
-method = "fitted"
-note = "Fitted over 2026-11-01 to 2026-11-19 on only $6 of Claude Opus 5.5 and Sonnet 5.5 usage; quota history over a longer span gives $0.22."
+method = "runs"
+note = "Two runs of one fixed 3,000-word task on claude-sonnet-5-5-medium, on a pool no other project used: $0.0760 for 0.3152 points and $0.0787 for 0.3259. A weekly point is two 5-hour points. The fit over 2026-11-01 to 2026-11-19 gave $0.23."
 
 [[rate]]
 provider = "openai"
 plan = "plus"
 pool = "Weekly limit"
 models = "GPT models in Codex"
+match = '^GPT-6(\.\d)? '
 usd_per_point = 2.59
 measured = "2026-11-16"
 method = "weekly"
@@ -77,6 +95,7 @@ provider = "meta"
 plan = "power"
 pool = "Weekly limit"
 models = "Muse models in Muse Code"
+match = '^Muse Wonder'
 usd_per_point = 0.61
 measured = "2026-11-16"
 method = "weekly"

@@ -14,6 +14,7 @@ from __future__ import annotations
 import argparse
 from datetime import datetime, timezone
 import json
+import math
 from pathlib import Path
 import re
 import shutil
@@ -31,6 +32,7 @@ SITE = ROOT / "site"
 CONTENT = SITE / "content"
 REPOSITORY = "https://github.com/wakamex/model-prices"
 GENERATED = (CONTENT / "_index.md", CONTENT / "providers", CONTENT / "corrections.md", CONTENT / "plans.md",
+             CONTENT / "benchmarks.md",
              SITE / "data" / "navigation.json",
              SITE / "static" / "snapshot.json", SITE / "static" / "calculator-models.json")
 
@@ -514,6 +516,7 @@ def build(check_results: Path | None) -> None:
             {"title": "All models", "path": ""},
             {"title": "Calculator", "path": "calculator/"},
             {"title": "Plans", "path": "plans/"},
+            {"title": "Benchmarks in plan dollars", "path": "benchmarks/"},
             {"title": "Corrections", "path": "corrections/"},
             {"title": "About the data", "path": "about/"}]},
         # The group heading links to the list of providers, so the count covers providers only.
@@ -521,6 +524,7 @@ def build(check_results: Path | None) -> None:
     ]}, indent=1) + "\n")
     (CONTENT / "corrections.md").write_text(corrections_page(pages))
     (CONTENT / "plans.md").write_text(plans_page(check_results, ran, now))
+    (CONTENT / "benchmarks.md").write_text(benchmarks_page(data["plans"], now))
     shutil.copyfile(ROOT / "src" / "model_prices" / "snapshot.json", SITE / "static" / "snapshot.json")
     (SITE / "static" / "calculator-models.json").write_text(json.dumps(calculator))
 
@@ -669,6 +673,118 @@ def quota_value(plans: list[dict], now: datetime) -> list[str]:
     lines += ["", f"Not yet measured: {', '.join(escape(name) for name in unmeasured)}.", "",
               '<script type="module" src="../plan-value.js"></script>', ""]
     return lines
+
+
+LAB_COLORS = {"anthropic": "#c96442", "google": "#1e8e3e", "openai": "#202124", "meta": "#1877f2"}
+
+
+def plan_rates(plans: list[dict], now: datetime) -> list[tuple[re.Pattern, dict, dict]]:
+    """Each measured quota rate that names the benchmark models it prices, with its plan."""
+    current = {(plan["provider"], plan["id"]): plan for plan in plans
+               if "valid_until" not in plan or model_prices._parse_time(plan["valid_until"]) > now}
+    rates = tomllib.loads((ROOT / "data" / "quota_rates.toml").read_text())["rate"]
+    return [(re.compile(rate["match"]), rate, current[(rate["provider"], rate["plan"])])
+            for rate in rates if "match" in rate and (rate["provider"], rate["plan"]) in current]
+
+
+def scatter(points: list[tuple[float, float, str, str]], title: str, x_title: str) -> str:
+    """An SVG scatter of (cost, score, label, color) with cost on a log scale."""
+    width, height, left, right, top, bottom = 520, 380, 48, 12, 28, 44
+    costs = [point[0] for point in points]
+    scores = [point[1] for point in points]
+    low, high = math.log10(min(costs)) - 0.15, math.log10(max(costs)) + 0.15
+    # An axis spans at least a decade, so it has ticks to read.
+    if high - low < 1:
+        middle = (high + low) / 2
+        low, high = middle - 0.5, middle + 0.5
+    floor, ceiling = math.floor(min(scores) / 5) * 5, math.ceil(max(scores) / 5) * 5 + 2
+    x = lambda cost: left + (math.log10(cost) - low) / (high - low) * (width - left - right)
+    y = lambda score: top + (ceiling - score) / (ceiling - floor) * (height - top - bottom)
+    parts = [f'<svg viewBox="0 0 {width} {height}" class="bench-chart" role="img" aria-label="{escape(title)}">',
+             f'<text x="{left}" y="16" class="bench-title">{escape(title)}</text>']
+    for power in range(math.floor(low), math.ceil(high) + 1):
+        for step in (1, 3):
+            tick = step * 10 ** power
+            if low <= math.log10(tick) <= high:
+                parts.append(f'<line x1="{x(tick):.1f}" x2="{x(tick):.1f}" y1="{top}" y2="{height - bottom}" class="bench-grid"/>'
+                             f'<text x="{x(tick):.1f}" y="{height - bottom + 14}" class="bench-tick" text-anchor="middle">'
+                             f'${tick:g}</text>')
+    for score in range(floor, ceiling + 1, 5):
+        parts.append(f'<line x1="{left}" x2="{width - right}" y1="{y(score):.1f}" y2="{y(score):.1f}" class="bench-grid"/>'
+                     f'<text x="{left - 6}" y="{y(score) + 4:.1f}" class="bench-tick" text-anchor="end">{score}</text>')
+    parts.append(f'<text x="{(left + width - right) / 2}" y="{height - 8}" class="bench-axis" text-anchor="middle">'
+                 f'{escape(x_title)}</text>')
+    # Only the frontier is labeled: points no other point beats on both score and cost.
+    frontier = {point for point in points if not any(
+        other[1] >= point[1] and other[0] <= point[0] and other[:2] != point[:2] for other in points)}
+    placed: list[tuple[float, float, float]] = []
+    for cost, score, label, color in sorted(points, key=lambda point: -point[1]):
+        cx, cy = x(cost), y(score)
+        parts.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="3.5" fill="{color}"><title>{escape(label)}: '
+                     f'{score:g}, ${cost:,.3g}</title></circle>')
+        if (cost, score, label, color) not in frontier:
+            continue
+        # A label goes beside its point, left of it near the right edge, moved down a line at a
+        # time past labels already drawn, and is left out when no free line is near.
+        size = 5.2 * len(label)
+        right_side = cx <= width * 0.62
+        start = cx + 5 if right_side else cx - 5 - size
+        for line in range(4):
+            top_y = cy - 4 + 12 * line
+            if not any(start < end and start + size > begin and abs(top_y - other) < 11
+                       for begin, end, other in placed):
+                placed.append((start, start + size, top_y))
+                parts.append(f'<text x="{start:.1f}" y="{top_y:.1f}" class="bench-label">{escape(label)}</text>')
+                break
+    return "".join(parts) + "</svg>"
+
+
+def benchmarks_page(plans: list[dict], now: datetime) -> str:
+    """Each benchmark's results against their cost per task at API prices, and in plan dollars
+    at the measured rate of the plan that runs the model."""
+    data = tomllib.loads((ROOT / "data" / "benchmarks.toml").read_text())
+    rates = plan_rates(plans, now)
+    sections = []
+    for source in data["source"]:
+        api, plan, rows = [], [], []
+        for result in (item for item in data["result"] if item["source"] == source["id"]):
+            found = next(((rate, owner) for pattern, rate, owner in rates if pattern.match(result["model"])), None)
+            if found is None:
+                continue
+            rate, owner = found
+            per_plan = result["cost"] / rate["usd_per_point"] * owner["usd_per_month"] / 434.8
+            label = f'{result["model"]} {result["effort"]}'.strip()
+            color = LAB_COLORS.get(rate["provider"], "#777")
+            api.append((result["cost"], result["score"], label, color))
+            plan.append((per_plan, result["score"], label, color))
+            rows.append(f'| {escape(label)} | {result["score"]:g} | ${result["cost"]:,.2f} | {escape(owner["name"])}, '
+                        f'{escape(rate["pool"])} | ${per_plan:,.3f} | {math.floor(100 * rate["usd_per_point"] / result["cost"]):,} |')
+        if not api:
+            continue
+        sections += [f'## {escape(source["name"])}', "",
+                     f'[{escape(source["name"])}]({source["url"]}), read {source["retrieved"]}: {escape(source["note"])}', "",
+                     '<div class="bench-pair">' + scatter(api, "At API prices", "Cost per task, US dollars")
+                     + scatter(plan, "In plan dollars", "Cost per task in plan dollars") + "</div>", "",
+                     "| Model and effort | Score | API $ per task | Plan and pool | Plan $ per task | Tasks a week |",
+                     "| --- | --- | --- | --- | --- | --- |", *rows, ""]
+    front = toml({"title": "Benchmarks in plan dollars",
+                  "description": "Benchmark scores against cost per task at API prices and in subscription plan dollars.",
+                  "extra": {"navigation_group": "prices", "toc": False}})
+    return ("+++\n" + front + "+++\n\n"
+            "Benchmarks report what a task costs at API prices. Run on a subscription, the same task "
+            "costs a share of the plan's weekly limit instead, and plans value their quota very "
+            "differently, so the ranking by cost can change. Each benchmark below is drawn twice: "
+            "score against its published cost per task, and against the plan dollars that task "
+            "costs at the measured rate of the plan that runs the model, the cost divided by the API "
+            "dollars a weekly quota point buys, times the plan's price per point (its monthly price "
+            "over 434.8). Tasks a week is how many such tasks a full week's limit holds. The rates "
+            "are measurements of one user's accounts, dated on the [Plans](../plans/) page, where a "
+            "converter takes any cost per task; only models whose plan rate has been measured are "
+            "shown, and each chart labels the models no other beats on both score and cost; a table "
+            "under it lists them all. A benchmark run in another harness, such as Cursor, is priced as if run in the "
+            "lab's own. Artificial Analysis's figures are quoted, with attribution, from the text of "
+            "its public post; the other benchmarks publish their cost per task openly.\n\n"
+            + "\n".join(sections))
 
 
 def main() -> int:

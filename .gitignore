@@ -20,6 +20,7 @@ dist/
 /site/content/providers/
 /site/content/corrections.md
 /site/content/plans.md
+/site/content/benchmarks.md
 /site/data/
 /site/static/snapshot.json
 /site/static/calculator-models.json
