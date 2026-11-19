@@ -23,7 +23,7 @@ id = "frontiercode"
 name = "FrontierCode 2.0"
 url = "https://cognition.com/frontiercode"
 retrieved = "2026-11-18"
-note = "Share of tasks solved and average cost per task, each model in the harness the leaderboard names."
+note = "Score, the weighted aggregate of rubric items the leaderboard heads its chart with, and average cost per task, each model in the harness the leaderboard names."
 
 [[source]]
 id = "frontierswe"
@@ -277,7 +277,7 @@ source = "frontiercode"
 model = "Claude Fable 5.2"
 effort = "low"
 harness = "claude-code"
-score = 38.64
+score = 35.26
 cost = 2.623
 tokens = 23907
 
@@ -286,7 +286,7 @@ source = "frontiercode"
 model = "Claude Fable 5.2"
 effort = "medium"
 harness = "claude-code"
-score = 42.42
+score = 38.78
 cost = 3.103
 tokens = 28384
 
@@ -295,7 +295,7 @@ source = "frontiercode"
 model = "Claude Fable 5.2"
 effort = "high"
 harness = "claude-code"
-score = 50.45
+score = 46.24
 cost = 8.402
 tokens = 75978
 
@@ -304,7 +304,7 @@ source = "frontiercode"
 model = "Claude Fable 5.2"
 effort = "xhigh"
 harness = "claude-code"
-score = 54.7
+score = 50.18
 cost = 17.734
 tokens = 156009
 
@@ -313,7 +313,7 @@ source = "frontiercode"
 model = "Claude Fable 5.2"
 effort = "max"
 harness = "claude-code"
-score = 52.73
+score = 48.23
 cost = 55.868
 tokens = 417808
 
@@ -322,7 +322,7 @@ source = "frontiercode"
 model = "GPT-6 Astra"
 effort = "low"
 harness = "codex"
-score = 34.24
+score = 31.11
 cost = 2.437
 tokens = 8987
 
@@ -331,7 +331,7 @@ source = "frontiercode"
 model = "GPT-6 Astra"
 effort = "medium"
 harness = "codex"
-score = 40.76
+score = 37.29
 cost = 3.493
 tokens = 14065
 
@@ -340,7 +340,7 @@ source = "frontiercode"
 model = "GPT-6 Astra"
 effort = "high"
 harness = "codex"
-score = 41.97
+score = 38.83
 cost = 4.277
 tokens = 18433
 
@@ -349,7 +349,7 @@ source = "frontiercode"
 model = "GPT-6 Astra"
 effort = "xhigh"
 harness = "codex"
-score = 45.15
+score = 41.69
 cost = 4.539
 tokens = 20869
 
@@ -358,7 +358,7 @@ source = "frontiercode"
 model = "GPT-6 Astra"
 effort = "max"
 harness = "codex"
-score = 47.58
+score = 44.02
 cost = 6.676
 tokens = 36354
 
@@ -367,7 +367,7 @@ source = "frontiercode"
 model = "GPT-6 Luna"
 effort = "low"
 harness = "codex"
-score = 4.55
+score = 4.05
 cost = 0.023
 tokens = 6519
 
@@ -376,7 +376,7 @@ source = "frontiercode"
 model = "GPT-6 Luna"
 effort = "medium"
 harness = "codex"
-score = 17.88
+score = 16.12
 cost = 0.092
 tokens = 31360
 
@@ -385,7 +385,7 @@ source = "frontiercode"
 model = "GPT-6 Luna"
 effort = "high"
 harness = "codex"
-score = 18.48
+score = 16.5
 cost = 0.115
 tokens = 42170
 
@@ -394,7 +394,7 @@ source = "frontiercode"
 model = "GPT-6 Luna"
 effort = "xhigh"
 harness = "codex"
-score = 20.45
+score = 18.44
 cost = 0.132
 tokens = 50565
 
@@ -403,7 +403,7 @@ source = "frontiercode"
 model = "GPT-6 Luna"
 effort = "max"
 harness = "codex"
-score = 25.15
+score = 22.74
 cost = 0.174
 tokens = 79659
 
@@ -412,7 +412,7 @@ source = "frontiercode"
 model = "GPT-6 Sol"
 effort = "low"
 harness = "codex"
-score = 11.67
+score = 10.49
 cost = 0.4164
 tokens = 6487
 
@@ -421,7 +421,7 @@ source = "frontiercode"
 model = "GPT-6 Sol"
 effort = "medium"
 harness = "codex"
-score = 24.55
+score = 22.05
 cost = 0.8225
 tokens = 13750
 
@@ -430,7 +430,7 @@ source = "frontiercode"
 model = "GPT-6 Sol"
 effort = "high"
 harness = "codex"
-score = 25.91
+score = 23.34
 cost = 1.0714
 tokens = 19393
 
@@ -439,7 +439,7 @@ source = "frontiercode"
 model = "GPT-6 Sol"
 effort = "xhigh"
 harness = "codex"
-score = 33.64
+score = 30.45
 cost = 1.4432
 tokens = 28587
 
@@ -448,7 +448,7 @@ source = "frontiercode"
 model = "GPT-6 Sol"
 effort = "max"
 harness = "codex"
-score = 38.33
+score = 34.91
 cost = 2.3547
 tokens = 54181
 
@@ -457,7 +457,7 @@ source = "frontiercode"
 model = "GPT-6.1 Sol"
 effort = "low"
 harness = "codex"
-score = 28.48
+score = 25.74
 cost = 0.341
 tokens = 10042
 
@@ -466,7 +466,7 @@ source = "frontiercode"
 model = "GPT-6.1 Sol"
 effort = "medium"
 harness = "codex"
-score = 33.03
+score = 30.27
 cost = 0.492
 tokens = 15686
 
@@ -475,7 +475,7 @@ source = "frontiercode"
 model = "GPT-6.1 Sol"
 effort = "high"
 harness = "codex"
-score = 38.33
+score = 35.09
 cost = 0.647
 tokens = 22419
 
@@ -484,7 +484,7 @@ source = "frontiercode"
 model = "GPT-6.1 Sol"
 effort = "xhigh"
 harness = "codex"
-score = 36.06
+score = 33.03
 cost = 0.695
 tokens = 24789
 
@@ -493,7 +493,7 @@ source = "frontiercode"
 model = "GPT-6.1 Sol"
 effort = "max"
 harness = "codex"
-score = 43.03
+score = 39.65
 cost = 1.029
 tokens = 41479
 
@@ -502,7 +502,7 @@ source = "frontiercode"
 model = "GPT-6.2 Astra"
 effort = "low"
 harness = "codex"
-score = 42.17
+score = 38.07
 cost = 1.415
 tokens = 8154
 
@@ -511,7 +511,7 @@ source = "frontiercode"
 model = "GPT-6.2 Astra"
 effort = "medium"
 harness = "codex"
-score = 46.47
+score = 42.2
 cost = 2.469
 tokens = 14364
 
@@ -520,7 +520,7 @@ source = "frontiercode"
 model = "GPT-6.2 Astra"
 effort = "high"
 harness = "codex"
-score = 47.73
+score = 43.56
 cost = 3.952
 tokens = 24452
 
@@ -529,7 +529,7 @@ source = "frontiercode"
 model = "GPT-6.2 Astra"
 effort = "xhigh"
 harness = "codex"
-score = 48.49
+score = 44.12
 cost = 4.289
 tokens = 28568
 
@@ -538,7 +538,7 @@ source = "frontiercode"
 model = "GPT-6.2 Astra"
 effort = "max"
 harness = "codex"
-score = 48.23
+score = 44.19
 cost = 5.966
 tokens = 45974
 
@@ -547,7 +547,7 @@ source = "frontiercode"
 model = "GPT-6.2 Sol"
 effort = "low"
 harness = "codex"
-score = 36.62
+score = 33.14
 cost = 0.402
 tokens = 9789
 
@@ -556,7 +556,7 @@ source = "frontiercode"
 model = "GPT-6.2 Sol"
 effort = "medium"
 harness = "codex"
-score = 42.17
+score = 38.29
 cost = 0.685
 tokens = 16457
 
@@ -565,7 +565,7 @@ source = "frontiercode"
 model = "GPT-6.2 Sol"
 effort = "high"
 harness = "codex"
-score = 43.94
+score = 39.72
 cost = 0.876
 tokens = 22415
 
@@ -574,7 +574,7 @@ source = "frontiercode"
 model = "GPT-6.2 Sol"
 effort = "xhigh"
 harness = "codex"
-score = 43.94
+score = 39.78
 cost = 0.98
 tokens = 26387
 
@@ -583,7 +583,7 @@ source = "frontiercode"
 model = "GPT-6.2 Sol"
 effort = "max"
 harness = "codex"
-score = 48.23
+score = 43.76
 cost = 1.287
 tokens = 38078
 
@@ -592,7 +592,7 @@ source = "frontiercode"
 model = "Gemini 4 Argon"
 effort = "low"
 harness = "devin-cli"
-score = 24.85
+score = 22.41
 cost = 3.977
 tokens = 63291
 
@@ -601,7 +601,7 @@ source = "frontiercode"
 model = "Gemini 4 Argon"
 effort = "medium"
 harness = "devin-cli"
-score = 27.12
+score = 24.43
 cost = 5.688
 tokens = 123879
 
@@ -610,7 +610,7 @@ source = "frontiercode"
 model = "Gemini 4 Argon"
 effort = "high"
 harness = "devin-cli"
-score = 30.61
+score = 27.63
 cost = 6.514
 tokens = 148569
 
@@ -619,7 +619,7 @@ source = "frontiercode"
 model = "Gemini 4 Carbon"
 effort = "low"
 harness = "antigravity-cli"
-score = 34.6
+score = 31.53
 cost = 7.723
 tokens = 51553
 
@@ -628,7 +628,7 @@ source = "frontiercode"
 model = "Gemini 4 Carbon"
 effort = "medium"
 harness = "antigravity-cli"
-score = 45.2
+score = 40.9
 cost = 4.486
 tokens = 114385
 
@@ -637,7 +637,7 @@ source = "frontiercode"
 model = "Gemini 4 Carbon"
 effort = "high"
 harness = "antigravity-cli"
-score = 46.92
+score = 42.62
 cost = 5.057
 tokens = 127641
 
@@ -646,7 +646,7 @@ source = "frontiercode"
 model = "Gemini 4 Neon"
 effort = "low"
 harness = "antigravity-cli"
-score = 30.56
+score = 27.41
 cost = 0.959
 tokens = 21049
 
@@ -655,7 +655,7 @@ source = "frontiercode"
 model = "Gemini 4 Neon"
 effort = "medium"
 harness = "antigravity-cli"
-score = 42.17
+score = 38.16
 cost = 2.174
 tokens = 45888
 
@@ -664,7 +664,7 @@ source = "frontiercode"
 model = "Gemini 4 Neon"
 effort = "high"
 harness = "antigravity-cli"
-score = 50.76
+score = 46.24
 cost = 4.382
 tokens = 85592
 
@@ -673,7 +673,7 @@ source = "frontiercode"
 model = "Gemini 4 Neon"
 effort = "xhigh"
 harness = "antigravity-cli"
-score = 49.24
+score = 44.83
 cost = 7.666
 tokens = 127992
 
@@ -682,7 +682,7 @@ source = "frontiercode"
 model = "Claude Haiku 5.5"
 effort = "low"
 harness = "claude-code"
-score = 11.82
+score = 10.59
 cost = 0.065
 tokens = 39366
 
@@ -691,7 +691,7 @@ source = "frontiercode"
 model = "Claude Haiku 5.5"
 effort = "medium"
 harness = "claude-code"
-score = 15.76
+score = 14.05
 cost = 0.097
 tokens = 57582
 
@@ -700,7 +700,7 @@ source = "frontiercode"
 model = "Claude Haiku 5.5"
 effort = "high"
 harness = "claude-code"
-score = 21.52
+score = 19.27
 cost = 0.139
 tokens = 80993
 
@@ -709,7 +709,7 @@ source = "frontiercode"
 model = "Claude Haiku 5.5"
 effort = "xhigh"
 harness = "claude-code"
-score = 25.45
+score = 22.92
 cost = 0.226
 tokens = 127735
 
@@ -718,7 +718,7 @@ source = "frontiercode"
 model = "Claude Haiku 5.5"
 effort = "max"
 harness = "claude-code"
-score = 31.86
+score = 28.93
 cost = 0.366
 tokens = 205112
 
@@ -727,7 +727,7 @@ source = "frontiercode"
 model = "Muse Wonder 1.0"
 effort = "low"
 harness = "muse"
-score = 24.55
+score = 21.6
 cost = 1.843
 tokens = 20301
 
@@ -736,7 +736,7 @@ source = "frontiercode"
 model = "Muse Wonder 1.0"
 effort = "medium"
 harness = "muse"
-score = 26.97
+score = 23.92
 cost = 2.534
 tokens = 26714
 
@@ -745,7 +745,7 @@ source = "frontiercode"
 model = "Muse Wonder 1.0"
 effort = "high"
 harness = "muse"
-score = 28.18
+score = 24.92
 cost = 3.143
 tokens = 32832
 
@@ -754,7 +754,7 @@ source = "frontiercode"
 model = "Muse Wonder 1.0"
 effort = "xhigh"
 harness = "muse"
-score = 28.79
+score = 25.32
 cost = 3.793
 tokens = 38672
 
@@ -763,7 +763,7 @@ source = "frontiercode"
 model = "Claude Opus 5.5"
 effort = "low"
 harness = "claude-code"
-score = 16.52
+score = 14.85
 cost = 0.746
 tokens = 14230
 
@@ -772,7 +772,7 @@ source = "frontiercode"
 model = "Claude Opus 5.5"
 effort = "medium"
 harness = "claude-code"
-score = 34.55
+score = 31.43
 cost = 1.699
 tokens = 30068
 
@@ -781,7 +781,7 @@ source = "frontiercode"
 model = "Claude Opus 5.5"
 effort = "high"
 harness = "claude-code"
-score = 39.85
+score = 36.27
 cost = 2.423
 tokens = 41233
 
@@ -790,7 +790,7 @@ source = "frontiercode"
 model = "Claude Opus 5.5"
 effort = "xhigh"
 harness = "claude-code"
-score = 48.79
+score = 44.72
 cost = 5.184
 tokens = 88053
 
@@ -799,7 +799,7 @@ source = "frontiercode"
 model = "Claude Opus 5.5"
 effort = "max"
 harness = "claude-code"
-score = 51.82
+score = 47.34
 cost = 12.821
 tokens = 201919
 
@@ -808,7 +808,7 @@ source = "frontiercode"
 model = "Claude Sonnet 5.5"
 effort = "low"
 harness = "claude-code"
-score = 10.91
+score = 9.66
 cost = 0.369
 tokens = 11265
 
@@ -817,7 +817,7 @@ source = "frontiercode"
 model = "Claude Sonnet 5.5"
 effort = "medium"
 harness = "claude-code"
-score = 16.67
+score = 14.96
 cost = 0.482
 tokens = 14449
 
@@ -826,7 +826,7 @@ source = "frontiercode"
 model = "Claude Sonnet 5.5"
 effort = "high"
 harness = "claude-code"
-score = 25.45
+score = 22.95
 cost = 1.066
 tokens = 27839
 
@@ -835,7 +835,7 @@ source = "frontiercode"
 model = "Claude Sonnet 5.5"
 effort = "xhigh"
 harness = "claude-code"
-score = 40.0
+score = 36.5
 cost = 3.315
 tokens = 80433
 
@@ -844,7 +844,7 @@ source = "frontiercode"
 model = "Claude Sonnet 5.5"
 effort = "max"
 harness = "claude-code"
-score = 46.36
+score = 42.24
 cost = 19.941
 tokens = 514722
 

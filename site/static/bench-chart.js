@@ -19,7 +19,7 @@ const element = (name, attributes = {}, text) => {
 
 // A marker per harness, centered on (x, y).
 function marker(shape, x, y, color) {
-  const r = 4;
+  const r = 5;
   const points = (list) => element("polygon", { points: list.map(([dx, dy]) => `${x + dx},${y + dy}`).join(" "), fill: color });
   switch (shape) {
     case "triangle": return points([[0, -r - 1], [r + 1, r], [-r - 1, r]]);
@@ -55,7 +55,7 @@ function ticks(low, high, log) {
 
 function draw(chart) {
   const { results, harnesses, axis, log } = chart;
-  const width = 960, height = 470, left = 44, right = 16, top = 16, bottom = 40;
+  const width = 1160, height = 680, left = 52, right = 40, top = 20, bottom = 48;
   const shown = results.filter((r) => r[axis] != null && r[axis] > 0);
   const svg = element("svg", { viewBox: `0 0 ${width} ${height}`, class: "bench-chart", role: "img",
     "aria-label": `${chart.name}: score against ${AXES[axis].label.toLowerCase()}` });
@@ -70,7 +70,7 @@ function draw(chart) {
   const y = (score) => top + (ceiling - score) / (ceiling - floor) * (height - top - bottom);
   for (const tick of ticks(low, high, log)) {
     svg.append(element("line", { x1: x(tick), x2: x(tick), y1: top, y2: height - bottom, class: "bench-grid" }),
-      element("text", { x: x(tick), y: height - bottom + 16, class: "bench-tick", "text-anchor": "middle" },
+      element("text", { x: x(tick), y: height - bottom + 20, class: "bench-tick", "text-anchor": "middle" },
         AXES[axis].money ? money(tick) : count(tick)));
   }
   for (let score = floor; score <= ceiling; score += 10) {
@@ -99,13 +99,13 @@ function draw(chart) {
   // Each model's name sits beside its best point, moved down past names already placed.
   const placed = [];
   for (const label of labels.sort((a, b) => a.y - b.y)) {
-    const size = 6 * label.model.length + 8;
-    let lx = label.x + 8, ly = label.y - 7;
+    const size = 7.4 * label.model.length + 10;
+    let lx = label.x + 9, ly = label.y - 9;
     if (lx + size > width - right) lx = label.x - 8 - size;
-    while (placed.some((p) => lx < p.x + p.w && lx + size > p.x && Math.abs(ly - p.y) < 15)) ly += 15;
+    while (placed.some((p) => lx < p.x + p.w && lx + size > p.x && Math.abs(ly - p.y) < 19)) ly += 19;
     placed.push({ x: lx, y: ly, w: size });
-    svg.append(element("rect", { x: lx, y: ly, width: size, height: 14, rx: 2, fill: label.color }),
-      element("text", { x: lx + 4, y: ly + 10.5, class: "bench-tag" }, label.model));
+    svg.append(element("rect", { x: lx, y: ly, width: size, height: 18, rx: 2, fill: label.color }),
+      element("text", { x: lx + 5, y: ly + 13, class: "bench-tag" }, label.model));
   }
   svg.append(element("text", { x: (left + width - right) / 2, y: height - 6, class: "bench-axis", "text-anchor": "middle" },
     AXES[axis].label + (log ? ", log scale" : "")));

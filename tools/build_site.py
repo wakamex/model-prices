@@ -675,7 +675,8 @@ def quota_value(plans: list[dict], now: datetime) -> list[str]:
     return lines
 
 
-LAB_COLORS = {"anthropic": "#c96442", "google": "#1e8e3e", "openai": "#202124", "meta": "#1877f2"}
+# Lab colors as the FrontierCode leaderboard draws them.
+LAB_COLORS = {"anthropic": "#FF5833", "google": "#D1A700", "openai": "#10B552", "meta": "#2050CF"}
 
 
 def plan_rates(plans: list[dict], now: datetime) -> list[tuple[re.Pattern, dict, dict]]:
