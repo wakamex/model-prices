@@ -718,8 +718,8 @@ LAB_NAMES = {"anthropic": "Anthropic", "google": "Google", "openai": "OpenAI", "
 
 def plan_choices(plans: list[dict], measured: dict[str, str], now: datetime) -> list[dict]:
     """Each lab with a measured plan: its current plans, each with its monthly price and its
-    discount, the API dollars a plan dollar buys on the lab's main measured pool. The measured
-    plan's is measured; a plan whose name states its usage against the measured plan's, as
+    discount, the API dollars a plan dollar buys on the lab's main measured pool. A plan measured
+    on that pool keeps its measured discount; a plan whose name states its usage against the measured plan's, as
     Anthropic's Max 5x and 20x Pro do, scales it by usage over price; any other plan starts at
     the measured plan's discount."""
     rates = tomllib.loads((ROOT / "data" / "quota_rates.toml").read_text())["rate"]
@@ -733,12 +733,20 @@ def plan_choices(plans: list[dict], measured: dict[str, str], now: datetime) -> 
         discount = base["usd_per_point"] / (own["usd_per_month"] / 434.8)
         choices = []
         for plan in current:
+            # A plan measured on the same pool, such as an account's earlier plan, keeps its own rate.
+            same = next((rate for rate in rates if rate["provider"] == provider and rate["plan"] == plan["id"]
+                         and rate["pool"] == base["pool"]), None)
             stated = (provider, plan["id"]) in STATED_MULTIPLES and (provider, plan_id) in STATED_MULTIPLES
-            value = (discount * STATED_MULTIPLES[(provider, plan["id"])] / STATED_MULTIPLES[(provider, plan_id)]
-                     / (plan["usd_per_month"] / own["usd_per_month"])) if stated else discount
+            if same is not None:
+                value, source = same["usd_per_point"] / (plan["usd_per_month"] / 434.8), "measured"
+            elif stated:
+                value = (discount * STATED_MULTIPLES[(provider, plan["id"])] / STATED_MULTIPLES[(provider, plan_id)]
+                         / (plan["usd_per_month"] / own["usd_per_month"]))
+                source = "stated"
+            else:
+                value, source = discount, "assumed"
             choices.append({"id": plan["id"], "name": plan["name"], "price": plan["usd_per_month"],
-                            "discount": round(value, 2),
-                            "source": "measured" if plan["id"] == plan_id else "stated" if stated else "assumed"})
+                            "discount": round(value, 2), "source": source})
         labs.append({"lab": provider, "name": LAB_NAMES.get(provider, provider), "measured": plan_id,
                      "measured_price": own["usd_per_month"], "measured_discount": discount,
                      "pool": base["pool"], "plans": choices})
@@ -809,8 +817,9 @@ def benchmarks_page(plans: list[dict], now: datetime) -> str:
             "lab's own. Artificial Analysis's figures are quoted, with attribution, from the text of "
             "its public post; the other benchmarks publish their cost per task openly.\n\n"
             "Choose each lab's plan below, and its discount: the API dollars a plan dollar buys on "
-            "the lab's main measured pool, which you can change. The measured plan's discount is "
-            "measured. A plan whose name states its usage against the measured plan's, as "
+            "the lab's main measured pool, which you can change. A plan measured on that pool, such "
+            "as ChatGPT Pro $200 on an account's earlier weeks, starts at its measured discount. A "
+            "plan whose name states its usage against the measured plan's, as "
             "Anthropic's Max 5x and 20x Pro do, scales it by usage over price, so Claude Pro and "
             "Max start at half of Ultra's; any other plan starts at the measured plan's discount. "
             "A lab's other pools, such as Claude's Fable limit, keep their measured ratio to the "

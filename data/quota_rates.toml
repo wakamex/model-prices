@@ -91,6 +91,16 @@ measured = "2026-11-16"
 method = "weekly"
 
 [[rate]]
+provider = "openai"
+plan = "pro_200"
+pool = "Weekly limit"
+models = "GPT models in Codex"
+usd_per_point = 14.5
+measured = "2026-10-07"
+method = "weekly"
+note = "One account's quota history on ChatGPT Pro $200: $14.15 to $16.41 a point over the five weeks from 2026-09-12 to 2026-10-03 that reached 36% or more, mostly GPT-6 Astra; $19.62 to $22.76 in August, mostly GPT-5.6 Sol. The account had held Pro since before 2026-09-22, so it kept the 20x Plus allowance through OpenAI's announced cut to 10x, which OpenAI cancelled on 2026-10-29 before it reached existing subscribers. Against Plus's measured $2.59, the weekly limit measured about 6 to 7 times Plus's, where OpenAI states 20 times; Plus was measured mostly on GPT-6.1 Sol, so the model mix may account for part of the gap."
+
+[[rate]]
 provider = "meta"
 plan = "power"
 pool = "Weekly limit"
