@@ -1,0 +1,82 @@
+# What a percentage point of a subscription's weekly quota is worth at API prices: the
+# API-priced cost of the usage that moved the quota by one point. These are measurements of
+# one user's accounts, not published by the labs: each entry gives the plan, the quota pool,
+# the models that draw on it, the dollars per point, and the date and method of measurement.
+#
+# Measured from the quota percentages that clanker-analytics records every few minutes and the
+# usage it prices with model-prices. `weekly` entries come from its quota history, which divides
+# a fixed week's API-priced usage by the points it used; `fitted` entries split one pool between
+# models by a non-negative least-squares fit of each 6-hour step in the pool's weekly quota on
+# the API-priced usage of each model family in that step.
+#
+# A plan dollar buys usd_per_month / 4.348 / 100 dollars' worth of weekly points, so a task
+# that costs C at API prices costs C / usd_per_point * (usd_per_month / 434.8) of the plan, and
+# a week at the limit holds 100 * usd_per_point / C such tasks.
+
+[[rate]]
+provider = "anthropic"
+plan = "max_20x"
+pool = "Weekly limit, all models"
+models = "Claude models in Claude Code"
+usd_per_point = 39.05
+measured = "2026-11-16"
+method = "weekly"
+note = "One account's quota history; a second account on the same plan measured $35.00."
+
+[[rate]]
+provider = "anthropic"
+plan = "max_20x"
+pool = "Weekly Fable limit"
+models = "Claude Fable 5.2"
+usd_per_point = 8.01
+measured = "2026-11-16"
+method = "weekly"
+note = "One account's quota history; a second account on the same plan measured $18.35, so this limit's value varies with how it is used."
+
+[[rate]]
+provider = "google"
+plan = "ultra_100"
+pool = "Antigravity, Gemini"
+models = "Gemini 4 Argon and Gemini 4 Carbon"
+usd_per_point = 1.9
+measured = "2026-11-19"
+method = "fitted"
+note = "Fitted over 2026-11-01 to 2026-11-19 on $350 of Argon and Carbon usage: Argon $1.96 and Carbon $1.83 per point, within the fit's noise. The fit explains 98.6% of the pool's 6-hour steps."
+
+[[rate]]
+provider = "google"
+plan = "ultra_100"
+pool = "Antigravity, Gemini"
+models = "Gemini 3.8 Flash"
+usd_per_point = 14.5
+measured = "2026-11-19"
+method = "fitted"
+note = "Fitted over 2026-11-01 to 2026-11-19 on $78 of Flash usage: Flash draws about a seventh of the Gemini pool per API dollar that Argon and Carbon draw."
+
+[[rate]]
+provider = "google"
+plan = "ultra_100"
+pool = "Antigravity, Claude and GPT"
+models = "Claude and GPT models in Antigravity"
+usd_per_point = 0.23
+measured = "2026-11-19"
+method = "fitted"
+note = "Fitted over 2026-11-01 to 2026-11-19 on only $6 of Claude Opus 5.5 and Sonnet 5.5 usage; quota history over a longer span gives $0.22."
+
+[[rate]]
+provider = "openai"
+plan = "plus"
+pool = "Weekly limit"
+models = "GPT models in Codex"
+usd_per_point = 2.59
+measured = "2026-11-16"
+method = "weekly"
+
+[[rate]]
+provider = "meta"
+plan = "power"
+pool = "Weekly limit"
+models = "Muse models in Muse Code"
+usd_per_point = 0.61
+measured = "2026-11-16"
+method = "weekly"

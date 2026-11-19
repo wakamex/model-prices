@@ -617,6 +617,7 @@ def plans_page(check_results: Path | None, ran: str | None, now: datetime) -> st
             lines.append(f"| {name(plan['provider'])} [{escape(plan['name'])}]({plan['source']}) | "
                          f"{price(plan['usd_per_month'])} | {period} | `{plan['id']}` |")
         lines.append("")
+    lines += quota_value(plans, now)
     front = toml({"title": "Subscription plans",
                   "description": "Monthly prices of the subscriptions each lab sells to individuals and teams.",
                   "extra": {"navigation_group": "prices", "toc": False}})
@@ -630,6 +631,44 @@ def plans_page(check_results: Path | None, ran: str | None, now: datetime) -> st
             "only by quote, or billed only annually are not listed. The plan id is the name the lab's "
             "usage tools report, which `model_prices.plan(provider, plan_id)` takes. The prices live in "
             f"[data/plans.toml]({REPOSITORY}/blob/main/data/plans.toml).\n\n" + "\n".join(lines))
+
+
+def quota_value(plans: list[dict], now: datetime) -> list[str]:
+    """What a plan's weekly quota is worth at API prices, from data/quota_rates.toml, with a
+    converter from an API cost per task to plan dollars and tasks a week."""
+    current = {(plan["provider"], plan["id"]): plan for plan in plans
+               if "valid_until" not in plan or model_prices._parse_time(plan["valid_until"]) > now}
+    rates = tomllib.loads((ROOT / "data" / "quota_rates.toml").read_text())["rate"]
+    lines = ["## What a plan's quota is worth", "",
+             "A subscription's weekly limit is a quota of percentage points, and each point is worth "
+             "some amount of usage at API prices. The table gives that amount as measured on one "
+             "user's accounts, with the date and method of each measurement in "
+             f"[data/quota_rates.toml]({REPOSITORY}/blob/main/data/quota_rates.toml); the labs publish "
+             "no such figures, and they vary with how a plan is used. A plan dollar buys a week's "
+             "share of the monthly price, so API dollars per plan dollar is the API value of a full "
+             "week divided by the plan's monthly price over 4.348 weeks. Enter a task's cost at API "
+             "prices, such as a benchmark's cost per task, to see what it costs in plan dollars and "
+             "how many such tasks fit in a week's limit.", "",
+             '<label class="plan-value-cost">API cost per task, US dollars '
+             '<input id="task-cost" type="number" min="0" step="0.01" value="1"></label>', "",
+             "| Plan | Pool | Models | API $ per weekly point | API $ per plan $ | Plan $ per task | "
+             "Tasks a week | Measured |", "| --- | --- | --- | --- | --- | --- | --- | --- |"]
+    measured = set()
+    for rate in rates:
+        plan = current.get((rate["provider"], rate["plan"]))
+        if plan is None:
+            continue
+        measured.add((rate["provider"], rate["plan"]))
+        point = plan["usd_per_month"] / 434.8
+        lines.append(
+            f'| {escape(plan["name"])} | {escape(rate["pool"])} | {escape(rate["models"])} | '
+            f'${rate["usd_per_point"]:,.2f} | {rate["usd_per_point"] / point:,.1f} | '
+            f'<span class="plan-task" data-rate="{rate["usd_per_point"]}" data-point="{point}"></span> | '
+            f'<span class="plan-tasks" data-rate="{rate["usd_per_point"]}"></span> | {rate["measured"]} |')
+    unmeasured = sorted({plan["name"] for key, plan in current.items() if key not in measured})
+    lines += ["", f"Not yet measured: {', '.join(escape(name) for name in unmeasured)}.", "",
+              '<script type="module" src="../plan-value.js"></script>', ""]
+    return lines
 
 
 def main() -> int:
