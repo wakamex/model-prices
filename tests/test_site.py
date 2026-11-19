@@ -113,6 +113,12 @@ class CalculatorTests(unittest.TestCase):
         self.assertEqual([chart["name"] for chart in charts][:2], ["Artificial Analysis Coding Agent Index", "CursorBench 4.1"])
         neon = next(item for item in charts[2]["results"] if item["model"] == "Gemini 4 Neon" and item["effort"] == "high")
         self.assertEqual((neon["harness"], neon["tokens"] > 0, neon["plan"] < neon["api"]), ("Antigravity CLI", True, True))
+        # Each lab's plans reach the page with their prices and usage multiples, Anthropic's as
+        # its plan names state them and the measured plan marked.
+        labs = json.loads(re.search(r'<div class="bench-plans"><script type="application/json">(.*?)</script>', page).group(1))
+        anthropic = next(lab for lab in labs if lab["lab"] == "anthropic")
+        self.assertEqual(anthropic["measured"], "max_20x")
+        self.assertEqual({plan["id"]: (plan["multiple"], plan["stated"]) for plan in anthropic["plans"]}["max_5x"], (5, True))
 
     def test_calculator_matches_the_package_exactly(self):
         cases = _cases(5000)

@@ -50,3 +50,8 @@ article > h1 { margin: 0 0 0.5em; }
 .bench-scale button.active { background: #222; color: #fff; }
 .bench-tag { font-size: 12.5px; fill: #fff; }
 .bench-legend { font-size: 0.8rem; opacity: 0.8; margin-bottom: 0.75rem; }
+.bench-plans { display: grid; gap: 0.4rem; margin: 0.5rem 0 1rem; padding: 0.75rem; border: 1px solid #8884; border-radius: 0.4rem; }
+.bench-plan { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; font-size: 0.92rem; }
+.bench-plan select, .bench-plan input { font: inherit; padding: 0.15rem 0.3rem; margin-left: 0.3rem; }
+.bench-plan input { width: 5.5rem; }
+.bench-plan-note { opacity: 0.7; font-size: 0.85rem; }

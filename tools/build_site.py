@@ -711,11 +711,34 @@ def superseded(model: str, results: list[dict]) -> bool:
                for other_line, other in (_version(item["model"]) for item in results))
 
 
+# Usage multiples a lab's plan names state, against its smallest plan.
+STATED_MULTIPLES = {("anthropic", "pro"): 1, ("anthropic", "max_5x"): 5, ("anthropic", "max_20x"): 20}
+LAB_NAMES = {"anthropic": "Anthropic", "google": "Google", "openai": "OpenAI", "meta": "Meta"}
+
+
+def plan_choices(plans: list[dict], measured: dict[str, str], now: datetime) -> list[dict]:
+    """Each lab with a measured plan: its current plans, with their monthly price and usage
+    multiple, a stated multiple where the plan's name gives one, otherwise one in proportion to
+    price against the lab's cheapest plan."""
+    labs = []
+    for provider, plan_id in sorted(measured.items(), key=lambda item: LAB_NAMES.get(item[0], item[0])):
+        current = sorted((plan for plan in plans if plan["provider"] == provider and (
+            "valid_until" not in plan or model_prices._parse_time(plan["valid_until"]) > now)),
+            key=lambda plan: plan["usd_per_month"])
+        cheapest = current[0]["usd_per_month"]
+        labs.append({"lab": provider, "name": LAB_NAMES.get(provider, provider), "measured": plan_id, "plans": [
+            {"id": plan["id"], "name": plan["name"], "price": plan["usd_per_month"],
+             "multiple": STATED_MULTIPLES.get((provider, plan["id"]), round(plan["usd_per_month"] / cheapest, 2)),
+             "stated": (provider, plan["id"]) in STATED_MULTIPLES} for plan in current]})
+    return labs
+
+
 def benchmarks_page(plans: list[dict], now: datetime) -> str:
     """Each benchmark's results against their cost per task at API prices, and in plan dollars
     at the measured rate of the plan that runs the model."""
     data = tomllib.loads((ROOT / "data" / "benchmarks.toml").read_text())
     rates = plan_rates(plans, now)
+    measured: dict[str, str] = {}
     sections = []
     for source in data["source"]:
         results, rows = [], []
@@ -731,7 +754,9 @@ def benchmarks_page(plans: list[dict], now: datetime) -> str:
             harness = HARNESSES.get(result["harness"], (result["harness"], "circle"))[0]
             results.append({"model": result["model"], "effort": result["effort"], "harness": harness,
                             "score": result["score"], "api": result["cost"], "plan": round(per_plan, 6),
-                            "tokens": result.get("tokens"), "color": color})
+                            "tokens": result.get("tokens"), "color": color, "lab": rate["provider"],
+                            "rate": rate["usd_per_point"]})
+            measured[rate["provider"]] = owner["id"]
             rows.append(f'| {escape(label)} | {result["score"]:g} | ${result["cost"]:,.2f} | {escape(owner["name"])}, '
                         f'{escape(rate["pool"])} | ${per_plan:,.3f} | {math.floor(100 * rate["usd_per_point"] / result["cost"]):,} |')
         if not results:
@@ -748,6 +773,8 @@ def benchmarks_page(plans: list[dict], now: datetime) -> str:
                      f"<details><summary>All {len(rows)} results</summary>", "",
                      "| Model and effort | Score | API $ per task | Plan and pool | Plan $ per task | Tasks a week |",
                      "| --- | --- | --- | --- | --- | --- |", *rows, "", "</details>", ""]
+    settings = '<div class="bench-plans"><script type="application/json">' + json.dumps(
+        plan_choices(plans, measured, now)).replace("</", "<\\/") + "</script></div>"
     front = toml({"title": "Benchmarks in plan dollars",
                   "description": "Benchmark scores against cost per task at API prices and in subscription plan dollars.",
                   "extra": {"navigation_group": "prices", "toc": False}})
@@ -769,6 +796,12 @@ def benchmarks_page(plans: list[dict], now: datetime) -> str:
             "chart lists the rest. A benchmark run in another harness, such as Cursor, is priced as if run in the "
             "lab's own. Artificial Analysis's figures are quoted, with attribution, from the text of "
             "its public post; the other benchmarks publish their cost per task openly.\n\n"
+            "Choose each lab's plan below. A plan's usage multiple is the size of its weekly limit "
+            "against the lab's other plans: Anthropic's plan names state theirs, as Max 5x and 20x "
+            "Pro, and any other plan starts in proportion to its price, so you can change it. A "
+            "plan's rate is the measured plan's rate times the ratio of their multiples, so a plan "
+            "whose multiple grows faster than its price gives more per dollar. The folded tables "
+            "keep the measured plans.\n\n" + settings + "\n\n"
             + "\n".join(sections) + '\n<script type="module" src="../bench-chart.js"></script>\n')
 
 

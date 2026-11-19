@@ -35,6 +35,7 @@ function marker(shape, x, y, color) {
 
 const money = (value) => "$" + (value >= 1 ? value.toLocaleString("en-US", { maximumFractionDigits: 0 })
   : value.toLocaleString("en-US", { maximumSignificantDigits: 1 }));
+const exact = (value) => "$" + value.toLocaleString("en-US", { maximumSignificantDigits: 3 });
 const count = (value) => value >= 1000 ? `${Math.round(value / 1000)}K` : `${value}`;
 
 function ticks(low, high, log) {
@@ -89,7 +90,7 @@ function draw(chart) {
     for (const r of points) {
       const mark = marker(harnesses[r.harness] || "circle", x(r[axis]), y(r.score), color);
       mark.append(element("title", {}, `${model} ${r.effort}`.trim() + `: ${r.score}; ` +
-        `${money(r.api)} in API dollars` + (r.plan ? `, ${money(r.plan)} in plan dollars` : "") +
+        `${exact(r.api)} in API dollars` + (r.plan ? `, ${exact(r.plan)} in plan dollars` : "") +
         (r.tokens ? `, ${r.tokens.toLocaleString("en-US")} output tokens` : "")));
       svg.append(mark);
     }
@@ -110,6 +111,58 @@ function draw(chart) {
   svg.append(element("text", { x: (left + width - right) / 2, y: height - 6, class: "bench-axis", "text-anchor": "middle" },
     AXES[axis].label + (log ? ", log scale" : "")));
   return svg;
+}
+
+// The plan each lab's results are priced on, and each plan's usage multiple, which a reader
+// may change. A result's plan cost is its API cost over the measured plan's rate scaled by the
+// ratio of the two plans' multiples, times the chosen plan's price per weekly point.
+const panel = document.querySelector(".bench-plans");
+const labs = panel ? JSON.parse(panel.querySelector("script").textContent) : [];
+const chosen = Object.fromEntries(labs.map((lab) => [lab.lab, lab.measured]));
+const renders = [];
+
+function planCost(r) {
+  const lab = labs.find((item) => item.lab === r.lab);
+  if (!lab) return r.plan;
+  const plan = lab.plans.find((item) => item.id === chosen[r.lab]);
+  const base = lab.plans.find((item) => item.id === lab.measured);
+  const rate = r.rate * plan.multiple / base.multiple;
+  return r.api / rate * plan.price / 434.8;
+}
+
+if (panel) {
+  const rows = labs.map((lab) => {
+    const row = document.createElement("div");
+    row.className = "bench-plan";
+    const select = document.createElement("select");
+    select.replaceChildren(...lab.plans.map((plan) => new Option(
+      `${plan.name}, $${plan.price}${plan.id === lab.measured ? " (measured)" : ""}`, plan.id, false, plan.id === lab.measured)));
+    const multiple = Object.assign(document.createElement("input"), { type: "number", min: "0.01", step: "0.01" });
+    const note = document.createElement("span");
+    note.className = "bench-plan-note";
+    const show = () => {
+      const plan = lab.plans.find((item) => item.id === select.value);
+      multiple.value = plan.multiple;
+      note.textContent = plan.stated ? "multiple stated in the plan's name" : "multiple assumed in proportion to price";
+    };
+    select.addEventListener("change", () => { chosen[lab.lab] = select.value; show(); renders.forEach((render) => render()); });
+    multiple.addEventListener("input", () => {
+      const value = Number(multiple.value);
+      if (value > 0) {
+        lab.plans.find((item) => item.id === select.value).multiple = value;
+        note.textContent = "multiple you set";
+        renders.forEach((render) => render());
+      }
+    });
+    const label = document.createElement("label");
+    label.append(`${lab.name} `, select);
+    const usage = document.createElement("label");
+    usage.append("usage multiple ", multiple);
+    row.append(label, usage, note);
+    show();
+    return row;
+  });
+  panel.replaceChildren(...rows);
 }
 
 for (const container of document.querySelectorAll(".bench")) {
@@ -137,9 +190,11 @@ for (const container of document.querySelectorAll(".bench")) {
   const body = document.createElement("div");
   container.replaceChildren(head, body, legend);
   const render = () => {
+    for (const r of chart.results) r.plan = planCost(r);
     buttons.forEach((button) => button.classList.toggle("active", (button.textContent === "Log") === chart.log));
     body.replaceChildren(draw(chart));
   };
+  renders.push(render);
   select.addEventListener("change", () => { chart.axis = select.value; render(); });
   render();
 }
