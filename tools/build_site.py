@@ -744,8 +744,10 @@ def benchmarks_page(plans: list[dict], now: datetime) -> str:
                                        if any(item["harness"] == name for item in results)},
                      }).replace("</", "<\\/") + "</script><noscript>The chart needs JavaScript; the table below "
                      "lists every result.</noscript></div>", "",
+                     # The table of every result starts folded under the chart.
+                     f"<details><summary>All {len(rows)} results</summary>", "",
                      "| Model and effort | Score | API $ per task | Plan and pool | Plan $ per task | Tasks a week |",
-                     "| --- | --- | --- | --- | --- | --- |", *rows, ""]
+                     "| --- | --- | --- | --- | --- | --- |", *rows, "", "</details>", ""]
     front = toml({"title": "Benchmarks in plan dollars",
                   "description": "Benchmark scores against cost per task at API prices and in subscription plan dollars.",
                   "extra": {"navigation_group": "prices", "toc": False}})
@@ -763,7 +765,8 @@ def benchmarks_page(plans: list[dict], now: datetime) -> str:
             "are measurements of one user's accounts, dated on the [Plans](../plans/) page, where a "
             "converter takes any cost per task; only models whose plan rate has been measured are "
             "shown, a model superseded by a newer version of its line that any benchmark here "
-            "lists, such as GPT-6.1 Sol by GPT-6.2 Sol, is left out, and a table under each chart lists the rest. A benchmark run in another harness, such as Cursor, is priced as if run in the "
+            "lists, such as GPT-6.1 Sol by GPT-6.2 Sol, is left out, and a folded table under each "
+            "chart lists the rest. A benchmark run in another harness, such as Cursor, is priced as if run in the "
             "lab's own. Artificial Analysis's figures are quoted, with attribution, from the text of "
             "its public post; the other benchmarks publish their cost per task openly.\n\n"
             + "\n".join(sections) + '\n<script type="module" src="../bench-chart.js"></script>\n')
