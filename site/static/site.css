@@ -38,8 +38,15 @@ article > h1 { margin: 0 0 0.5em; }
 .navigation-dialog .site-links { margin-top: 1rem; }
 .bench-chart { width: 100%; max-width: 62rem; font-family: inherit; }
 .bench-api { fill: Canvas; stroke-width: 1.5; }
-.bench-link { stroke-width: 1.5; opacity: 0.55; }
+.bench-link { fill: none; stroke-width: 1.5; opacity: 0.6; }
 .bench-grid { stroke: #8883; stroke-width: 1; }
 .bench-tick, .bench-label { font-size: 10px; fill: currentColor; }
 .bench-axis { font-size: 11px; fill: currentColor; }
 .bench-title { font-size: 13px; font-weight: 600; fill: currentColor; }
+.bench-head { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; font-weight: 600; margin: 1rem 0 0.25rem; }
+.bench-head select { font: inherit; font-weight: 400; padding: 0.15rem 0.3rem; }
+.bench-scale { margin-left: auto; display: inline-flex; }
+.bench-scale button { font: inherit; font-weight: 400; padding: 0.15rem 0.6rem; border: 1px solid #8886; background: none; color: inherit; cursor: pointer; }
+.bench-scale button.active { background: #222; color: #fff; }
+.bench-tag { font-size: 10px; fill: #fff; }
+.bench-legend { font-size: 0.8rem; opacity: 0.8; margin-bottom: 0.75rem; }

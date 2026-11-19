@@ -1,7 +1,8 @@
 # Benchmark results with an API cost per task, for the models a measured plan rate in
 # quota_rates.toml covers, so the Benchmarks page can set each result's cost at API prices beside
 # its cost in plan dollars. Scores are percentages; costs are US dollars per task at the
-# benchmark's own API pricing. Each source names its page and the date it was read.
+# benchmark's own API pricing; tokens, where a benchmark gives them, are its output tokens per
+# task. Each source names its page and the date it was read.
 
 [[source]]
 id = "artificial-analysis"
@@ -278,6 +279,7 @@ effort = "low"
 harness = "claude-code"
 score = 38.64
 cost = 2.623
+tokens = 23907
 
 [[result]]
 source = "frontiercode"
@@ -286,6 +288,7 @@ effort = "medium"
 harness = "claude-code"
 score = 42.42
 cost = 3.103
+tokens = 28384
 
 [[result]]
 source = "frontiercode"
@@ -294,6 +297,7 @@ effort = "high"
 harness = "claude-code"
 score = 50.45
 cost = 8.402
+tokens = 75978
 
 [[result]]
 source = "frontiercode"
@@ -302,6 +306,7 @@ effort = "xhigh"
 harness = "claude-code"
 score = 54.7
 cost = 17.734
+tokens = 156009
 
 [[result]]
 source = "frontiercode"
@@ -310,6 +315,7 @@ effort = "max"
 harness = "claude-code"
 score = 52.73
 cost = 55.868
+tokens = 417808
 
 [[result]]
 source = "frontiercode"
@@ -318,6 +324,7 @@ effort = "low"
 harness = "codex"
 score = 34.24
 cost = 2.437
+tokens = 8987
 
 [[result]]
 source = "frontiercode"
@@ -326,6 +333,7 @@ effort = "medium"
 harness = "codex"
 score = 40.76
 cost = 3.493
+tokens = 14065
 
 [[result]]
 source = "frontiercode"
@@ -334,6 +342,7 @@ effort = "high"
 harness = "codex"
 score = 41.97
 cost = 4.277
+tokens = 18433
 
 [[result]]
 source = "frontiercode"
@@ -342,6 +351,7 @@ effort = "xhigh"
 harness = "codex"
 score = 45.15
 cost = 4.539
+tokens = 20869
 
 [[result]]
 source = "frontiercode"
@@ -350,6 +360,7 @@ effort = "max"
 harness = "codex"
 score = 47.58
 cost = 6.676
+tokens = 36354
 
 [[result]]
 source = "frontiercode"
@@ -358,6 +369,7 @@ effort = "low"
 harness = "codex"
 score = 4.55
 cost = 0.023
+tokens = 6519
 
 [[result]]
 source = "frontiercode"
@@ -366,6 +378,7 @@ effort = "medium"
 harness = "codex"
 score = 17.88
 cost = 0.092
+tokens = 31360
 
 [[result]]
 source = "frontiercode"
@@ -374,6 +387,7 @@ effort = "high"
 harness = "codex"
 score = 18.48
 cost = 0.115
+tokens = 42170
 
 [[result]]
 source = "frontiercode"
@@ -382,6 +396,7 @@ effort = "xhigh"
 harness = "codex"
 score = 20.45
 cost = 0.132
+tokens = 50565
 
 [[result]]
 source = "frontiercode"
@@ -390,6 +405,7 @@ effort = "max"
 harness = "codex"
 score = 25.15
 cost = 0.174
+tokens = 79659
 
 [[result]]
 source = "frontiercode"
@@ -398,6 +414,7 @@ effort = "low"
 harness = "codex"
 score = 11.67
 cost = 0.4164
+tokens = 6487
 
 [[result]]
 source = "frontiercode"
@@ -406,6 +423,7 @@ effort = "medium"
 harness = "codex"
 score = 24.55
 cost = 0.8225
+tokens = 13750
 
 [[result]]
 source = "frontiercode"
@@ -414,6 +432,7 @@ effort = "high"
 harness = "codex"
 score = 25.91
 cost = 1.0714
+tokens = 19393
 
 [[result]]
 source = "frontiercode"
@@ -422,6 +441,7 @@ effort = "xhigh"
 harness = "codex"
 score = 33.64
 cost = 1.4432
+tokens = 28587
 
 [[result]]
 source = "frontiercode"
@@ -430,6 +450,7 @@ effort = "max"
 harness = "codex"
 score = 38.33
 cost = 2.3547
+tokens = 54181
 
 [[result]]
 source = "frontiercode"
@@ -438,6 +459,7 @@ effort = "low"
 harness = "codex"
 score = 28.48
 cost = 0.341
+tokens = 10042
 
 [[result]]
 source = "frontiercode"
@@ -446,6 +468,7 @@ effort = "medium"
 harness = "codex"
 score = 33.03
 cost = 0.492
+tokens = 15686
 
 [[result]]
 source = "frontiercode"
@@ -454,6 +477,7 @@ effort = "high"
 harness = "codex"
 score = 38.33
 cost = 0.647
+tokens = 22419
 
 [[result]]
 source = "frontiercode"
@@ -462,6 +486,7 @@ effort = "xhigh"
 harness = "codex"
 score = 36.06
 cost = 0.695
+tokens = 24789
 
 [[result]]
 source = "frontiercode"
@@ -470,6 +495,7 @@ effort = "max"
 harness = "codex"
 score = 43.03
 cost = 1.029
+tokens = 41479
 
 [[result]]
 source = "frontiercode"
@@ -478,6 +504,7 @@ effort = "low"
 harness = "codex"
 score = 42.17
 cost = 1.415
+tokens = 8154
 
 [[result]]
 source = "frontiercode"
@@ -486,6 +513,7 @@ effort = "medium"
 harness = "codex"
 score = 46.47
 cost = 2.469
+tokens = 14364
 
 [[result]]
 source = "frontiercode"
@@ -494,6 +522,7 @@ effort = "high"
 harness = "codex"
 score = 47.73
 cost = 3.952
+tokens = 24452
 
 [[result]]
 source = "frontiercode"
@@ -502,6 +531,7 @@ effort = "xhigh"
 harness = "codex"
 score = 48.49
 cost = 4.289
+tokens = 28568
 
 [[result]]
 source = "frontiercode"
@@ -510,6 +540,7 @@ effort = "max"
 harness = "codex"
 score = 48.23
 cost = 5.966
+tokens = 45974
 
 [[result]]
 source = "frontiercode"
@@ -518,6 +549,7 @@ effort = "low"
 harness = "codex"
 score = 36.62
 cost = 0.402
+tokens = 9789
 
 [[result]]
 source = "frontiercode"
@@ -526,6 +558,7 @@ effort = "medium"
 harness = "codex"
 score = 42.17
 cost = 0.685
+tokens = 16457
 
 [[result]]
 source = "frontiercode"
@@ -534,6 +567,7 @@ effort = "high"
 harness = "codex"
 score = 43.94
 cost = 0.876
+tokens = 22415
 
 [[result]]
 source = "frontiercode"
@@ -542,6 +576,7 @@ effort = "xhigh"
 harness = "codex"
 score = 43.94
 cost = 0.98
+tokens = 26387
 
 [[result]]
 source = "frontiercode"
@@ -550,6 +585,7 @@ effort = "max"
 harness = "codex"
 score = 48.23
 cost = 1.287
+tokens = 38078
 
 [[result]]
 source = "frontiercode"
@@ -558,6 +594,7 @@ effort = "low"
 harness = "devin-cli"
 score = 24.85
 cost = 3.977
+tokens = 63291
 
 [[result]]
 source = "frontiercode"
@@ -566,6 +603,7 @@ effort = "medium"
 harness = "devin-cli"
 score = 27.12
 cost = 5.688
+tokens = 123879
 
 [[result]]
 source = "frontiercode"
@@ -574,6 +612,7 @@ effort = "high"
 harness = "devin-cli"
 score = 30.61
 cost = 6.514
+tokens = 148569
 
 [[result]]
 source = "frontiercode"
@@ -582,6 +621,7 @@ effort = "low"
 harness = "antigravity-cli"
 score = 34.6
 cost = 7.723
+tokens = 51553
 
 [[result]]
 source = "frontiercode"
@@ -590,6 +630,7 @@ effort = "medium"
 harness = "antigravity-cli"
 score = 45.2
 cost = 4.486
+tokens = 114385
 
 [[result]]
 source = "frontiercode"
@@ -598,6 +639,7 @@ effort = "high"
 harness = "antigravity-cli"
 score = 46.92
 cost = 5.057
+tokens = 127641
 
 [[result]]
 source = "frontiercode"
@@ -606,6 +648,7 @@ effort = "low"
 harness = "antigravity-cli"
 score = 30.56
 cost = 0.959
+tokens = 21049
 
 [[result]]
 source = "frontiercode"
@@ -614,6 +657,7 @@ effort = "medium"
 harness = "antigravity-cli"
 score = 42.17
 cost = 2.174
+tokens = 45888
 
 [[result]]
 source = "frontiercode"
@@ -622,6 +666,7 @@ effort = "high"
 harness = "antigravity-cli"
 score = 50.76
 cost = 4.382
+tokens = 85592
 
 [[result]]
 source = "frontiercode"
@@ -630,6 +675,7 @@ effort = "xhigh"
 harness = "antigravity-cli"
 score = 49.24
 cost = 7.666
+tokens = 127992
 
 [[result]]
 source = "frontiercode"
@@ -638,6 +684,7 @@ effort = "low"
 harness = "claude-code"
 score = 11.82
 cost = 0.065
+tokens = 39366
 
 [[result]]
 source = "frontiercode"
@@ -646,6 +693,7 @@ effort = "medium"
 harness = "claude-code"
 score = 15.76
 cost = 0.097
+tokens = 57582
 
 [[result]]
 source = "frontiercode"
@@ -654,6 +702,7 @@ effort = "high"
 harness = "claude-code"
 score = 21.52
 cost = 0.139
+tokens = 80993
 
 [[result]]
 source = "frontiercode"
@@ -662,6 +711,7 @@ effort = "xhigh"
 harness = "claude-code"
 score = 25.45
 cost = 0.226
+tokens = 127735
 
 [[result]]
 source = "frontiercode"
@@ -670,6 +720,7 @@ effort = "max"
 harness = "claude-code"
 score = 31.86
 cost = 0.366
+tokens = 205112
 
 [[result]]
 source = "frontiercode"
@@ -678,6 +729,7 @@ effort = "low"
 harness = "muse"
 score = 24.55
 cost = 1.843
+tokens = 20301
 
 [[result]]
 source = "frontiercode"
@@ -686,6 +738,7 @@ effort = "medium"
 harness = "muse"
 score = 26.97
 cost = 2.534
+tokens = 26714
 
 [[result]]
 source = "frontiercode"
@@ -694,6 +747,7 @@ effort = "high"
 harness = "muse"
 score = 28.18
 cost = 3.143
+tokens = 32832
 
 [[result]]
 source = "frontiercode"
@@ -702,6 +756,7 @@ effort = "xhigh"
 harness = "muse"
 score = 28.79
 cost = 3.793
+tokens = 38672
 
 [[result]]
 source = "frontiercode"
@@ -710,6 +765,7 @@ effort = "low"
 harness = "claude-code"
 score = 16.52
 cost = 0.746
+tokens = 14230
 
 [[result]]
 source = "frontiercode"
@@ -718,6 +774,7 @@ effort = "medium"
 harness = "claude-code"
 score = 34.55
 cost = 1.699
+tokens = 30068
 
 [[result]]
 source = "frontiercode"
@@ -726,6 +783,7 @@ effort = "high"
 harness = "claude-code"
 score = 39.85
 cost = 2.423
+tokens = 41233
 
 [[result]]
 source = "frontiercode"
@@ -734,6 +792,7 @@ effort = "xhigh"
 harness = "claude-code"
 score = 48.79
 cost = 5.184
+tokens = 88053
 
 [[result]]
 source = "frontiercode"
@@ -742,6 +801,7 @@ effort = "max"
 harness = "claude-code"
 score = 51.82
 cost = 12.821
+tokens = 201919
 
 [[result]]
 source = "frontiercode"
@@ -750,6 +810,7 @@ effort = "low"
 harness = "claude-code"
 score = 10.91
 cost = 0.369
+tokens = 11265
 
 [[result]]
 source = "frontiercode"
@@ -758,6 +819,7 @@ effort = "medium"
 harness = "claude-code"
 score = 16.67
 cost = 0.482
+tokens = 14449
 
 [[result]]
 source = "frontiercode"
@@ -766,6 +828,7 @@ effort = "high"
 harness = "claude-code"
 score = 25.45
 cost = 1.066
+tokens = 27839
 
 [[result]]
 source = "frontiercode"
@@ -774,6 +837,7 @@ effort = "xhigh"
 harness = "claude-code"
 score = 40.0
 cost = 3.315
+tokens = 80433
 
 [[result]]
 source = "frontiercode"
@@ -782,6 +846,7 @@ effort = "max"
 harness = "claude-code"
 score = 46.36
 cost = 19.941
+tokens = 514722
 
 [[result]]
 source = "frontierswe"
