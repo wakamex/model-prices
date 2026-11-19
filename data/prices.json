@@ -1664,6 +1664,16 @@
       "output": 0.24
      },
      "valid_from": "2026-09-11T02:16:26Z"
+    },
+    {
+     "commit": "bb8695b47e01",
+     "rates": {
+      "cache_read": 0.015,
+      "cache_write": 0.0,
+      "input": 0.06,
+      "output": 0.24
+     },
+     "valid_from": "2026-11-19T23:20:20Z"
     }
    ],
    "amazon.nova-micro-v1:0": [
@@ -1693,6 +1703,16 @@
       "output": 0.14
      },
      "valid_from": "2026-09-11T02:16:26Z"
+    },
+    {
+     "commit": "bb8695b47e01",
+     "rates": {
+      "cache_read": 0.00875,
+      "cache_write": 0.0,
+      "input": 0.035,
+      "output": 0.14
+     },
+     "valid_from": "2026-11-19T23:20:20Z"
     }
    ],
    "amazon.nova-premier-v1:0": [
@@ -1732,6 +1752,16 @@
       "output": 3.2
      },
      "valid_from": "2026-09-11T02:16:26Z"
+    },
+    {
+     "commit": "bb8695b47e01",
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 0.0,
+      "input": 0.8,
+      "output": 3.2
+     },
+     "valid_from": "2026-11-19T23:20:20Z"
     }
    ],
    "apac.amazon.nova-lite-v1:0": [
@@ -2206,6 +2236,16 @@
       "output": 0.24
      },
      "valid_from": "2026-09-11T02:16:26Z"
+    },
+    {
+     "commit": "bb8695b47e01",
+     "rates": {
+      "cache_read": 0.015,
+      "cache_write": 0.0,
+      "input": 0.06,
+      "output": 0.24
+     },
+     "valid_from": "2026-11-19T23:20:20Z"
     }
    ],
    "us.amazon.nova-micro-v1:0": [
@@ -2227,6 +2267,16 @@
       "output": 0.14
      },
      "valid_from": "2026-09-11T02:16:26Z"
+    },
+    {
+     "commit": "bb8695b47e01",
+     "rates": {
+      "cache_read": 0.00875,
+      "cache_write": 0.0,
+      "input": 0.035,
+      "output": 0.14
+     },
+     "valid_from": "2026-11-19T23:20:20Z"
     }
    ],
    "us.amazon.nova-premier-v1:0": [
@@ -2292,6 +2342,30 @@
       "output": 3.2
      },
      "valid_from": "2026-10-20T01:20:23Z"
+    },
+    {
+     "commit": "bb8695b47e01",
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 0.0,
+      "input": 0.8,
+      "modes": {
+       "flex": {
+        "cache_read": 0.1,
+        "cache_write": 0.0,
+        "input": 0.4,
+        "output": 1.6
+       },
+       "priority": {
+        "cache_read": 0.35,
+        "cache_write": 0.0,
+        "input": 1.4,
+        "output": 5.6
+       }
+      },
+      "output": 3.2
+     },
+     "valid_from": "2026-11-19T23:20:20Z"
     }
    ]
   },
@@ -14987,8 +15061,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "af07617a53ad7356cb355ce5a4fcc7e30efffb92",
- "source_committed_at": "2026-11-18T22:06:46Z",
+ "source_commit": "bb8695b47e01432476282bffd4556df04bb201e8",
+ "source_committed_at": "2026-11-19T23:20:20Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
