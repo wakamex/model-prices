@@ -19,34 +19,12 @@
 provider = "anthropic"
 plan = "max_20x"
 pool = "Weekly limit, all models"
-models = "Claude Opus 5.5 in Claude Code"
-match = '^(Claude )?Opus 5\.5$'
+models = "Claude models in Claude Code"
+match = '^(Claude )?(Opus|Sonnet|Haiku) 5\.5$'
 usd_per_point = 29.8
 measured = "2026-11-19"
 method = "Opus-only blocks"
-note = "Both Claude Ultra accounts' weekly readings summed over 3-hour blocks from 2026-10-14 to 2026-11-19 in which Opus 5.5 was at least 97% of Claude Code's API spend: 76 blocks, $6,817 of Opus for 229 points, $29.77 a point. A line fitted across those blocks, whose Opus spend ranges from $16 to $164, gives $29.88 (95% range $27.71 to $32.29) with no drift from unlogged usage, and 6- and 12-hour blocks agree."
-
-[[rate]]
-provider = "anthropic"
-plan = "max_20x"
-pool = "Weekly limit, all models"
-models = "Claude Sonnet 5.5 in Claude Code"
-match = '^(Claude )?Sonnet 5\.5$'
-usd_per_point = 17.06
-measured = "2026-11-19"
-method = "per-model fit"
-note = "A per-model fit of both accounts' weekly limits from 2026-10-14 to 2026-11-19 on $1,042 of Sonnet usage, 95% range $13.65 to $21.53, steady at $15 to $18 as the fit's unit size changes. A point of the limit buys far fewer API dollars of Sonnet than of Opus."
-
-[[rate]]
-provider = "anthropic"
-plan = "max_20x"
-pool = "Weekly limit, all models"
-models = "Claude Haiku 5.5 in Claude Code"
-match = '^(Claude )?Haiku 5\.5$'
-usd_per_point = 15.12
-measured = "2026-11-19"
-method = "per-model fit"
-note = "A per-model fit of both accounts' weekly limits from 2026-10-14 to 2026-11-19 on $652 of Haiku usage, 95% range $13.59 to $22.03, steady at $13.60 to $15.90 as the fit's unit size changes."
+note = "Measured on Opus 5.5, which is nearly all Claude Code usage: both Claude Ultra accounts' weekly readings summed over 3-hour blocks from 2026-10-14 to 2026-11-19 in which Opus was at least 97% of Claude Code's API spend gave $6,817 of Opus for 229 points, $29.77 a point, and a line fitted across those 76 blocks $29.88 (95% range $27.71 to $32.29) with no drift. A per-model fit with spend-cut units gives Opus $28.98 ($27.37 to $30.43). Sonnet 5.5 and Haiku 5.5 had too little usable spend, about $240 each, to show a rate different from Opus's, so they share it; in Antigravity's Claude and GPT pool, Opus and Sonnet measured the same per API dollar."
 
 [[rate]]
 provider = "anthropic"
@@ -54,10 +32,10 @@ plan = "max_20x"
 pool = "Weekly Fable limit"
 models = "Claude Fable 5.2"
 match = '^(Claude )?Fable 5\.2$'
-usd_per_point = 6.34
+usd_per_point = 5.96
 measured = "2026-11-19"
 method = "per-model fit"
-note = "A per-model fit of both accounts' weekly Fable limits from 2026-10-14 to 2026-11-19, 141 points, 95% range $5.94 to $6.78. Whole weeks of single accounts had given $8.01 and $18.35, since a week's reading also moves with usage no local log records."
+note = "A per-model fit of both Claude Ultra accounts' weekly Fable limits from 2026-10-14 to 2026-11-19, with units cut by spend and intervals at 100% dropped: $5.96 a point, 95% range $5.37 to $6.78. Whole weeks of single accounts had given $8.01 and $18.35."
 
 [[rate]]
 provider = "google"
