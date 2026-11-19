@@ -1,7 +1,7 @@
 name: Deploy site
 
-# Builds the website from the bundled price snapshot and the current official-page check,
-# and publishes it as the model-prices Cloudflare Worker at model-prices.com: after each
+# Builds the website from the bundled price snapshot and the official-page check results of
+# the newest price update run that saved them, and publishes it as the model-prices Cloudflare Worker at model-prices.com: after each
 # price update run, on site changes, and on request.
 
 on:
@@ -15,6 +15,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: site
@@ -23,6 +24,8 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-24.04
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       # A price update commits to main, so the site is built from main's head.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -43,9 +46,22 @@ jobs:
           tar -xzf "$RUNNER_TEMP/$archive" -C "$RUNNER_TEMP" zola
       - name: Build
         run: |
-          # A failed check still builds the site; each model page shows its own status.
-          uv --no-config run --locked model-prices check --json > "$RUNNER_TEMP/check.json" || true
-          uv --no-config run --locked python tools/build_site.py --check-results "$RUNNER_TEMP/check.json"
+          # The check results of the run that started this deploy, or else of the newest price
+          # update run that saved them, dated by when that run finished. A failed check still
+          # builds the site; each model page shows its own status.
+          for run in ${{ github.event.workflow_run.id }} $(gh run list -R "$GITHUB_REPOSITORY" \
+              -w update-prices.yml -L 20 --json databaseId -q '.[].databaseId'); do
+            if gh run download "$run" -R "$GITHUB_REPOSITORY" -n check-results -D "$RUNNER_TEMP/check" 2> /dev/null; then
+              touch -d "$(gh run view "$run" -R "$GITHUB_REPOSITORY" --json updatedAt -q .updatedAt)" \
+                "$RUNNER_TEMP/check/check.json"
+              break
+            fi
+          done
+          results=()
+          if [ -f "$RUNNER_TEMP/check/check.json" ]; then
+            results=(--check-results "$RUNNER_TEMP/check/check.json")
+          fi
+          uv --no-config run --locked python tools/build_site.py "${results[@]}"
           "$RUNNER_TEMP/zola" --root site build --output-dir site/public
       - name: Deploy
         env:

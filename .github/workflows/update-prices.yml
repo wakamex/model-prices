@@ -165,6 +165,20 @@ jobs:
           # Any other disagreement, such as a page that changed before models.dev did.
           uv --no-config run --locked model-prices check
 
+      # The website shows each model's check status from these results, so a deploy fetches no
+      # pages itself. The pages this run fetched are read back from its archive, not fetched again.
+      - name: Save the check results for the website
+        if: always() && github.event_name != 'push'
+        run: uv --no-config run --locked model-prices check --json > "$RUNNER_TEMP/check.json" || true
+      - name: Upload the check results
+        if: always() && github.event_name != 'push'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: check-results
+          path: ${{ runner.temp }}/check.json
+          retention-days: 30
+          if-no-files-found: ignore
+
       - name: Archive the fetched pages
         if: always()
         uses: ./.github/actions/archive-pages
