@@ -10,10 +10,12 @@ from dataclasses import asdict, dataclass, replace
 from datetime import datetime, timedelta, timezone
 import gzip
 import html
+import http.client
 import inspect
 import json
 import math
 import re
+import time
 from typing import Callable, Iterable
 import urllib.error
 import urllib.parse
@@ -1554,22 +1556,34 @@ def _request(url: str) -> str:
     except urllib.error.HTTPError as error:
         archive.record(url, None, error.code, error=str(error))
         raise
+    # A response cut off before its end, such as an IncompleteRead, is a failed fetch.
+    except http.client.HTTPException as error:
+        archive.record(url, None, error=f"{type(error).__name__}: {error}")
+        raise OSError(f"{url}: {type(error).__name__}: {error}") from error
     except (OSError, ValueError) as error:
         archive.record(url, None, error=f"{type(error).__name__}: {error}")
         raise
 
 
-def fetch(url: str) -> str:
+def fetch(url: str, attempts: int = 3) -> str:
     """A page, from this run's archive when the run already holds a whole copy, and fetched up
-    to three times while the server answers with a bare shell."""
+    to `attempts` times while the server answers with a bare shell, times out, or cuts the
+    response off; a refusal, such as a 403, is not retried."""
     if (body := archive.fetched(url)) is not None and is_whole(url, body.decode()):
         return body.decode()
-    page = _request(url)
-    for _ in range(2):
-        if is_whole(url, page):
-            break
-        page = _request(url)
-    return page
+    for attempt in range(1, attempts + 1):
+        try:
+            page = _request(url)
+        except urllib.error.HTTPError:
+            raise
+        except OSError:
+            if attempt == attempts:
+                raise
+            time.sleep(5 * attempt)
+            continue
+        if is_whole(url, page) or attempt == attempts:
+            return page
+    raise AssertionError("unreachable")
 
 
 def _value(found, field: str, above: int | None, modality: str | None = None) -> float | None:

@@ -1,10 +1,13 @@
 from datetime import datetime, timedelta, timezone
+import http.client
 import io
-import re
 import json
+import os
 from pathlib import Path
+import re
 import unittest
 from unittest import mock
+import urllib.error
 
 from html_fixtures import as_html
 import model_prices
@@ -185,6 +188,23 @@ class CheckTests(unittest.TestCase):
         short = page.replace("<td>\\$0.47</td>", "").replace("<td>0<Token≤1M</td>", "")
         with self.assertRaisesRegex(ValueError, "4 cells|5 cells"):
             checks.parse_alibaba(short, TODAY, PAGES.__getitem__)
+
+    def test_a_cut_off_or_timed_out_fetch_is_retried_but_a_refusal_is_not(self):
+        self.enterContext(mock.patch.dict("os.environ", {}, clear=False))
+        os.environ.pop("MODEL_PRICES_ARCHIVE", None)
+        whole = mock.MagicMock()
+        whole.__enter__.return_value.read.return_value = b"page"
+        whole.__enter__.return_value.headers = {}
+        cut = mock.MagicMock()
+        cut.__enter__.return_value.read.side_effect = http.client.IncompleteRead(b"pag", 1)
+        with mock.patch("urllib.request.urlopen", side_effect=[cut, TimeoutError("timed out"), whole]), \
+                mock.patch("time.sleep"):
+            self.assertEqual(checks.fetch("https://example.com/pricing"), "page")
+        refused = urllib.error.HTTPError("https://example.com", 403, "Forbidden", {}, None)
+        with mock.patch("urllib.request.urlopen", side_effect=refused) as urlopen, \
+                self.assertRaises(urllib.error.HTTPError):
+            checks.fetch("https://example.com/pricing")
+        self.assertEqual(urlopen.call_count, 1)
 
     def test_openai_parser_reads_flex_and_ultrafast_launch_sections(self):
         # The layout of 2026-11-17: Flex is its own section, and GPT-6.2's Ultrafast launch
