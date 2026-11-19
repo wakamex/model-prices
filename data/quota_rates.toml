@@ -19,12 +19,34 @@
 provider = "anthropic"
 plan = "max_20x"
 pool = "Weekly limit, all models"
-models = "Claude models in Claude Code"
-match = '^(Claude )?(Opus|Sonnet|Haiku) 5\.5$'
+models = "Claude Opus 5.5 in Claude Code"
+match = '^(Claude )?Opus 5\.5$'
 usd_per_point = 39.05
 measured = "2026-11-16"
 method = "weekly"
-note = "One account's quota history; a second account on the same plan measured $35.00."
+note = "One account's quota history; a second account on the same plan measured $35.00. A per-model fit of both accounts' weekly limits from 2026-10-14 to 2026-11-19, with a stationary block bootstrap, gives Opus 5.5 $47.17 (95% range $29.97 to $83.56) and $38.01 to $52.40 as its specification changes: Opus runs almost continuously, so the fit cannot separate it well from usage no local log records, and this rate keeps the whole-limit measurement, which Opus dominates."
+
+[[rate]]
+provider = "anthropic"
+plan = "max_20x"
+pool = "Weekly limit, all models"
+models = "Claude Sonnet 5.5 in Claude Code"
+match = '^(Claude )?Sonnet 5\.5$'
+usd_per_point = 17.06
+measured = "2026-11-19"
+method = "per-model fit"
+note = "A per-model fit of both accounts' weekly limits from 2026-10-14 to 2026-11-19 on $1,042 of Sonnet usage, 95% range $13.65 to $21.53, steady at $15 to $18 as the fit's unit size changes. A point of the limit buys far fewer API dollars of Sonnet than of Opus."
+
+[[rate]]
+provider = "anthropic"
+plan = "max_20x"
+pool = "Weekly limit, all models"
+models = "Claude Haiku 5.5 in Claude Code"
+match = '^(Claude )?Haiku 5\.5$'
+usd_per_point = 15.12
+measured = "2026-11-19"
+method = "per-model fit"
+note = "A per-model fit of both accounts' weekly limits from 2026-10-14 to 2026-11-19 on $652 of Haiku usage, 95% range $13.59 to $22.03, steady at $13.60 to $15.90 as the fit's unit size changes."
 
 [[rate]]
 provider = "anthropic"
@@ -32,10 +54,10 @@ plan = "max_20x"
 pool = "Weekly Fable limit"
 models = "Claude Fable 5.2"
 match = '^(Claude )?Fable 5\.2$'
-usd_per_point = 8.01
-measured = "2026-11-16"
-method = "weekly"
-note = "One account's quota history; a second account on the same plan measured $18.35, so this limit's value varies with how it is used."
+usd_per_point = 6.34
+measured = "2026-11-19"
+method = "per-model fit"
+note = "A per-model fit of both accounts' weekly Fable limits from 2026-10-14 to 2026-11-19, 141 points, 95% range $5.94 to $6.78. Whole weeks of single accounts had given $8.01 and $18.35, since a week's reading also moves with usage no local log records."
 
 [[rate]]
 provider = "google"
