@@ -113,21 +113,23 @@ function draw(chart) {
   return svg;
 }
 
-// The plan each lab's results are priced on, and each plan's usage multiple, which a reader
-// may change. A result's plan cost is its API cost over the measured plan's rate scaled by the
-// ratio of the two plans' multiples, times the chosen plan's price per weekly point.
+// The plan each lab's results are priced on, and each plan's discount: the API dollars a plan
+// dollar buys on the lab's main measured pool, which a reader may change. A result's plan cost is
+// its API cost over its own pool's measured discount, scaled by the chosen plan's discount
+// against the measured plan's.
 const panel = document.querySelector(".bench-plans");
 const labs = panel ? JSON.parse(panel.querySelector("script").textContent) : [];
 const chosen = Object.fromEntries(labs.map((lab) => [lab.lab, lab.measured]));
 const renders = [];
+const SOURCES = { measured: "measured", stated: "from the usage the plan's name states",
+  assumed: "assumed equal to the measured plan's", set: "you set" };
 
 function planCost(r) {
   const lab = labs.find((item) => item.lab === r.lab);
   if (!lab) return r.plan;
   const plan = lab.plans.find((item) => item.id === chosen[r.lab]);
-  const base = lab.plans.find((item) => item.id === lab.measured);
-  const rate = r.rate * plan.multiple / base.multiple;
-  return r.api / rate * plan.price / 434.8;
+  const own = r.rate * 434.8 / lab.measured_price;
+  return r.api / (own * plan.discount / lab.measured_discount);
 }
 
 if (panel) {
@@ -137,28 +139,30 @@ if (panel) {
     const select = document.createElement("select");
     select.replaceChildren(...lab.plans.map((plan) => new Option(
       `${plan.name}, $${plan.price}${plan.id === lab.measured ? " (measured)" : ""}`, plan.id, false, plan.id === lab.measured)));
-    const multiple = Object.assign(document.createElement("input"), { type: "number", min: "0.01", step: "0.01" });
+    const discount = Object.assign(document.createElement("input"), { type: "number", min: "0.01", step: "0.1" });
     const note = document.createElement("span");
     note.className = "bench-plan-note";
     const show = () => {
       const plan = lab.plans.find((item) => item.id === select.value);
-      multiple.value = plan.multiple;
-      note.textContent = plan.stated ? "multiple stated in the plan's name" : "multiple assumed in proportion to price";
+      discount.value = plan.discount;
+      note.textContent = `${SOURCES[plan.source]}; pool: ${lab.pool}`;
     };
     select.addEventListener("change", () => { chosen[lab.lab] = select.value; show(); renders.forEach((render) => render()); });
-    multiple.addEventListener("input", () => {
-      const value = Number(multiple.value);
+    discount.addEventListener("input", () => {
+      const value = Number(discount.value);
       if (value > 0) {
-        lab.plans.find((item) => item.id === select.value).multiple = value;
-        note.textContent = "multiple you set";
+        const plan = lab.plans.find((item) => item.id === select.value);
+        plan.discount = value;
+        plan.source = "set";
+        note.textContent = `${SOURCES.set}; pool: ${lab.pool}`;
         renders.forEach((render) => render());
       }
     });
     const label = document.createElement("label");
     label.append(`${lab.name} `, select);
-    const usage = document.createElement("label");
-    usage.append("usage multiple ", multiple);
-    row.append(label, usage, note);
+    const value = document.createElement("label");
+    value.append("API $ per plan $ ", discount);
+    row.append(label, value, note);
     show();
     return row;
   });

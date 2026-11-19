@@ -717,19 +717,31 @@ LAB_NAMES = {"anthropic": "Anthropic", "google": "Google", "openai": "OpenAI", "
 
 
 def plan_choices(plans: list[dict], measured: dict[str, str], now: datetime) -> list[dict]:
-    """Each lab with a measured plan: its current plans, with their monthly price and usage
-    multiple, a stated multiple where the plan's name gives one, otherwise one in proportion to
-    price against the lab's cheapest plan."""
+    """Each lab with a measured plan: its current plans, each with its monthly price and its
+    discount, the API dollars a plan dollar buys on the lab's main measured pool. The measured
+    plan's is measured; a plan whose name states its usage against the measured plan's, as
+    Anthropic's Max 5x and 20x Pro do, scales it by usage over price; any other plan starts at
+    the measured plan's discount."""
+    rates = tomllib.loads((ROOT / "data" / "quota_rates.toml").read_text())["rate"]
     labs = []
     for provider, plan_id in sorted(measured.items(), key=lambda item: LAB_NAMES.get(item[0], item[0])):
         current = sorted((plan for plan in plans if plan["provider"] == provider and (
             "valid_until" not in plan or model_prices._parse_time(plan["valid_until"]) > now)),
             key=lambda plan: plan["usd_per_month"])
-        cheapest = current[0]["usd_per_month"]
-        labs.append({"lab": provider, "name": LAB_NAMES.get(provider, provider), "measured": plan_id, "plans": [
-            {"id": plan["id"], "name": plan["name"], "price": plan["usd_per_month"],
-             "multiple": STATED_MULTIPLES.get((provider, plan["id"]), round(plan["usd_per_month"] / cheapest, 2)),
-             "stated": (provider, plan["id"]) in STATED_MULTIPLES} for plan in current]})
+        own = next(plan for plan in current if plan["id"] == plan_id)
+        base = next(rate for rate in rates if rate["provider"] == provider and rate["plan"] == plan_id and "match" in rate)
+        discount = base["usd_per_point"] / (own["usd_per_month"] / 434.8)
+        choices = []
+        for plan in current:
+            stated = (provider, plan["id"]) in STATED_MULTIPLES and (provider, plan_id) in STATED_MULTIPLES
+            value = (discount * STATED_MULTIPLES[(provider, plan["id"])] / STATED_MULTIPLES[(provider, plan_id)]
+                     / (plan["usd_per_month"] / own["usd_per_month"])) if stated else discount
+            choices.append({"id": plan["id"], "name": plan["name"], "price": plan["usd_per_month"],
+                            "discount": round(value, 2),
+                            "source": "measured" if plan["id"] == plan_id else "stated" if stated else "assumed"})
+        labs.append({"lab": provider, "name": LAB_NAMES.get(provider, provider), "measured": plan_id,
+                     "measured_price": own["usd_per_month"], "measured_discount": discount,
+                     "pool": base["pool"], "plans": choices})
     return labs
 
 
@@ -796,12 +808,13 @@ def benchmarks_page(plans: list[dict], now: datetime) -> str:
             "chart lists the rest. A benchmark run in another harness, such as Cursor, is priced as if run in the "
             "lab's own. Artificial Analysis's figures are quoted, with attribution, from the text of "
             "its public post; the other benchmarks publish their cost per task openly.\n\n"
-            "Choose each lab's plan below. A plan's usage multiple is the size of its weekly limit "
-            "against the lab's other plans: Anthropic's plan names state theirs, as Max 5x and 20x "
-            "Pro, and any other plan starts in proportion to its price, so you can change it. A "
-            "plan's rate is the measured plan's rate times the ratio of their multiples, so a plan "
-            "whose multiple grows faster than its price gives more per dollar. The folded tables "
-            "keep the measured plans.\n\n" + settings + "\n\n"
+            "Choose each lab's plan below, and its discount: the API dollars a plan dollar buys on "
+            "the lab's main measured pool, which you can change. The measured plan's discount is "
+            "measured. A plan whose name states its usage against the measured plan's, as "
+            "Anthropic's Max 5x and 20x Pro do, scales it by usage over price, so Claude Pro and "
+            "Max start at half of Ultra's; any other plan starts at the measured plan's discount. "
+            "A lab's other pools, such as Claude's Fable limit, keep their measured ratio to the "
+            "main pool. The folded tables keep the measured plans.\n\n" + settings + "\n\n"
             + "\n".join(sections) + '\n<script type="module" src="../bench-chart.js"></script>\n')
 
 
