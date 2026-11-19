@@ -21,10 +21,10 @@ plan = "max_20x"
 pool = "Weekly limit, all models"
 models = "Claude Opus 5.5 in Claude Code"
 match = '^(Claude )?Opus 5\.5$'
-usd_per_point = 39.05
-measured = "2026-11-16"
-method = "weekly"
-note = "One account's quota history; a second account on the same plan measured $35.00. A per-model fit of both accounts' weekly limits from 2026-10-14 to 2026-11-19, with a stationary block bootstrap, gives Opus 5.5 $47.17 (95% range $29.97 to $83.56) and $38.01 to $52.40 as its specification changes: Opus runs almost continuously, so the fit cannot separate it well from usage no local log records, and this rate keeps the whole-limit measurement, which Opus dominates."
+usd_per_point = 29.8
+measured = "2026-11-19"
+method = "Opus-only blocks"
+note = "Both Claude Ultra accounts' weekly readings summed over 3-hour blocks from 2026-10-14 to 2026-11-19 in which Opus 5.5 was at least 97% of Claude Code's API spend: 76 blocks, $6,817 of Opus for 229 points, $29.77 a point. A line fitted across those blocks, whose Opus spend ranges from $16 to $164, gives $29.88 (95% range $27.71 to $32.29) with no drift from unlogged usage, and 6- and 12-hour blocks agree."
 
 [[rate]]
 provider = "anthropic"

@@ -100,8 +100,8 @@ class CalculatorTests(unittest.TestCase):
         plans = model_prices._data()["plans"]
         lines = build_site.quota_value(plans, datetime(2026, 11, 19, tzinfo=timezone.utc))
         row = next(line for line in lines if line.startswith("| Claude Ultra | Weekly limit"))
-        # $39.05 a point against $200 a month: a plan dollar buys $84.9 of API usage.
-        self.assertIn("| $39.05 | 84.9 |", row)
+        # $29.80 a point against $200 a month: a plan dollar buys $64.8 of API usage.
+        self.assertIn("| $29.80 | 64.8 |", row)
         self.assertTrue(any(line.startswith("Not yet measured:") and "Claude Pro" in line for line in lines))
 
     def test_benchmarks_page_prices_tasks_in_plan_dollars(self):
@@ -119,10 +119,10 @@ class CalculatorTests(unittest.TestCase):
         anthropic = next(lab for lab in labs if lab["lab"] == "anthropic")
         self.assertEqual(anthropic["measured"], "max_20x")
         discounts = {plan["id"]: (plan["discount"], plan["source"]) for plan in anthropic["plans"]}
-        # Ultra's measured $84.89 a plan dollar; Max gives a quarter of the usage for half the price.
+        # Ultra's measured $64.79 a plan dollar; Max gives a quarter of the usage for half the price.
         self.assertEqual((discounts["max_20x"], discounts["max_5x"], discounts["pro"]),
-                         ((84.89, "measured"), (42.45, "stated"), (42.45, "stated")))
-        self.assertEqual(discounts["team_standard"], (84.89, "assumed"))
+                         ((64.79, "measured"), (32.39, "stated"), (32.39, "stated")))
+        self.assertEqual(discounts["team_standard"], (64.79, "assumed"))
 
     def test_calculator_matches_the_package_exactly(self):
         cases = _cases(5000)
