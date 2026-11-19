@@ -687,21 +687,23 @@ def plan_rates(plans: list[dict], now: datetime) -> list[tuple[re.Pattern, dict,
             for rate in rates if "match" in rate and (rate["provider"], rate["plan"]) in current]
 
 
-def scatter(points: list[tuple[float, float, str, str]], title: str, x_title: str) -> str:
-    """An SVG scatter of (cost, score, label, color) with cost on a log scale."""
-    width, height, left, right, top, bottom = 520, 380, 48, 12, 28, 44
-    costs = [point[0] for point in points]
-    scores = [point[1] for point in points]
+def cost_chart(results: list[tuple[float, float, float, str, str]], title: str) -> str:
+    """An SVG chart of (API cost, plan cost, score, label, color): each result a horizontal line
+    at its score from a hollow circle at its cost in API dollars to a filled dot at its cost in
+    plan dollars, with cost on a log scale."""
+    width, height, left, right, top, bottom = 1000, 460, 48, 16, 44, 44
+    costs = [cost for result in results for cost in result[:2]]
+    scores = [result[2] for result in results]
     low, high = math.log10(min(costs)) - 0.15, math.log10(max(costs)) + 0.15
-    # An axis spans at least a decade, so it has ticks to read.
-    if high - low < 1:
-        middle = (high + low) / 2
-        low, high = middle - 0.5, middle + 0.5
     floor, ceiling = math.floor(min(scores) / 5) * 5, math.ceil(max(scores) / 5) * 5 + 2
     x = lambda cost: left + (math.log10(cost) - low) / (high - low) * (width - left - right)
     y = lambda score: top + (ceiling - score) / (ceiling - floor) * (height - top - bottom)
     parts = [f'<svg viewBox="0 0 {width} {height}" class="bench-chart" role="img" aria-label="{escape(title)}">',
-             f'<text x="{left}" y="16" class="bench-title">{escape(title)}</text>']
+             f'<text x="{left}" y="16" class="bench-title">{escape(title)}</text>',
+             f'<circle cx="{left + 6}" cy="31" r="3.5" stroke="currentColor" class="bench-api"/>'
+             f'<text x="{left + 14}" y="35" class="bench-axis">cost in API dollars</text>'
+             f'<circle cx="{left + 156}" cy="31" r="3.5"/>'
+             f'<text x="{left + 164}" y="35" class="bench-axis">cost in plan dollars</text>']
     for power in range(math.floor(low), math.ceil(high) + 1):
         for step in (1, 3):
             tick = step * 10 ** power
@@ -713,24 +715,26 @@ def scatter(points: list[tuple[float, float, str, str]], title: str, x_title: st
         parts.append(f'<line x1="{left}" x2="{width - right}" y1="{y(score):.1f}" y2="{y(score):.1f}" class="bench-grid"/>'
                      f'<text x="{left - 6}" y="{y(score) + 4:.1f}" class="bench-tick" text-anchor="end">{score}</text>')
     parts.append(f'<text x="{(left + width - right) / 2}" y="{height - 8}" class="bench-axis" text-anchor="middle">'
-                 f'{escape(x_title)}</text>')
-    # Only the frontier is labeled: points no other point beats on both score and cost.
-    frontier = {point for point in points if not any(
-        other[1] >= point[1] and other[0] <= point[0] and other[:2] != point[:2] for other in points)}
+                 f'Cost per task, US dollars, log scale</text>')
+    # A small chart labels every result; a larger one the models no other beats on both score and
+    # cost in plan dollars.
+    frontier = set(results) if len(results) <= 8 else {result for result in results if not any(
+        other[2] >= result[2] and other[1] <= result[1] and other[1:3] != result[1:3] for other in results)}
     placed: list[tuple[float, float, float]] = []
-    for cost, score, label, color in sorted(points, key=lambda point: -point[1]):
-        cx, cy = x(cost), y(score)
-        parts.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="3.5" fill="{color}"><title>{escape(label)}: '
-                     f'{score:g}, ${cost:,.3g}</title></circle>')
-        if (cost, score, label, color) not in frontier:
+    for api, plan, score, label, color in sorted(results, key=lambda result: -result[2]):
+        cy = y(score)
+        parts.append(f'<g><title>{escape(label)}: {score:g}; ${api:,.3g} in API dollars, ${plan:,.3g} in plan dollars</title>'
+                     f'<line x1="{x(api):.1f}" x2="{x(plan):.1f}" y1="{cy:.1f}" y2="{cy:.1f}" stroke="{color}" class="bench-link"/>'
+                     f'<circle cx="{x(api):.1f}" cy="{cy:.1f}" r="3.5" stroke="{color}" class="bench-api"/>'
+                     f'<circle cx="{x(plan):.1f}" cy="{cy:.1f}" r="3.5" fill="{color}"/></g>')
+        if (api, plan, score, label, color) not in frontier:
             continue
-        # A label goes beside its point, left of it near the right edge, moved down a line at a
-        # time past labels already drawn, and is left out when no free line is near.
+        # The label sits just above its line from the line's left end, moved up a line at a time
+        # past labels already drawn, and is left out when no free line is near.
         size = 5.2 * len(label)
-        right_side = cx <= width * 0.62
-        start = cx + 5 if right_side else cx - 5 - size
+        start = min(x(min(api, plan)), width - right - size)
         for line in range(4):
-            top_y = cy - 4 + 12 * line
+            top_y = cy - 5 - 11 * line
             if not any(start < end and start + size > begin and abs(top_y - other) < 11
                        for begin, end, other in placed):
                 placed.append((start, start + size, top_y))
@@ -746,7 +750,7 @@ def benchmarks_page(plans: list[dict], now: datetime) -> str:
     rates = plan_rates(plans, now)
     sections = []
     for source in data["source"]:
-        api, plan, rows = [], [], []
+        results, rows = [], []
         for result in (item for item in data["result"] if item["source"] == source["id"]):
             found = next(((rate, owner) for pattern, rate, owner in rates if pattern.match(result["model"])), None)
             if found is None:
@@ -755,16 +759,14 @@ def benchmarks_page(plans: list[dict], now: datetime) -> str:
             per_plan = result["cost"] / rate["usd_per_point"] * owner["usd_per_month"] / 434.8
             label = f'{result["model"]} {result["effort"]}'.strip()
             color = LAB_COLORS.get(rate["provider"], "#777")
-            api.append((result["cost"], result["score"], label, color))
-            plan.append((per_plan, result["score"], label, color))
+            results.append((result["cost"], per_plan, result["score"], label, color))
             rows.append(f'| {escape(label)} | {result["score"]:g} | ${result["cost"]:,.2f} | {escape(owner["name"])}, '
                         f'{escape(rate["pool"])} | ${per_plan:,.3f} | {math.floor(100 * rate["usd_per_point"] / result["cost"]):,} |')
-        if not api:
+        if not results:
             continue
         sections += [f'## {escape(source["name"])}', "",
                      f'[{escape(source["name"])}]({source["url"]}), read {source["retrieved"]}: {escape(source["note"])}', "",
-                     '<div class="bench-pair">' + scatter(api, "At API prices", "Cost per task in API dollars")
-                     + scatter(plan, "In plan dollars", "Cost per task in plan dollars") + "</div>", "",
+                     cost_chart(results, source["name"]), "",
                      "| Model and effort | Score | API $ per task | Plan and pool | Plan $ per task | Tasks a week |",
                      "| --- | --- | --- | --- | --- | --- |", *rows, ""]
     front = toml({"title": "Benchmarks in plan dollars",
@@ -773,15 +775,16 @@ def benchmarks_page(plans: list[dict], now: datetime) -> str:
     return ("+++\n" + front + "+++\n\n"
             "Benchmarks report what a task costs at API prices. Run on a subscription, the same task "
             "costs a share of the plan's weekly limit instead, and plans value their quota very "
-            "differently, so the ranking by cost can change. Each benchmark below is drawn twice: "
-            "score against its published cost per task, and against the plan dollars that task "
-            "costs at the measured rate of the plan that runs the model, the cost divided by the API "
+            "differently, so the ranking by cost can change. In each chart below, a result is a line "
+            "at its score from a hollow circle at its published cost per task in API dollars to a "
+            "dot at what the task costs in plan dollars, at the measured rate of the plan that runs "
+            "the model: the cost divided by the API "
             "dollars a weekly quota point buys, times the plan's price per point (its monthly price "
             "over 434.8). Tasks a week is how many such tasks a full week's limit holds. The rates "
             "are measurements of one user's accounts, dated on the [Plans](../plans/) page, where a "
             "converter takes any cost per task; only models whose plan rate has been measured are "
-            "shown, and each chart labels the models no other beats on both score and cost; a table "
-            "under it lists them all. A benchmark run in another harness, such as Cursor, is priced as if run in the "
+            "shown, and each chart labels the models no other beats on both score and plan cost; "
+            "a table under it lists them all. A benchmark run in another harness, such as Cursor, is priced as if run in the "
             "lab's own. Artificial Analysis's figures are quoted, with attribution, from the text of "
             "its public post; the other benchmarks publish their cost per task openly.\n\n"
             + "\n".join(sections))

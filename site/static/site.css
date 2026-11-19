@@ -36,8 +36,9 @@ article > h1 { margin: 0 0 0.5em; }
 .site-links li + li { margin-top: 0.25rem; }
 .site-links a { font-weight: 600; }
 .navigation-dialog .site-links { margin-top: 1rem; }
-.bench-pair { display: flex; flex-wrap: wrap; gap: 1rem; }
-.bench-chart { flex: 1 1 22rem; max-width: 34rem; font-family: inherit; }
+.bench-chart { width: 100%; max-width: 62rem; font-family: inherit; }
+.bench-api { fill: Canvas; stroke-width: 1.5; }
+.bench-link { stroke-width: 1.5; opacity: 0.55; }
 .bench-grid { stroke: #8883; stroke-width: 1; }
 .bench-tick, .bench-label { font-size: 10px; fill: currentColor; }
 .bench-axis { font-size: 11px; fill: currentColor; }

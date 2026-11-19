@@ -107,7 +107,8 @@ class CalculatorTests(unittest.TestCase):
         page = build_site.benchmarks_page(model_prices._data()["plans"], datetime(2026, 11, 19, tzinfo=timezone.utc))
         # Neon's $6.86 task at $6.00 a point on Google AI Ultra $100: $0.263, 87 a week.
         self.assertIn("| Gemini 4 Neon xhigh | 59 | $6.86 | Google AI Ultra $100, Antigravity, Gemini | $0.263 | 87 |", page)
-        self.assertIn('<svg viewBox="0 0 520 380"', page)
+        self.assertIn('<svg viewBox="0 0 1000 460"', page)
+        self.assertEqual(page.count('<svg '), 4)
 
     def test_calculator_matches_the_package_exactly(self):
         cases = _cases(5000)
