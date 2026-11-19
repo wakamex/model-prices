@@ -109,7 +109,7 @@ class CalculatorTests(unittest.TestCase):
         # Neon's $6.86 task at $6.00 a point on Google AI Ultra $100: $0.263, 87 a week.
         self.assertIn("| Gemini 4 Neon xhigh | 59 | $6.86 | Google AI Ultra $100, Antigravity, Gemini | $0.263 | 87 |", page)
         # Each benchmark's results reach the chart script as JSON, with both costs and tokens.
-        charts = [json.loads(found) for found in re.findall(r'<script type="application/json">(.*?)</script>', page)]
+        charts = [json.loads(found) for found in re.findall(r'<div class="bench"><script type="application/json">(.*?)</script>', page)]
         self.assertEqual([chart["name"] for chart in charts][:2], ["Artificial Analysis Coding Agent Index", "CursorBench 4.1"])
         neon = next(item for item in charts[2]["results"] if item["model"] == "Gemini 4 Neon" and item["effort"] == "high")
         self.assertEqual((neon["harness"], neon["tokens"] > 0, neon["plan"] < neon["api"]), ("Antigravity CLI", True, True))
