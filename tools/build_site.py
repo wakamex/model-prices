@@ -694,6 +694,22 @@ HARNESSES = {"claude-code": ("Claude Code", "triangle"), "Claude Code": ("Claude
              "muse": ("Muse Code", "circle"), "proximus": ("proximus", "circle")}
 
 
+def _version(model: str) -> tuple[str, tuple[int, ...]]:
+    """A model's line and version, as ("GPT- Sol", (6, 2)) for GPT-6.2 Sol."""
+    found = re.search(r"\d+(?:\.\d+)*", model)
+    if found is None:
+        return model, ()
+    return model[:found.start()] + model[found.end():], tuple(int(part) for part in found.group().split("."))
+
+
+def superseded(model: str, results: list[dict]) -> bool:
+    """Whether any benchmark lists a newer version of the model's line, as GPT-6.2 Sol is of
+    GPT-6.1 Sol."""
+    line, version = _version(model)
+    return any(other_line == line and other > version
+               for other_line, other in (_version(item["model"]) for item in results))
+
+
 def benchmarks_page(plans: list[dict], now: datetime) -> str:
     """Each benchmark's results against their cost per task at API prices, and in plan dollars
     at the measured rate of the plan that runs the model."""
@@ -702,7 +718,8 @@ def benchmarks_page(plans: list[dict], now: datetime) -> str:
     sections = []
     for source in data["source"]:
         results, rows = [], []
-        for result in (item for item in data["result"] if item["source"] == source["id"]):
+        listed = [item for item in data["result"] if item["source"] == source["id"]]
+        for result in (item for item in listed if not superseded(item["model"], data["result"])):
             found = next(((rate, owner) for pattern, rate, owner in rates if pattern.match(result["model"])), None)
             if found is None:
                 continue
@@ -744,7 +761,8 @@ def benchmarks_page(plans: list[dict], now: datetime) -> str:
             "over 434.8). Tasks a week is how many such tasks a full week's limit holds. The rates "
             "are measurements of one user's accounts, dated on the [Plans](../plans/) page, where a "
             "converter takes any cost per task; only models whose plan rate has been measured are "
-            "shown, and a table under each chart lists them all. A benchmark run in another harness, such as Cursor, is priced as if run in the "
+            "shown, a model superseded by a newer version of its line that any benchmark here "
+            "lists, such as GPT-6.1 Sol by GPT-6.2 Sol, is left out, and a table under each chart lists the rest. A benchmark run in another harness, such as Cursor, is priced as if run in the "
             "lab's own. Artificial Analysis's figures are quoted, with attribution, from the text of "
             "its public post; the other benchmarks publish their cost per task openly.\n\n"
             + "\n".join(sections) + '\n<script type="module" src="../bench-chart.js"></script>\n')
