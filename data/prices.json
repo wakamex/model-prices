@@ -15061,8 +15061,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "bb8695b47e01432476282bffd4556df04bb201e8",
- "source_committed_at": "2026-11-19T23:20:20Z",
+ "source_commit": "3f48020ad15738d4bee86c9b544c8d7d6117489a",
+ "source_committed_at": "2026-11-20T00:45:02Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
@@ -15306,6 +15306,7 @@
    "grok-4.20-multi-agent-beta-latest": "removed",
    "grok-4.20-multi-agent-experimental-beta-0304": "removed",
    "grok-beta": "removed",
+   "grok-build-0.1": "removed",
    "grok-code-fast-1": "removed",
    "grok-vision-beta": "removed"
   },
