@@ -1635,6 +1635,30 @@
       "output": 2.75
      },
      "valid_from": "2026-10-20T01:20:23Z"
+    },
+    {
+     "commit": "9fc1108f0dfa",
+     "rates": {
+      "cache_read": 0.0825,
+      "cache_write": 0.0,
+      "input": 0.33,
+      "modes": {
+       "flex": {
+        "cache_read": 0.04125,
+        "cache_write": 0.0,
+        "input": 0.165,
+        "output": 1.375
+       },
+       "priority": {
+        "cache_read": 0.144375,
+        "cache_write": 0.0,
+        "input": 0.5775,
+        "output": 4.8125
+       }
+      },
+      "output": 2.75
+     },
+     "valid_from": "2026-11-20T00:48:58Z"
     }
    ],
    "amazon.nova-lite-v1:0": [
@@ -2117,6 +2141,30 @@
       "output": 2.5
      },
      "valid_from": "2026-10-20T01:20:23Z"
+    },
+    {
+     "commit": "9fc1108f0dfa",
+     "rates": {
+      "cache_read": 0.075,
+      "cache_write": 0.0,
+      "input": 0.3,
+      "modes": {
+       "flex": {
+        "cache_read": 0.0375,
+        "cache_write": 0.0,
+        "input": 0.15,
+        "output": 1.25
+       },
+       "priority": {
+        "cache_read": 0.13125,
+        "cache_write": 0.0,
+        "input": 0.525,
+        "output": 4.375
+       }
+      },
+      "output": 2.5
+     },
+     "valid_from": "2026-11-20T00:48:58Z"
     }
    ],
    "jp.amazon.nova-2-lite-v1:0": [
@@ -2215,6 +2263,30 @@
       "output": 2.75
      },
      "valid_from": "2026-10-20T01:20:23Z"
+    },
+    {
+     "commit": "9fc1108f0dfa",
+     "rates": {
+      "cache_read": 0.0825,
+      "cache_write": 0.0,
+      "input": 0.33,
+      "modes": {
+       "flex": {
+        "cache_read": 0.04125,
+        "cache_write": 0.0,
+        "input": 0.165,
+        "output": 1.375
+       },
+       "priority": {
+        "cache_read": 0.144375,
+        "cache_write": 0.0,
+        "input": 0.5775,
+        "output": 4.8125
+       }
+      },
+      "output": 2.75
+     },
+     "valid_from": "2026-11-20T00:48:58Z"
     }
    ],
    "us.amazon.nova-lite-v1:0": [
@@ -15061,8 +15133,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "3f48020ad15738d4bee86c9b544c8d7d6117489a",
- "source_committed_at": "2026-11-20T00:45:02Z",
+ "source_commit": "9fc1108f0dfa3297a5ab05350db56825008d1fd4",
+ "source_committed_at": "2026-11-20T00:48:58Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
