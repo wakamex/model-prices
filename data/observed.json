@@ -2809,6 +2809,28 @@
    ]
   },
   "thinkingmachines": {
+   "thinkingmachines/Inkling-2-Mini": [
+    {
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.15,
+      "output": 0.5
+     },
+     "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+     "valid_from": "2026-11-20T20:49:24Z"
+    }
+   ],
+   "thinkingmachines/Inkling-2-Mini:peft:262144": [
+    {
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.15,
+      "output": 0.5
+     },
+     "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+     "valid_from": "2026-11-20T20:49:24Z"
+    }
+   ],
    "thinkingmachines/Inkling-2-Small": [
     {
      "rates": {

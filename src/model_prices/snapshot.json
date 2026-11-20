@@ -40858,6 +40858,36 @@
      }
     ]
    },
+   "thinkingmachines/Inkling-2-Mini": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.015,
+       "input": 0.15,
+       "output": 0.5,
+       "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+       "valid_from": "2026-11-20T20:49:24Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "thinkingmachines/Inkling-2-Mini:peft:262144": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.015,
+       "input": 0.15,
+       "output": 0.5,
+       "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+       "valid_from": "2026-11-20T20:49:24Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "thinkingmachines/Inkling-2-Small": {
     "standard": [
      {
@@ -44862,5 +44892,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-20T14:05:04Z"
+ "updated_at": "2026-11-20T20:49:58Z"
 }
