@@ -6344,6 +6344,28 @@
      },
      "valid_from": "2026-11-12T21:39:24Z"
     }
+   ],
+   "genie-4": [
+    {
+     "commit": "51bb51a36926",
+     "rates": {
+      "input": 1.5,
+      "modalities": {
+       "image": {
+        "input": 1.5
+       },
+       "text": {
+        "input": 1.5,
+        "output": 9.0
+       },
+       "video": {
+        "output": 17.5
+       }
+      },
+      "output": 17.5
+     },
+     "valid_from": "2026-11-20T14:02:57Z"
+    }
    ]
   },
   "inception": {
@@ -15133,8 +15155,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "9fc1108f0dfa3297a5ab05350db56825008d1fd4",
- "source_committed_at": "2026-11-20T00:48:58Z",
+ "source_commit": "51bb51a3692670612b958b37d6dc24ad886ad71a",
+ "source_committed_at": "2026-11-20T14:02:57Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
