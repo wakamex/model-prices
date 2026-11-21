@@ -184,6 +184,26 @@ class PageBuildTests(unittest.TestCase):
         self.assertEqual(rates["cache_read"], readings._at(timeline, "2026-11-01T00:00:00Z")["cache_read"])
 
 
+    def test_a_page_listing_a_model_before_models_dev_keeps_its_unstated_fields(self):
+        # OpenAI's page listed GPT-6.2 Sol eight minutes before models.dev, whose entry gives
+        # the web search fee the page's prices table does not.
+        entries = [{"valid_from": "2026-11-17T18:07:07Z", "commit": "a",
+                    "rates": {"input": 2.0, "output": 10.0, "tools": {"web_search": 10.0}}}]
+        merged = compiler._with_pages(entries, [self.page("2026-11-17T17:59:44Z", {"input": 2.0, "output": 10.0})])
+        self.assertEqual(merged[0]["rates"]["tools"], {"web_search": 10.0})
+
+    def test_differences_are_listed_once_as_additions_or_changes(self):
+        def timeline(*intervals):
+            return [{"start": start, "rates": rates} for start, rates in intervals]
+        published = {"prices": {"p": {"m": {"standard": timeline((None, {"input": 1.0}))}}}}
+        built = {"prices": {"p": {"m": {
+            "standard": timeline((None, {"input": 1.0}), ("2026-11-13T00:00:00Z", {"input": 1.0}),
+                                 ("2026-11-14T00:00:00Z", {"input": 2.0})),
+            "thinking": timeline((None, {"output": 3.0}), ("2026-11-14T00:00:00Z", {"output": 3.0}))}}}}
+        self.assertEqual(readings._differences(built, published, "2026-11-12T00:00:00Z"), [
+            "changes  p/m standard from 2026-11-14T00:00:00Z: input 1.0 -> 2.0",
+            "adds     p/m thinking from 2026-11-12T00:00:00Z: output none -> 3.0"])
+
     def test_an_impossible_price_fails_the_build_and_an_unlikely_one_is_reported(self):
         pages = {("anthropic", "claude-opus-5-5"): [
             self.page("2026-11-12T06:00:00Z", {"input": 4.0, "output": 20.0}),

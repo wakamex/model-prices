@@ -460,7 +460,8 @@ def unlikely(pages: dict[tuple[str, str], list[dict]]) -> list[str]:
 
 def _differences(built: dict, published: dict, start: str) -> list[str]:
     """For each model and mode, each time from `start` that the built and published rates
-    come to differ, or differ in another way, with the fields that differ."""
+    come to differ, or differ in another way, with the fields that differ, marked as adding
+    prices the published build lacks or changing those it has."""
     lines = []
     for provider, models in sorted(built["prices"].items()):
         for model, modes in sorted(models.items()):
@@ -477,7 +478,10 @@ def _differences(built: dict, published: dict, start: str) -> list[str]:
                     shown = "; ".join(f"{key} {_shown((old or {}).get(key))} -> {_shown((new or {}).get(key))}"
                                       for key in fields)
                     if fields and shown != last:
-                        lines.append(f"{provider}/{model} {mode} from {at}: {shown}")
+                        # Prices the published build lacks are what the pages add; any other
+                        # difference changes or drops a published price.
+                        kind = "adds" if all((old or {}).get(key) is None for key in fields) else "changes"
+                        lines.append(f"{kind:<8} {provider}/{model} {mode} from {at}: {shown}")
                     last = shown
     return lines
 
