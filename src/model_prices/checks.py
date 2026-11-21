@@ -161,7 +161,8 @@ def parse_anthropic(text: str, today: datetime) -> list[Observed]:
 
 def parse_openai(text: str, today: datetime) -> list[Observed]:
     """Read every table of the page's first pricing section by service tier: Standard, Batch,
-    Flex, Fast (the priority tier), and Ultrafast. Flex is its own section, or a Flex table
+    Flex, Fast, and Ultrafast. OpenAI renamed its priority tier Fast on 2026-07-30, and
+    models.dev records it under both names, so the Fast section prices both modes. Flex is its own section, or a Flex table
     within the Batch section as the page gave it until November 2026. A model whose
     Ultrafast price is a launch price gives it in the "Ultrafast promotion" section, and the
     price that follows in the "Ultrafast list" section, which applies from the date the page
@@ -173,7 +174,7 @@ def parse_openai(text: str, today: datetime) -> list[Observed]:
         if section not in (None, headings.get(2)):
             break
         mode = {"Standard pricing data": (None,), "Batch pricing data": ("batch",),
-                "Flex pricing data": ("flex",), "Fast pricing data": ("priority",),
+                "Flex pricing data": ("flex",), "Fast pricing data": ("priority", "fast"),
                 "Ultrafast pricing data": ("ultrafast",),
                 "Ultrafast promotion pricing data": ("ultrafast",)}.get(headings.get(3, ""))
         if headings.get(3) == "Batch pricing data" and headings.get(4):
@@ -201,8 +202,8 @@ def parse_openai(text: str, today: datetime) -> list[Observed]:
                 field = {"input": "input", "cached input": "cache_read",
                          "cache writes": "cache_write", "30m write": "cache_write",
                          "12h write": "cache_write_1h", "output": "output"}[kind]
-                found.append(Observed("openai", model, field, value, mode=mode[0], at=at,
-                                      above=272_000 if span == "Long" else None))
+                found += [Observed("openai", model, field, value, mode=name, at=at,
+                                   above=272_000 if span == "Long" else None) for name in mode]
     return found + _openai_by_modality(text)
 
 
@@ -1070,9 +1071,13 @@ def _google_ids(text: str) -> dict[str, list[str]]:
 
 
 def parse_google(text: str, today: datetime) -> list[Observed]:
+    """Read each section's tables by tab. A Flex or Priority tab whose output cell prices
+    images only per image, as Gemini 2.5 Flash Image's does, is left out for its models: its
+    token output price is unstated, and the tier would otherwise take the Standard one."""
     rows = {"Input price": "input", "Output price": "output", "Context caching price": "cache_read"}
     ids = _google_ids(text)
     found = []
+    unpriced: set[tuple[str, str]] = set()
     for headings, header, table in _markdoc_tables(text):
         # A section with one table, such as a Live model's, gives it outside any tab.
         heading, tab = headings.get(2, ""), headings.get(3, "Standard")
@@ -1096,7 +1101,11 @@ def parse_google(text: str, today: datetime) -> list[Observed]:
             field = next((value for key, value in rows.items() if row[0].startswith(key)), None)
             if field is None:
                 continue
-            for value, above in _google_price(row[-1], today, field):
+            prices = _google_price(row[-1], today, field)
+            if (field == "output" and mode in {"flex", "priority"} and not prices
+                    and re.search(r"\$[0-9.]+ per (?:image|video)", row[-1])):
+                unpriced.update((model, mode) for model in ids[heading])
+            for value, above in prices:
                 found.extend(Observed("google", model, field, value, above=above, mode=mode)
                              for model in ids[heading])
             for modality, value, above in _google_by_modality(row[-1], today):
@@ -1115,7 +1124,7 @@ def parse_google(text: str, today: datetime) -> list[Observed]:
                                       at=at.isoformat().replace("+00:00", "Z"), modality=modality)
                              for modality, value, above in _google_by_modality(row[-1], at)
                              for model in ids[heading])
-    return found
+    return [entry for entry in found if (entry.model, entry.mode) not in unpriced]
 
 
 def _html_text(page: str) -> str:

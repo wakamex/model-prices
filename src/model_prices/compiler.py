@@ -303,7 +303,11 @@ def _with_pages(entries: list[dict], pages: list[dict]) -> list[dict]:
     merged = [entry for entry in entries if _parse_time(entry["valid_from"]) < first]
     last = _parse_time(pages[-1]["valid_from"])
     for at in times:
-        base = next((entry for entry in reversed(entries) if _parse_time(entry["valid_from"]) <= at), None)
+        # A page that lists a model before models.dev does gets the model's first models.dev
+        # entry as its base, as the published build extends that entry back over earlier times,
+        # so the fields the page does not state, such as tool fees, are the same in both.
+        base = next((entry for entry in reversed(entries) if _parse_time(entry["valid_from"]) <= at),
+                    entries[0] if entries else None)
         page = next(entry for entry in reversed(pages) if _parse_time(entry["valid_from"]) <= at)
         # A change announced for after the page was last read, such as the end of a
         # launch price, is the page's own next price, which no reading has yet stated.

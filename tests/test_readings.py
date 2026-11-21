@@ -93,6 +93,21 @@ class ReadingTests(unittest.TestCase):
         self.assertEqual((fixed["run"], "reading" in fixed), ("1", True))
         self.assertEqual(readings.retry(self.archive, self.store), 0)
 
+    def test_a_reading_is_read_again_when_its_reader_gains_a_version(self):
+        self.fetch("1", "2026-11-10T06:00:00Z", self.page)
+        self.fetch("2", "2026-11-11T06:00:00Z", self.page)
+        readings.record(self.archive, self.store)
+        self.assertEqual(readings.retryable(self.store)[0]["reader"], "anthropic:tools")
+        # A parser change that alters successful readings raises its reader's version.
+        with mock.patch.dict(readings.VERSIONS, {"anthropic": 2}):
+            outdated = {(line["run"], line["reader"]) for line in readings.retryable(self.store)
+                        if line["reader"] == "anthropic"}
+            self.assertEqual(outdated, {("1", "anthropic"), ("2", "anthropic")})
+            self.assertEqual(readings.retry(self.archive, self.store), 2)
+            lines = [line for line in readings.load_log(self.store) if line["reader"] == "anthropic"]
+            self.assertEqual([line.get("version") for line in lines], [2, 2])
+            self.assertFalse(any(line["reader"] == "anthropic" for line in readings.retryable(self.store)))
+
     def test_a_run_that_stored_only_a_bare_shell_is_not_read_again(self):
         body = "<html>shell</html>"
         digest = hashlib.sha256(body.encode()).hexdigest()

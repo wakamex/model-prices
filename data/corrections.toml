@@ -1301,3 +1301,38 @@ regions = { au = 1.1, eu = 1.1, in = 1.1, jp = 1.1, us = 1.1 }
 tools = { web_search = 10.0 }
 source = "https://developers.openai.com/api/docs/pricing"
 note = "OpenAI's pricing page, on 2026-11-17: \"For GPT-6.2 Astra and GPT-6.2 Sol, Ultrafast costs 3 times the Standard rate through February 28, 2027, and 6 times the Standard rate starting March 1, 2027 (Pacific time).\" models.dev's multipliers change on 2027-03-01, which model-prices applies at 00:00 UTC; Pacific midnight is 08:00 UTC, so until then Ultrafast keeps its launch price. The standard rates are models.dev's."
+
+# GPT-6 Astra's long-context Fast prices, and its Flex prices, were on OpenAI's pricing page from
+# the model's launch; models.dev recorded them on 2026-10-19.
+
+[[correction]]
+provider = "openai"
+model = "gpt-6-astra"
+valid_from = "2026-09-04T10:30:51Z"
+valid_until = "2026-09-30T18:54:53Z"
+input = 10.0
+output = 50.0
+cache_read = 1.0
+cache_write = 12.5
+cache_write_1h_multiple = 2.5
+tiers = [{ above = 272000, input = 20.0, output = 75.0, cache_read = 2.0, cache_write = 25.0 }]
+modes = { fast = { input = 20.0, output = 100.0, cache_read = 2.0, cache_write = 25.0, tiers = [{ above = 272000, input = 40.0, output = 150.0, cache_read = 4.0, cache_write = 50.0 }] }, flex = { input = 5.0, output = 25.0, cache_read = 0.5, cache_write = 6.25, tiers = [{ above = 272000, input = 10.0, output = 37.5, cache_read = 1.0, cache_write = 12.5 }] } }
+tools = { web_search = 10.0 }
+source = "https://web.archive.org/web/20260904103051/https://developers.openai.com/api/docs/pricing"
+note = "OpenAI's pricing page, archived 2026-09-04 at 10:30 UTC and 2026-09-05, lists gpt-6-astra under Fast mode at $20.00 input, $2.00 cached input, $25.00 cache writes and $100.00 output in short context and $40.00, $4.00, $50.00 and $150.00 in long context, and under Flex at $5.00, $0.50, $6.25 and $25.00, and $10.00, $1.00, $12.50 and $37.50. models.dev gave Fast no long-context prices and Flex none until 2026-10-19."
+
+[[correction]]
+provider = "openai"
+model = "gpt-6-astra"
+valid_from = "2026-09-30T18:54:53Z"
+valid_until = "2026-10-19T18:06:59Z"
+input = 10.0
+output = 50.0
+cache_read = 1.0
+cache_write = 12.5
+cache_write_1h_multiple = 2.5
+tiers = [{ above = 272000, input = 20.0, output = 75.0, cache_read = 2.0, cache_write = 25.0 }]
+modes = { fast = { input = 20.0, output = 100.0, cache_read = 2.0, cache_write = 25.0, tiers = [{ above = 272000, input = 40.0, output = 150.0, cache_read = 4.0, cache_write = 50.0 }] }, flex = { input = 5.0, output = 25.0, cache_read = 0.5, cache_write = 6.25, tiers = [{ above = 272000, input = 10.0, output = 37.5, cache_read = 1.0, cache_write = 12.5 }] }, ultrafast = { input = 60.0, output = 300.0, cache_read = 6.0, cache_write = 75.0, tiers = [{ above = 272000, input = 120.0, output = 450.0, cache_read = 12.0, cache_write = 150.0 }] } }
+tools = { web_search = 10.0 }
+source = "https://web.archive.org/web/20261018110127/https://developers.openai.com/api/docs/pricing"
+note = "OpenAI's pricing page, archived 2026-09-30 and 2026-10-18, lists gpt-6-astra's Fast and Flex prices as before and Ultrafast at $60.00, $6.00, $75.00 and $300.00 in short context and $120.00, $12.00, $150.00 and $450.00 in long context. models.dev added Ultrafast on 2026-09-30 without its long-context prices, and recorded those and Flex's on 2026-10-19."

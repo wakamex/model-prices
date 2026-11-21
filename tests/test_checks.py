@@ -206,6 +206,12 @@ class CheckTests(unittest.TestCase):
             checks.fetch("https://example.com/pricing")
         self.assertEqual(urlopen.call_count, 1)
 
+    def test_openai_fast_section_prices_both_names_of_the_tier(self):
+        # OpenAI renamed its priority tier Fast, and models.dev records both modes.
+        found = {item.mode: item.value for item in checks.parse_openai((FIXTURES / "openai.md").read_text(), TODAY)
+                 if item.model == "gpt-6-astra" and item.field == "input" and item.above is None}
+        self.assertEqual((found["fast"], found["priority"]), (20.0, 20.0))
+
     def test_openai_parser_reads_flex_and_ultrafast_launch_sections(self):
         # The layout of 2026-11-17: Flex is its own section, and GPT-6.2's Ultrafast launch
         # price is followed by its list price from a date in Pacific time.
@@ -621,6 +627,14 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(google[("gemini-3.8-flash-tts", "output", None, None)], 9)
         self.assertEqual(google[("gemini-omni-1.1-flash", "output", None, None)], 17.5)
 
+    def test_google_tier_pricing_output_only_per_image_is_left_out(self):
+        # Gemini 2.5 Flash Image's section as the page gave it on 2026-11-21: Flex and Priority
+        # price its image output only per image, so those tiers have no token output price.
+        page = (FIXTURES / "google-per-image.md").read_text()
+        found = {(item.mode, item.field): item.value for item in checks.parse_google(page, TODAY)}
+        self.assertEqual(found[(None, "input")], 0.3)
+        self.assertFalse({mode for mode, _ in found} & {"flex", "priority"})
+
     def test_google_dated_prices_follow_the_check_date(self):
         cell = "$0.75 through December 31, 2026. $1.50 starting January 1, 2027."
 
@@ -711,8 +725,9 @@ Batch
                 + "| gpt-6.1-sol | $4.00 | $20.00 | $0.20 | $5.00 | $10.00 | $8.00 | $30.00 | $0.40 | $10.00 | $20.00 |\n")
         found = checks.parse_openai(page, TODAY)
 
-        # OpenAI's Flex table is the flex tier and its Fast table the priority tier.
-        self.assertEqual({item.mode for item in found}, {"flex", "priority"})
+        # OpenAI's Flex table is the flex tier, and its Fast table the tier models.dev records
+        # as both priority and fast.
+        self.assertEqual({item.mode for item in found}, {"flex", "priority", "fast"})
         results = checks.compare(found, datetime(2026, 10, 30, tzinfo=timezone.utc))
         self.assertEqual({r.status for r in results}, {"ok"})
         self.assertIn(("flex input", 272_000), {(r.field, r.above) for r in results})

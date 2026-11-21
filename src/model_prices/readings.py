@@ -123,6 +123,14 @@ def _plans(key: str) -> Callable[[Get, datetime], list[dict]]:
     return read
 
 
+# Each reader whose parser has changed what a successful reading gives, with the number of such
+# changes: a reading made before the latest is read again from its run's pages, as a failed one
+# is. A reader not listed is at version 1.
+VERSIONS = {
+    "openai": 2,  # OpenAI's Fast section also prices models.dev's fast mode.
+    "google": 2,  # A Flex or Priority tab that prices output only per image is left out.
+}
+
 READERS: dict[str, Reader] = {
     **{provider: Reader(url, _pricing_page(provider)) for provider, (url, _) in SOURCES.items()},
     **{provider: Reader(observe.SOURCE_PAGES[provider], _observed_page(provider))
@@ -188,6 +196,8 @@ def read_run(archive: Path, run: str, log: list[dict]) -> Iterator[tuple[dict, d
 
         read_at = (stored.get(main) or tried[main])["fetched_at"]
         line = {"run": run, "reader": name, "read_at": read_at}
+        if VERSIONS.get(name, 1) > 1:
+            line["version"] = VERSIONS[name]
         try:
             entries = reader.read(get, _parse_time(read_at))
         # Any failure to read the pages stops this reader's reading alone.
@@ -227,9 +237,11 @@ def record(archive: Path, out: Path) -> int:
 
 
 def retryable(out: Path) -> list[dict]:
-    """The log lines of readings that failed for a reason a parser fix can change: any but a
-    page the run did not store."""
-    return [line for line in load_log(out) if "error" in line and not line["error"].startswith("NotStored")]
+    """The log lines of readings a parser change can change: those that failed for any reason
+    but a page the run did not store, and those made before their reader's latest version."""
+    return [line for line in load_log(out)
+            if ("error" in line and not line["error"].startswith("NotStored"))
+            or line.get("version", 1) < VERSIONS.get(line["reader"], 1)]
 
 
 def retry_pages(out: Path, archive: Path) -> set[str]:
@@ -241,8 +253,8 @@ def retry_pages(out: Path, archive: Path) -> set[str]:
 
 
 def retry(archive: Path, out: Path) -> int:
-    """Read again every retryable reading whose run the archive holds, as after a parser fix,
-    replacing its log line when the result differs; return how many were replaced."""
+    """Read again every retryable reading whose run the archive holds, as after a parser fix or
+    change, replacing its log line when the result differs; return how many were replaced."""
     failed = {(line["run"], line["reader"]): line for line in retryable(out)}
     runs = _fetches(archive)
     replaced: dict[tuple[str, str], dict] = {}
