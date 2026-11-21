@@ -206,11 +206,10 @@ jobs:
           for attempt in 1 2 3 4 5; do
             mkdir -p "$retry/blobs"
             cat "$log"/fetches/*.jsonl > "$retry/fetches.jsonl"
-            for sha in $(uv --no-config run --locked model-prices readings retry-pages "$log" --archive "$retry"); do
-              [ -f "$retry/blobs/$sha" ] && continue
-              aws s3 cp --quiet --endpoint-url "$R2_ENDPOINT" "s3://model-prices-pages/blobs/$sha.gz.age" - \
-                | age -d -i "$key" | gunzip > "$retry/page" && mv "$retry/page" "$retry/blobs/$sha"
-            done
+            # Eight downloads at a time, as a reader's version change can need hundreds of pages;
+            # a page that cannot be downloaded leaves its reading as it is.
+            uv --no-config run --locked model-prices readings retry-pages "$log" --archive "$retry" \
+              | xargs -r -P 8 -I '{}' sh -c '[ -f "$0/blobs/$1" ] || { aws s3 cp --quiet --endpoint-url "$R2_ENDPOINT" "s3://model-prices-pages/blobs/$1.gz.age" - | age -d -i "$2" | gunzip > "$0/blobs/$1.part" && mv "$0/blobs/$1.part" "$0/blobs/$1" || rm -f "$0/blobs/$1.part"; }' "$retry" '{}' "$key"
             uv --no-config run --locked model-prices readings retry "$log" --archive "$retry"
             git -C "$log" add readings
             git -C "$log" diff --cached --quiet && break

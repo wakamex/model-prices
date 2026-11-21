@@ -103,6 +103,10 @@ class ReadingTests(unittest.TestCase):
             outdated = {(line["run"], line["reader"]) for line in readings.retryable(self.store)
                         if line["reader"] == "anthropic"}
             self.assertEqual(outdated, {("1", "anthropic"), ("2", "anthropic")})
+            # Only the pages those readings read are needed, and for the failed tool readings
+            # every page their runs stored.
+            self.assertEqual(readings.retry_pages(self.store, self.archive),
+                             {hashlib.sha256(self.page.encode()).hexdigest()})
             self.assertEqual(readings.retry(self.archive, self.store), 2)
             lines = [line for line in readings.load_log(self.store) if line["reader"] == "anthropic"]
             self.assertEqual([line.get("version") for line in lines], [2, 2])

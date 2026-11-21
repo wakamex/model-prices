@@ -246,11 +246,14 @@ def retryable(out: Path) -> list[dict]:
 
 
 def retry_pages(out: Path, archive: Path) -> set[str]:
-    """The hashes of the pages the runs with retryable readings stored, from the archive's
-    fetch log, which a retry needs in the archive's blobs."""
-    runs = {line["run"] for line in retryable(out)}
-    return {entry["sha256"] for run, log in _fetches(archive).items() if run in runs
-            for entry in log if entry["status"] == 200 and entry["sha256"]}
+    """The hashes of the pages a retry needs in the archive's blobs: those a successful reading
+    made before its reader's latest version read, and every page the run stored for a failed
+    one, whose pages are not all known."""
+    lines = retryable(out)
+    failed = {line["run"] for line in lines if "error" in line}
+    return {sha for line in lines if "error" not in line for sha in line["inputs"].values()} | {
+        entry["sha256"] for run, log in _fetches(archive).items() if run in failed
+        for entry in log if entry["status"] == 200 and entry["sha256"]}
 
 
 def retry(archive: Path, out: Path) -> int:
