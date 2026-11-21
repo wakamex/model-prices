@@ -129,6 +129,7 @@ def _plans(key: str) -> Callable[[Get, datetime], list[dict]]:
 VERSIONS = {
     "openai": 2,  # OpenAI's Fast section also prices models.dev's fast mode.
     "google": 2,  # A Flex or Priority tab that prices output only per image is left out.
+    "alibaba": 2,  # Cache prices derived from input are rounded, as they were from 2026-11-12.
 }
 
 READERS: dict[str, Reader] = {
@@ -406,8 +407,9 @@ def impossible(built: dict, start: str) -> list[str]:
 
 
 # A page price outside these bounds, in dollars per million tokens, is unlikely: text input and
-# output prices, then every other price.
-TEXT_BOUNDS = (0.01, 200.0)
+# output prices, then every other price. OpenAI's dearest list prices reach $450, for GPT-6
+# Astra's long-context Ultrafast output.
+TEXT_BOUNDS = (0.01, 1000.0)
 OTHER_BOUNDS = (0.001, 1000.0)
 # A change by more than this factor, up or down, is unlikely.
 JUMP = 3.0
@@ -458,7 +460,7 @@ def unlikely(pages: dict[tuple[str, str], list[dict]]) -> list[str]:
 
 def _differences(built: dict, published: dict, start: str) -> list[str]:
     """For each model and mode, each time from `start` that the built and published rates
-    differ, with the fields that differ."""
+    come to differ, or differ in another way, with the fields that differ."""
     lines = []
     for provider, models in sorted(built["prices"].items()):
         for model, modes in sorted(models.items()):
@@ -466,15 +468,17 @@ def _differences(built: dict, published: dict, start: str) -> list[str]:
                 before = published["prices"].get(provider, {}).get(model, {}).get(mode, [])
                 times = sorted({start} | {interval["start"] for interval in (*timeline, *before)
                                           if interval["start"] and interval["start"] > start})
+                last = None
                 for at in times:
                     old, new = (_canonical(_at(intervals, at)) for intervals in (before, timeline))
                     fields = sorted(key for key in {*(old or {}), *(new or {})}
                                     if key not in {"valid_from", "source", "valid_from_basis"}
                                     and (old or {}).get(key) != (new or {}).get(key))
-                    if fields:
-                        lines.append(f"{provider}/{model} {mode} from {at}: " + "; ".join(
-                            f"{key} {_shown((old or {}).get(key))} -> {_shown((new or {}).get(key))}"
-                            for key in fields))
+                    shown = "; ".join(f"{key} {_shown((old or {}).get(key))} -> {_shown((new or {}).get(key))}"
+                                      for key in fields)
+                    if fields and shown != last:
+                        lines.append(f"{provider}/{model} {mode} from {at}: {shown}")
+                    last = shown
     return lines
 
 

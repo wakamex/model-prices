@@ -965,7 +965,10 @@ def main(argv: list[str] | None = None) -> int:
                 parser.error("readings changed needs --run")
             print("\n".join(readings.changed(args.directory, args.run)))
             return 0
-        errors = [line for line in readings.load_log(args.directory) if "error" in line]
+        # A reader's failure matters until a later reading of it succeeds.
+        latest = {line["reader"]: line for line in sorted(readings.load_log(args.directory),
+                                                          key=lambda line: line["read_at"])}
+        errors = [line for line in latest.values() if "error" in line]
         differences = readings.diff(readings.readings(args.directory))
         print(readings.report(differences, errors) or "every reading matches the published prices")
         return 0

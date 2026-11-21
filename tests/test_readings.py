@@ -197,7 +197,7 @@ class PageBuildTests(unittest.TestCase):
                           "cached input $0.1 above input $0.002 in batch"])
         self.assertEqual(readings.unlikely(pages), [
             "anthropic/claude-opus-5-5 input $0.004 from 2026-11-13T06:00:00Z: "
-            "outside $0.01 to $200, 0.001 times $4",
+            "outside $0.01 to $1000, 0.001 times $4",
             "anthropic/claude-opus-5-5 input $4 from 2026-11-14T06:00:00Z: 1e+03 times $0.004",
             "anthropic/claude-opus-5-5 output $0 from 2026-11-14T06:00:00Z: from $20"])
 
