@@ -345,17 +345,18 @@ def _in_mode(corrected: Rates, standard: Rates, moded: Rates) -> Rates:
         value, base, mode_value = (getattr(item, field) for item in (corrected, standard, moded))
         if value is None or not base or mode_value is None:
             return value
-        return value * mode_value / base
+        # Rounded past float noise, so $0.4 scaled by $0.5 / $0.5 stays $0.4.
+        return round(value * mode_value / base, 10)
 
     def ratio(field: str) -> float:
         base, mode_value = getattr(standard, field), getattr(moded, field)
         return mode_value / base if base and mode_value is not None else 1.0
-    modalities = tuple(replace(item, **{field: getattr(item, field) * ratio(field)
+    modalities = tuple(replace(item, **{field: round(getattr(item, field) * ratio(field), 10)
                                         for field in ("input", "output", "cache_read")
                                         if getattr(item, field) is not None})
                        for item in corrected.modalities)
     # Long-prompt tiers keep each price's ratio, as the mode's own tiers do.
-    tiers = tuple(replace(tier, **{field: getattr(tier, field) * ratio(field)
+    tiers = tuple(replace(tier, **{field: round(getattr(tier, field) * ratio(field), 10)
                                    for field in ("input", "output", "cache_read", "cache_write")
                                    if getattr(tier, field) is not None})
                   for tier in corrected.tiers)

@@ -1750,7 +1750,7 @@
      {
       "rates": {
        "cache_read": 0.01,
-       "input": 0.05000000000000001,
+       "input": 0.05,
        "output": 0.5,
        "source": "https://www.alibabacloud.com/help/en/model-studio/context-cache",
        "valid_from": "2026-10-09T18:18:19Z",
@@ -3505,19 +3505,19 @@
     "thinking": [
      {
       "rates": {
-       "input": 0.20000000000000004,
+       "input": 0.2,
        "output": 4.8,
        "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
          "above": 32000,
          "input": 0.3,
-         "output": 7.199999999999998
+         "output": 7.2
         },
         {
          "above": 128000,
          "input": 0.6,
-         "output": 14.399999999999997
+         "output": 14.4
         }
        ],
        "valid_from": "2025-10-14T17:34:46Z",
@@ -3537,7 +3537,7 @@
        "cache_read": 0.04,
        "cache_read_explicit": 0.02,
        "cache_write": 0.25,
-       "input": 0.20000000000000004,
+       "input": 0.2,
        "output": 4.8,
        "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
@@ -3547,7 +3547,7 @@
          "cache_read_explicit": 0.03,
          "cache_write": 0.375,
          "input": 0.3,
-         "output": 7.199999999999998
+         "output": 7.2
         },
         {
          "above": 128000,
@@ -3555,7 +3555,7 @@
          "cache_read_explicit": 0.06,
          "cache_write": 0.75,
          "input": 0.6,
-         "output": 14.399999999999997
+         "output": 14.4
         }
        ],
        "valid_from": "2026-10-09T18:18:19Z",
@@ -3575,8 +3575,8 @@
        "cache_read": 0.04,
        "cache_read_explicit": 0.02,
        "cache_write": 0.25,
-       "input": 0.20000000000000004,
-       "output": 1.6000000000000003,
+       "input": 0.2,
+       "output": 1.6,
        "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
@@ -3625,8 +3625,8 @@
        "cache_read": 0.04,
        "cache_read_explicit": 0.02,
        "cache_write": 0.25,
-       "input": 0.20000000000000004,
-       "output": 1.6000000000000003,
+       "input": 0.2,
+       "output": 1.6,
        "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
        "tiers": [
         {
@@ -12787,8 +12787,8 @@
        "input": 0.54,
        "modalities": {
         "audio": {
-         "cache_read": 0.18000000000000002,
-         "input": 1.8000000000000003
+         "cache_read": 0.18,
+         "input": 1.8
         },
         "text": {
          "cache_read": 0.054,
@@ -13203,7 +13203,7 @@
      {
       "rates": {
        "cache_read": 0.01,
-       "input": 0.05000000000000001,
+       "input": 0.05,
        "modalities": {
         "audio": {
          "cache_read": 0.03,
@@ -13215,7 +13215,7 @@
          "output": 0.2
         }
        },
-       "output": 0.20000000000000004,
+       "output": 0.2,
        "source": "https://ai.google.dev/gemini-api/docs/pricing#gemini-2.5-flash-lite",
        "tools": {
         "web_search_prompt": 35.0
@@ -13281,11 +13281,11 @@
      {
       "rates": {
        "cache_read": 0.018,
-       "input": 0.17999999999999997,
+       "input": 0.18,
        "modalities": {
         "audio": {
-         "cache_read": 0.05399999999999999,
-         "input": 0.5399999999999999
+         "cache_read": 0.054,
+         "input": 0.54
         },
         "text": {
          "cache_read": 0.018,
@@ -13293,7 +13293,7 @@
          "output": 0.72
         }
        },
-       "output": 0.7199999999999999,
+       "output": 0.72,
        "source": "https://ai.google.dev/gemini-api/docs/pricing#gemini-2.5-flash-lite",
        "tools": {
         "web_search_prompt": 35.0
@@ -35379,7 +35379,7 @@
      },
      {
       "rates": {
-       "cache_read": 0.8000000000000002,
+       "cache_read": 0.8,
        "cache_write": 20.0,
        "cache_write_1h_multiple": 2.5,
        "input": 16.0,
@@ -35561,7 +35561,7 @@
      },
      {
       "rates": {
-       "cache_read": 0.8000000000000002,
+       "cache_read": 0.8,
        "cache_write": 20.0,
        "cache_write_1h_multiple": 2.5,
        "input": 16.0,
@@ -36265,7 +36265,7 @@
      },
      {
       "rates": {
-       "cache_read": 0.20000000000000004,
+       "cache_read": 0.2,
        "cache_write": 5.0,
        "cache_write_1h_multiple": 2.5,
        "input": 4.0,
@@ -36447,7 +36447,7 @@
      },
      {
       "rates": {
-       "cache_read": 0.20000000000000004,
+       "cache_read": 0.2,
        "cache_write": 5.0,
        "cache_write_1h_multiple": 2.5,
        "input": 4.0,
@@ -45078,5 +45078,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-21T19:59:21Z"
+ "updated_at": "2026-11-21T21:17:28Z"
 }
