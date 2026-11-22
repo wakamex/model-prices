@@ -1,0 +1,6241 @@
+{
+ "providers": {
+  "ai21": {
+   "jamba-large": [
+    {
+     "rates": {
+      "input": 2.0,
+      "output": 8.0
+     },
+     "source": "https://www.ai21.com/pricing/",
+     "valid_from": "2026-11-12T05:14:46Z"
+    }
+   ],
+   "jamba-mini": [
+    {
+     "rates": {
+      "input": 0.2,
+      "output": 0.4
+     },
+     "source": "https://www.ai21.com/pricing/",
+     "valid_from": "2026-11-12T05:14:46Z"
+    }
+   ]
+  },
+  "alibaba": {
+   "qwen-flash": [
+    {
+     "rates": {
+      "cache_read": 0.01,
+      "cache_read_explicit": 0.005,
+      "cache_write": 0.0625,
+      "input": 0.05,
+      "output": 0.4,
+      "tiers": [
+       {
+        "above": 256000,
+        "cache_read": 0.05,
+        "cache_read_explicit": 0.025,
+        "cache_write": 0.3125,
+        "input": 0.25,
+        "output": 2.0
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen-flash-2025-07-28": [
+    {
+     "rates": {
+      "input": 0.05,
+      "output": 0.4,
+      "tiers": [
+       {
+        "above": 256000,
+        "input": 0.25,
+        "output": 2.0
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen-max": [
+    {
+     "rates": {
+      "cache_read": 0.32,
+      "input": 1.6,
+      "output": 6.4
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen-mt-flash": [
+    {
+     "rates": {
+      "input": 0.16,
+      "output": 0.49
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen-mt-lite": [
+    {
+     "rates": {
+      "input": 0.12,
+      "output": 0.36
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen-mt-plus": [
+    {
+     "rates": {
+      "input": 2.46,
+      "output": 7.37
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen-plus": [
+    {
+     "rates": {
+      "cache_read": 0.08,
+      "cache_read_explicit": 0.04,
+      "cache_write": 0.5,
+      "input": 0.4,
+      "modes": {
+       "thinking": {
+        "output": 4.0,
+        "tiers": [
+         {
+          "above": 256000,
+          "output": 12.0
+         }
+        ]
+       }
+      },
+      "output": 1.2,
+      "tiers": [
+       {
+        "above": 256000,
+        "cache_read": 0.24,
+        "cache_read_explicit": 0.12,
+        "cache_write": 1.5,
+        "input": 1.2,
+        "output": 3.6
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen-plus-2025-01-25": [
+    {
+     "rates": {
+      "input": 0.4,
+      "output": 1.2
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen-plus-2025-04-28": [
+    {
+     "rates": {
+      "input": 0.4,
+      "modes": {
+       "thinking": {
+        "output": 4.0
+       }
+      },
+      "output": 1.2
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen-plus-2025-07-14": [
+    {
+     "rates": {
+      "input": 0.4,
+      "modes": {
+       "thinking": {
+        "output": 4.0
+       }
+      },
+      "output": 1.2
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen-plus-2025-12-01": [
+    {
+     "rates": {
+      "input": 0.4,
+      "modes": {
+       "thinking": {
+        "output": 4.0,
+        "tiers": [
+         {
+          "above": 256000,
+          "output": 12.0
+         }
+        ]
+       }
+      },
+      "output": 1.2,
+      "tiers": [
+       {
+        "above": 256000,
+        "input": 1.2,
+        "output": 3.6
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen-plus-latest": [
+    {
+     "rates": {
+      "input": 0.4,
+      "modes": {
+       "thinking": {
+        "output": 4.0,
+        "tiers": [
+         {
+          "above": 256000,
+          "output": 12.0
+         }
+        ]
+       }
+      },
+      "output": 1.2,
+      "tiers": [
+       {
+        "above": 256000,
+        "input": 1.2,
+        "output": 3.6
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen-vl-ocr": [
+    {
+     "rates": {
+      "input": 0.07,
+      "output": 0.16
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen-vl-ocr-2025-11-20": [
+    {
+     "rates": {
+      "input": 0.07,
+      "output": 0.16
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3-coder-flash": [
+    {
+     "rates": {
+      "cache_read": 0.06,
+      "cache_read_explicit": 0.03,
+      "cache_write": 0.375,
+      "input": 0.3,
+      "output": 1.5,
+      "tiers": [
+       {
+        "above": 32000,
+        "cache_read": 0.1,
+        "cache_read_explicit": 0.05,
+        "cache_write": 0.625,
+        "input": 0.5,
+        "output": 2.5
+       },
+       {
+        "above": 128000,
+        "cache_read": 0.16,
+        "cache_read_explicit": 0.08,
+        "cache_write": 1.0,
+        "input": 0.8,
+        "output": 4.0
+       },
+       {
+        "above": 256000,
+        "cache_read": 0.32,
+        "cache_read_explicit": 0.16,
+        "cache_write": 2.0,
+        "input": 1.6,
+        "output": 9.6
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3-coder-flash-2025-07-28": [
+    {
+     "rates": {
+      "input": 0.3,
+      "output": 1.5,
+      "tiers": [
+       {
+        "above": 32000,
+        "input": 0.5,
+        "output": 2.5
+       },
+       {
+        "above": 128000,
+        "input": 0.8,
+        "output": 4.0
+       },
+       {
+        "above": 256000,
+        "input": 1.6,
+        "output": 9.6
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3-vl-plus": [
+    {
+     "rates": {
+      "cache_read": 0.04,
+      "cache_read_explicit": 0.02,
+      "cache_write": 0.25,
+      "input": 0.2,
+      "output": 1.6,
+      "tiers": [
+       {
+        "above": 32000,
+        "cache_read": 0.06,
+        "cache_read_explicit": 0.03,
+        "cache_write": 0.375,
+        "input": 0.3,
+        "output": 2.4
+       },
+       {
+        "above": 128000,
+        "cache_read": 0.12,
+        "cache_read_explicit": 0.06,
+        "cache_write": 0.75,
+        "input": 0.6,
+        "output": 4.8
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.5-122b-a10b": [
+    {
+     "rates": {
+      "input": 0.4,
+      "modes": {
+       "thinking": {
+        "output": 3.2
+       }
+      },
+      "output": 3.2
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.5-27b": [
+    {
+     "rates": {
+      "input": 0.3,
+      "modes": {
+       "thinking": {
+        "output": 2.4
+       }
+      },
+      "output": 2.4
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.5-35b-a3b": [
+    {
+     "rates": {
+      "input": 0.25,
+      "modes": {
+       "thinking": {
+        "output": 2.0
+       }
+      },
+      "output": 2.0
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.5-397b-a17b": [
+    {
+     "rates": {
+      "input": 0.6,
+      "modes": {
+       "thinking": {
+        "output": 3.6
+       }
+      },
+      "output": 3.6
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.5-flash": [
+    {
+     "rates": {
+      "cache_read": 0.01,
+      "cache_write": 0.125,
+      "input": 0.1,
+      "output": 0.4
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.5-flash-2026-02-23": [
+    {
+     "rates": {
+      "input": 0.1,
+      "output": 0.4
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.5-plus": [
+    {
+     "rates": {
+      "cache_read": 0.04,
+      "cache_write": 0.5,
+      "input": 0.4,
+      "modes": {
+       "thinking": {
+        "output": 2.4,
+        "tiers": [
+         {
+          "above": 256000,
+          "output": 3.0
+         }
+        ]
+       }
+      },
+      "output": 2.4,
+      "tiers": [
+       {
+        "above": 256000,
+        "cache_read": 0.05,
+        "cache_write": 0.625,
+        "input": 0.5,
+        "output": 3.0
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.5-plus-2026-02-15": [
+    {
+     "rates": {
+      "input": 0.4,
+      "modes": {
+       "thinking": {
+        "output": 2.4,
+        "tiers": [
+         {
+          "above": 256000,
+          "output": 3.0
+         }
+        ]
+       }
+      },
+      "output": 2.4,
+      "tiers": [
+       {
+        "above": 256000,
+        "input": 0.5,
+        "output": 3.0
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.5-plus-2026-04-20": [
+    {
+     "rates": {
+      "cache_read": 0.04,
+      "cache_write": 0.5,
+      "input": 0.4,
+      "modes": {
+       "thinking": {
+        "output": 2.4,
+        "tiers": [
+         {
+          "above": 256000,
+          "output": 3.0
+         }
+        ]
+       }
+      },
+      "output": 2.4,
+      "tiers": [
+       {
+        "above": 256000,
+        "cache_read": 0.05,
+        "cache_write": 0.625,
+        "input": 0.5,
+        "output": 3.0
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.6-27b": [
+    {
+     "rates": {
+      "input": 0.6,
+      "modes": {
+       "thinking": {
+        "output": 3.6
+       }
+      },
+      "output": 3.6
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.6-35b-a3b": [
+    {
+     "rates": {
+      "input": 0.375,
+      "modes": {
+       "thinking": {
+        "output": 2.25
+       }
+      },
+      "output": 2.25
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.6-flash": [
+    {
+     "rates": {
+      "cache_read": 0.025,
+      "cache_write": 0.3125,
+      "input": 0.25,
+      "output": 1.5,
+      "tiers": [
+       {
+        "above": 256000,
+        "cache_read": 0.1,
+        "cache_write": 1.25,
+        "input": 1.0,
+        "output": 4.0
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.6-flash-2026-04-16": [
+    {
+     "rates": {
+      "input": 0.25,
+      "output": 1.5,
+      "tiers": [
+       {
+        "above": 256000,
+        "input": 1.0,
+        "output": 4.0
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.6-plus": [
+    {
+     "rates": {
+      "cache_read": 0.05,
+      "cache_write": 0.625,
+      "input": 0.5,
+      "modes": {
+       "thinking": {
+        "output": 3.0,
+        "tiers": [
+         {
+          "above": 256000,
+          "output": 6.0
+         }
+        ]
+       }
+      },
+      "output": 3.0,
+      "tiers": [
+       {
+        "above": 256000,
+        "cache_read": 0.2,
+        "cache_write": 2.5,
+        "input": 2.0,
+        "output": 6.0
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.6-plus-2026-04-02": [
+    {
+     "rates": {
+      "input": 0.5,
+      "modes": {
+       "thinking": {
+        "output": 3.0,
+        "tiers": [
+         {
+          "above": 256000,
+          "output": 6.0
+         }
+        ]
+       }
+      },
+      "output": 3.0,
+      "tiers": [
+       {
+        "above": 256000,
+        "input": 2.0,
+        "output": 6.0
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.7-flash": [
+    {
+     "rates": {
+      "cache_read": 0.006,
+      "cache_read_explicit": 0.003,
+      "cache_write": 0.0375,
+      "input": 0.03,
+      "output": 0.13,
+      "tiers": [
+       {
+        "above": 32000,
+        "cache_read": 0.02,
+        "cache_read_explicit": 0.01,
+        "cache_write": 0.125,
+        "input": 0.1,
+        "output": 0.4
+       },
+       {
+        "above": 256000,
+        "cache_read": 0.04,
+        "cache_read_explicit": 0.02,
+        "cache_write": 0.25,
+        "input": 0.2,
+        "output": 0.8
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.7-flash-2026-07-15": [
+    {
+     "rates": {
+      "cache_read": 0.006,
+      "cache_read_explicit": 0.003,
+      "cache_write": 0.0375,
+      "input": 0.03,
+      "output": 0.13,
+      "tiers": [
+       {
+        "above": 32000,
+        "cache_read": 0.02,
+        "cache_read_explicit": 0.01,
+        "cache_write": 0.125,
+        "input": 0.1,
+        "output": 0.4
+       },
+       {
+        "above": 256000,
+        "cache_read": 0.04,
+        "cache_read_explicit": 0.02,
+        "cache_write": 0.25,
+        "input": 0.2,
+        "output": 0.8
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.7-max": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "cache_read_explicit": 0.25,
+      "cache_write": 3.125,
+      "input": 2.5,
+      "output": 7.5
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.7-max-2026-05-17": [
+    {
+     "rates": {
+      "input": 2.5,
+      "output": 7.5
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.7-max-2026-05-20": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "cache_read_explicit": 0.25,
+      "cache_write": 3.125,
+      "input": 2.5,
+      "output": 7.5
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.7-max-2026-06-08": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "cache_read_explicit": 0.25,
+      "cache_write": 3.125,
+      "input": 2.5,
+      "output": 7.5
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.7-max-preview": [
+    {
+     "rates": {
+      "input": 2.5,
+      "output": 7.5
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.7-plus": [
+    {
+     "rates": {
+      "cache_read": 0.064,
+      "cache_read_explicit": 0.032,
+      "cache_write": 0.4,
+      "input": 0.32,
+      "modes": {
+       "thinking": {
+        "output": 1.28,
+        "tiers": [
+         {
+          "above": 256000,
+          "output": 3.84
+         }
+        ]
+       }
+      },
+      "output": 1.28,
+      "tiers": [
+       {
+        "above": 256000,
+        "cache_read": 0.192,
+        "cache_read_explicit": 0.096,
+        "cache_write": 1.2,
+        "input": 0.96,
+        "output": 3.84
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.7-plus-2026-05-26": [
+    {
+     "rates": {
+      "cache_read": 0.08,
+      "cache_read_explicit": 0.04,
+      "cache_write": 0.5,
+      "input": 0.4,
+      "modes": {
+       "thinking": {
+        "output": 1.6,
+        "tiers": [
+         {
+          "above": 256000,
+          "output": 4.8
+         }
+        ]
+       }
+      },
+      "output": 1.6,
+      "tiers": [
+       {
+        "above": 256000,
+        "cache_read": 0.24,
+        "cache_read_explicit": 0.12,
+        "cache_write": 1.5,
+        "input": 1.2,
+        "output": 4.8
+       }
+      ]
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.8-2.4t-a95b": [
+    {
+     "rates": {
+      "input": 2.0,
+      "output": 6.0
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.8-27b": [
+    {
+     "rates": {
+      "cache_read": 0.1,
+      "cache_read_explicit": 0.05,
+      "cache_write": 0.625,
+      "input": 0.5,
+      "output": 3.0
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.8-flash": [
+    {
+     "rates": {
+      "input": 0.15,
+      "output": 0.47
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.8-max": [
+    {
+     "rates": {
+      "input": 2.0,
+      "output": 6.0
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.8-max-0902": [
+    {
+     "rates": {
+      "input": 2.0,
+      "output": 6.0
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen3.8-omni-flash": [
+    {
+     "rates": {
+      "input": 0.15,
+      "output": 0.47
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-12T05:14:45Z"
+    }
+   ],
+   "qwen4-max": [
+    {
+     "rates": {
+      "input": 1.5,
+      "output": 4.5
+     },
+     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
+     "valid_from": "2026-11-16T02:39:18Z"
+    }
+   ]
+  },
+  "amazon-bedrock": {
+   "amazon.nova-2-lite-v1:0": [
+    {
+     "rates": {
+      "input": 0.33,
+      "output": 2.75
+     },
+     "source": "https://aws.amazon.com/bedrock/pricing/",
+     "valid_from": "2026-11-12T05:14:47Z"
+    }
+   ],
+   "amazon.nova-lite-v1:0": [
+    {
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.06,
+      "output": 0.24
+     },
+     "source": "https://aws.amazon.com/bedrock/pricing/",
+     "valid_from": "2026-11-12T05:14:47Z"
+    }
+   ],
+   "amazon.nova-micro-v1:0": [
+    {
+     "rates": {
+      "cache_read": 0.00875,
+      "input": 0.035,
+      "output": 0.14
+     },
+     "source": "https://aws.amazon.com/bedrock/pricing/",
+     "valid_from": "2026-11-12T05:14:47Z"
+    }
+   ],
+   "amazon.nova-premier-v1:0": [
+    {
+     "rates": {
+      "input": 2.5,
+      "output": 12.5
+     },
+     "source": "https://aws.amazon.com/bedrock/pricing/",
+     "valid_from": "2026-11-12T05:14:47Z"
+    }
+   ],
+   "amazon.nova-pro-v1:0": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "input": 0.8,
+      "output": 3.2
+     },
+     "source": "https://aws.amazon.com/bedrock/pricing/",
+     "valid_from": "2026-11-12T05:14:47Z"
+    }
+   ],
+   "global.amazon.nova-2-lite-v1:0": [
+    {
+     "rates": {
+      "cache_read": 0.075,
+      "input": 0.3,
+      "output": 2.5
+     },
+     "source": "https://aws.amazon.com/bedrock/pricing/",
+     "valid_from": "2026-11-12T05:14:47Z"
+    }
+   ],
+   "us.amazon.nova-2-lite-v1:0": [
+    {
+     "rates": {
+      "input": 0.33,
+      "output": 2.75
+     },
+     "source": "https://aws.amazon.com/bedrock/pricing/",
+     "valid_from": "2026-11-12T05:14:47Z"
+    }
+   ],
+   "us.amazon.nova-lite-v1:0": [
+    {
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.06,
+      "output": 0.24
+     },
+     "source": "https://aws.amazon.com/bedrock/pricing/",
+     "valid_from": "2026-11-12T05:14:47Z"
+    }
+   ],
+   "us.amazon.nova-micro-v1:0": [
+    {
+     "rates": {
+      "cache_read": 0.00875,
+      "input": 0.035,
+      "output": 0.14
+     },
+     "source": "https://aws.amazon.com/bedrock/pricing/",
+     "valid_from": "2026-11-12T05:14:47Z"
+    }
+   ],
+   "us.amazon.nova-premier-v1:0": [
+    {
+     "rates": {
+      "input": 2.5,
+      "output": 12.5
+     },
+     "source": "https://aws.amazon.com/bedrock/pricing/",
+     "valid_from": "2026-11-12T05:14:47Z"
+    }
+   ],
+   "us.amazon.nova-pro-v1:0": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "input": 0.8,
+      "output": 3.2
+     },
+     "source": "https://aws.amazon.com/bedrock/pricing/",
+     "valid_from": "2026-11-12T05:14:47Z"
+    }
+   ]
+  },
+  "anthropic": {
+   "claude-fable-5": [
+    {
+     "rates": {
+      "cache_read": 1.0,
+      "cache_write": 12.5,
+      "input": 10.0,
+      "modes": {
+       "batch": {
+        "input": 5.0,
+        "output": 25.0
+       }
+      },
+      "output": 50.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ],
+   "claude-fable-5-1": [
+    {
+     "rates": {
+      "cache_read": 0.25,
+      "cache_write": 12.5,
+      "input": 10.0,
+      "modes": {
+       "batch": {
+        "input": 5.0,
+        "output": 25.0
+       }
+      },
+      "output": 50.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ],
+   "claude-fable-5-2": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 10.0,
+      "input": 8.0,
+      "modes": {
+       "batch": {
+        "input": 4.0,
+        "output": 20.0
+       }
+      },
+      "output": 40.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ],
+   "claude-haiku-4-5": [
+    {
+     "rates": {
+      "cache_read": 0.1,
+      "cache_write": 1.25,
+      "input": 1.0,
+      "modes": {
+       "batch": {
+        "input": 0.5,
+        "output": 2.5
+       }
+      },
+      "output": 5.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ],
+   "claude-haiku-5-5": [
+    {
+     "rates": {
+      "cache_read": 0.01,
+      "cache_write": 0.125,
+      "input": 0.1,
+      "modes": {
+       "batch": {
+        "input": 0.05,
+        "output": 0.25,
+        "tiers": [
+         {
+          "above": 100000,
+          "input": 0.25,
+          "output": 1.25
+         }
+        ]
+       }
+      },
+      "output": 0.5,
+      "tiers": [
+       {
+        "above": 100000,
+        "cache_read": 0.05,
+        "cache_write": 0.625,
+        "input": 0.5,
+        "output": 2.5
+       }
+      ]
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ],
+   "claude-mythos-5": [
+    {
+     "rates": {
+      "cache_read": 1.0,
+      "cache_write": 12.5,
+      "input": 10.0,
+      "modes": {
+       "batch": {
+        "input": 5.0,
+        "output": 25.0
+       }
+      },
+      "output": 50.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ],
+   "claude-mythos-5-1": [
+    {
+     "rates": {
+      "cache_read": 0.25,
+      "cache_write": 12.5,
+      "input": 10.0,
+      "modes": {
+       "batch": {
+        "input": 5.0,
+        "output": 25.0
+       }
+      },
+      "output": 50.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ],
+   "claude-mythos-5-2": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 10.0,
+      "input": 8.0,
+      "modes": {
+       "batch": {
+        "input": 4.0,
+        "output": 20.0
+       }
+      },
+      "output": 40.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ],
+   "claude-opus-4-0": [
+    {
+     "rates": {
+      "cache_read": 1.5,
+      "cache_write": 18.75,
+      "input": 15.0,
+      "modes": {
+       "batch": {
+        "input": 7.5,
+        "output": 37.5
+       }
+      },
+      "output": 75.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ],
+   "claude-opus-4-1": [
+    {
+     "rates": {
+      "cache_read": 1.5,
+      "cache_write": 18.75,
+      "input": 15.0,
+      "modes": {
+       "batch": {
+        "input": 7.5,
+        "output": 37.5
+       }
+      },
+      "output": 75.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ],
+   "claude-opus-4-5": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "cache_write": 6.25,
+      "input": 5.0,
+      "modes": {
+       "batch": {
+        "input": 2.5,
+        "output": 12.5
+       }
+      },
+      "output": 25.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ],
+   "claude-opus-4-6": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "cache_write": 6.25,
+      "input": 5.0,
+      "modes": {
+       "batch": {
+        "input": 2.5,
+        "output": 12.5
+       }
+      },
+      "output": 25.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ],
+   "claude-opus-4-7": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "cache_write": 6.25,
+      "input": 5.0,
+      "modes": {
+       "batch": {
+        "input": 2.5,
+        "output": 12.5
+       }
+      },
+      "output": 25.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ],
+   "claude-opus-4-8": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "cache_write": 6.25,
+      "input": 5.0,
+      "modes": {
+       "batch": {
+        "input": 2.5,
+        "output": 12.5
+       }
+      },
+      "output": 25.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ],
+   "claude-opus-5": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "cache_write": 6.25,
+      "input": 5.0,
+      "modes": {
+       "batch": {
+        "input": 2.5,
+        "output": 12.5
+       }
+      },
+      "output": 25.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ],
+   "claude-opus-5-5": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 5.0,
+      "input": 4.0,
+      "modes": {
+       "batch": {
+        "input": 2.0,
+        "output": 10.0
+       }
+      },
+      "output": 20.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ],
+   "claude-sonnet-4-0": [
+    {
+     "rates": {
+      "cache_read": 0.3,
+      "cache_write": 3.75,
+      "input": 3.0,
+      "modes": {
+       "batch": {
+        "input": 1.5,
+        "output": 7.5
+       }
+      },
+      "output": 15.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ],
+   "claude-sonnet-4-5": [
+    {
+     "rates": {
+      "cache_read": 0.3,
+      "cache_write": 3.75,
+      "input": 3.0,
+      "modes": {
+       "batch": {
+        "input": 1.5,
+        "output": 7.5
+       }
+      },
+      "output": 15.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ],
+   "claude-sonnet-4-6": [
+    {
+     "rates": {
+      "cache_read": 0.3,
+      "cache_write": 3.75,
+      "input": 3.0,
+      "modes": {
+       "batch": {
+        "input": 1.5,
+        "output": 7.5
+       }
+      },
+      "output": 15.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ],
+   "claude-sonnet-5": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 2.5,
+      "input": 2.0,
+      "modes": {
+       "batch": {
+        "input": 1.0,
+        "output": 5.0
+       }
+      },
+      "output": 10.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ],
+   "claude-sonnet-5-5": [
+    {
+     "rates": {
+      "cache_read": 0.1,
+      "cache_write": 2.5,
+      "input": 2.0,
+      "modes": {
+       "batch": {
+        "input": 1.0,
+        "output": 5.0
+       }
+      },
+      "output": 10.0
+     },
+     "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+     "valid_from": "2026-11-12T05:14:48Z"
+    }
+   ]
+  },
+  "byteplus": {
+   "dola-seed-2-1-turbo": [
+    {
+     "rates": {
+      "cache_read": 0.1,
+      "input": 0.5,
+      "output": 2.5
+     },
+     "source": "https://docs.byteplus.com/en/docs/ModelArk/1544106",
+     "valid_from": "2026-11-12T05:14:41Z"
+    }
+   ],
+   "seed-2-0-code-preview-260328": [
+    {
+     "rates": {
+      "cache_read": 0.1,
+      "input": 0.5,
+      "output": 3.0,
+      "tiers": [
+       {
+        "above": 128000,
+        "cache_read": 0.2,
+        "input": 1.0,
+        "output": 6.0
+       }
+      ]
+     },
+     "source": "https://docs.byteplus.com/en/docs/ModelArk/1544106",
+     "valid_from": "2026-11-12T05:14:41Z"
+    }
+   ],
+   "seed-2-0-lite-260428": [
+    {
+     "rates": {
+      "cache_read": 0.05,
+      "input": 0.25,
+      "output": 2.0,
+      "tiers": [
+       {
+        "above": 128000,
+        "cache_read": 0.1,
+        "input": 0.5,
+        "output": 4.0
+       }
+      ]
+     },
+     "source": "https://docs.byteplus.com/en/docs/ModelArk/1544106",
+     "valid_from": "2026-11-12T05:14:41Z"
+    }
+   ],
+   "seed-2-0-mini-260428": [
+    {
+     "rates": {
+      "cache_read": 0.02,
+      "input": 0.1,
+      "output": 0.4,
+      "tiers": [
+       {
+        "above": 128000,
+        "cache_read": 0.04,
+        "input": 0.2,
+        "output": 0.8
+       }
+      ]
+     },
+     "source": "https://docs.byteplus.com/en/docs/ModelArk/1544106",
+     "valid_from": "2026-11-12T05:14:41Z"
+    }
+   ],
+   "seed-2-0-pro-260328": [
+    {
+     "rates": {
+      "cache_read": 0.1,
+      "input": 0.5,
+      "output": 3.0,
+      "tiers": [
+       {
+        "above": 128000,
+        "cache_read": 0.2,
+        "input": 1.0,
+        "output": 6.0
+       }
+      ]
+     },
+     "source": "https://docs.byteplus.com/en/docs/ModelArk/1544106",
+     "valid_from": "2026-11-12T05:14:41Z"
+    }
+   ]
+  },
+  "cognition": {
+   "adaptive": [
+    {
+     "rates": {
+      "cache_read": 0.1,
+      "cache_write": 0.5,
+      "input": 0.5,
+      "output": 2.0
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-12T05:14:42Z"
+    }
+   ],
+   "arena-fast": [
+    {
+     "rates": {
+      "cache_read": 0.0,
+      "cache_write": 0.0,
+      "input": 0.1,
+      "output": 0.5
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-12T05:14:42Z"
+    }
+   ],
+   "arena-mixed": [
+    {
+     "rates": {
+      "cache_read": 0.1,
+      "cache_write": 1.25,
+      "input": 1.0,
+      "output": 5.0
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-12T05:14:42Z"
+    }
+   ],
+   "arena-smart": [
+    {
+     "rates": {
+      "cache_read": 0.3,
+      "cache_write": 3.75,
+      "input": 3.0,
+      "output": 15.0
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-12T05:14:42Z"
+    }
+   ],
+   "swe-1-6": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 0.0,
+      "input": 0.5,
+      "output": 2.5
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-12T05:14:42Z"
+    }
+   ],
+   "swe-1-7": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 0.0,
+      "input": 0.5,
+      "output": 2.5
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-12T05:14:42Z"
+    }
+   ],
+   "swe-1-7-medium": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 0.0,
+      "input": 0.5,
+      "output": 2.5
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-12T05:14:42Z"
+    }
+   ],
+   "swe-2-flash-high": [
+    {
+     "rates": {
+      "cache_read": 0.0075,
+      "cache_write": 0.09375,
+      "input": 0.075,
+      "output": 0.375
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-12T05:14:42Z"
+    }
+   ],
+   "swe-2-flash-max": [
+    {
+     "rates": {
+      "cache_read": 0.0075,
+      "cache_write": 0.09375,
+      "input": 0.075,
+      "output": 0.375
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-12T05:14:42Z"
+    }
+   ],
+   "swe-2-flash-medium": [
+    {
+     "rates": {
+      "cache_read": 0.0075,
+      "cache_write": 0.09375,
+      "input": 0.075,
+      "output": 0.375
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-12T05:14:42Z"
+    }
+   ],
+   "swe-2-high": [
+    {
+     "rates": {
+      "cache_read": 0.05,
+      "cache_write": 0.0,
+      "input": 0.5,
+      "output": 2.5
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-12T05:14:42Z"
+    }
+   ],
+   "swe-2-max": [
+    {
+     "rates": {
+      "cache_read": 0.05,
+      "cache_write": 0.0,
+      "input": 0.5,
+      "output": 2.5
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-12T05:14:42Z"
+    }
+   ],
+   "swe-2-medium": [
+    {
+     "rates": {
+      "cache_read": 0.05,
+      "cache_write": 0.0,
+      "input": 0.5,
+      "output": 2.5
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-12T05:14:42Z"
+    }
+   ],
+   "swe-check": [
+    {
+     "rates": {
+      "cache_read": 0.0,
+      "cache_write": 0.0,
+      "input": 0.0,
+      "output": 0.0
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-12T05:14:42Z"
+    }
+   ]
+  },
+  "cohere": {
+   "command-r-08-2024": [
+    {
+     "rates": {
+      "input": 0.15,
+      "output": 0.6
+     },
+     "source": "https://cohere.com/pricing",
+     "valid_from": "2026-11-12T05:14:46Z"
+    }
+   ],
+   "command-r7b-12-2024": [
+    {
+     "rates": {
+      "input": 0.0375,
+      "output": 0.15
+     },
+     "source": "https://cohere.com/pricing",
+     "valid_from": "2026-11-12T05:14:46Z"
+    }
+   ]
+  },
+  "cursor": {
+   "composer-2.5": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "input": 0.5,
+      "modes": {
+       "fast": {
+        "cache_read": 0.5,
+        "input": 3.0,
+        "output": 15.0
+       }
+      },
+      "output": 2.5
+     },
+     "source": "https://cursor.com/llms.txt",
+     "valid_from": "2026-11-12T05:14:42Z"
+    }
+   ]
+  },
+  "google": {
+   "gemini-2.5-flash": [
+    {
+     "rates": {
+      "cache_read": 0.03,
+      "input": 0.3,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.1,
+        "input": 1.0
+       },
+       "image": {
+        "cache_read": 0.03,
+        "input": 0.3
+       },
+       "text": {
+        "cache_read": 0.03,
+        "input": 0.3
+       },
+       "video": {
+        "cache_read": 0.03,
+        "input": 0.3
+       }
+      },
+      "modes": {
+       "batch": {
+        "cache_read": 0.03,
+        "input": 0.15,
+        "modalities": {
+         "audio": {
+          "cache_read": 0.1,
+          "input": 0.5
+         },
+         "image": {
+          "cache_read": 0.03,
+          "input": 0.15
+         },
+         "text": {
+          "cache_read": 0.03,
+          "input": 0.15
+         },
+         "video": {
+          "cache_read": 0.03,
+          "input": 0.15
+         }
+        },
+        "output": 1.25
+       },
+       "flex": {
+        "cache_read": 0.03,
+        "input": 0.15,
+        "modalities": {
+         "audio": {
+          "cache_read": 0.1,
+          "input": 0.5
+         },
+         "image": {
+          "cache_read": 0.03,
+          "input": 0.15
+         },
+         "text": {
+          "cache_read": 0.03,
+          "input": 0.15
+         },
+         "video": {
+          "cache_read": 0.03,
+          "input": 0.15
+         }
+        },
+        "output": 1.25
+       },
+       "priority": {
+        "cache_read": 0.054,
+        "input": 0.54,
+        "modalities": {
+         "audio": {
+          "cache_read": 0.18,
+          "input": 1.8
+         },
+         "image": {
+          "cache_read": 0.054,
+          "input": 0.54
+         },
+         "text": {
+          "cache_read": 0.054,
+          "input": 0.54
+         },
+         "video": {
+          "cache_read": 0.054,
+          "input": 0.54
+         }
+        },
+        "output": 4.5
+       }
+      },
+      "output": 2.5,
+      "tools": {
+       "web_search_prompt": 35.0
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-2.5-flash-image": [
+    {
+     "rates": {
+      "input": 0.3,
+      "modes": {
+       "batch": {
+        "input": 0.15
+       }
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-2.5-flash-lite": [
+    {
+     "rates": {
+      "cache_read": 0.01,
+      "input": 0.1,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.03,
+        "input": 0.3
+       },
+       "image": {
+        "cache_read": 0.01,
+        "input": 0.1
+       },
+       "text": {
+        "cache_read": 0.01,
+        "input": 0.1
+       },
+       "video": {
+        "cache_read": 0.01,
+        "input": 0.1
+       }
+      },
+      "modes": {
+       "batch": {
+        "cache_read": 0.01,
+        "input": 0.05,
+        "modalities": {
+         "audio": {
+          "cache_read": 0.03,
+          "input": 0.15
+         },
+         "image": {
+          "cache_read": 0.01,
+          "input": 0.05
+         },
+         "text": {
+          "cache_read": 0.01,
+          "input": 0.05
+         },
+         "video": {
+          "cache_read": 0.01,
+          "input": 0.05
+         }
+        },
+        "output": 0.2
+       },
+       "flex": {
+        "cache_read": 0.01,
+        "input": 0.05,
+        "modalities": {
+         "audio": {
+          "cache_read": 0.03,
+          "input": 0.15
+         },
+         "image": {
+          "cache_read": 0.01,
+          "input": 0.05
+         },
+         "text": {
+          "cache_read": 0.01,
+          "input": 0.05
+         },
+         "video": {
+          "cache_read": 0.01,
+          "input": 0.05
+         }
+        },
+        "output": 0.2
+       },
+       "priority": {
+        "cache_read": 0.018,
+        "input": 0.18,
+        "modalities": {
+         "audio": {
+          "cache_read": 0.054,
+          "input": 0.54
+         },
+         "image": {
+          "cache_read": 0.018,
+          "input": 0.18
+         },
+         "text": {
+          "cache_read": 0.018,
+          "input": 0.18
+         },
+         "video": {
+          "cache_read": 0.018,
+          "input": 0.18
+         }
+        },
+        "output": 0.72
+       }
+      },
+      "output": 0.4,
+      "tools": {
+       "web_search_prompt": 35.0
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-2.5-flash-native-audio-preview-12-2025": [
+    {
+     "rates": {
+      "input": 0.5,
+      "modalities": {
+       "audio": {
+        "input": 3.0,
+        "output": 12.0
+       },
+       "text": {
+        "input": 0.5,
+        "output": 2.0
+       },
+       "video": {
+        "input": 3.0
+       }
+      },
+      "output": 2.0
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-2.5-flash-preview-tts": [
+    {
+     "rates": {
+      "input": 0.5,
+      "modes": {
+       "batch": {
+        "input": 0.25,
+        "output": 5.0
+       }
+      },
+      "output": 10.0
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-2.5-pro": [
+    {
+     "rates": {
+      "cache_read": 0.125,
+      "input": 1.25,
+      "modes": {
+       "batch": {
+        "cache_read": 0.125,
+        "input": 0.625,
+        "output": 5.0,
+        "tiers": [
+         {
+          "above": 200000,
+          "cache_read": 0.25,
+          "input": 1.25,
+          "output": 7.5
+         }
+        ]
+       },
+       "flex": {
+        "cache_read": 0.125,
+        "input": 0.625,
+        "output": 5.0,
+        "tiers": [
+         {
+          "above": 200000,
+          "cache_read": 0.25,
+          "input": 1.25,
+          "output": 7.5
+         }
+        ]
+       },
+       "priority": {
+        "cache_read": 0.225,
+        "input": 2.25,
+        "output": 18.0,
+        "tiers": [
+         {
+          "above": 200000,
+          "cache_read": 0.45,
+          "input": 4.5,
+          "output": 27.0
+         }
+        ]
+       }
+      },
+      "output": 10.0,
+      "tiers": [
+       {
+        "above": 200000,
+        "cache_read": 0.25,
+        "input": 2.5,
+        "output": 15.0
+       }
+      ],
+      "tools": {
+       "web_search_prompt": 35.0
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-2.5-pro-preview-tts": [
+    {
+     "rates": {
+      "input": 1.0,
+      "modes": {
+       "batch": {
+        "input": 0.5,
+        "output": 10.0
+       }
+      },
+      "output": 20.0
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-3-flash-preview": [
+    {
+     "rates": {
+      "cache_read": 0.05,
+      "input": 0.5,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.1,
+        "input": 1.0
+       },
+       "image": {
+        "cache_read": 0.05,
+        "input": 0.5
+       },
+       "text": {
+        "cache_read": 0.05,
+        "input": 0.5
+       },
+       "video": {
+        "cache_read": 0.05,
+        "input": 0.5
+       }
+      },
+      "modes": {
+       "batch": {
+        "cache_read": 0.05,
+        "input": 0.25,
+        "modalities": {
+         "audio": {
+          "cache_read": 0.1,
+          "input": 0.5
+         },
+         "image": {
+          "cache_read": 0.05,
+          "input": 0.25
+         },
+         "text": {
+          "cache_read": 0.05,
+          "input": 0.25
+         },
+         "video": {
+          "cache_read": 0.05,
+          "input": 0.25
+         }
+        },
+        "output": 1.5
+       },
+       "flex": {
+        "cache_read": 0.05,
+        "input": 0.25,
+        "modalities": {
+         "audio": {
+          "cache_read": 0.1,
+          "input": 0.5
+         },
+         "image": {
+          "cache_read": 0.05,
+          "input": 0.25
+         },
+         "text": {
+          "cache_read": 0.05,
+          "input": 0.25
+         },
+         "video": {
+          "cache_read": 0.05,
+          "input": 0.25
+         }
+        },
+        "output": 1.5
+       },
+       "priority": {
+        "cache_read": 0.09,
+        "input": 0.9,
+        "modalities": {
+         "audio": {
+          "cache_read": 0.18,
+          "input": 1.8
+         },
+         "image": {
+          "cache_read": 0.09,
+          "input": 0.9
+         },
+         "text": {
+          "cache_read": 0.09,
+          "input": 0.9
+         },
+         "video": {
+          "cache_read": 0.09,
+          "input": 0.9
+         }
+        },
+        "output": 5.4
+       }
+      },
+      "output": 3.0,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-3-pro-image": [
+    {
+     "rates": {
+      "input": 2.0,
+      "modalities": {
+       "image": {
+        "input": 2.0,
+        "output": 120.0
+       },
+       "text": {
+        "input": 2.0,
+        "output": 12.0
+       }
+      },
+      "output": 120.0,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-3.1-flash-image": [
+    {
+     "rates": {
+      "input": 0.5,
+      "modalities": {
+       "image": {
+        "input": 0.5,
+        "output": 60.0
+       },
+       "text": {
+        "input": 0.5,
+        "output": 3.0
+       }
+      },
+      "output": 60.0
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-3.1-flash-lite": [
+    {
+     "rates": {
+      "cache_read": 0.025,
+      "input": 0.25,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.05,
+        "input": 0.5
+       },
+       "image": {
+        "cache_read": 0.025,
+        "input": 0.25
+       },
+       "text": {
+        "cache_read": 0.025,
+        "input": 0.25
+       },
+       "video": {
+        "cache_read": 0.025,
+        "input": 0.25
+       }
+      },
+      "modes": {
+       "batch": {
+        "cache_read": 0.0125,
+        "input": 0.125,
+        "modalities": {
+         "audio": {
+          "cache_read": 0.025,
+          "input": 0.25
+         },
+         "image": {
+          "cache_read": 0.0125,
+          "input": 0.125
+         },
+         "text": {
+          "cache_read": 0.0125,
+          "input": 0.125
+         },
+         "video": {
+          "cache_read": 0.0125,
+          "input": 0.125
+         }
+        },
+        "output": 0.75
+       },
+       "flex": {
+        "cache_read": 0.0125,
+        "input": 0.125,
+        "modalities": {
+         "audio": {
+          "cache_read": 0.025,
+          "input": 0.25
+         },
+         "image": {
+          "cache_read": 0.0125,
+          "input": 0.125
+         },
+         "text": {
+          "cache_read": 0.0125,
+          "input": 0.125
+         },
+         "video": {
+          "cache_read": 0.0125,
+          "input": 0.125
+         }
+        },
+        "output": 0.75
+       },
+       "priority": {
+        "cache_read": 0.045,
+        "input": 0.45,
+        "modalities": {
+         "audio": {
+          "cache_read": 0.09,
+          "input": 0.9
+         },
+         "image": {
+          "cache_read": 0.045,
+          "input": 0.45
+         },
+         "text": {
+          "cache_read": 0.045,
+          "input": 0.45
+         },
+         "video": {
+          "cache_read": 0.045,
+          "input": 0.45
+         }
+        },
+        "output": 2.7
+       }
+      },
+      "output": 1.5,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-3.1-flash-lite-image": [
+    {
+     "rates": {
+      "input": 0.25,
+      "modalities": {
+       "image": {
+        "input": 0.25,
+        "output": 30.0
+       },
+       "text": {
+        "input": 0.25,
+        "output": 1.5
+       },
+       "video": {
+        "input": 0.25
+       }
+      },
+      "modes": {
+       "batch": {
+        "input": 0.125,
+        "modalities": {
+         "image": {
+          "input": 0.125,
+          "output": 15.0
+         },
+         "text": {
+          "input": 0.125,
+          "output": 0.75
+         },
+         "video": {
+          "input": 0.125
+         }
+        },
+        "output": 15.0
+       }
+      },
+      "output": 30.0
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-3.1-flash-live-preview": [
+    {
+     "rates": {
+      "input": 0.75,
+      "modalities": {
+       "audio": {
+        "input": 3.0,
+        "output": 12.0
+       },
+       "image": {
+        "input": 1.0
+       },
+       "text": {
+        "input": 0.75,
+        "output": 4.5
+       },
+       "video": {
+        "input": 1.0
+       }
+      },
+      "output": 4.5,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-3.1-flash-tts-preview": [
+    {
+     "rates": {
+      "input": 1.0,
+      "modes": {
+       "batch": {
+        "input": 0.5,
+        "output": 10.0
+       }
+      },
+      "output": 20.0
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-3.1-pro-preview": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "input": 2.0,
+      "modes": {
+       "batch": {
+        "cache_read": 0.2,
+        "input": 1.0,
+        "output": 6.0,
+        "tiers": [
+         {
+          "above": 200000,
+          "cache_read": 0.4,
+          "input": 2.0,
+          "output": 9.0
+         }
+        ]
+       },
+       "flex": {
+        "cache_read": 0.2,
+        "input": 1.0,
+        "output": 6.0,
+        "tiers": [
+         {
+          "above": 200000,
+          "cache_read": 0.4,
+          "input": 2.0,
+          "output": 9.0
+         }
+        ]
+       },
+       "priority": {
+        "cache_read": 0.36,
+        "input": 3.6,
+        "output": 21.6,
+        "tiers": [
+         {
+          "above": 200000,
+          "cache_read": 0.72,
+          "input": 7.2,
+          "output": 32.4
+         }
+        ]
+       }
+      },
+      "output": 12.0,
+      "tiers": [
+       {
+        "above": 200000,
+        "cache_read": 0.4,
+        "input": 4.0,
+        "output": 18.0
+       }
+      ],
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-3.1-pro-preview-customtools": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "input": 2.0,
+      "modes": {
+       "batch": {
+        "cache_read": 0.2,
+        "input": 1.0,
+        "output": 6.0,
+        "tiers": [
+         {
+          "above": 200000,
+          "cache_read": 0.4,
+          "input": 2.0,
+          "output": 9.0
+         }
+        ]
+       },
+       "flex": {
+        "cache_read": 0.2,
+        "input": 1.0,
+        "output": 6.0,
+        "tiers": [
+         {
+          "above": 200000,
+          "cache_read": 0.4,
+          "input": 2.0,
+          "output": 9.0
+         }
+        ]
+       },
+       "priority": {
+        "cache_read": 0.36,
+        "input": 3.6,
+        "output": 21.6,
+        "tiers": [
+         {
+          "above": 200000,
+          "cache_read": 0.72,
+          "input": 7.2,
+          "output": 32.4
+         }
+        ]
+       }
+      },
+      "output": 12.0,
+      "tiers": [
+       {
+        "above": 200000,
+        "cache_read": 0.4,
+        "input": 4.0,
+        "output": 18.0
+       }
+      ],
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-3.5-flash-lite": [
+    {
+     "rates": {
+      "cache_read": 0.03,
+      "input": 0.3,
+      "modes": {
+       "batch": {
+        "cache_read": 0.015,
+        "input": 0.15,
+        "output": 1.25
+       },
+       "flex": {
+        "cache_read": 0.02,
+        "input": 0.15,
+        "output": 1.25
+       },
+       "priority": {
+        "cache_read": 0.05,
+        "input": 0.54,
+        "output": 4.5
+       }
+      },
+      "output": 2.5,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-3.5-live-translate-preview": [
+    {
+     "rates": {
+      "input": 3.5,
+      "output": 21.0
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-3.5-transcribe": [
+    {
+     "rates": {
+      "input": 2.0,
+      "output": 12.0
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-3.5-transcribe-live": [
+    {
+     "rates": {
+      "input": 3.5,
+      "output": 21.0
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-3.6-flash": [
+    {
+     "rates": {
+      "cache_read": 0.075,
+      "input": 0.75,
+      "modes": {
+       "batch": {
+        "cache_read": 0.0375,
+        "input": 0.375,
+        "output": 1.875
+       },
+       "flex": {
+        "cache_read": 0.0375,
+        "input": 0.375,
+        "output": 1.875
+       },
+       "priority": {
+        "cache_read": 0.135,
+        "input": 1.35,
+        "output": 6.75
+       }
+      },
+      "output": 3.75,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-3.8-flash": [
+    {
+     "rates": {
+      "cache_read": 0.075,
+      "input": 0.75,
+      "modes": {
+       "batch": {
+        "cache_read": 0.0375,
+        "input": 0.375,
+        "output": 1.875
+       },
+       "flex": {
+        "cache_read": 0.0375,
+        "input": 0.375,
+        "output": 1.875
+       },
+       "priority": {
+        "cache_read": 0.135,
+        "input": 1.35,
+        "output": 6.75
+       }
+      },
+      "output": 3.75,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-3.8-flash-lite-tts": [
+    {
+     "rates": {
+      "input": 0.5,
+      "modes": {
+       "batch": {
+        "input": 0.25,
+        "output": 3.0
+       },
+       "flex": {
+        "input": 0.25,
+        "output": 3.0
+       },
+       "priority": {
+        "input": 0.9,
+        "output": 10.8
+       }
+      },
+      "output": 6.0
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-3.8-flash-tts": [
+    {
+     "rates": {
+      "input": 0.5,
+      "modes": {
+       "batch": {
+        "input": 0.25,
+        "output": 4.5
+       },
+       "flex": {
+        "input": 0.25,
+        "output": 4.5
+       },
+       "priority": {
+        "input": 0.9,
+        "output": 16.2
+       }
+      },
+      "output": 9.0
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-3.8-live": [
+    {
+     "rates": {
+      "input": 0.75,
+      "modalities": {
+       "audio": {
+        "input": 3.0,
+        "output": 12.0
+       },
+       "image": {
+        "input": 1.0
+       },
+       "text": {
+        "input": 0.75,
+        "output": 4.5
+       },
+       "video": {
+        "input": 1.0
+       }
+      },
+      "output": 4.5,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-3.8-live-extended-thinking": [
+    {
+     "rates": {
+      "input": 0.75,
+      "modalities": {
+       "audio": {
+        "input": 3.0,
+        "output": 12.0
+       },
+       "image": {
+        "input": 1.0
+       },
+       "text": {
+        "input": 0.75,
+        "output": 4.5
+       },
+       "video": {
+        "input": 1.0
+       }
+      },
+      "output": 4.5,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-4-argon": [
+    {
+     "rates": {
+      "cache_read": 0.1,
+      "input": 2.0,
+      "modes": {
+       "batch": {
+        "cache_read": 0.05,
+        "input": 1.0,
+        "output": 5.0
+       },
+       "flex": {
+        "cache_read": 0.05,
+        "input": 1.0,
+        "output": 5.0
+       },
+       "priority": {
+        "cache_read": 0.18,
+        "input": 3.6,
+        "output": 18.0
+       }
+      },
+      "output": 10.0,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-4-carbon": [
+    {
+     "rates": {
+      "cache_read": 0.1,
+      "input": 2.0,
+      "modes": {
+       "batch": {
+        "cache_read": 0.05,
+        "input": 1.0,
+        "output": 5.0
+       },
+       "flex": {
+        "cache_read": 0.05,
+        "input": 1.0,
+        "output": 5.0
+       },
+       "priority": {
+        "cache_read": 0.18,
+        "input": 3.6,
+        "output": 18.0
+       }
+      },
+      "output": 10.0,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-4-hydrogen": [
+    {
+     "rates": {
+      "cache_read": 0.075,
+      "input": 1.5,
+      "modes": {
+       "batch": {
+        "cache_read": 0.0375,
+        "input": 0.75,
+        "output": 3.75
+       },
+       "flex": {
+        "cache_read": 0.0375,
+        "input": 0.75,
+        "output": 3.75
+       },
+       "priority": {
+        "cache_read": 0.135,
+        "input": 2.7,
+        "output": 13.5
+       }
+      },
+      "output": 7.5,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T18:46:07Z"
+    }
+   ],
+   "gemini-4-neon": [
+    {
+     "rates": {
+      "cache_read": 0.15,
+      "input": 3.0,
+      "modes": {
+       "batch": {
+        "cache_read": 0.075,
+        "input": 1.5,
+        "output": 7.5
+       },
+       "flex": {
+        "cache_read": 0.075,
+        "input": 1.5,
+        "output": 7.5
+       },
+       "priority": {
+        "cache_read": 0.27,
+        "input": 5.4,
+        "output": 27.0
+       }
+      },
+      "output": 15.0,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-18T21:09:26Z"
+    }
+   ],
+   "gemini-decision-1": [
+    {
+     "rates": {
+      "input": 0.1
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-embedding-001": [
+    {
+     "rates": {
+      "input": 0.15,
+      "modes": {
+       "batch": {
+        "input": 0.075
+       }
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-nano-banana-2.1": [
+    {
+     "rates": {
+      "input": 1.5,
+      "modalities": {
+       "image": {
+        "input": 1.5,
+        "output": 30.0
+       },
+       "text": {
+        "input": 1.5,
+        "output": 7.5
+       },
+       "video": {
+        "input": 1.5
+       }
+      },
+      "modes": {
+       "batch": {
+        "input": 0.75,
+        "modalities": {
+         "image": {
+          "input": 0.75,
+          "output": 15.0
+         },
+         "text": {
+          "input": 0.75,
+          "output": 3.75
+         },
+         "video": {
+          "input": 0.75
+         }
+        },
+        "output": 15.0
+       }
+      },
+      "output": 30.0
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-omni-1.1-flash": [
+    {
+     "rates": {
+      "input": 1.5,
+      "modalities": {
+       "image": {
+        "input": 1.5
+       },
+       "text": {
+        "input": 1.5,
+        "output": 9.0
+       },
+       "video": {
+        "input": 1.5,
+        "output": 17.5
+       }
+      },
+      "output": 17.5
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-omni-1.2-flash": [
+    {
+     "rates": {
+      "input": 1.5,
+      "modalities": {
+       "image": {
+        "input": 1.5
+       },
+       "text": {
+        "input": 1.5,
+        "output": 9.0
+       },
+       "video": {
+        "input": 1.5,
+        "output": 12.0
+       }
+      },
+      "output": 12.0
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-robotics-er-2-preview": [
+    {
+     "rates": {
+      "cache_read": 0.1,
+      "input": 1.0,
+      "modes": {
+       "batch": {
+        "cache_read": 0.05,
+        "input": 0.5,
+        "output": 2.5
+       }
+      },
+      "output": 5.0,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ],
+   "gemini-robotics-er-2-streaming-preview": [
+    {
+     "rates": {
+      "input": 1.0,
+      "output": 5.0,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "source": "https://ai.google.dev/gemini-api/docs/pricing.md.txt",
+     "valid_from": "2026-11-12T05:14:49Z"
+    }
+   ]
+  },
+  "inception": {
+   "mercury-2": [
+    {
+     "rates": {
+      "cache_read": 0.025,
+      "input": 0.25,
+      "output": 0.75
+     },
+     "source": "https://docs.inceptionlabs.ai/get-started/models.md",
+     "valid_from": "2026-11-12T05:14:53Z"
+    }
+   ],
+   "mercury-2.5": [
+    {
+     "rates": {
+      "cache_read": 0.02,
+      "input": 0.2,
+      "output": 0.75
+     },
+     "source": "https://docs.inceptionlabs.ai/get-started/models.md",
+     "valid_from": "2026-11-12T05:14:53Z"
+    }
+   ],
+   "mercury-3": [
+    {
+     "rates": {
+      "cache_read": 0.01,
+      "input": 0.1,
+      "output": 0.35
+     },
+     "source": "https://docs.inceptionlabs.ai/get-started/models.md",
+     "valid_from": "2026-11-12T05:14:53Z"
+    }
+   ],
+   "mercury-decide": [
+    {
+     "rates": {
+      "cache_read": 0.0,
+      "input": 0.02,
+      "output": 0.0
+     },
+     "source": "https://docs.inceptionlabs.ai/get-started/models.md",
+     "valid_from": "2026-11-12T05:14:53Z"
+    }
+   ],
+   "mercury-edit-2": [
+    {
+     "rates": {
+      "cache_read": 0.025,
+      "input": 0.25,
+      "output": 0.75
+     },
+     "source": "https://docs.inceptionlabs.ai/get-started/models.md",
+     "valid_from": "2026-11-12T05:14:53Z"
+    }
+   ],
+   "mercury-voice": [
+    {
+     "rates": {
+      "cache_read": 0.02,
+      "input": 0.2,
+      "output": 0.75
+     },
+     "source": "https://docs.inceptionlabs.ai/get-started/models.md",
+     "valid_from": "2026-11-12T05:14:53Z"
+    }
+   ]
+  },
+  "longcat": {
+   "LongCat-2.5": [
+    {
+     "rates": {
+      "cache_read": 0.006,
+      "input": 0.3,
+      "output": 1.2
+     },
+     "source": "https://longcat.chat/platform/docs/",
+     "valid_from": "2026-11-12T05:14:50Z"
+    }
+   ]
+  },
+  "meta": {
+   "muse-ember-1.0": [
+    {
+     "rates": {
+      "cache_read": 0.004,
+      "input": 0.1,
+      "output": 0.5,
+      "tiers": [
+       {
+        "above": 200000,
+        "cache_read": 0.012,
+        "input": 0.3,
+        "output": 1.5
+       }
+      ]
+     },
+     "source": "https://dev.meta.ai/models/muse-spark/",
+     "valid_from": "2026-11-12T05:14:54Z"
+    }
+   ],
+   "muse-spark-1.2": [
+    {
+     "rates": {
+      "cache_read": 0.15,
+      "input": 1.25,
+      "output": 4.25
+     },
+     "source": "https://dev.meta.ai/models/muse-spark/",
+     "valid_from": "2026-11-12T05:14:54Z"
+    }
+   ],
+   "muse-spark-1.2-contributor": [
+    {
+     "rates": {
+      "cache_read": 0.002,
+      "input": 0.1,
+      "output": 0.2
+     },
+     "source": "https://dev.meta.ai/models/muse-spark/",
+     "valid_from": "2026-11-12T05:14:54Z"
+    }
+   ],
+   "muse-spark-1.3": [
+    {
+     "rates": {
+      "cache_read": 0.15,
+      "input": 1.25,
+      "output": 4.25
+     },
+     "source": "https://dev.meta.ai/models/muse-spark/",
+     "valid_from": "2026-11-12T05:14:54Z"
+    }
+   ],
+   "muse-spark-1.3-contributor": [
+    {
+     "rates": {
+      "cache_read": 0.002,
+      "input": 0.1,
+      "output": 0.2
+     },
+     "source": "https://dev.meta.ai/models/muse-spark/",
+     "valid_from": "2026-11-12T05:14:54Z"
+    }
+   ],
+   "muse-wonder-1.0": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "input": 4.0,
+      "output": 20.0
+     },
+     "source": "https://dev.meta.ai/models/muse-spark/",
+     "valid_from": "2026-11-12T05:14:54Z"
+    }
+   ]
+  },
+  "minimax": {
+   "MiniMax-M3.1-Flash": [
+    {
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.15,
+      "output": 0.6
+     },
+     "source": "https://platform.minimax.io/docs/guides/pricing-paygo.md",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ]
+  },
+  "mistral": {
+   "codestral-2508": [
+    {
+     "rates": {
+      "cache_read": 0.03,
+      "input": 0.3,
+      "output": 0.9
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ],
+   "codestral-embed": [
+    {
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.15
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ],
+   "codestral-embed-2505": [
+    {
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.15
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ],
+   "codestral-latest": [
+    {
+     "rates": {
+      "cache_read": 0.03,
+      "input": 0.3,
+      "output": 0.9
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ],
+   "deepseek-v4-1-flash-1017": [
+    {
+     "rates": {
+      "cache_read": 0.007,
+      "input": 0.3,
+      "output": 1.2
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ],
+   "ministral-14b-2512": [
+    {
+     "rates": {
+      "cache_read": 0.02,
+      "input": 0.2,
+      "output": 0.2
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ],
+   "ministral-14b-latest": [
+    {
+     "rates": {
+      "cache_read": 0.02,
+      "input": 0.2,
+      "output": 0.2
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ],
+   "ministral-3b-2512": [
+    {
+     "rates": {
+      "cache_read": 0.01,
+      "input": 0.1,
+      "output": 0.1
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ],
+   "ministral-3b-latest": [
+    {
+     "rates": {
+      "cache_read": 0.01,
+      "input": 0.1,
+      "output": 0.1
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ],
+   "ministral-8b-2512": [
+    {
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.15,
+      "output": 0.15
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ],
+   "ministral-8b-latest": [
+    {
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.15,
+      "output": 0.15
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ],
+   "mistral-embed": [
+    {
+     "rates": {
+      "cache_read": 0.01,
+      "input": 0.1
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ],
+   "mistral-embed-2312": [
+    {
+     "rates": {
+      "cache_read": 0.01,
+      "input": 0.1
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ],
+   "mistral-large-4": [
+    {
+     "rates": {
+      "cache_read": 0.07,
+      "input": 0.7,
+      "output": 2.1
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ],
+   "mistral-large-4-0": [
+    {
+     "rates": {
+      "cache_read": 0.07,
+      "input": 0.7,
+      "output": 2.1
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ],
+   "mistral-large-latest": [
+    {
+     "rates": {
+      "cache_read": 0.07,
+      "input": 0.7,
+      "output": 2.1
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T16:51:17Z"
+    }
+   ],
+   "mistral-moderation-2603": [
+    {
+     "rates": {
+      "cache_read": 0.0,
+      "input": 0.0,
+      "output": 0.0
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ],
+   "mistral-small-2603": [
+    {
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.15,
+      "output": 0.6
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ],
+   "mistral-small-latest": [
+    {
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.15,
+      "output": 0.6
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ],
+   "voxtral-small-2507": [
+    {
+     "rates": {
+      "output": 0.4
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ],
+   "voxtral-small-latest": [
+    {
+     "rates": {
+      "output": 0.4
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-12T05:15:05Z"
+    }
+   ]
+  },
+  "moonshotai": {
+   "kimi-k2.6": [
+    {
+     "rates": {
+      "cache_read": 0.16,
+      "input": 0.95,
+      "output": 4.0
+     },
+     "source": "https://platform.kimi.ai/docs/pricing/chat",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "kimi-k2.7-code": [
+    {
+     "rates": {
+      "cache_read": 0.19,
+      "input": 0.95,
+      "output": 4.0
+     },
+     "source": "https://platform.kimi.ai/docs/pricing/chat",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "kimi-k2.7-code-highspeed": [
+    {
+     "rates": {
+      "cache_read": 0.38,
+      "input": 1.9,
+      "output": 8.0
+     },
+     "source": "https://platform.kimi.ai/docs/pricing/chat",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "kimi-k3": [
+    {
+     "rates": {
+      "cache_read": 0.3,
+      "cache_write": 3.0,
+      "input": 3.0,
+      "output": 15.0
+     },
+     "source": "https://platform.kimi.ai/docs/pricing/chat",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "kimi-k3.1-pro": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 2.0,
+      "input": 2.0,
+      "output": 10.0
+     },
+     "source": "https://platform.kimi.ai/docs/pricing/chat",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "kimi-k3.1-pro-highspeed": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 4.0,
+      "input": 4.0,
+      "output": 20.0
+     },
+     "source": "https://platform.kimi.ai/docs/pricing/chat",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ]
+  },
+  "openai": {
+   "chatgpt-image-latest": [
+    {
+     "rates": {
+      "cache_read": 1.25,
+      "input": 5.0,
+      "modalities": {
+       "image": {
+        "cache_read": 2.0,
+        "input": 8.0,
+        "output": 32.0
+       },
+       "text": {
+        "cache_read": 1.25,
+        "input": 5.0,
+        "output": 10.0
+       }
+      },
+      "modes": {
+       "batch": {
+        "cache_read": 0.63,
+        "input": 2.5,
+        "modalities": {
+         "image": {
+          "cache_read": 1.0,
+          "input": 4.0,
+          "output": 16.0
+         },
+         "text": {
+          "cache_read": 0.63,
+          "input": 2.5,
+          "output": 5.0
+         }
+        },
+        "output": 16.0
+       }
+      },
+      "output": 32.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-4.1": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "input": 2.0,
+      "modes": {
+       "batch": {
+        "input": 1.0,
+        "output": 4.0
+       },
+       "fast": {
+        "cache_read": 0.875,
+        "input": 3.5,
+        "output": 14.0
+       },
+       "priority": {
+        "cache_read": 0.875,
+        "input": 3.5,
+        "output": 14.0
+       }
+      },
+      "output": 8.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-4.1-mini": [
+    {
+     "rates": {
+      "cache_read": 0.1,
+      "input": 0.4,
+      "modes": {
+       "batch": {
+        "input": 0.2,
+        "output": 0.8
+       },
+       "fast": {
+        "cache_read": 0.175,
+        "input": 0.7,
+        "output": 2.8
+       },
+       "priority": {
+        "cache_read": 0.175,
+        "input": 0.7,
+        "output": 2.8
+       }
+      },
+      "output": 1.6
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-4o": [
+    {
+     "rates": {
+      "cache_read": 1.25,
+      "input": 2.5,
+      "modes": {
+       "batch": {
+        "input": 1.25,
+        "output": 5.0
+       },
+       "fast": {
+        "cache_read": 2.125,
+        "input": 4.25,
+        "output": 17.0
+       },
+       "priority": {
+        "cache_read": 2.125,
+        "input": 4.25,
+        "output": 17.0
+       }
+      },
+      "output": 10.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-4o-mini": [
+    {
+     "rates": {
+      "cache_read": 0.075,
+      "input": 0.15,
+      "modes": {
+       "batch": {
+        "input": 0.075,
+        "output": 0.3
+       },
+       "fast": {
+        "cache_read": 0.125,
+        "input": 0.25,
+        "output": 1.0
+       },
+       "priority": {
+        "cache_read": 0.125,
+        "input": 0.25,
+        "output": 1.0
+       }
+      },
+      "output": 0.6
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-4o-mini-tts": [
+    {
+     "rates": {
+      "input": 0.6,
+      "output": 12.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-5": [
+    {
+     "rates": {
+      "cache_read": 0.125,
+      "input": 1.25,
+      "modes": {
+       "batch": {
+        "cache_read": 0.0625,
+        "input": 0.625,
+        "output": 5.0
+       },
+       "fast": {
+        "cache_read": 0.25,
+        "input": 2.5,
+        "output": 20.0
+       },
+       "flex": {
+        "cache_read": 0.0625,
+        "input": 0.625,
+        "output": 5.0
+       },
+       "priority": {
+        "cache_read": 0.25,
+        "input": 2.5,
+        "output": 20.0
+       }
+      },
+      "output": 10.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-5-mini": [
+    {
+     "rates": {
+      "cache_read": 0.025,
+      "input": 0.25,
+      "modes": {
+       "batch": {
+        "cache_read": 0.0125,
+        "input": 0.125,
+        "output": 1.0
+       },
+       "fast": {
+        "cache_read": 0.045,
+        "input": 0.45,
+        "output": 3.6
+       },
+       "flex": {
+        "cache_read": 0.0125,
+        "input": 0.125,
+        "output": 1.0
+       },
+       "priority": {
+        "cache_read": 0.045,
+        "input": 0.45,
+        "output": 3.6
+       }
+      },
+      "output": 2.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-5-nano": [
+    {
+     "rates": {
+      "cache_read": 0.005,
+      "input": 0.05,
+      "modes": {
+       "batch": {
+        "cache_read": 0.0025,
+        "input": 0.025,
+        "output": 0.2
+       },
+       "flex": {
+        "cache_read": 0.0025,
+        "input": 0.025,
+        "output": 0.2
+       }
+      },
+      "output": 0.4
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-5-pro": [
+    {
+     "rates": {
+      "input": 15.0,
+      "modes": {
+       "batch": {
+        "input": 7.5,
+        "output": 60.0
+       }
+      },
+      "output": 120.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-5.1": [
+    {
+     "rates": {
+      "cache_read": 0.125,
+      "input": 1.25,
+      "modes": {
+       "batch": {
+        "cache_read": 0.0625,
+        "input": 0.625,
+        "output": 5.0
+       },
+       "fast": {
+        "cache_read": 0.25,
+        "input": 2.5,
+        "output": 20.0
+       },
+       "flex": {
+        "cache_read": 0.0625,
+        "input": 0.625,
+        "output": 5.0
+       },
+       "priority": {
+        "cache_read": 0.25,
+        "input": 2.5,
+        "output": 20.0
+       }
+      },
+      "output": 10.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-5.2": [
+    {
+     "rates": {
+      "cache_read": 0.175,
+      "input": 1.75,
+      "modes": {
+       "batch": {
+        "cache_read": 0.0875,
+        "input": 0.875,
+        "output": 7.0
+       },
+       "fast": {
+        "cache_read": 0.35,
+        "input": 3.5,
+        "output": 28.0
+       },
+       "flex": {
+        "cache_read": 0.0875,
+        "input": 0.875,
+        "output": 7.0
+       },
+       "priority": {
+        "cache_read": 0.35,
+        "input": 3.5,
+        "output": 28.0
+       }
+      },
+      "output": 14.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-5.2-pro": [
+    {
+     "rates": {
+      "input": 21.0,
+      "modes": {
+       "batch": {
+        "input": 10.5,
+        "output": 84.0
+       }
+      },
+      "output": 168.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-5.4": [
+    {
+     "rates": {
+      "cache_read": 0.25,
+      "input": 2.5,
+      "modes": {
+       "batch": {
+        "cache_read": 0.13,
+        "input": 1.25,
+        "output": 7.5,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.25,
+          "input": 2.5,
+          "output": 11.25
+         }
+        ]
+       },
+       "fast": {
+        "cache_read": 0.5,
+        "input": 5.0,
+        "output": 30.0
+       },
+       "flex": {
+        "cache_read": 0.13,
+        "input": 1.25,
+        "output": 7.5,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.25,
+          "input": 2.5,
+          "output": 11.25
+         }
+        ]
+       },
+       "priority": {
+        "cache_read": 0.5,
+        "input": 5.0,
+        "output": 30.0
+       }
+      },
+      "output": 15.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 0.5,
+        "input": 5.0,
+        "output": 22.5
+       }
+      ]
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-5.4-mini": [
+    {
+     "rates": {
+      "cache_read": 0.075,
+      "input": 0.75,
+      "modes": {
+       "batch": {
+        "cache_read": 0.0375,
+        "input": 0.375,
+        "output": 2.25
+       },
+       "fast": {
+        "cache_read": 0.15,
+        "input": 1.5,
+        "output": 9.0
+       },
+       "flex": {
+        "cache_read": 0.0375,
+        "input": 0.375,
+        "output": 2.25
+       },
+       "priority": {
+        "cache_read": 0.15,
+        "input": 1.5,
+        "output": 9.0
+       }
+      },
+      "output": 4.5
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-5.4-nano": [
+    {
+     "rates": {
+      "cache_read": 0.02,
+      "input": 0.2,
+      "modes": {
+       "batch": {
+        "cache_read": 0.01,
+        "input": 0.1,
+        "output": 0.625
+       },
+       "flex": {
+        "cache_read": 0.01,
+        "input": 0.1,
+        "output": 0.625
+       }
+      },
+      "output": 1.25
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-5.4-pro": [
+    {
+     "rates": {
+      "input": 30.0,
+      "modes": {
+       "batch": {
+        "input": 15.0,
+        "output": 90.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "input": 30.0,
+          "output": 135.0
+         }
+        ]
+       },
+       "flex": {
+        "input": 15.0,
+        "output": 90.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "input": 30.0,
+          "output": 135.0
+         }
+        ]
+       }
+      },
+      "output": 180.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "input": 60.0,
+        "output": 270.0
+       }
+      ]
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-5.5": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "input": 5.0,
+      "modes": {
+       "batch": {
+        "cache_read": 0.25,
+        "input": 2.5,
+        "output": 15.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.5,
+          "input": 5.0,
+          "output": 22.5
+         }
+        ]
+       },
+       "fast": {
+        "cache_read": 1.25,
+        "input": 12.5,
+        "output": 75.0
+       },
+       "flex": {
+        "cache_read": 0.25,
+        "input": 2.5,
+        "output": 15.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.5,
+          "input": 5.0,
+          "output": 22.5
+         }
+        ]
+       },
+       "priority": {
+        "cache_read": 1.25,
+        "input": 12.5,
+        "output": 75.0
+       }
+      },
+      "output": 30.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 1.0,
+        "input": 10.0,
+        "output": 45.0
+       }
+      ]
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-5.5-pro": [
+    {
+     "rates": {
+      "input": 30.0,
+      "modes": {
+       "batch": {
+        "input": 15.0,
+        "output": 90.0
+       },
+       "flex": {
+        "input": 15.0,
+        "output": 90.0
+       }
+      },
+      "output": 180.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "input": 60.0,
+        "output": 270.0
+       }
+      ]
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-5.6-luna": [
+    {
+     "rates": {
+      "cache_read": 0.02,
+      "cache_write": 0.25,
+      "input": 0.2,
+      "modes": {
+       "batch": {
+        "cache_read": 0.01,
+        "cache_write": 0.125,
+        "input": 0.1,
+        "output": 0.6,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.02,
+          "cache_write": 0.25,
+          "input": 0.2,
+          "output": 0.9
+         }
+        ]
+       },
+       "fast": {
+        "cache_read": 0.04,
+        "cache_write": 0.5,
+        "input": 0.4,
+        "output": 2.4,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.08,
+          "cache_write": 1.0,
+          "input": 0.8,
+          "output": 3.6
+         }
+        ]
+       },
+       "flex": {
+        "cache_read": 0.01,
+        "cache_write": 0.125,
+        "input": 0.1,
+        "output": 0.6,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.02,
+          "cache_write": 0.25,
+          "input": 0.2,
+          "output": 0.9
+         }
+        ]
+       },
+       "priority": {
+        "cache_read": 0.04,
+        "cache_write": 0.5,
+        "input": 0.4,
+        "output": 2.4,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.08,
+          "cache_write": 1.0,
+          "input": 0.8,
+          "output": 3.6
+         }
+        ]
+       }
+      },
+      "output": 1.2,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 0.04,
+        "cache_write": 0.5,
+        "input": 0.4,
+        "output": 1.8
+       }
+      ]
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-5.6-sol": [
+    {
+     "rates": {
+      "cache_read": 0.4,
+      "cache_write": 5.0,
+      "input": 4.0,
+      "modes": {
+       "batch": {
+        "cache_read": 0.2,
+        "cache_write": 2.5,
+        "input": 2.0,
+        "output": 10.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.4,
+          "cache_write": 5.0,
+          "input": 4.0,
+          "output": 15.0
+         }
+        ]
+       },
+       "fast": {
+        "cache_read": 0.8,
+        "cache_write": 10.0,
+        "input": 8.0,
+        "output": 40.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 1.6,
+          "cache_write": 20.0,
+          "input": 16.0,
+          "output": 60.0
+         }
+        ]
+       },
+       "flex": {
+        "cache_read": 0.2,
+        "cache_write": 2.5,
+        "input": 2.0,
+        "output": 10.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.4,
+          "cache_write": 5.0,
+          "input": 4.0,
+          "output": 15.0
+         }
+        ]
+       },
+       "priority": {
+        "cache_read": 0.8,
+        "cache_write": 10.0,
+        "input": 8.0,
+        "output": 40.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 1.6,
+          "cache_write": 20.0,
+          "input": 16.0,
+          "output": 60.0
+         }
+        ]
+       }
+      },
+      "output": 20.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 0.8,
+        "cache_write": 10.0,
+        "input": 8.0,
+        "output": 30.0
+       }
+      ]
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-5.6-terra": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 2.5,
+      "input": 2.0,
+      "modes": {
+       "batch": {
+        "cache_read": 0.1,
+        "cache_write": 1.25,
+        "input": 1.0,
+        "output": 6.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "input": 2.0,
+          "output": 9.0
+         }
+        ]
+       },
+       "fast": {
+        "cache_read": 0.4,
+        "cache_write": 5.0,
+        "input": 4.0,
+        "output": 24.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.8,
+          "cache_write": 10.0,
+          "input": 8.0,
+          "output": 36.0
+         }
+        ]
+       },
+       "flex": {
+        "cache_read": 0.1,
+        "cache_write": 1.25,
+        "input": 1.0,
+        "output": 6.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "input": 2.0,
+          "output": 9.0
+         }
+        ]
+       },
+       "priority": {
+        "cache_read": 0.4,
+        "cache_write": 5.0,
+        "input": 4.0,
+        "output": 24.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.8,
+          "cache_write": 10.0,
+          "input": 8.0,
+          "output": 36.0
+         }
+        ]
+       }
+      },
+      "output": 12.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 0.4,
+        "cache_write": 5.0,
+        "input": 4.0,
+        "output": 18.0
+       }
+      ]
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-6-astra": [
+    {
+     "rates": {
+      "cache_read": 1.0,
+      "cache_write": 12.5,
+      "input": 10.0,
+      "modes": {
+       "batch": {
+        "cache_read": 0.5,
+        "cache_write": 6.25,
+        "input": 5.0,
+        "output": 25.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 1.0,
+          "cache_write": 12.5,
+          "input": 10.0,
+          "output": 37.5
+         }
+        ]
+       },
+       "fast": {
+        "cache_read": 2.0,
+        "cache_write": 25.0,
+        "input": 20.0,
+        "output": 100.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 4.0,
+          "cache_write": 50.0,
+          "input": 40.0,
+          "output": 150.0
+         }
+        ]
+       },
+       "flex": {
+        "cache_read": 0.5,
+        "cache_write": 6.25,
+        "input": 5.0,
+        "output": 25.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 1.0,
+          "cache_write": 12.5,
+          "input": 10.0,
+          "output": 37.5
+         }
+        ]
+       },
+       "priority": {
+        "cache_read": 2.0,
+        "cache_write": 25.0,
+        "input": 20.0,
+        "output": 100.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 4.0,
+          "cache_write": 50.0,
+          "input": 40.0,
+          "output": 150.0
+         }
+        ]
+       },
+       "ultrafast": {
+        "cache_read": 6.0,
+        "cache_write": 75.0,
+        "input": 60.0,
+        "output": 300.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 12.0,
+          "cache_write": 150.0,
+          "input": 120.0,
+          "output": 450.0
+         }
+        ]
+       }
+      },
+      "output": 50.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 2.0,
+        "cache_write": 25.0,
+        "input": 20.0,
+        "output": 75.0
+       }
+      ]
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-6-luna": [
+    {
+     "rates": {
+      "cache_read": 0.01,
+      "cache_write": 0.125,
+      "input": 0.1,
+      "modes": {
+       "batch": {
+        "cache_read": 0.005,
+        "cache_write": 0.0625,
+        "input": 0.05,
+        "output": 0.25,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "input": 0.1,
+          "output": 0.375
+         }
+        ]
+       },
+       "fast": {
+        "cache_read": 0.02,
+        "cache_write": 0.25,
+        "input": 0.2,
+        "output": 1.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.04,
+          "cache_write": 0.5,
+          "input": 0.4,
+          "output": 1.5
+         }
+        ]
+       },
+       "flex": {
+        "cache_read": 0.005,
+        "cache_write": 0.0625,
+        "input": 0.05,
+        "output": 0.25,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.01,
+          "cache_write": 0.125,
+          "input": 0.1,
+          "output": 0.375
+         }
+        ]
+       },
+       "priority": {
+        "cache_read": 0.02,
+        "cache_write": 0.25,
+        "input": 0.2,
+        "output": 1.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.04,
+          "cache_write": 0.5,
+          "input": 0.4,
+          "output": 1.5
+         }
+        ]
+       }
+      },
+      "output": 0.5,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 0.02,
+        "cache_write": 0.25,
+        "input": 0.2,
+        "output": 0.75
+       }
+      ]
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-6-sol": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 2.5,
+      "input": 2.0,
+      "modes": {
+       "batch": {
+        "cache_read": 0.1,
+        "cache_write": 1.25,
+        "input": 1.0,
+        "output": 5.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "input": 2.0,
+          "output": 7.5
+         }
+        ]
+       },
+       "fast": {
+        "cache_read": 0.4,
+        "cache_write": 5.0,
+        "input": 4.0,
+        "output": 20.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.8,
+          "cache_write": 10.0,
+          "input": 8.0,
+          "output": 30.0
+         }
+        ]
+       },
+       "flex": {
+        "cache_read": 0.1,
+        "cache_write": 1.25,
+        "input": 1.0,
+        "output": 5.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.2,
+          "cache_write": 2.5,
+          "input": 2.0,
+          "output": 7.5
+         }
+        ]
+       },
+       "priority": {
+        "cache_read": 0.4,
+        "cache_write": 5.0,
+        "input": 4.0,
+        "output": 20.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.8,
+          "cache_write": 10.0,
+          "input": 8.0,
+          "output": 30.0
+         }
+        ]
+       }
+      },
+      "output": 10.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 0.4,
+        "cache_write": 5.0,
+        "input": 4.0,
+        "output": 15.0
+       }
+      ]
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-6.1-sol": [
+    {
+     "rates": {
+      "cache_read": 0.1,
+      "cache_write": 2.5,
+      "input": 2.0,
+      "modes": {
+       "batch": {
+        "cache_read": 0.05,
+        "cache_write": 1.25,
+        "input": 1.0,
+        "output": 5.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.1,
+          "cache_write": 2.5,
+          "input": 2.0,
+          "output": 7.5
+         }
+        ]
+       },
+       "fast": {
+        "cache_read": 0.2,
+        "cache_write": 5.0,
+        "input": 4.0,
+        "output": 20.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.4,
+          "cache_write": 10.0,
+          "input": 8.0,
+          "output": 30.0
+         }
+        ]
+       },
+       "flex": {
+        "cache_read": 0.05,
+        "cache_write": 1.25,
+        "input": 1.0,
+        "output": 5.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.1,
+          "cache_write": 2.5,
+          "input": 2.0,
+          "output": 7.5
+         }
+        ]
+       },
+       "priority": {
+        "cache_read": 0.2,
+        "cache_write": 5.0,
+        "input": 4.0,
+        "output": 20.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.4,
+          "cache_write": 10.0,
+          "input": 8.0,
+          "output": 30.0
+         }
+        ]
+       },
+       "ultrafast": {
+        "cache_read": 0.6,
+        "cache_write": 15.0,
+        "input": 12.0,
+        "output": 60.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 1.2,
+          "cache_write": 30.0,
+          "input": 24.0,
+          "output": 90.0
+         }
+        ]
+       }
+      },
+      "output": 10.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 0.2,
+        "cache_write": 5.0,
+        "input": 4.0,
+        "output": 15.0
+       }
+      ]
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-6.1-terra": [
+    {
+     "rates": {
+      "cache_read": 0.05,
+      "cache_write": 1.25,
+      "input": 1.0,
+      "modes": {
+       "batch": {
+        "cache_read": 0.025,
+        "cache_write": 0.625,
+        "input": 0.5,
+        "output": 2.5,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.05,
+          "cache_write": 1.25,
+          "input": 1.0,
+          "output": 3.75
+         }
+        ]
+       },
+       "fast": {
+        "cache_read": 0.1,
+        "cache_write": 2.5,
+        "input": 2.0,
+        "output": 10.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.2,
+          "cache_write": 5.0,
+          "input": 4.0,
+          "output": 15.0
+         }
+        ]
+       },
+       "flex": {
+        "cache_read": 0.025,
+        "cache_write": 0.625,
+        "input": 0.5,
+        "output": 2.5,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.05,
+          "cache_write": 1.25,
+          "input": 1.0,
+          "output": 3.75
+         }
+        ]
+       },
+       "priority": {
+        "cache_read": 0.1,
+        "cache_write": 2.5,
+        "input": 2.0,
+        "output": 10.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.2,
+          "cache_write": 5.0,
+          "input": 4.0,
+          "output": 15.0
+         }
+        ]
+       }
+      },
+      "output": 5.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 0.1,
+        "cache_write": 2.5,
+        "input": 2.0,
+        "output": 7.5
+       }
+      ]
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-6.2-astra": [
+    {
+     "rates": {
+      "cache_read": 0.4,
+      "cache_write": 10.0,
+      "input": 8.0,
+      "modes": {
+       "batch": {
+        "cache_read": 0.2,
+        "cache_write": 5.0,
+        "input": 4.0,
+        "output": 20.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.4,
+          "cache_write": 10.0,
+          "input": 8.0,
+          "output": 30.0
+         }
+        ]
+       },
+       "fast": {
+        "cache_read": 0.8,
+        "cache_write": 20.0,
+        "input": 16.0,
+        "output": 80.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 1.6,
+          "cache_write": 40.0,
+          "input": 32.0,
+          "output": 120.0
+         }
+        ]
+       },
+       "priority": {
+        "cache_read": 0.8,
+        "cache_write": 20.0,
+        "input": 16.0,
+        "output": 80.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 1.6,
+          "cache_write": 40.0,
+          "input": 32.0,
+          "output": 120.0
+         }
+        ]
+       },
+       "ultrafast": {
+        "cache_read": 1.2,
+        "cache_write": 30.0,
+        "input": 24.0,
+        "output": 120.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 2.4,
+          "cache_write": 60.0,
+          "input": 48.0,
+          "output": 180.0
+         }
+        ]
+       }
+      },
+      "output": 40.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 0.8,
+        "cache_write": 20.0,
+        "input": 16.0,
+        "output": 60.0
+       }
+      ]
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-17T17:59:44Z"
+    }
+   ],
+   "gpt-6.2-sol": [
+    {
+     "rates": {
+      "cache_read": 0.1,
+      "cache_write": 2.5,
+      "input": 2.0,
+      "modes": {
+       "batch": {
+        "cache_read": 0.05,
+        "cache_write": 1.25,
+        "input": 1.0,
+        "output": 5.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.1,
+          "cache_write": 2.5,
+          "input": 2.0,
+          "output": 7.5
+         }
+        ]
+       },
+       "fast": {
+        "cache_read": 0.2,
+        "cache_write": 5.0,
+        "input": 4.0,
+        "output": 20.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.4,
+          "cache_write": 10.0,
+          "input": 8.0,
+          "output": 30.0
+         }
+        ]
+       },
+       "priority": {
+        "cache_read": 0.2,
+        "cache_write": 5.0,
+        "input": 4.0,
+        "output": 20.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.4,
+          "cache_write": 10.0,
+          "input": 8.0,
+          "output": 30.0
+         }
+        ]
+       },
+       "ultrafast": {
+        "cache_read": 0.3,
+        "cache_write": 7.5,
+        "input": 6.0,
+        "output": 30.0,
+        "tiers": [
+         {
+          "above": 272000,
+          "cache_read": 0.6,
+          "cache_write": 15.0,
+          "input": 12.0,
+          "output": 45.0
+         }
+        ]
+       }
+      },
+      "output": 10.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 0.2,
+        "cache_write": 5.0,
+        "input": 4.0,
+        "output": 15.0
+       }
+      ]
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-17T17:59:44Z"
+    }
+   ],
+   "gpt-audio": [
+    {
+     "rates": {
+      "input": 2.5,
+      "modalities": {
+       "audio": {
+        "input": 32.0,
+        "output": 64.0
+       },
+       "text": {
+        "input": 2.5,
+        "output": 10.0
+       }
+      },
+      "output": 10.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-audio-1.5": [
+    {
+     "rates": {
+      "input": 2.5,
+      "modalities": {
+       "audio": {
+        "input": 32.0,
+        "output": 64.0
+       },
+       "text": {
+        "input": 2.5,
+        "output": 10.0
+       }
+      },
+      "output": 10.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-audio-mini": [
+    {
+     "rates": {
+      "input": 0.6,
+      "modalities": {
+       "audio": {
+        "input": 10.0,
+        "output": 20.0
+       },
+       "text": {
+        "input": 0.6,
+        "output": 2.4
+       }
+      },
+      "output": 2.4
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-image-1-mini": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "input": 2.0,
+      "modalities": {
+       "image": {
+        "cache_read": 0.25,
+        "input": 2.5,
+        "output": 8.0
+       },
+       "text": {
+        "cache_read": 0.2,
+        "input": 2.0
+       }
+      },
+      "modes": {
+       "batch": {
+        "cache_read": 0.1,
+        "input": 1.0,
+        "modalities": {
+         "image": {
+          "cache_read": 0.13,
+          "input": 1.25,
+          "output": 4.0
+         },
+         "text": {
+          "cache_read": 0.1,
+          "input": 1.0
+         }
+        },
+        "output": 4.0
+       }
+      },
+      "output": 8.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-image-1.5": [
+    {
+     "rates": {
+      "cache_read": 1.25,
+      "input": 5.0,
+      "modalities": {
+       "image": {
+        "cache_read": 2.0,
+        "input": 8.0,
+        "output": 32.0
+       },
+       "text": {
+        "cache_read": 1.25,
+        "input": 5.0,
+        "output": 10.0
+       }
+      },
+      "modes": {
+       "batch": {
+        "cache_read": 0.63,
+        "input": 2.5,
+        "modalities": {
+         "image": {
+          "cache_read": 1.0,
+          "input": 4.0,
+          "output": 16.0
+         },
+         "text": {
+          "cache_read": 0.63,
+          "input": 2.5,
+          "output": 5.0
+         }
+        },
+        "output": 16.0
+       }
+      },
+      "output": 32.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-image-2": [
+    {
+     "rates": {
+      "cache_read": 1.25,
+      "input": 5.0,
+      "modalities": {
+       "image": {
+        "cache_read": 2.0,
+        "input": 8.0,
+        "output": 30.0
+       },
+       "text": {
+        "cache_read": 1.25,
+        "input": 5.0
+       }
+      },
+      "modes": {
+       "batch": {
+        "cache_read": 0.625,
+        "input": 2.5,
+        "modalities": {
+         "image": {
+          "cache_read": 1.0,
+          "input": 4.0,
+          "output": 15.0
+         },
+         "text": {
+          "cache_read": 0.625,
+          "input": 2.5
+         }
+        },
+        "output": 15.0
+       }
+      },
+      "output": 30.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-image-2.5-flare": [
+    {
+     "rates": {
+      "cache_read": 1.25,
+      "input": 5.0,
+      "modalities": {
+       "image": {
+        "cache_read": 2.0,
+        "input": 8.0,
+        "output": 30.0
+       },
+       "text": {
+        "cache_read": 1.25,
+        "input": 5.0
+       }
+      },
+      "modes": {
+       "batch": {
+        "cache_read": 0.625,
+        "input": 2.5,
+        "modalities": {
+         "image": {
+          "cache_read": 1.0,
+          "input": 4.0,
+          "output": 15.0
+         },
+         "text": {
+          "cache_read": 0.625,
+          "input": 2.5
+         }
+        },
+        "output": 15.0
+       }
+      },
+      "output": 30.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-image-2.5-sunburst": [
+    {
+     "rates": {
+      "cache_read": 1.25,
+      "input": 5.0,
+      "modalities": {
+       "image": {
+        "cache_read": 2.0,
+        "input": 8.0,
+        "output": 30.0
+       },
+       "text": {
+        "cache_read": 1.25,
+        "input": 5.0
+       }
+      },
+      "modes": {
+       "batch": {
+        "cache_read": 0.625,
+        "input": 2.5,
+        "modalities": {
+         "image": {
+          "cache_read": 1.0,
+          "input": 4.0,
+          "output": 15.0
+         },
+         "text": {
+          "cache_read": 0.625,
+          "input": 2.5
+         }
+        },
+        "output": 15.0
+       }
+      },
+      "output": 30.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-image-2.6-flare": [
+    {
+     "rates": {
+      "cache_read": 1.25,
+      "input": 5.0,
+      "modalities": {
+       "image": {
+        "cache_read": 2.0,
+        "input": 8.0,
+        "output": 30.0
+       },
+       "text": {
+        "cache_read": 1.25,
+        "input": 5.0
+       }
+      },
+      "output": 30.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    },
+    {
+     "rates": {
+      "cache_read": 1.25,
+      "input": 5.0,
+      "modalities": {
+       "image": {
+        "cache_read": 2.0,
+        "input": 8.0,
+        "output": 30.0
+       },
+       "text": {
+        "cache_read": 1.25,
+        "input": 5.0
+       }
+      },
+      "modes": {
+       "batch": {
+        "cache_read": 0.625,
+        "input": 2.5,
+        "modalities": {
+         "image": {
+          "cache_read": 1.0,
+          "input": 4.0,
+          "output": 15.0
+         },
+         "text": {
+          "cache_read": 0.625,
+          "input": 2.5
+         }
+        },
+        "output": 15.0
+       }
+      },
+      "output": 30.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-13T18:10:48Z"
+    }
+   ],
+   "gpt-image-2.6-sunburst": [
+    {
+     "rates": {
+      "cache_read": 1.25,
+      "input": 5.0,
+      "modalities": {
+       "image": {
+        "cache_read": 2.0,
+        "input": 8.0,
+        "output": 30.0
+       },
+       "text": {
+        "cache_read": 1.25,
+        "input": 5.0
+       }
+      },
+      "output": 30.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    },
+    {
+     "rates": {
+      "cache_read": 1.25,
+      "input": 5.0,
+      "modalities": {
+       "image": {
+        "cache_read": 2.0,
+        "input": 8.0,
+        "output": 30.0
+       },
+       "text": {
+        "cache_read": 1.25,
+        "input": 5.0
+       }
+      },
+      "modes": {
+       "batch": {
+        "cache_read": 0.625,
+        "input": 2.5,
+        "modalities": {
+         "image": {
+          "cache_read": 1.0,
+          "input": 4.0,
+          "output": 15.0
+         },
+         "text": {
+          "cache_read": 0.625,
+          "input": 2.5
+         }
+        },
+        "output": 15.0
+       }
+      },
+      "output": 30.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-13T18:10:48Z"
+    }
+   ],
+   "gpt-realtime": [
+    {
+     "rates": {
+      "cache_read": 0.4,
+      "input": 4.0,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.4,
+        "input": 32.0,
+        "output": 64.0
+       },
+       "image": {
+        "cache_read": 0.5,
+        "input": 5.0
+       },
+       "text": {
+        "cache_read": 0.4,
+        "input": 4.0,
+        "output": 16.0
+       }
+      },
+      "output": 16.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-realtime-1.5": [
+    {
+     "rates": {
+      "cache_read": 0.4,
+      "input": 4.0,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.4,
+        "input": 32.0,
+        "output": 64.0
+       },
+       "image": {
+        "cache_read": 0.5,
+        "input": 5.0
+       },
+       "text": {
+        "cache_read": 0.4,
+        "input": 4.0,
+        "output": 16.0
+       }
+      },
+      "output": 16.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-realtime-2": [
+    {
+     "rates": {
+      "cache_read": 0.4,
+      "input": 4.0,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.4,
+        "input": 32.0,
+        "output": 64.0
+       },
+       "image": {
+        "cache_read": 0.5,
+        "input": 5.0
+       },
+       "text": {
+        "cache_read": 0.4,
+        "input": 4.0,
+        "output": 24.0
+       }
+      },
+      "output": 24.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-realtime-2.1": [
+    {
+     "rates": {
+      "cache_read": 0.4,
+      "input": 4.0,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.4,
+        "input": 32.0,
+        "output": 64.0
+       },
+       "image": {
+        "cache_read": 0.5,
+        "input": 5.0
+       },
+       "text": {
+        "cache_read": 0.4,
+        "input": 4.0,
+        "output": 24.0
+       }
+      },
+      "output": 24.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-realtime-2.1-mini": [
+    {
+     "rates": {
+      "cache_read": 0.06,
+      "input": 0.6,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.3,
+        "input": 10.0,
+        "output": 20.0
+       },
+       "image": {
+        "cache_read": 0.08,
+        "input": 0.8
+       },
+       "text": {
+        "cache_read": 0.06,
+        "input": 0.6,
+        "output": 2.4
+       }
+      },
+      "output": 2.4
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "gpt-realtime-mini": [
+    {
+     "rates": {
+      "cache_read": 0.06,
+      "input": 0.6,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.3,
+        "input": 10.0,
+        "output": 20.0
+       },
+       "image": {
+        "cache_read": 0.08,
+        "input": 0.8
+       },
+       "text": {
+        "cache_read": 0.06,
+        "input": 0.6,
+        "output": 2.4
+       }
+      },
+      "output": 2.4
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "o3": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "input": 2.0,
+      "modes": {
+       "batch": {
+        "input": 1.0,
+        "output": 4.0
+       },
+       "fast": {
+        "cache_read": 0.875,
+        "input": 3.5,
+        "output": 14.0
+       },
+       "flex": {
+        "cache_read": 0.25,
+        "input": 1.0,
+        "output": 4.0
+       },
+       "priority": {
+        "cache_read": 0.875,
+        "input": 3.5,
+        "output": 14.0
+       }
+      },
+      "output": 8.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "o3-pro": [
+    {
+     "rates": {
+      "input": 20.0,
+      "modes": {
+       "batch": {
+        "input": 10.0,
+        "output": 40.0
+       }
+      },
+      "output": 80.0
+     },
+     "source": "https://developers.openai.com/api/docs/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ]
+  },
+  "perplexity": {
+   "sonar": [
+    {
+     "rates": {
+      "cache_read": 0.0625,
+      "input": 0.25,
+      "output": 2.5
+     },
+     "source": "https://docs.perplexity.ai/docs/agent-api/models.md",
+     "valid_from": "2026-11-12T05:15:09Z"
+    }
+   ]
+  },
+  "sakana": {
+   "fugu": [
+    {
+     "rates": {
+      "cache_read": 0.25,
+      "input": 5.0,
+      "output": 25.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 0.35,
+        "input": 7.0,
+        "output": 35.0
+       }
+      ]
+     },
+     "source": "https://console.sakana.ai/pricing",
+     "valid_from": "2026-11-12T05:15:09Z"
+    }
+   ],
+   "fugu-max": [
+    {
+     "rates": {
+      "cache_read": 0.25,
+      "input": 2.0,
+      "output": 6.0
+     },
+     "source": "https://console.sakana.ai/pricing",
+     "valid_from": "2026-11-12T05:15:09Z"
+    }
+   ],
+   "fugu-ultra": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "input": 5.0,
+      "output": 30.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 1.0,
+        "input": 10.0,
+        "output": 45.0
+       }
+      ]
+     },
+     "source": "https://console.sakana.ai/pricing",
+     "valid_from": "2026-11-12T05:15:09Z"
+    }
+   ],
+   "sakana-namazu": [
+    {
+     "rates": {
+      "cache_read": 0.15,
+      "input": 0.95,
+      "output": 4.0
+     },
+     "source": "https://console.sakana.ai/pricing",
+     "valid_from": "2026-11-12T05:15:09Z"
+    }
+   ]
+  },
+  "stepfun-ai": {
+   "step-1o-audio": [
+    {
+     "rates": {
+      "cache_read": 0.71,
+      "input": 3.57,
+      "output": 8.57
+     },
+     "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+     "valid_from": "2026-11-12T05:15:11Z"
+    }
+   ],
+   "step-1o-turbo-vision": [
+    {
+     "rates": {
+      "cache_read": 0.07,
+      "input": 0.36,
+      "output": 1.15
+     },
+     "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+     "valid_from": "2026-11-12T05:15:11Z"
+    }
+   ],
+   "step-3.5-flash": [
+    {
+     "rates": {
+      "cache_read": 0.02,
+      "input": 0.1,
+      "output": 0.3
+     },
+     "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+     "valid_from": "2026-11-12T05:15:11Z"
+    }
+   ],
+   "step-3.5-flash-2603": [
+    {
+     "rates": {
+      "cache_read": 0.02,
+      "input": 0.1,
+      "output": 0.3
+     },
+     "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+     "valid_from": "2026-11-12T05:15:11Z"
+    }
+   ],
+   "step-3.7-flash": [
+    {
+     "rates": {
+      "cache_read": 0.04,
+      "input": 0.2,
+      "output": 1.15
+     },
+     "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+     "valid_from": "2026-11-12T05:15:11Z"
+    }
+   ],
+   "step-5-preview": [
+    {
+     "rates": {
+      "cache_read": 0.1,
+      "input": 1.0,
+      "output": 2.7
+     },
+     "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+     "valid_from": "2026-11-12T05:15:11Z"
+    }
+   ],
+   "step-audio-2": [
+    {
+     "rates": {
+      "cache_read": 0.29,
+      "input": 1.43,
+      "output": 10.0
+     },
+     "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+     "valid_from": "2026-11-12T05:15:11Z"
+    }
+   ],
+   "step-audio-r1.5": [
+    {
+     "rates": {
+      "cache_read": 0.29,
+      "input": 1.43,
+      "output": 15.0
+     },
+     "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+     "valid_from": "2026-11-12T05:15:11Z"
+    }
+   ],
+   "stepaudio-2.5-chat": [
+    {
+     "rates": {
+      "cache_read": 0.3,
+      "input": 1.5,
+      "output": 3.5
+     },
+     "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+     "valid_from": "2026-11-12T05:15:11Z"
+    }
+   ],
+   "stepaudio-2.5-realtime": [
+    {
+     "rates": {
+      "cache_read": 0.3,
+      "input": 1.5,
+      "output": 10.0
+     },
+     "source": "https://platform.stepfun.ai/docs/en/guides/pricing/details.md",
+     "valid_from": "2026-11-12T05:15:11Z"
+    }
+   ]
+  },
+  "thinkingmachines": {
+   "thinkingmachines/Inkling": [
+    {
+     "rates": {
+      "cache_read": 0.374,
+      "input": 1.87,
+      "output": 4.68
+     },
+     "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+     "valid_from": "2026-11-12T05:15:09Z"
+    }
+   ],
+   "thinkingmachines/Inkling-2-Mini": [
+    {
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.15,
+      "output": 0.5
+     },
+     "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+     "valid_from": "2026-11-20T20:47:34Z"
+    }
+   ],
+   "thinkingmachines/Inkling-2-Mini:peft:262144": [
+    {
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.15,
+      "output": 0.5
+     },
+     "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+     "valid_from": "2026-11-20T20:47:34Z"
+    }
+   ],
+   "thinkingmachines/Inkling-2-Small": [
+    {
+     "rates": {
+      "cache_read": 0.03,
+      "input": 0.3,
+      "output": 1.0
+     },
+     "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+     "valid_from": "2026-11-12T05:15:09Z"
+    }
+   ],
+   "thinkingmachines/Inkling-2-Small:peft:262144": [
+    {
+     "rates": {
+      "cache_read": 0.03,
+      "input": 0.3,
+      "output": 1.0
+     },
+     "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+     "valid_from": "2026-11-12T05:15:09Z"
+    }
+   ],
+   "thinkingmachines/Inkling-Small": [
+    {
+     "rates": {
+      "cache_read": 0.116,
+      "input": 0.58,
+      "output": 1.44
+     },
+     "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+     "valid_from": "2026-11-12T05:15:09Z"
+    }
+   ],
+   "thinkingmachines/Inkling-Small:peft:262144": [
+    {
+     "rates": {
+      "cache_read": 0.116,
+      "input": 0.58,
+      "output": 1.44
+     },
+     "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+     "valid_from": "2026-11-12T05:15:09Z"
+    }
+   ],
+   "thinkingmachines/Inkling:peft:262144": [
+    {
+     "rates": {
+      "cache_read": 0.374,
+      "input": 1.87,
+      "output": 4.68
+     },
+     "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+     "valid_from": "2026-11-12T05:15:09Z"
+    }
+   ]
+  },
+  "upstage": {
+   "solar-mini-4": [
+    {
+     "rates": {
+      "cache_read": 0.01,
+      "input": 0.1,
+      "output": 0.4
+     },
+     "source": "https://www.upstage.ai/pricing",
+     "valid_from": "2026-11-12T05:15:10Z"
+    }
+   ],
+   "solar-pro2": [
+    {
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.15,
+      "output": 0.6
+     },
+     "source": "https://www.upstage.ai/pricing",
+     "valid_from": "2026-11-12T05:15:10Z"
+    }
+   ],
+   "solar-pro3": [
+    {
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.15,
+      "output": 0.6
+     },
+     "source": "https://www.upstage.ai/pricing",
+     "valid_from": "2026-11-12T05:15:10Z"
+    }
+   ],
+   "solar-pro4": [
+    {
+     "rates": {
+      "cache_read": 0.06,
+      "input": 0.3,
+      "output": 1.2
+     },
+     "source": "https://www.upstage.ai/pricing",
+     "valid_from": "2026-11-12T05:15:10Z"
+    }
+   ]
+  },
+  "xai": {
+   "grok-4.20-0309-non-reasoning": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "input": 1.25,
+      "output": 2.5,
+      "tiers": [
+       {
+        "above": 200000,
+        "cache_read": 0.4,
+        "input": 2.5,
+        "output": 5.0
+       }
+      ]
+     },
+     "source": "https://docs.x.ai/developers/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "grok-4.20-0309-reasoning": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "input": 1.25,
+      "output": 2.5,
+      "tiers": [
+       {
+        "above": 200000,
+        "cache_read": 0.4,
+        "input": 2.5,
+        "output": 5.0
+       }
+      ]
+     },
+     "source": "https://docs.x.ai/developers/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "grok-4.20-multi-agent-0309": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "input": 1.25,
+      "output": 2.5,
+      "tiers": [
+       {
+        "above": 200000,
+        "cache_read": 0.4,
+        "input": 2.5,
+        "output": 5.0
+       }
+      ]
+     },
+     "source": "https://docs.x.ai/developers/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "grok-4.3": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "input": 1.25,
+      "output": 2.5,
+      "tiers": [
+       {
+        "above": 200000,
+        "cache_read": 0.4,
+        "input": 2.5,
+        "output": 5.0
+       }
+      ]
+     },
+     "source": "https://docs.x.ai/developers/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "grok-4.5": [
+    {
+     "rates": {
+      "cache_read": 0.3,
+      "input": 2.0,
+      "output": 6.0,
+      "tiers": [
+       {
+        "above": 200000,
+        "cache_read": 0.6,
+        "input": 4.0,
+        "output": 12.0
+       }
+      ]
+     },
+     "source": "https://docs.x.ai/developers/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "grok-4.6": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "input": 2.0,
+      "output": 6.0,
+      "tiers": [
+       {
+        "above": 200000,
+        "cache_read": 1.0,
+        "input": 4.0,
+        "output": 12.0
+       }
+      ]
+     },
+     "source": "https://docs.x.ai/developers/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "grok-4.7": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "input": 2.0,
+      "output": 6.0,
+      "tiers": [
+       {
+        "above": 200000,
+        "cache_read": 1.0,
+        "input": 4.0,
+        "output": 12.0
+       }
+      ]
+     },
+     "source": "https://docs.x.ai/developers/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "grok-build-0.1": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "input": 1.0,
+      "output": 2.0,
+      "tiers": [
+       {
+        "above": 200000,
+        "cache_read": 0.4,
+        "input": 2.0,
+        "output": 4.0
+       }
+      ]
+     },
+     "source": "https://docs.x.ai/developers/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ]
+  },
+  "xiaomi": {
+   "mimo-v2.6-flash": [
+    {
+     "rates": {
+      "cache_read": 0.0028,
+      "input": 0.14,
+      "output": 0.28
+     },
+     "source": "https://mimo.mi.com/static/docs/price/pay-as-you-go.md",
+     "valid_from": "2026-11-12T05:15:10Z"
+    }
+   ],
+   "mimo-v2.6-pro": [
+    {
+     "rates": {
+      "cache_read": 0.0036,
+      "input": 0.435,
+      "output": 0.87
+     },
+     "source": "https://mimo.mi.com/static/docs/price/pay-as-you-go.md",
+     "valid_from": "2026-11-12T05:15:10Z"
+    }
+   ],
+   "mimo-v2.6-pro-ultraspeed": [
+    {
+     "rates": {
+      "cache_read": 0.036,
+      "input": 4.35,
+      "output": 8.7
+     },
+     "source": "https://mimo.mi.com/static/docs/price/pay-as-you-go.md",
+     "valid_from": "2026-11-12T05:15:10Z"
+    }
+   ]
+  },
+  "zai": {
+   "glm-4-32b-0414-128k": [
+    {
+     "rates": {
+      "input": 0.1,
+      "output": 0.1
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "glm-4.5": [
+    {
+     "rates": {
+      "cache_read": 0.11,
+      "input": 0.6,
+      "output": 2.2
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "glm-4.5-air": [
+    {
+     "rates": {
+      "cache_read": 0.03,
+      "input": 0.2,
+      "output": 1.1
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "glm-4.5-airx": [
+    {
+     "rates": {
+      "cache_read": 0.22,
+      "input": 1.1,
+      "output": 4.5
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "glm-4.5-flash": [
+    {
+     "rates": {
+      "cache_read": 0.0,
+      "input": 0.0,
+      "output": 0.0
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "glm-4.5-x": [
+    {
+     "rates": {
+      "cache_read": 0.45,
+      "input": 2.2,
+      "output": 8.9
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "glm-4.6": [
+    {
+     "rates": {
+      "cache_read": 0.11,
+      "input": 0.6,
+      "output": 2.2
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "glm-4.7": [
+    {
+     "rates": {
+      "cache_read": 0.11,
+      "input": 0.6,
+      "output": 2.2
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "glm-4.7-flash": [
+    {
+     "rates": {
+      "cache_read": 0.0,
+      "input": 0.0,
+      "output": 0.0
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "glm-4.7-flashx": [
+    {
+     "rates": {
+      "cache_read": 0.01,
+      "input": 0.07,
+      "output": 0.4
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "glm-5": [
+    {
+     "rates": {
+      "cache_read": 0.2,
+      "input": 1.0,
+      "output": 3.2
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "glm-5.1": [
+    {
+     "rates": {
+      "cache_read": 0.26,
+      "input": 1.4,
+      "output": 4.4
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "glm-5.2": [
+    {
+     "rates": {
+      "cache_read": 0.26,
+      "input": 1.4,
+      "output": 4.4
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "glm-5.3": [
+    {
+     "rates": {
+      "cache_read": 0.26,
+      "input": 1.4,
+      "output": 4.4
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "glm-5.3-flash": [
+    {
+     "rates": {
+      "cache_read": 0.03,
+      "input": 0.15,
+      "output": 0.5
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "glm-5.3-flashx": [
+    {
+     "rates": {
+      "cache_read": 0.075,
+      "input": 0.37,
+      "output": 1.25
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ],
+   "glm-5.3-flashx-legal": [
+    {
+     "rates": {
+      "cache_read": 0.075,
+      "input": 0.37,
+      "output": 1.25
+     },
+     "source": "https://docs.z.ai/guides/overview/pricing.md",
+     "valid_from": "2026-11-12T05:15:12Z"
+    }
+   ]
+  }
+ }
+}

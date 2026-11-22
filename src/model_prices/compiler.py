@@ -32,10 +32,28 @@ _EARLIEST = datetime.min.replace(tzinfo=timezone.utc)
 BATCH = "batch"
 
 
+# Whether the prices pricing pages state, which data/pages.json records from the readings,
+# take precedence over models.dev's from each page's first reading. The daily job writes the file
+# either way, and `model-prices readings shadow` compares the two builds.
+PAGES_FIRST = False
+
+
+def load_pages(data: Path) -> dict[tuple[str, str], list[dict]]:
+    """The page entries data/pages.json records, by provider and model."""
+    path = data / "pages.json"
+    if not path.exists():
+        return {}
+    return {(provider, model): entries
+            for provider, models in json.loads(path.read_text())["providers"].items()
+            for model, entries in models.items()}
+
+
 class _Inputs:
     """The merge rules over one set of input files."""
 
     def __init__(self, data: Path, pages: dict[tuple[str, str], list[dict]] | None = None):
+        if pages is None and PAGES_FIRST:
+            pages = load_pages(data)
         self.prices = json.loads((data / "prices.json").read_text())
         observed = data / "observed.json"
         for provider, models in (json.loads(observed.read_text())["providers"].items()

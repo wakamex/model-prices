@@ -370,6 +370,16 @@ def page_entries(out: Path, data: Path) -> dict[tuple[str, str], list[dict]]:
     return found
 
 
+def write_pages(out: Path, data: Path) -> int:
+    """Write the page entries of the readings in `out` to data/pages.json, where the compiler
+    reads them; return how many models they price."""
+    pages: dict[str, dict[str, list[dict]]] = {}
+    for (provider, model), entries in sorted(page_entries(out, data).items()):
+        pages.setdefault(provider, {})[model] = entries
+    (data / "pages.json").write_text(json.dumps({"providers": pages}, indent=1, sort_keys=True) + "\n")
+    return sum(len(models) for models in pages.values())
+
+
 @dataclass(frozen=True)
 class Shadow:
     """The snapshot built with the pages' prices, compared with the published one: where they

@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 import hashlib
 import json
 from pathlib import Path
+import shutil
 import tempfile
 import unittest
 from unittest import mock
@@ -195,6 +196,21 @@ class PageBuildTests(unittest.TestCase):
                     "rates": {"input": 2.0, "output": 10.0, "tools": {"web_search": 10.0}}}]
         merged = compiler._with_pages(entries, [self.page("2026-11-17T17:59:44Z", {"input": 2.0, "output": 10.0})])
         self.assertEqual(merged[0]["rates"]["tools"], {"web_search": 10.0})
+
+    def test_the_compiler_takes_the_page_prices_from_data_only_when_pages_come_first(self):
+        data = Path(__file__).parent.parent / "data"
+        pages = {("anthropic", "claude-opus-5-5"): [
+            self.page("2026-11-12T06:00:00Z", {"input": 4.5, "output": 22.5})]}
+        with tempfile.TemporaryDirectory() as directory:
+            copy = Path(directory) / "data"
+            shutil.copytree(data, copy)
+            (copy / "pages.json").write_text(json.dumps({"providers": {
+                "anthropic": {"claude-opus-5-5": pages[("anthropic", "claude-opus-5-5")]}}}))
+            self.assertEqual(compiler.load_pages(copy), pages)
+            with mock.patch.object(compiler, "PAGES_FIRST", False):
+                self.assertEqual(compiler.build(copy), compiler.build(data))
+            with mock.patch.object(compiler, "PAGES_FIRST", True):
+                self.assertEqual(compiler.build(copy), compiler.build(data, pages))
 
     def test_differences_are_listed_once_as_additions_or_changes(self):
         def timeline(*intervals):

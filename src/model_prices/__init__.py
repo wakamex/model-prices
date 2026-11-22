@@ -915,7 +915,7 @@ def main(argv: list[str] | None = None) -> int:
         "readings", help="Record what each reader read from archived pages, or compare it with "
                          "the published prices")
     reading.add_argument("action", choices=["fetch", "record", "retry", "retry-pages", "diff",
-                                            "changed", "shadow"],
+                                            "changed", "shadow", "pages"],
                          help="fetch: fetch every page the hourly readers read into the archive "
                               "DIRECTORY; record: add readings to DIRECTORY for the runs in "
                               "--archive; retry: read again the failed readings whose runs "
@@ -924,7 +924,8 @@ def main(argv: list[str] | None = None) -> int:
                               "published prices; changed: list the readers whose reading in "
                               "--run differs from the one before; shadow: build the snapshot "
                               "with the pricing pages' token prices from their first reading, "
-                              "and list where it differs from the bundled snapshot")
+                              "and list where it differs from the bundled snapshot; pages: write the pricing "
+                              "pages' prices to data/pages.json for the compiler")
     reading.add_argument("directory", type=Path, help="The page archive (fetch) or the readings")
     reading.add_argument("--archive", type=Path,
                          help="Page archive to read, with fetches.jsonl and blobs/ (record only)")
@@ -960,6 +961,9 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"impossible  {line}")
             # An impossible rate card fails the build; an unlikely price is for a look only.
             return 1 if found.impossible else 0
+        if args.action == "pages":
+            print(f"wrote the page prices of {readings.write_pages(args.directory, Path('data'))} models")
+            return 0
         if args.action == "changed":
             if args.run is None:
                 parser.error("readings changed needs --run")

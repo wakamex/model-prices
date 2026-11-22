@@ -49,6 +49,14 @@ jobs:
         if: github.event_name != 'push'
         run: |
           git clone --quiet https://github.com/sst/models.dev.git "$RUNNER_TEMP/models.dev"
+          # The prices the pricing pages stated, from the readings the runs so far recorded on
+          # the data branch, go to data/pages.json, which the compiler reads when PAGES_FIRST is
+          # on; this run's own readings reach it in the next run.
+          if git fetch --quiet origin data; then
+            git worktree add --quiet --detach "$RUNNER_TEMP/readings" FETCH_HEAD
+            uv --no-config run --locked model-prices readings pages "$RUNNER_TEMP/readings"
+            git add data/pages.json
+          fi
           # The page is the source for observed prices, so a change needs no other check.
           if ! uv --no-config run --locked model-prices observe; then
             echo "OBSERVE_FAILED=1" >> "$GITHUB_ENV"
@@ -70,8 +78,8 @@ jobs:
             git checkout -- data/prices.json src/model_prices/snapshot.json
             uv --no-config run --locked model-prices update "$RUNNER_TEMP/models.dev" --hold $held
           fi
-          if ! git diff --quiet; then
-            git commit -am "Update prices from models.dev"
+          if ! git diff --quiet HEAD; then
+            git commit -am "Update prices from models.dev and the pricing pages"
             git push origin main
           fi
 
