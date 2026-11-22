@@ -35,7 +35,7 @@ BATCH = "batch"
 # Whether the prices pricing pages state, which data/pages.json records from the readings,
 # take precedence over models.dev's from each page's first reading. The daily job writes the file
 # either way, and `model-prices readings shadow` compares the two builds.
-PAGES_FIRST = False
+PAGES_FIRST = True
 
 
 def load_pages(data: Path) -> dict[tuple[str, str], list[dict]]:
