@@ -33,7 +33,7 @@ import tomllib
 from typing import Callable, Iterable, Iterator
 
 from model_prices import _parse_time, _stored_rates, compiler, observe, openai_regions, plan_checks
-from model_prices.checks import (MINIMUM_MODELS, SOURCES, card_problems, TERMS, TOOL_PAGES, YUAN_TO_USD, Observed,
+from model_prices.checks import (MINIMUM_MODELS, SOURCES, canonical_rates, card_problems, TERMS, TOOL_PAGES, YUAN_TO_USD, Observed,
                                  _moments, compare, fetch, is_whole, parse, peak_terms, tool_prices, xai_batch)
 
 LOG = "readings"
@@ -484,7 +484,7 @@ def _differences(built: dict, published: dict, start: str) -> list[str]:
                                           if interval["start"] and interval["start"] > start})
                 last = None
                 for at in times:
-                    old, new = (_canonical(_at(intervals, at)) for intervals in (before, timeline))
+                    old, new = (canonical_rates(_at(intervals, at)) for intervals in (before, timeline))
                     fields = sorted(key for key in {*(old or {}), *(new or {})}
                                     if key not in {"valid_from", "source", "valid_from_basis"}
                                     and (old or {}).get(key) != (new or {}).get(key))
@@ -507,18 +507,6 @@ def _at(intervals: list[dict], at: str) -> dict | None:
         if index == 0 or interval["start"] <= at:
             found = interval["rates"]
     return found
-
-
-def _canonical(rates: dict | None) -> dict | None:
-    """Rates without the modality prices that equal the price of a token without a modality,
-    which cost the same whether listed or not."""
-    if not rates or "modalities" not in rates:
-        return rates
-    plain = {key: rates.get(key) for key in ("input", "cache_read", "output")}
-    modalities = {name: kept for name, prices in rates["modalities"].items()
-                  if (kept := {key: value for key, value in prices.items() if value != plain.get(key)})}
-    return {**rates, "modalities": modalities} if modalities else {
-        key: value for key, value in rates.items() if key != "modalities"}
 
 
 def _shown(value: object) -> str:

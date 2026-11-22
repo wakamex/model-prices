@@ -936,6 +936,10 @@ Batch
             interval(None, 9.0, md), interval("2026-11-10T06:00:00Z", 12.0, md)]}}}}
         self.assertEqual(checks.rewritten_history(corrected, published, None), [])
         self.assertEqual(checks.rewritten_history(appended, published, None), [])
+        # Listing a modality at the plain price, as Google's page states image input, costs the same.
+        listed = json.loads(json.dumps(published))
+        listed["prices"]["google"]["m"]["standard"][0]["rates"]["modalities"] = {"image": {"input": 9.0}}
+        self.assertEqual(checks.rewritten_history(listed, published, None), [])
 
     def test_a_live_page_that_loses_most_of_its_models_fails(self):
         with (mock.patch.object(checks, "fetch", lambda url: PAGES["zai"]),

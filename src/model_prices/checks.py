@@ -1907,6 +1907,18 @@ def _rates_at(timeline: list[dict], at: str) -> dict | None:
     return found
 
 
+def canonical_rates(rates: dict | None) -> dict | None:
+    """Rates without the modality prices that equal the price of a token without a modality,
+    which cost the same whether listed or not."""
+    if not rates or "modalities" not in rates:
+        return rates
+    plain = {key: rates.get(key) for key in ("input", "cache_read", "output")}
+    modalities = {name: kept for name, prices in rates["modalities"].items()
+                  if (kept := {key: value for key, value in prices.items() if value != plain.get(key)})}
+    return {**rates, "modalities": modalities} if modalities else {
+        key: value for key, value in rates.items() if key != "modalities"}
+
+
 def rewritten_history(candidate: dict, published: dict, providers: set[str] | None) -> list[Result]:
     """Earlier prices the candidate snapshot changes from the published one on models.dev's
     word alone. Published history only gains a latest price; a past interval may change only
@@ -1927,8 +1939,9 @@ def rewritten_history(candidate: dict, published: dict, providers: set[str] | No
                     new, old = _rates_at(timeline, at), _rates_at(before, at)
                     if new is None or old is None or "models.dev/commit/" not in new.get("source", ""):
                         continue
-                    if {k: v for k, v in new.items() if k not in _PROVENANCE} != {
-                            k: v for k, v in old.items() if k not in _PROVENANCE}:
+                    # A modality price equal to the plain price costs the same listed or not.
+                    if {k: v for k, v in canonical_rates(new).items() if k not in _PROVENANCE} != {
+                            k: v for k, v in canonical_rates(old).items() if k not in _PROVENANCE}:
                         results.append(Result(provider, f"{provider}/{model}", "rule:history", None, at,
                                               mode, new.get("source"), None, "mismatch"))
                         break
