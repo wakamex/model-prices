@@ -4,11 +4,14 @@
 # the models that draw on it, the dollars per point, and the date and method of measurement.
 #
 # Measured from the quota percentages that clanker-analytics records every few minutes and the
-# usage it prices with model-prices. `weekly` entries come from its quota history, which divides
-# a fixed week's API-priced usage by the points it used; `fitted` entries split one pool between
-# models by a non-negative least-squares fit of each 6-hour step in the pool's weekly quota on
-# the API-priced usage of each model family in that step; `runs` entries run one fixed task on
-# one model, on a pool no other project is using, and read the pool before and after each run.
+# usage it prices with model-prices, by one of four methods, from most to least direct:
+# `controlled runs` run one fixed task on one model, on a pool no other project is using, and
+# read the pool before and after each run; `single-model stretches` divide the API-priced usage
+# by the points it used over blocks of hours in which one model was nearly all of a pool's usage;
+# a `per-model fit` splits one pool between models by a non-negative least-squares fit of each
+# block's rise on each model's usage; `whole weeks` divide a week's API-priced usage by the points
+# it used. `range` is the measurement's spread: a 95% or 90% interval for stretches and fits, the
+# lowest and highest run or week for runs and weeks, as each note says.
 # `match` names the benchmark models a rate prices.
 #
 # A plan dollar buys usd_per_month / 4.348 / 100 dollars' worth of weekly points, so a task
@@ -23,7 +26,8 @@ models = "Claude models in Claude Code"
 match = '^(Claude )?(Opus|Sonnet|Haiku) 5\.5$'
 usd_per_point = 29.8
 measured = "2026-11-19"
-method = "Opus-only blocks"
+method = "single-model stretches"
+range = [27.71, 32.29]
 note = "Measured on Opus 5.5, which is nearly all Claude Code usage: both Claude Ultra accounts' weekly readings summed over 3-hour blocks from 2026-10-14 to 2026-11-19 in which Opus was at least 97% of Claude Code's API spend gave $6,817 of Opus for 229 points, $29.77 a point, and a line fitted across those 76 blocks $29.88 (95% range $27.71 to $32.29) with no drift. A per-model fit with spend-cut units gives Opus $28.98 ($27.37 to $30.43). Sonnet 5.5 and Haiku 5.5 had too little usable spend, about $240 each, to show a rate different from Opus's, so they share it; in Antigravity's Claude and GPT pool, Opus and Sonnet measured the same per API dollar."
 
 [[rate]]
@@ -35,6 +39,7 @@ match = '^(Claude )?Fable 5\.2$'
 usd_per_point = 5.96
 measured = "2026-11-19"
 method = "per-model fit"
+range = [5.37, 6.78]
 note = "A per-model fit of both Claude Ultra accounts' weekly Fable limits from 2026-10-14 to 2026-11-19, with units cut by spend and intervals at 100% dropped: $5.96 a point, 95% range $5.37 to $6.78. Whole weeks of single accounts had given $8.01 and $18.35."
 
 [[rate]]
@@ -45,8 +50,9 @@ models = "Gemini 4 Argon and Gemini 4 Carbon"
 match = '^Gemini 4 (Argon|Carbon)$'
 usd_per_point = 1.9
 measured = "2026-11-19"
-method = "fitted"
-note = "Fitted over 2026-11-01 to 2026-11-19 on $350 of Argon and Carbon usage, each call at its own time: Argon $1.92 per point (90% bootstrap interval $1.79 to $2.02) and Carbon $1.84 ($1.81 to $1.93). The fit explains 99.3% of the pool's 6-hour steps. Two runs of one fixed task on gemini-4-carbon-high on 2026-11-19, on a pool no other project used, gave $2.00 each ($0.4904 for 0.2452 points, $0.5204 for 0.2602), so Carbon's rate held after Gemini 4 Neon's launch."
+method = "single-model stretches"
+range = [1.77, 2.19]
+note = "Fitted over 2026-11-01 to 2026-11-19 on $350 of Argon and Carbon usage, each call at its own time: Argon $1.92 per point (90% bootstrap interval $1.79 to $2.02) and Carbon $1.84 ($1.81 to $1.93). The fit explains 99.3% of the pool's 6-hour steps. Two-hour blocks from 2026-10-13 to 2026-11-09 in which Argon was at least 97% of Antigravity's Gemini spend, with no other model in the hour before, give $470 for 237.5 points, $1.98 a point (95% range $1.77 to $2.19), and $1.80 to $1.93 in 4- and 8-hour blocks; Carbon-only blocks from 2026-11-10 give $1.85 to $2.01. Two runs of one fixed task on gemini-4-carbon-high on 2026-11-19, on a pool no other project used, gave $2.00 each ($0.4904 for 0.2452 points, $0.5204 for 0.2602), so Carbon's rate held after Gemini 4 Neon's launch."
 
 [[rate]]
 provider = "google"
@@ -56,7 +62,8 @@ models = "Gemini 4 Neon"
 match = '^Gemini 4 Neon$'
 usd_per_point = 6.0
 measured = "2026-11-19"
-method = "runs"
+method = "controlled runs"
+range = [6.0, 6.0]
 note = "Four runs of one fixed 3,000-word task on gemini-4-neon-high, each after the pool had been idle 15 minutes: $0.1946 for 0.03242 points, $0.2015 for 0.03358, $0.2072 for 0.03455, and $0.1929 for 0.03215, $6.00 a point each. A weekly point is four 5-hour points."
 
 [[rate]]
@@ -67,7 +74,8 @@ models = "Gemini 3.8 Flash"
 match = '^Gemini 3\.8 Flash$'
 usd_per_point = 7.17
 measured = "2026-11-19"
-method = "fitted"
+method = "per-model fit"
+range = [5.94, 17.3]
 note = "Fitted over 2026-11-01 to 2026-11-19 on $78 of Flash usage, each call at its own time: 90% bootstrap interval $5.94 to $17.30, wide since Flash's usage is small and sparse. A fit that timed each aop run's usage at its start gave $14.50. Two-hour blocks in which Flash was at least 97% of Antigravity's Gemini spend, with no other model in the hour before, agree: from 2026-10-21 four of six give $5.75 to $11.45 a point and together $6.95, while one on 2026-11-03 gives $1.87 and one is too small to read. Before 2026-10-12, 26 such blocks of Gemini 3.8 Flash gave about $1.20 a point at the same API prices, so between 2026-10-12 and 2026-10-21 a point came to buy about six times as much Flash."
 
 [[rate]]
@@ -77,7 +85,8 @@ pool = "Antigravity, Claude and GPT"
 models = "Claude Sonnet 5.5 and Opus 5.5 in Antigravity"
 usd_per_point = 0.241
 measured = "2026-11-19"
-method = "runs"
+method = "controlled runs"
+range = [0.241, 0.242]
 note = "Two runs of one fixed 3,000-word task on claude-sonnet-5-5-medium, on a pool no other project used: $0.0760 for 0.3152 points and $0.0787 for 0.3259. A weekly point is two 5-hour points. Claude Opus 5.5 alone on the pool, $1.72 of another project's calls, gave $0.230. Two runs of gpt-oss-120b, which has no API price, moved the pool by nothing measurable beside that project's Opus calls."
 
 [[rate]]
@@ -88,7 +97,8 @@ models = "GPT models in Codex"
 match = '^GPT-6(\.\d)? '
 usd_per_point = 1.49
 measured = "2026-11-19"
-method = "weekly"
+method = "whole weeks"
+range = [1.41, 2.26]
 note = "One account's Codex usage against its weekly readings from 2026-10-19, when it moved to Plus, to 2026-11-19, each window counted up to its last reading below 100%: $750 of API usage for 503 points, $1.49 a point. The three full weeks gave $2.26, $1.41 and $1.47; the first was heaviest in GPT-6.1 Terra and GPT-6 Astra. Blocks of 6 to 24 hours in which GPT-6.1 Sol was at least 97% of the spend give $1.37 to $1.41 (95% range $0.94 to $2.08), and a per-model fit gives Sol $1.45 ($0.98 to $2.17); the other models had too little usage to measure on their own."
 
 [[rate]]
@@ -98,7 +108,8 @@ pool = "Weekly limit"
 models = "GPT models in Codex"
 usd_per_point = 14.5
 measured = "2026-10-07"
-method = "weekly"
+method = "whole weeks"
+range = [14.15, 16.41]
 note = "One account's quota history on ChatGPT Pro $200: $14.15 to $16.41 a point over the five weeks from 2026-09-12 to 2026-10-03 that reached 36% or more, mostly GPT-6 Astra; $19.62 to $22.76 in August, mostly GPT-5.6 Sol. The account had held Pro since before 2026-09-22, so it kept the 20x Plus allowance through OpenAI's announced cut to 10x, which OpenAI cancelled on 2026-10-29 before it reached existing subscribers. Against Plus's measured $1.49, the weekly limit measures about 10 times Plus's, where OpenAI states 20 times; compared on Sol models alone, $20.26 for GPT-5.6 Sol on Pro against $1.37 to $1.45 for GPT-6.1 Sol on Plus, it is about 14 times."
 
 [[rate]]
@@ -109,4 +120,4 @@ models = "Muse models in Muse Code"
 match = '^Muse Wonder'
 usd_per_point = 0.61
 measured = "2026-11-16"
-method = "weekly"
+method = "whole weeks"

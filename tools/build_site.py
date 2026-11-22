@@ -637,6 +637,19 @@ def plans_page(check_results: Path | None, ran: str | None, now: datetime) -> st
             f"[data/plans.toml]({REPOSITORY}/blob/main/data/plans.toml).\n\n" + "\n".join(lines))
 
 
+def _range(rate: dict) -> str:
+    """A quota rate's measured spread, as "$1.41 to $2.26", or "unknown"."""
+    if "range" not in rate:
+        return "unknown"
+    low, high = (_dollars(value) for value in rate["range"])
+    return low if low == high else f"{low} to {high}"
+
+
+def _dollars(value: float) -> str:
+    """A rate in dollars, to three figures below $1, as $0.241 or $0.61."""
+    return f"${value:,.2f}" if value >= 1 else f"${value:.3g}"
+
+
 def quota_value(plans: list[dict], now: datetime) -> list[str]:
     """What a plan's weekly quota is worth at API prices, from data/quota_rates.toml, with a
     converter from an API cost per task to plan dollars and tasks a week."""
@@ -652,11 +665,18 @@ def quota_value(plans: list[dict], now: datetime) -> list[str]:
              "share of the monthly price, so API dollars per plan dollar is the API value of a full "
              "week divided by the plan's monthly price over 4.348 weeks. Enter a task's cost at API "
              "prices, such as a benchmark's cost per task, to see what it costs in plan dollars and "
-             "how many such tasks fit in a week's limit.", "",
+             "how many such tasks fit in a week's limit. Plan dollars assume every week's limit is "
+             "used in full; a plan used less costs more per task.", "",
+             "Each rate is measured one of four ways, from most to least direct: controlled runs of "
+             "one fixed task on an otherwise idle pool; single-model stretches, hours in which one "
+             "model was nearly all of a pool's usage; a per-model fit that splits a pool's usage "
+             "between models; or whole weeks of mixed usage. The range is the measurement's spread, "
+             "explained in each entry's note.", "",
              '<label class="plan-value-cost">API cost per task, US dollars '
              '<input id="task-cost" type="number" min="0" step="0.01" value="1"></label>', "",
-             "| Plan | Pool | Models | API $ per weekly point | API $ per plan $ | Plan $ per task | "
-             "Tasks a week | Measured |", "| --- | --- | --- | --- | --- | --- | --- | --- |"]
+             "| Plan | Pool | Models | API $ per weekly point | Range | Measured by | API $ per plan $ | "
+             "Plan $ per task | Tasks a week | Measured |",
+             "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |"]
     measured = set()
     for rate in rates:
         plan = current.get((rate["provider"], rate["plan"]))
@@ -666,7 +686,8 @@ def quota_value(plans: list[dict], now: datetime) -> list[str]:
         point = plan["usd_per_month"] / 434.8
         lines.append(
             f'| {escape(plan["name"])} | {escape(rate["pool"])} | {escape(rate["models"])} | '
-            f'${rate["usd_per_point"]:,.2f} | {rate["usd_per_point"] / point:,.1f} | '
+            f'{_dollars(rate["usd_per_point"])} | {_range(rate)} | {rate["method"]} | '
+            f'{rate["usd_per_point"] / point:,.1f} | '
             f'<span class="plan-task" data-rate="{rate["usd_per_point"]}" data-point="{point}"></span> | '
             f'<span class="plan-tasks" data-rate="{rate["usd_per_point"]}"></span> | {rate["measured"]} |')
     unmeasured = sorted({plan["name"] for key, plan in current.items() if key not in measured})
@@ -823,7 +844,9 @@ def benchmarks_page(plans: list[dict], now: datetime) -> str:
             "Anthropic's Max 5x and 20x Pro do, scales it by usage over price, so Claude Pro and "
             "Max start at half of Ultra's; any other plan starts at the measured plan's discount. "
             "A lab's other pools, such as Claude's Fable limit, keep their measured ratio to the "
-            "main pool. The folded tables keep the measured plans.\n\n" + settings + "\n\n"
+            "main pool. The folded tables keep the measured plans. Plan dollars assume every "
+            "week's limit is used in full, and each rate's method and measured range are on the "
+            "Plans page.\n\n" + settings + "\n\n"
             + "\n".join(sections) + '\n<script type="module" src="../bench-chart.js"></script>\n')
 
 

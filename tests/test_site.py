@@ -100,8 +100,11 @@ class CalculatorTests(unittest.TestCase):
         plans = model_prices._data()["plans"]
         lines = build_site.quota_value(plans, datetime(2026, 11, 19, tzinfo=timezone.utc))
         row = next(line for line in lines if line.startswith("| Claude Ultra | Weekly limit"))
-        # $29.80 a point against $200 a month: a plan dollar buys $64.8 of API usage.
-        self.assertIn("| $29.80 | 64.8 |", row)
+        # $29.80 a point against $200 a month: a plan dollar buys $64.8 of API usage. Each rate
+        # gives its measured range and how it was measured.
+        self.assertIn("| $29.80 | $27.71 to $32.29 | single-model stretches | 64.8 |", row)
+        muse = next(line for line in lines if line.startswith("| Muse Code Power Usage"))
+        self.assertIn("| unknown | whole weeks |", muse)
         self.assertTrue(any(line.startswith("Not yet measured:") and "Claude Pro" in line for line in lines))
 
     def test_benchmarks_page_prices_tasks_in_plan_dollars(self):
