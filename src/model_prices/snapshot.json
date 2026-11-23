@@ -52,7 +52,7 @@
    "ministral-3-14b-instruct-2512": "ministral-14b-2512",
    "ministral-3-3b-instruct-2512": "ministral-3b-2512",
    "ministral-3-8b-instruct-2512": "ministral-8b-2512",
-   "mistral-large-4": "mistral-large-4-0-8"
+   "mistral-large-4": "mistral-large-latest"
   },
   "moonshotai": {
    "kimi-k2.7-code": "kimi-k2.7-code-highspeed",
@@ -117,8 +117,8 @@
   }
  ],
  "models_dev": {
-  "commit": "48586eb4973b7d053ad67ea3075fe064f6c767a9",
-  "committed_at": "2026-11-23T17:27:25Z",
+  "commit": "a6dee4f194b473a5c22fc446827eba899604d807",
+  "committed_at": "2026-11-23T17:35:48Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -19725,6 +19725,25 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.015,
+       "input": 0.15,
+       "output": 0.0,
+       "source": "https://mistral.ai/pricing/api",
+       "valid_from": "2026-10-20T03:20:56Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.015,
+       "input": 0.15,
+       "output": 0.0,
+       "source": "https://github.com/sst/models.dev/commit/a6dee4f194b4",
+       "valid_from": "2026-11-23T17:35:48Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-23T17:35:48Z"
      }
     ]
    },
@@ -19952,6 +19971,17 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.15,
+       "input": 1.5,
+       "output": 7.5,
+       "source": "https://github.com/sst/models.dev/commit/a6dee4f194b4",
+       "valid_from": "2026-11-23T17:35:48Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-23T17:35:48Z"
      }
     ]
    },
@@ -19996,6 +20026,17 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.02,
+       "input": 0.2,
+       "output": 0.2,
+       "source": "https://github.com/sst/models.dev/commit/a6dee4f194b4",
+       "valid_from": "2026-11-23T17:35:48Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-23T17:35:48Z"
      }
     ]
    },
@@ -20144,6 +20185,25 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-22T16:10:04Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.01,
+       "input": 0.1,
+       "output": 0.0,
+       "source": "https://mistral.ai/pricing/api",
+       "valid_from": "2026-10-22T16:10:04Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.01,
+       "input": 0.1,
+       "output": 0.0,
+       "source": "https://github.com/sst/models.dev/commit/a6dee4f194b4",
+       "valid_from": "2026-11-23T17:35:48Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-23T17:35:48Z"
      }
     ]
    },
@@ -45558,27 +45618,28 @@
    "MiniMax-M2.7-highspeed": "deprecated"
   },
   "mistral": {
-   "devstral-2512": "deprecated",
-   "devstral-latest": "deprecated",
+   "devstral-2512": "removed",
+   "devstral-latest": "removed",
    "devstral-medium-2507": "removed",
-   "devstral-medium-latest": "deprecated",
+   "devstral-medium-latest": "removed",
    "devstral-small-2505": "removed",
    "devstral-small-2507": "removed",
    "glm-5-2": "deprecated",
-   "labs-devstral-small-2512": "deprecated",
-   "labs-leanstral-1-5-1": "deprecated",
+   "labs-devstral-small-2512": "removed",
+   "labs-leanstral-1-5-1": "removed",
    "magistral-medium-latest": "deprecated",
    "magistral-small": "removed",
    "mistral-large-2411": "removed",
-   "mistral-medium-2505": "deprecated",
-   "mistral-medium-2508": "deprecated",
+   "mistral-large-4-0-8": "removed",
+   "mistral-medium-2505": "removed",
+   "mistral-medium-2508": "removed",
    "mistral-nemo": "removed",
-   "mistral-small-2506": "deprecated",
+   "mistral-small-2506": "removed",
    "open-mistral-7b": "removed",
-   "open-mistral-nemo": "deprecated",
+   "open-mistral-nemo": "removed",
    "open-mixtral-8x22b": "removed",
    "open-mixtral-8x7b": "removed",
-   "pixtral-12b": "deprecated",
+   "pixtral-12b": "removed",
    "pixtral-large-latest": "removed",
    "zai-glm-5-2": "deprecated"
   },
@@ -45713,5 +45774,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-23T17:31:06Z"
+ "updated_at": "2026-11-23T17:39:52Z"
 }
