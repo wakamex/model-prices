@@ -488,12 +488,18 @@ def _entries(versions: list[tuple[str, str, dict[str, Any] | None]], provider: s
             if index == 0 or entry["rates"] != entries[index - 1]["rates"]]
 
 
+# The end of the days on which models.dev filled tool fees into its schema 2 files.
+TOOLS_FILLED_BY = datetime(2026, 10, 24, tzinfo=timezone.utc)
+
+
 def _with_first_tools(entries: list[dict[str, Any]], schemas: list[int]) -> list[dict[str, Any]]:
     """Entries with a model's first recorded tool fees carried back over its earlier entries,
     as a model's first price covers earlier usage: schema 1 had no field for tool fees, and
-    models.dev added them to its schema 2 files only on 2026-10-22."""
+    models.dev filled them into its schema 2 files on 2026-10-22 and 2026-10-23. A fee first
+    recorded after that, such as Meta's web search fee on 2026-11-23, is a change models.dev
+    made then, so it starts at its commit."""
     first = next((index for index, entry in enumerate(entries) if "tools" in entry["rates"]), None)
-    if first is None:
+    if first is None or datetime.fromisoformat(entries[first]["valid_from"].replace("Z", "+00:00")) >= TOOLS_FILLED_BY:
         return entries
     tools = entries[first]["rates"]["tools"]
     for index in range(first):

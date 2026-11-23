@@ -117,8 +117,8 @@
   }
  ],
  "models_dev": {
-  "commit": "b1301ceb52296b3c366846be51e5ac2e48feaafb",
-  "committed_at": "2026-11-23T15:19:11Z",
+  "commit": "6f52882a458459fe4cfba0c4ea9fa9534fe9ec9e",
+  "committed_at": "2026-11-23T17:13:12Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -18937,6 +18937,28 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-11-10T01:01:45Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.004,
+       "input": 0.1,
+       "output": 0.5,
+       "source": "https://github.com/sst/models.dev/commit/6f52882a4584",
+       "tiers": [
+        {
+         "above": 200000,
+         "cache_read": 0.012,
+         "input": 0.3,
+         "output": 1.5
+        }
+       ],
+       "tools": {
+        "web_search": 2.5
+       },
+       "valid_from": "2026-11-23T17:13:12Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-23T17:13:12Z"
      }
     ]
    },
@@ -18962,6 +18984,20 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-07-09T19:51:17Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.15,
+       "input": 1.25,
+       "output": 4.25,
+       "source": "https://github.com/sst/models.dev/commit/6f52882a4584",
+       "tools": {
+        "web_search": 2.5
+       },
+       "valid_from": "2026-11-23T17:13:12Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-23T17:13:12Z"
      }
     ]
    },
@@ -18977,6 +19013,20 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.15,
+       "input": 1.25,
+       "output": 4.25,
+       "source": "https://github.com/sst/models.dev/commit/6f52882a4584",
+       "tools": {
+        "web_search": 2.5
+       },
+       "valid_from": "2026-11-23T17:13:12Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-23T17:13:12Z"
      }
     ]
    },
@@ -18992,6 +19042,20 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.002,
+       "input": 0.1,
+       "output": 0.2,
+       "source": "https://github.com/sst/models.dev/commit/6f52882a4584",
+       "tools": {
+        "web_search": 2.5
+       },
+       "valid_from": "2026-11-23T17:13:12Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-23T17:13:12Z"
      }
     ]
    },
@@ -19007,6 +19071,20 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.15,
+       "input": 1.25,
+       "output": 4.25,
+       "source": "https://github.com/sst/models.dev/commit/6f52882a4584",
+       "tools": {
+        "web_search": 2.5
+       },
+       "valid_from": "2026-11-23T17:13:12Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-23T17:13:12Z"
      }
     ]
    },
@@ -19022,6 +19100,20 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.002,
+       "input": 0.1,
+       "output": 0.2,
+       "source": "https://github.com/sst/models.dev/commit/6f52882a4584",
+       "tools": {
+        "web_search": 2.5
+       },
+       "valid_from": "2026-11-23T17:13:12Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-23T17:13:12Z"
      }
     ]
    },
@@ -19037,6 +19129,20 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "input": 4.0,
+       "output": 20.0,
+       "source": "https://github.com/sst/models.dev/commit/6f52882a4584",
+       "tools": {
+        "web_search": 2.5
+       },
+       "valid_from": "2026-11-23T17:13:12Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-23T17:13:12Z"
      }
     ]
    }
@@ -45222,5 +45328,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-23T15:21:12Z"
+ "updated_at": "2026-11-23T17:20:45Z"
 }

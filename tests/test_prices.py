@@ -529,6 +529,18 @@ class PriceTests(unittest.TestCase):
         self.assertEqual(entries[0]["rates"]["modalities"]["audio"],
                          {"input": 32.0, "output": 64.0, "cache_read": 0.4})
 
+    def test_tool_fees_carry_back_only_from_when_models_dev_filled_them_in(self):
+        from model_prices.backfill import _with_first_tools
+        def entry(at, tools=None):
+            return {"valid_from": at, "rates": {"input": 1.0, **({"tools": tools} if tools else {})}}
+        # A fee first recorded when models.dev filled tool fees into its schema 2 files covers
+        # the model's earlier entries, which had no field for it.
+        filled = _with_first_tools([entry("2026-07-09T19:51:17Z"), entry("2026-10-22T12:00:00Z", {"web_search": 10.0})], [1, 2])
+        self.assertEqual(filled[0]["rates"]["tools"], {"web_search": 10.0})
+        # Meta's web search fee, first recorded on 2026-11-23, starts at its commit.
+        later = _with_first_tools([entry("2026-11-10T01:01:45Z"), entry("2026-11-23T17:13:12Z", {"web_search": 2.5})], [2, 2])
+        self.assertNotIn("tools", later[0]["rates"])
+
     def test_requests_served_in_a_region_cost_its_factor(self):
         document = {"schema": 2, "cost": {
             "text": {"input": {"price": 5, "cache": {"read": 0.5}}, "output": {"price": 25}},
