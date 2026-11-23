@@ -10196,6 +10196,27 @@
       }
      },
      "valid_from": "2026-11-14T20:59:40Z"
+    },
+    {
+     "commit": "1574669a5a39",
+     "rates": {
+      "cache_read": 2.0,
+      "cache_write": 25.0,
+      "input": 20.0,
+      "output": 100.0,
+      "tiers": [
+       {
+        "above": 272000,
+        "cache_read": 4.0,
+        "input": 40.0,
+        "output": 150.0
+       }
+      ],
+      "tools": {
+       "web_search": 10.0
+      }
+     },
+     "valid_from": "2026-11-23T17:19:52Z"
     }
    ],
    "gpt-6-luna": [
@@ -11246,6 +11267,7 @@
       "input": 4.0,
       "modalities": {
        "audio": {
+        "cache_read": 0.4,
         "input": 32.0,
         "output": 64.0
        },
@@ -11258,6 +11280,31 @@
       "output": 24.0
      },
      "valid_from": "2026-07-10T19:32:05Z"
+    },
+    {
+     "commit": "1574669a5a39",
+     "rates": {
+      "cache_read": 0.4,
+      "input": 4.0,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.4,
+        "input": 32.0,
+        "output": 64.0
+       },
+       "image": {
+        "cache_read": 0.5,
+        "input": 5.0
+       },
+       "text": {
+        "cache_read": 0.4,
+        "input": 4.0,
+        "output": 24.0
+       }
+      },
+      "output": 24.0
+     },
+     "valid_from": "2026-11-23T17:19:52Z"
     }
    ],
    "gpt-realtime-2.1-mini": [
@@ -15597,17 +15644,28 @@
   "openai": {
    "chatgpt-image-latest": "deprecated",
    "codex-mini-latest": "removed",
-   "gpt-3.5-turbo": "deprecated",
-   "gpt-4": "deprecated",
-   "gpt-4-turbo": "deprecated",
-   "gpt-4.1-nano": "deprecated",
+   "gpt-3.5-turbo": "removed",
+   "gpt-4": "removed",
+   "gpt-4-turbo": "removed",
+   "gpt-4.1": "deprecated",
+   "gpt-4.1-mini": "deprecated",
+   "gpt-4.1-nano": "removed",
    "gpt-4.5-preview": "removed",
-   "gpt-4o-2024-05-13": "deprecated",
+   "gpt-4o": "deprecated",
+   "gpt-4o-2024-05-13": "removed",
+   "gpt-4o-2024-08-06": "deprecated",
+   "gpt-4o-2024-11-20": "deprecated",
+   "gpt-4o-mini": "deprecated",
    "gpt-4o-mini-transcribe": "deprecated",
    "gpt-4o-transcribe": "deprecated",
    "gpt-4o-transcribe-diarize": "deprecated",
+   "gpt-5": "deprecated",
    "gpt-5-chat-latest": "removed",
    "gpt-5-codex": "removed",
+   "gpt-5-mini": "deprecated",
+   "gpt-5-nano": "deprecated",
+   "gpt-5-pro": "deprecated",
+   "gpt-5.1": "deprecated",
    "gpt-5.1-chat-latest": "removed",
    "gpt-5.1-codex": "removed",
    "gpt-5.1-codex-max": "removed",
@@ -15615,19 +15673,25 @@
    "gpt-5.2-chat-latest": "removed",
    "gpt-5.2-codex": "removed",
    "gpt-5.3-chat-latest": "removed",
+   "gpt-5.3-codex": "deprecated",
+   "gpt-5.3-codex-spark": "removed",
    "gpt-5.3-codex-spark-preview": "removed",
+   "gpt-5.4-nano": "deprecated",
    "gpt-audio": "deprecated",
    "gpt-audio-mini": "deprecated",
    "gpt-image-1.5": "deprecated",
+   "gpt-image-2": "deprecated",
    "gpt-realtime": "deprecated",
    "gpt-realtime-mini": "deprecated",
-   "o1": "deprecated",
+   "o1": "removed",
    "o1-mini": "removed",
    "o1-preview": "removed",
-   "o1-pro": "deprecated",
+   "o1-pro": "removed",
+   "o3": "deprecated",
    "o3-deep-research": "removed",
-   "o3-mini": "deprecated",
-   "o4-mini": "deprecated",
+   "o3-mini": "removed",
+   "o3-pro": "deprecated",
+   "o4-mini": "removed",
    "o4-mini-deep-research": "removed"
   },
   "perplexity": {
