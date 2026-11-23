@@ -71,6 +71,9 @@
   "sakana": {
    "fugu-ultra": "fugu-ultra-20260615"
   },
+  "sarvam": {
+   "sarvam-105b": "sarvam-105b-conversations"
+  },
   "thinkingmachines": {
    "inkling": "thinkingmachines/Inkling",
    "inkling-small": "thinkingmachines/Inkling-Small"
@@ -114,8 +117,8 @@
   }
  ],
  "models_dev": {
-  "commit": "51bb51a3692670612b958b37d6dc24ad886ad71a",
-  "committed_at": "2026-11-20T14:02:57Z",
+  "commit": "5ac63b800ba60984514632ae15bc1b52349e0fd6",
+  "committed_at": "2026-11-23T04:42:22Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -39970,6 +39973,81 @@
    }
   },
   "sarvam": {
+   "deepseekv4.1-flash-1017": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.00265957,
+       "input": 0.14893617,
+       "output": 0.58510638,
+       "source": "https://github.com/sst/models.dev/commit/5ac63b800ba6",
+       "valid_from": "2026-11-23T04:42:22Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "deepseekv4.1-flash-1017-interactive": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.00531915,
+       "input": 0.26595745,
+       "output": 1.11702128,
+       "source": "https://github.com/sst/models.dev/commit/5ac63b800ba6",
+       "valid_from": "2026-11-23T04:42:22Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "gemma4": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.10638298,
+       "input": 0.37234043,
+       "output": 0.95744681,
+       "source": "https://github.com/sst/models.dev/commit/5ac63b800ba6",
+       "valid_from": "2026-11-23T04:42:22Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "glm5.3": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.21276596,
+       "input": 1.34042553,
+       "output": 4.14893617,
+       "source": "https://github.com/sst/models.dev/commit/5ac63b800ba6",
+       "valid_from": "2026-11-23T04:42:22Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "glm5.3-flash": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.02659574,
+       "input": 0.14361702,
+       "output": 0.4787234,
+       "source": "https://github.com/sst/models.dev/commit/5ac63b800ba6",
+       "valid_from": "2026-11-23T04:42:22Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
    "sarvam-105b": {
     "standard": [
      {
@@ -39979,6 +40057,46 @@
        "output": 0.63161075,
        "source": "https://github.com/sst/models.dev/commit/e31e476c7181",
        "valid_from": "2026-10-21T16:00:26Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     },
+     {
+      "rates": {
+       "cache_read": 0.00265957,
+       "input": 0.10638298,
+       "output": 0.26595745,
+       "source": "https://github.com/sst/models.dev/commit/5ac63b800ba6",
+       "valid_from": "2026-11-23T04:42:22Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-23T04:42:22Z"
+     }
+    ]
+   },
+   "sarvam-105b-conversations": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.00265957,
+       "input": 0.10638298,
+       "output": 0.26595745,
+       "source": "https://github.com/sst/models.dev/commit/5ac63b800ba6",
+       "valid_from": "2026-11-23T04:42:22Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "sarvam-prism": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.04255319,
+       "output": 0.0,
+       "source": "https://github.com/sst/models.dev/commit/5ac63b800ba6",
+       "valid_from": "2026-11-23T04:42:22Z",
        "valid_from_basis": "models.dev commit"
       },
       "start": null
@@ -45078,5 +45196,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-21T21:17:28Z"
+ "updated_at": "2026-11-23T04:44:09Z"
 }

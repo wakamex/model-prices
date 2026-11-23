@@ -44,6 +44,9 @@
   "sakana": {
    "fugu-ultra": "fugu-ultra-20260615"
   },
+  "sarvam": {
+   "sarvam-105b": "sarvam-105b-conversations"
+  },
   "thinkingmachines": {
    "inkling": "thinkingmachines/Inkling",
    "inkling-small": "thinkingmachines/Inkling-Small"
@@ -11624,6 +11627,61 @@
    ]
   },
   "sarvam": {
+   "deepseekv4.1-flash-1017": [
+    {
+     "commit": "5ac63b800ba6",
+     "rates": {
+      "cache_read": 0.00265957,
+      "input": 0.14893617,
+      "output": 0.58510638
+     },
+     "valid_from": "2026-11-23T04:42:22Z"
+    }
+   ],
+   "deepseekv4.1-flash-1017-interactive": [
+    {
+     "commit": "5ac63b800ba6",
+     "rates": {
+      "cache_read": 0.00531915,
+      "input": 0.26595745,
+      "output": 1.11702128
+     },
+     "valid_from": "2026-11-23T04:42:22Z"
+    }
+   ],
+   "gemma4": [
+    {
+     "commit": "5ac63b800ba6",
+     "rates": {
+      "cache_read": 0.10638298,
+      "input": 0.37234043,
+      "output": 0.95744681
+     },
+     "valid_from": "2026-11-23T04:42:22Z"
+    }
+   ],
+   "glm5.3": [
+    {
+     "commit": "5ac63b800ba6",
+     "rates": {
+      "cache_read": 0.21276596,
+      "input": 1.34042553,
+      "output": 4.14893617
+     },
+     "valid_from": "2026-11-23T04:42:22Z"
+    }
+   ],
+   "glm5.3-flash": [
+    {
+     "commit": "5ac63b800ba6",
+     "rates": {
+      "cache_read": 0.02659574,
+      "input": 0.14361702,
+      "output": 0.4787234
+     },
+     "valid_from": "2026-11-23T04:42:22Z"
+    }
+   ],
    "sarvam-105b": [
     {
      "commit": "e31e476c7181",
@@ -11633,6 +11691,36 @@
       "output": 0.63161075
      },
      "valid_from": "2026-10-21T16:00:26Z"
+    },
+    {
+     "commit": "5ac63b800ba6",
+     "rates": {
+      "cache_read": 0.00265957,
+      "input": 0.10638298,
+      "output": 0.26595745
+     },
+     "valid_from": "2026-11-23T04:42:22Z"
+    }
+   ],
+   "sarvam-105b-conversations": [
+    {
+     "commit": "5ac63b800ba6",
+     "rates": {
+      "cache_read": 0.00265957,
+      "input": 0.10638298,
+      "output": 0.26595745
+     },
+     "valid_from": "2026-11-23T04:42:22Z"
+    }
+   ],
+   "sarvam-prism": [
+    {
+     "commit": "5ac63b800ba6",
+     "rates": {
+      "input": 0.04255319,
+      "output": 0.0
+     },
+     "valid_from": "2026-11-23T04:42:22Z"
     }
    ]
   },
@@ -15155,8 +15243,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "51bb51a3692670612b958b37d6dc24ad886ad71a",
- "source_committed_at": "2026-11-20T14:02:57Z",
+ "source_commit": "5ac63b800ba60984514632ae15bc1b52349e0fd6",
+ "source_committed_at": "2026-11-23T04:42:22Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
