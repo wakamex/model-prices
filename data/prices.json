@@ -6492,6 +6492,17 @@
      "valid_from": "2026-10-21T05:15:03Z"
     }
    ],
+   "LongCat-2.5": [
+    {
+     "commit": "b1301ceb5229",
+     "rates": {
+      "cache_read": 0.006,
+      "input": 0.3,
+      "output": 1.2
+     },
+     "valid_from": "2026-11-23T15:19:11Z"
+    }
+   ],
    "LongCat-2.5-Preview": [
     {
      "commit": "0aed167a234a",
@@ -15243,8 +15254,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "5ac63b800ba60984514632ae15bc1b52349e0fd6",
- "source_committed_at": "2026-11-23T04:42:22Z",
+ "source_commit": "b1301ceb52296b3c366846be51e5ac2e48feaafb",
+ "source_committed_at": "2026-11-23T15:19:11Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
