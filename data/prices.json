@@ -5558,7 +5558,7 @@
      "valid_from": "2026-08-13T17:26:42Z"
     },
     {
-     "commit": "4e85ae8852cc",
+     "commit": "48586eb4973b",
      "rates": {
       "cache_read": 0.15,
       "input": 1.5,
@@ -6044,6 +6044,55 @@
       "output": 3.75
      },
      "valid_from": "2026-08-21T06:42:28Z"
+    },
+    {
+     "commit": "48586eb4973b",
+     "rates": {
+      "cache_read": 0.075,
+      "input": 0.75,
+      "modes": {
+       "flex": {
+        "cache_read": 0.0375,
+        "input": 0.375,
+        "output": 1.875
+       },
+       "priority": {
+        "cache_read": 0.135,
+        "input": 1.35,
+        "output": 6.75
+       }
+      },
+      "output": 3.75,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "valid_from": "2026-11-23T17:27:25Z"
+    },
+    {
+     "commit": "48586eb4973b",
+     "rates": {
+      "cache_read": 0.15,
+      "input": 1.5,
+      "modes": {
+       "flex": {
+        "cache_read": 0.075,
+        "input": 0.75,
+        "output": 3.75
+       },
+       "priority": {
+        "cache_read": 0.27,
+        "input": 2.7,
+        "output": 13.5
+       }
+      },
+      "output": 7.5,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "scheduled": true,
+     "valid_from": "2027-01-01T00:00:00Z"
     }
    ],
    "gemini-flash-lite-latest": [
@@ -6166,6 +6215,23 @@
       "output": 17.5
      },
      "valid_from": "2026-10-20T01:14:04Z"
+    },
+    {
+     "commit": "48586eb4973b",
+     "rates": {
+      "input": 1.5,
+      "modalities": {
+       "text": {
+        "input": 1.5,
+        "output": 9.0
+       },
+       "video": {
+        "output": 17.5
+       }
+      },
+      "output": 17.5
+     },
+     "valid_from": "2026-11-23T17:27:25Z"
     }
    ],
    "gemini-omni-1.2-flash": [
@@ -6176,6 +6242,23 @@
       "output": 12.0
      },
      "valid_from": "2026-11-10T17:17:46Z"
+    },
+    {
+     "commit": "48586eb4973b",
+     "rates": {
+      "input": 1.5,
+      "modalities": {
+       "text": {
+        "input": 1.5,
+        "output": 9.0
+       },
+       "video": {
+        "output": 12.0
+       }
+      },
+      "output": 12.0
+     },
+     "valid_from": "2026-11-23T17:27:25Z"
     }
    ],
    "gemini-omni-flash-preview": [
@@ -15346,8 +15429,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "6f52882a458459fe4cfba0c4ea9fa9534fe9ec9e",
- "source_committed_at": "2026-11-23T17:13:12Z",
+ "source_commit": "48586eb4973b7d053ad67ea3075fe064f6c767a9",
+ "source_committed_at": "2026-11-23T17:27:25Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
@@ -15426,25 +15509,38 @@
    "gemini-1.5-pro": "removed",
    "gemini-2.0-flash": "removed",
    "gemini-2.0-flash-lite": "removed",
+   "gemini-2.5-computer-use-preview-10-2025": "removed",
+   "gemini-2.5-flash": "deprecated",
    "gemini-2.5-flash-image": "deprecated",
    "gemini-2.5-flash-image-preview": "removed",
    "gemini-2.5-flash-lite-preview-06-17": "removed",
    "gemini-2.5-flash-lite-preview-09-2025": "removed",
+   "gemini-2.5-flash-native-audio-preview-12-2025": "deprecated",
    "gemini-2.5-flash-preview-04-17": "removed",
    "gemini-2.5-flash-preview-05-20": "removed",
    "gemini-2.5-flash-preview-09-2025": "removed",
+   "gemini-2.5-flash-preview-tts": "deprecated",
    "gemini-2.5-flash-tts": "removed",
+   "gemini-2.5-pro": "deprecated",
    "gemini-2.5-pro-preview-03-25": "removed",
    "gemini-2.5-pro-preview-05-06": "removed",
    "gemini-2.5-pro-preview-06-05": "removed",
+   "gemini-2.5-pro-preview-tts": "deprecated",
    "gemini-3-pro-image-preview": "removed",
    "gemini-3-pro-preview": "removed",
+   "gemini-3.1-flash-image": "deprecated",
    "gemini-3.1-flash-image-preview": "removed",
-   "gemini-3.1-flash-lite-preview": "deprecated",
+   "gemini-3.1-flash-lite": "deprecated",
+   "gemini-3.1-flash-lite-preview": "removed",
+   "gemini-3.1-flash-tts-preview": "deprecated",
    "gemini-3.1-pro": "removed",
+   "gemini-3.5-flash": "deprecated",
+   "gemini-3.7-flash": "deprecated",
+   "gemini-embedding-001": "deprecated",
    "gemini-live-2.5-flash": "removed",
    "gemini-live-2.5-flash-preview-native-audio": "removed",
    "gemini-omni-1.1-flash": "deprecated",
+   "gemini-omni-flash-preview": "removed",
    "gemini-robotics-er-1.6-preview": "removed",
    "gemma-3-12b-it": "removed",
    "gemma-3-27b-it": "removed",
