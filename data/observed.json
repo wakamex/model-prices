@@ -2914,6 +2914,17 @@
      "source": "https://www.upstage.ai/pricing",
      "valid_from": "2026-10-23T01:31:14Z"
     }
+   ],
+   "solar-mini-4.5-preview": [
+    {
+     "rates": {
+      "cache_read": 0.001,
+      "input": 0.01,
+      "output": 0.04
+     },
+     "source": "https://www.upstage.ai/pricing",
+     "valid_from": "2026-11-23T06:21:41Z"
+    }
    ]
   },
   "zai": {
