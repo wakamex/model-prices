@@ -757,6 +757,9 @@ Batch
             "  - <strong>agent policy</strong>:\n\n    - The fee per 1,000 calls is as follows:\n\n"
             "      - For the China (Beijing), US (Virginia) regions: \\$0.573411.\n"
             "      - For the Singapore region: \\$10.00.\n")), {"web_search": {10.0}})
+        self.assertEqual(checks.tool_prices("meta", (
+            "- **Web search grounding**: **$2.50 per 1,000 search queries**, in addition to the "
+            "request's token cost.")), {"web_search": {2.5}})
         with self.assertRaisesRegex(ValueError, "page format changed"):
             checks.tool_prices("anthropic", "Web search costs money.")
         # Google's grounding row names its unit: grounded prompts on Gemini 2.5, search
@@ -936,6 +939,17 @@ Batch
             interval(None, 9.0, md), interval("2026-11-10T06:00:00Z", 12.0, md)]}}}}
         self.assertEqual(checks.rewritten_history(corrected, published, None), [])
         self.assertEqual(checks.rewritten_history(appended, published, None), [])
+        # A fee a tools.toml rule gives, dated by the page it cites, may enter past intervals,
+        # as Meta's web search fee does from 2026-08-04; any other fee may not.
+        rule = [{"provider": "google", "models": "^m$", "valid_from": "2026-01-01T00:00:00Z",
+                 "tools": {"web_search": 2.5}}]
+        old_rates = {"input": 9.0, "output": 1.0}
+        self.assertTrue(checks._only_rule_tools({**old_rates, "tools": {"web_search": 2.5}}, old_rates,
+                                                checks._rule_tools(rule, "google", "m", "2026-11-05T00:00:00Z")))
+        self.assertFalse(checks._only_rule_tools({**old_rates, "tools": {"web_search": 3.0}}, old_rates,
+                                                 checks._rule_tools(rule, "google", "m", "2026-11-05T00:00:00Z")))
+        self.assertFalse(checks._only_rule_tools({**old_rates, "input": 12.0, "tools": {"web_search": 2.5}},
+                                                 old_rates, checks._rule_tools(rule, "google", "m", "2026-11-05T00:00:00Z")))
         # Listing a modality at the plain price, as Google's page states image input, costs the same.
         listed = json.loads(json.dumps(published))
         listed["prices"]["google"]["m"]["standard"][0]["rates"]["modalities"] = {"image": {"input": 9.0}}
