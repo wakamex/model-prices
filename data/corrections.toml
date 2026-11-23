@@ -955,13 +955,13 @@ note = "Google's pricing page: input \"$1.50 (text / image / video / audio)\", o
 provider = "openai"
 model = "gpt-realtime-2.1"
 valid_from = "2026-07-10T19:32:05Z"
+valid_until = "2026-11-23T17:19:52Z"
 input = 4.0
 output = 24.0
 cache_read = 0.4
 modalities = { text = { input = 4.0, output = 24.0, cache_read = 0.4 }, audio = { input = 32.0, output = 64.0, cache_read = 0.4 }, image = { input = 5.0, cache_read = 0.5 } }
-replaces = { input = 4.0, output = 24.0, modalities = { text = { input = 4.0, output = 24.0, cache_read = 0.4 }, audio = { input = 32.0, output = 64.0 } } }
 source = "https://developers.openai.com/api/docs/pricing"
-note = "OpenAI's pricing page lists gpt-realtime-2.1 at $32 audio input, $0.40 cached audio, $64 audio output, $5 image input, and $0.50 cached image, on 2026-10-30 and in the Wayback Machine copy of 2026-07-11 (https://web.archive.org/web/20260711091339/https://developers.openai.com/api/pricing), a day after models.dev's first record, which lists no cached audio or image price."
+note = "OpenAI's pricing page lists gpt-realtime-2.1 at $32 audio input, $0.40 cached audio, $64 audio output, $5 image input, and $0.50 cached image, on 2026-10-30 and in the Wayback Machine copy of 2026-07-11 (https://web.archive.org/web/20260711091339/https://developers.openai.com/api/pricing), a day after models.dev's first record, which lists no cached audio or image price. models.dev recorded those prices on 2026-11-23."
 
 [[correction]]
 provider = "openai"

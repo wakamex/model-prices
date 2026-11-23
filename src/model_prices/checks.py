@@ -1950,7 +1950,9 @@ def rewritten_history(candidate: dict, published: dict, providers: set[str] | No
     word alone. Published history only gains a latest price; a past interval may change only
     where a correction, a provider page, or a tools.toml rule citing one gives the new price, so a models.dev value that was
     held back, such as a wrong price it later fixed, never enters the dated history."""
-    until = published["updated_at"]
+    # A models.dev commit after the one the published snapshot was built from is news, even when
+    # it came before the snapshot was published.
+    until = (published.get("models_dev") or {}).get("committed_at") or published["updated_at"]
     rules_path = Path(__file__).resolve().parents[2] / "data" / "tools.toml"
     rules = tomllib.loads(rules_path.read_text()).get("tool", []) if rules_path.exists() else []
     results = []
