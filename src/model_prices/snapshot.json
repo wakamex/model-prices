@@ -117,8 +117,8 @@
   }
  ],
  "models_dev": {
-  "commit": "a6dee4f194b473a5c22fc446827eba899604d807",
-  "committed_at": "2026-11-23T17:35:48Z",
+  "commit": "9ec5ef270de65b398b52b3f32099ef356e2fab6f",
+  "committed_at": "2026-11-23T19:55:07Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -45630,9 +45630,12 @@
    "magistral-medium-latest": "deprecated",
    "magistral-small": "removed",
    "mistral-large-2411": "removed",
+   "mistral-large-2512": "deprecated",
    "mistral-large-4-0-8": "removed",
    "mistral-medium-2505": "removed",
    "mistral-medium-2508": "removed",
+   "mistral-medium-2604": "deprecated",
+   "mistral-medium-latest": "deprecated",
    "mistral-nemo": "removed",
    "mistral-small-2506": "removed",
    "open-mistral-7b": "removed",
@@ -45774,5 +45777,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-23T17:39:52Z"
+ "updated_at": "2026-11-23T19:56:00Z"
 }

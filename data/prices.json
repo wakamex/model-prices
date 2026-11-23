@@ -15514,8 +15514,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "a6dee4f194b473a5c22fc446827eba899604d807",
- "source_committed_at": "2026-11-23T17:35:48Z",
+ "source_commit": "9ec5ef270de65b398b52b3f32099ef356e2fab6f",
+ "source_committed_at": "2026-11-23T19:55:07Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
@@ -15659,9 +15659,12 @@
    "magistral-medium-latest": "deprecated",
    "magistral-small": "removed",
    "mistral-large-2411": "removed",
+   "mistral-large-2512": "deprecated",
    "mistral-large-4-0-8": "removed",
    "mistral-medium-2505": "removed",
    "mistral-medium-2508": "removed",
+   "mistral-medium-2604": "deprecated",
+   "mistral-medium-latest": "deprecated",
    "mistral-nemo": "removed",
    "mistral-small-2506": "removed",
    "open-mistral-7b": "removed",
