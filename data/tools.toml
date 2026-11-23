@@ -30,3 +30,13 @@ valid_from = "2026-11-01T00:00:00Z"
 tools = { web_search_fast = 1.0 }
 source = "https://docs.perplexity.ai/docs/agent-api/tools/web-search"
 note = "Perplexity's web search tool page: \"Fast calls cost $1.00 per 1,000 invocations instead of $2.50, plus model tokens.\" The page gives no start date, so it applies from its first reading, on 2026-11-01."
+
+[[tool]]
+provider = "meta"
+# The reasoning models the page names: Muse Wonder, Muse Spark, and Muse Ember. Muse Image's
+# search is included in its price.
+models = '^muse-(wonder|spark|ember)'
+valid_from = "2026-08-04T01:45:26Z"
+tools = { web_search = 2.5 }
+source = "https://web.archive.org/web/20260804014526/https://dev.meta.ai/docs/pricing-rate-limits"
+note = "Meta's pricing page, in its earliest archived copy of 2026-08-04: \"Web search grounding costs $2.50 per 1,000 search queries, in addition to tokens for the request.\" Its copy of 2026-11-10 adds that this \"applies to the web_search tool on the reasoning models, Muse Wonder, Muse Spark, and Muse Ember. Muse Image search is included.\" models.dev recorded the fee on 2026-11-23."

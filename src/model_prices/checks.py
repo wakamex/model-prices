@@ -14,8 +14,10 @@ import http.client
 import inspect
 import json
 import math
+from pathlib import Path
 import re
 import time
+import tomllib
 from typing import Callable, Iterable
 import urllib.error
 import urllib.parse
@@ -1738,6 +1740,7 @@ TOOL_PAGES = {
     "xai": "https://docs.x.ai/developers/pricing.md",
     "perplexity": "https://docs.perplexity.ai/docs/agent-api/tools/web-search.md",
     "alibaba": "https://www.alibabacloud.com/help/en/model-studio/web-search.md",
+    "meta": "https://dev.meta.ai/docs/pricing-rate-limits.md",
 }
 
 
@@ -1750,6 +1753,7 @@ def tool_prices(provider: str, page: str) -> dict[str, set[float]]:
                    ("web_search_preview", r"\| Web search \| Web search preview \([^)]*\) \| \$([0-9.]+) / 1k calls")],
         "anthropic": [("web_search", r"(?:Web search is available on the Claude API for|On the Claude API, web search costs) \*\*\$([0-9.]+) USD per 1,000 searches")],
         "xai": [("web_search", r"\| Web Search \| `web_search` \|[^|]*\| \$([0-9.]+) \|")],
+        "meta": [("web_search", r"\*\*Web search grounding\*\*: \*\*\$([0-9.]+) per 1,000 search queries\*\*")],
         "perplexity": [("web_search", r"`web_search` is billed at \*\*\$([0-9.]+) per 1,000 invocations\*\*"),
                        ("web_search_fast", r"or \*\*\$([0-9.]+) per 1,000 invocations\*\* with `search_type: \"fast\"`")],
         # Served as HTML or as Markdown, which lists each region as a bullet. The agent policy
@@ -1919,12 +1923,36 @@ def canonical_rates(rates: dict | None) -> dict | None:
         key: value for key, value in rates.items() if key != "modalities"}
 
 
+def _rule_tools(rules: list[dict], provider: str, model: str, at: str) -> dict[str, float]:
+    """The tool fees data/tools.toml's rules in effect at `at` add to a model."""
+    fees: dict[str, float] = {}
+    for item in rules:
+        if (item["provider"] == provider and _parse_time(item["valid_from"]) <= _parse_time(at)
+                and re.search(item.get("models", ""), model)):
+            for name, price in item["tools"].items():
+                fees.setdefault(name, float(price))
+    return fees
+
+
+def _only_rule_tools(new: dict, old: dict, rules: dict[str, float]) -> bool:
+    """Whether `new` differs from `old` only by tool fees a rule gives, which a rule's source
+    dates, as a fee models.dev recorded late."""
+    if {k: v for k, v in new.items() if k not in _PROVENANCE | {"tools"}} != {
+            k: v for k, v in old.items() if k not in _PROVENANCE | {"tools"}}:
+        return False
+    before, after = old.get("tools") or {}, new.get("tools") or {}
+    return all(after.get(name) == price for name, price in before.items()) and all(
+        rules.get(name) == price for name, price in after.items() if before.get(name) != price)
+
+
 def rewritten_history(candidate: dict, published: dict, providers: set[str] | None) -> list[Result]:
     """Earlier prices the candidate snapshot changes from the published one on models.dev's
     word alone. Published history only gains a latest price; a past interval may change only
-    where a correction or a provider page gives the new price, so a models.dev value that was
+    where a correction, a provider page, or a tools.toml rule citing one gives the new price, so a models.dev value that was
     held back, such as a wrong price it later fixed, never enters the dated history."""
     until = published["updated_at"]
+    rules_path = Path(__file__).resolve().parents[2] / "data" / "tools.toml"
+    rules = tomllib.loads(rules_path.read_text()).get("tool", []) if rules_path.exists() else []
     results = []
     for provider, models in sorted(candidate["prices"].items()):
         if providers is not None and provider not in providers:
@@ -1940,8 +1968,10 @@ def rewritten_history(candidate: dict, published: dict, providers: set[str] | No
                     if new is None or old is None or "models.dev/commit/" not in new.get("source", ""):
                         continue
                     # A modality price equal to the plain price costs the same listed or not.
-                    if {k: v for k, v in canonical_rates(new).items() if k not in _PROVENANCE} != {
-                            k: v for k, v in canonical_rates(old).items() if k not in _PROVENANCE}:
+                    new, old = canonical_rates(new), canonical_rates(old)
+                    if ({k: v for k, v in new.items() if k not in _PROVENANCE} != {
+                            k: v for k, v in old.items() if k not in _PROVENANCE}
+                            and not _only_rule_tools(new, old, _rule_tools(rules, provider, model, at))):
                         results.append(Result(provider, f"{provider}/{model}", "rule:history", None, at,
                                               mode, new.get("source"), None, "mismatch"))
                         break
