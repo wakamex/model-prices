@@ -301,6 +301,17 @@
      "valid_from": "2026-11-24T17:38:39Z"
     }
    ],
+   "glm-5.3-prime": [
+    {
+     "commit": "7260f81e2985",
+     "rates": {
+      "cache_read": 0.56,
+      "input": 2.8,
+      "output": 8.8
+     },
+     "valid_from": "2026-11-24T17:43:21Z"
+    }
+   ],
    "kimi-k2.7-code": [
     {
      "commit": "d955efbd1b99",
@@ -324,6 +335,34 @@
       }
      },
      "valid_from": "2026-09-17T00:43:06Z"
+    }
+   ],
+   "kimi-k3.1-pro": [
+    {
+     "commit": "7260f81e2985",
+     "rates": {
+      "cache_read": 0.2,
+      "input": 2.0,
+      "output": 10.0,
+      "tools": {
+       "web_search": 10.0
+      }
+     },
+     "valid_from": "2026-11-24T17:43:21Z"
+    }
+   ],
+   "kimi-k3.1-pro-prime": [
+    {
+     "commit": "7260f81e2985",
+     "rates": {
+      "cache_read": 0.2,
+      "input": 4.0,
+      "output": 20.0,
+      "tools": {
+       "web_search": 10.0
+      }
+     },
+     "valid_from": "2026-11-24T17:43:21Z"
     }
    ],
    "qvq-max": [
@@ -1658,6 +1697,21 @@
       }
      },
      "valid_from": "2026-09-28T04:01:19Z"
+    }
+   ],
+   "qwen4-max": [
+    {
+     "commit": "7260f81e2985",
+     "rates": {
+      "cache_read": 0.075,
+      "cache_write": 1.875,
+      "input": 1.5,
+      "output": 4.5,
+      "tools": {
+       "web_search": 10.0
+      }
+     },
+     "valid_from": "2026-11-24T17:43:21Z"
     }
    ],
    "qwq-plus": [
@@ -15788,8 +15842,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "dfc6aa5deb34b5c9e4f6d56993320a055781a21e",
- "source_committed_at": "2026-11-24T17:38:52Z",
+ "source_commit": "5b491f5ed01045c1b75587caa59eda9d2f2062b1",
+ "source_committed_at": "2026-11-24T17:43:38Z",
  "status": {
   "alibaba": {
    "qvq-max": "removed",
