@@ -82,10 +82,14 @@
    "inkling-small": "thinkingmachines/Inkling-Small"
   },
   "volcengine": {
+   "seed-1-6": "doubao-seed-1-6-251015",
+   "seed-1-6-flash": "doubao-seed-1-6-flash-250828",
+   "seed-1-6-vision": "doubao-seed-1-6-vision-250815",
+   "seed-1-8": "doubao-seed-1-8-251228",
+   "seed-2.0-code": "doubao-seed-2-0-code-preview-260215",
    "seed-2.0-lite": "doubao-seed-2-0-lite-260428",
    "seed-2.0-mini": "doubao-seed-2-0-mini-260428",
    "seed-2.0-pro": "doubao-seed-2-0-pro-260215",
-   "seed-2.1-lite": "doubao-seed-2-1-lite-260915",
    "seed-2.1-pro": "doubao-seed-2-1-pro-260628",
    "seed-2.1-turbo": "doubao-seed-2-1-turbo-260628",
    "seed-character": "doubao-seed-character-260628",
@@ -116,8 +120,8 @@
   }
  ],
  "models_dev": {
-  "commit": "e944b38c326f343ed68b8b4dc2a5fd7691121523",
-  "committed_at": "2026-11-24T17:47:45Z",
+  "commit": "e3ea4fe268ed4fbd136c18b904a6fdbf900a4c18",
+  "committed_at": "2026-11-24T18:17:22Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -1224,6 +1228,25 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-09T18:18:19Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.32,
+       "input": 1.6,
+       "output": 6.4,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/context-cache",
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.32,
+       "input": 1.6,
+       "output": 6.4,
+       "source": "https://github.com/sst/models.dev/commit/e3ea4fe268ed",
+       "valid_from": "2026-11-24T18:17:22Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-24T18:17:22Z"
      }
     ]
    },
@@ -1803,6 +1826,25 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-10-09T18:18:19Z"
+     },
+     {
+      "rates": {
+       "cache_read": 0.1,
+       "input": 0.5,
+       "output": 1.4,
+       "source": "https://www.alibabacloud.com/help/en/model-studio/context-cache",
+       "valid_from": "2026-10-09T18:18:19Z",
+       "valid_from_basis": "documented"
+      },
+      "recorded": {
+       "cache_read": 0.1,
+       "input": 0.5,
+       "output": 1.4,
+       "source": "https://github.com/sst/models.dev/commit/e3ea4fe268ed",
+       "valid_from": "2026-11-24T18:17:22Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": "2026-11-24T18:17:22Z"
      }
     ]
    },
@@ -41501,141 +41543,6 @@
    }
   },
   "tencent-tokenhub": {
-   "deepseek-v4-pro": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.145,
-       "input": 1.74,
-       "output": 3.48,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "valid_from": "2026-11-24T17:43:38Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "deepseek-v4-pro-0813": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.022,
-       "input": 0.66,
-       "output": 1.98,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "valid_from": "2026-11-24T17:43:38Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "deepseek-v4.1-flash": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.003,
-       "input": 0.15,
-       "output": 0.6,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "valid_from": "2026-11-24T17:43:38Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "deepseek-v4.1-flash-1017": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.003,
-       "input": 0.15,
-       "output": 0.6,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "valid_from": "2026-11-24T17:43:38Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "deepseek/deepseek-flash": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.003,
-       "input": 0.15,
-       "output": 0.6,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "valid_from": "2026-11-24T17:43:38Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "deepseek/deepseek-v4-pro": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.022,
-       "input": 0.66,
-       "output": 1.98,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "valid_from": "2026-11-24T17:43:38Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "glm-5.2": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.26,
-       "input": 1.4,
-       "output": 4.4,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "valid_from": "2026-11-24T17:43:38Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "glm-5.3": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.26,
-       "input": 1.4,
-       "output": 4.4,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "valid_from": "2026-11-24T17:43:38Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "glm-5.3-flash": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.03,
-       "input": 0.15,
-       "output": 0.5,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "valid_from": "2026-11-24T17:43:38Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
    "hunyuan-role-latest": {
     "standard": [
      {
@@ -41744,17 +41651,6 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-07-20T16:00:00Z"
-     },
-     {
-      "rates": {
-       "cache_read": 0.033,
-       "input": 0.132,
-       "output": 0.528,
-       "source": "https://github.com/sst/models.dev/commit/be1bc709b168",
-       "valid_from": "2026-11-24T17:24:36Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": "2026-11-24T17:24:36Z"
      }
     ]
    },
@@ -41789,21 +41685,6 @@
      }
     ]
    },
-   "hy4-flash": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.003,
-       "input": 0.07,
-       "output": 0.281,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "valid_from": "2026-11-24T17:43:38Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
    "hy4-preview": {
     "standard": [
      {
@@ -41813,98 +41694,6 @@
        "output": 2.501,
        "source": "https://github.com/sst/models.dev/commit/241a9864813e",
        "valid_from": "2026-09-02T18:53:25Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "kimi-k2.6": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.145,
-       "input": 0.858,
-       "output": 3.566,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "valid_from": "2026-11-24T17:43:38Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "kimi-k2.7-code": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.19,
-       "input": 0.95,
-       "output": 4.0,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "valid_from": "2026-11-24T17:43:38Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "kimi-k2.7-code-highspeed": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.38,
-       "input": 1.9,
-       "output": 8.0,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "valid_from": "2026-11-24T17:43:38Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "kimi-k2.8-preview": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.25,
-       "input": 1.0,
-       "output": 4.0,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "valid_from": "2026-11-24T17:43:38Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "kimi-k3": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.3,
-       "cache_write": 3.0,
-       "input": 3.0,
-       "output": 15.0,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "valid_from": "2026-11-24T17:43:38Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "kimi-k3.1-pro": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.2,
-       "cache_write": 2.0,
-       "input": 2.0,
-       "output": 10.0,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "valid_from": "2026-11-24T17:43:38Z",
        "valid_from_basis": "models.dev commit"
       },
       "start": null
@@ -41933,89 +41722,6 @@
        "output": 0.0,
        "source": "https://github.com/sst/models.dev/commit/1162d4c6fa1c",
        "valid_from": "2026-11-09T03:54:05Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "mimo-v2.6-flash": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.0028,
-       "input": 0.14,
-       "output": 0.28,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "valid_from": "2026-11-24T17:43:38Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "mimo-v2.6-pro": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.0036,
-       "input": 0.435,
-       "output": 0.87,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "valid_from": "2026-11-24T17:43:38Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "minimax-m3": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.06,
-       "input": 0.3,
-       "output": 1.2,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "tiers": [
-        {
-         "above": 512000,
-         "cache_read": 0.12,
-         "input": 0.6,
-         "output": 2.4
-        }
-       ],
-       "valid_from": "2026-11-24T17:43:38Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "minimax-m3.1-flash": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.015,
-       "input": 0.15,
-       "output": 0.6,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "valid_from": "2026-11-24T17:43:38Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "step-5-preview": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.05,
-       "input": 1.0,
-       "output": 2.7,
-       "source": "https://github.com/sst/models.dev/commit/5b491f5ed010",
-       "valid_from": "2026-11-24T17:43:38Z",
        "valid_from_basis": "models.dev commit"
       },
       "start": null
@@ -43012,51 +42718,6 @@
    }
   },
   "volcengine": {
-   "deepseek-v4-1-flash-260910": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.00299,
-       "input": 0.14972,
-       "output": 0.59886,
-       "source": "https://github.com/sst/models.dev/commit/007b3060b0ad",
-       "valid_from": "2026-11-24T17:15:35Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "deepseek-v4-1-flash-261017": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.00299,
-       "input": 0.14972,
-       "output": 0.59886,
-       "source": "https://github.com/sst/models.dev/commit/007b3060b0ad",
-       "valid_from": "2026-11-24T17:15:35Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "deepseek-v4-1-flash-economy-261017": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.0024,
-       "input": 0.11977,
-       "output": 0.47909,
-       "source": "https://github.com/sst/models.dev/commit/007b3060b0ad",
-       "valid_from": "2026-11-24T17:15:35Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
    "deepseek-v4-flash-ga-260731": {
     "standard": [
      {
@@ -43323,24 +42984,14 @@
     "standard": [
      {
       "rates": {
-       "cache_read": 0.02395,
-       "input": 0.11977,
-       "modalities": {
-        "audio": {
-         "cache_read": 0.35932,
-         "input": 1.7966
-        },
-        "text": {
-         "cache_read": 0.02395,
-         "input": 0.11977,
-         "output": 0.40423
-        }
-       },
-       "output": 0.40423,
-       "source": "https://github.com/sst/models.dev/commit/007b3060b0ad",
-       "valid_from": "2026-11-24T17:15:35Z",
-       "valid_from_basis": "models.dev commit"
+       "cache_read": 0.023749,
+       "input": 0.118747,
+       "output": 0.400771,
+       "source": "https://www.volcengine.com/docs/82379/1544106",
+       "valid_from": "2026-11-01T22:18:37Z",
+       "valid_from_basis": "documented"
       },
+      "recorded": null,
       "start": null
      }
     ]
@@ -43354,21 +43005,6 @@
        "output": 4.45301,
        "source": "https://github.com/sst/models.dev/commit/241a9864813e",
        "valid_from": "2026-09-02T18:53:25Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "doubao-seed-2-1-pro-260915": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.17966,
-       "input": 0.8983,
-       "output": 4.49149,
-       "source": "https://github.com/sst/models.dev/commit/007b3060b0ad",
-       "valid_from": "2026-11-24T17:15:35Z",
        "valid_from_basis": "models.dev commit"
       },
       "start": null
@@ -43467,21 +43103,6 @@
        "output": 0.41563,
        "source": "https://github.com/sst/models.dev/commit/2db949bf037d",
        "valid_from": "2026-09-17T00:17:18Z",
-       "valid_from_basis": "models.dev commit"
-      },
-      "start": null
-     }
-    ]
-   },
-   "kimi-k3-1-pro-261024": {
-    "standard": [
-     {
-      "rates": {
-       "cache_read": 0.19463,
-       "input": 1.94631,
-       "output": 10.18071,
-       "source": "https://github.com/sst/models.dev/commit/007b3060b0ad",
-       "valid_from": "2026-11-24T17:15:35Z",
        "valid_from_basis": "models.dev commit"
       },
       "start": null
@@ -46715,10 +46336,6 @@
    "step-1-32k": "removed",
    "step-2-16k": "removed"
   },
-  "tencent-tokenhub": {
-   "hy3-preview": "removed",
-   "hy4-preview": "deprecated"
-  },
   "thinkingmachines": {
    "Qwen/Qwen3.6-27B": "removed",
    "deepseek-ai/DeepSeek-V3.1": "removed",
@@ -46726,11 +46343,11 @@
    "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16": "removed"
   },
   "volcengine": {
-   "doubao-seed-1-6-251015": "removed",
-   "doubao-seed-1-6-flash-250828": "removed",
-   "doubao-seed-1-6-vision-250815": "removed",
-   "doubao-seed-1-8-251228": "removed",
-   "doubao-seed-2-0-code-preview-260215": "removed",
+   "doubao-seed-1-6-251015": "deprecated",
+   "doubao-seed-1-6-flash-250828": "deprecated",
+   "doubao-seed-1-6-vision-250815": "deprecated",
+   "doubao-seed-1-8-251228": "deprecated",
+   "doubao-seed-2-0-code-preview-260215": "deprecated",
    "doubao-seed-2-0-pro-260215": "deprecated"
   },
   "xai": {
@@ -46775,5 +46392,5 @@
    "mimo-v2.5-pro-ultraspeed": "removed"
   }
  },
- "updated_at": "2026-11-24T17:52:34Z"
+ "updated_at": "2026-11-24T18:19:17Z"
 }
