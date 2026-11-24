@@ -1261,11 +1261,12 @@ def _rule(windows, weekdays: bool, holidays: str | None, factor: float) -> str:
 
 
 def _time_of_day(provider: str, models: dict, today: datetime) -> list[Result]:
-    """Compare models.dev's time-of-day multipliers with the schedule in effect today."""
-    schedule = _schedule(provider, today) or {}
-    off_peak = schedule.get("off_peak_multiplier", {})
+    """Compare models.dev's time-of-day multipliers with the schedule in effect today for
+    each model."""
     results = []
     for model, rule in sorted(models.items()):
+        schedule = _schedule(provider, today, model) or {}
+        off_peak = schedule.get("off_peak_multiplier", {})
         for item in rule.get("multipliers", []):
             factor = item["factor"]
             # A factor keyed by modality is a text factor for these text models.
@@ -1277,8 +1278,7 @@ def _time_of_day(provider: str, models: dict, today: datetime) -> list[Result]:
                 stated = str(error)
             # A rise prices peak hours over recorded off-peak rates; a cut prices off-peak
             # hours under recorded standard rates.
-            if (isinstance(factor, (int, float)) and factor > 1 and "peak_hours_utc" in schedule
-                    and re.search(schedule.get("models", ""), model)):
+            if isinstance(factor, (int, float)) and factor > 1 and "peak_hours_utc" in schedule:
                 ours = _rule(tuple(map(tuple, sorted(schedule["peak_hours_utc"]))),
                              schedule.get("weekdays_only", False), schedule.get("holidays"),
                              schedule["peak_multiplier"])
@@ -1289,6 +1289,9 @@ def _time_of_day(provider: str, models: dict, today: datetime) -> list[Result]:
                 ours = None
             results.append(Result(provider, f"{provider}/{model}", "rule:time_of_day", None, None,
                                   stated, ours, None, "ok" if stated == ours else "mismatch"))
+    # A provider-wide schedule needs models.dev's rule on the models it names, or on some model.
+    schedule = _schedule(provider, today) or {}
+    off_peak = schedule.get("off_peak_multiplier", {})
     for model in sorted(set(off_peak) - {model for model, rule in models.items()
                                          if rule.get("multipliers")}):
         results.append(Result(provider, f"{provider}/{model}", "rule:time_of_day", None, None,

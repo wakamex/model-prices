@@ -633,10 +633,13 @@ def _schedules(provider: str) -> tuple[tuple[datetime, datetime | None, dict], .
     )
 
 
-def _schedule(provider: str, moment: datetime) -> dict[str, Any] | None:
-    """Return the provider's time-of-day pricing schedule in effect at `moment`."""
+def _schedule(provider: str, moment: datetime, model: str | None = None) -> dict[str, Any] | None:
+    """Return the provider's time-of-day pricing schedule in effect at `moment` for `model`:
+    a schedule with a `models` pattern covers only the models it matches."""
     for start, end, schedule in _schedules(provider):
-        if start <= moment and (end is None or moment < end):
+        if (start <= moment and (end is None or moment < end)
+                and re.search(schedule.get("models", ""), model or "") is not None
+                and ("models" not in schedule or model)):
             return schedule
     return None
 
@@ -649,7 +652,7 @@ def _period(provider: str, moment: datetime,
     lowers them for listed models inside off-peak hours; outside those hours the recorded
     price is the standard price.
     """
-    schedule = _schedule(provider, moment)
+    schedule = _schedule(provider, moment, model)
     if schedule is None:
         return None
     if "off_peak_hours_utc" in schedule:
@@ -658,9 +661,6 @@ def _period(provider: str, moment: datetime,
             return None
         off_peak = any(_in_window(moment, window) for window in schedule["off_peak_hours_utc"])
         return ("off_peak", factor) if off_peak else ("standard", 1.0)
-    # A peak schedule with a `models` pattern prices only the models it matches.
-    if "models" in schedule and not re.search(schedule["models"], model or ""):
-        return None
     peak = any(_in_window(moment, window) for window in schedule["peak_hours_utc"])
     if schedule.get("weekdays_only") and moment.weekday() >= 5:
         peak = False

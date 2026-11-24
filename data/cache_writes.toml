@@ -19,6 +19,12 @@ note = "Kimi K3 lists a $6.00 one-hour cache write against a $3.00 input price. 
 
 
 [[cache_write_1h]]
+provider = "tencent-tokenhub"
+multiple = 2.0
+source = "https://cloud.tencent.com/document/product/1823/130055"
+note = "Tencent's China price list gives a one-hour cache write (缓存写入-1h) at twice input for the Kimi K3 series, such as 26 yuan against 13 for kimi-k3.1-pro and 40 against 20 for kimi-k3, in the copy of 2026-11-24T18:37Z in model-prices' page archive; no other model lists one."
+
+[[cache_write_1h]]
 provider = "openai"
 multiple = 2.5
 source = "https://developers.openai.com/api/docs/pricing"

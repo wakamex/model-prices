@@ -281,6 +281,16 @@ def _fetch(url: str, body: bytes | None, attempts: int = 3) -> str:
     raise AssertionError("unreachable")
 
 
+def require_listed(expected: tuple[tuple[str, str], ...], stated: Prices, at: datetime) -> None:
+    """Fail when a source leaves out a plan in effect at `at`. A plan that ended, such as Step
+    Plan Mini, need not be listed; one listed again has no price in effect, which the check
+    reports as a mismatch."""
+    missing = [f"{provider}/{plan_id}" for provider, plan_id in expected
+               if (provider, plan_id) not in stated and plan(provider, plan_id, at)]
+    if missing:
+        raise ValueError(f"no price for {', '.join(missing)}; the page format changed")
+
+
 def check_plans(today: datetime, pages: dict[str, str] | None = None) -> list[Result]:
     """Compare every plan price in effect today with its source. A source that cannot be read
     is an error that covers its plans; a plan no source is read for is listed as unchecked."""
@@ -289,12 +299,7 @@ def check_plans(today: datetime, pages: dict[str, str] | None = None) -> list[Re
         covered.update(expected)
         try:
             stated = reader(pages[key] if pages is not None else _fetch(url, body))
-            # A plan that ended, such as Step Plan Mini, need not be listed; one listed again
-            # has no price in effect and fails below.
-            missing = [f"{provider}/{plan_id}" for provider, plan_id in expected
-                       if (provider, plan_id) not in stated and plan(provider, plan_id, today)]
-            if missing:
-                raise ValueError(f"no price for {', '.join(missing)}; the page format changed")
+            require_listed(expected, stated, today)
         # Any failure to fetch or read a source fails its check, whatever raised it.
         except Exception as error:
             results.append(Result(expected[0][0], key, "plan", None, None, url,

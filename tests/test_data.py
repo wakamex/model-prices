@@ -62,6 +62,10 @@ class CorrectionDataTests(unittest.TestCase):
         history = json.loads((DATA / "prices.json").read_text())["providers"]
         for item in self.each():
             entries = history.get(item["provider"], {}).get(item["model"], [])
+            # A correction for a model models.dev lacked, with an empty `replaces`, no longer
+            # applies once models.dev lists the model, as it did Volcengine's Seed 2.1 Lite.
+            if item.get("replaces") == {} and entries:
+                continue
             start = _time(item["valid_from"])
             end = _time(item["valid_until"]) if "valid_until" in item else None
             covered = [entry for index, entry in enumerate(entries)

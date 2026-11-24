@@ -564,6 +564,18 @@ class PriceTests(unittest.TestCase):
                          ("off_peak", 1.0))
         self.assertIsNone(model_prices._period("volcengine", peak, "doubao-seed-2-0-pro-260215"))
 
+    def test_a_provider_can_run_schedules_for_different_models(self):
+        # Tencent doubled peak prices for DeepSeek's direct models from 2026-08-29 Beijing time
+        # and for its other DeepSeek models from 2026-09-26; deepseek-v4-pro has no peak hours.
+        september = datetime(2026, 9, 1, 2, tzinfo=timezone.utc)
+        november = datetime(2026, 11, 25, 2, tzinfo=timezone.utc)
+        period = lambda at, model: model_prices._period("tencent-tokenhub", at, model)
+        self.assertEqual(period(september, "deepseek/deepseek-flash"), ("peak", 2.0))
+        self.assertIsNone(period(september, "deepseek-v4.1-flash"))
+        self.assertEqual(period(november, "deepseek-v4.1-flash"), ("peak", 2.0))
+        self.assertIsNone(period(november, "deepseek-v4-pro"))
+        self.assertIsNone(period(november, "glm-5.3"))
+
     def test_tool_fees_carry_back_only_from_when_models_dev_filled_them_in(self):
         from model_prices.backfill import _with_first_tools
         def entry(at, tools=None):

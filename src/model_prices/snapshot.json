@@ -119,7 +119,7 @@
   "commit": "05868006a4ef9652eafd385675623ce76b7080e9",
   "committed_at": "2026-11-24T18:33:24Z",
   "held": {
-   "tencent-tokenhub": "2026-11-24T18:17:22Z"
+   "tencent-tokenhub": "2026-11-24T17:24:36Z"
   },
   "source": "https://github.com/sst/models.dev"
  },
@@ -41546,6 +41546,7 @@
     "standard": [
      {
       "rates": {
+       "cache_write_1h_multiple": 2.0,
        "input": 0.3336,
        "output": 1.3344,
        "source": "https://cloud.tencent.com/document/product/1823/130055",
@@ -41561,6 +41562,7 @@
     "standard": [
      {
       "rates": {
+       "cache_write_1h_multiple": 2.0,
        "input": 0.0417,
        "output": 0.1668,
        "source": "https://cloud.tencent.com/document/product/1823/130055",
@@ -41576,6 +41578,7 @@
     "standard": [
      {
       "rates": {
+       "cache_write_1h_multiple": 2.0,
        "input": 0.0695,
        "output": 0.278,
        "source": "https://cloud.tencent.com/document/product/1823/130055",
@@ -41591,6 +41594,7 @@
     "standard": [
      {
       "rates": {
+       "cache_write_1h_multiple": 2.0,
        "input": 0.0695,
        "output": 0.278,
        "source": "https://cloud.tencent.com/document/product/1823/130055",
@@ -41606,6 +41610,7 @@
     "standard": [
      {
       "rates": {
+       "cache_write_1h_multiple": 2.0,
        "input": 0.3336,
        "output": 1.3344,
        "source": "https://cloud.tencent.com/document/product/1823/130055",
@@ -41623,6 +41628,7 @@
       "rates": {
        "cache_read": 0.0,
        "cache_write": 0.0,
+       "cache_write_1h_multiple": 2.0,
        "input": 0.0,
        "output": 0.0,
        "source": "https://github.com/sst/models.dev/commit/66c66c03080c",
@@ -41634,6 +41640,7 @@
      {
       "rates": {
        "cache_read": 0.03475,
+       "cache_write_1h_multiple": 2.0,
        "input": 0.139,
        "output": 0.556,
        "source": "https://cloud.tencent.com/document/product/1823/130055",
@@ -41643,6 +41650,7 @@
       "recorded": {
        "cache_read": 0.0,
        "cache_write": 0.0,
+       "cache_write_1h_multiple": 2.0,
        "input": 0.0,
        "output": 0.0,
        "source": "https://github.com/sst/models.dev/commit/66c66c03080c",
@@ -41659,6 +41667,7 @@
       "rates": {
        "cache_read": 0.0,
        "cache_write": 0.0,
+       "cache_write_1h_multiple": 2.0,
        "input": 0.0,
        "output": 0.0,
        "source": "https://github.com/sst/models.dev/commit/d8d5f08df6ad",
@@ -41674,6 +41683,7 @@
      {
       "rates": {
        "cache_read": 0.042,
+       "cache_write_1h_multiple": 2.0,
        "input": 0.834,
        "output": 2.501,
        "source": "https://github.com/sst/models.dev/commit/f608935f2014",
@@ -41689,6 +41699,7 @@
      {
       "rates": {
        "cache_read": 0.042,
+       "cache_write_1h_multiple": 2.0,
        "input": 0.834,
        "output": 2.501,
        "source": "https://github.com/sst/models.dev/commit/241a9864813e",
@@ -41703,6 +41714,7 @@
     "standard": [
      {
       "rates": {
+       "cache_write_1h_multiple": 2.0,
        "input": 0.074729,
        "output": 0.0,
        "source": "https://github.com/sst/models.dev/commit/1162d4c6fa1c",
@@ -41717,6 +41729,7 @@
     "standard": [
      {
       "rates": {
+       "cache_write_1h_multiple": 2.0,
        "input": 0.089675,
        "output": 0.0,
        "source": "https://github.com/sst/models.dev/commit/1162d4c6fa1c",
@@ -46290,6 +46303,44 @@
     "source": "https://www.volcengine.com/docs/82379/1544106",
     "valid_from": "2026-11-12T05:19:22Z",
     "weekdays_only": true
+   },
+   {
+    "models": "^(deepseek/|deepseek-v4-flash-202605$|deepseek-v4-pro-202606$)",
+    "note": "Tencent's China price list: \"DeepSeek 模型峰谷计费规则：周一至周五（北京时间）9:00–12:00、14:00–18:00 为高峰时段，其余为空闲时段；周六、周日全天为空闲时段。生效时间说明：原厂直供模型于北京时间 2026 年 8 月 29 日 00:00 起生效；其他 DeepSeek 模型（除 deepseek-v4-flash，deepseek-v4-pro 外）于北京时间 2026 年 9 月 26 日 00:00 起生效。\" From 2026-08-29 00:00 Beijing time, which is\n2026-08-28T16:00Z.",
+    "peak_hours_utc": [
+     [
+      "01:00",
+      "04:00"
+     ],
+     [
+      "06:00",
+      "10:00"
+     ]
+    ],
+    "peak_multiplier": 2.0,
+    "provider": "tencent-tokenhub",
+    "source": "https://cloud.tencent.com/document/product/1823/130055",
+    "valid_from": "2026-08-28T16:00:00Z",
+    "weekdays_only": true
+   },
+   {
+    "models": "^deepseek-v4(-pro-0813|\\.1-flash(-1017)?)$",
+    "note": "Tencent's China price list, as quoted in the schedule above. From 2026-09-26 00:00 Beijing\ntime, which is 2026-09-25T16:00Z.",
+    "peak_hours_utc": [
+     [
+      "01:00",
+      "04:00"
+     ],
+     [
+      "06:00",
+      "10:00"
+     ]
+    ],
+    "peak_multiplier": 2.0,
+    "provider": "tencent-tokenhub",
+    "source": "https://cloud.tencent.com/document/product/1823/130055",
+    "valid_from": "2026-09-25T16:00:00Z",
+    "weekdays_only": true
    }
   ]
  },
@@ -46592,5 +46643,5 @@
    "mimo-v2.5-pro-ultraspeed": "removed"
   }
  },
- "updated_at": "2026-11-24T19:11:47Z"
+ "updated_at": "2026-11-24T19:19:25Z"
 }

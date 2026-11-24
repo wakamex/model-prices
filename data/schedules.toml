@@ -107,3 +107,35 @@ Volcengine Ark's pricing page, under standard online inference: "deepseek-v4.1-f
 off-peak ones (deepseek-v4-1-flash 1.00 and 2.00 yuan input, 4.00 and 8.00 output), and no
 holiday is excepted. Every copy of the page model-prices archived states it, from the first
 on 2026-11-12T05:19:22Z; no earlier copy is archived."""
+
+# Tencent TokenHub's DeepSeek models: peak prices are double the off-peak ones, as each row's
+# 空闲时段 and 高峰时段 prices show (deepseek-v4.1-flash 1 and 2 yuan input, deepseek-v4-pro-0813
+# 4.5 and 9), judged by when Tencent receives the request; no holiday is excepted. The terms
+# quoted below are from the China price list in model-prices' page archive, the copy of
+# 2026-11-24T18:37Z; Tencent's pages have served scripts only a JavaScript challenge since.
+[[schedule]]
+provider = "tencent-tokenhub"
+# The models DeepSeek supplies directly (原厂直供), under their deepseek/ ids and the dated
+# aliases their rows list.
+models = '^(deepseek/|deepseek-v4-flash-202605$|deepseek-v4-pro-202606$)'
+valid_from = "2026-08-28T16:00:00Z"
+peak_multiplier = 2.0
+peak_hours_utc = [["01:00", "04:00"], ["06:00", "10:00"]]
+weekdays_only = true
+source = "https://cloud.tencent.com/document/product/1823/130055"
+note = """
+Tencent's China price list: "DeepSeek 模型峰谷计费规则：周一至周五（北京时间）9:00–12:00、14:00–18:00 为高峰时段，其余为空闲时段；周六、周日全天为空闲时段。生效时间说明：原厂直供模型于北京时间 2026 年 8 月 29 日 00:00 起生效；其他 DeepSeek 模型（除 deepseek-v4-flash，deepseek-v4-pro 外）于北京时间 2026 年 9 月 26 日 00:00 起生效。" From 2026-08-29 00:00 Beijing time, which is
+2026-08-28T16:00Z."""
+
+[[schedule]]
+provider = "tencent-tokenhub"
+# The other DeepSeek models with peak rows; deepseek-v4-flash and deepseek-v4-pro have none.
+models = '^deepseek-v4(-pro-0813|\.1-flash(-1017)?)$'
+valid_from = "2026-09-25T16:00:00Z"
+peak_multiplier = 2.0
+peak_hours_utc = [["01:00", "04:00"], ["06:00", "10:00"]]
+weekdays_only = true
+source = "https://cloud.tencent.com/document/product/1823/130055"
+note = """
+Tencent's China price list, as quoted in the schedule above. From 2026-09-26 00:00 Beijing
+time, which is 2026-09-25T16:00Z."""

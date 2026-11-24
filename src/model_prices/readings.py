@@ -115,9 +115,7 @@ def _plans(key: str) -> Callable[[Get, datetime], list[dict]]:
 
     def read(get: Get, at: datetime) -> list[dict]:
         stated = reader(get(url, body))
-        missing = [f"{provider}/{plan}" for provider, plan in expected if (provider, plan) not in stated]
-        if missing:
-            raise ValueError(f"no price for {', '.join(missing)}; the page format changed")
+        plan_checks.require_listed(expected, stated, at)
         return [{"provider": provider, "plan": plan, "value": price}
                 for (provider, plan), price in stated.items()]
     return read

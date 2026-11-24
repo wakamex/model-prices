@@ -45,7 +45,9 @@ function inWindow(at, [start, end]) {
 
 // The time-of-day period at `at` and its multiplier on the recorded rates, or null.
 export function period(snapshot, provider, at, model) {
-  const schedules = (snapshot.schedules.schedule || []).filter((item) => item.provider === provider);
+  // A schedule with a `models` pattern covers only the models it matches.
+  const schedules = (snapshot.schedules.schedule || []).filter((item) => item.provider === provider
+    && (!("models" in item) || (model && new RegExp(item.models).test(model))));
   const schedule = schedules.find((item) => parseTime(item.valid_from) <= at
     && (item.valid_until === undefined || at < parseTime(item.valid_until)));
   if (!schedule) return null;
@@ -55,8 +57,6 @@ export function period(snapshot, provider, at, model) {
     const offPeak = schedule.off_peak_hours_utc.some((window) => inWindow(at, window));
     return offPeak ? ["off_peak", factor] : ["standard", 1.0];
   }
-  // A peak schedule with a `models` pattern prices only the models it matches.
-  if ("models" in schedule && !new RegExp(schedule.models).test(model || "")) return null;
   let peak = schedule.peak_hours_utc.some((window) => inWindow(at, window));
   const weekday = new Date(at).getUTCDay();
   if (schedule.weekdays_only && (weekday === 0 || weekday === 6)) peak = false;
