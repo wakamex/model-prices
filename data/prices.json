@@ -6942,6 +6942,41 @@
       ]
      },
      "valid_from": "2026-10-20T02:04:58Z"
+    },
+    {
+     "commit": "b18fdf7de7b0",
+     "rates": {
+      "cache_read": 0.06,
+      "input": 0.3,
+      "modes": {
+       "priority": {
+        "cache_read": 0.09,
+        "input": 0.45,
+        "output": 1.8,
+        "tiers": [
+         {
+          "above": 512000,
+          "cache_read": 0.18,
+          "input": 0.9,
+          "output": 3.6
+         }
+        ]
+       }
+      },
+      "output": 1.2,
+      "tiers": [
+       {
+        "above": 512000,
+        "cache_read": 0.12,
+        "input": 0.6,
+        "output": 2.4
+       }
+      ],
+      "tools": {
+       "web_search": 10.0
+      }
+     },
+     "valid_from": "2026-11-24T17:09:08Z"
     }
    ],
    "MiniMax-M3.1-Flash": [
@@ -6953,6 +6988,18 @@
       "output": 0.6
      },
      "valid_from": "2026-10-19T09:09:19Z"
+    },
+    {
+     "commit": "b18fdf7de7b0",
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.15,
+      "output": 0.6,
+      "tools": {
+       "web_search": 10.0
+      }
+     },
+     "valid_from": "2026-11-24T17:09:08Z"
     }
    ]
   },
@@ -15514,8 +15561,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "fbaa0e1fde3e5a3f9211fbff69674ac8f4808eec",
- "source_committed_at": "2026-11-24T00:47:20Z",
+ "source_commit": "b18fdf7de7b09a6be5b5ec967551e5c2e205e3b0",
+ "source_committed_at": "2026-11-24T17:09:08Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
@@ -15639,6 +15686,9 @@
    "mercury": "removed",
    "mercury-coder": "removed",
    "mercury-edit": "removed"
+  },
+  "longcat": {
+   "LongCat-2.5-Preview": "removed"
   },
   "minimax": {
    "MiniMax-M2": "deprecated",
