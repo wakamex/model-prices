@@ -455,6 +455,18 @@ class CheckTests(unittest.TestCase):
         self.assertFalse(checks._matches(0.125, 0.12, 1e-9))
         self.assertFalse(checks._matches(0.12, 0.13, 1e-9))
 
+    def test_mistral_docs_pages_give_their_own_models_ids(self):
+        # A docs page embeds records of related models; its own is the one named by its path.
+        page = (FIXTURES / "mistral-docs-large-4.html").read_text()
+        self.assertEqual(checks._mistral_ids(page, "mistral-large-4-0"), ["mistral-large-4"])
+        with self.assertRaisesRegex(ValueError, "page format changed"):
+            checks._mistral_ids(page, "codestral")
+        # The pricing page of 2026-11-24 writes its links with two leading slashes.
+        doubled = PAGES["mistral"].replace('href="/models/', 'href="//models/')
+        self.assertNotEqual(doubled, PAGES["mistral"])
+        self.assertEqual(sorted(map(repr, checks.parse_mistral(doubled, TODAY, PAGES.get))),
+                         sorted(map(repr, checks.parse_mistral(PAGES["mistral"], TODAY, PAGES.get))))
+
     def test_mistral_reads_token_prices_beside_audio_minute_prices(self):
         row = ('<tr><td><a href="/models/voxtral-small-25-07">Voxtral Small</a></td>'
                "<td>$0.004 /Min</td><td>$0.0004 /Min</td><td>$0.4 /M Tokens</td></tr>")
@@ -462,7 +474,7 @@ class CheckTests(unittest.TestCase):
 
         def get(url):
             if url.endswith("/models/voxtral-small-25-07"):
-                return '"names":["voxtral-small-2507","voxtral-small-latest"]'
+                return '{"id":1,"slug":"voxtral-small-25-07","modelIds":["voxtral-small-2507","voxtral-small-latest"]}'
             return PAGES[url]
 
         found = {(item.model, item.field): item.value

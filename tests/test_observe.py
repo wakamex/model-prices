@@ -146,7 +146,7 @@ class ObserveTests(unittest.TestCase):
                "<td>$0.15</td><td>$0.015</td><td>-</td></tr>")
         url = checks.SOURCES["mistral"][0]
         pages = {url: (FIXTURES / "mistral.html").read_text().replace("<tbody>", "<tbody>" + row, 1),
-                 checks.MISTRAL_DOCS + "/models/codestral-embed-99": '"names":["codestral-embed-9999"]',
+                 checks.MISTRAL_DOCS + "/models/codestral-embed-99": '{"id":1,"slug":"codestral-embed-99","modelIds":["codestral-embed-9999"]}',
                  checks.MISTRAL_DOCS + "/models/mistral-large-3-25-12":
                      (FIXTURES / "mistral-docs-large-3.html").read_text(),
                  checks.MISTRAL_DOCS + "/models/mistral-large-4-0":

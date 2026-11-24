@@ -931,13 +931,17 @@ def parse_bedrock(text: str, today: datetime, get: Callable[[str], str]) -> list
 MISTRAL_DOCS = "https://docs.mistral.ai"
 
 
-def _mistral_ids(page: str) -> list[str]:
-    """Every API name a Mistral docs model page lists for its model, such as
-    ["mistral-medium-3-5", "mistral-medium-3", "mistral-medium-latest"]."""
-    names = re.search(r'"names":\[((?:"[a-z0-9.-]+",?)+)\]', page.replace('\\"', '"'))
-    if names is None:
-        raise ValueError("mistral: no model ids on a docs model page; the page format changed")
-    return re.findall(r'"([a-z0-9.-]+)"', names.group(1))
+def _mistral_ids(page: str, slug: str) -> list[str]:
+    """Every API name a Mistral docs model page lists for its own model, such as
+    ["codestral-2508", "codestral-latest"] for the page /models/codestral. The page embeds a
+    record for each model it mentions, and the page's own is the one whose slug is its path."""
+    page = page.replace('\\"', '"')
+    start = page.find(f'"slug":"{slug}"')
+    ids = re.search(r'"modelIds":\[((?:"[a-z0-9.-]+",?)*)\]', page[start:]) if start >= 0 else None
+    following = page.find('{"id":', start)
+    if ids is None or (following != -1 and start + ids.start() > following):
+        raise ValueError(f"mistral: no model ids for {slug} on its docs page; the page format changed")
+    return re.findall(r'"([a-z0-9.-]+)"', ids.group(1))
 
 
 def parse_mistral(text: str, today: datetime, get: Callable[[str], str]) -> list[Observed]:
@@ -963,12 +967,13 @@ def parse_mistral(text: str, today: datetime, get: Callable[[str], str]) -> list
             # audio model's row can price its output in tokens.
             cells = {title: row[titles.index(title)] for title in columns
                      if not re.search(r"/\s*(1000 Pages|Min|M Chars)", row[titles.index(title)])}
-            link = re.search(r'href="(/models/[^"]+)"', row_html)
+            # Since 2026-11-24 the page writes the link with two leading slashes, "//models/...".
+            link = re.search(r'href="/+(models/[^"]+)"', row_html)
             # Self-hosted open-weight models have no API price, and their docs pages list
             # no API names.
             if link is None or not any("$" in cell or cell == "Free" for cell in cells.values()):
                 continue
-            models = _mistral_ids(get(MISTRAL_DOCS + link.group(1)))
+            models = _mistral_ids(get(f"{MISTRAL_DOCS}/{link.group(1)}"), link.group(1).rsplit("/", 1)[-1])
             for title, field in columns.items():
                 cell = cells.get(title, "")
                 amounts = re.findall(r"\$\s*([0-9]+(?:\.[0-9]+)?)", cell)
