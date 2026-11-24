@@ -289,8 +289,10 @@ def check_plans(today: datetime, pages: dict[str, str] | None = None) -> list[Re
         covered.update(expected)
         try:
             stated = reader(pages[key] if pages is not None else _fetch(url, body))
+            # A plan that ended, such as Step Plan Mini, need not be listed; one listed again
+            # has no price in effect and fails below.
             missing = [f"{provider}/{plan_id}" for provider, plan_id in expected
-                       if (provider, plan_id) not in stated]
+                       if (provider, plan_id) not in stated and plan(provider, plan_id, today)]
             if missing:
                 raise ValueError(f"no price for {', '.join(missing)}; the page format changed")
         # Any failure to fetch or read a source fails its check, whatever raised it.

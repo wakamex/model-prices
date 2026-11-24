@@ -614,7 +614,8 @@
    "name": "Step Plan Mini",
    "provider": "stepfun-ai",
    "source": "https://platform.stepfun.ai/step-plan",
-   "usd_per_month": 6.99
+   "usd_per_month": 6.99,
+   "valid_until": "2026-11-24T17:10:30Z"
   },
   {
    "id": "plus",
@@ -635,7 +636,16 @@
    "name": "Step Plan Max",
    "provider": "stepfun-ai",
    "source": "https://platform.stepfun.ai/step-plan",
-   "usd_per_month": 99
+   "usd_per_month": 99,
+   "valid_until": "2026-11-24T17:10:30Z"
+  },
+  {
+   "id": "max",
+   "name": "Step Plan Max",
+   "provider": "stepfun-ai",
+   "source": "https://platform.stepfun.ai/step-plan",
+   "usd_per_month": 59,
+   "valid_from": "2026-11-24T17:10:30Z"
   }
  ],
  "prices": {
@@ -45906,5 +45916,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-24T17:31:11Z"
+ "updated_at": "2026-11-24T17:33:08Z"
 }

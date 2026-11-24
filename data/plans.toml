@@ -502,6 +502,9 @@ id = "mini"
 name = "Step Plan Mini"
 usd_per_month = 6.99
 source = "https://platform.stepfun.ai/step-plan"
+# The plan list Step Plan's page loads gave Mini (type 4) at 2026-11-24T06:35:35Z and no longer
+# at 2026-11-24T17:10:30Z, when it still gave Plus, Pro, and Max at their prices.
+valid_until = "2026-11-24T17:10:30Z"
 
 [[plan]]
 provider = "stepfun-ai"
@@ -522,4 +525,16 @@ provider = "stepfun-ai"
 id = "max"
 name = "Step Plan Max"
 usd_per_month = 99
+source = "https://platform.stepfun.ai/step-plan"
+valid_until = "2026-11-24T17:10:30Z"
+
+[[plan]]
+provider = "stepfun-ai"
+id = "max"
+name = "Step Plan Max"
+usd_per_month = 59
+# The plan list Step Plan's page loads gave Max at an original_price of 9900 cents through
+# 2026-11-24T06:35:35Z and 5900, with the same selling price, from 2026-11-24T17:10:30Z, when
+# Mini left the list; the original_price is the list price, so this is no promotion.
+valid_from = "2026-11-24T17:10:30Z"
 source = "https://platform.stepfun.ai/step-plan"
