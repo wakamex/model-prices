@@ -122,6 +122,9 @@
  "models_dev": {
   "commit": "e3ea4fe268ed4fbd136c18b904a6fdbf900a4c18",
   "committed_at": "2026-11-24T18:17:22Z",
+  "held": {
+   "volcengine": "2026-11-24T17:15:35Z"
+  },
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -46392,5 +46395,5 @@
    "mimo-v2.5-pro-ultraspeed": "removed"
   }
  },
- "updated_at": "2026-11-24T18:19:17Z"
+ "updated_at": "2026-11-24T19:08:38Z"
 }

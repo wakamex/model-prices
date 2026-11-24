@@ -112,7 +112,8 @@ def _context_tiers(cost: dict[str, Any]) -> list[dict[str, Any]]:
         size = (tier.get("tier") or {}).get("size")
         values = _rate_values(tier)
         if isinstance(size, int) and values:
-            tiers.append({"above": size, **values})
+            modalities = tier.get("modalities")
+            tiers.append({"above": size, **values, **({"modalities": modalities} if modalities else {})})
     return sorted(tiers, key=lambda item: item["above"])
 
 
@@ -134,9 +135,16 @@ def parse_rates(document: dict[str, Any], provider: str = "") -> dict[str, Any] 
     for key in ("regions", "tools"):
         if isinstance(cost.get(key), dict):
             rates[key] = cost[key]
-    # Modality prices on a model with long-context tiers are not priced yet; the check
-    # reports such a model from the rules data/prices.json keeps.
-    modalities = None if tiers else _modalities(cost, rates)
+    modalities = _modalities(cost, rates)
+    for tier in tiers:
+        overridden = tier.pop("modalities", {})
+        # A tier on a model that prices modalities apart gives every modality's price in it:
+        # text at the tier's prices, a modality its own override, and any other its base price.
+        if modalities:
+            tier["modalities"] = {name: {**prices, **overridden.get(name, {})}
+                                  for name, prices in modalities.items() if name != "text"} | {
+                "text": {key: tier.get(key, rates.get(key)) for key in ("input", "output", "cache_read")
+                         if tier.get(key, rates.get(key)) is not None}}
     if modalities:
         rates["modalities"] = modalities
         # An image or video generation model's output price is that of the media it
@@ -232,13 +240,16 @@ def _schema1_cost(cost: dict[str, Any], where: str) -> dict[str, Any] | None:
     modalities = {}
     for name in ("audio", "image", "video"):
         section = cost.get(name) or {}
-        overrides = [override for side in ("input", "output")
-                     for override in (section.get(side) or {}).get("overrides") or []]
-        # A model whose text prices have long-context tiers is recorded without its modality
-        # prices, which the check reports, so context overrides of a modality's price change
-        # nothing; any other override has no schema 1 field.
-        if overrides and not (tiers and all(map(context_only, overrides))):
-            raise ValueError(f"{where}: unsupported {name} override")
+        # A context override of a modality's price is that modality's price in the text's
+        # long-context tier of the same size; any other override has no schema 1 field.
+        for side in ("input", "output"):
+            for override in (section.get(side) or {}).get("overrides") or []:
+                if not context_only(override):
+                    raise ValueError(f"{where}: unsupported {name} override")
+                cached = (override.get("cache") or {}) if side == "input" else {}
+                tier(override["when"]).setdefault("modalities", {}).setdefault(name, {}).update(
+                    {key: float(value) for key, value in _present({
+                        side: override.get("price"), "cache_read": cached.get("read")}).items()})
         sides = {side: section[side] for side in ("input", "output")
                  if side in section and per_token(section[side])}
         prices = _present({"input": sides.get("input", {}).get("price"),
@@ -676,13 +687,6 @@ def _rules(current: dict[tuple[str, str], dict[str, Any]]) -> dict[str, dict[str
             rule["multipliers"] = clock
         if isinstance(write, dict) and len(write) > 1:
             rule |= {"input": given.get("price"), "cache_write": write}
-        # Modality prices on a model with long-context tiers are left out of its rates.
-        tiered = any(override.get("when", {}).get("context") for section in
-                     ((cost.get("text") or {}).get(side) or {} for side in ("input", "output"))
-                     for override in section.get("overrides") or [])
-        if tiered and any(name in cost for name in ("audio", "image", "video")):
-            rule["unpriced_modalities"] = sorted(name for name in ("audio", "image", "video")
-                                                 if name in cost)
         # A regional factor that scales some priced modalities and not others is left out.
         unpriced = sorted(item["when"]["region"].get("equals", "") for item in cost.get("multipliers") or []
                           if list(item.get("when") or {}) == ["region"]
@@ -773,6 +777,10 @@ def hold(data: dict[str, Any], output: Path, providers: set[str]) -> dict[str, A
         merged |= {provider: value for provider, value in current.get(key, {}).items()
                    if provider in providers}
         held[key] = dict(sorted(merged.items()))
+    # The models.dev time each held provider's history stops at, kept while the hold lasts,
+    # so the history guard reads its later entries as news rather than rewrites.
+    held["held"] = {provider: current.get("held", {}).get(provider) or current["source_committed_at"]
+                    for provider in sorted(providers) if "source_committed_at" in current}
     return held
 
 

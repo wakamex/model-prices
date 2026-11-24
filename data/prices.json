@@ -79,6 +79,9 @@
    "glm-5.3-flash": "glm-5.3-flashx"
   }
  },
+ "held": {
+  "volcengine": "2026-11-24T17:15:35Z"
+ },
  "links": {
   "anthropic": {
    "claude-3-5-haiku-latest": "claude-3-5-haiku-20241022",

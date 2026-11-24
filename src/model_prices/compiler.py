@@ -369,14 +369,17 @@ def _in_mode(corrected: Rates, standard: Rates, moded: Rates) -> Rates:
     def ratio(field: str) -> float:
         base, mode_value = getattr(standard, field), getattr(moded, field)
         return mode_value / base if base and mode_value is not None else 1.0
-    modalities = tuple(replace(item, **{field: round(getattr(item, field) * ratio(field), 10)
-                                        for field in ("input", "output", "cache_read")
-                                        if getattr(item, field) is not None})
-                       for item in corrected.modalities)
+
+    def by_modality(items):
+        return tuple(replace(item, **{field: round(getattr(item, field) * ratio(field), 10)
+                                      for field in ("input", "output", "cache_read")
+                                      if getattr(item, field) is not None}) for item in items)
+    modalities = by_modality(corrected.modalities)
     # Long-prompt tiers keep each price's ratio, as the mode's own tiers do.
     tiers = tuple(replace(tier, **{field: round(getattr(tier, field) * ratio(field), 10)
                                    for field in ("input", "output", "cache_read", "cache_write")
-                                   if getattr(tier, field) is not None})
+                                   if getattr(tier, field) is not None},
+                          modalities=by_modality(tier.modalities))
                   for tier in corrected.tiers)
     return replace(corrected, **{field: scaled(field) for field in RATE_FIELDS}, tiers=tiers,
                    modalities=modalities)
@@ -393,12 +396,14 @@ def _batched(found: Rates, item: dict[str, Any]) -> Rates:
     def scaled(rates: Any) -> dict[str, float | None]:
         return {field: None if getattr(rates, field) is None else getattr(rates, field) * factor
                 for field, factor in factors.items()}
+    def by_modality(items):
+        return tuple(replace(item, **{field: getattr(item, field) * factors[field]
+                                      for field in ("input", "output", "cache_read")
+                                      if getattr(item, field) is not None}) for item in items)
     return replace(found, **scaled(found),
-                   tiers=tuple(replace(tier, **scaled(tier)) for tier in found.tiers),
-                   modalities=tuple(replace(item, **{
-                       field: getattr(item, field) * factors[field]
-                       for field in ("input", "output", "cache_read")
-                       if getattr(item, field) is not None}) for item in found.modalities))
+                   tiers=tuple(replace(tier, **scaled(tier), modalities=by_modality(tier.modalities))
+                               for tier in found.tiers),
+                   modalities=by_modality(found.modalities))
 
 
 def _stored(found: Rates | None, model: str) -> dict[str, Any] | None:
@@ -412,16 +417,21 @@ def _stored(found: Rates | None, model: str) -> dict[str, Any] | None:
     if found.model == model:
         del stored["model"]
     if "tiers" in stored:
-        stored["tiers"] = [{key: value for key, value in tier.items() if value is not None}
+        stored["tiers"] = [{key: _by_modality(value) if key == "modalities" else value
+                            for key, value in tier.items() if value is not None and value != ()}
                            for tier in stored["tiers"]]
     for key in ("regions", "tools"):
         if key in stored:
             stored[key] = dict(stored[key])
     if "modalities" in stored:
-        stored["modalities"] = {item.pop("modality"): {key: value for key, value in item.items()
-                                                       if value is not None}
-                                for item in stored["modalities"]}
+        stored["modalities"] = _by_modality(stored["modalities"])
     return stored
+
+
+def _by_modality(items: list[dict[str, Any]]) -> dict[str, dict[str, float]]:
+    """Prices by modality as a snapshot stores them, {"audio": {"input": 32.0}}."""
+    return {item["modality"]: {key: value for key, value in item.items()
+                               if key != "modality" and value is not None} for item in items}
 
 
 def _timeline(inputs: _Inputs, provider: str, model: str, mode: str | None) -> list[dict]:
@@ -468,7 +478,8 @@ def build(data: Path, pages: dict[tuple[str, str], list[dict]] | None = None) ->
         "schema": SCHEMA,
         "models_dev": {"source": inputs.prices["source"],
                        "commit": inputs.prices["source_commit"],
-                       "committed_at": inputs.prices["source_committed_at"]},
+                       "committed_at": inputs.prices["source_committed_at"],
+                       **({"held": inputs.prices["held"]} if inputs.prices.get("held") else {})},
         "prices": prices,
         "bases": inputs.prices["bases"],
         # Models models.dev marks deprecated or no longer lists, as "deprecated" or "removed".

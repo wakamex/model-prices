@@ -941,6 +941,10 @@ Batch
             interval(None, 9.0, md), interval("2026-11-09T12:00:00Z", 12.0, md)]}}}}
         self.assertEqual(checks.rewritten_history(late, built_from, None), [])
         self.assertTrue(checks.rewritten_history(late, published, None))
+        # A provider held for review stops at an earlier models.dev time.
+        held = {**published, "models_dev": {"committed_at": "2026-11-12T00:00:00Z",
+                                            "held": {"google": "2026-11-09T00:00:00Z"}}}
+        self.assertEqual(checks.rewritten_history(late, held, None), [])
         # A fee a tools.toml rule gives, dated by the page it cites, may enter past intervals,
         # as Meta's web search fee does from 2026-08-04; any other fee may not.
         rule = [{"provider": "google", "models": "^m$", "valid_from": "2026-01-01T00:00:00Z",
