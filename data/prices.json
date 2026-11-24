@@ -55,14 +55,10 @@
    "inkling-small": "thinkingmachines/Inkling-Small"
   },
   "volcengine": {
-   "seed-1-6": "doubao-seed-1-6-251015",
-   "seed-1-6-flash": "doubao-seed-1-6-flash-250828",
-   "seed-1-6-vision": "doubao-seed-1-6-vision-250815",
-   "seed-1-8": "doubao-seed-1-8-251228",
-   "seed-2.0-code": "doubao-seed-2-0-code-preview-260215",
    "seed-2.0-lite": "doubao-seed-2-0-lite-260428",
    "seed-2.0-mini": "doubao-seed-2-0-mini-260428",
    "seed-2.0-pro": "doubao-seed-2-0-pro-260215",
+   "seed-2.1-lite": "doubao-seed-2-1-lite-260915",
    "seed-2.1-pro": "doubao-seed-2-1-pro-260628",
    "seed-2.1-turbo": "doubao-seed-2-1-turbo-260628",
    "seed-character": "doubao-seed-character-260628",
@@ -80,7 +76,7 @@
   }
  },
  "held": {
-  "volcengine": "2026-11-24T17:15:35Z"
+  "tencent-tokenhub": "2026-11-24T18:17:22Z"
  },
  "links": {
   "anthropic": {
@@ -13109,6 +13105,39 @@
    ]
   },
   "volcengine": {
+   "deepseek-v4-1-flash-260910": [
+    {
+     "commit": "007b3060b0ad",
+     "rates": {
+      "cache_read": 0.00299,
+      "input": 0.14972,
+      "output": 0.59886
+     },
+     "valid_from": "2026-11-24T17:15:35Z"
+    }
+   ],
+   "deepseek-v4-1-flash-261017": [
+    {
+     "commit": "007b3060b0ad",
+     "rates": {
+      "cache_read": 0.00299,
+      "input": 0.14972,
+      "output": 0.59886
+     },
+     "valid_from": "2026-11-24T17:15:35Z"
+    }
+   ],
+   "deepseek-v4-1-flash-economy-261017": [
+    {
+     "commit": "007b3060b0ad",
+     "rates": {
+      "cache_read": 0.0024,
+      "input": 0.11977,
+      "output": 0.47909
+     },
+     "valid_from": "2026-11-24T17:15:35Z"
+    }
+   ],
    "deepseek-v4-flash-ga-260731": [
     {
      "commit": "241a9864813e",
@@ -13279,6 +13308,62 @@
       ]
      },
      "valid_from": "2026-09-02T18:53:25Z"
+    },
+    {
+     "commit": "32b3ad9c0262",
+     "rates": {
+      "cache_read": 0.01781,
+      "input": 0.08906,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.26718,
+        "input": 1.3359
+       },
+       "text": {
+        "cache_read": 0.01781,
+        "input": 0.08906,
+        "output": 0.53436
+       }
+      },
+      "output": 0.53436,
+      "tiers": [
+       {
+        "above": 32000,
+        "cache_read": 0.02672,
+        "input": 0.13359,
+        "modalities": {
+         "audio": {
+          "cache_read": 0.40077,
+          "input": 2.00386
+         },
+         "text": {
+          "cache_read": 0.02672,
+          "input": 0.13359,
+          "output": 0.80154
+         }
+        },
+        "output": 0.80154
+       },
+       {
+        "above": 128000,
+        "cache_read": 0.05344,
+        "input": 0.26718,
+        "modalities": {
+         "audio": {
+          "cache_read": 0.80154,
+          "input": 4.00771
+         },
+         "text": {
+          "cache_read": 0.05344,
+          "input": 0.26718,
+          "output": 1.60308
+         }
+        },
+        "output": 1.60308
+       }
+      ]
+     },
+     "valid_from": "2026-11-24T17:25:44Z"
     }
    ],
    "doubao-seed-2-0-mini-260428": [
@@ -13304,6 +13389,62 @@
       ]
      },
      "valid_from": "2026-09-02T18:53:25Z"
+    },
+    {
+     "commit": "32b3ad9c0262",
+     "rates": {
+      "cache_read": 0.00594,
+      "input": 0.02969,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.08906,
+        "input": 0.4453
+       },
+       "text": {
+        "cache_read": 0.00594,
+        "input": 0.02969,
+        "output": 0.29687
+       }
+      },
+      "output": 0.29687,
+      "tiers": [
+       {
+        "above": 32000,
+        "cache_read": 0.01187,
+        "input": 0.05937,
+        "modalities": {
+         "audio": {
+          "cache_read": 0.17812,
+          "input": 0.8906
+         },
+         "text": {
+          "cache_read": 0.01187,
+          "input": 0.05937,
+          "output": 0.59374
+         }
+        },
+        "output": 0.59374
+       },
+       {
+        "above": 128000,
+        "cache_read": 0.02375,
+        "input": 0.11875,
+        "modalities": {
+         "audio": {
+          "cache_read": 0.35624,
+          "input": 1.78121
+         },
+         "text": {
+          "cache_read": 0.02375,
+          "input": 0.11875,
+          "output": 1.18747
+         }
+        },
+        "output": 1.18747
+       }
+      ]
+     },
+     "valid_from": "2026-11-24T17:25:44Z"
     }
    ],
    "doubao-seed-2-0-pro-260215": [
@@ -13331,6 +13472,28 @@
      "valid_from": "2026-09-02T18:53:25Z"
     }
    ],
+   "doubao-seed-2-1-lite-260915": [
+    {
+     "commit": "007b3060b0ad",
+     "rates": {
+      "cache_read": 0.02395,
+      "input": 0.11977,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.35932,
+        "input": 1.7966
+       },
+       "text": {
+        "cache_read": 0.02395,
+        "input": 0.11977,
+        "output": 0.40423
+       }
+      },
+      "output": 0.40423
+     },
+     "valid_from": "2026-11-24T17:15:35Z"
+    }
+   ],
    "doubao-seed-2-1-pro-260628": [
     {
      "commit": "241a9864813e",
@@ -13340,6 +13503,17 @@
       "output": 4.45301
      },
      "valid_from": "2026-09-02T18:53:25Z"
+    }
+   ],
+   "doubao-seed-2-1-pro-260915": [
+    {
+     "commit": "007b3060b0ad",
+     "rates": {
+      "cache_read": 0.17966,
+      "input": 0.8983,
+      "output": 4.49149
+     },
+     "valid_from": "2026-11-24T17:15:35Z"
     }
    ],
    "doubao-seed-2-1-turbo-260628": [
@@ -13403,6 +13577,17 @@
       "output": 0.41563
      },
      "valid_from": "2026-09-17T00:17:18Z"
+    }
+   ],
+   "kimi-k3-1-pro-261024": [
+    {
+     "commit": "007b3060b0ad",
+     "rates": {
+      "cache_read": 0.19463,
+      "input": 1.94631,
+      "output": 10.18071
+     },
+     "valid_from": "2026-11-24T17:15:35Z"
     }
    ]
   },
@@ -15881,12 +16066,158 @@
     },
     "input": 12.5
    }
+  },
+  "volcengine": {
+   "deepseek-v4-1-flash-260910": {
+    "multipliers": [
+     {
+      "factor": 2,
+      "when": {
+       "any": [
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "01:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "04:00"
+           }
+          }
+         ]
+        },
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "06:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "10:00"
+           }
+          }
+         ]
+        }
+       ],
+       "utc_days": {
+        "in": [
+         "mon",
+         "tue",
+         "wed",
+         "thu",
+         "fri"
+        ]
+       }
+      }
+     }
+    ]
+   },
+   "deepseek-v4-1-flash-261017": {
+    "multipliers": [
+     {
+      "factor": 2,
+      "when": {
+       "any": [
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "01:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "04:00"
+           }
+          }
+         ]
+        },
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "06:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "10:00"
+           }
+          }
+         ]
+        }
+       ],
+       "utc_days": {
+        "in": [
+         "mon",
+         "tue",
+         "wed",
+         "thu",
+         "fri"
+        ]
+       }
+      }
+     }
+    ]
+   },
+   "deepseek-v4-1-flash-economy-261017": {
+    "multipliers": [
+     {
+      "factor": 2,
+      "when": {
+       "any": [
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "01:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "04:00"
+           }
+          }
+         ]
+        },
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "06:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "10:00"
+           }
+          }
+         ]
+        }
+       ],
+       "utc_days": {
+        "in": [
+         "mon",
+         "tue",
+         "wed",
+         "thu",
+         "fri"
+        ]
+       }
+      }
+     }
+    ]
+   }
   }
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "e3ea4fe268ed4fbd136c18b904a6fdbf900a4c18",
- "source_committed_at": "2026-11-24T18:17:22Z",
+ "source_commit": "05868006a4ef9652eafd385675623ce76b7080e9",
+ "source_committed_at": "2026-11-24T18:33:24Z",
  "status": {
   "alibaba": {
    "qvq-max": "removed",
@@ -16139,11 +16470,11 @@
    "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16": "removed"
   },
   "volcengine": {
-   "doubao-seed-1-6-251015": "deprecated",
-   "doubao-seed-1-6-flash-250828": "deprecated",
-   "doubao-seed-1-6-vision-250815": "deprecated",
-   "doubao-seed-1-8-251228": "deprecated",
-   "doubao-seed-2-0-code-preview-260215": "deprecated",
+   "doubao-seed-1-6-251015": "removed",
+   "doubao-seed-1-6-flash-250828": "removed",
+   "doubao-seed-1-6-vision-250815": "removed",
+   "doubao-seed-1-8-251228": "removed",
+   "doubao-seed-2-0-code-preview-260215": "removed",
    "doubao-seed-2-0-pro-260215": "deprecated"
   },
   "xai": {
