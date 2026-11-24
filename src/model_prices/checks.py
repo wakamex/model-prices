@@ -1409,9 +1409,6 @@ def parse_longcat(page: str, today: datetime, get: Callable[[str], str]) -> list
 YUAN_TO_USD = {
     # providers/volcengine/provider.toml: "CNY→USD rate: 6.737012, 2026-08-26".
     "volcengine": 1 / 6.737012,
-    # providers/tencent-tokenhub/provider.toml converts list price / tax rate × exchange
-    # rate, which gives hy4-preview's 6 yuan as $0.834.
-    "tencent-tokenhub": 0.834 / 6,
 }
 YUAN_TOLERANCE = 0.01
 
@@ -1473,44 +1470,6 @@ def parse_volcengine(page: str, today: datetime, get: Callable[[str], str]) -> l
     return found
 
 
-def parse_tencent(page: str, today: datetime) -> list[Observed]:
-    """Tencent TokenHub's language-model prices in yuan for its Guangzhou (China) region,
-    whose list prices models.dev converts. Each row names its API ids in the model column,
-    several when one model has aliases; a "输入长度（32k, 128k]" or "输入长度 32k+" condition
-    is the tier above 32K input tokens. Peak and off-peak rows are left out."""
-    table = re.search(r"<table.*?</table>", page, re.S)
-    if table is None:
-        raise ValueError("tencent-tokenhub: no price table; the page format changed")
-    rows = [[" ".join(html.unescape(re.sub(r"<[^>]+>", " ", cell)).replace("\ufeff", "")
-                      .split()) for cell in re.findall(r"<t[hd].*?</t[hd]>", row, re.S)]
-            for row in re.findall(r"<tr.*?</tr>", table.group(0), re.S)]
-    titles = [re.sub(r"\s|（.*", "", cell) for cell in rows[0]] if rows else []
-    columns = {"推理输入": "input", "推理输出": "output", "缓存命中": "cache_read",
-               "缓存写入-5min": "cache_write", "缓存写入-1h": "cache_write_1h"}
-    if titles[:4] != ["模型名称", "model", "条件", "峰谷计费"] or set(titles[4:]) != set(columns):
-        raise ValueError(f"tencent-tokenhub: table columns are {titles}; the page format changed")
-    found, ids = [], []
-    for cells in rows[1:]:
-        if len(cells) != len(titles):
-            continue
-        ids = cells[1].split() or ids
-        if cells[3] != "-":
-            continue
-        tier = re.fullmatch(r"输入长度\s*(?:（(\d+)([kM]?), \d+[kM]]|(\d+)([kM])\+)", cells[2])
-        if cells[2] != "-" and tier is None:
-            raise ValueError(f"tencent-tokenhub: unknown pricing condition {cells[2]!r} for {ids}")
-        above = None
-        if tier:
-            size, unit = (tier.group(1), tier.group(2)) if tier.group(1) else tier.group(3, 4)
-            above = int(size) * (1000 if unit == "k" else 1_000_000) or None
-        for model in ids:
-            for title, field in columns.items():
-                cell = cells[titles.index(title)]
-                if re.fullmatch(r"[0-9]+(?:\.[0-9]+)?", cell):
-                    found.append(_yuan("tencent-tokenhub", model, field, float(cell), above))
-    return found
-
-
 SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "alibaba": ("https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
                 parse_alibaba),
@@ -1534,7 +1493,6 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "xiaomi": ("https://mimo.mi.com/static/docs/price/pay-as-you-go.md", parse_xiaomi),
     "upstage": ("https://www.upstage.ai/pricing", parse_upstage),
     "stepfun-ai": ("https://platform.stepfun.ai/docs/en/guides/pricing/details.md", parse_stepfun),
-    "tencent-tokenhub": ("https://cloud.tencent.com/document/product/1823/130055", parse_tencent),
     "volcengine": ("https://www.volcengine.com/api/doc/getDocDetail?LibraryID=82379"
                    "&DocumentID=1544106&type=online", parse_volcengine),
     "moonshotai": ("https://platform.kimi.ai/docs/pricing/chat", parse_moonshot),
@@ -1797,7 +1755,7 @@ def compare_tools(provider: str, page: str, today: datetime, listed: set[str]) -
 # read excerpts.
 MINIMUM_MODELS = {"alibaba": 28, "amazon-bedrock": 5, "anthropic": 10, "arcee": 3, "google": 17,
                   "inception": 3, "meta": 3, "mistral": 12, "moonshotai": 3, "openai": 22,
-                  "sakana": 2, "stepfun-ai": 5, "tencent-tokenhub": 14, "thinkingmachines": 19,
+                  "sakana": 2, "stepfun-ai": 5, "thinkingmachines": 19,
                   "upstage": 2, "volcengine": 8, "xai": 4, "zai": 8}
 
 

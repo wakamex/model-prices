@@ -159,7 +159,6 @@ def official_page(provider: str) -> str | None:
 # Providers that set prices in Chinese yuan, which models.dev converts to US dollars.
 YUAN_NOTES = {
     "volcengine": "at 6.737 yuan per dollar, the exchange rate on 2026-08-26",
-    "tencent-tokenhub": f"at about {1 / checks.YUAN_TO_USD['tencent-tokenhub']:.2f} yuan per dollar",
 }
 
 
