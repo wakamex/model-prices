@@ -19846,6 +19846,16 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "input": 0.15,
+       "output": 0.0,
+       "source": "https://mistral.ai/pricing/api",
+       "valid_from": "2026-11-24T17:20:25Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-11-24T17:20:25Z"
      }
     ]
    },
@@ -20306,6 +20316,16 @@
        "valid_from_basis": "first observed"
       },
       "start": null
+     },
+     {
+      "rates": {
+       "input": 0.1,
+       "output": 0.0,
+       "source": "https://mistral.ai/pricing/api",
+       "valid_from": "2026-11-24T17:20:25Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": "2026-11-24T17:20:25Z"
      }
     ]
    },
@@ -45867,5 +45887,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-24T17:15:22Z"
+ "updated_at": "2026-11-24T17:21:13Z"
 }

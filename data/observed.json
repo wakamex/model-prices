@@ -2103,6 +2103,14 @@
      },
      "source": "https://mistral.ai/pricing/api",
      "valid_from": "2026-11-01T22:19:08Z"
+    },
+    {
+     "rates": {
+      "input": 0.15,
+      "output": 0.0
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-24T17:20:25Z"
     }
    ],
    "deepseek-v4-1-flash-1017": [
@@ -2136,6 +2144,14 @@
      },
      "source": "https://mistral.ai/pricing/api",
      "valid_from": "2026-11-01T22:19:08Z"
+    },
+    {
+     "rates": {
+      "input": 0.1,
+      "output": 0.0
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-24T17:20:25Z"
     }
    ],
    "mistral-large-4-0": [
