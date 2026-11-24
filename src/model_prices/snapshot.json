@@ -34,6 +34,7 @@
    "wan2.7": "wan2.7-i2v"
   },
   "cohere": {
+   "north-mini-code-1-0": "north-mini-code-1.0",
    "north-small-translate-1-0": "north-small-translate-09-2026"
   },
   "deepseek": {
@@ -117,8 +118,8 @@
   }
  ],
  "models_dev": {
-  "commit": "b18fdf7de7b09a6be5b5ec967551e5c2e205e3b0",
-  "committed_at": "2026-11-24T17:09:08Z",
+  "commit": "68773290d8e4784e7cfc3f23e1a1ea9e4d753aed",
+  "committed_at": "2026-11-24T17:14:03Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -11789,6 +11790,20 @@
      }
     ]
    },
+   "north-mini-code-1.0": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.0,
+       "output": 0.0,
+       "source": "https://github.com/sst/models.dev/commit/ec52219a2024",
+       "valid_from": "2026-11-24T17:10:11Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
    "north-small-translate-09-2026": {
     "standard": [
      {
@@ -11797,6 +11812,20 @@
        "output": 0.0,
        "source": "https://github.com/sst/models.dev/commit/3cd1c8ce1d71",
        "valid_from": "2026-10-02T02:20:18Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
+   "north-small-translate-1.0": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.0,
+       "output": 0.0,
+       "source": "https://github.com/sst/models.dev/commit/ec52219a2024",
+       "valid_from": "2026-11-24T17:10:11Z",
        "valid_from_basis": "models.dev commit"
       },
       "start": null
@@ -45838,5 +45867,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-24T17:09:56Z"
+ "updated_at": "2026-11-24T17:15:22Z"
 }
