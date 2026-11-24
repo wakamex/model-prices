@@ -55,6 +55,8 @@ export function period(snapshot, provider, at, model) {
     const offPeak = schedule.off_peak_hours_utc.some((window) => inWindow(at, window));
     return offPeak ? ["off_peak", factor] : ["standard", 1.0];
   }
+  // A peak schedule with a `models` pattern prices only the models it matches.
+  if ("models" in schedule && !new RegExp(schedule.models).test(model || "")) return null;
   let peak = schedule.peak_hours_utc.some((window) => inWindow(at, window));
   const weekday = new Date(at).getUTCDay();
   if (schedule.weekdays_only && (weekday === 0 || weekday === 6)) peak = false;

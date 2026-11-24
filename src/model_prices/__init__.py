@@ -650,6 +650,9 @@ def _period(provider: str, moment: datetime,
             return None
         off_peak = any(_in_window(moment, window) for window in schedule["off_peak_hours_utc"])
         return ("off_peak", factor) if off_peak else ("standard", 1.0)
+    # A peak schedule with a `models` pattern prices only the models it matches.
+    if "models" in schedule and not re.search(schedule["models"], model or ""):
+        return None
     peak = any(_in_window(moment, window) for window in schedule["peak_hours_utc"])
     if schedule.get("weekdays_only") and moment.weekday() >= 5:
         peak = False

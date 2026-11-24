@@ -45591,6 +45591,25 @@
     "provider": "alibaba",
     "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing",
     "valid_from": "2026-08-16T16:00:00Z"
+   },
+   {
+    "models": "^deepseek-v4-1-flash",
+    "note": "Volcengine Ark's pricing page, under standard online inference: \"deepseek-v4.1-flash\n模型高峰、空闲时段如下。实际费用以请求完成时间对应的计费时段为准。高峰时段：北京时间周一至周五\n09:00–12:00、14:00–18:00。空闲时段：除上述高峰时段外，其余均为空闲时段。\" Peak prices are twice the\noff-peak ones (deepseek-v4-1-flash 1.00 and 2.00 yuan input, 4.00 and 8.00 output), and no\nholiday is excepted. Every copy of the page model-prices archived states it, from the first\non 2026-11-12T05:19:22Z; no earlier copy is archived.",
+    "peak_hours_utc": [
+     [
+      "01:00",
+      "04:00"
+     ],
+     [
+      "06:00",
+      "10:00"
+     ]
+    ],
+    "peak_multiplier": 2.0,
+    "provider": "volcengine",
+    "source": "https://www.volcengine.com/docs/82379/1544106",
+    "valid_from": "2026-11-12T05:19:22Z",
+    "weekdays_only": true
    }
   ]
  },
@@ -45887,5 +45906,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-24T17:21:13Z"
+ "updated_at": "2026-11-24T17:31:11Z"
 }

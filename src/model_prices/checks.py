@@ -1277,7 +1277,8 @@ def _time_of_day(provider: str, models: dict, today: datetime) -> list[Result]:
                 stated = str(error)
             # A rise prices peak hours over recorded off-peak rates; a cut prices off-peak
             # hours under recorded standard rates.
-            if isinstance(factor, (int, float)) and factor > 1 and "peak_hours_utc" in schedule:
+            if (isinstance(factor, (int, float)) and factor > 1 and "peak_hours_utc" in schedule
+                    and re.search(schedule.get("models", ""), model)):
                 ours = _rule(tuple(map(tuple, sorted(schedule["peak_hours_utc"]))),
                              schedule.get("weekdays_only", False), schedule.get("holidays"),
                              schedule["peak_multiplier"])

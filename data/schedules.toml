@@ -1,6 +1,7 @@
 # Time-of-day pricing, in one of two forms. With peak_hours_utc, the recorded rate
 # (models.dev history plus corrections) is the off-peak rate, and inside a peak window every
-# rate, including long-context tiers, is multiplied by peak_multiplier. With
+# rate, including long-context tiers, is multiplied by peak_multiplier, for every model of the
+# provider or, with a `models` pattern, the models it matches. With
 # off_peak_hours_utc, the recorded rate is the standard rate, and inside an off-peak window
 # each listed model's rates are multiplied by its off_peak_multiplier. Windows are UTC and
 # may run past midnight. A date listed under a holiday calendar is off-peak all day, judged
@@ -90,3 +91,19 @@ refer to UTC+8 22:00 - 8:00 the next day." Idle prices are half the busy ones, e
 On 2026-10-29 the page also lists busy and idle prices, idle half of busy, for
 deepseek-v4-pro-0813 ($1.32 and $0.66 input), deepseek-v4.1-flash-1017, and
 deepseek-v4.1-flash ($0.3 and $0.15 input)."""
+
+[[schedule]]
+provider = "volcengine"
+models = '^deepseek-v4-1-flash'
+valid_from = "2026-11-12T05:19:22Z"
+peak_multiplier = 2.0
+peak_hours_utc = [["01:00", "04:00"], ["06:00", "10:00"]]
+weekdays_only = true
+source = "https://www.volcengine.com/docs/82379/1544106"
+note = """
+Volcengine Ark's pricing page, under standard online inference: "deepseek-v4.1-flash
+模型高峰、空闲时段如下。实际费用以请求完成时间对应的计费时段为准。高峰时段：北京时间周一至周五
+09:00–12:00、14:00–18:00。空闲时段：除上述高峰时段外，其余均为空闲时段。" Peak prices are twice the
+off-peak ones (deepseek-v4-1-flash 1.00 and 2.00 yuan input, 4.00 and 8.00 output), and no
+holiday is excepted. Every copy of the page model-prices archived states it, from the first
+on 2026-11-12T05:19:22Z; no earlier copy is archived."""

@@ -46,7 +46,8 @@ def _cases(count: int, seed: int = 0) -> list[dict]:
         begin = model_prices._parse_time(schedule["valid_from"])
         end = model_prices._parse_time(schedule.get("valid_until", "2027-01-01T00:00:00Z"))
         covered = [entry for entry in models if entry[0] == schedule["provider"] and (
-            "peak_hours_utc" in schedule or entry[1] in schedule["off_peak_multiplier"])]
+            re.search(schedule.get("models", ""), entry[1]) if "peak_hours_utc" in schedule
+            else entry[1] in schedule["off_peak_multiplier"])]
         scheduled += [(entry, begin, end) for entry in covered]
     cases = []
     for _ in range(count):

@@ -232,7 +232,12 @@ def _schema1_cost(cost: dict[str, Any], where: str) -> dict[str, Any] | None:
     modalities = {}
     for name in ("audio", "image", "video"):
         section = cost.get(name) or {}
-        if any((section.get(side) or {}).get("overrides") for side in ("input", "output")):
+        overrides = [override for side in ("input", "output")
+                     for override in (section.get(side) or {}).get("overrides") or []]
+        # A model whose text prices have long-context tiers is recorded without its modality
+        # prices, which the check reports, so context overrides of a modality's price change
+        # nothing; any other override has no schema 1 field.
+        if overrides and not (tiers and all(map(context_only, overrides))):
             raise ValueError(f"{where}: unsupported {name} override")
         sides = {side: section[side] for side in ("input", "output")
                  if side in section and per_token(section[side])}

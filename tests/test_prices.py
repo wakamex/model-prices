@@ -529,6 +529,14 @@ class PriceTests(unittest.TestCase):
         self.assertEqual(entries[0]["rates"]["modalities"]["audio"],
                          {"input": 32.0, "output": 64.0, "cache_read": 0.4})
 
+    def test_a_peak_schedule_with_a_model_pattern_prices_only_those_models(self):
+        # Volcengine doubles DeepSeek V4.1 Flash on weekday Beijing working hours, and no other model.
+        peak = datetime(2026, 11, 25, 2, tzinfo=timezone.utc)
+        self.assertEqual(model_prices._period("volcengine", peak, "deepseek-v4-1-flash-261017"), ("peak", 2.0))
+        self.assertEqual(model_prices._period("volcengine", peak + timedelta(hours=3), "deepseek-v4-1-flash-261017"),
+                         ("off_peak", 1.0))
+        self.assertIsNone(model_prices._period("volcengine", peak, "doubao-seed-2-0-pro-260215"))
+
     def test_tool_fees_carry_back_only_from_when_models_dev_filled_them_in(self):
         from model_prices.backfill import _with_first_tools
         def entry(at, tools=None):
