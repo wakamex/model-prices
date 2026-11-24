@@ -3902,6 +3902,14 @@
       "output": 10.0
      },
      "valid_from": "2026-06-09T15:55:42Z"
+    },
+    {
+     "commit": "49d9d77c59ec",
+     "rates": {
+      "input": 0.0,
+      "output": 0.0
+     },
+     "valid_from": "2026-11-24T20:01:28Z"
     }
    ],
    "command-a-reasoning-08-2025": [
@@ -16720,8 +16728,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "05868006a4ef9652eafd385675623ce76b7080e9",
- "source_committed_at": "2026-11-24T18:33:24Z",
+ "source_commit": "49d9d77c59ec0f970db0da529fbacfbe3a2d196b",
+ "source_committed_at": "2026-11-24T20:01:28Z",
  "status": {
   "alibaba": {
    "qvq-max": "removed",
