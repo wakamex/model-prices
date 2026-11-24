@@ -75,9 +75,7 @@
    "glm-5.3-flash": "glm-5.3-flashx"
   }
  },
- "held": {
-  "tencent-tokenhub": "2026-11-24T17:24:36Z"
- },
+ "held": {},
  "links": {
   "anthropic": {
    "claude-3-5-haiku-latest": "claude-3-5-haiku-20241022",
@@ -12488,6 +12486,105 @@
    ]
   },
   "tencent-tokenhub": {
+   "deepseek-v4-pro": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.145,
+      "input": 1.74,
+      "output": 3.48
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
+    }
+   ],
+   "deepseek-v4-pro-0813": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.022,
+      "input": 0.66,
+      "output": 1.98
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
+    }
+   ],
+   "deepseek-v4.1-flash": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.003,
+      "input": 0.15,
+      "output": 0.6
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
+    }
+   ],
+   "deepseek-v4.1-flash-1017": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.003,
+      "input": 0.15,
+      "output": 0.6
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
+    }
+   ],
+   "deepseek/deepseek-flash": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.003,
+      "input": 0.15,
+      "output": 0.6
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
+    }
+   ],
+   "deepseek/deepseek-v4-pro": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.022,
+      "input": 0.66,
+      "output": 1.98
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
+    }
+   ],
+   "glm-5.2": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.26,
+      "input": 1.4,
+      "output": 4.4
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
+    }
+   ],
+   "glm-5.3": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.26,
+      "input": 1.4,
+      "output": 4.4
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
+    }
+   ],
+   "glm-5.3-flash": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.03,
+      "input": 0.15,
+      "output": 0.5
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
+    }
+   ],
    "hy3": [
     {
      "commit": "66c66c03080c",
@@ -12498,6 +12595,15 @@
       "output": 0.0
      },
      "valid_from": "2026-07-03T04:56:30Z"
+    },
+    {
+     "commit": "be1bc709b168",
+     "rates": {
+      "cache_read": 0.033,
+      "input": 0.132,
+      "output": 0.528
+     },
+     "valid_from": "2026-11-24T17:24:36Z"
     }
    ],
    "hy3-preview": [
@@ -12523,6 +12629,17 @@
      "valid_from": "2026-11-04T19:22:43Z"
     }
    ],
+   "hy4-flash": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.003,
+      "input": 0.07,
+      "output": 0.281
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
+    }
+   ],
    "hy4-preview": [
     {
      "commit": "241a9864813e",
@@ -12532,6 +12649,74 @@
       "output": 2.501
      },
      "valid_from": "2026-09-02T18:53:25Z"
+    }
+   ],
+   "kimi-k2.6": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.145,
+      "input": 0.858,
+      "output": 3.566
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
+    }
+   ],
+   "kimi-k2.7-code": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.19,
+      "input": 0.95,
+      "output": 4.0
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
+    }
+   ],
+   "kimi-k2.7-code-highspeed": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.38,
+      "input": 1.9,
+      "output": 8.0
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
+    }
+   ],
+   "kimi-k2.8-preview": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.25,
+      "input": 1.0,
+      "output": 4.0
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
+    }
+   ],
+   "kimi-k3": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.3,
+      "cache_write": 3.0,
+      "input": 3.0,
+      "output": 15.0
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
+    }
+   ],
+   "kimi-k3.1-pro": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 2.0,
+      "input": 2.0,
+      "output": 10.0
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
     }
    ],
    "kinfra-text-embedding-0.6b": [
@@ -12552,6 +12737,69 @@
       "output": 0.0
      },
      "valid_from": "2026-11-09T03:54:05Z"
+    }
+   ],
+   "mimo-v2.6-flash": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.0028,
+      "input": 0.14,
+      "output": 0.28
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
+    }
+   ],
+   "mimo-v2.6-pro": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.0036,
+      "input": 0.435,
+      "output": 0.87
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
+    }
+   ],
+   "minimax-m3": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.06,
+      "input": 0.3,
+      "output": 1.2,
+      "tiers": [
+       {
+        "above": 512000,
+        "cache_read": 0.12,
+        "input": 0.6,
+        "output": 2.4
+       }
+      ]
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
+    }
+   ],
+   "minimax-m3.1-flash": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.15,
+      "output": 0.6
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
+    }
+   ],
+   "step-5-preview": [
+    {
+     "commit": "5b491f5ed010",
+     "rates": {
+      "cache_read": 0.05,
+      "input": 1.0,
+      "output": 2.7
+     },
+     "valid_from": "2026-11-24T17:43:38Z"
     }
    ]
   },
@@ -16067,6 +16315,262 @@
     "input": 12.5
    }
   },
+  "tencent-tokenhub": {
+   "deepseek-v4-pro-0813": {
+    "multipliers": [
+     {
+      "factor": 2,
+      "when": {
+       "any": [
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "01:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "04:00"
+           }
+          }
+         ]
+        },
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "06:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "10:00"
+           }
+          }
+         ]
+        }
+       ],
+       "utc_days": {
+        "in": [
+         "mon",
+         "tue",
+         "wed",
+         "thu",
+         "fri"
+        ]
+       }
+      }
+     }
+    ]
+   },
+   "deepseek-v4.1-flash": {
+    "multipliers": [
+     {
+      "factor": 2,
+      "when": {
+       "any": [
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "01:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "04:00"
+           }
+          }
+         ]
+        },
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "06:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "10:00"
+           }
+          }
+         ]
+        }
+       ],
+       "utc_days": {
+        "in": [
+         "mon",
+         "tue",
+         "wed",
+         "thu",
+         "fri"
+        ]
+       }
+      }
+     }
+    ]
+   },
+   "deepseek-v4.1-flash-1017": {
+    "multipliers": [
+     {
+      "factor": 2,
+      "when": {
+       "any": [
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "01:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "04:00"
+           }
+          }
+         ]
+        },
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "06:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "10:00"
+           }
+          }
+         ]
+        }
+       ],
+       "utc_days": {
+        "in": [
+         "mon",
+         "tue",
+         "wed",
+         "thu",
+         "fri"
+        ]
+       }
+      }
+     }
+    ]
+   },
+   "deepseek/deepseek-flash": {
+    "multipliers": [
+     {
+      "factor": 2,
+      "when": {
+       "any": [
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "01:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "04:00"
+           }
+          }
+         ]
+        },
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "06:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "10:00"
+           }
+          }
+         ]
+        }
+       ],
+       "utc_days": {
+        "in": [
+         "mon",
+         "tue",
+         "wed",
+         "thu",
+         "fri"
+        ]
+       }
+      }
+     }
+    ]
+   },
+   "deepseek/deepseek-v4-pro": {
+    "multipliers": [
+     {
+      "factor": 2,
+      "when": {
+       "any": [
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "01:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "04:00"
+           }
+          }
+         ]
+        },
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "06:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "10:00"
+           }
+          }
+         ]
+        }
+       ],
+       "utc_days": {
+        "in": [
+         "mon",
+         "tue",
+         "wed",
+         "thu",
+         "fri"
+        ]
+       }
+      }
+     }
+    ]
+   },
+   "kimi-k3": {
+    "cache_write": {
+     "1h": 6,
+     "5m": 3
+    },
+    "input": 3
+   },
+   "kimi-k3.1-pro": {
+    "cache_write": {
+     "1h": 4,
+     "5m": 2
+    },
+    "input": 2
+   }
+  },
   "volcengine": {
    "deepseek-v4-1-flash-260910": {
     "multipliers": [
@@ -16462,6 +16966,10 @@
   "stepfun-ai": {
    "step-1-32k": "removed",
    "step-2-16k": "removed"
+  },
+  "tencent-tokenhub": {
+   "hy3-preview": "removed",
+   "hy4-preview": "deprecated"
   },
   "thinkingmachines": {
    "Qwen/Qwen3.6-27B": "removed",
