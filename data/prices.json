@@ -1761,6 +1761,26 @@
    ]
   },
   "amazon-bedrock": {
+   "amazon.nova-2-5-sonic": [
+    {
+     "commit": "464b5409f68a",
+     "rates": {
+      "input": 0.33,
+      "modalities": {
+       "audio": {
+        "input": 3.0,
+        "output": 12.0
+       },
+       "text": {
+        "input": 0.33,
+        "output": 2.75
+       }
+      },
+      "output": 2.75
+     },
+     "valid_from": "2026-11-24T21:52:33Z"
+    }
+   ],
    "amazon.nova-2-lite-v1:0": [
     {
      "commit": "2380542c6837",
@@ -1827,6 +1847,26 @@
       "output": 2.75
      },
      "valid_from": "2026-11-20T00:48:58Z"
+    }
+   ],
+   "amazon.nova-2-sonic-v1:0": [
+    {
+     "commit": "464b5409f68a",
+     "rates": {
+      "input": 0.33,
+      "modalities": {
+       "audio": {
+        "input": 3.0,
+        "output": 12.0
+       },
+       "text": {
+        "input": 0.33,
+        "output": 2.75
+       }
+      },
+      "output": 2.75
+     },
+     "valid_from": "2026-11-24T21:52:33Z"
     }
    ],
    "amazon.nova-lite-v1:0": [
@@ -16728,8 +16768,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "49d9d77c59ec0f970db0da529fbacfbe3a2d196b",
- "source_committed_at": "2026-11-24T20:01:28Z",
+ "source_commit": "464b5409f68a4bf99b81f9bf296bdeb0736950a3",
+ "source_committed_at": "2026-11-24T21:52:33Z",
  "status": {
   "alibaba": {
    "qvq-max": "removed",

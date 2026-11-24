@@ -116,8 +116,8 @@
   }
  ],
  "models_dev": {
-  "commit": "49d9d77c59ec0f970db0da529fbacfbe3a2d196b",
-  "committed_at": "2026-11-24T20:01:28Z",
+  "commit": "464b5409f68a4bf99b81f9bf296bdeb0736950a3",
+  "committed_at": "2026-11-24T21:52:33Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -5837,6 +5837,30 @@
    }
   },
   "amazon-bedrock": {
+   "amazon.nova-2-5-sonic": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.33,
+       "modalities": {
+        "audio": {
+         "input": 3.0,
+         "output": 12.0
+        },
+        "text": {
+         "input": 0.33,
+         "output": 2.75
+        }
+       },
+       "output": 2.75,
+       "source": "https://github.com/sst/models.dev/commit/464b5409f68a",
+       "valid_from": "2026-11-24T21:52:33Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
    "amazon.nova-2-lite-v1:0": {
     "flex": [
      {
@@ -5944,6 +5968,30 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-11-20T00:48:58Z"
+     }
+    ]
+   },
+   "amazon.nova-2-sonic-v1:0": {
+    "standard": [
+     {
+      "rates": {
+       "input": 0.33,
+       "modalities": {
+        "audio": {
+         "input": 3.0,
+         "output": 12.0
+        },
+        "text": {
+         "input": 0.33,
+         "output": 2.75
+        }
+       },
+       "output": 2.75,
+       "source": "https://github.com/sst/models.dev/commit/464b5409f68a",
+       "valid_from": "2026-11-24T21:52:33Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
      }
     ]
    },
@@ -47012,5 +47060,5 @@
    "mimo-v2.5-pro-ultraspeed": "removed"
   }
  },
- "updated_at": "2026-11-24T20:03:19Z"
+ "updated_at": "2026-11-24T21:54:07Z"
 }
