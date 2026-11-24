@@ -1336,12 +1336,6 @@ def compare_rules(rules: dict[str, dict], providers: set[str] | None,
             models = rules.get(provider, {})
             results += _time_of_day(provider, models, today)
             results += _cache_lifetimes(provider, models, today)
-            # A model with long-context tiers and modality prices, which the history records
-            # without its modality prices until they can be priced together.
-            results += [Result(provider, f"{provider}/{model}", "rule:modalities", None, None,
-                               f"{', '.join(rule['unpriced_modalities'])} prices with "
-                               "long-context tiers", None, None, "mismatch")
-                        for model, rule in sorted(models.items()) if "unpriced_modalities" in rule]
             results += [Result(provider, f"{provider}/{model}", "rule:regions", None, None,
                                f"{', '.join(rule['unpriced_regions'])} factors that differ by "
                                "modality", None, None, "mismatch")
@@ -1409,9 +1403,6 @@ def parse_longcat(page: str, today: datetime, get: Callable[[str], str]) -> list
 YUAN_TO_USD = {
     # providers/volcengine/provider.toml: "CNY→USD rate: 6.737012, 2026-08-26".
     "volcengine": 1 / 6.737012,
-    # providers/tencent-tokenhub/provider.toml converts list price / tax rate × exchange
-    # rate, which gives hy4-preview's 6 yuan as $0.834.
-    "tencent-tokenhub": 0.834 / 6,
 }
 YUAN_TOLERANCE = 0.01
 
@@ -1473,44 +1464,6 @@ def parse_volcengine(page: str, today: datetime, get: Callable[[str], str]) -> l
     return found
 
 
-def parse_tencent(page: str, today: datetime) -> list[Observed]:
-    """Tencent TokenHub's language-model prices in yuan for its Guangzhou (China) region,
-    whose list prices models.dev converts. Each row names its API ids in the model column,
-    several when one model has aliases; a "输入长度（32k, 128k]" or "输入长度 32k+" condition
-    is the tier above 32K input tokens. Peak and off-peak rows are left out."""
-    table = re.search(r"<table.*?</table>", page, re.S)
-    if table is None:
-        raise ValueError("tencent-tokenhub: no price table; the page format changed")
-    rows = [[" ".join(html.unescape(re.sub(r"<[^>]+>", " ", cell)).replace("\ufeff", "")
-                      .split()) for cell in re.findall(r"<t[hd].*?</t[hd]>", row, re.S)]
-            for row in re.findall(r"<tr.*?</tr>", table.group(0), re.S)]
-    titles = [re.sub(r"\s|（.*", "", cell) for cell in rows[0]] if rows else []
-    columns = {"推理输入": "input", "推理输出": "output", "缓存命中": "cache_read",
-               "缓存写入-5min": "cache_write", "缓存写入-1h": "cache_write_1h"}
-    if titles[:4] != ["模型名称", "model", "条件", "峰谷计费"] or set(titles[4:]) != set(columns):
-        raise ValueError(f"tencent-tokenhub: table columns are {titles}; the page format changed")
-    found, ids = [], []
-    for cells in rows[1:]:
-        if len(cells) != len(titles):
-            continue
-        ids = cells[1].split() or ids
-        if cells[3] != "-":
-            continue
-        tier = re.fullmatch(r"输入长度\s*(?:（(\d+)([kM]?), \d+[kM]]|(\d+)([kM])\+)", cells[2])
-        if cells[2] != "-" and tier is None:
-            raise ValueError(f"tencent-tokenhub: unknown pricing condition {cells[2]!r} for {ids}")
-        above = None
-        if tier:
-            size, unit = (tier.group(1), tier.group(2)) if tier.group(1) else tier.group(3, 4)
-            above = int(size) * (1000 if unit == "k" else 1_000_000) or None
-        for model in ids:
-            for title, field in columns.items():
-                cell = cells[titles.index(title)]
-                if re.fullmatch(r"[0-9]+(?:\.[0-9]+)?", cell):
-                    found.append(_yuan("tencent-tokenhub", model, field, float(cell), above))
-    return found
-
-
 SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "alibaba": ("https://www.alibabacloud.com/help/en/model-studio/model-pricing.md",
                 parse_alibaba),
@@ -1534,7 +1487,6 @@ SOURCES: dict[str, tuple[str, Callable[[str, datetime], list[Observed]]]] = {
     "xiaomi": ("https://mimo.mi.com/static/docs/price/pay-as-you-go.md", parse_xiaomi),
     "upstage": ("https://www.upstage.ai/pricing", parse_upstage),
     "stepfun-ai": ("https://platform.stepfun.ai/docs/en/guides/pricing/details.md", parse_stepfun),
-    "tencent-tokenhub": ("https://cloud.tencent.com/document/product/1823/130055", parse_tencent),
     "volcengine": ("https://www.volcengine.com/api/doc/getDocDetail?LibraryID=82379"
                    "&DocumentID=1544106&type=online", parse_volcengine),
     "moonshotai": ("https://platform.kimi.ai/docs/pricing/chat", parse_moonshot),
@@ -1610,7 +1562,8 @@ def _value(found, field: str, above: int | None, modality: str | None = None) ->
         return dict(found.tools).get(field[5:])
     # A modality's price is the one cost() charges its tokens, stated or filled in.
     if modality is not None:
-        return found._modality_prices(modality, found._tiered(above + 1 if above else 0)[1])[field]
+        _, plain, modalities = found._tiered(above + 1 if above else 0)
+        return found._modality_prices(modality, plain, modalities)[field]
     keys = ("input", "output", "cache_read", "cache_read_explicit", "cache_write")
     values = {key: getattr(found, key) for key in keys}
     if above is not None:
@@ -1797,7 +1750,7 @@ def compare_tools(provider: str, page: str, today: datetime, listed: set[str]) -
 # read excerpts.
 MINIMUM_MODELS = {"alibaba": 28, "amazon-bedrock": 5, "anthropic": 10, "arcee": 3, "google": 17,
                   "inception": 3, "meta": 3, "mistral": 12, "moonshotai": 3, "openai": 22,
-                  "sakana": 2, "stepfun-ai": 5, "tencent-tokenhub": 14, "thinkingmachines": 19,
+                  "sakana": 2, "stepfun-ai": 5, "thinkingmachines": 19,
                   "upstage": 2, "volcengine": 8, "xai": 4, "zai": 8}
 
 
@@ -1954,17 +1907,20 @@ def _only_rule_tools(new: dict, old: dict, rules: dict[str, float]) -> bool:
 def rewritten_history(candidate: dict, published: dict, providers: set[str] | None) -> list[Result]:
     """Earlier prices the candidate snapshot changes from the published one on models.dev's
     word alone. Published history only gains a latest price; a past interval may change only
-    where a correction, a provider page, or a tools.toml rule citing one gives the new price, so a models.dev value that was
-    held back, such as a wrong price it later fixed, never enters the dated history."""
+    where a correction, a provider page, or a tools.toml rule citing one gives the new price,
+    so a models.dev value that was held back, such as a wrong price it later fixed, never
+    enters the dated history."""
     # A models.dev commit after the one the published snapshot was built from is news, even when
-    # it came before the snapshot was published.
-    until = (published.get("models_dev") or {}).get("committed_at") or published["updated_at"]
+    # it came before the snapshot was published; a provider held for review stops earlier.
+    built_from = published.get("models_dev") or {}
+    cutoff = built_from.get("committed_at") or published["updated_at"]
     rules_path = Path(__file__).resolve().parents[2] / "data" / "tools.toml"
     rules = tomllib.loads(rules_path.read_text()).get("tool", []) if rules_path.exists() else []
     results = []
     for provider, models in sorted(candidate["prices"].items()):
         if providers is not None and provider not in providers:
             continue
+        until = (built_from.get("held") or {}).get(provider, cutoff)
         for model, timelines in sorted(models.items()):
             for mode, timeline in sorted(timelines.items()):
                 before = published["prices"].get(provider, {}).get(model, {}).get(mode)
@@ -2166,7 +2122,7 @@ def report(results: list[Result], genai: bool = False) -> str:
                          f"batch.toml {result.effective}")
             continue
         if result.field.startswith("rule:"):
-            source = {"rule:time_of_day": "schedules.toml", "rule:modalities": "model-prices",
+            source = {"rule:time_of_day": "schedules.toml",
                       "rule:regions": "model-prices"}.get(result.field, "cache_writes.toml")
             lines.append(f"{result.status:9} {result.model} {result.field[5:]}: models.dev "
                          f"{result.official}, {source} {result.effective}")

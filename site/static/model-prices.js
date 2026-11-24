@@ -71,6 +71,8 @@ export function period(snapshot, provider, at, model) {
 // Rates with every token price multiplied by a factor, as the package's _multiplied gives them.
 function multiplied(found, factor) {
   const scale = (value) => (value === undefined || value === null ? value : value * factor);
+  const byModality = (modalities) => Object.fromEntries(Object.entries(modalities).map(([name, prices]) => [
+    name, Object.fromEntries(Object.entries(prices).map(([key, value]) => [key, scale(value)]))]));
   return {
     ...found,
     input: found.input * factor,
@@ -83,11 +85,9 @@ function multiplied(found, factor) {
       output: scale(tier.output),
       cache_read: scale(tier.cache_read),
       cache_write: scale(tier.cache_write),
+      ...(tier.modalities ? { modalities: byModality(tier.modalities) } : {}),
     })),
-    ...(found.modalities ? {
-      modalities: Object.fromEntries(Object.entries(found.modalities).map(([name, prices]) => [
-        name, Object.fromEntries(Object.entries(prices).map(([key, value]) => [key, scale(value)]))])),
-    } : {}),
+    ...(found.modalities ? { modalities: byModality(found.modalities) } : {}),
   };
 }
 
@@ -125,9 +125,9 @@ function split(byModality) {
 }
 
 // A modality's input, cache read, and output prices, given the prices of a token without a
-// modality, as Rates._modality_prices gives them.
-function modalityPrices(found, name, current) {
-  const stated = (found.modalities || {})[name] || {};
+// modality and the prices by modality at the request's size, as Rates._modality_prices gives them.
+function modalityPrices(modalities, name, current) {
+  const stated = (modalities || {})[name] || {};
   const defaultCache = present(current.cache_read) ? current.cache_read : current.input;
   return {
     input: present(stated.input) ? stated.input : current.input,
@@ -172,9 +172,11 @@ export function breakdown(found, tokens) {
     cache_read: found.cache_read, cache_write: found.cache_write,
   };
   let applied = null;
+  let modalities = found.modalities;
   for (const tier of found.tiers) {
     if (prompt > tier.above) {
       applied = tier.above;
+      if (tier.modalities) modalities = tier.modalities;
       for (const key of ["input", "output", "cache_read", "cache_write"]) {
         if (present(tier[key])) current[key] = tier[key];
       }
@@ -187,7 +189,7 @@ export function breakdown(found, tokens) {
     ? inputRate * found.cache_write_1h_multiple : cacheWriteRate;
   const spent = { input: input * inputRate, output: output * current.output, cache_read: cacheRead * cacheReadRate };
   for (const [name, counts] of Object.entries(byModality || {})) {
-    const prices = modalityPrices(found, name, current);
+    const prices = modalityPrices(modalities, name, current);
     for (const key of COUNTS) spent[key] += counts[key] * prices[key];
   }
   const parts = {

@@ -103,12 +103,17 @@ def by_modality(rates: dict) -> str:
 
 
 def tiers(rates: dict) -> str:
+    """Each long-context tier's prices, with its modalities' other than text, whose prices
+    are the tier's own."""
+    def modal(tier: dict) -> str:
+        others = {name: prices for name, prices in tier.get("modalities", {}).items() if name != "text"}
+        return f" ({by_modality({'modalities': others})})" if others else ""
     return "; ".join(
         f"above {tier['above'] // 1000:,}K: " + ", ".join(
             f"{label} {price(tier[field])}" for field, label in (
                 ("input", "in"), ("cache_read", "cached"),
                 ("cache_read_explicit", "explicit cached"), ("cache_write", "write"),
-                ("output", "out")) if tier.get(field) is not None)
+                ("output", "out")) if tier.get(field) is not None) + modal(tier)
         for tier in rates.get("tiers", []))
 
 
@@ -159,7 +164,6 @@ def official_page(provider: str) -> str | None:
 # Providers that set prices in Chinese yuan, which models.dev converts to US dollars.
 YUAN_NOTES = {
     "volcengine": "at 6.737 yuan per dollar, the exchange rate on 2026-08-26",
-    "tencent-tokenhub": f"at about {1 / checks.YUAN_TO_USD['tencent-tokenhub']:.2f} yuan per dollar",
 }
 
 

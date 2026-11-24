@@ -37,16 +37,6 @@ _CONTEXT_MARKER = re.compile(r"\[[^\]]*\]$")
 _GROK_BUILD_ALIAS = re.compile(r"^(grok-\d+\.\d+)(-build)$")
 
 
-@dataclass(frozen=True)
-class Tier:
-    above: int
-    input: float | None = None
-    output: float | None = None
-    cache_read: float | None = None
-    cache_write: float | None = None
-    cache_read_explicit: float | None = None
-
-
 # The modalities a model may price apart, as models.dev names them, and the token counts
 # modality_tokens takes for each. Gemini reports PDF pages as DOCUMENT tokens, which Google
 # bills at the image price.
@@ -64,6 +54,19 @@ class ModalityRates:
     input: float | None = None
     output: float | None = None
     cache_read: float | None = None
+
+
+@dataclass(frozen=True)
+class Tier:
+    above: int
+    input: float | None = None
+    output: float | None = None
+    cache_read: float | None = None
+    cache_write: float | None = None
+    cache_read_explicit: float | None = None
+    # On a model that prices modalities apart, every modality's prices above this size, text
+    # included, in place of Rates.modalities; empty when the model's are unchanged here.
+    modalities: tuple[ModalityRates, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -182,7 +185,7 @@ class Rates:
         prompt = (input_tokens + cache_read_tokens + cache_read_explicit_tokens
                   + cache_write_tokens + cache_write_1h_tokens
                   + sum(counts["input"] + counts["cache_read"] for counts in (split or {}).values()))
-        applied, rates = self._tiered(prompt)
+        applied, rates, stated = self._tiered(prompt)
         input_rate = rates["input"]
         cache_read = rates["cache_read"] if rates["cache_read"] is not None else input_rate
         explicit = (rates["cache_read_explicit"] if rates["cache_read_explicit"] is not None
@@ -193,7 +196,7 @@ class Rates:
         spent = {"input": input_tokens * input_rate, "output": output_tokens * rates["output"],
                  "cache_read": cache_read_tokens * cache_read}
         for name, counts in (split or {}).items():
-            prices = self._modality_prices(name, rates)
+            prices = self._modality_prices(name, rates, stated)
             for key, count in counts.items():
                 spent[key] += count * prices[key]
         return CostBreakdown(
@@ -222,32 +225,36 @@ class Rates:
             total += count * prices[tool] / 1e3
         return total
 
-    def _tiered(self, prompt: int) -> tuple[int | None, dict[str, float | None]]:
-        """The long-context tier a prompt of this size reaches, if any, and the prices of a
-        token without a modality in it."""
+    def _tiered(self, prompt: int) -> tuple[int | None, dict[str, float | None],
+                                            tuple[ModalityRates, ...]]:
+        """The long-context tier a prompt of this size reaches, if any, the prices of a token
+        without a modality in it, and the prices by modality in it."""
         rates: dict[str, float | None] = {
             "input": self.input, "output": self.output,
             "cache_read": self.cache_read, "cache_write": self.cache_write,
             "cache_read_explicit": self.cache_read_explicit,
         }
-        applied = None
+        applied, modalities = None, self.modalities
         for tier in self.tiers:
             if prompt > tier.above:
                 applied = tier.above
+                modalities = tier.modalities or modalities
                 # A tier's cache read price without an explicit one prices both kinds of hit.
                 if tier.cache_read is not None:
                     rates["cache_read_explicit"] = None
                 rates.update({
                     key: value for key, value in asdict(tier).items()
-                    if key != "above" and value is not None
+                    if key not in {"above", "modalities"} and value is not None
                 })
-        return applied, rates
+        return applied, rates, modalities
 
-    def _modality_prices(self, name: str, rates: dict[str, float | None]) -> dict[str, float]:
+    def _modality_prices(self, name: str, rates: dict[str, float | None],
+                         modalities: tuple[ModalityRates, ...]) -> dict[str, float]:
         """The input, cache read, and output prices of a modality's tokens, given the prices
-        of a token without a modality: a price the modality does not state is, for cached
-        tokens, its own input price when it states one, and otherwise the default."""
-        stated = self.modality(name) or ModalityRates(name)
+        of a token without a modality and the prices by modality at the request's size: a
+        price the modality does not state is, for cached tokens, its own input price when it
+        states one, and otherwise the default."""
+        stated = next((item for item in modalities if item.modality == name), ModalityRates(name))
         default_cache = rates["cache_read"] if rates["cache_read"] is not None else rates["input"]
         return {"input": stated.input if stated.input is not None else rates["input"],
                 "output": stated.output if stated.output is not None else rates["output"],
@@ -556,7 +563,8 @@ def _known(cls: type, values: dict[str, Any]) -> dict[str, Any]:
 
 
 def _tiers(raw: list[dict[str, Any]] | None) -> tuple[Tier, ...]:
-    return tuple(Tier(**_known(Tier, tier)) for tier in raw or ())
+    return tuple(Tier(**{**_known(Tier, tier), "modalities": _modalities(tier.get("modalities"))})
+                 for tier in raw or ())
 
 
 def _modalities(raw: dict[str, dict[str, float]] | None) -> tuple[ModalityRates, ...]:
@@ -680,7 +688,9 @@ def _multiplied(found: Rates, factor: float) -> Rates:
         tiers=tuple(
             replace(tier, input=scale(tier.input), output=scale(tier.output),
                     cache_read=scale(tier.cache_read), cache_write=scale(tier.cache_write),
-                    cache_read_explicit=scale(tier.cache_read_explicit))
+                    cache_read_explicit=scale(tier.cache_read_explicit),
+                    modalities=tuple(replace(item, input=scale(item.input), output=scale(item.output),
+                                             cache_read=scale(item.cache_read)) for item in tier.modalities))
             for tier in found.tiers
         ),
     )
@@ -1098,6 +1108,11 @@ def main(argv: list[str] | None = None) -> int:
         print(f"above {tier.above:,} prompt tokens: input {usd(tier.input)}  "
               f"output {usd(tier.output)}  cache read {usd(tier.cache_read)}{explicit(tier)}  "
               f"cache write {usd(tier.cache_write)}")
+        for item in tier.modalities:
+            stated = [f"{label} ${value:g}" for label, value in (
+                ("input", item.input), ("output", item.output), ("cache read", item.cache_read))
+                if value is not None]
+            print(f"  {item.modality}: {'  '.join(stated)}")
     if found.tools:
         print("tools: " + ", ".join(f"{name} ${price:g} per 1,000 calls" for name, price in found.tools))
     for item in found.modalities:

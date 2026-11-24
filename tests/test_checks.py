@@ -51,7 +51,6 @@ PAGES = {
     "openai": (FIXTURES / "openai.md").read_text(),
     "xai": (FIXTURES / "xai.md").read_text(),
     "zai": (FIXTURES / "zai.md").read_text(),
-    "tencent-tokenhub": (FIXTURES / "tencent.html").read_text(),
     "longcat": (FIXTURES / "longcat.html").read_text(),
     "https://longcat.chat/platform/docs/pricing/longcat-2.0":
         (FIXTURES / "longcat-2.0.html").read_text(),
@@ -375,27 +374,11 @@ class CheckTests(unittest.TestCase):
             ("deepseek-v4-1-flash", "deepseek-v4-pro-preview"))})
         self.assertNotIn(9.9, {item.yuan for item in found.values()})
 
-    def test_tencent_reads_the_guangzhou_table_in_yuan(self):
-        found = {(item.model, item.field, item.above): item.yuan for item in
-                 checks.parse_tencent(PAGES["tencent-tokenhub"], TODAY)}
-
-        self.assertEqual(found[("hy4-preview", "input", None)], 6)
-        self.assertEqual(found[("hy3", "cache_read", None)], 0.25)
-        # The model column gives the API id, which the display name does not.
-        self.assertEqual(found[("hunyuan-role-latest", "output", None)], 9.6)
-        self.assertEqual(found[("glm-5v-turbo", "output", None)], 22)
-        self.assertEqual(found[("glm-5v-turbo", "output", 32_000)], 26)
-        self.assertEqual(found[("qwen3.5-flash", "input", 256_000)], 1.2)
-        self.assertEqual(found[("kimi-k3.1-pro", "cache_write", None)], 13)
-        self.assertEqual(found[("kimi-k3.1-pro", "cache_write_1h", None)], 26)
-        self.assertNotIn(("hy3", "cache_write", None), found)
-        # Peak and off-peak rows are left out.
-        self.assertFalse({key for key in found if "deepseek" in key[0]})
-
     def test_a_yuan_price_matches_within_rounding_of_its_conversion(self):
-        # models.dev lists hy4-preview's 18 yuan as $2.501; the conversion gives $2.502.
-        close = checks._yuan("tencent-tokenhub", "hy4-preview", "output", 18)
-        changed = checks._yuan("tencent-tokenhub", "hy4-preview", "output", 20)
+        # models.dev lists doubao-seed-2-0-pro-260215's 16 yuan output as $2.37494, as the
+        # conversion gives it; 17 yuan is a changed price.
+        close = checks._yuan("volcengine", "doubao-seed-2-0-pro-260215", "output", 16)
+        changed = checks._yuan("volcengine", "doubao-seed-2-0-pro-260215", "output", 17)
 
         self.assertEqual([r.status for r in checks.compare([close, changed], TODAY)],
                          ["ok", "mismatch"])
@@ -958,6 +941,10 @@ Batch
             interval(None, 9.0, md), interval("2026-11-09T12:00:00Z", 12.0, md)]}}}}
         self.assertEqual(checks.rewritten_history(late, built_from, None), [])
         self.assertTrue(checks.rewritten_history(late, published, None))
+        # A provider held for review stops at an earlier models.dev time.
+        held = {**published, "models_dev": {"committed_at": "2026-11-12T00:00:00Z",
+                                            "held": {"google": "2026-11-09T00:00:00Z"}}}
+        self.assertEqual(checks.rewritten_history(late, held, None), [])
         # A fee a tools.toml rule gives, dated by the page it cites, may enter past intervals,
         # as Meta's web search fee does from 2026-08-04; any other fee may not.
         rule = [{"provider": "google", "models": "^m$", "valid_from": "2026-01-01T00:00:00Z",

@@ -320,6 +320,8 @@ class PriceTests(unittest.TestCase):
             cut["providers"]["openai"]["gpt-6-astra"][-1]["rates"]["input"] = 8.0
             cut["providers"]["xai"] = {"grok-9": entries[:1]}
             held = hold(cut, output, {"openai"})
+            # The held provider's history stops at the models.dev time of the file it keeps.
+            self.assertEqual(held["held"], {"openai": json.loads(output.read_text())["source_committed_at"]})
             self.assertEqual(held["providers"]["openai"], data["providers"]["openai"])
             self.assertEqual(changed_providers(output, held), ["xai"])
 
@@ -496,13 +498,38 @@ class PriceTests(unittest.TestCase):
         self.assertEqual(parse_rates({"cost": {"input": 0.3, "output": 2.5, "input_audio": 1.0}}),
                          {"input": 0.3, "output": 2.5, "modalities": {
                              "audio": {"input": 1.0}, "text": {"input": 0.3, "output": 2.5}}})
-        # Long-context tiers and modality prices together are left out of the rates.
+        # Above a long-context tier, text takes the tier's prices and a modality without an
+        # override of its own keeps its price.
         tiered = {"schema": 2, "cost": {
             "text": {"input": {"price": 1, "overrides": [{"when": {"context": {"gt": 200_000}},
                                                            "price": 2}]},
                      "output": {"price": 2}},
             "audio": {"input": {"price": 3}}}}
-        self.assertNotIn("modalities", parse_rates(schema1(tiered)))
+        self.assertEqual(parse_rates(schema1(tiered))["tiers"], [{
+            "above": 200_000, "input": 2.0, "output": 2.0,
+            "modalities": {"audio": {"input": 3.0}, "text": {"input": 2.0, "output": 2.0}}}])
+        # Volcengine's Doubao Seed 2.0 Lite raises audio input with each text tier.
+        doubao = {"schema": 2, "cost": {
+            "text": {"input": {"price": 0.089, "cache": {"read": 0.018},
+                               "overrides": [{"when": {"context": {"gt": 32_000}}, "price": 0.134,
+                                              "cache": {"read": 0.027}}]},
+                     "output": {"price": 0.534, "overrides": [{"when": {"context": {"gt": 32_000}},
+                                                               "price": 0.802}]}},
+            "audio": {"input": {"price": 1.336, "cache": {"read": 0.267},
+                                "overrides": [{"when": {"context": {"gt": 32_000}}, "price": 2.004,
+                                               "cache": {"read": 0.401}}]}}}}
+        parsed = parse_rates(schema1(doubao))
+        self.assertEqual(parsed["tiers"][0]["modalities"], {
+            "audio": {"input": 2.004, "cache_read": 0.401},
+            "text": {"input": 0.134, "output": 0.802, "cache_read": 0.027}})
+        found = model_prices._stored_rates("volcengine", "doubao", {
+            **parsed, "valid_from": "2026-11-24T00:00:00Z", "source": "s"})
+        small = {"text": {"input": 1_000}, "audio": {"input": 10_000}}
+        large = {"text": {"input": 30_000}, "audio": {"input": 10_000}}
+        self.assertAlmostEqual(found.breakdown(modality_tokens=small).input,
+                               (1_000 * 0.089 + 10_000 * 1.336) / 1e6)
+        self.assertAlmostEqual(found.breakdown(modality_tokens=large).input,
+                               (30_000 * 0.134 + 10_000 * 2.004) / 1e6)
 
     def test_backfill_carries_cached_audio_back_over_schema_1(self):
         schema_1 = '[cost]\ninput = 4\noutput = 16\ncache_read = 0.4\ninput_audio = 32\noutput_audio = 64\n'
