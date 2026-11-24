@@ -12347,6 +12347,17 @@
      "valid_from": "2026-02-16T05:57:35Z"
     }
    ],
+   "step-1o-turbo-vision": [
+    {
+     "commit": "bfc039c42e1b",
+     "rates": {
+      "cache_read": 0.07,
+      "input": 0.36,
+      "output": 1.15
+     },
+     "valid_from": "2026-11-24T17:46:43Z"
+    }
+   ],
    "step-2-16k": [
     {
      "commit": "5a2bcd704e99",
@@ -12445,6 +12456,17 @@
       "output": 2.7
      },
      "valid_from": "2026-10-21T05:50:38Z"
+    }
+   ],
+   "stepaudio-2.5-chat": [
+    {
+     "commit": "bfc039c42e1b",
+     "rates": {
+      "cache_read": 0.3,
+      "input": 1.5,
+      "output": 3.5
+     },
+     "valid_from": "2026-11-24T17:46:43Z"
     }
    ]
   },
@@ -15842,8 +15864,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "5b491f5ed01045c1b75587caa59eda9d2f2062b1",
- "source_committed_at": "2026-11-24T17:43:38Z",
+ "source_commit": "e944b38c326f343ed68b8b4dc2a5fd7691121523",
+ "source_committed_at": "2026-11-24T17:47:45Z",
  "status": {
   "alibaba": {
    "qvq-max": "removed",
