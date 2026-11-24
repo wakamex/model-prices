@@ -50,6 +50,8 @@
   },
   "thinkingmachines": {
    "inkling": "thinkingmachines/Inkling",
+   "inkling-2-mini": "thinkingmachines/Inkling-2-Mini",
+   "inkling-2-small": "thinkingmachines/Inkling-2-Small",
    "inkling-small": "thinkingmachines/Inkling-Small"
   },
   "volcengine": {
@@ -136,6 +138,18 @@
       }
      },
      "valid_from": "2026-10-20T03:35:36Z"
+    },
+    {
+     "commit": "6e08b664cab8",
+     "rates": {
+      "cache_read": 0.044,
+      "input": 0.44,
+      "output": 1.32,
+      "tools": {
+       "web_search": 10.0
+      }
+     },
+     "valid_from": "2026-11-24T17:38:39Z"
     }
    ],
    "deepseek-v4-pro": [
@@ -149,6 +163,18 @@
       }
      },
      "valid_from": "2026-10-20T03:35:36Z"
+    },
+    {
+     "commit": "6e08b664cab8",
+     "rates": {
+      "cache_read": 0.2,
+      "input": 2.4,
+      "output": 4.8,
+      "tools": {
+       "web_search": 10.0
+      }
+     },
+     "valid_from": "2026-11-24T17:38:39Z"
     }
    ],
    "deepseek-v4-pro-0813": [
@@ -162,6 +188,18 @@
       }
      },
      "valid_from": "2026-10-20T03:35:36Z"
+    },
+    {
+     "commit": "6e08b664cab8",
+     "rates": {
+      "cache_read": 0.132,
+      "input": 1.32,
+      "output": 3.96,
+      "tools": {
+       "web_search": 10.0
+      }
+     },
+     "valid_from": "2026-11-24T17:38:39Z"
     }
    ],
    "deepseek-v4.1-flash": [
@@ -173,6 +211,15 @@
       "output": 1.2
      },
      "valid_from": "2026-10-20T03:35:36Z"
+    },
+    {
+     "commit": "6e08b664cab8",
+     "rates": {
+      "cache_read": 0.006,
+      "input": 0.3,
+      "output": 1.2
+     },
+     "valid_from": "2026-11-24T17:38:39Z"
     }
    ],
    "deepseek-v4.1-flash-1017": [
@@ -187,6 +234,18 @@
       }
      },
      "valid_from": "2026-10-20T03:35:36Z"
+    },
+    {
+     "commit": "6e08b664cab8",
+     "rates": {
+      "cache_read": 0.006,
+      "input": 0.3,
+      "output": 1.2,
+      "tools": {
+       "web_search": 10.0
+      }
+     },
+     "valid_from": "2026-11-24T17:38:39Z"
     }
    ],
    "glm-5.1": [
@@ -231,6 +290,15 @@
       "output": 4.4
      },
      "valid_from": "2026-10-20T03:35:36Z"
+    },
+    {
+     "commit": "6e08b664cab8",
+     "rates": {
+      "cache_read": 0.28,
+      "input": 1.4,
+      "output": 4.4
+     },
+     "valid_from": "2026-11-24T17:38:39Z"
     }
    ],
    "kimi-k2.7-code": [
@@ -1105,6 +1173,33 @@
       }
      },
      "valid_from": "2026-10-20T03:35:36Z"
+    },
+    {
+     "commit": "6e08b664cab8",
+     "rates": {
+      "cache_read_explicit": 0.04,
+      "cache_write": 0.5,
+      "input": 0.4,
+      "modes": {
+       "thinking": {
+        "output": 2.4
+       }
+      },
+      "output": 2.4,
+      "tiers": [
+       {
+        "above": 256000,
+        "cache_read_explicit": 0.05,
+        "cache_write": 0.625,
+        "input": 0.5,
+        "output": 3.0
+       }
+      ],
+      "tools": {
+       "web_search": 10.0
+      }
+     },
+     "valid_from": "2026-11-24T17:38:39Z"
     }
    ],
    "qwen3.6-27b": [
@@ -6153,6 +6248,30 @@
       "output": 2.5
      },
      "valid_from": "2026-08-21T06:42:28Z"
+    },
+    {
+     "commit": "eea13b54153b",
+     "rates": {
+      "cache_read": 0.03,
+      "input": 0.3,
+      "modes": {
+       "flex": {
+        "cache_read": 0.02,
+        "input": 0.15,
+        "output": 1.25
+       },
+       "priority": {
+        "cache_read": 0.05,
+        "input": 0.54,
+        "output": 4.5
+       }
+      },
+      "output": 2.5,
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "valid_from": "2026-11-24T17:21:52Z"
     }
    ],
    "gemini-live-2.5-flash": [
@@ -6309,6 +6428,26 @@
       ]
      },
      "valid_from": "2026-10-20T17:32:09Z"
+    },
+    {
+     "commit": "eea13b54153b",
+     "rates": {
+      "cache_read": 0.2,
+      "input": 2.0,
+      "output": 12.0,
+      "tiers": [
+       {
+        "above": 200000,
+        "cache_read": 0.4,
+        "input": 4.0,
+        "output": 18.0
+       }
+      ],
+      "tools": {
+       "web_search": 14.0
+      }
+     },
+     "valid_from": "2026-11-24T17:21:52Z"
     }
    ],
    "gemini-robotics-er-1.6-preview": [
@@ -6344,7 +6483,7 @@
      "valid_from": "2026-10-20T01:14:04Z"
     },
     {
-     "commit": "4e85ae8852cc",
+     "commit": "eea13b54153b",
      "rates": {
       "cache_read": 0.2,
       "input": 2.0,
@@ -6370,7 +6509,7 @@
      "valid_from": "2026-10-20T01:14:04Z"
     },
     {
-     "commit": "23affac1328e",
+     "commit": "eea13b54153b",
      "rates": {
       "input": 2.0,
       "output": 10.0,
@@ -12533,6 +12672,17 @@
      "valid_from": "2026-10-21T05:57:06Z"
     }
    ],
+   "moonshotai/Kimi-K3.1-Pro:peft:262144": [
+    {
+     "commit": "056a5f0b82eb",
+     "rates": {
+      "cache_read": 1.2,
+      "input": 6.0,
+      "output": 25.0
+     },
+     "valid_from": "2026-11-24T17:25:25Z"
+    }
+   ],
    "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16": [
     {
      "commit": "0aed167a234a",
@@ -12674,6 +12824,50 @@
       "output": 4.68
      },
      "valid_from": "2026-07-23T16:17:56Z"
+    }
+   ],
+   "thinkingmachines/Inkling-2-Mini": [
+    {
+     "commit": "056a5f0b82eb",
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.15,
+      "output": 0.5
+     },
+     "valid_from": "2026-11-24T17:25:25Z"
+    }
+   ],
+   "thinkingmachines/Inkling-2-Mini:peft:262144": [
+    {
+     "commit": "056a5f0b82eb",
+     "rates": {
+      "cache_read": 0.015,
+      "input": 0.15,
+      "output": 0.5
+     },
+     "valid_from": "2026-11-24T17:25:25Z"
+    }
+   ],
+   "thinkingmachines/Inkling-2-Small": [
+    {
+     "commit": "056a5f0b82eb",
+     "rates": {
+      "cache_read": 0.03,
+      "input": 0.3,
+      "output": 1.0
+     },
+     "valid_from": "2026-11-24T17:25:25Z"
+    }
+   ],
+   "thinkingmachines/Inkling-2-Small:peft:262144": [
+    {
+     "commit": "056a5f0b82eb",
+     "rates": {
+      "cache_read": 0.03,
+      "input": 0.3,
+      "output": 1.0
+     },
+     "valid_from": "2026-11-24T17:25:25Z"
     }
    ],
    "thinkingmachines/Inkling-Small": [
@@ -15036,6 +15230,18 @@
      "valid_from": "2026-09-19T05:17:06Z"
     }
    ],
+   "glm-5.3-flashx-legal": [
+    {
+     "commit": "25a2b8966f50",
+     "rates": {
+      "cache_read": 0.075,
+      "cache_write": 0.0,
+      "input": 0.37,
+      "output": 1.25
+     },
+     "valid_from": "2026-11-24T17:20:56Z"
+    }
+   ],
    "glm-5v-turbo": [
     {
      "commit": "ad3305bc0840",
@@ -15582,39 +15788,42 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "68773290d8e4784e7cfc3f23e1a1ea9e4d753aed",
- "source_committed_at": "2026-11-24T17:14:03Z",
+ "source_commit": "dfc6aa5deb34b5c9e4f6d56993320a055781a21e",
+ "source_committed_at": "2026-11-24T17:38:52Z",
  "status": {
   "alibaba": {
-   "qvq-max": "deprecated",
-   "qwen-mt-turbo": "deprecated",
-   "qwen-omni-turbo": "deprecated",
-   "qwen-omni-turbo-realtime": "deprecated",
-   "qwen-turbo": "deprecated",
-   "qwen-vl-max": "deprecated",
-   "qwen-vl-plus": "deprecated",
+   "qvq-max": "removed",
+   "qwen-mt-turbo": "removed",
+   "qwen-omni-turbo": "removed",
+   "qwen-omni-turbo-realtime": "removed",
+   "qwen-turbo": "removed",
+   "qwen-vl-max": "removed",
+   "qwen-vl-plus": "removed",
    "qwen2-5-14b-instruct": "removed",
    "qwen2-5-32b-instruct": "removed",
    "qwen2-5-72b-instruct": "removed",
    "qwen2-5-7b-instruct": "removed",
-   "qwen2-5-omni-7b": "deprecated",
+   "qwen2-5-omni-7b": "removed",
    "qwen2-5-vl-72b-instruct": "removed",
    "qwen2-5-vl-7b-instruct": "removed",
-   "qwen3-14b": "deprecated",
-   "qwen3-235b-a22b": "deprecated",
-   "qwen3-32b": "deprecated",
-   "qwen3-8b": "deprecated",
-   "qwen3-coder-30b-a3b-instruct": "deprecated",
-   "qwen3-coder-480b-a35b-instruct": "deprecated",
-   "qwen3-coder-plus": "deprecated",
-   "qwen3-livetranslate-flash-realtime": "deprecated",
-   "qwen3-max": "deprecated",
-   "qwen3-next-80b-a3b-instruct": "deprecated",
-   "qwen3-next-80b-a3b-thinking": "deprecated",
-   "qwen3-omni-flash-realtime": "deprecated",
-   "qwen3-vl-235b-a22b": "deprecated",
-   "qwen3.6-max-preview": "deprecated",
-   "qwq-plus": "deprecated"
+   "qwen3-14b": "removed",
+   "qwen3-235b-a22b": "removed",
+   "qwen3-32b": "removed",
+   "qwen3-8b": "removed",
+   "qwen3-coder-30b-a3b-instruct": "removed",
+   "qwen3-coder-480b-a35b-instruct": "removed",
+   "qwen3-coder-plus": "removed",
+   "qwen3-livetranslate-flash-realtime": "removed",
+   "qwen3-max": "removed",
+   "qwen3-next-80b-a3b-instruct": "removed",
+   "qwen3-next-80b-a3b-thinking": "removed",
+   "qwen3-omni-flash-realtime": "removed",
+   "qwen3-vl-235b-a22b": "removed",
+   "qwen3-vl-30b-a3b": "deprecated",
+   "qwen3.5-397b-a17b": "deprecated",
+   "qwen3.5-plus": "deprecated",
+   "qwen3.6-max-preview": "removed",
+   "qwq-plus": "removed"
   },
   "amazon-bedrock": {
    "amazon.nova-premier-v1:0": "removed",
@@ -15827,7 +16036,10 @@
    "step-2-16k": "removed"
   },
   "thinkingmachines": {
-   "inkling": "removed"
+   "Qwen/Qwen3.6-27B": "removed",
+   "deepseek-ai/DeepSeek-V3.1": "removed",
+   "inkling": "removed",
+   "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16": "removed"
   },
   "volcengine": {
    "doubao-seed-1-6-251015": "deprecated",
@@ -15874,9 +16086,9 @@
    "mimo-v2-flash": "removed",
    "mimo-v2-omni": "removed",
    "mimo-v2-pro": "removed",
-   "mimo-v2.5": "deprecated",
-   "mimo-v2.5-pro": "deprecated",
-   "mimo-v2.5-pro-ultraspeed": "deprecated"
+   "mimo-v2.5": "removed",
+   "mimo-v2.5-pro": "removed",
+   "mimo-v2.5-pro-ultraspeed": "removed"
   }
  }
 }
