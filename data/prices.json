@@ -61,6 +61,7 @@
    "seed-2.0-lite": "doubao-seed-2-0-lite-260428",
    "seed-2.0-mini": "doubao-seed-2-0-mini-260428",
    "seed-2.0-pro": "doubao-seed-2-0-pro-260215",
+   "seed-2.1-lite": "doubao-seed-2-1-lite-260915",
    "seed-2.1-pro": "doubao-seed-2-1-pro-260628",
    "seed-2.1-turbo": "doubao-seed-2-1-turbo-260628",
    "seed-character": "doubao-seed-character-260628",
@@ -12818,6 +12819,39 @@
    ]
   },
   "volcengine": {
+   "deepseek-v4-1-flash-260910": [
+    {
+     "commit": "007b3060b0ad",
+     "rates": {
+      "cache_read": 0.00299,
+      "input": 0.14972,
+      "output": 0.59886
+     },
+     "valid_from": "2026-11-24T17:15:35Z"
+    }
+   ],
+   "deepseek-v4-1-flash-261017": [
+    {
+     "commit": "007b3060b0ad",
+     "rates": {
+      "cache_read": 0.00299,
+      "input": 0.14972,
+      "output": 0.59886
+     },
+     "valid_from": "2026-11-24T17:15:35Z"
+    }
+   ],
+   "deepseek-v4-1-flash-economy-261017": [
+    {
+     "commit": "007b3060b0ad",
+     "rates": {
+      "cache_read": 0.0024,
+      "input": 0.11977,
+      "output": 0.47909
+     },
+     "valid_from": "2026-11-24T17:15:35Z"
+    }
+   ],
    "deepseek-v4-flash-ga-260731": [
     {
      "commit": "241a9864813e",
@@ -13040,6 +13074,28 @@
      "valid_from": "2026-09-02T18:53:25Z"
     }
    ],
+   "doubao-seed-2-1-lite-260915": [
+    {
+     "commit": "007b3060b0ad",
+     "rates": {
+      "cache_read": 0.02395,
+      "input": 0.11977,
+      "modalities": {
+       "audio": {
+        "cache_read": 0.35932,
+        "input": 1.7966
+       },
+       "text": {
+        "cache_read": 0.02395,
+        "input": 0.11977,
+        "output": 0.40423
+       }
+      },
+      "output": 0.40423
+     },
+     "valid_from": "2026-11-24T17:15:35Z"
+    }
+   ],
    "doubao-seed-2-1-pro-260628": [
     {
      "commit": "241a9864813e",
@@ -13049,6 +13105,17 @@
       "output": 4.45301
      },
      "valid_from": "2026-09-02T18:53:25Z"
+    }
+   ],
+   "doubao-seed-2-1-pro-260915": [
+    {
+     "commit": "007b3060b0ad",
+     "rates": {
+      "cache_read": 0.17966,
+      "input": 0.8983,
+      "output": 4.49149
+     },
+     "valid_from": "2026-11-24T17:15:35Z"
     }
    ],
    "doubao-seed-2-1-turbo-260628": [
@@ -13112,6 +13179,17 @@
       "output": 0.41563
      },
      "valid_from": "2026-09-17T00:17:18Z"
+    }
+   ],
+   "kimi-k3-1-pro-261024": [
+    {
+     "commit": "007b3060b0ad",
+     "rates": {
+      "cache_read": 0.19463,
+      "input": 1.94631,
+      "output": 10.18071
+     },
+     "valid_from": "2026-11-24T17:15:35Z"
     }
    ]
   },
@@ -15578,12 +15656,158 @@
     },
     "input": 12.5
    }
+  },
+  "volcengine": {
+   "deepseek-v4-1-flash-260910": {
+    "multipliers": [
+     {
+      "factor": 2,
+      "when": {
+       "any": [
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "01:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "04:00"
+           }
+          }
+         ]
+        },
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "06:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "10:00"
+           }
+          }
+         ]
+        }
+       ],
+       "utc_days": {
+        "in": [
+         "mon",
+         "tue",
+         "wed",
+         "thu",
+         "fri"
+        ]
+       }
+      }
+     }
+    ]
+   },
+   "deepseek-v4-1-flash-261017": {
+    "multipliers": [
+     {
+      "factor": 2,
+      "when": {
+       "any": [
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "01:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "04:00"
+           }
+          }
+         ]
+        },
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "06:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "10:00"
+           }
+          }
+         ]
+        }
+       ],
+       "utc_days": {
+        "in": [
+         "mon",
+         "tue",
+         "wed",
+         "thu",
+         "fri"
+        ]
+       }
+      }
+     }
+    ]
+   },
+   "deepseek-v4-1-flash-economy-261017": {
+    "multipliers": [
+     {
+      "factor": 2,
+      "when": {
+       "any": [
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "01:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "04:00"
+           }
+          }
+         ]
+        },
+        {
+         "all": [
+          {
+           "utc_hours": {
+            "gte": "06:00"
+           }
+          },
+          {
+           "utc_hours": {
+            "lt": "10:00"
+           }
+          }
+         ]
+        }
+       ],
+       "utc_days": {
+        "in": [
+         "mon",
+         "tue",
+         "wed",
+         "thu",
+         "fri"
+        ]
+       }
+      }
+     }
+    ]
+   }
   }
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "68773290d8e4784e7cfc3f23e1a1ea9e4d753aed",
- "source_committed_at": "2026-11-24T17:14:03Z",
+ "source_commit": "93c9b1fcc07e96ee35f7feb9e40b68cb233c61b3",
+ "source_committed_at": "2026-11-24T17:19:33Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
