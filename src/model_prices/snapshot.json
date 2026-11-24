@@ -117,8 +117,8 @@
   }
  ],
  "models_dev": {
-  "commit": "9ec5ef270de65b398b52b3f32099ef356e2fab6f",
-  "committed_at": "2026-11-23T19:55:07Z",
+  "commit": "fbaa0e1fde3e5a3f9211fbff69674ac8f4808eec",
+  "committed_at": "2026-11-24T00:47:20Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -45538,6 +45538,8 @@
    "claude-opus-4-1": "removed",
    "claude-opus-4-1-20250805": "removed",
    "claude-opus-4-20250514": "removed",
+   "claude-opus-4-5": "deprecated",
+   "claude-opus-4-5-20251101": "deprecated",
    "claude-opus-4-6-20260205": "removed",
    "claude-sonnet-4-0": "removed",
    "claude-sonnet-4-20250514": "removed",
@@ -45777,5 +45779,5 @@
    "mimo-v2.5-pro-ultraspeed": "deprecated"
   }
  },
- "updated_at": "2026-11-23T19:56:00Z"
+ "updated_at": "2026-11-24T00:48:06Z"
 }

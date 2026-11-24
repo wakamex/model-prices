@@ -15514,8 +15514,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "9ec5ef270de65b398b52b3f32099ef356e2fab6f",
- "source_committed_at": "2026-11-23T19:55:07Z",
+ "source_commit": "fbaa0e1fde3e5a3f9211fbff69674ac8f4808eec",
+ "source_committed_at": "2026-11-24T00:47:20Z",
  "status": {
   "alibaba": {
    "qvq-max": "deprecated",
@@ -15567,6 +15567,8 @@
    "claude-opus-4-1": "removed",
    "claude-opus-4-1-20250805": "removed",
    "claude-opus-4-20250514": "removed",
+   "claude-opus-4-5": "deprecated",
+   "claude-opus-4-5-20251101": "deprecated",
    "claude-opus-4-6-20260205": "removed",
    "claude-sonnet-4-0": "removed",
    "claude-sonnet-4-20250514": "removed",
