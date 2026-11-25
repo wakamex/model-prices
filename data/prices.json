@@ -13004,6 +13004,14 @@
       "output": 0.0
      },
      "valid_from": "2026-11-09T03:54:05Z"
+    },
+    {
+     "commit": "76daed77b692",
+     "rates": {
+      "input": 0.07,
+      "output": 0.0
+     },
+     "valid_from": "2026-11-25T17:18:31Z"
     }
    ],
    "kinfra-text-embedding-4b": [
@@ -13014,6 +13022,14 @@
       "output": 0.0
      },
      "valid_from": "2026-11-09T03:54:05Z"
+    },
+    {
+     "commit": "76daed77b692",
+     "rates": {
+      "input": 0.084,
+      "output": 0.0
+     },
+     "valid_from": "2026-11-25T17:18:31Z"
     }
    ],
    "mimo-v2.6-flash": [
@@ -17011,8 +17027,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "78aee78d7cc1175225cb288030dbca7bb7328315",
- "source_committed_at": "2026-11-25T17:08:11Z",
+ "source_commit": "b4f1678814716bfa2443c39727ee6bfc6ac2aa8d",
+ "source_committed_at": "2026-11-25T17:19:23Z",
  "status": {
   "alibaba": {
    "qvq-max": "removed",
