@@ -69,6 +69,7 @@
    "seedance-2.5": "doubao-seedance-2-5-260628"
   },
   "zai": {
+   "cogview-4": "cogview-4-250304",
    "glm-4.5": "glm-4.5-x",
    "glm-4.5-air": "glm-4.5-airx",
    "glm-4.6v-flash": "glm-4.6v-flashx",
@@ -989,6 +990,27 @@
       "output": 1.66
      },
      "valid_from": "2025-10-14T17:34:46Z"
+    },
+    {
+     "commit": "8e75f2ad9d6c",
+     "rates": {
+      "input": 0.43,
+      "modalities": {
+       "audio": {
+        "input": 3.81,
+        "output": 15.11
+       },
+       "image": {
+        "input": 0.78
+       },
+       "text": {
+        "input": 0.43,
+        "output": 1.66
+       }
+      },
+      "output": 1.66
+     },
+     "valid_from": "2026-11-25T17:20:49Z"
     }
    ],
    "qwen3-omni-flash-realtime": [
@@ -15749,6 +15771,16 @@
    ]
   },
   "zai": {
+   "glm-4-32b-0414-128k": [
+    {
+     "commit": "648cbc87d674",
+     "rates": {
+      "input": 0.1,
+      "output": 0.1
+     },
+     "valid_from": "2026-11-25T17:19:43Z"
+    }
+   ],
    "glm-4.5": [
     {
      "commit": "6d3491f8d509",
@@ -17027,8 +17059,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "b4f1678814716bfa2443c39727ee6bfc6ac2aa8d",
- "source_committed_at": "2026-11-25T17:19:23Z",
+ "source_commit": "b535ae74658f1b1878fa2ecc6e6bcbd8c362b99a",
+ "source_committed_at": "2026-11-25T17:22:56Z",
  "status": {
   "alibaba": {
    "qvq-max": "removed",
