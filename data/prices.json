@@ -17011,8 +17011,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "5192a691eea9a5e890caa31ec47983a2da31f7e6",
- "source_committed_at": "2026-11-25T14:16:34Z",
+ "source_commit": "78aee78d7cc1175225cb288030dbca7bb7328315",
+ "source_committed_at": "2026-11-25T17:08:11Z",
  "status": {
   "alibaba": {
    "qvq-max": "removed",
@@ -17186,7 +17186,10 @@
    "kimi-k2-thinking": "removed",
    "kimi-k2-thinking-turbo": "removed",
    "kimi-k2-turbo-preview": "removed",
-   "kimi-k2.5": "removed"
+   "kimi-k2.5": "removed",
+   "kimi-k2.6": "deprecated",
+   "kimi-k2.7-code": "deprecated",
+   "kimi-k2.7-code-highspeed": "deprecated"
   },
   "openai": {
    "chatgpt-image-latest": "deprecated",
