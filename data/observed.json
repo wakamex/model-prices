@@ -2847,6 +2847,17 @@
      "valid_from": "2026-11-20T20:49:24Z"
     }
    ],
+   "thinkingmachines/Inkling-2-Mini:peft:65536:free": [
+    {
+     "rates": {
+      "cache_read": 0.0,
+      "input": 0.0,
+      "output": 0.0
+     },
+     "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+     "valid_from": "2026-11-25T00:41:37Z"
+    }
+   ],
    "thinkingmachines/Inkling-2-Small": [
     {
      "rates": {

@@ -42702,6 +42702,21 @@
      }
     ]
    },
+   "thinkingmachines/Inkling-2-Mini:peft:65536:free": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.0,
+       "input": 0.0,
+       "output": 0.0,
+       "source": "https://tinker-docs.thinkingmachines.ai/tinker/models/models_and_pricing/index.md",
+       "valid_from": "2026-11-25T00:41:37Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "thinkingmachines/Inkling-2-Small": {
     "standard": [
      {
@@ -47060,5 +47075,5 @@
    "mimo-v2.5-pro-ultraspeed": "removed"
   }
  },
- "updated_at": "2026-11-24T21:54:07Z"
+ "updated_at": "2026-11-25T00:42:11Z"
 }
