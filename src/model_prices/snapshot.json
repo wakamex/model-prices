@@ -117,8 +117,8 @@
   }
  ],
  "models_dev": {
-  "commit": "b535ae74658f1b1878fa2ecc6e6bcbd8c362b99a",
-  "committed_at": "2026-11-25T17:22:56Z",
+  "commit": "538c057188eaeb658dc56865b5d8f1c9956df4e1",
+  "committed_at": "2026-11-25T17:32:00Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -47936,7 +47936,7 @@
   },
   "amazon-bedrock": {
    "amazon.nova-premier-v1:0": "removed",
-   "us.amazon.nova-premier-v1:0": "deprecated"
+   "us.amazon.nova-premier-v1:0": "removed"
   },
   "anthropic": {
    "claude-3-5-haiku-20241022": "removed",
@@ -48204,5 +48204,5 @@
    "mimo-v2.5-pro-ultraspeed": "removed"
   }
  },
- "updated_at": "2026-11-25T17:25:19Z"
+ "updated_at": "2026-11-25T17:33:01Z"
 }
