@@ -66,7 +66,8 @@
    "seedance-2.0": "doubao-seedance-2-0-260128",
    "seedance-2.0-fast": "doubao-seedance-2-0-fast-260128",
    "seedance-2.0-mini": "doubao-seedance-2-0-mini-260615",
-   "seedance-2.5": "doubao-seedance-2-5-260628"
+   "seedance-2.5": "doubao-seedance-2-5-260628",
+   "seedance-2.5-flash": "doubao-seedance-2-5-flash-261115"
   },
   "zai": {
    "cogview-4": "cogview-4-250304",
@@ -17059,8 +17060,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "538c057188eaeb658dc56865b5d8f1c9956df4e1",
- "source_committed_at": "2026-11-25T17:32:00Z",
+ "source_commit": "74ecb6acb2ed7633def30973184f4e3cb6034522",
+ "source_committed_at": "2026-11-25T18:22:52Z",
  "status": {
   "alibaba": {
    "qvq-max": "removed",
