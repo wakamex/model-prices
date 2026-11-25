@@ -1605,6 +1605,150 @@
      "valid_from": "2026-11-12T05:14:42Z"
     }
    ],
+   "swe-2-1": [
+    {
+     "rates": {
+      "cache_read": 0.05,
+      "cache_write": 0.0,
+      "input": 0.5,
+      "output": 2.5
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-25T05:40:23Z"
+    }
+   ],
+   "swe-2-1-high": [
+    {
+     "rates": {
+      "cache_read": 0.05,
+      "cache_write": 0.0,
+      "input": 0.5,
+      "output": 2.5
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-25T05:40:23Z"
+    }
+   ],
+   "swe-2-1-high-lightning": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "cache_write": 0.0,
+      "input": 5.0,
+      "output": 25.0
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-25T05:40:23Z"
+    }
+   ],
+   "swe-2-1-lightning": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "cache_write": 0.0,
+      "input": 5.0,
+      "output": 25.0
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-25T05:40:23Z"
+    }
+   ],
+   "swe-2-1-low": [
+    {
+     "rates": {
+      "cache_read": 0.05,
+      "cache_write": 0.0,
+      "input": 0.5,
+      "output": 2.5
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-25T05:40:23Z"
+    }
+   ],
+   "swe-2-1-low-lightning": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "cache_write": 0.0,
+      "input": 5.0,
+      "output": 25.0
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-25T05:40:23Z"
+    }
+   ],
+   "swe-2-1-max": [
+    {
+     "rates": {
+      "cache_read": 0.05,
+      "cache_write": 0.0,
+      "input": 0.5,
+      "output": 2.5
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-25T05:40:23Z"
+    }
+   ],
+   "swe-2-1-max-lightning": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "cache_write": 0.0,
+      "input": 5.0,
+      "output": 25.0
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-25T05:40:23Z"
+    }
+   ],
+   "swe-2-1-medium": [
+    {
+     "rates": {
+      "cache_read": 0.05,
+      "cache_write": 0.0,
+      "input": 0.5,
+      "output": 2.5
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-25T05:40:23Z"
+    }
+   ],
+   "swe-2-1-medium-lightning": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "cache_write": 0.0,
+      "input": 5.0,
+      "output": 25.0
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-25T05:40:23Z"
+    }
+   ],
+   "swe-2-1-xhigh": [
+    {
+     "rates": {
+      "cache_read": 0.05,
+      "cache_write": 0.0,
+      "input": 0.5,
+      "output": 2.5
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-25T05:40:23Z"
+    }
+   ],
+   "swe-2-1-xhigh-lightning": [
+    {
+     "rates": {
+      "cache_read": 0.5,
+      "cache_write": 0.0,
+      "input": 5.0,
+      "output": 25.0
+     },
+     "source": "https://docs.devin.ai/desktop/models",
+     "valid_from": "2026-11-25T05:40:23Z"
+    }
+   ],
    "swe-2-flash-high": [
     {
      "rates": {

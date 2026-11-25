@@ -11679,6 +11679,198 @@
      }
     ]
    },
+   "swe-2-1": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.05,
+       "cache_write": 0.0,
+       "input": 0.5,
+       "output": 2.5,
+       "source": "https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-11-25T05:42:15Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "swe-2-1-high": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.05,
+       "cache_write": 0.0,
+       "input": 0.5,
+       "output": 2.5,
+       "source": "https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-11-25T05:42:15Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "swe-2-1-high-lightning": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.5,
+       "cache_write": 0.0,
+       "input": 5.0,
+       "output": 25.0,
+       "source": "https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-11-25T05:42:15Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "swe-2-1-lightning": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.5,
+       "cache_write": 0.0,
+       "input": 5.0,
+       "output": 25.0,
+       "source": "https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-11-25T05:42:15Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "swe-2-1-low": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.05,
+       "cache_write": 0.0,
+       "input": 0.5,
+       "output": 2.5,
+       "source": "https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-11-25T05:42:15Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "swe-2-1-low-lightning": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.5,
+       "cache_write": 0.0,
+       "input": 5.0,
+       "output": 25.0,
+       "source": "https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-11-25T05:42:15Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "swe-2-1-max": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.05,
+       "cache_write": 0.0,
+       "input": 0.5,
+       "output": 2.5,
+       "source": "https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-11-25T05:42:15Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "swe-2-1-max-lightning": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.5,
+       "cache_write": 0.0,
+       "input": 5.0,
+       "output": 25.0,
+       "source": "https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-11-25T05:42:15Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "swe-2-1-medium": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.05,
+       "cache_write": 0.0,
+       "input": 0.5,
+       "output": 2.5,
+       "source": "https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-11-25T05:42:15Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "swe-2-1-medium-lightning": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.5,
+       "cache_write": 0.0,
+       "input": 5.0,
+       "output": 25.0,
+       "source": "https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-11-25T05:42:15Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "swe-2-1-xhigh": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.05,
+       "cache_write": 0.0,
+       "input": 0.5,
+       "output": 2.5,
+       "source": "https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-11-25T05:42:15Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
+   "swe-2-1-xhigh-lightning": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.5,
+       "cache_write": 0.0,
+       "input": 5.0,
+       "output": 25.0,
+       "source": "https://docs.devin.ai/desktop/models",
+       "valid_from": "2026-11-25T05:42:15Z",
+       "valid_from_basis": "first observed"
+      },
+      "start": null
+     }
+    ]
+   },
    "swe-2-flash-high": {
     "standard": [
      {
@@ -47075,5 +47267,5 @@
    "mimo-v2.5-pro-ultraspeed": "removed"
   }
  },
- "updated_at": "2026-11-25T00:42:11Z"
+ "updated_at": "2026-11-25T05:42:48Z"
 }
