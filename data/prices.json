@@ -4569,6 +4569,23 @@
       "output": 30.0
      },
      "valid_from": "2026-11-15T22:57:01Z"
+    },
+    {
+     "commit": "4112140b73e8",
+     "rates": {
+      "input": 0.3,
+      "modalities": {
+       "image": {
+        "output": 30.0
+       },
+       "text": {
+        "input": 0.3,
+        "output": 2.5
+       }
+      },
+      "output": 30.0
+     },
+     "valid_from": "2026-11-25T14:09:02Z"
     }
    ],
    "gemini-2.5-flash-image-preview": [
@@ -16768,8 +16785,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "464b5409f68a4bf99b81f9bf296bdeb0736950a3",
- "source_committed_at": "2026-11-24T21:52:33Z",
+ "source_commit": "4112140b73e88fbc4d94e632c9f6a3c4a9c082f3",
+ "source_committed_at": "2026-11-25T14:09:02Z",
  "status": {
   "alibaba": {
    "qvq-max": "removed",
