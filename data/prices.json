@@ -13019,6 +13019,18 @@
      "valid_from": "2026-11-24T17:43:38Z"
     }
    ],
+   "kimi-k3.1-pro-highspeed": [
+    {
+     "commit": "ef1e356a70f2",
+     "rates": {
+      "cache_read": 0.2,
+      "cache_write": 4.0,
+      "input": 4.0,
+      "output": 20.0
+     },
+     "valid_from": "2026-11-26T17:20:33Z"
+    }
+   ],
    "kinfra-text-embedding-0.6b": [
     {
      "commit": "1162d4c6fa1c",
@@ -13053,6 +13065,17 @@
       "output": 0.0
      },
      "valid_from": "2026-11-25T17:18:31Z"
+    }
+   ],
+   "mimo-v2.5-pro": [
+    {
+     "commit": "ef1e356a70f2",
+     "rates": {
+      "cache_read": 0.0036,
+      "input": 0.435,
+      "output": 0.87
+     },
+     "valid_from": "2026-11-26T17:20:33Z"
     }
    ],
    "mimo-v2.6-flash": [
@@ -16909,6 +16932,13 @@
      "5m": 2
     },
     "input": 2
+   },
+   "kimi-k3.1-pro-highspeed": {
+    "cache_write": {
+     "1h": 8,
+     "5m": 4
+    },
+    "input": 4
    }
   },
   "volcengine": {
@@ -17060,8 +17090,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "74ecb6acb2ed7633def30973184f4e3cb6034522",
- "source_committed_at": "2026-11-25T18:22:52Z",
+ "source_commit": "ef1e356a70f2ebe990983ff457c9ac6ffc2bc458",
+ "source_committed_at": "2026-11-26T17:20:33Z",
  "status": {
   "alibaba": {
    "qvq-max": "removed",

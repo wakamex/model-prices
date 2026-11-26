@@ -118,8 +118,8 @@
   }
  ],
  "models_dev": {
-  "commit": "74ecb6acb2ed7633def30973184f4e3cb6034522",
-  "committed_at": "2026-11-25T18:22:52Z",
+  "commit": "ef1e356a70f2ebe990983ff457c9ac6ffc2bc458",
+  "committed_at": "2026-11-26T17:20:33Z",
   "source": "https://github.com/sst/models.dev"
  },
  "plans": [
@@ -43130,6 +43130,23 @@
      }
     ]
    },
+   "kimi-k3.1-pro-highspeed": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.2,
+       "cache_write": 4.0,
+       "cache_write_1h_multiple": 2.0,
+       "input": 4.0,
+       "output": 20.0,
+       "source": "https://github.com/sst/models.dev/commit/ef1e356a70f2",
+       "valid_from": "2026-11-26T17:20:33Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
+     }
+    ]
+   },
    "kinfra-text-embedding-0.6b": {
     "standard": [
      {
@@ -43179,6 +43196,22 @@
        "valid_from_basis": "models.dev commit"
       },
       "start": "2026-11-25T17:18:31Z"
+     }
+    ]
+   },
+   "mimo-v2.5-pro": {
+    "standard": [
+     {
+      "rates": {
+       "cache_read": 0.0036,
+       "cache_write_1h_multiple": 2.0,
+       "input": 0.435,
+       "output": 0.87,
+       "source": "https://github.com/sst/models.dev/commit/ef1e356a70f2",
+       "valid_from": "2026-11-26T17:20:33Z",
+       "valid_from_basis": "models.dev commit"
+      },
+      "start": null
      }
     ]
    },
@@ -48205,5 +48238,5 @@
    "mimo-v2.5-pro-ultraspeed": "removed"
   }
  },
- "updated_at": "2026-11-25T18:24:10Z"
+ "updated_at": "2026-11-26T17:22:10Z"
 }
