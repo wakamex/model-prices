@@ -42,6 +42,22 @@ class StateTests(unittest.TestCase):
         self.assertIn("watch-pages.yml", run.call_args.args)
         self.assertEqual(state["page_watch_started"], 10_000 + watch.PAGE_WATCH_INTERVAL)
 
+    def test_nothing_starts_while_the_state_cannot_be_saved(self):
+        # On a full disk the watch started the page watch every minute, since the time it
+        # started could not be saved.
+        state = {}
+        with mock.patch.object(watch, "_run") as run, \
+                mock.patch.object(watch, "save", side_effect=OSError(28, "No space left on device")):
+            with self.assertRaises(OSError):
+                watch.start_page_watch(state, 10_000)
+        run.assert_not_called()
+        # A start that fails is undone, so the next run tries again.
+        with mock.patch.object(watch, "_run", side_effect=watch.subprocess.CalledProcessError(1, "gh")), \
+                mock.patch("sys.stdout"):
+            with self.assertRaises(watch.subprocess.CalledProcessError):
+                watch.start_page_watch(state, 20_000)
+        self.assertNotIn("page_watch_started", state)
+
 
 if __name__ == "__main__":
     unittest.main()

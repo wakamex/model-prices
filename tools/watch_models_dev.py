@@ -156,13 +156,40 @@ def save(state: dict) -> None:
     partial.replace(STATE)
 
 
+def recorded(state: dict, updates: dict, action) -> None:
+    """Save `updates` to the state, then run `action`, so a state that cannot be saved, such
+    as on a full disk, stops the action instead of letting it repeat every minute. An action
+    that fails undoes the updates, so the next run tries again."""
+    missing = object()
+    previous = {key: state.get(key, missing) for key in updates}
+
+    def undo() -> None:
+        for key, value in previous.items():
+            if value is missing:
+                state.pop(key, None)
+            else:
+                state[key] = value
+    state.update(updates)
+    try:
+        save(state)
+    except OSError:
+        undo()
+        raise
+    try:
+        action()
+    except Exception:
+        undo()
+        save(state)
+        raise
+
+
 def start_page_watch(state: dict, now: float | None = None) -> None:
     """Start the hourly page watch when an hour has passed since this last started it."""
     now = time.time() if now is None else now
     if now - state.get("page_watch_started", 0) < PAGE_WATCH_INTERVAL:
         return
-    _run(GH, "workflow", "run", PAGE_WATCH, "--repo", REPOSITORY)
-    state["page_watch_started"] = now
+    recorded(state, {"page_watch_started": now},
+             lambda: _run(GH, "workflow", "run", PAGE_WATCH, "--repo", REPOSITORY))
     print(f"started {PAGE_WATCH}")
 
 
@@ -186,10 +213,11 @@ def check(state: dict) -> None:
     changed = sorted(name for name in trees.keys() | state.get("trees", {}).keys()
                      if trees.get(name) != state.get("trees", {}).get(name))
     # The first run records the current state without starting anything.
-    if changed and "trees" in state:
-        _run(GH, "workflow", "run", WORKFLOW, "--repo", REPOSITORY)
+    start = changed and "trees" in state
+    recorded(state, {"head": commit, "trees": trees},
+             lambda: _run(GH, "workflow", "run", WORKFLOW, "--repo", REPOSITORY) if start else None)
+    if start:
         print(f"{commit[:9]}: started {WORKFLOW} for {', '.join(changed)}")
-    state.update(head=commit, trees=trees)
 
 
 if __name__ == "__main__":
