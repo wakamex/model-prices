@@ -364,6 +364,54 @@
      "valid_from": "2026-11-24T17:43:21Z"
     }
    ],
+   "mindlab/macaron-v1-tall": [
+    {
+     "commit": "5e799244ede6",
+     "rates": {
+      "cache_read": 0.08,
+      "cache_write": 0.08,
+      "input": 0.45,
+      "output": 2.6
+     },
+     "valid_from": "2026-11-27T17:19:07Z"
+    }
+   ],
+   "mindlab/macaron-v1.1-coding-venti": [
+    {
+     "commit": "5e799244ede6",
+     "rates": {
+      "cache_read": 0.22,
+      "cache_write": 0.22,
+      "input": 1.19,
+      "output": 3.74
+     },
+     "valid_from": "2026-11-27T17:19:07Z"
+    }
+   ],
+   "mindlab/macaron-v1.1-venti": [
+    {
+     "commit": "5e799244ede6",
+     "rates": {
+      "cache_read": 0.22,
+      "cache_write": 0.22,
+      "input": 1.19,
+      "output": 3.74
+     },
+     "valid_from": "2026-11-27T17:19:07Z"
+    }
+   ],
+   "mindlab/macaron-v1.1-venti-pro": [
+    {
+     "commit": "5e799244ede6",
+     "rates": {
+      "cache_read": 0.1,
+      "cache_write": 0.1,
+      "input": 2.0,
+      "output": 10.0
+     },
+     "valid_from": "2026-11-27T17:19:07Z"
+    }
+   ],
    "qvq-max": [
     {
      "commit": "9511348dd73d",
@@ -17090,8 +17138,8 @@
  },
  "schema_version": 1,
  "source": "https://github.com/sst/models.dev",
- "source_commit": "ef1e356a70f2ebe990983ff457c9ac6ffc2bc458",
- "source_committed_at": "2026-11-26T17:20:33Z",
+ "source_commit": "5e799244ede67d969b5581924e302f53159037b5",
+ "source_committed_at": "2026-11-27T17:19:07Z",
  "status": {
   "alibaba": {
    "qvq-max": "removed",
