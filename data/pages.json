@@ -3667,6 +3667,13 @@
      },
      "source": "https://mistral.ai/pricing/api",
      "valid_from": "2026-11-12T05:15:05Z"
+    },
+    {
+     "rates": {
+      "output": 0.3
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-27T18:22:27Z"
     }
    ],
    "voxtral-small-latest": [
@@ -3676,6 +3683,13 @@
      },
      "source": "https://mistral.ai/pricing/api",
      "valid_from": "2026-11-12T05:15:05Z"
+    },
+    {
+     "rates": {
+      "output": 0.3
+     },
+     "source": "https://mistral.ai/pricing/api",
+     "valid_from": "2026-11-27T18:22:27Z"
     }
    ]
   },
