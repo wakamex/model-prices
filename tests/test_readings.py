@@ -224,6 +224,28 @@ class PageBuildTests(unittest.TestCase):
             "changes  p/m standard from 2026-11-14T00:00:00Z: input 1.0 -> 2.0",
             "adds     p/m thinking from 2026-11-12T00:00:00Z: output none -> 3.0"])
 
+    def test_a_page_price_models_dev_prices_differently_is_listed_by_the_run_that_first_publishes_it(self):
+        # Mistral's page cut Voxtral Small's output to $0.3 on 2026-11-27, with models.dev at $0.4.
+        recorded = {"mistral": {"voxtral-small-2507": [
+            {"valid_from": "2026-10-07T14:52:40Z", "commit": "a", "rates": {"input": 0.1, "output": 0.4}}]}}
+        first = self.page("2026-11-12T05:15:05Z", {"output": 0.4})
+        cut = self.page("2026-11-27T18:22:27Z", {"output": 0.3})
+        key = ("mistral", "voxtral-small-2507")
+        self.assertEqual(readings.conflicts({key: [first, cut]}, {key: [first]}, recorded), [
+            "mistral/voxtral-small-2507 output from 2026-11-27T18:22:27Z: page $0.3, models.dev $0.4"])
+        # The next run's earlier copy has it, so that run lists nothing.
+        self.assertEqual(readings.conflicts({key: [first, cut]}, {key: [first, cut]}, recorded), [])
+        # A later change to another price lists only that price, and a price models.dev lacks,
+        # or a rounded copy of its own, is no conflict.
+        later = self.page("2026-11-28T00:00:00Z", {"output": 0.3, "input": 0.1, "cache_read": 0.01})
+        self.assertEqual(readings.conflicts({key: [first, cut, later]}, {key: [first, cut]}, recorded), [])
+        recorded[key[0]][key[1]].append({"valid_from": "2026-11-20T00:00:00Z", "commit": "b",
+                                          "rates": {"input": 0.125, "output": 0.4}})
+        rounded = self.page("2026-11-28T00:00:00Z", {"output": 0.3, "input": 0.13})
+        self.assertEqual(readings.conflicts({key: [first, cut, rounded]}, {key: [first, cut]}, recorded), [])
+        # A model models.dev does not list is an addition.
+        self.assertEqual(readings.conflicts({("mistral", "new"): [cut]}, {}, recorded), [])
+
     def test_an_impossible_price_fails_the_build_and_an_unlikely_one_is_reported(self):
         pages = {("anthropic", "claude-opus-5-5"): [
             self.page("2026-11-12T06:00:00Z", {"input": 4.0, "output": 20.0}),

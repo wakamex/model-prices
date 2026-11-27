@@ -52,6 +52,9 @@ jobs:
           # The prices the pricing pages stated, from the readings the runs so far recorded on
           # the data branch, go to data/pages.json, which the compiler reads when PAGES_FIRST is
           # on; this run's own readings reach it in the next run.
+          # The copy the last build read, so the run that first publishes a page price can
+          # report one models.dev prices differently.
+          cp data/pages.json "$RUNNER_TEMP/pages-before.json"
           if git fetch --quiet origin data; then
             git worktree add --quiet --detach "$RUNNER_TEMP/readings" FETCH_HEAD
             uv --no-config run --locked model-prices readings pages "$RUNNER_TEMP/readings"
@@ -162,6 +165,10 @@ jobs:
       - name: Fail when a provider failed its official check
         if: github.event_name != 'push'
         run: |
+          # A page price this run published first that models.dev prices differently fails
+          # this run alone, after publishing it, for an agent to confirm or correct.
+          conflicts=0
+          uv --no-config run --locked model-prices readings conflicts "$RUNNER_TEMP/pages-before.json" || conflicts=1
           if [ -n "$HELD" ]; then
             echo "Held after failing the official check:$HELD"
             exit 1
@@ -172,6 +179,7 @@ jobs:
           fi
           # Any other disagreement, such as a page that changed before models.dev did.
           uv --no-config run --locked model-prices check
+          exit "$conflicts"
 
       # The website shows each model's check status from these results, so a deploy fetches no
       # pages itself. The pages this run fetched are read back from its archive, not fetched again.

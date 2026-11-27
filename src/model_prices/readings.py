@@ -471,6 +471,35 @@ def unlikely(pages: dict[tuple[str, str], list[dict]]) -> list[str]:
     return found
 
 
+def conflicts(pages: dict[tuple[str, str], list[dict]], earlier: dict[tuple[str, str], list[dict]],
+              recorded: dict) -> list[str]:
+    """The page prices `pages` gives that `earlier`, the page entries the last build read, did
+    not, where models.dev's entry in effect at the time, from `recorded`, prices the same field
+    differently. The build publishes the page's price, so each is listed by the one run that
+    first publishes it, for an agent to confirm it or correct it."""
+    from model_prices.checks import _matches
+    found = []
+    for (provider, model), entries in sorted(pages.items()):
+        listed = recorded.get(provider, {}).get(model, [])
+        stated: dict[str, float] = {}
+        for entry in entries:
+            prices = _prices(entry["rates"])
+            if listed and entry not in earlier.get((provider, model), []):
+                at = _parse_time(entry["valid_from"])
+                base = next((item for item in reversed(listed) if _parse_time(item["valid_from"]) <= at),
+                            listed[0])
+                theirs = _prices(base["rates"])
+                for path, price in sorted(prices.items()):
+                    # A price the page shows rounded from models.dev's, as $0.13 for $0.125,
+                    # is the same price.
+                    if (stated.get(path) != price and path in theirs
+                            and not _matches(theirs[path], price, 1e-9)):
+                        found.append(f"{provider}/{model} {path} from {entry['valid_from']}: "
+                                     f"page ${price:g}, models.dev ${theirs[path]:g}")
+            stated = prices
+    return found
+
+
 def _differences(built: dict, published: dict, start: str) -> list[str]:
     """For each model and mode, each time from `start` that the built and published rates
     come to differ, or differ in another way, with the fields that differ, marked as adding

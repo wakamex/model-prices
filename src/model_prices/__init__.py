@@ -915,7 +915,7 @@ def main(argv: list[str] | None = None) -> int:
         "readings", help="Record what each reader read from archived pages, or compare it with "
                          "the published prices")
     reading.add_argument("action", choices=["fetch", "record", "retry", "retry-pages", "diff",
-                                            "changed", "shadow", "pages"],
+                                            "changed", "shadow", "pages", "conflicts"],
                          help="fetch: fetch every page the hourly readers read into the archive "
                               "DIRECTORY; record: add readings to DIRECTORY for the runs in "
                               "--archive; retry: read again the failed readings whose runs "
@@ -925,8 +925,11 @@ def main(argv: list[str] | None = None) -> int:
                               "--run differs from the one before; shadow: build the snapshot "
                               "with the pricing pages' token prices from their first reading, "
                               "and list where it differs from the bundled snapshot; pages: write the pricing "
-                              "pages' prices to data/pages.json for the compiler")
-    reading.add_argument("directory", type=Path, help="The page archive (fetch) or the readings")
+                              "pages' prices to data/pages.json for the compiler; conflicts: list the "
+                              "page prices data/pages.json gives over the earlier copy DIRECTORY that "
+                              "models.dev prices differently")
+    reading.add_argument("directory", type=Path,
+                         help="The page archive (fetch), the readings, or the earlier pages.json (conflicts)")
     reading.add_argument("--archive", type=Path,
                          help="Page archive to read, with fetches.jsonl and blobs/ (record only)")
     reading.add_argument("--run", help="Workflow run to compare (changed only)")
@@ -961,6 +964,19 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"impossible  {line}")
             # An impossible rate card fails the build; an unlikely price is for a look only.
             return 1 if found.impossible else 0
+        if args.action == "conflicts":
+            def by_model(path: Path) -> dict:
+                return {(provider, model): entries
+                        for provider, models in json.loads(path.read_text())["providers"].items()
+                        for model, entries in models.items()}
+            found = readings.conflicts(by_model(Path("data/pages.json")), by_model(args.directory),
+                                       json.loads(Path("data/prices.json").read_text())["providers"])
+            for line in found:
+                print(f"conflict  {line}")
+            if found:
+                print("This run published these page prices, which models.dev prices differently. "
+                      "Confirm each on its page, and write a correction for any the page states wrongly.")
+            return 1 if found else 0
         if args.action == "pages":
             print(f"wrote the page prices of {readings.write_pages(args.directory, Path('data'))} models")
             return 0

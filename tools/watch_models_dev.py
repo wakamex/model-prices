@@ -82,7 +82,7 @@ def failed_lines(run: int) -> list[str]:
         log = _run(GH, "run", "view", str(run), "--repo", REPOSITORY, *flags).splitlines()
         return [re.sub(r"\x1b\[[0-9;]*m", "", line.split("Z ", 1)[-1]) for line in log]
     found = [line for line in messages("--log")
-             if line.startswith(("mismatch  ", "error     ", "FAIL: "))
+             if line.startswith(("mismatch  ", "error     ", "conflict  ", "FAIL: "))
              or re.match(r"[A-Za-z]+Error: ", line)]
     return found or messages("--log-failed")[-15:]
 
