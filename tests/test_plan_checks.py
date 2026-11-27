@@ -87,6 +87,11 @@ class PlanCheckTests(unittest.TestCase):
         # StepFun's feed names each plan by a type number, in cents.
         self.assertEqual(plan_checks.read_stepfun(PAGES["stepfun-ai"])[("stepfun-ai", "mini")], 6.99)
         self.assertEqual(plan_checks.read_alibaba_token(PAGES["alibaba-token"])[("alibaba", "token_lite")], 6)
+        # Before 2026-11-27 the Coding Plan's price row was labelled Price, under a column "Pro".
+        self.assertEqual(plan_checks.read_alibaba_coding(
+            "<table><thead><tr><th><p></p></th><th><p><strong>Pro</strong></p></th></tr></thead>"
+            "<tbody><tr><td><p>Price</p></td><td><p><strong>$ 50</strong>/month</p></td></tr>"
+            "</tbody></table>"), {("alibaba", "coding_pro"): 50})
 
     def test_plan_changes_are_dated(self):
         # ChatGPT's pro names several tiers from OpenAI's announcement of the $100 tier.

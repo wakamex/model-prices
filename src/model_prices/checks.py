@@ -1720,8 +1720,8 @@ def tool_prices(provider: str, page: str) -> dict[str, set[float]]:
                        ("web_search_fast", r"or \*\*\$([0-9.]+) per 1,000 invocations\*\* with `search_type: \"fast\"`")],
         # Served as HTML or as Markdown, which lists each region as a bullet. The agent policy
         # states its fee per call; a limited-time agent_max policy, while offered, states its
-        # web search tool's fee.
-        "alibaba": [("web_search", r"(?:Fee per 1,000 calls for the web search tool|The fee per 1,000 calls is as follows):\s*(?:- )?For the China[^$]*\$[0-9.]+\.\s*(?:- )?For the Singapore region: \$([0-9]+(?:\.[0-9]+)?)")],
+        # web search tool's fee. Since 2026-11-27 the bullets start with the region's name.
+        "alibaba": [("web_search", r"(?:Fee per 1,000 calls for the web search tool|The fee per 1,000 calls is as follows|The fee for every 1,000 calls is|Web search tool fee per 1,000 calls):\s*(?:- )?(?:For the )?China[^$]*\$[0-9.]+\.?\s*(?:- )?(?:For the )?Singapore region: \$([0-9]+(?:\.[0-9]+)?)")],
     }[provider]
     found = {}
     for tool, pattern in patterns:

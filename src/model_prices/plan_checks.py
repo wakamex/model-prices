@@ -151,9 +151,9 @@ def read_minimax(page: str) -> Prices:
                                 re.findall(r"^\| (\w+) \| [^|]+ \| \\?\$([0-9.]+)/month \|$", page, re.M)))
 
 
-def _table(page: str, provider: str, label: str) -> tuple[list[str], list[str]]:
-    """The column titles and the row whose first cell is `label`, as text, of the one HTML
-    table that has such a row."""
+def _table(page: str, provider: str, *labels: str) -> tuple[list[str], list[str]]:
+    """The column titles and the row whose first cell is one of `labels`, as text, of the one
+    HTML table that has such a row."""
 
     def text(cell: str) -> str:
         return " ".join(re.sub(r"<[^>]+>", " ", cell).replace("\\$", "$").split())
@@ -162,19 +162,23 @@ def _table(page: str, provider: str, label: str) -> tuple[list[str], list[str]]:
     for table in re.findall(r"<table.*?</table>", page, re.S):
         rows = [[text(cell) for cell in re.findall(r"<t[hd][^>]*?(?:/>|>(.*?)</t[hd]>)", row, re.S)]
                 for row in re.findall(r"<tr>(.*?)</tr>", table, re.S)]
-        found += [(rows[0], row) for row in rows[1:] if row[0] == label]
+        found += [(rows[0], row) for row in rows[1:] if row[0] in labels]
     if len(found) != 1:
-        raise ValueError(f"{provider}: {len(found)} tables have a {label} row; the page format changed")
+        raise ValueError(f"{provider}: {len(found)} tables have a {' or '.join(labels)} row; "
+                         "the page format changed")
     return found[0]
 
 
 def read_alibaba_coding(page: str) -> Prices:
-    titles, row = _table(page, "alibaba", "Price")
-    prices = [re.fullmatch(r"\$ ?([0-9.]+) ?/month", cell) for cell in row[1:]]
-    if len(prices) != len(titles) - 1 or not all(prices):
+    """The Coding Plan table's price row, labelled Pricing with columns such as "Pro Plan"
+    since 2026-11-27, and Price with columns such as "Pro" before."""
+    titles, row = _table(page, "alibaba", "Pricing", "Price")
+    names = [re.fullmatch(r"(\w+)(?: Plan)?", title) for title in titles[1:]]
+    prices = [re.fullmatch(r"\$ ?([0-9.]+) ?/(?:month|Month\(s\))", cell) for cell in row[1:]]
+    if len(prices) != len(names) or not all(names) or not all(prices):
         raise ValueError(f"alibaba: the Coding Plan price row is {row}")
-    return _collect("alibaba", ((("alibaba", f"coding_{title.lower()}"), float(price.group(1)))
-                                for title, price in zip(titles[1:], prices)))
+    return _collect("alibaba", ((("alibaba", f"coding_{name.group(1).lower()}"), float(price.group(1)))
+                                for name, price in zip(names, prices)))
 
 
 def read_alibaba_token(page: str) -> Prices:

@@ -752,6 +752,17 @@ Batch
             "  - <strong>agent policy</strong>:\n\n    - The fee per 1,000 calls is as follows:\n\n"
             "      - For the China (Beijing), US (Virginia) regions: \\$0.573411.\n"
             "      - For the Singapore region: \\$10.00.\n")), {"web_search": {10.0}})
+        # Since 2026-11-27 each bullet starts with the region, and the agent policy's China
+        # price has no full stop.
+        self.assertEqual(checks.tool_prices("alibaba", (
+            "    - The fee for every 1,000 calls is:\n\n"
+            "      - China (Beijing), US (Virginia), Hong Kong (China), Japan (Tokyo), and Germany "
+            "(Frankfurt) regions: \\$0.573411\n"
+            "      - Singapore region: \\$10.00.\n")), {"web_search": {10.0}})
+        self.assertEqual(checks.tool_prices("alibaba", (
+            "    - Web search tool fee per 1,000 calls:\n\n"
+            "      - China (Beijing), US (Virginia) regions: \\$0.573411.\n"
+            "      - Singapore region: \\$12.00.\n")), {"web_search": {12.0}})
         self.assertEqual(checks.tool_prices("meta", (
             "- **Web search grounding**: **$2.50 per 1,000 search queries**, in addition to the "
             "request's token cost.")), {"web_search": {2.5}})
